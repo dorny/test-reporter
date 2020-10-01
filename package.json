@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
+  "name": "junit-check",
   "version": "0.0.0",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "Presents results of junit test report as Github check run",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -15,14 +15,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/dorny/junit-check.git"
   },
   "keywords": [
     "actions",
     "node",
-    "setup"
+    "junit"
   ],
-  "author": "",
+  "author": "Michal Dorner <dorner.michal@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.6"

@@ -1,11 +1,11 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'JUnit Check Report'
+description: 'Presents results of junit test report as Github check run'
+author: 'Michal Dorner <dorner.michal@gmail.com>'
 inputs:
-  milliseconds: # change this
-    required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+  token:
+    description: 'GitHub Access Token'
+    required: false
+    default: ${{ github.token }}
 runs:
   using: 'node12'
   main: 'dist/index.js'
