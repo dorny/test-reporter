@@ -1,7 +1,26 @@
-name: 'JUnit Check Report'
-description: 'Presents results of junit test report as Github check run'
+name: 'Test Check Reporter'
+description: |
+  Presents test results from popular testing frameworks as Github check run.
+  Supports:
+    - dotnet (trx logger)
+    - flutter (JSON output with '--machine' flag )
+    - jest (jest-junit reporter)
+
 author: 'Michal Dorner <dorner.michal@gmail.com>'
 inputs:
+  name:
+    description: 'Name of the check run'
+    required: true
+  path:
+    description: 'Path to test report'
+    required: true
+  reporter:
+    description: |
+      Format of test report. Supported options:
+        - dotnet-trx
+        - flutter-machine
+        - jest-junit
+    required: true
   token:
     description: 'GitHub Access Token'
     required: false
