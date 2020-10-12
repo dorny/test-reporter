@@ -1,5 +1,5 @@
 {
-  "name": "junit-check",
+  "name": "test-check",
   "version": "0.0.0",
   "private": true,
   "description": "Presents test results from popular testing frameworks as Github check run",
@@ -20,7 +20,8 @@
   "keywords": [
     "actions",
     "node",
-    "junit"
+    "test",
+    "report"
   ],
   "author": "Michal Dorner <dorner.michal@gmail.com>",
   "license": "MIT",
