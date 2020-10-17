@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="b31581d7-9fcd-44c8-94e7-e0dee07cb5f1" name="Michal@DORNY-PC 2020-10-17 21:39:04" runUser="DORNY-PC\Michal" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2020-10-17T21:39:04.3522129+02:00" queuing="2020-10-17T21:39:04.3522142+02:00" start="2020-10-17T21:39:03.3285079+02:00" finish="2020-10-17T21:39:04.3892722+02:00" />
+  <TestSettings name="default" id="4796a3f4-6ab2-4919-aed2-7bd0f59e0405">
+    <Deployment runDeploymentRoot="Michal_DORNY-PC_2020-10-17_21_39_04" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="b112f30a-5b23-4fee-bc4e-15212fad3d40" testId="55ef2114-eb39-77d8-4031-3da68d0dc505" testName="DotnetTests.XUnitTests.CalculatorTests.Skipped_Test" computerName="DORNY-PC" duration="00:00:00.0010000" startTime="2020-10-17T21:39:04.2366767+02:00" endTime="2020-10-17T21:39:04.2366838+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b112f30a-5b23-4fee-bc4e-15212fad3d40">
+      <Output>
+        <StdOut>Skipped test</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="0fef32cb-e95a-453c-a925-6edbcc7244b4" testId="3bd3c92f-b8b2-2f41-9211-951100aa2540" testName="DotnetTests.XUnitTests.CalculatorTests.Failing_Test" computerName="DORNY-PC" duration="00:00:00.0032953" startTime="2020-10-17T21:39:04.2341773+02:00" endTime="2020-10-17T21:39:04.2341789+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0fef32cb-e95a-453c-a925-6edbcc7244b4">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Equal() Failure&#xD;
+Expected: 3&#xD;
+Actual:   2</Message>
+          <StackTrace>   at DotnetTests.XUnitTests.CalculatorTests.Failing_Test() in C:\Users\Michal\Workspace\dorny\test-check\reports\dotnet\DotnetTests.XUnitTests\CalculatorTests.cs:line 27</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="005348f3-5302-483e-821d-ee3469d212ea" testId="41c1dee7-2d17-4cf3-ae64-fae6fd9f9105" testName="DotnetTests.XUnitTests.CalculatorTests.Timeout_Test" computerName="DORNY-PC" duration="00:00:00.1022821" startTime="2020-10-17T21:39:04.2285304+02:00" endTime="2020-10-17T21:39:04.2285320+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="005348f3-5302-483e-821d-ee3469d212ea" />
+    <UnitTestResult executionId="4cb3c100-d0bb-4d88-b017-b0b4da2fc2a3" testId="a171b9bb-97df-a0d8-c112-02ea0ea98607" testName="Custom Name" computerName="DORNY-PC" duration="00:00:00.0001030" startTime="2020-10-17T21:39:04.2342433+02:00" endTime="2020-10-17T21:39:04.2342435+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4cb3c100-d0bb-4d88-b017-b0b4da2fc2a3" />
+    <UnitTestResult executionId="baa7bd90-c1ed-4b62-bc41-ae23457aafb5" testId="eda9288a-92d4-85a5-dd8e-96ed8a58af10" testName="DotnetTests.XUnitTests.CalculatorTests.Exception_In_Test" computerName="DORNY-PC" duration="00:00:00.0022728" startTime="2020-10-17T21:39:04.1309244+02:00" endTime="2020-10-17T21:39:04.1309960+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="baa7bd90-c1ed-4b62-bc41-ae23457aafb5">
+      <Output>
+        <ErrorInfo>
+          <Message>System.Exception : Test</Message>
+          <StackTrace>   at DotnetTests.XUnitTests.CalculatorTests.Exception_In_Test() in C:\Users\Michal\Workspace\dorny\test-check\reports\dotnet\DotnetTests.XUnitTests\CalculatorTests.cs:line 39</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="12a3ab6a-64d8-4001-94ff-cc563228d7ba" testId="e4d3ab06-acb8-d3f7-0518-e81c04c0108a" testName="DotnetTests.XUnitTests.CalculatorTests.Exception_In_TargetTest" computerName="DORNY-PC" duration="00:00:00.0004975" startTime="2020-10-17T21:39:04.2354587+02:00" endTime="2020-10-17T21:39:04.2354600+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="12a3ab6a-64d8-4001-94ff-cc563228d7ba">
+      <Output>
+        <ErrorInfo>
+          <Message>System.DivideByZeroException : Attempted to divide by zero.</Message>
+          <StackTrace>   at DotnetTests.Unit.Calculator.Div(Int32 a, Int32 b) in C:\Users\Michal\Workspace\dorny\test-check\reports\dotnet\DotnetTests.Unit\Calculator.cs:line 9&#xD;
+   at DotnetTests.XUnitTests.CalculatorTests.Exception_In_TargetTest() in C:\Users\Michal\Workspace\dorny\test-check\reports\dotnet\DotnetTests.XUnitTests\CalculatorTests.cs:line 33</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="e29e1ba0-ebb3-45cd-aa1a-f60f23a6d509" testId="3e8432a2-ff59-c925-c08b-bb7f9ee02dd1" testName="DotnetTests.XUnitTests.CalculatorTests.Passing_Test" computerName="DORNY-PC" duration="00:00:00.0001254" startTime="2020-10-17T21:39:04.2355437+02:00" endTime="2020-10-17T21:39:04.2355439+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e29e1ba0-ebb3-45cd-aa1a-f60f23a6d509" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="DotnetTests.XUnitTests.CalculatorTests.Failing_Test" storage="c:\users\michal\workspace\dorny\test-check\reports\dotnet\dotnettests.xunittests\bin\debug\netcoreapp3.1\dotnettests.xunittests.dll" id="3bd3c92f-b8b2-2f41-9211-951100aa2540">
+      <Execution id="0fef32cb-e95a-453c-a925-6edbcc7244b4" />
+      <TestMethod codeBase="C:\Users\Michal\Workspace\dorny\test-check\reports\dotnet\DotnetTests.XUnitTests\bin\Debug\netcoreapp3.1\DotnetTests.XUnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="DotnetTests.XUnitTests.CalculatorTests" name="Failing_Test" />
+    </UnitTest>
+    <UnitTest name="DotnetTests.XUnitTests.CalculatorTests.Exception_In_Test" storage="c:\users\michal\workspace\dorny\test-check\reports\dotnet\dotnettests.xunittests\bin\debug\netcoreapp3.1\dotnettests.xunittests.dll" id="eda9288a-92d4-85a5-dd8e-96ed8a58af10">
+      <Execution id="baa7bd90-c1ed-4b62-bc41-ae23457aafb5" />
+      <TestMethod codeBase="C:\Users\Michal\Workspace\dorny\test-check\reports\dotnet\DotnetTests.XUnitTests\bin\Debug\netcoreapp3.1\DotnetTests.XUnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="DotnetTests.XUnitTests.CalculatorTests" name="Exception_In_Test" />
+    </UnitTest>
+    <UnitTest name="DotnetTests.XUnitTests.CalculatorTests.Skipped_Test" storage="c:\users\michal\workspace\dorny\test-check\reports\dotnet\dotnettests.xunittests\bin\debug\netcoreapp3.1\dotnettests.xunittests.dll" id="55ef2114-eb39-77d8-4031-3da68d0dc505">
+      <Execution id="b112f30a-5b23-4fee-bc4e-15212fad3d40" />
+      <TestMethod codeBase="C:\Users\Michal\Workspace\dorny\test-check\reports\dotnet\DotnetTests.XUnitTests\bin\Debug\netcoreapp3.1\DotnetTests.XUnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="DotnetTests.XUnitTests.CalculatorTests" name="Skipped_Test" />
+    </UnitTest>
+    <UnitTest name="Custom Name" storage="c:\users\michal\workspace\dorny\test-check\reports\dotnet\dotnettests.xunittests\bin\debug\netcoreapp3.1\dotnettests.xunittests.dll" id="a171b9bb-97df-a0d8-c112-02ea0ea98607">
+      <Execution id="4cb3c100-d0bb-4d88-b017-b0b4da2fc2a3" />
+      <TestMethod codeBase="C:\Users\Michal\Workspace\dorny\test-check\reports\dotnet\DotnetTests.XUnitTests\bin\Debug\netcoreapp3.1\DotnetTests.XUnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="DotnetTests.XUnitTests.CalculatorTests" name="Passing_Test_With_Name" />
+    </UnitTest>
+    <UnitTest name="DotnetTests.XUnitTests.CalculatorTests.Passing_Test" storage="c:\users\michal\workspace\dorny\test-check\reports\dotnet\dotnettests.xunittests\bin\debug\netcoreapp3.1\dotnettests.xunittests.dll" id="3e8432a2-ff59-c925-c08b-bb7f9ee02dd1">
+      <Execution id="e29e1ba0-ebb3-45cd-aa1a-f60f23a6d509" />
+      <TestMethod codeBase="C:\Users\Michal\Workspace\dorny\test-check\reports\dotnet\DotnetTests.XUnitTests\bin\Debug\netcoreapp3.1\DotnetTests.XUnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="DotnetTests.XUnitTests.CalculatorTests" name="Passing_Test" />
+    </UnitTest>
+    <UnitTest name="DotnetTests.XUnitTests.CalculatorTests.Timeout_Test" storage="c:\users\michal\workspace\dorny\test-check\reports\dotnet\dotnettests.xunittests\bin\debug\netcoreapp3.1\dotnettests.xunittests.dll" id="41c1dee7-2d17-4cf3-ae64-fae6fd9f9105">
+      <Execution id="005348f3-5302-483e-821d-ee3469d212ea" />
+      <TestMethod codeBase="C:\Users\Michal\Workspace\dorny\test-check\reports\dotnet\DotnetTests.XUnitTests\bin\Debug\netcoreapp3.1\DotnetTests.XUnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="DotnetTests.XUnitTests.CalculatorTests" name="Timeout_Test" />
+    </UnitTest>
+    <UnitTest name="DotnetTests.XUnitTests.CalculatorTests.Exception_In_TargetTest" storage="c:\users\michal\workspace\dorny\test-check\reports\dotnet\dotnettests.xunittests\bin\debug\netcoreapp3.1\dotnettests.xunittests.dll" id="e4d3ab06-acb8-d3f7-0518-e81c04c0108a">
+      <Execution id="12a3ab6a-64d8-4001-94ff-cc563228d7ba" />
+      <TestMethod codeBase="C:\Users\Michal\Workspace\dorny\test-check\reports\dotnet\DotnetTests.XUnitTests\bin\Debug\netcoreapp3.1\DotnetTests.XUnitTests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="DotnetTests.XUnitTests.CalculatorTests" name="Exception_In_TargetTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="55ef2114-eb39-77d8-4031-3da68d0dc505" executionId="b112f30a-5b23-4fee-bc4e-15212fad3d40" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3bd3c92f-b8b2-2f41-9211-951100aa2540" executionId="0fef32cb-e95a-453c-a925-6edbcc7244b4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="41c1dee7-2d17-4cf3-ae64-fae6fd9f9105" executionId="005348f3-5302-483e-821d-ee3469d212ea" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a171b9bb-97df-a0d8-c112-02ea0ea98607" executionId="4cb3c100-d0bb-4d88-b017-b0b4da2fc2a3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="eda9288a-92d4-85a5-dd8e-96ed8a58af10" executionId="baa7bd90-c1ed-4b62-bc41-ae23457aafb5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e4d3ab06-acb8-d3f7-0518-e81c04c0108a" executionId="12a3ab6a-64d8-4001-94ff-cc563228d7ba" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3e8432a2-ff59-c925-c08b-bb7f9ee02dd1" executionId="e29e1ba0-ebb3-45cd-aa1a-f60f23a6d509" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="7" executed="6" passed="3" failed="3" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.4.0 (64-bit .NET Core 3.1.9)&#xD;
+[xUnit.net 00:00:00.27]   Discovering: DotnetTests.XUnitTests&#xD;
+[xUnit.net 00:00:00.30]   Discovered:  DotnetTests.XUnitTests&#xD;
+[xUnit.net 00:00:00.30]   Starting:    DotnetTests.XUnitTests&#xD;
+[xUnit.net 00:00:00.37]       System.Exception : Test&#xD;
+[xUnit.net 00:00:00.37]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.37]         C:\Users\Michal\Workspace\dorny\test-check\reports\dotnet\DotnetTests.XUnitTests\CalculatorTests.cs(39,0): at DotnetTests.XUnitTests.CalculatorTests.Exception_In_Test()&#xD;
+[xUnit.net 00:00:00.48]       Assert.Equal() Failure&#xD;
+[xUnit.net 00:00:00.48]       Expected: 3&#xD;
+[xUnit.net 00:00:00.48]       Actual:   2&#xD;
+[xUnit.net 00:00:00.48]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.48]         C:\Users\Michal\Workspace\dorny\test-check\reports\dotnet\DotnetTests.XUnitTests\CalculatorTests.cs(27,0): at DotnetTests.XUnitTests.CalculatorTests.Failing_Test()&#xD;
+[xUnit.net 00:00:00.48]       System.DivideByZeroException : Attempted to divide by zero.&#xD;
+[xUnit.net 00:00:00.48]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.48]         C:\Users\Michal\Workspace\dorny\test-check\reports\dotnet\DotnetTests.Unit\Calculator.cs(9,0): at DotnetTests.Unit.Calculator.Div(Int32 a, Int32 b)&#xD;
+[xUnit.net 00:00:00.48]         C:\Users\Michal\Workspace\dorny\test-check\reports\dotnet\DotnetTests.XUnitTests\CalculatorTests.cs(33,0): at DotnetTests.XUnitTests.CalculatorTests.Exception_In_TargetTest()&#xD;
+[xUnit.net 00:00:00.48]       Skipped test&#xD;
+[xUnit.net 00:00:00.49]   Finished:    DotnetTests.XUnitTests&#xD;
+Test 'DotnetTests.XUnitTests.CalculatorTests.Skipped_Test' was skipped in the test run.&#xD;
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="DORNY-PC" outcome="Error" timestamp="2020-10-17T21:39:04.1284415+02:00">
+        <Text>[xUnit.net 00:00:00.37]     DotnetTests.XUnitTests.CalculatorTests.Exception_In_Test [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="DORNY-PC" outcome="Error" timestamp="2020-10-17T21:39:04.2341547+02:00">
+        <Text>[xUnit.net 00:00:00.48]     DotnetTests.XUnitTests.CalculatorTests.Failing_Test [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="DORNY-PC" outcome="Error" timestamp="2020-10-17T21:39:04.2354218+02:00">
+        <Text>[xUnit.net 00:00:00.48]     DotnetTests.XUnitTests.CalculatorTests.Exception_In_TargetTest [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="DORNY-PC" outcome="Warning" timestamp="2020-10-17T21:39:04.2388123+02:00">
+        <Text>[xUnit.net 00:00:00.48]     DotnetTests.XUnitTests.CalculatorTests.Skipped_Test [SKIP]</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

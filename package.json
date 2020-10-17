@@ -11,7 +11,8 @@
     "lint": "eslint src/**/*.ts",
     "package": "ncc build --source-map --license licenses.txt",
     "test": "jest",
-    "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
+    "all": "npm run build && npm run format && npm run lint && npm run package && npm test",
+    "dotnet-report": "cross-env-shell dotnet test reports/dotnet/DotnetTests.XUnitTests --logger \"trx;LogFileName=$INIT_CWD/__tests__/fixtures/dotnet-trx.trx\""
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
     "@types/node": "^14.11.2",
     "@typescript-eslint/parser": "^4.3.0",
     "@vercel/ncc": "^0.24.1",
+    "cross-env": "^7.0.2",
     "eslint": "^7.10.0",
     "eslint-plugin-github": "^4.1.1",
     "eslint-plugin-jest": "^24.0.2",
