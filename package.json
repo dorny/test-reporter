@@ -12,7 +12,8 @@
     "package": "ncc build --source-map --license licenses.txt",
     "test": "jest",
     "all": "npm run build && npm run format && npm run lint && npm run package && npm test",
-    "dotnet-fixture": "dotnet test reports/dotnet/DotnetTests.XUnitTests --logger \"trx;LogFileName=../../../../__tests__/fixtures/dotnet-trx.trx\""
+    "dotnet-fixture": "dotnet test reports/dotnet/DotnetTests.XUnitTests --logger \"trx;LogFileName=../../../../__tests__/fixtures/dotnet-trx.trx\"",
+    "dart-fixture": "cd \"reports/dart\" && dart test --file-reporter=\"json:../../__tests__/fixtures/dart-json.json\""
   },
   "repository": {
     "type": "git",
