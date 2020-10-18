@@ -23,9 +23,5 @@ void main() {
     test('Exception in test', () {
       throw Exception('Some error');
     });
-
-    test('Timeout test', () {
-      sleep(Duration(milliseconds: 1));
-    }, timeout: Timeout(Duration(microseconds: 1)));
   });
 }
