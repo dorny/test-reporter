@@ -16,6 +16,10 @@
     "suiteName": "jest tests",
     "outputDirectory": "../../__tests__/fixtures",
     "outputName": "jest-junit.xml",
-    "uniqueOutputName": "false"
+    "ancestorSeparator": " › ",
+    "uniqueOutputName": "false",
+    "suiteNameTemplate": "{filepath}",
+    "classNameTemplate": "{classname}",
+    "titleTemplate": "{title}"
   }
 }
