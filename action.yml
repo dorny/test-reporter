@@ -17,6 +17,7 @@ inputs:
   reporter:
     description: |
       Format of test report. Supported options:
+        - dart-json
         - dotnet-trx
         - flutter-machine
         - jest-junit
