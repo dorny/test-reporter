@@ -9,6 +9,7 @@ const outputPath = __dirname + '/__outputs__/jest-junit.md'
 describe('jest-junit tests', () => {
   it('matches report snapshot', async () => {
     const result = await parseJestJunit(xmlFixture)
+    fs.mkdirSync(path.dirname(outputPath), {recursive: true})
     fs.writeFileSync(outputPath, result?.output?.summary ?? '')
 
     expect(result.success).toBeFalsy()
