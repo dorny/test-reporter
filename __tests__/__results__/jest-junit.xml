@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="1" failures="0" errors="0" time="2.249">
-  <testsuite name="__tests__\jest-junit.test.ts" errors="0" failures="0" skipped="0" timestamp="2020-11-17T21:26:30" time="2.195" tests="1">
-    <testcase classname="jest-junit tests" name="matches report snapshot" time="0.014">
-    </testcase>
-  </testsuite>
-</testsuites>
