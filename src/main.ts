@@ -25,15 +25,18 @@ async function main(): Promise<void> {
   const parser = getParser(reporter)
   const content = getFileContent(path)
   const result = await parser(content)
+  const conclusion = result.success ? 'success' : 'failure'
 
   await octokit.checks.create({
     head_sha: sha,
     name,
+    conclusion,
     status: 'completed',
-    conclusion: result.success ? 'success' : 'failure',
     output: result.output,
     ...github.context.repo
   })
+
+  core.setOutput('conclusion', conclusion)
 }
 
 function getParser(reporter: string): ParseTestResult {

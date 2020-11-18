@@ -50,21 +50,27 @@ async function main() {
     const parser = getParser(reporter);
     const content = file_utils_1.getFileContent(path);
     const result = await parser(content);
+    const conclusion = result.success ? 'success' : 'failure';
     await octokit.checks.create({
         head_sha: sha,
         name,
+        conclusion,
         status: 'completed',
-        conclusion: result.success ? 'success' : 'failure',
         output: result.output,
-        ...github.context.repo,
+        ...github.context.repo
     });
+    core.setOutput('conclusion', conclusion);
 }
 function getParser(reporter) {
     switch (reporter) {
-        case 'dotnet-trx': throw new Error('Not implemented yet!');
-        case 'flutter-machine': throw new Error('Not implemented yet!');
-        case 'jest-junit': return jest_junit_parser_1.parseJestJunit;
-        default: throw new Error(`Input parameter 'reporter' is set to invalid value '${reporter}'`);
+        case 'dotnet-trx':
+            throw new Error('Not implemented yet!');
+        case 'flutter-machine':
+            throw new Error('Not implemented yet!');
+        case 'jest-junit':
+            return jest_junit_parser_1.parseJestJunit;
+        default:
+            throw new Error(`Input parameter 'reporter' is set to invalid value '${reporter}'`);
     }
 }
 run();
@@ -251,8 +257,7 @@ exports.getCheckRunSha = void 0;
 const github = __importStar(__webpack_require__(5438));
 function getCheckRunSha() {
     if (github.context.payload.pull_request) {
-        const pr = github.context.payload
-            .pull_request;
+        const pr = github.context.payload.pull_request;
         return pr.head.sha;
     }
     return github.context.sha;

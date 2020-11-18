@@ -26,6 +26,12 @@ inputs:
     description: 'GitHub Access Token'
     required: false
     default: ${{ github.token }}
+outputs:
+  conclusion:
+    description: |
+      Final conclusion of the created check run:
+        - 'success' if no failed tests was found
+        - 'failure' if any failed test was found
 runs:
   using: 'node12'
   main: 'dist/index.js'
