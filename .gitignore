@@ -97,3 +97,7 @@ Thumbs.db
 # Ignore built ts files
 __tests__/runner/*
 lib/**/*
+
+# Project specific
+__tests__/__outputs__
+__tests__/__results__

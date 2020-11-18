@@ -1,0 +1,30 @@
+name: 'build-test'
+on:
+  pull_request:
+    paths-ignore: [ 'README.md' ]
+  push:
+    paths-ignore: [ 'README.md' ]
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-test:
+    name: 'Build & Test'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm ci
+      - run: npm run build
+      - run: npm run format-check
+      - run: npm run lint
+      - run: npm test
+        continue-on-error: true
+      - name: 'Evaluate test results'
+        uses: ./
+        with:
+          name: 'JEST Tests'
+          path: '__tests__/__results__/jest-junit.xml'
+          reporter: 'jest-junit'
+      - name: 'Sanity check' # re-run tests in case this action failed to detect failing test
+        run: npm test
