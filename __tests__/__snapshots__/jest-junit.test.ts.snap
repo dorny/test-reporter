@@ -5,11 +5,11 @@ exports[`jest-junit tests matches report snapshot 1`] = `
 **6** tests were completed in **1.360s** with **1** passed, **1** skipped and **4** failed.
 | Result | Suite | Tests | Time | Passed ✔️ | Failed ❌ | Skipped ✖️ |
 | :---: | :--- | ---: | ---: | ---: | ---: | ---: |
-| ❌ | [__tests__\\\\main.test.js](#testsmaintestjs-) | 4 | 0.486s | 1 | 3 | 0 |
-| ❌ | [__tests__\\\\second.test.js](#testssecondtestjs-) | 2 | 0.082s | 0 | 1 | 1 |
+| ❌ | [__tests__\\\\main.test.js](#ts-0-tests-main-test-js) | 4 | 0.486s | 1 | 3 | 0 |
+| ❌ | [__tests__\\\\second.test.js](#ts-1-tests-second-test-js) | 2 | 0.082s | 0 | 1 | 1 |
 ## Test Suites
 
-### __tests__\\\\main.test.js ❌
+### <a id=\\"user-content-ts-0-tests-main-test-js\\" href=\\"#ts-0-tests-main-test-js\\">__tests__\\\\main.test.js</a> ❌
 
 #### Test 1
 
@@ -30,7 +30,7 @@ exports[`jest-junit tests matches report snapshot 1`] = `
 | :---: | :--- | ---: | --- |
 | ❌ | Exception in test | 0ms | <details><summary>Error: Some error</summary><pre>    at Object.<anonymous> (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\__tests__\\\\main.test.js:21:11)<br>    at Object.asyncJestTest (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\jasmineAsyncInstall.js:106:37)<br>    at C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\queueRunner.js:45:12<br>    at new Promise (<anonymous>)<br>    at mapper (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\queueRunner.js:28:19)<br>    at C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\queueRunner.js:75:41<br>    at processTicksAndRejections (internal/process/task_queues.js:97:5)</pre></details> |
 
-### __tests__\\\\second.test.js ❌
+### <a id=\\"user-content-ts-1-tests-second-test-js\\" href=\\"#ts-1-tests-second-test-js\\">__tests__\\\\second.test.js</a> ❌
 
 | Result | Test | Time | Details |
 | :---: | :--- | ---: | --- |
