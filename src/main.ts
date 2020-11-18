@@ -14,6 +14,7 @@ async function run(): Promise<void> {
 }
 
 async function main(): Promise<void> {
+  const failOnError = core.getInput('fail-on-error', {required: true}) === 'true'
   const name = core.getInput('name', {required: true})
   const path = core.getInput('path', {required: true})
   const reporter = core.getInput('reporter', {required: true})
@@ -37,6 +38,9 @@ async function main(): Promise<void> {
   })
 
   core.setOutput('conclusion', conclusion)
+  if (failOnError && !result.success) {
+    core.setFailed(`Failed test has been found and 'fail-on-error' option is set to ${failOnError}.`)
+  }
 }
 
 function getParser(reporter: string): ParseTestResult {

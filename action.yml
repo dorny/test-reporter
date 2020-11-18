@@ -8,6 +8,10 @@ description: |
 
 author: 'Michal Dorner <dorner.michal@gmail.com>'
 inputs:
+  fail-on-error:
+    description: 'Set this action as failed if test report contains any failed test'
+    required: true
+    default: 'true'
   name:
     description: 'Name of the check run'
     required: true
