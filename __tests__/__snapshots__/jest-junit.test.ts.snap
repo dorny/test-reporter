@@ -17,7 +17,6 @@ Received: false
     at C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\queueRunner.js:75:41
     at processTicksAndRejections (internal/process/task_queues.js:97:5)",
       "path": "__tests__/main.test.js",
-      "start_column": 21,
       "start_line": 10,
       "title": "Exception was thrown here",
     },
@@ -34,7 +33,6 @@ Received: false
     at C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\queueRunner.js:75:41
     at processTicksAndRejections (internal/process/task_queues.js:97:5)",
       "path": "lib/main.js",
-      "start_column": 9,
       "start_line": 2,
       "title": "Exception was thrown here",
     },
@@ -50,7 +48,6 @@ Received: false
     at C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\queueRunner.js:75:41
     at processTicksAndRejections (internal/process/task_queues.js:97:5)",
       "path": "__tests__/main.test.js",
-      "start_column": 11,
       "start_line": 21,
       "title": "Exception was thrown here",
     },
@@ -72,7 +69,6 @@ Received: false
     at runTestInternal (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-runner\\\\build\\\\runTest.js:380:22)
     at runTest (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-runner\\\\build\\\\runTest.js:472:34)",
       "path": "__tests__/second.test.js",
-      "start_column": 34,
       "start_line": 1,
       "title": "Exception was thrown here",
     },

@@ -144,7 +144,6 @@ function getAnnotations(junit: JunitReport, workDir: string, trackedFiles: strin
           annotation_level: 'failure',
           start_line: src.line,
           end_line: src.line,
-          start_column: src.column,
           path: src.file,
           message: ex,
           title: 'Exception was thrown here'
