@@ -1,12 +1,13 @@
-import {TestResult} from '../test-parser'
+import {Annotation, ParseOptions, TestResult} from '../test-parser'
 import {parseStringPromise} from 'xml2js'
 
 import {JunitReport, TestCase, TestSuite, TestSuites} from './jest-junit-types'
 import {Align, Icon, link, table, exceptionCell} from '../../utils/markdown-utils'
+import {normalizeFilePath} from '../../utils/file-utils'
 import {slug} from '../../utils/slugger'
 import {parseAttribute} from '../../utils/xml-utils'
 
-export async function parseJestJunit(content: string): Promise<TestResult> {
+export async function parseJestJunit(content: string, options: ParseOptions): Promise<TestResult> {
   const junit = (await parseStringPromise(content, {
     attrValueProcessors: [parseAttribute]
   })) as JunitReport
@@ -17,7 +18,8 @@ export async function parseJestJunit(content: string): Promise<TestResult> {
     success,
     output: {
       title: junit.testsuites.$.name,
-      summary: getSummary(success, junit)
+      summary: getSummary(success, junit),
+      annotations: options.annotations ? getAnnotations(junit, options.workDir, options.trackedFiles) : undefined
     }
   }
 }
@@ -124,4 +126,56 @@ function getTestCaseDetails(test: TestCase): string {
 function makeSuiteSlug(index: number, name: string): {id: string; link: string} {
   // use "ts-$index-" as prefix to avoid slug conflicts after escaping the paths
   return slug(`ts-${index}-${name}`)
+}
+
+function getAnnotations(junit: JunitReport, workDir: string, trackedFiles: string[]): Annotation[] {
+  const annotations: Annotation[] = []
+  for (const suite of junit.testsuites.testsuite) {
+    for (const tc of suite.testcase) {
+      if (!tc.failure) {
+        continue
+      }
+      for (const ex of tc.failure) {
+        const src = exceptionThrowSource(ex, workDir, trackedFiles)
+        if (src === null) {
+          continue
+        }
+        annotations.push({
+          annotation_level: 'failure',
+          start_line: src.line,
+          end_line: src.line,
+          start_column: src.column,
+          path: src.file,
+          message: ex,
+          title: 'Exception was thrown here'
+        })
+      }
+    }
+  }
+  return annotations
+}
+
+export function exceptionThrowSource(
+  ex: string,
+  workDir: string,
+  trackedFiles: string[]
+): {file: string; line: number; column: number} | null {
+  const lines = ex.split(/\r?\n/)
+  const re = /\((.*):(\d+):(\d+)\)$/
+
+  for (const str of lines) {
+    const match = str.match(re)
+    if (match !== null) {
+      const [_, fileStr, lineStr, colStr] = match
+      const filePath = normalizeFilePath(fileStr)
+      const file = filePath.startsWith(workDir) ? filePath.substr(workDir.length) : filePath
+      if (trackedFiles.includes(file)) {
+        const line = parseInt(lineStr)
+        const column = parseInt(colStr)
+        return {file, line, column}
+      }
+    }
+  }
+
+  return null
 }
