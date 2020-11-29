@@ -8,6 +8,10 @@ description: |
 
 author: 'Michal Dorner <dorner.michal@gmail.com>'
 inputs:
+  annotations:
+    description: 'Annotate code where exceptions in tests were thrown'
+    required: true
+    default: 'true'
   fail-on-error:
     description: 'Set this action as failed if test report contains any failed test'
     required: true
@@ -30,6 +34,9 @@ inputs:
     description: 'GitHub Access Token'
     required: false
     default: ${{ github.token }}
+  working-directory:
+    description: 'Relative path under $GITHUB_WORKSPACE where the repository was checked out.'
+    required: false
 outputs:
   conclusion:
     description: |

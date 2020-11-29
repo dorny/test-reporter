@@ -11,3 +11,23 @@ export function getFileContent(path: string): string {
 
   return fs.readFileSync(path, {encoding: 'utf8'})
 }
+
+export function normalizeDirPath(path: string, trailingSeparator: boolean): string {
+  if (!path) {
+    return path
+  }
+
+  path = normalizeFilePath(path)
+  if (trailingSeparator && !path.endsWith('/')) {
+    path += '/'
+  }
+  return path
+}
+
+export function normalizeFilePath(path: string): string {
+  if (!path) {
+    return path
+  }
+
+  return path.trim().replace(/\\/g, '/')
+}

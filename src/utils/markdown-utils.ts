@@ -21,32 +21,12 @@ export function link(title: string, address: string): string {
 
 type ToString = string | number | boolean | Date
 export function table(headers: ToString[], align: ToString[], ...rows: ToString[][]): string {
-  const headerRow = `| ${headers.join(' | ')} |`
+  const headerRow = `| ${headers.map(tableEscape).join(' | ')} |`
   const alignRow = `| ${align.join(' | ')} |`
-  const contentRows = rows.map(row => `| ${row.join(' | ')} |`).join('\n')
+  const contentRows = rows.map(row => `| ${row.map(tableEscape).join(' | ')} |`).join('\n')
   return [headerRow, alignRow, contentRows].join('\n')
 }
 
-export function exceptionCell(ex: string): string {
-  const lines = ex.split(/\r?\n/)
-  if (lines.length === 0) {
-    return ''
-  }
-
-  const summary = tableEscape(lines.shift()?.trim() || '')
-  const emptyLine = /^\s*$/
-  const firstNonEmptyLine = lines.findIndex(l => !emptyLine.test(l))
-
-  if (firstNonEmptyLine === -1) {
-    return summary
-  }
-
-  const contentLines = firstNonEmptyLine > 0 ? lines.slice(firstNonEmptyLine) : lines
-
-  const content = '<pre>' + tableEscape(contentLines.join('<br>')) + '</pre>'
-  return details(summary, content)
-}
-
-export function tableEscape(content: string): string {
-  return content.replace('|', '\\|')
+export function tableEscape(content: ToString): string {
+  return content.toString().replace('|', '\\|')
 }

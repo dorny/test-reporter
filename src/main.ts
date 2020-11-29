@@ -1,8 +1,9 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import {parseJestJunit} from './parsers/jest-junit/jest-junit-parser'
-import {ParseTestResult} from './parsers/test-parser'
-import {getFileContent} from './utils/file-utils'
+import {ParseOptions, ParseTestResult} from './parsers/test-parser'
+import {getFileContent, normalizeDirPath} from './utils/file-utils'
+import {listFiles} from './utils/git'
 import {getCheckRunSha} from './utils/github-utils'
 
 async function run(): Promise<void> {
@@ -14,18 +15,34 @@ async function run(): Promise<void> {
 }
 
 async function main(): Promise<void> {
+  const annotations = core.getInput('annotations', {required: true}) === 'true'
   const failOnError = core.getInput('fail-on-error', {required: true}) === 'true'
   const name = core.getInput('name', {required: true})
   const path = core.getInput('path', {required: true})
   const reporter = core.getInput('reporter', {required: true})
   const token = core.getInput('token', {required: true})
+  const workDirInput = core.getInput('working-directory', {required: false})
 
+  if (workDirInput) {
+    process.chdir(workDirInput)
+  }
+
+  const workDir = normalizeDirPath(workDirInput || process.cwd(), true)
   const octokit = github.getOctokit(token)
   const sha = getCheckRunSha()
 
+  // We won't need tracked files if we are not going to create annotations
+  const trackedFiles = annotations ? await listFiles() : []
+
+  const opts: ParseOptions = {
+    annotations,
+    trackedFiles,
+    workDir
+  }
+
   const parser = getParser(reporter)
   const content = getFileContent(path)
-  const result = await parser(content)
+  const result = await parser(content, opts)
   const conclusion = result.success ? 'success' : 'failure'
 
   await octokit.checks.create({
