@@ -18,7 +18,7 @@ export async function parseJestJunit(content: string, options: ParseOptions): Pr
   return {
     success,
     output: {
-      title: `${junit.testsuites.$.name} ${icon}`,
+      title: `${junit.testsuites.$.name.trim()} ${icon}`,
       summary: getSummary(success, junit),
       annotations: options.annotations ? getAnnotations(junit, options.workDir, options.trackedFiles) : undefined
     }
@@ -42,7 +42,7 @@ function getSummary(success: boolean, junit: JunitReport): string {
     const pass = ts.$.tests - fail - skip
     const tm = `${ts.$.time.toFixed(3)}s`
     const result = success ? Icon.success : Icon.fail
-    const tsName = ts.$.name
+    const tsName = ts.$.name.trim()
     const tsAddr = makeSuiteSlug(i, tsName).link
     const tsNameLink = link(tsName, tsAddr)
     return [result, tsNameLink, ts.$.tests, tm, pass, fail, skip]
@@ -80,12 +80,12 @@ function getSuiteSummary(suite: TestSuite, index: number): string {
 
   const content = groups
     .map(grp => {
-      const header = grp.describe !== '' ? `### ${grp.describe}\n\n` : ''
+      const header = grp.describe !== '' ? `### ${grp.describe.trim()}\n\n` : ''
       const tests = table(
         ['Result', 'Test', 'Time'],
         [Align.Center, Align.Left, Align.Right],
         ...grp.tests.map(tc => {
-          const name = tc.$.name
+          const name = tc.$.name.trim()
           const time = `${Math.round(tc.$.time * 1000)}ms`
           const result = getTestCaseIcon(tc)
           return [result, name, time]
@@ -96,7 +96,7 @@ function getSuiteSummary(suite: TestSuite, index: number): string {
     })
     .join('\n')
 
-  const tsName = suite.$.name
+  const tsName = suite.$.name.trim()
   const tsSlug = makeSuiteSlug(index, tsName)
   const tsNameLink = `<a id="${tsSlug.id}" href="${tsSlug.link}">${tsName}</a>`
   return `## ${tsNameLink} ${icon}\n\n${content}`
@@ -131,7 +131,7 @@ function getAnnotations(junit: JunitReport, workDir: string, trackedFiles: strin
           end_line: src.line,
           path: src.file,
           message: ex,
-          title: `Test Failed: '${tc.$.name}' [${suite.$.name}]`
+          title: `[${suite.$.name}] ${tc.$.name.trim()}`
         })
       }
     }

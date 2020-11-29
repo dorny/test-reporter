@@ -119,7 +119,7 @@ async function parseJestJunit(content, options) {
     return {
         success,
         output: {
-            title: `${junit.testsuites.$.name} ${icon}`,
+            title: `${junit.testsuites.$.name.trim()} ${icon}`,
             summary: getSummary(success, junit),
             annotations: options.annotations ? getAnnotations(junit, options.workDir, options.trackedFiles) : undefined
         }
@@ -140,7 +140,7 @@ function getSummary(success, junit) {
         const pass = ts.$.tests - fail - skip;
         const tm = `${ts.$.time.toFixed(3)}s`;
         const result = success ? markdown_utils_1.Icon.success : markdown_utils_1.Icon.fail;
-        const tsName = ts.$.name;
+        const tsName = ts.$.name.trim();
         const tsAddr = makeSuiteSlug(i, tsName).link;
         const tsNameLink = markdown_utils_1.link(tsName, tsAddr);
         return [result, tsNameLink, ts.$.tests, tm, pass, fail, skip];
@@ -168,9 +168,9 @@ function getSuiteSummary(suite, index) {
     }
     const content = groups
         .map(grp => {
-        const header = grp.describe !== '' ? `### ${grp.describe}\n\n` : '';
+        const header = grp.describe !== '' ? `### ${grp.describe.trim()}\n\n` : '';
         const tests = markdown_utils_1.table(['Result', 'Test', 'Time'], [markdown_utils_1.Align.Center, markdown_utils_1.Align.Left, markdown_utils_1.Align.Right], ...grp.tests.map(tc => {
-            const name = tc.$.name;
+            const name = tc.$.name.trim();
             const time = `${Math.round(tc.$.time * 1000)}ms`;
             const result = getTestCaseIcon(tc);
             return [result, name, time];
@@ -178,7 +178,7 @@ function getSuiteSummary(suite, index) {
         return `${header}${tests}\n`;
     })
         .join('\n');
-    const tsName = suite.$.name;
+    const tsName = suite.$.name.trim();
     const tsSlug = makeSuiteSlug(index, tsName);
     const tsNameLink = `<a id="${tsSlug.id}" href="${tsSlug.link}">${tsName}</a>`;
     return `## ${tsNameLink} ${icon}\n\n${content}`;
@@ -212,7 +212,7 @@ function getAnnotations(junit, workDir, trackedFiles) {
                     end_line: src.line,
                     path: src.file,
                     message: ex,
-                    title: `Test Failed: '${tc.$.name}' [${suite.$.name}]`
+                    title: `[${suite.$.name}] ${tc.$.name.trim()}`
                 });
             }
         }
