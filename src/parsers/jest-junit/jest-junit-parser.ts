@@ -2,7 +2,7 @@ import {Annotation, ParseOptions, TestResult} from '../test-parser'
 import {parseStringPromise} from 'xml2js'
 
 import {JunitReport, TestCase, TestSuite, TestSuites} from './jest-junit-types'
-import {Align, Icon, link, table, exceptionCell} from '../../utils/markdown-utils'
+import {Align, Icon, link, table} from '../../utils/markdown-utils'
 import {normalizeFilePath} from '../../utils/file-utils'
 import {slug} from '../../utils/slugger'
 import {parseAttribute} from '../../utils/xml-utils'
@@ -83,14 +83,13 @@ function getSuiteSummary(suite: TestSuite, index: number): string {
     .map(grp => {
       const header = grp.describe !== '' ? `#### ${grp.describe}\n\n` : ''
       const tests = table(
-        ['Result', 'Test', 'Time', 'Details'],
-        [Align.Center, Align.Left, Align.Right, Align.None],
+        ['Result', 'Test', 'Time'],
+        [Align.Center, Align.Left, Align.Right],
         ...grp.tests.map(tc => {
           const name = tc.$.name
           const time = `${Math.round(tc.$.time * 1000)}ms`
           const result = getTestCaseIcon(tc)
-          const ex = getTestCaseDetails(tc)
-          return [result, name, time, ex]
+          return [result, name, time]
         })
       )
 
@@ -108,19 +107,6 @@ function getTestCaseIcon(test: TestCase): string {
   if (test.failure) return Icon.fail
   if (test.skipped) return Icon.skip
   return Icon.success
-}
-
-function getTestCaseDetails(test: TestCase): string {
-  if (test.skipped !== undefined) {
-    return 'Skipped'
-  }
-
-  if (test.failure !== undefined) {
-    const failure = test.failure.join('\n')
-    return exceptionCell(failure)
-  }
-
-  return ''
 }
 
 function makeSuiteSlug(index: number, name: string): {id: string; link: string} {

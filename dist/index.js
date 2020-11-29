@@ -170,12 +170,11 @@ function getSuiteSummary(suite, index) {
     const content = groups
         .map(grp => {
         const header = grp.describe !== '' ? `#### ${grp.describe}\n\n` : '';
-        const tests = markdown_utils_1.table(['Result', 'Test', 'Time', 'Details'], [markdown_utils_1.Align.Center, markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.None], ...grp.tests.map(tc => {
+        const tests = markdown_utils_1.table(['Result', 'Test', 'Time'], [markdown_utils_1.Align.Center, markdown_utils_1.Align.Left, markdown_utils_1.Align.Right], ...grp.tests.map(tc => {
             const name = tc.$.name;
             const time = `${Math.round(tc.$.time * 1000)}ms`;
             const result = getTestCaseIcon(tc);
-            const ex = getTestCaseDetails(tc);
-            return [result, name, time, ex];
+            return [result, name, time];
         }));
         return `${header}${tests}\n`;
     })
@@ -191,16 +190,6 @@ function getTestCaseIcon(test) {
     if (test.skipped)
         return markdown_utils_1.Icon.skip;
     return markdown_utils_1.Icon.success;
-}
-function getTestCaseDetails(test) {
-    if (test.skipped !== undefined) {
-        return 'Skipped';
-    }
-    if (test.failure !== undefined) {
-        const failure = test.failure.join('\n');
-        return markdown_utils_1.exceptionCell(failure);
-    }
-    return '';
 }
 function makeSuiteSlug(index, name) {
     // use "ts-$index-" as prefix to avoid slug conflicts after escaping the paths
@@ -224,7 +213,7 @@ function getAnnotations(junit, workDir, trackedFiles) {
                     end_line: src.line,
                     path: src.file,
                     message: ex,
-                    title: 'Exception was thrown here'
+                    title: `Test Failed: ${tc.$.name}`
                 });
             }
         }
@@ -437,7 +426,7 @@ exports.getCheckRunSha = getCheckRunSha;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.tableEscape = exports.exceptionCell = exports.table = exports.link = exports.details = exports.Icon = exports.Align = void 0;
+exports.tableEscape = exports.table = exports.link = exports.details = exports.Icon = exports.Align = void 0;
 var Align;
 (function (Align) {
     Align["Left"] = ":---";
@@ -459,31 +448,14 @@ function link(title, address) {
 }
 exports.link = link;
 function table(headers, align, ...rows) {
-    const headerRow = `| ${headers.join(' | ')} |`;
+    const headerRow = `| ${headers.map(tableEscape).join(' | ')} |`;
     const alignRow = `| ${align.join(' | ')} |`;
-    const contentRows = rows.map(row => `| ${row.join(' | ')} |`).join('\n');
+    const contentRows = rows.map(row => `| ${row.map(tableEscape).join(' | ')} |`).join('\n');
     return [headerRow, alignRow, contentRows].join('\n');
 }
 exports.table = table;
-function exceptionCell(ex) {
-    var _a;
-    const lines = ex.split(/\r?\n/);
-    if (lines.length === 0) {
-        return '';
-    }
-    const summary = tableEscape(((_a = lines.shift()) === null || _a === void 0 ? void 0 : _a.trim()) || '');
-    const emptyLine = /^\s*$/;
-    const firstNonEmptyLine = lines.findIndex(l => !emptyLine.test(l));
-    if (firstNonEmptyLine === -1) {
-        return summary;
-    }
-    const contentLines = firstNonEmptyLine > 0 ? lines.slice(firstNonEmptyLine) : lines;
-    const content = '<pre>' + tableEscape(contentLines.join('<br>')) + '</pre>';
-    return details(summary, content);
-}
-exports.exceptionCell = exceptionCell;
 function tableEscape(content) {
-    return content.replace('|', '\\|');
+    return content.toString().replace('|', '\\|');
 }
 exports.tableEscape = tableEscape;
 

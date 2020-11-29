@@ -18,7 +18,7 @@ Received: false
     at processTicksAndRejections (internal/process/task_queues.js:97:5)",
       "path": "__tests__/main.test.js",
       "start_line": 10,
-      "title": "Exception was thrown here",
+      "title": "Test Failed: Failing test",
     },
     Object {
       "annotation_level": "failure",
@@ -34,7 +34,7 @@ Received: false
     at processTicksAndRejections (internal/process/task_queues.js:97:5)",
       "path": "lib/main.js",
       "start_line": 2,
-      "title": "Exception was thrown here",
+      "title": "Test Failed: Exception in target unit",
     },
     Object {
       "annotation_level": "failure",
@@ -49,7 +49,7 @@ Received: false
     at processTicksAndRejections (internal/process/task_queues.js:97:5)",
       "path": "__tests__/main.test.js",
       "start_line": 21,
-      "title": "Exception was thrown here",
+      "title": "Test Failed: Exception in test",
     },
     Object {
       "annotation_level": "failure",
@@ -70,7 +70,7 @@ Received: false
     at runTest (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-runner\\\\build\\\\runTest.js:472:34)",
       "path": "__tests__/second.test.js",
       "start_line": 1,
-      "title": "Exception was thrown here",
+      "title": "Test Failed: Timeout test",
     },
   ],
   "summary": "# jest tests ❌
@@ -85,29 +85,29 @@ Received: false
 
 #### Test 1
 
-| Result | Test | Time | Details |
-| :---: | :--- | ---: | --- |
-| ✔️ | Passing test | 1ms |  |
+| Result | Test | Time |
+| :---: | :--- | ---: |
+| ✔️ | Passing test | 1ms |
 
 #### Test 1 › Test 1.1
 
-| Result | Test | Time | Details |
-| :---: | :--- | ---: | --- |
-| ❌ | Failing test | 2ms | <details><summary>Error: expect(received).toBeTruthy()</summary><pre>Received: false<br>    at Object.<anonymous> (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\__tests__\\\\main.test.js:10:21)<br>    at Object.asyncJestTest (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\jasmineAsyncInstall.js:106:37)<br>    at C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\queueRunner.js:45:12<br>    at new Promise (<anonymous>)<br>    at mapper (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\queueRunner.js:28:19)<br>    at C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\queueRunner.js:75:41<br>    at processTicksAndRejections (internal/process/task_queues.js:97:5)</pre></details> |
-| ❌ | Exception in target unit | 0ms | <details><summary>Error: Some error</summary><pre>    at Object.throwError (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\lib\\\\main.js:2:9)<br>    at Object.<anonymous> (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\__tests__\\\\main.test.js:14:11)<br>    at Object.asyncJestTest (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\jasmineAsyncInstall.js:106:37)<br>    at C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\queueRunner.js:45:12<br>    at new Promise (<anonymous>)<br>    at mapper (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\queueRunner.js:28:19)<br>    at C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\queueRunner.js:75:41<br>    at processTicksAndRejections (internal/process/task_queues.js:97:5)</pre></details> |
+| Result | Test | Time |
+| :---: | :--- | ---: |
+| ❌ | Failing test | 2ms |
+| ❌ | Exception in target unit | 0ms |
 
 #### Test 2
 
-| Result | Test | Time | Details |
-| :---: | :--- | ---: | --- |
-| ❌ | Exception in test | 0ms | <details><summary>Error: Some error</summary><pre>    at Object.<anonymous> (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\__tests__\\\\main.test.js:21:11)<br>    at Object.asyncJestTest (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\jasmineAsyncInstall.js:106:37)<br>    at C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\queueRunner.js:45:12<br>    at new Promise (<anonymous>)<br>    at mapper (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\queueRunner.js:28:19)<br>    at C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\queueRunner.js:75:41<br>    at processTicksAndRejections (internal/process/task_queues.js:97:5)</pre></details> |
+| Result | Test | Time |
+| :---: | :--- | ---: |
+| ❌ | Exception in test | 0ms |
 
 ### <a id=\\"user-content-ts-1-tests-second-test-js\\" href=\\"#ts-1-tests-second-test-js\\">__tests__\\\\second.test.js</a> ❌
 
-| Result | Test | Time | Details |
-| :---: | :--- | ---: | --- |
-| ❌ | Timeout test | 4ms | <details><summary>: Timeout - Async callback was not invoked within the 1 ms timeout specified by jest.setTimeout.Timeout - Async callback was not invoked within the 1 ms timeout specified by jest.setTimeout.Error:</summary><pre>    at new Spec (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\jasmine\\\\Spec.js:116:22)<br>    at new Spec (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\setup_jest_globals.js:78:9)<br>    at specFactory (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\jasmine\\\\Env.js:523:24)<br>    at Env.it (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\jasmine\\\\Env.js:592:24)<br>    at Env.it (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\jasmineAsyncInstall.js:134:23)<br>    at it (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\jasmine\\\\jasmineLight.js:100:21)<br>    at Object.<anonymous> (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\__tests__\\\\second.test.js:1:34)<br>    at Runtime._execModule (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-runtime\\\\build\\\\index.js:1245:24)<br>    at Runtime._loadModule (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-runtime\\\\build\\\\index.js:844:12)<br>    at Runtime.requireModule (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-runtime\\\\build\\\\index.js:694:10)<br>    at jasmine2 (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\index.js:230:13)<br>    at runTestInternal (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-runner\\\\build\\\\runTest.js:380:22)<br>    at runTest (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-runner\\\\build\\\\runTest.js:472:34)</pre></details> |
-| ✖️ | Skipped test | 0ms | Skipped |
+| Result | Test | Time |
+| :---: | :--- | ---: |
+| ❌ | Timeout test | 4ms |
+| ✖️ | Skipped test | 0ms |
 ",
   "title": "jest tests",
 }
