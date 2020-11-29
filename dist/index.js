@@ -115,10 +115,11 @@ async function parseJestJunit(content, options) {
     }));
     const testsuites = junit.testsuites;
     const success = !(((_a = testsuites.$) === null || _a === void 0 ? void 0 : _a.failures) > 0 || ((_b = testsuites.$) === null || _b === void 0 ? void 0 : _b.errors) > 0);
+    const icon = success ? markdown_utils_1.Icon.success : markdown_utils_1.Icon.fail;
     return {
         success,
         output: {
-            title: junit.testsuites.$.name,
+            title: `${junit.testsuites.$.name} ${icon}`,
             summary: getSummary(success, junit),
             annotations: options.annotations ? getAnnotations(junit, options.workDir, options.trackedFiles) : undefined
         }
@@ -128,12 +129,10 @@ exports.parseJestJunit = parseJestJunit;
 function getSummary(success, junit) {
     var _a, _b;
     const stats = junit.testsuites.$;
-    const icon = success ? markdown_utils_1.Icon.success : markdown_utils_1.Icon.fail;
     const time = `${stats.time.toFixed(3)}s`;
     const skipped = getSkippedCount(junit.testsuites);
     const failed = stats.errors + stats.failures;
     const passed = stats.tests - failed - skipped;
-    const heading = `# ${stats.name} ${icon}`;
     const headingLine = `**${stats.tests}** tests were completed in **${time}** with **${passed}** passed, **${skipped}** skipped and **${failed}** failed.`;
     const suitesSummary = junit.testsuites.testsuite.map((ts, i) => {
         const skip = ts.$.skipped;
@@ -148,8 +147,8 @@ function getSummary(success, junit) {
     });
     const summary = markdown_utils_1.table(['Result', 'Suite', 'Tests', 'Time', `Passed ${markdown_utils_1.Icon.success}`, `Failed ${markdown_utils_1.Icon.fail}`, `Skipped ${markdown_utils_1.Icon.skip}`], [markdown_utils_1.Align.Center, markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...suitesSummary);
     const suites = (_b = (_a = junit.testsuites) === null || _a === void 0 ? void 0 : _a.testsuite) === null || _b === void 0 ? void 0 : _b.map((ts, i) => getSuiteSummary(ts, i)).join('\n');
-    const suitesSection = `## Test Suites\n\n${suites}`;
-    return `${heading}\n${headingLine}\n${summary}\n${suitesSection}`;
+    const suitesSection = `# Test Suites\n\n${suites}`;
+    return `${headingLine}\n${summary}\n${suitesSection}`;
 }
 function getSkippedCount(suites) {
     return suites.testsuite.reduce((sum, suite) => sum + suite.$.skipped, 0);
@@ -169,7 +168,7 @@ function getSuiteSummary(suite, index) {
     }
     const content = groups
         .map(grp => {
-        const header = grp.describe !== '' ? `#### ${grp.describe}\n\n` : '';
+        const header = grp.describe !== '' ? `### ${grp.describe}\n\n` : '';
         const tests = markdown_utils_1.table(['Result', 'Test', 'Time'], [markdown_utils_1.Align.Center, markdown_utils_1.Align.Left, markdown_utils_1.Align.Right], ...grp.tests.map(tc => {
             const name = tc.$.name;
             const time = `${Math.round(tc.$.time * 1000)}ms`;
@@ -182,7 +181,7 @@ function getSuiteSummary(suite, index) {
     const tsName = suite.$.name;
     const tsSlug = makeSuiteSlug(index, tsName);
     const tsNameLink = `<a id="${tsSlug.id}" href="${tsSlug.link}">${tsName}</a>`;
-    return `### ${tsNameLink} ${icon}\n\n${content}`;
+    return `## ${tsNameLink} ${icon}\n\n${content}`;
 }
 function getTestCaseIcon(test) {
     if (test.failure)
@@ -213,7 +212,7 @@ function getAnnotations(junit, workDir, trackedFiles) {
                     end_line: src.line,
                     path: src.file,
                     message: ex,
-                    title: `Test Failed: ${tc.$.name}`
+                    title: `Test Failed: '${tc.$.name}' [${suite.$.name}]`
                 });
             }
         }

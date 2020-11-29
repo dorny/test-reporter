@@ -73,42 +73,41 @@ Received: false
       "title": "Test Failed: 'Timeout test' [__tests__\\\\second.test.js]",
     },
   ],
-  "summary": "# jest tests ❌
-**6** tests were completed in **1.360s** with **1** passed, **1** skipped and **4** failed.
+  "summary": "**6** tests were completed in **1.360s** with **1** passed, **1** skipped and **4** failed.
 | Result | Suite | Tests | Time | Passed ✔️ | Failed ❌ | Skipped ✖️ |
 | :---: | :--- | ---: | ---: | ---: | ---: | ---: |
 | ❌ | [__tests__\\\\main.test.js](#ts-0-tests-main-test-js) | 4 | 0.486s | 1 | 3 | 0 |
 | ❌ | [__tests__\\\\second.test.js](#ts-1-tests-second-test-js) | 2 | 0.082s | 0 | 1 | 1 |
-## Test Suites
+# Test Suites
 
-### <a id=\\"user-content-ts-0-tests-main-test-js\\" href=\\"#ts-0-tests-main-test-js\\">__tests__\\\\main.test.js</a> ❌
+## <a id=\\"user-content-ts-0-tests-main-test-js\\" href=\\"#ts-0-tests-main-test-js\\">__tests__\\\\main.test.js</a> ❌
 
-#### Test 1
+### Test 1
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | Passing test | 1ms |
 
-#### Test 1 › Test 1.1
+### Test 1 › Test 1.1
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ❌ | Failing test | 2ms |
 | ❌ | Exception in target unit | 0ms |
 
-#### Test 2
+### Test 2
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ❌ | Exception in test | 0ms |
 
-### <a id=\\"user-content-ts-1-tests-second-test-js\\" href=\\"#ts-1-tests-second-test-js\\">__tests__\\\\second.test.js</a> ❌
+## <a id=\\"user-content-ts-1-tests-second-test-js\\" href=\\"#ts-1-tests-second-test-js\\">__tests__\\\\second.test.js</a> ❌
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ❌ | Timeout test | 4ms |
 | ✖️ | Skipped test | 0ms |
 ",
-  "title": "jest tests",
+  "title": "jest tests ❌",
 }
 `;

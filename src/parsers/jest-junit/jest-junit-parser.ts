@@ -13,11 +13,12 @@ export async function parseJestJunit(content: string, options: ParseOptions): Pr
   })) as JunitReport
   const testsuites = junit.testsuites
   const success = !(testsuites.$?.failures > 0 || testsuites.$?.errors > 0)
+  const icon = success ? Icon.success : Icon.fail
 
   return {
     success,
     output: {
-      title: junit.testsuites.$.name,
+      title: `${junit.testsuites.$.name} ${icon}`,
       summary: getSummary(success, junit),
       annotations: options.annotations ? getAnnotations(junit, options.workDir, options.trackedFiles) : undefined
     }
@@ -27,14 +28,12 @@ export async function parseJestJunit(content: string, options: ParseOptions): Pr
 function getSummary(success: boolean, junit: JunitReport): string {
   const stats = junit.testsuites.$
 
-  const icon = success ? Icon.success : Icon.fail
   const time = `${stats.time.toFixed(3)}s`
 
   const skipped = getSkippedCount(junit.testsuites)
   const failed = stats.errors + stats.failures
   const passed = stats.tests - failed - skipped
 
-  const heading = `# ${stats.name} ${icon}`
   const headingLine = `**${stats.tests}** tests were completed in **${time}** with **${passed}** passed, **${skipped}** skipped and **${failed}** failed.`
 
   const suitesSummary = junit.testsuites.testsuite.map((ts, i) => {
@@ -56,9 +55,9 @@ function getSummary(success: boolean, junit: JunitReport): string {
   )
 
   const suites = junit.testsuites?.testsuite?.map((ts, i) => getSuiteSummary(ts, i)).join('\n')
-  const suitesSection = `## Test Suites\n\n${suites}`
+  const suitesSection = `# Test Suites\n\n${suites}`
 
-  return `${heading}\n${headingLine}\n${summary}\n${suitesSection}`
+  return `${headingLine}\n${summary}\n${suitesSection}`
 }
 
 function getSkippedCount(suites: TestSuites): number {
@@ -81,7 +80,7 @@ function getSuiteSummary(suite: TestSuite, index: number): string {
 
   const content = groups
     .map(grp => {
-      const header = grp.describe !== '' ? `#### ${grp.describe}\n\n` : ''
+      const header = grp.describe !== '' ? `### ${grp.describe}\n\n` : ''
       const tests = table(
         ['Result', 'Test', 'Time'],
         [Align.Center, Align.Left, Align.Right],
@@ -100,7 +99,7 @@ function getSuiteSummary(suite: TestSuite, index: number): string {
   const tsName = suite.$.name
   const tsSlug = makeSuiteSlug(index, tsName)
   const tsNameLink = `<a id="${tsSlug.id}" href="${tsSlug.link}">${tsName}</a>`
-  return `### ${tsNameLink} ${icon}\n\n${content}`
+  return `## ${tsNameLink} ${icon}\n\n${content}`
 }
 
 function getTestCaseIcon(test: TestCase): string {
