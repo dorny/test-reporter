@@ -146,7 +146,7 @@ function getAnnotations(junit: JunitReport, workDir: string, trackedFiles: strin
           end_line: src.line,
           path: src.file,
           message: ex,
-          title: 'Exception was thrown here'
+          title: `Test Failed: ${tc.$.name}`
         })
       }
     }
