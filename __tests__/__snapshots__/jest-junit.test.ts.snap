@@ -18,7 +18,7 @@ Received: false
     at processTicksAndRejections (internal/process/task_queues.js:97:5)",
       "path": "__tests__/main.test.js",
       "start_line": 10,
-      "title": "Test Failed: Failing test",
+      "title": "Test Failed: 'Failing test' [__tests__\\\\main.test.js]",
     },
     Object {
       "annotation_level": "failure",
@@ -34,7 +34,7 @@ Received: false
     at processTicksAndRejections (internal/process/task_queues.js:97:5)",
       "path": "lib/main.js",
       "start_line": 2,
-      "title": "Test Failed: Exception in target unit",
+      "title": "Test Failed: 'Exception in target unit' [__tests__\\\\main.test.js]",
     },
     Object {
       "annotation_level": "failure",
@@ -49,7 +49,7 @@ Received: false
     at processTicksAndRejections (internal/process/task_queues.js:97:5)",
       "path": "__tests__/main.test.js",
       "start_line": 21,
-      "title": "Test Failed: Exception in test",
+      "title": "Test Failed: 'Exception in test' [__tests__\\\\main.test.js]",
     },
     Object {
       "annotation_level": "failure",
@@ -70,7 +70,7 @@ Received: false
     at runTest (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-runner\\\\build\\\\runTest.js:472:34)",
       "path": "__tests__/second.test.js",
       "start_line": 1,
-      "title": "Test Failed: Timeout test",
+      "title": "Test Failed: 'Timeout test' [__tests__\\\\second.test.js]",
     },
   ],
   "summary": "# jest tests ❌

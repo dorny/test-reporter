@@ -132,7 +132,7 @@ function getAnnotations(junit: JunitReport, workDir: string, trackedFiles: strin
           end_line: src.line,
           path: src.file,
           message: ex,
-          title: `Test Failed: ${tc.$.name}`
+          title: `Test Failed: '${tc.$.name}' [${suite.$.name}]`
         })
       }
     }
