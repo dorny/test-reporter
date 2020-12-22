@@ -1,6 +1,6 @@
 import {Endpoints} from '@octokit/types'
 
-export type OutputParameters = Endpoints['POST /repos/:owner/:repo/check-runs']['parameters']['output']
+export type OutputParameters = Endpoints['POST /repos/{owner}/{repo}/check-runs']['parameters']['output']
 export type Annotation = {
   path: string
   start_line: number
