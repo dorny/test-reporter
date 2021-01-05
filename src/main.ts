@@ -35,6 +35,7 @@ async function main(): Promise<void> {
   const trackedFiles = annotations ? await listFiles() : []
 
   const opts: ParseOptions = {
+    name,
     annotations,
     trackedFiles,
     workDir

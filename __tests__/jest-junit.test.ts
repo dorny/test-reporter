@@ -10,6 +10,7 @@ const outputPath = __dirname + '/__outputs__/jest-junit.md'
 describe('jest-junit tests', () => {
   it('matches report snapshot', async () => {
     const opts: ParseOptions = {
+      name: 'unused',
       annotations: true,
       trackedFiles: ['__tests__/main.test.js', '__tests__/second.test.js', 'lib/main.js'],
       workDir: 'C:/Users/Michal/Workspace/dorny/test-check/reports/jest/'
