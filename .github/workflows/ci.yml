@@ -19,12 +19,10 @@ jobs:
       - run: npm run format-check
       - run: npm run lint
       - run: npm test
-        continue-on-error: true
       - name: 'Evaluate test results'
+        if: always()
         uses: ./
         with:
           name: 'JEST Tests'
           path: '__tests__/__results__/jest-junit.xml'
           reporter: 'jest-junit'
-      - name: 'Sanity check' # re-run tests in case this action failed to detect failing test
-        run: npm test
