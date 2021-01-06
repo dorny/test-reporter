@@ -19,17 +19,16 @@ export async function parseJestJunit(content: string, options: ParseOptions): Pr
     success,
     output: {
       title: `${junit.testsuites.$.name.trim()} ${icon}`,
-      summary: getSummary(success, junit),
+      summary: getSummary(junit),
       annotations: options.annotations ? getAnnotations(junit, options.workDir, options.trackedFiles) : undefined
     }
   }
 }
 
-function getSummary(success: boolean, junit: JunitReport): string {
+function getSummary(junit: JunitReport): string {
   const stats = junit.testsuites.$
 
   const time = `${stats.time.toFixed(3)}s`
-
   const skipped = getSkippedCount(junit.testsuites)
   const failed = stats.errors + stats.failures
   const passed = stats.tests - failed - skipped
@@ -40,8 +39,8 @@ function getSummary(success: boolean, junit: JunitReport): string {
     const skip = ts.$.skipped
     const fail = ts.$.errors + ts.$.failures
     const pass = ts.$.tests - fail - skip
-    const tm = `${ts.$.time.toFixed(3)}s`
-    const result = success ? Icon.success : Icon.fail
+    const tm = formatTime(ts.$.time)
+    const result = fail === 0 ? Icon.success : Icon.fail
     const tsName = ts.$.name.trim()
     const tsAddr = makeSuiteSlug(i, tsName).link
     const tsNameLink = link(tsName, tsAddr)
@@ -86,7 +85,7 @@ function getSuiteSummary(suite: TestSuite, index: number): string {
         [Align.Center, Align.Left, Align.Right],
         ...grp.tests.map(tc => {
           const name = tc.$.name.trim()
-          const time = `${Math.round(tc.$.time * 1000)}ms`
+          const time = formatTime(tc.$.time)
           const result = getTestCaseIcon(tc)
           return [result, name, time]
         })
@@ -111,6 +110,10 @@ function getTestCaseIcon(test: TestCase): string {
 function makeSuiteSlug(index: number, name: string): {id: string; link: string} {
   // use "ts-$index-" as prefix to avoid slug conflicts after escaping the paths
   return slug(`ts-${index}-${name}`)
+}
+
+function formatTime(sec: number): string {
+  return `${Math.round(sec * 1000)}ms`
 }
 
 function getAnnotations(junit: JunitReport, workDir: string, trackedFiles: string[]): Annotation[] {
