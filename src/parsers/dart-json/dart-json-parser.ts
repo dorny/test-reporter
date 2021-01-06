@@ -1,6 +1,6 @@
 import {ParseOptions, TestResult} from '../test-parser'
-
-import {Icon} from '../../utils/markdown-utils'
+import {Align, Icon, link, table} from '../../utils/markdown-utils'
+import {slug} from '../../utils/slugger'
 
 import {
   ReportEvent,
@@ -35,28 +35,27 @@ class TestRun {
 
 class TestSuite {
   constructor(readonly suite: Suite) {}
-  tests = new TestGroup()
   groups: {[id: number]: TestGroup} = {}
   get count(): number {
-    return this.tests.count + Object.values(this.groups).reduce((sum, g) => sum + g.count, 0)
+    return Object.values(this.groups).reduce((sum, g) => sum + g.count, 0)
   }
   get passed(): number {
-    return this.tests.passed + Object.values(this.groups).reduce((sum, g) => sum + g.passed, 0)
+    return Object.values(this.groups).reduce((sum, g) => sum + g.passed, 0)
   }
   get failed(): number {
-    return this.tests.failed + Object.values(this.groups).reduce((sum, g) => sum + g.failed, 0)
+    return Object.values(this.groups).reduce((sum, g) => sum + g.failed, 0)
   }
   get skipped(): number {
-    return this.tests.skipped + Object.values(this.groups).reduce((sum, g) => sum + g.skipped, 0)
+    return Object.values(this.groups).reduce((sum, g) => sum + g.skipped, 0)
   }
   get time(): number {
-    return this.tests.time + Object.values(this.groups).reduce((sum, g) => sum + g.time, 0)
+    return Object.values(this.groups).reduce((sum, g) => sum + g.time, 0)
   }
 }
 
 class TestGroup {
-  constructor(readonly group?: Group) {}
-  tests: TestSuiteTest[] = []
+  constructor(readonly group: Group) {}
+  tests: TestCase[] = []
   get count(): number {
     return this.tests.length
   }
@@ -74,7 +73,7 @@ class TestGroup {
   }
 }
 
-class TestSuiteTest {
+class TestCase {
   constructor(readonly testStart: TestStartEvent) {
     this.groupId = testStart.test.groupIDs[testStart.test.groupIDs.length - 1]
   }
@@ -116,7 +115,7 @@ function getTestRun(content: string): TestRun {
   let success = false
   let totalTime = 0
   const suites: {[id: number]: TestSuite} = {}
-  const tests: {[id: number]: TestSuiteTest} = {}
+  const tests: {[id: number]: TestCase} = {}
 
   for (const evt of events) {
     if (isSuiteEvent(evt)) {
@@ -124,10 +123,9 @@ function getTestRun(content: string): TestRun {
     } else if (isGroupEvent(evt)) {
       suites[evt.group.suiteID].groups[evt.group.id] = new TestGroup(evt.group)
     } else if (isTestStartEvent(evt) && evt.test.url !== null) {
-      const test: TestSuiteTest = new TestSuiteTest(evt)
+      const test: TestCase = new TestCase(evt)
       const suite = suites[evt.test.suiteID]
-      const group =
-        evt.test.groupIDs.length === 0 ? suite.tests : suite.groups[evt.test.groupIDs[evt.test.groupIDs.length - 1]]
+      const group = suite.groups[evt.test.groupIDs[evt.test.groupIDs.length - 1]]
       group.tests.push(test)
       tests[evt.test.id] = test
     } else if (isTestDoneEvent(evt) && !evt.hidden) {
@@ -143,13 +141,70 @@ function getTestRun(content: string): TestRun {
   return new TestRun(Object.values(suites), success, totalTime)
 }
 
-function getSummary(testRun: TestRun): string {
-  const tests = testRun.count
-  const time = `${(testRun.time / 1000).toFixed(3)}s`
-  const passed = testRun.passed
-  const skipped = testRun.skipped
-  const failed = testRun.failed
+function getSummary(tr: TestRun): string {
+  const time = `${(tr.time / 1000).toFixed(3)}s`
+  const headingLine = `**${tr.count}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.skipped}** skipped and **${tr.failed}** failed.`
 
-  const headingLine = `**${tests}** tests were completed in **${time}** with **${passed}** passed, **${skipped}** skipped and **${failed}** failed.`
-  return `${headingLine}`
+  const suitesSummary = tr.suites.map((s, i) => {
+    const icon = s.failed === 0 ? Icon.success : Icon.fail
+    const tsTime = `${s.time}ms`
+    const tsName = s.suite.path
+    const tsAddr = makeSuiteSlug(i, tsName).link
+    const tsNameLink = link(tsName, tsAddr)
+    return [icon, tsNameLink, s.count, tsTime, s.passed, s.failed, s.skipped]
+  })
+
+  const summary = table(
+    ['Result', 'Suite', 'Tests', 'Time', `Passed ${Icon.success}`, `Failed ${Icon.fail}`, `Skipped ${Icon.skip}`],
+    [Align.Center, Align.Left, Align.Right, Align.Right, Align.Right, Align.Right, Align.Right],
+    ...suitesSummary
+  )
+
+  const suites = tr.suites.map((ts, i) => getSuiteSummary(ts, i)).join('\n')
+  const suitesSection = `# Test Suites\n\n${suites}`
+
+  return `${headingLine}\n${summary}\n${suitesSection}`
+}
+
+function getSuiteSummary(ts: TestSuite, index: number): string {
+  const icon = ts.failed === 0 ? Icon.success : Icon.fail
+
+  const groups = Object.values(ts.groups)
+  groups.sort((a, b) => (a.group.line ?? 0) - (b.group.line ?? 0))
+
+  const content = groups
+    .filter(grp => grp.count > 0)
+    .map(grp => {
+      const header = grp.group.name !== null ? `### ${grp.group.name}\n\n` : ''
+      grp.tests.sort((a, b) => (a.testStart.test.line ?? 0) - (b.testStart.test.line ?? 0))
+      const tests = table(
+        ['Result', 'Test', 'Time'],
+        [Align.Center, Align.Left, Align.Right],
+        ...grp.tests.map(tc => {
+          const name = tc.testStart.test.name
+          const time = `${tc.time}ms`
+          const result = getTestCaseIcon(tc)
+          return [result, name, time]
+        })
+      )
+
+      return `${header}${tests}\n`
+    })
+    .join('\n')
+
+  const tsName = ts.suite.path
+  const tsSlug = makeSuiteSlug(index, tsName)
+  const tsNameLink = `<a id="${tsSlug.id}" href="${tsSlug.link}">${tsName}</a>`
+  return `## ${tsNameLink} ${icon}\n\n${content}`
+}
+
+function makeSuiteSlug(index: number, name: string): {id: string; link: string} {
+  // use "ts-$index-" as prefix to avoid slug conflicts after escaping the paths
+  return slug(`ts-${index}-${name}`)
+}
+
+function getTestCaseIcon(test: TestCase): string {
+  if (test.isFailed) return Icon.fail
+  if (test.isSkipped) return Icon.skip
+  return Icon.success
 }
