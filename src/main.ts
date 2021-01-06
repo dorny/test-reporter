@@ -1,6 +1,7 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import {parseJestJunit} from './parsers/jest-junit/jest-junit-parser'
+import {parseDartJson} from './parsers/dart-json/dart-json-parser'
 import {ParseOptions, ParseTestResult} from './parsers/test-parser'
 import {getFileContent, normalizeDirPath} from './utils/file-utils'
 import {listFiles} from './utils/git'
@@ -63,10 +64,12 @@ async function main(): Promise<void> {
 
 function getParser(reporter: string): ParseTestResult {
   switch (reporter) {
+    case 'dart-json':
+      return parseDartJson
     case 'dotnet-trx':
       throw new Error('Not implemented yet!')
     case 'flutter-machine':
-      throw new Error('Not implemented yet!')
+      return parseDartJson
     case 'jest-junit':
       return parseJestJunit
     default:
