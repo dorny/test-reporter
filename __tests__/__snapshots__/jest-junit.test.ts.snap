@@ -76,8 +76,8 @@ Received: false
   "summary": "**6** tests were completed in **1.360s** with **1** passed, **1** skipped and **4** failed.
 | Result | Suite | Tests | Time | Passed ✔️ | Failed ❌ | Skipped ✖️ |
 | :---: | :--- | ---: | ---: | ---: | ---: | ---: |
-| ❌ | [__tests__\\\\main.test.js](#ts-0-tests-main-test-js) | 4 | 0.486s | 1 | 3 | 0 |
-| ❌ | [__tests__\\\\second.test.js](#ts-1-tests-second-test-js) | 2 | 0.082s | 0 | 1 | 1 |
+| ❌ | [__tests__\\\\main.test.js](#ts-0-tests-main-test-js) | 4 | 486ms | 1 | 3 | 0 |
+| ❌ | [__tests__\\\\second.test.js](#ts-1-tests-second-test-js) | 2 | 82ms | 0 | 1 | 1 |
 # Test Suites
 
 ## <a id=\\"user-content-ts-0-tests-main-test-js\\" href=\\"#ts-0-tests-main-test-js\\">__tests__\\\\main.test.js</a> ❌

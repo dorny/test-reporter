@@ -2,7 +2,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 
 import {parseJestJunit} from '../src/parsers/jest-junit/jest-junit-parser'
-import {ParseOptions} from '../src/parsers/test-parser'
+import {ParseOptions} from '../src/parsers/parser-types'
 
 const xmlFixture = fs.readFileSync(path.join(__dirname, 'fixtures', 'jest-junit.xml'), {encoding: 'utf8'})
 const outputPath = __dirname + '/__outputs__/jest-junit.md'
@@ -10,6 +10,7 @@ const outputPath = __dirname + '/__outputs__/jest-junit.md'
 describe('jest-junit tests', () => {
   it('matches report snapshot', async () => {
     const opts: ParseOptions = {
+      name: 'jest tests',
       annotations: true,
       trackedFiles: ['__tests__/main.test.js', '__tests__/second.test.js', 'lib/main.js'],
       workDir: 'C:/Users/Michal/Workspace/dorny/test-check/reports/jest/'

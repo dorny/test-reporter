@@ -16,6 +16,7 @@ export type Annotation = {
 export type ParseTestResult = (content: string, options: ParseOptions) => Promise<TestResult>
 
 export interface ParseOptions {
+  name: string
   annotations: boolean
   workDir: string
   trackedFiles: string[]
