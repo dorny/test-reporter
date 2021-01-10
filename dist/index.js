@@ -30,6 +30,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__webpack_require__(2186));
 const github = __importStar(__webpack_require__(5438));
 const jest_junit_parser_1 = __webpack_require__(1113);
+const dart_json_parser_1 = __webpack_require__(4528);
 const file_utils_1 = __webpack_require__(2711);
 const git_1 = __webpack_require__(9844);
 const github_utils_1 = __webpack_require__(3522);
@@ -58,6 +59,7 @@ async function main() {
     // We won't need tracked files if we are not going to create annotations
     const trackedFiles = annotations ? await git_1.listFiles() : [];
     const opts = {
+        name,
         annotations,
         trackedFiles,
         workDir
@@ -81,10 +83,12 @@ async function main() {
 }
 function getParser(reporter) {
     switch (reporter) {
+        case 'dart-json':
+            return dart_json_parser_1.parseDartJson;
         case 'dotnet-trx':
             throw new Error('Not implemented yet!');
         case 'flutter-machine':
-            throw new Error('Not implemented yet!');
+            return dart_json_parser_1.parseDartJson;
         case 'jest-junit':
             return jest_junit_parser_1.parseJestJunit;
         default:
@@ -96,18 +100,248 @@ run();
 
 /***/ }),
 
-/***/ 1113:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ 4528:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.parseDartJson = void 0;
+const get_report_1 = __importDefault(__webpack_require__(3737));
+const file_utils_1 = __webpack_require__(2711);
+const markdown_utils_1 = __webpack_require__(6482);
+const dart_json_types_1 = __webpack_require__(7887);
+const test_results_1 = __webpack_require__(8407);
+class TestRun {
+    constructor(suites, success, time) {
+        this.suites = suites;
+        this.success = success;
+        this.time = time;
+    }
+}
+class TestSuite {
+    constructor(suite) {
+        this.suite = suite;
+        this.groups = {};
+    }
+}
+class TestGroup {
+    constructor(group) {
+        this.group = group;
+        this.tests = [];
+    }
+}
+class TestCase {
+    constructor(testStart) {
+        this.testStart = testStart;
+        this.groupId = testStart.test.groupIDs[testStart.test.groupIDs.length - 1];
+    }
+    get result() {
+        var _a, _b, _c, _d;
+        if ((_a = this.testDone) === null || _a === void 0 ? void 0 : _a.skipped) {
+            return 'skipped';
+        }
+        if (((_b = this.testDone) === null || _b === void 0 ? void 0 : _b.result) === 'success') {
+            return 'success';
+        }
+        if (((_c = this.testDone) === null || _c === void 0 ? void 0 : _c.result) === 'error' || ((_d = this.testDone) === null || _d === void 0 ? void 0 : _d.result) === 'failure') {
+            return 'failed';
+        }
+        return undefined;
+    }
+    get time() {
+        return this.testDone !== undefined ? this.testDone.time - this.testStart.time : 0;
+    }
+}
+async function parseDartJson(content, options) {
+    const testRun = getTestRun(content);
+    const icon = testRun.success ? markdown_utils_1.Icon.success : markdown_utils_1.Icon.fail;
+    return {
+        success: testRun.success,
+        output: {
+            title: `${options.name.trim()} ${icon}`,
+            summary: get_report_1.default(getTestRunResult(testRun)),
+            annotations: options.annotations ? getAnnotations(testRun, options.workDir, options.trackedFiles) : undefined
+        }
+    };
+}
+exports.parseDartJson = parseDartJson;
+function getTestRun(content) {
+    const lines = content.split(/\n\r?/g).filter(line => line !== '');
+    const events = lines.map(str => JSON.parse(str));
+    let success = false;
+    let totalTime = 0;
+    const suites = {};
+    const tests = {};
+    for (const evt of events) {
+        if (dart_json_types_1.isSuiteEvent(evt)) {
+            suites[evt.suite.id] = new TestSuite(evt.suite);
+        }
+        else if (dart_json_types_1.isGroupEvent(evt)) {
+            suites[evt.group.suiteID].groups[evt.group.id] = new TestGroup(evt.group);
+        }
+        else if (dart_json_types_1.isTestStartEvent(evt) && evt.test.url !== null) {
+            const test = new TestCase(evt);
+            const suite = suites[evt.test.suiteID];
+            const group = suite.groups[evt.test.groupIDs[evt.test.groupIDs.length - 1]];
+            group.tests.push(test);
+            tests[evt.test.id] = test;
+        }
+        else if (dart_json_types_1.isTestDoneEvent(evt) && !evt.hidden) {
+            tests[evt.testID].testDone = evt;
+        }
+        else if (dart_json_types_1.isErrorEvent(evt)) {
+            tests[evt.testID].error = evt;
+        }
+        else if (dart_json_types_1.isDoneEvent(evt)) {
+            success = evt.success;
+            totalTime = evt.time;
+        }
+    }
+    return new TestRun(Object.values(suites), success, totalTime);
+}
+function getTestRunResult(tr) {
+    const suites = tr.suites.map(s => {
+        return new test_results_1.TestSuiteResult(s.suite.path, getGroups(s));
+    });
+    return new test_results_1.TestRunResult(suites, tr.time);
+}
+function getGroups(suite) {
+    const groups = Object.values(suite.groups).filter(grp => grp.tests.length > 0);
+    groups.sort((a, b) => { var _a, _b; return ((_a = a.group.line) !== null && _a !== void 0 ? _a : 0) - ((_b = b.group.line) !== null && _b !== void 0 ? _b : 0); });
+    return groups.map(group => {
+        group.tests.sort((a, b) => { var _a, _b; return ((_a = a.testStart.test.line) !== null && _a !== void 0 ? _a : 0) - ((_b = b.testStart.test.line) !== null && _b !== void 0 ? _b : 0); });
+        const tests = group.tests.map(t => new test_results_1.TestCaseResult(t.testStart.test.name, t.result, t.time));
+        return new test_results_1.TestGroupResult(group.group.name, tests);
+    });
+}
+function getAnnotations(tr, workDir, trackedFiles) {
+    const annotations = [];
+    for (const suite of tr.suites) {
+        for (const group of Object.values(suite.groups)) {
+            for (const test of group.tests) {
+                if (test.error) {
+                    const err = getAnnotation(test, suite, workDir, trackedFiles);
+                    if (err !== null) {
+                        annotations.push(err);
+                    }
+                }
+            }
+        }
+    }
+    return annotations;
+}
+function getAnnotation(test, testSuite, workDir, trackedFiles) {
+    var _a, _b, _c, _d, _e, _f;
+    const stack = (_b = (_a = test.error) === null || _a === void 0 ? void 0 : _a.stackTrace) !== null && _b !== void 0 ? _b : '';
+    let src = exceptionThrowSource(stack, trackedFiles);
+    if (src === null) {
+        const file = getRelativePathFromUrl((_c = test.testStart.test.url) !== null && _c !== void 0 ? _c : '', workDir);
+        if (!trackedFiles.includes(file)) {
+            return null;
+        }
+        src = {
+            file,
+            line: (_d = test.testStart.test.line) !== null && _d !== void 0 ? _d : 0
+        };
+    }
+    return {
+        annotation_level: 'failure',
+        start_line: src.line,
+        end_line: src.line,
+        path: src.file,
+        message: `${(_e = test.error) === null || _e === void 0 ? void 0 : _e.error}\n\n${(_f = test.error) === null || _f === void 0 ? void 0 : _f.stackTrace}`,
+        title: `[${testSuite.suite.path}] ${test.testStart.test.name}`
+    };
+}
+function exceptionThrowSource(ex, trackedFiles) {
+    // imports from package which is tested are listed in stack traces as 'package:xyz/' which maps to relative path 'lib/'
+    const packageRe = /^package:[a-zA-z0-9_$]+\//;
+    const lines = ex.split(/\r?\n/).map(str => str.replace(packageRe, 'lib/'));
+    // regexp to extract file path and line number from stack trace
+    const re = /^(.*)\s+(\d+):\d+\s+/;
+    for (const str of lines) {
+        const match = str.match(re);
+        if (match !== null) {
+            const [_, fileStr, lineStr] = match;
+            const file = file_utils_1.normalizeFilePath(fileStr);
+            if (trackedFiles.includes(file)) {
+                const line = parseInt(lineStr);
+                return { file, line };
+            }
+        }
+    }
+    return null;
+}
+function getRelativePathFromUrl(file, workdir) {
+    const prefix = 'file:///';
+    if (file.startsWith(prefix)) {
+        file = file.substr(prefix.length);
+    }
+    if (file.startsWith(workdir)) {
+        file = file.substr(workdir.length);
+    }
+    return file;
+}
+
+
+/***/ }),
+
+/***/ 7887:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+/// reflects documentation at https://github.com/dart-lang/test/blob/master/pkgs/test/doc/json_reporter.md
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isDoneEvent = exports.isErrorEvent = exports.isTestDoneEvent = exports.isTestStartEvent = exports.isGroupEvent = exports.isSuiteEvent = void 0;
+function isSuiteEvent(event) {
+    return event.type === 'suite';
+}
+exports.isSuiteEvent = isSuiteEvent;
+function isGroupEvent(event) {
+    return event.type === 'group';
+}
+exports.isGroupEvent = isGroupEvent;
+function isTestStartEvent(event) {
+    return event.type === 'testStart';
+}
+exports.isTestStartEvent = isTestStartEvent;
+function isTestDoneEvent(event) {
+    return event.type === 'testDone';
+}
+exports.isTestDoneEvent = isTestDoneEvent;
+function isErrorEvent(event) {
+    return event.type === 'error';
+}
+exports.isErrorEvent = isErrorEvent;
+function isDoneEvent(event) {
+    return event.type === 'done';
+}
+exports.isDoneEvent = isDoneEvent;
+
+
+/***/ }),
+
+/***/ 1113:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.exceptionThrowSource = exports.parseJestJunit = void 0;
 const xml2js_1 = __webpack_require__(6189);
 const markdown_utils_1 = __webpack_require__(6482);
 const file_utils_1 = __webpack_require__(2711);
-const slugger_1 = __webpack_require__(3328);
 const xml_utils_1 = __webpack_require__(8653);
+const test_results_1 = __webpack_require__(8407);
+const get_report_1 = __importDefault(__webpack_require__(3737));
 async function parseJestJunit(content, options) {
     var _a, _b;
     const junit = (await xml2js_1.parseStringPromise(content, {
@@ -119,44 +353,25 @@ async function parseJestJunit(content, options) {
     return {
         success,
         output: {
-            title: `${junit.testsuites.$.name.trim()} ${icon}`,
-            summary: getSummary(success, junit),
+            title: `${options.name.trim()} ${icon}`,
+            summary: getSummary(junit),
             annotations: options.annotations ? getAnnotations(junit, options.workDir, options.trackedFiles) : undefined
         }
     };
 }
 exports.parseJestJunit = parseJestJunit;
-function getSummary(success, junit) {
-    var _a, _b;
-    const stats = junit.testsuites.$;
-    const time = `${stats.time.toFixed(3)}s`;
-    const skipped = getSkippedCount(junit.testsuites);
-    const failed = stats.errors + stats.failures;
-    const passed = stats.tests - failed - skipped;
-    const headingLine = `**${stats.tests}** tests were completed in **${time}** with **${passed}** passed, **${skipped}** skipped and **${failed}** failed.`;
-    const suitesSummary = junit.testsuites.testsuite.map((ts, i) => {
-        const skip = ts.$.skipped;
-        const fail = ts.$.errors + ts.$.failures;
-        const pass = ts.$.tests - fail - skip;
-        const tm = `${ts.$.time.toFixed(3)}s`;
-        const result = success ? markdown_utils_1.Icon.success : markdown_utils_1.Icon.fail;
-        const tsName = ts.$.name.trim();
-        const tsAddr = makeSuiteSlug(i, tsName).link;
-        const tsNameLink = markdown_utils_1.link(tsName, tsAddr);
-        return [result, tsNameLink, ts.$.tests, tm, pass, fail, skip];
+function getSummary(junit) {
+    const suites = junit.testsuites.testsuite.map(ts => {
+        const name = ts.$.name.trim();
+        const time = ts.$.time * 1000;
+        const sr = new test_results_1.TestSuiteResult(name, getGroups(ts), time);
+        return sr;
     });
-    const summary = markdown_utils_1.table(['Result', 'Suite', 'Tests', 'Time', `Passed ${markdown_utils_1.Icon.success}`, `Failed ${markdown_utils_1.Icon.fail}`, `Skipped ${markdown_utils_1.Icon.skip}`], [markdown_utils_1.Align.Center, markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...suitesSummary);
-    const suites = (_b = (_a = junit.testsuites) === null || _a === void 0 ? void 0 : _a.testsuite) === null || _b === void 0 ? void 0 : _b.map((ts, i) => getSuiteSummary(ts, i)).join('\n');
-    const suitesSection = `# Test Suites\n\n${suites}`;
-    return `${headingLine}\n${summary}\n${suitesSection}`;
+    const time = junit.testsuites.$.time * 1000;
+    const tr = new test_results_1.TestRunResult(suites, time);
+    return get_report_1.default(tr);
 }
-function getSkippedCount(suites) {
-    return suites.testsuite.reduce((sum, suite) => sum + suite.$.skipped, 0);
-}
-function getSuiteSummary(suite, index) {
-    var _a, _b;
-    const success = !(((_a = suite.$) === null || _a === void 0 ? void 0 : _a.failures) > 0 || ((_b = suite.$) === null || _b === void 0 ? void 0 : _b.errors) > 0);
-    const icon = success ? markdown_utils_1.Icon.success : markdown_utils_1.Icon.fail;
+function getGroups(suite) {
     const groups = [];
     for (const tc of suite.testcase) {
         let grp = groups.find(g => g.describe === tc.$.classname);
@@ -166,33 +381,22 @@ function getSuiteSummary(suite, index) {
         }
         grp.tests.push(tc);
     }
-    const content = groups
-        .map(grp => {
-        const header = grp.describe !== '' ? `### ${grp.describe.trim()}\n\n` : '';
-        const tests = markdown_utils_1.table(['Result', 'Test', 'Time'], [markdown_utils_1.Align.Center, markdown_utils_1.Align.Left, markdown_utils_1.Align.Right], ...grp.tests.map(tc => {
+    return groups.map(grp => {
+        const tests = grp.tests.map(tc => {
             const name = tc.$.name.trim();
-            const time = `${Math.round(tc.$.time * 1000)}ms`;
-            const result = getTestCaseIcon(tc);
-            return [result, name, time];
-        }));
-        return `${header}${tests}\n`;
-    })
-        .join('\n');
-    const tsName = suite.$.name.trim();
-    const tsSlug = makeSuiteSlug(index, tsName);
-    const tsNameLink = `<a id="${tsSlug.id}" href="${tsSlug.link}">${tsName}</a>`;
-    return `## ${tsNameLink} ${icon}\n\n${content}`;
+            const result = getTestCaseResult(tc);
+            const time = tc.$.time * 1000;
+            return new test_results_1.TestCaseResult(name, result, time);
+        });
+        return new test_results_1.TestGroupResult(grp.describe, tests);
+    });
 }
-function getTestCaseIcon(test) {
+function getTestCaseResult(test) {
     if (test.failure)
-        return markdown_utils_1.Icon.fail;
+        return 'failed';
     if (test.skipped)
-        return markdown_utils_1.Icon.skip;
-    return markdown_utils_1.Icon.success;
-}
-function makeSuiteSlug(index, name) {
-    // use "ts-$index-" as prefix to avoid slug conflicts after escaping the paths
-    return slugger_1.slug(`ts-${index}-${name}`);
+        return 'skipped';
+    return 'success';
 }
 function getAnnotations(junit, workDir, trackedFiles) {
     const annotations = [];
@@ -238,6 +442,164 @@ function exceptionThrowSource(ex, workDir, trackedFiles) {
     return null;
 }
 exports.exceptionThrowSource = exceptionThrowSource;
+
+
+/***/ }),
+
+/***/ 3737:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const markdown_utils_1 = __webpack_require__(6482);
+const slugger_1 = __webpack_require__(3328);
+function getReport(tr) {
+    const time = `${(tr.time / 1000).toFixed(3)}s`;
+    const headingLine = `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.skipped}** skipped and **${tr.failed}** failed.`;
+    const suitesSummary = tr.suites.map((s, i) => {
+        const icon = getResultIcon(s.result);
+        const tsTime = `${s.time}ms`;
+        const tsName = s.name;
+        const tsAddr = makeSuiteSlug(i, tsName).link;
+        const tsNameLink = markdown_utils_1.link(tsName, tsAddr);
+        return [icon, tsNameLink, s.tests, tsTime, s.passed, s.failed, s.skipped];
+    });
+    const summary = markdown_utils_1.table(['Result', 'Suite', 'Tests', 'Time', `Passed ${markdown_utils_1.Icon.success}`, `Failed ${markdown_utils_1.Icon.fail}`, `Skipped ${markdown_utils_1.Icon.skip}`], [markdown_utils_1.Align.Center, markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...suitesSummary);
+    const suites = tr.suites.map((ts, i) => getSuiteSummary(ts, i)).join('\n');
+    const suitesSection = `# Test Suites\n\n${suites}`;
+    return `${headingLine}\n${summary}\n${suitesSection}`;
+}
+exports.default = getReport;
+function getSuiteSummary(ts, index) {
+    const icon = getResultIcon(ts.result);
+    const content = ts.groups
+        .map(grp => {
+        const header = grp.name ? `### ${grp.name}\n\n` : '';
+        const tests = markdown_utils_1.table(['Result', 'Test', 'Time'], [markdown_utils_1.Align.Center, markdown_utils_1.Align.Left, markdown_utils_1.Align.Right], ...grp.tests.map(tc => {
+            const name = tc.name;
+            const time = `${tc.time}ms`;
+            const result = getResultIcon(tc.result);
+            return [result, name, time];
+        }));
+        return `${header}${tests}\n`;
+    })
+        .join('\n');
+    const tsName = ts.name;
+    const tsSlug = makeSuiteSlug(index, tsName);
+    const tsNameLink = `<a id="${tsSlug.id}" href="${tsSlug.link}">${tsName}</a>`;
+    return `## ${tsNameLink} ${icon}\n\n${content}`;
+}
+function makeSuiteSlug(index, name) {
+    // use "ts-$index-" as prefix to avoid slug conflicts after escaping the paths
+    return slugger_1.slug(`ts-${index}-${name}`);
+}
+function getResultIcon(result) {
+    switch (result) {
+        case 'success':
+            return markdown_utils_1.Icon.success;
+        case 'skipped':
+            return markdown_utils_1.Icon.skip;
+        case 'failed':
+            return markdown_utils_1.Icon.fail;
+        default:
+            return '';
+    }
+}
+
+
+/***/ }),
+
+/***/ 8407:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.TestCaseResult = exports.TestGroupResult = exports.TestSuiteResult = exports.TestRunResult = void 0;
+class TestRunResult {
+    constructor(suites, totalTime) {
+        this.suites = suites;
+        this.totalTime = totalTime;
+    }
+    get tests() {
+        return this.suites.reduce((sum, g) => sum + g.tests, 0);
+    }
+    get passed() {
+        return this.suites.reduce((sum, g) => sum + g.passed, 0);
+    }
+    get failed() {
+        return this.suites.reduce((sum, g) => sum + g.failed, 0);
+    }
+    get skipped() {
+        return this.suites.reduce((sum, g) => sum + g.skipped, 0);
+    }
+    get time() {
+        var _a;
+        return (_a = this.totalTime) !== null && _a !== void 0 ? _a : this.suites.reduce((sum, g) => sum + g.time, 0);
+    }
+    get result() {
+        return this.suites.some(t => t.result === 'failed') ? 'failed' : 'success';
+    }
+}
+exports.TestRunResult = TestRunResult;
+class TestSuiteResult {
+    constructor(name, groups, totalTime) {
+        this.name = name;
+        this.groups = groups;
+        this.totalTime = totalTime;
+    }
+    get tests() {
+        return this.groups.reduce((sum, g) => sum + g.tests.length, 0);
+    }
+    get passed() {
+        return this.groups.reduce((sum, g) => sum + g.passed, 0);
+    }
+    get failed() {
+        return this.groups.reduce((sum, g) => sum + g.failed, 0);
+    }
+    get skipped() {
+        return this.groups.reduce((sum, g) => sum + g.skipped, 0);
+    }
+    get time() {
+        var _a;
+        return (_a = this.totalTime) !== null && _a !== void 0 ? _a : this.groups.reduce((sum, g) => sum + g.time, 0);
+    }
+    get result() {
+        return this.groups.some(t => t.result === 'failed') ? 'failed' : 'success';
+    }
+}
+exports.TestSuiteResult = TestSuiteResult;
+class TestGroupResult {
+    constructor(name, tests) {
+        this.name = name;
+        this.tests = tests;
+    }
+    get passed() {
+        return this.tests.reduce((sum, t) => (t.result === 'success' ? sum + 1 : sum), 0);
+    }
+    get failed() {
+        return this.tests.reduce((sum, t) => (t.result === 'failed' ? sum + 1 : sum), 0);
+    }
+    get skipped() {
+        return this.tests.reduce((sum, t) => (t.result === 'skipped' ? sum + 1 : sum), 0);
+    }
+    get time() {
+        return this.tests.reduce((sum, t) => sum + t.time, 0);
+    }
+    get result() {
+        return this.tests.some(t => t.result === 'failed') ? 'failed' : 'success';
+    }
+}
+exports.TestGroupResult = TestGroupResult;
+class TestCaseResult {
+    constructor(name, result, time) {
+        this.name = name;
+        this.result = result;
+        this.time = time;
+    }
+}
+exports.TestCaseResult = TestCaseResult;
 
 
 /***/ }),
