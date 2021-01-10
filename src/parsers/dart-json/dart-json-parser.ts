@@ -1,8 +1,8 @@
 import {Annotation, ParseOptions, TestResult} from '../parser-types'
 
+import getReport from '../../report/get-report'
 import {normalizeFilePath} from '../../utils/file-utils'
-import {Align, Icon, link, table} from '../../utils/markdown-utils'
-import {slug} from '../../utils/slugger'
+import {Icon} from '../../utils/markdown-utils'
 
 import {
   ReportEvent,
@@ -19,60 +19,26 @@ import {
   isDoneEvent
 } from './dart-json-types'
 
+import {
+  TestExecutionResult,
+  TestRunResult,
+  TestSuiteResult,
+  TestGroupResult,
+  TestCaseResult
+} from '../../report/test-results'
+
 class TestRun {
   constructor(readonly suites: TestSuite[], readonly success: boolean, readonly time: number) {}
-  get count(): number {
-    return Object.values(this.suites).reduce((sum, g) => sum + g.count, 0)
-  }
-  get passed(): number {
-    return Object.values(this.suites).reduce((sum, g) => sum + g.passed, 0)
-  }
-  get failed(): number {
-    return Object.values(this.suites).reduce((sum, g) => sum + g.failed, 0)
-  }
-  get skipped(): number {
-    return Object.values(this.suites).reduce((sum, g) => sum + g.skipped, 0)
-  }
 }
 
 class TestSuite {
   constructor(readonly suite: Suite) {}
-  groups: {[id: number]: TestGroup} = {}
-  get count(): number {
-    return Object.values(this.groups).reduce((sum, g) => sum + g.count, 0)
-  }
-  get passed(): number {
-    return Object.values(this.groups).reduce((sum, g) => sum + g.passed, 0)
-  }
-  get failed(): number {
-    return Object.values(this.groups).reduce((sum, g) => sum + g.failed, 0)
-  }
-  get skipped(): number {
-    return Object.values(this.groups).reduce((sum, g) => sum + g.skipped, 0)
-  }
-  get time(): number {
-    return Object.values(this.groups).reduce((sum, g) => sum + g.time, 0)
-  }
+  readonly groups: {[id: number]: TestGroup} = {}
 }
 
 class TestGroup {
   constructor(readonly group: Group) {}
-  tests: TestCase[] = []
-  get count(): number {
-    return this.tests.length
-  }
-  get passed(): number {
-    return this.tests.reduce((sum, t) => (t.isPassed ? sum + 1 : sum), 0)
-  }
-  get failed(): number {
-    return this.tests.reduce((sum, t) => (t.isFailed ? sum + 1 : sum), 0)
-  }
-  get skipped(): number {
-    return this.tests.reduce((sum, t) => (t.isSkipped ? sum + 1 : sum), 0)
-  }
-  get time(): number {
-    return this.tests.reduce((sum, t) => sum + t.time, 0)
-  }
+  readonly tests: TestCase[] = []
 }
 
 class TestCase {
@@ -82,15 +48,21 @@ class TestCase {
   readonly groupId: number
   testDone?: TestDoneEvent
   error?: ErrorEvent
-  get isPassed(): boolean {
-    return this.testDone?.result === 'success' && !this.testDone?.skipped
+  get result(): TestExecutionResult {
+    if (this.testDone?.skipped) {
+      return 'skipped'
+    }
+    if (this.testDone?.result === 'success') {
+      return 'success'
+    }
+
+    if (this.testDone?.result === 'error' || this.testDone?.result === 'failure') {
+      return 'failed'
+    }
+
+    return undefined
   }
-  get isFailed(): boolean {
-    return this.testDone?.result !== 'success'
-  }
-  get isSkipped(): boolean {
-    return this.testDone?.skipped === true
-  }
+
   get time(): number {
     return this.testDone !== undefined ? this.testDone.time - this.testStart.time : 0
   }
@@ -104,7 +76,7 @@ export async function parseDartJson(content: string, options: ParseOptions): Pro
     success: testRun.success,
     output: {
       title: `${options.name.trim()} ${icon}`,
-      summary: getSummary(testRun),
+      summary: getReport(getTestRunResult(testRun)),
       annotations: options.annotations ? getAnnotations(testRun, options.workDir, options.trackedFiles) : undefined
     }
   }
@@ -143,72 +115,23 @@ function getTestRun(content: string): TestRun {
   return new TestRun(Object.values(suites), success, totalTime)
 }
 
-function getSummary(tr: TestRun): string {
-  const time = `${(tr.time / 1000).toFixed(3)}s`
-  const headingLine = `**${tr.count}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.skipped}** skipped and **${tr.failed}** failed.`
-
-  const suitesSummary = tr.suites.map((s, i) => {
-    const icon = s.failed === 0 ? Icon.success : Icon.fail
-    const tsTime = `${s.time}ms`
-    const tsName = s.suite.path
-    const tsAddr = makeSuiteSlug(i, tsName).link
-    const tsNameLink = link(tsName, tsAddr)
-    return [icon, tsNameLink, s.count, tsTime, s.passed, s.failed, s.skipped]
+function getTestRunResult(tr: TestRun): TestRunResult {
+  const suites = tr.suites.map(s => {
+    return new TestSuiteResult(s.suite.path, getGroups(s))
   })
 
-  const summary = table(
-    ['Result', 'Suite', 'Tests', 'Time', `Passed ${Icon.success}`, `Failed ${Icon.fail}`, `Skipped ${Icon.skip}`],
-    [Align.Center, Align.Left, Align.Right, Align.Right, Align.Right, Align.Right, Align.Right],
-    ...suitesSummary
-  )
-
-  const suites = tr.suites.map((ts, i) => getSuiteSummary(ts, i)).join('\n')
-  const suitesSection = `# Test Suites\n\n${suites}`
-
-  return `${headingLine}\n${summary}\n${suitesSection}`
+  return new TestRunResult(suites, tr.time)
 }
 
-function getSuiteSummary(ts: TestSuite, index: number): string {
-  const icon = ts.failed === 0 ? Icon.success : Icon.fail
-
-  const groups = Object.values(ts.groups)
+function getGroups(suite: TestSuite): TestGroupResult[] {
+  const groups = Object.values(suite.groups).filter(grp => grp.tests.length > 0)
   groups.sort((a, b) => (a.group.line ?? 0) - (b.group.line ?? 0))
 
-  const content = groups
-    .filter(grp => grp.count > 0)
-    .map(grp => {
-      const header = grp.group.name !== null ? `### ${grp.group.name}\n\n` : ''
-      grp.tests.sort((a, b) => (a.testStart.test.line ?? 0) - (b.testStart.test.line ?? 0))
-      const tests = table(
-        ['Result', 'Test', 'Time'],
-        [Align.Center, Align.Left, Align.Right],
-        ...grp.tests.map(tc => {
-          const name = tc.testStart.test.name
-          const time = `${tc.time}ms`
-          const result = getTestCaseIcon(tc)
-          return [result, name, time]
-        })
-      )
-
-      return `${header}${tests}\n`
-    })
-    .join('\n')
-
-  const tsName = ts.suite.path
-  const tsSlug = makeSuiteSlug(index, tsName)
-  const tsNameLink = `<a id="${tsSlug.id}" href="${tsSlug.link}">${tsName}</a>`
-  return `## ${tsNameLink} ${icon}\n\n${content}`
-}
-
-function makeSuiteSlug(index: number, name: string): {id: string; link: string} {
-  // use "ts-$index-" as prefix to avoid slug conflicts after escaping the paths
-  return slug(`ts-${index}-${name}`)
-}
-
-function getTestCaseIcon(test: TestCase): string {
-  if (test.isFailed) return Icon.fail
-  if (test.isSkipped) return Icon.skip
-  return Icon.success
+  return groups.map(group => {
+    group.tests.sort((a, b) => (a.testStart.test.line ?? 0) - (b.testStart.test.line ?? 0))
+    const tests = group.tests.map(t => new TestCaseResult(t.testStart.test.name, t.result, t.time))
+    return new TestGroupResult(group.group.name, tests)
+  })
 }
 
 function getAnnotations(tr: TestRun, workDir: string, trackedFiles: string[]): Annotation[] {

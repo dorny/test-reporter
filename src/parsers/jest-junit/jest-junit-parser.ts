@@ -1,11 +1,19 @@
 import {Annotation, ParseOptions, TestResult} from '../parser-types'
 import {parseStringPromise} from 'xml2js'
 
-import {JunitReport, TestCase, TestSuite, TestSuites} from './jest-junit-types'
-import {Align, Icon, link, table} from '../../utils/markdown-utils'
+import {JunitReport, TestCase, TestSuite} from './jest-junit-types'
+import {Icon} from '../../utils/markdown-utils'
 import {normalizeFilePath} from '../../utils/file-utils'
-import {slug} from '../../utils/slugger'
 import {parseAttribute} from '../../utils/xml-utils'
+
+import {
+  TestExecutionResult,
+  TestRunResult,
+  TestSuiteResult,
+  TestGroupResult,
+  TestCaseResult
+} from '../../report/test-results'
+import getReport from '../../report/get-report'
 
 export async function parseJestJunit(content: string, options: ParseOptions): Promise<TestResult> {
   const junit = (await parseStringPromise(content, {
@@ -26,47 +34,19 @@ export async function parseJestJunit(content: string, options: ParseOptions): Pr
 }
 
 function getSummary(junit: JunitReport): string {
-  const stats = junit.testsuites.$
-
-  const time = `${stats.time.toFixed(3)}s`
-  const skipped = getSkippedCount(junit.testsuites)
-  const failed = stats.errors + stats.failures
-  const passed = stats.tests - failed - skipped
-
-  const headingLine = `**${stats.tests}** tests were completed in **${time}** with **${passed}** passed, **${skipped}** skipped and **${failed}** failed.`
-
-  const suitesSummary = junit.testsuites.testsuite.map((ts, i) => {
-    const skip = ts.$.skipped
-    const fail = ts.$.errors + ts.$.failures
-    const pass = ts.$.tests - fail - skip
-    const tm = formatTime(ts.$.time)
-    const result = fail === 0 ? Icon.success : Icon.fail
-    const tsName = ts.$.name.trim()
-    const tsAddr = makeSuiteSlug(i, tsName).link
-    const tsNameLink = link(tsName, tsAddr)
-    return [result, tsNameLink, ts.$.tests, tm, pass, fail, skip]
+  const suites = junit.testsuites.testsuite.map(ts => {
+    const name = ts.$.name.trim()
+    const time = ts.$.time * 1000
+    const sr = new TestSuiteResult(name, getGroups(ts), time)
+    return sr
   })
 
-  const summary = table(
-    ['Result', 'Suite', 'Tests', 'Time', `Passed ${Icon.success}`, `Failed ${Icon.fail}`, `Skipped ${Icon.skip}`],
-    [Align.Center, Align.Left, Align.Right, Align.Right, Align.Right, Align.Right, Align.Right],
-    ...suitesSummary
-  )
-
-  const suites = junit.testsuites?.testsuite?.map((ts, i) => getSuiteSummary(ts, i)).join('\n')
-  const suitesSection = `# Test Suites\n\n${suites}`
-
-  return `${headingLine}\n${summary}\n${suitesSection}`
+  const time = junit.testsuites.$.time * 1000
+  const tr = new TestRunResult(suites, time)
+  return getReport(tr)
 }
 
-function getSkippedCount(suites: TestSuites): number {
-  return suites.testsuite.reduce((sum, suite) => sum + suite.$.skipped, 0)
-}
-
-function getSuiteSummary(suite: TestSuite, index: number): string {
-  const success = !(suite.$?.failures > 0 || suite.$?.errors > 0)
-  const icon = success ? Icon.success : Icon.fail
-
+function getGroups(suite: TestSuite): TestGroupResult[] {
   const groups: {describe: string; tests: TestCase[]}[] = []
   for (const tc of suite.testcase) {
     let grp = groups.find(g => g.describe === tc.$.classname)
@@ -77,43 +57,21 @@ function getSuiteSummary(suite: TestSuite, index: number): string {
     grp.tests.push(tc)
   }
 
-  const content = groups
-    .map(grp => {
-      const header = grp.describe !== '' ? `### ${grp.describe.trim()}\n\n` : ''
-      const tests = table(
-        ['Result', 'Test', 'Time'],
-        [Align.Center, Align.Left, Align.Right],
-        ...grp.tests.map(tc => {
-          const name = tc.$.name.trim()
-          const time = formatTime(tc.$.time)
-          const result = getTestCaseIcon(tc)
-          return [result, name, time]
-        })
-      )
-
-      return `${header}${tests}\n`
+  return groups.map(grp => {
+    const tests = grp.tests.map(tc => {
+      const name = tc.$.name.trim()
+      const result = getTestCaseResult(tc)
+      const time = tc.$.time * 1000
+      return new TestCaseResult(name, result, time)
     })
-    .join('\n')
-
-  const tsName = suite.$.name.trim()
-  const tsSlug = makeSuiteSlug(index, tsName)
-  const tsNameLink = `<a id="${tsSlug.id}" href="${tsSlug.link}">${tsName}</a>`
-  return `## ${tsNameLink} ${icon}\n\n${content}`
+    return new TestGroupResult(grp.describe, tests)
+  })
 }
 
-function getTestCaseIcon(test: TestCase): string {
-  if (test.failure) return Icon.fail
-  if (test.skipped) return Icon.skip
-  return Icon.success
-}
-
-function makeSuiteSlug(index: number, name: string): {id: string; link: string} {
-  // use "ts-$index-" as prefix to avoid slug conflicts after escaping the paths
-  return slug(`ts-${index}-${name}`)
-}
-
-function formatTime(sec: number): string {
-  return `${Math.round(sec * 1000)}ms`
+function getTestCaseResult(test: TestCase): TestExecutionResult {
+  if (test.failure) return 'failed'
+  if (test.skipped) return 'skipped'
+  return 'success'
 }
 
 function getAnnotations(junit: JunitReport, workDir: string, trackedFiles: string[]): Annotation[] {
