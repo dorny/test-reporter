@@ -26,7 +26,7 @@ export async function parseJestJunit(content: string, options: ParseOptions): Pr
   return {
     success,
     output: {
-      title: `${junit.testsuites.$.name.trim()} ${icon}`,
+      title: `${options.name.trim()} ${icon}`,
       summary: getSummary(junit),
       annotations: options.annotations ? getAnnotations(junit, options.workDir, options.trackedFiles) : undefined
     }
