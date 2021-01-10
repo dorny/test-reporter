@@ -2,7 +2,56 @@
 
 exports[`dart-json tests matches report snapshot 1`] = `
 Object {
-  "annotations": Array [],
+  "annotations": Array [
+    Object {
+      "annotation_level": "failure",
+      "end_line": 13,
+      "message": "Expected: <2>
+  Actual: <1>
+
+
+package:test_api          expect
+test\\\\main_test.dart 13:9  main.<fn>.<fn>.<fn>
+",
+      "path": "test/main_test.dart",
+      "start_line": 13,
+      "title": "[test\\\\main_test.dart] Test 1 Test 1.1 Failing test",
+    },
+    Object {
+      "annotation_level": "failure",
+      "end_line": 2,
+      "message": "Exception: Some error
+
+package:darttest/main.dart 2:3  throwError
+test\\\\main_test.dart 17:9        main.<fn>.<fn>.<fn>
+",
+      "path": "lib/main.dart",
+      "start_line": 2,
+      "title": "[test\\\\main_test.dart] Test 1 Test 1.1 Exception in target unit",
+    },
+    Object {
+      "annotation_level": "failure",
+      "end_line": 24,
+      "message": "Exception: Some error
+
+test\\\\main_test.dart 24:7  main.<fn>.<fn>
+",
+      "path": "test/main_test.dart",
+      "start_line": 24,
+      "title": "[test\\\\main_test.dart] Test 2 Exception in test",
+    },
+    Object {
+      "annotation_level": "failure",
+      "end_line": 5,
+      "message": "TimeoutException after 0:00:00.000001: Test timed out after 0 seconds.
+
+dart:isolate  _RawReceivePortImpl._handleMessage
+",
+      "path": "test/second_test.dart",
+      "start_line": 5,
+      "title": "[test\\\\second_test.dart] Timeout test",
+    },
+  ],
   "summary": "**6** tests were completed in **3.760s** with **1** passed, **1** skipped and **4** failed.
 | Result | Suite | Tests | Time | Passed ✔️ | Failed ❌ | Skipped ✖️ |
 | :---: | :--- | ---: | ---: | ---: | ---: | ---: |

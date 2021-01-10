@@ -12,7 +12,7 @@ describe('dart-json tests', () => {
     const opts: ParseOptions = {
       name: 'Dart tests',
       annotations: true,
-      trackedFiles: ['test/main_test.dart', 'test/second_test.dart'],
+      trackedFiles: ['lib/main.dart', 'test/main_test.dart', 'test/second_test.dart'],
       workDir: 'C:/Users/Michal/Workspace/dorny/test-check/reports/dart/'
     }
 

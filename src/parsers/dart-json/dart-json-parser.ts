@@ -1,4 +1,6 @@
-import {ParseOptions, TestResult} from '../test-parser'
+import {Annotation, ParseOptions, TestResult} from '../test-parser'
+
+import {normalizeFilePath} from '../../utils/file-utils'
 import {Align, Icon, link, table} from '../../utils/markdown-utils'
 import {slug} from '../../utils/slugger'
 
@@ -103,7 +105,7 @@ export async function parseDartJson(content: string, options: ParseOptions): Pro
     output: {
       title: `${options.name.trim()} ${icon}`,
       summary: getSummary(testRun),
-      annotations: options.annotations ? [] : undefined
+      annotations: options.annotations ? getAnnotations(testRun, options.workDir, options.trackedFiles) : undefined
     }
   }
 }
@@ -207,4 +209,84 @@ function getTestCaseIcon(test: TestCase): string {
   if (test.isFailed) return Icon.fail
   if (test.isSkipped) return Icon.skip
   return Icon.success
+}
+
+function getAnnotations(tr: TestRun, workDir: string, trackedFiles: string[]): Annotation[] {
+  const annotations: Annotation[] = []
+  for (const suite of tr.suites) {
+    for (const group of Object.values(suite.groups)) {
+      for (const test of group.tests) {
+        if (test.error) {
+          const err = getAnnotation(test, suite, workDir, trackedFiles)
+          if (err !== null) {
+            annotations.push(err)
+          }
+        }
+      }
+    }
+  }
+
+  return annotations
+}
+
+function getAnnotation(
+  test: TestCase,
+  testSuite: TestSuite,
+  workDir: string,
+  trackedFiles: string[]
+): Annotation | null {
+  const stack = test.error?.stackTrace ?? ''
+  let src = exceptionThrowSource(stack, trackedFiles)
+  if (src === null) {
+    const file = getRelativePathFromUrl(test.testStart.test.url ?? '', workDir)
+    if (!trackedFiles.includes(file)) {
+      return null
+    }
+    src = {
+      file,
+      line: test.testStart.test.line ?? 0
+    }
+  }
+
+  return {
+    annotation_level: 'failure',
+    start_line: src.line,
+    end_line: src.line,
+    path: src.file,
+    message: `${test.error?.error}\n\n${test.error?.stackTrace}`,
+    title: `[${testSuite.suite.path}] ${test.testStart.test.name}`
+  }
+}
+
+function exceptionThrowSource(ex: string, trackedFiles: string[]): {file: string; line: number} | null {
+  // imports from package which is tested are listed in stack traces as 'package:xyz/' which maps to relative path 'lib/'
+  const packageRe = /^package:[a-zA-z0-9_$]+\//
+  const lines = ex.split(/\r?\n/).map(str => str.replace(packageRe, 'lib/'))
+
+  // regexp to extract file path and line number from stack trace
+  const re = /^(.*)\s+(\d+):\d+\s+/
+  for (const str of lines) {
+    const match = str.match(re)
+    if (match !== null) {
+      const [_, fileStr, lineStr] = match
+      const file = normalizeFilePath(fileStr)
+      if (trackedFiles.includes(file)) {
+        const line = parseInt(lineStr)
+        return {file, line}
+      }
+    }
+  }
+
+  return null
+}
+
+function getRelativePathFromUrl(file: string, workdir: string): string {
+  const prefix = 'file:///'
+  if (file.startsWith(prefix)) {
+    file = file.substr(prefix.length)
+  }
+  if (file.startsWith(workdir)) {
+    file = file.substr(workdir.length)
+  }
+  return file
 }
