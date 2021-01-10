@@ -1,4 +1,4 @@
-import {Annotation, ParseOptions, TestResult} from '../test-parser'
+import {Annotation, ParseOptions, TestResult} from '../parser-types'
 import {parseStringPromise} from 'xml2js'
 
 import {JunitReport, TestCase, TestSuite, TestSuites} from './jest-junit-types'

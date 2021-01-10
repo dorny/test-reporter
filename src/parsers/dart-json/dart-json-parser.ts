@@ -1,4 +1,4 @@
-import {Annotation, ParseOptions, TestResult} from '../test-parser'
+import {Annotation, ParseOptions, TestResult} from '../parser-types'
 
 import {normalizeFilePath} from '../../utils/file-utils'
 import {Align, Icon, link, table} from '../../utils/markdown-utils'
