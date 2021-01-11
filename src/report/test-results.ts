@@ -50,7 +50,7 @@ export class TestSuiteResult {
 }
 
 export class TestGroupResult {
-  constructor(readonly name: string | undefined, readonly tests: TestCaseResult[]) {}
+  constructor(readonly name: string | undefined | null, readonly tests: TestCaseResult[]) {}
 
   get passed(): number {
     return this.tests.reduce((sum, t) => (t.result === 'success' ? sum + 1 : sum), 0)
