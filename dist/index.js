@@ -254,7 +254,7 @@ function getAnnotation(test, testSuite, workDir, trackedFiles) {
         start_line: src.line,
         end_line: src.line,
         path: src.file,
-        message: `${(_e = test.error) === null || _e === void 0 ? void 0 : _e.error}\n\n${(_f = test.error) === null || _f === void 0 ? void 0 : _f.stackTrace}`,
+        message: `${markdown_utils_1.fixEol((_e = test.error) === null || _e === void 0 ? void 0 : _e.error)}\n\n${markdown_utils_1.fixEol((_f = test.error) === null || _f === void 0 ? void 0 : _f.stackTrace)}`,
         title: `[${testSuite.suite.path}] ${test.testStart.test.name}`
     };
 }
@@ -440,7 +440,7 @@ function getAnnotations(testClasses, workDir, trackedFiles) {
                     start_line: src.line,
                     end_line: src.line,
                     path: src.file,
-                    message: t.error.Message[0],
+                    message: markdown_utils_1.fixEol(t.error.Message[0]),
                     title: `[${tc.name}] ${t.name}`
                 });
             }
@@ -559,7 +559,7 @@ function getAnnotations(junit, workDir, trackedFiles) {
                     start_line: src.line,
                     end_line: src.line,
                     path: src.file,
-                    message: ex,
+                    message: markdown_utils_1.fixEol(ex),
                     title: `[${suite.$.name}] ${tc.$.name.trim()}`
                 });
             }
@@ -931,7 +931,7 @@ exports.getCheckRunSha = getCheckRunSha;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.tableEscape = exports.table = exports.link = exports.details = exports.Icon = exports.Align = void 0;
+exports.fixEol = exports.tableEscape = exports.table = exports.link = exports.details = exports.Icon = exports.Align = void 0;
 var Align;
 (function (Align) {
     Align["Left"] = ":---";
@@ -963,6 +963,11 @@ function tableEscape(content) {
     return content.toString().replace('|', '\\|');
 }
 exports.tableEscape = tableEscape;
+function fixEol(text) {
+    var _a;
+    return (_a = text === null || text === void 0 ? void 0 : text.replace(/\r/g, '')) !== null && _a !== void 0 ? _a : '';
+}
+exports.fixEol = fixEol;
 
 
 /***/ }),

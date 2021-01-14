@@ -23,9 +23,7 @@ Object {
       "annotation_level": "failure",
       "end_line": 27,
       "message": "Assert.Equal() Failure
-
 Expected: 3
-
 Actual:   2",
       "path": "DotnetTests.XUnitTests/CalculatorTests.cs",
       "start_line": 27,

@@ -2,7 +2,7 @@ import {Annotation, ParseOptions, TestResult} from '../parser-types'
 import {parseStringPromise} from 'xml2js'
 
 import {JunitReport, TestCase, TestSuite} from './jest-junit-types'
-import {Icon} from '../../utils/markdown-utils'
+import {fixEol, Icon} from '../../utils/markdown-utils'
 import {normalizeFilePath} from '../../utils/file-utils'
 import {parseAttribute} from '../../utils/xml-utils'
 
@@ -91,7 +91,7 @@ function getAnnotations(junit: JunitReport, workDir: string, trackedFiles: strin
           start_line: src.line,
           end_line: src.line,
           path: src.file,
-          message: ex,
+          message: fixEol(ex),
           title: `[${suite.$.name}] ${tc.$.name.trim()}`
         })
       }

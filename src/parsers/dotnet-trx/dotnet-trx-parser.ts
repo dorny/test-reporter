@@ -5,7 +5,7 @@ import {parseStringPromise} from 'xml2js'
 
 import {normalizeFilePath} from '../../utils/file-utils'
 import {parseAttribute} from '../../utils/xml-utils'
-import {Icon} from '../../utils/markdown-utils'
+import {Icon, fixEol} from '../../utils/markdown-utils'
 
 import {
   TestExecutionResult,
@@ -123,7 +123,7 @@ function getAnnotations(testClasses: TestClass[], workDir: string, trackedFiles:
           start_line: src.line,
           end_line: src.line,
           path: src.file,
-          message: t.error.Message[0],
+          message: fixEol(t.error.Message[0]),
           title: `[${tc.name}] ${t.name}`
         })
       }

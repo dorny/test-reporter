@@ -2,7 +2,7 @@ import {Annotation, ParseOptions, TestResult} from '../parser-types'
 
 import getReport from '../../report/get-report'
 import {normalizeFilePath} from '../../utils/file-utils'
-import {Icon} from '../../utils/markdown-utils'
+import {Icon, fixEol} from '../../utils/markdown-utils'
 
 import {
   ReportEvent,
@@ -176,7 +176,7 @@ function getAnnotation(
     start_line: src.line,
     end_line: src.line,
     path: src.file,
-    message: `${test.error?.error}\n\n${test.error?.stackTrace}`,
+    message: `${fixEol(test.error?.error)}\n\n${fixEol(test.error?.stackTrace)}`,
     title: `[${testSuite.suite.path}] ${test.testStart.test.name}`
   }
 }
