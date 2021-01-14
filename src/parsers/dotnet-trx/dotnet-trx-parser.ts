@@ -3,6 +3,7 @@ import {ErrorInfo, Outcome, TestMethod, TrxReport} from './dotnet-trx-types'
 import {Annotation, ParseOptions, TestResult} from '../parser-types'
 import {parseStringPromise} from 'xml2js'
 
+import {normalizeFilePath} from '../../utils/file-utils'
 import {parseAttribute} from '../../utils/xml-utils'
 import {Icon} from '../../utils/markdown-utils'
 
@@ -55,9 +56,7 @@ export async function parseDotnetTrx(content: string, options: ParseOptions): Pr
     output: {
       title: `${options.name.trim()} ${icon}`,
       summary: getReport(testRun),
-      annotations: options.annotations
-        ? getAnnotations(/*testClasses, options.workDir, options.trackedFiles*/)
-        : undefined
+      annotations: options.annotations ? getAnnotations(testClasses, options.workDir, options.trackedFiles) : undefined
     }
   }
 }
@@ -110,6 +109,49 @@ function getTestClasses(trx: TrxReport): TestClass[] {
   return result
 }
 
-function getAnnotations(/*testClasses: TestClass[], workDir: string, trackedFiles: string[]*/): Annotation[] {
-  return []
+function getAnnotations(testClasses: TestClass[], workDir: string, trackedFiles: string[]): Annotation[] {
+  const annotations: Annotation[] = []
+  for (const tc of testClasses) {
+    for (const t of tc.tests) {
+      if (t.error) {
+        const src = exceptionThrowSource(t.error.StackTrace[0], workDir, trackedFiles)
+        if (src === null) {
+          continue
+        }
+        annotations.push({
+          annotation_level: 'failure',
+          start_line: src.line,
+          end_line: src.line,
+          path: src.file,
+          message: t.error.Message[0],
+          title: `[${tc.name}] ${t.name}`
+        })
+      }
+    }
+  }
+  return annotations
+}
+
+export function exceptionThrowSource(
+  ex: string,
+  workDir: string,
+  trackedFiles: string[]
+): {file: string; line: number} | null {
+  const lines = ex.split(/\r*\n/)
+  const re = / in (.+):line (\d+)$/
+
+  for (const str of lines) {
+    const match = str.match(re)
+    if (match !== null) {
+      const [_, fileStr, lineStr] = match
+      const filePath = normalizeFilePath(fileStr)
+      const file = filePath.startsWith(workDir) ? filePath.substr(workDir.length) : filePath
+      if (trackedFiles.includes(file)) {
+        const line = parseInt(lineStr)
+        return {file, line}
+      }
+    }
+  }
+
+  return null
 }
