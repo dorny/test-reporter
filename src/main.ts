@@ -29,7 +29,7 @@ async function main(): Promise<void> {
     process.chdir(workDirInput)
   }
 
-  const workDir = normalizeDirPath(workDirInput || process.cwd(), true)
+  const workDir = normalizeDirPath(process.cwd(), true)
   const octokit = github.getOctokit(token)
   const sha = getCheckRunSha()
 
