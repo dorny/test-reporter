@@ -29,8 +29,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__webpack_require__(2186));
 const github = __importStar(__webpack_require__(5438));
-const jest_junit_parser_1 = __webpack_require__(1113);
 const dart_json_parser_1 = __webpack_require__(4528);
+const dotnet_trx_parser_1 = __webpack_require__(2664);
+const jest_junit_parser_1 = __webpack_require__(1113);
 const file_utils_1 = __webpack_require__(2711);
 const git_1 = __webpack_require__(9844);
 const github_utils_1 = __webpack_require__(3522);
@@ -53,7 +54,7 @@ async function main() {
     if (workDirInput) {
         process.chdir(workDirInput);
     }
-    const workDir = file_utils_1.normalizeDirPath(workDirInput || process.cwd(), true);
+    const workDir = file_utils_1.normalizeDirPath(process.cwd(), true);
     const octokit = github.getOctokit(token);
     const sha = github_utils_1.getCheckRunSha();
     // We won't need tracked files if we are not going to create annotations
@@ -86,7 +87,7 @@ function getParser(reporter) {
         case 'dart-json':
             return dart_json_parser_1.parseDartJson;
         case 'dotnet-trx':
-            throw new Error('Not implemented yet!');
+            return dotnet_trx_parser_1.parseDotnetTrx;
         case 'flutter-machine':
             return dart_json_parser_1.parseDartJson;
         case 'jest-junit':
@@ -253,7 +254,7 @@ function getAnnotation(test, testSuite, workDir, trackedFiles) {
         start_line: src.line,
         end_line: src.line,
         path: src.file,
-        message: `${(_e = test.error) === null || _e === void 0 ? void 0 : _e.error}\n\n${(_f = test.error) === null || _f === void 0 ? void 0 : _f.stackTrace}`,
+        message: `${markdown_utils_1.fixEol((_e = test.error) === null || _e === void 0 ? void 0 : _e.error)}\n\n${markdown_utils_1.fixEol((_f = test.error) === null || _f === void 0 ? void 0 : _f.stackTrace)}`,
         title: `[${testSuite.suite.path}] ${test.testStart.test.name}`
     };
 }
@@ -322,6 +323,149 @@ function isDoneEvent(event) {
     return event.type === 'done';
 }
 exports.isDoneEvent = isDoneEvent;
+
+
+/***/ }),
+
+/***/ 2664:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.exceptionThrowSource = exports.parseDotnetTrx = void 0;
+const xml2js_1 = __webpack_require__(6189);
+const file_utils_1 = __webpack_require__(2711);
+const xml_utils_1 = __webpack_require__(8653);
+const markdown_utils_1 = __webpack_require__(6482);
+const test_results_1 = __webpack_require__(8407);
+const get_report_1 = __importDefault(__webpack_require__(3737));
+class TestClass {
+    constructor(name) {
+        this.name = name;
+        this.tests = [];
+    }
+}
+class Test {
+    constructor(name, outcome, duration, error) {
+        this.name = name;
+        this.outcome = outcome;
+        this.duration = duration;
+        this.error = error;
+    }
+    get result() {
+        switch (this.outcome) {
+            case 'Passed':
+                return 'success';
+            case 'NotExecuted':
+                return 'skipped';
+            case 'Failed':
+                return 'failed';
+        }
+    }
+}
+async function parseDotnetTrx(content, options) {
+    const trx = (await xml2js_1.parseStringPromise(content, {
+        attrValueProcessors: [xml_utils_1.parseAttribute]
+    }));
+    const testClasses = getTestClasses(trx);
+    const testRun = getTestRunResult(trx, testClasses);
+    const success = testRun.result === 'success';
+    const icon = success ? markdown_utils_1.Icon.success : markdown_utils_1.Icon.fail;
+    return {
+        success,
+        output: {
+            title: `${options.name.trim()} ${icon}`,
+            summary: get_report_1.default(testRun),
+            annotations: options.annotations ? getAnnotations(testClasses, options.workDir, options.trackedFiles) : undefined
+        }
+    };
+}
+exports.parseDotnetTrx = parseDotnetTrx;
+function getTestRunResult(trx, testClasses) {
+    const times = trx.TestRun.Times[0].$;
+    const totalTime = times.finish.getTime() - times.start.getTime();
+    const suites = testClasses.map(tc => {
+        const tests = tc.tests.map(t => new test_results_1.TestCaseResult(t.name, t.result, t.duration));
+        const group = new test_results_1.TestGroupResult(null, tests);
+        return new test_results_1.TestSuiteResult(tc.name, [group]);
+    });
+    return new test_results_1.TestRunResult(suites, totalTime);
+}
+function getTestClasses(trx) {
+    var _a;
+    const unitTests = {};
+    for (const td of trx.TestRun.TestDefinitions) {
+        for (const ut of td.UnitTest) {
+            unitTests[ut.$.id] = ut.TestMethod[0];
+        }
+    }
+    const unitTestsResults = trx.TestRun.Results.flatMap(r => r.UnitTestResult).flatMap(unitTestResult => ({
+        unitTestResult,
+        testMethod: unitTests[unitTestResult.$.testId]
+    }));
+    const testClasses = {};
+    for (const r of unitTestsResults) {
+        let tc = testClasses[r.testMethod.$.className];
+        if (tc === undefined) {
+            tc = new TestClass(r.testMethod.$.className);
+            testClasses[tc.name] = tc;
+        }
+        const output = r.unitTestResult.Output;
+        const error = (output === null || output === void 0 ? void 0 : output.length) > 0 && ((_a = output[0].ErrorInfo) === null || _a === void 0 ? void 0 : _a.length) > 0 ? output[0].ErrorInfo[0] : undefined;
+        const test = new Test(r.testMethod.$.name, r.unitTestResult.$.outcome, r.unitTestResult.$.duration, error);
+        tc.tests.push(test);
+    }
+    const result = Object.values(testClasses);
+    result.sort((a, b) => a.name.localeCompare(b.name));
+    for (const tc of result) {
+        tc.tests.sort((a, b) => a.name.localeCompare(b.name));
+    }
+    return result;
+}
+function getAnnotations(testClasses, workDir, trackedFiles) {
+    const annotations = [];
+    for (const tc of testClasses) {
+        for (const t of tc.tests) {
+            if (t.error) {
+                const src = exceptionThrowSource(t.error.StackTrace[0], workDir, trackedFiles);
+                if (src === null) {
+                    continue;
+                }
+                annotations.push({
+                    annotation_level: 'failure',
+                    start_line: src.line,
+                    end_line: src.line,
+                    path: src.file,
+                    message: markdown_utils_1.fixEol(t.error.Message[0]),
+                    title: `[${tc.name}] ${t.name}`
+                });
+            }
+        }
+    }
+    return annotations;
+}
+function exceptionThrowSource(ex, workDir, trackedFiles) {
+    const lines = ex.split(/\r*\n/);
+    const re = / in (.+):line (\d+)$/;
+    for (const str of lines) {
+        const match = str.match(re);
+        if (match !== null) {
+            const [_, fileStr, lineStr] = match;
+            const filePath = file_utils_1.normalizeFilePath(fileStr);
+            const file = filePath.startsWith(workDir) ? filePath.substr(workDir.length) : filePath;
+            if (trackedFiles.includes(file)) {
+                const line = parseInt(lineStr);
+                return { file, line };
+            }
+        }
+    }
+    return null;
+}
+exports.exceptionThrowSource = exceptionThrowSource;
 
 
 /***/ }),
@@ -415,7 +559,7 @@ function getAnnotations(junit, workDir, trackedFiles) {
                     start_line: src.line,
                     end_line: src.line,
                     path: src.file,
-                    message: ex,
+                    message: markdown_utils_1.fixEol(ex),
                     title: `[${suite.$.name}] ${tc.$.name.trim()}`
                 });
             }
@@ -787,7 +931,7 @@ exports.getCheckRunSha = getCheckRunSha;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.tableEscape = exports.table = exports.link = exports.details = exports.Icon = exports.Align = void 0;
+exports.fixEol = exports.tableEscape = exports.table = exports.link = exports.details = exports.Icon = exports.Align = void 0;
 var Align;
 (function (Align) {
     Align["Left"] = ":---";
@@ -819,6 +963,11 @@ function tableEscape(content) {
     return content.toString().replace('|', '\\|');
 }
 exports.tableEscape = tableEscape;
+function fixEol(text) {
+    var _a;
+    return (_a = text === null || text === void 0 ? void 0 : text.replace(/\r/g, '')) !== null && _a !== void 0 ? _a : '';
+}
+exports.fixEol = fixEol;
 
 
 /***/ }),
@@ -855,9 +1004,20 @@ exports.slug = slug;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.parseAttribute = void 0;
+const isoDateRe = /^\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)$/;
+// matches dotnet duration: 00:00:00.0010000
+const durationRe = /^(\d\d):(\d\d):(\d\d\.\d+)$/;
 function parseAttribute(str) {
     if (str === '' || str === undefined) {
         return str;
+    }
+    if (isoDateRe.test(str)) {
+        return new Date(str);
+    }
+    const durationMatch = str.match(durationRe);
+    if (durationMatch !== null) {
+        const [_, hourStr, minStr, secStr] = durationMatch;
+        return (parseInt(hourStr) * 3600 + parseInt(minStr) * 60 + parseFloat(secStr)) * 1000;
     }
     const num = parseFloat(str);
     if (isNaN(num)) {

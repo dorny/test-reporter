@@ -30,3 +30,7 @@ export function table(headers: ToString[], align: ToString[], ...rows: ToString[
 export function tableEscape(content: ToString): string {
   return content.toString().replace('|', '\\|')
 }
+
+export function fixEol(text?: string): string {
+  return text?.replace(/\r/g, '') ?? ''
+}

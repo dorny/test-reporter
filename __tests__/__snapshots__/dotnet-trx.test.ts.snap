@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`dotnet-trx tests matches report snapshot 1`] = `
+Object {
+  "annotations": Array [
+    Object {
+      "annotation_level": "failure",
+      "end_line": 9,
+      "message": "System.DivideByZeroException : Attempted to divide by zero.",
+      "path": "DotnetTests.Unit/Calculator.cs",
+      "start_line": 9,
+      "title": "[DotnetTests.XUnitTests.CalculatorTests] Exception_In_TargetTest",
+    },
+    Object {
+      "annotation_level": "failure",
+      "end_line": 39,
+      "message": "System.Exception : Test",
+      "path": "DotnetTests.XUnitTests/CalculatorTests.cs",
+      "start_line": 39,
+      "title": "[DotnetTests.XUnitTests.CalculatorTests] Exception_In_Test",
+    },
+    Object {
+      "annotation_level": "failure",
+      "end_line": 27,
+      "message": "Assert.Equal() Failure
+Expected: 3
+Actual:   2",
+      "path": "DotnetTests.XUnitTests/CalculatorTests.cs",
+      "start_line": 27,
+      "title": "[DotnetTests.XUnitTests.CalculatorTests] Failing_Test",
+    },
+  ],
+  "summary": "**7** tests were completed in **1.061s** with **3** passed, **1** skipped and **3** failed.
+| Result | Suite | Tests | Time | Passed ✔️ | Failed ❌ | Skipped ✖️ |
+| :---: | :--- | ---: | ---: | ---: | ---: | ---: |
+| ❌ | [DotnetTests.XUnitTests.CalculatorTests](#ts-0-DotnetTests-XUnitTests-CalculatorTests) | 7 | 109.5761ms | 3 | 3 | 1 |
+# Test Suites
+
+## <a id=\\"user-content-ts-0-DotnetTests-XUnitTests-CalculatorTests\\" href=\\"#ts-0-DotnetTests-XUnitTests-CalculatorTests\\">DotnetTests.XUnitTests.CalculatorTests</a> ❌
+
+| Result | Test | Time |
+| :---: | :--- | ---: |
+| ❌ | Exception_In_TargetTest | 0.4975ms |
+| ❌ | Exception_In_Test | 2.2728ms |
+| ❌ | Failing_Test | 3.2953ms |
+| ✔️ | Passing_Test | 0.1254ms |
+| ✔️ | Passing_Test_With_Name | 0.103ms |
+| ✖️ | Skipped_Test | 1ms |
+| ✔️ | Timeout_Test | 102.2821ms |
+",
+  "title": "Dotnet TRX tests ❌",
+}
+`;

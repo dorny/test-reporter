@@ -1,7 +1,8 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-import {parseJestJunit} from './parsers/jest-junit/jest-junit-parser'
 import {parseDartJson} from './parsers/dart-json/dart-json-parser'
+import {parseDotnetTrx} from './parsers/dotnet-trx/dotnet-trx-parser'
+import {parseJestJunit} from './parsers/jest-junit/jest-junit-parser'
 import {ParseOptions, ParseTestResult} from './parsers/parser-types'
 import {getFileContent, normalizeDirPath} from './utils/file-utils'
 import {listFiles} from './utils/git'
@@ -28,7 +29,7 @@ async function main(): Promise<void> {
     process.chdir(workDirInput)
   }
 
-  const workDir = normalizeDirPath(workDirInput || process.cwd(), true)
+  const workDir = normalizeDirPath(process.cwd(), true)
   const octokit = github.getOctokit(token)
   const sha = getCheckRunSha()
 
@@ -67,7 +68,7 @@ function getParser(reporter: string): ParseTestResult {
     case 'dart-json':
       return parseDartJson
     case 'dotnet-trx':
-      throw new Error('Not implemented yet!')
+      return parseDotnetTrx
     case 'flutter-machine':
       return parseDartJson
     case 'jest-junit':
