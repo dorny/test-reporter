@@ -3,11 +3,12 @@ import * as path from 'path'
 
 import {parseDartJson} from '../src/parsers/dart-json/dart-json-parser'
 import {ParseOptions} from '../src/parsers/parser-types'
+import {normalizeFilePath} from '../src/utils/file-utils'
 
 const fixturePath = path.join(__dirname, 'fixtures', 'dart-json.json')
 const outputPath = path.join(__dirname, '__outputs__', 'dart-json.md')
 const xmlFixture = {
-  path: path.relative(__dirname, fixturePath),
+  path: normalizeFilePath(path.relative(__dirname, fixturePath)),
   content: fs.readFileSync(fixturePath, {encoding: 'utf8'})
 }
 

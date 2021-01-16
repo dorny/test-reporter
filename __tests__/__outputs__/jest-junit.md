@@ -1,4 +1,4 @@
-### fixtures\jest-junit.xml
+### fixtures/jest-junit.xml
 
 **6** tests were completed in **1.360s** with **1** passed, **1** skipped and **4** failed.
 

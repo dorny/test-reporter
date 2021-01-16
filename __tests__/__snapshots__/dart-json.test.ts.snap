@@ -52,7 +52,7 @@ dart:isolate  _RawReceivePortImpl._handleMessage
       "title": "[test\\\\second_test.dart] Timeout test",
     },
   ],
-  "summary": "### fixtures\\\\dart-json.json
+  "summary": "### fixtures/dart-json.json
 
 **6** tests were completed in **3.760s** with **1** passed, **1** skipped and **4** failed.
 

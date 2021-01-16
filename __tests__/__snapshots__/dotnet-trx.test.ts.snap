@@ -30,7 +30,7 @@ Actual:   2",
       "title": "[DotnetTests.XUnitTests.CalculatorTests] Failing_Test",
     },
   ],
-  "summary": "### fixtures\\\\dotnet-trx.trx
+  "summary": "### fixtures/dotnet-trx.trx
 
 **7** tests were completed in **1.061s** with **3** passed, **1** skipped and **3** failed.
 
