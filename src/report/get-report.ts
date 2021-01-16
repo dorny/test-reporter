@@ -2,9 +2,21 @@ import {TestExecutionResult, TestRunResult, TestSuiteResult} from './test-result
 import {Align, Icon, link, table} from '../utils/markdown-utils'
 import {slug} from '../utils/slugger'
 
-export default function getReport(tr: TestRunResult): string {
+export default function getReport(results: TestRunResult[]): string {
+  const runsSummary = results.map(getRunSummary).join('\n\n')
+  const suites = results
+    .flatMap(tr => tr.suites)
+    .map((ts, i) => getSuiteSummary(ts, i))
+    .join('\n')
+
+  const suitesSection = `# Test Suites\n\n${suites}`
+  return [runsSummary, suitesSection].join('\n\n')
+}
+
+function getRunSummary(tr: TestRunResult): string {
   const time = `${(tr.time / 1000).toFixed(3)}s`
-  const headingLine = `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.skipped}** skipped and **${tr.failed}** failed.`
+  const headingLine1 = `### ${tr.path}`
+  const headingLine2 = `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.skipped}** skipped and **${tr.failed}** failed.`
 
   const suitesSummary = tr.suites.map((s, i) => {
     const icon = getResultIcon(s.result)
@@ -12,19 +24,16 @@ export default function getReport(tr: TestRunResult): string {
     const tsName = s.name
     const tsAddr = makeSuiteSlug(i, tsName).link
     const tsNameLink = link(tsName, tsAddr)
-    return [icon, tsNameLink, s.tests, tsTime, s.passed, s.failed, s.skipped]
+    return [icon, tsNameLink, s.tests, tsTime, s.passed, s.skipped, s.failed]
   })
 
   const summary = table(
-    ['Result', 'Suite', 'Tests', 'Time', `Passed ${Icon.success}`, `Failed ${Icon.fail}`, `Skipped ${Icon.skip}`],
+    ['Result', 'Suite', 'Tests', 'Time', `Passed ${Icon.success}`, `Skipped ${Icon.skip}`, `Failed ${Icon.fail}`],
     [Align.Center, Align.Left, Align.Right, Align.Right, Align.Right, Align.Right, Align.Right],
     ...suitesSummary
   )
 
-  const suites = tr.suites.map((ts, i) => getSuiteSummary(ts, i)).join('\n')
-  const suitesSection = `# Test Suites\n\n${suites}`
-
-  return `${headingLine}\n${summary}\n${suitesSection}`
+  return [headingLine1, headingLine2, summary].join('\n\n')
 }
 
 function getSuiteSummary(ts: TestSuiteResult, index: number): string {

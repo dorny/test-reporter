@@ -7,7 +7,7 @@ import {ParseOptions} from '../src/parsers/parser-types'
 const fixturePath = path.join(__dirname, 'fixtures', 'dotnet-trx.trx')
 const outputPath = path.join(__dirname, '__outputs__', 'dotnet-trx.md')
 const xmlFixture = {
-  path: fixturePath,
+  path: path.relative(__dirname, fixturePath),
   content: fs.readFileSync(fixturePath, {encoding: 'utf8'})
 }
 

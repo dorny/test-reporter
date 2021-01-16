@@ -99,5 +99,4 @@ __tests__/runner/*
 lib/**/*
 
 # Project specific
-__tests__/__outputs__
 __tests__/__results__

@@ -42,26 +42,37 @@ class Test {
 }
 
 export async function parseDotnetTrx(files: FileContent[], options: ParseOptions): Promise<TestResult> {
-  const trx = (await parseStringPromise(files[0].content, {
-    attrValueProcessors: [parseAttribute]
-  })) as TrxReport
+  const testRuns: TestRunResult[] = []
+  const testClasses: TestClass[] = []
 
-  const testClasses = getTestClasses(trx)
-  const testRun = getTestRunResult(trx, testClasses)
-  const success = testRun.result === 'success'
+  for (const file of files) {
+    const trx = await getTrxReport(file.content)
+    const tc = getTestClasses(trx)
+    const tr = getTestRunResult(file.path, trx, tc)
+    testRuns.push(tr)
+    testClasses.push(...tc)
+  }
+
+  const success = testRuns.every(tr => tr.result === 'success')
   const icon = success ? Icon.success : Icon.fail
 
   return {
     success,
     output: {
       title: `${options.name.trim()} ${icon}`,
-      summary: getReport(testRun),
+      summary: getReport(testRuns),
       annotations: options.annotations ? getAnnotations(testClasses, options.workDir, options.trackedFiles) : undefined
     }
   }
 }
 
-function getTestRunResult(trx: TrxReport, testClasses: TestClass[]): TestRunResult {
+async function getTrxReport(content: string): Promise<TrxReport> {
+  return (await parseStringPromise(content, {
+    attrValueProcessors: [parseAttribute]
+  })) as TrxReport
+}
+
+function getTestRunResult(path: string, trx: TrxReport, testClasses: TestClass[]): TestRunResult {
   const times = trx.TestRun.Times[0].$
   const totalTime = times.finish.getTime() - times.start.getTime()
 
@@ -71,7 +82,7 @@ function getTestRunResult(trx: TrxReport, testClasses: TestClass[]): TestRunResu
     return new TestSuiteResult(tc.name, [group])
   })
 
-  return new TestRunResult(suites, totalTime)
+  return new TestRunResult(path, suites, totalTime)
 }
 
 function getTestClasses(trx: TrxReport): TestClass[] {
