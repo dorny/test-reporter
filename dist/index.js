@@ -7,14 +7,33 @@ require('./sourcemap-register.js');module.exports =
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getFiles = void 0;
-const core_1 = __importDefault(__webpack_require__(2186));
-const github_1 = __importDefault(__webpack_require__(5438));
-const fs_1 = __importDefault(__webpack_require__(5747));
+const core = __importStar(__webpack_require__(2186));
+const github = __importStar(__webpack_require__(5438));
+const fs = __importStar(__webpack_require__(5747));
 const fast_glob_1 = __importDefault(__webpack_require__(3664));
 const dart_json_parser_1 = __webpack_require__(4528);
 const dotnet_trx_parser_1 = __webpack_require__(2664);
@@ -27,23 +46,23 @@ async function run() {
         await main();
     }
     catch (error) {
-        core_1.default.setFailed(error.message);
+        core.setFailed(error.message);
     }
 }
 async function main() {
-    const annotations = core_1.default.getInput('annotations', { required: true }) === 'true';
-    const failOnError = core_1.default.getInput('fail-on-error', { required: true }) === 'true';
-    const name = core_1.default.getInput('name', { required: true });
-    const path = core_1.default.getInput('path', { required: true });
-    const reporter = core_1.default.getInput('reporter', { required: true });
-    const token = core_1.default.getInput('token', { required: true });
-    const workDirInput = core_1.default.getInput('working-directory', { required: false });
+    const annotations = core.getInput('annotations', { required: true }) === 'true';
+    const failOnError = core.getInput('fail-on-error', { required: true }) === 'true';
+    const name = core.getInput('name', { required: true });
+    const path = core.getInput('path', { required: true });
+    const reporter = core.getInput('reporter', { required: true });
+    const token = core.getInput('token', { required: true });
+    const workDirInput = core.getInput('working-directory', { required: false });
     if (workDirInput) {
-        core_1.default.info(`Changing directory to ${workDirInput}`);
+        core.info(`Changing directory to ${workDirInput}`);
         process.chdir(workDirInput);
     }
     const workDir = file_utils_1.normalizeDirPath(process.cwd(), true);
-    const octokit = github_1.default.getOctokit(token);
+    const octokit = github.getOctokit(token);
     const sha = github_utils_1.getCheckRunSha();
     // We won't need tracked files if we are not going to create annotations
     const trackedFiles = annotations ? await git_1.listFiles() : [];
@@ -56,7 +75,7 @@ async function main() {
     const parser = getParser(reporter);
     const files = await getFiles(path);
     if (files.length === 0) {
-        core_1.default.setFailed(`No file matches path ${path}`);
+        core.setFailed(`No file matches path ${path}`);
         return;
     }
     const result = await parser(files, opts);
@@ -67,11 +86,11 @@ async function main() {
         conclusion,
         status: 'completed',
         output: result.output,
-        ...github_1.default.context.repo
+        ...github.context.repo
     });
-    core_1.default.setOutput('conclusion', conclusion);
+    core.setOutput('conclusion', conclusion);
     if (failOnError && !result.success) {
-        core_1.default.setFailed(`Failed test has been found and 'fail-on-error' option is set to ${failOnError}.`);
+        core.setFailed(`Failed test has been found and 'fail-on-error' option is set to ${failOnError}.`);
     }
 }
 function getParser(reporter) {
@@ -91,7 +110,7 @@ function getParser(reporter) {
 async function getFiles(pattern) {
     const paths = await fast_glob_1.default(pattern, { dot: true });
     return Promise.all(paths.map(async (path) => {
-        const content = await fs_1.default.promises.readFile(path, { encoding: 'utf8' });
+        const content = await fs.promises.readFile(path, { encoding: 'utf8' });
         return { path, content };
     }));
 }
