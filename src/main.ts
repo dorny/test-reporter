@@ -1,10 +1,12 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
+import * as fs from 'fs'
+import glob from 'fast-glob'
 import {parseDartJson} from './parsers/dart-json/dart-json-parser'
 import {parseDotnetTrx} from './parsers/dotnet-trx/dotnet-trx-parser'
 import {parseJestJunit} from './parsers/jest-junit/jest-junit-parser'
-import {ParseOptions, ParseTestResult} from './parsers/parser-types'
-import {getFileContent, normalizeDirPath} from './utils/file-utils'
+import {FileContent, ParseOptions, ParseTestResult} from './parsers/parser-types'
+import {normalizeDirPath} from './utils/file-utils'
 import {listFiles} from './utils/git'
 import {getCheckRunSha} from './utils/github-utils'
 
@@ -26,6 +28,7 @@ async function main(): Promise<void> {
   const workDirInput = core.getInput('working-directory', {required: false})
 
   if (workDirInput) {
+    core.info(`Changing directory to ${workDirInput}`)
     process.chdir(workDirInput)
   }
 
@@ -44,8 +47,14 @@ async function main(): Promise<void> {
   }
 
   const parser = getParser(reporter)
-  const content = getFileContent(path)
-  const result = await parser(content, opts)
+  const files = await getFiles(path)
+
+  if (files.length === 0) {
+    core.setFailed(`No file matches path ${path}`)
+    return
+  }
+
+  const result = await parser(files, opts)
   const conclusion = result.success ? 'success' : 'failure'
 
   await octokit.checks.create({
@@ -76,6 +85,16 @@ function getParser(reporter: string): ParseTestResult {
     default:
       throw new Error(`Input parameter 'reporter' is set to invalid value '${reporter}'`)
   }
+}
+
+export async function getFiles(pattern: string): Promise<FileContent[]> {
+  const paths = await glob(pattern, {dot: true})
+  return Promise.all(
+    paths.map(async path => {
+      const content = await fs.promises.readFile(path, {encoding: 'utf8'})
+      return {path, content}
+    })
+  )
 }
 
 run()

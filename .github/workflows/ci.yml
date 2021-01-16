@@ -24,5 +24,5 @@ jobs:
         uses: ./
         with:
           name: 'JEST Tests'
-          path: '__tests__/__results__/jest-junit.xml'
+          path: '__tests__/__results__/*.xml'
           reporter: 'jest-junit'

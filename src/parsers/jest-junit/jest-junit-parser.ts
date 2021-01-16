@@ -1,4 +1,4 @@
-import {Annotation, ParseOptions, TestResult} from '../parser-types'
+import {Annotation, FileContent, ParseOptions, TestResult} from '../parser-types'
 import {parseStringPromise} from 'xml2js'
 
 import {JunitReport, TestCase, TestSuite} from './jest-junit-types'
@@ -15,25 +15,37 @@ import {
 } from '../../report/test-results'
 import getReport from '../../report/get-report'
 
-export async function parseJestJunit(content: string, options: ParseOptions): Promise<TestResult> {
-  const junit = (await parseStringPromise(content, {
-    attrValueProcessors: [parseAttribute]
-  })) as JunitReport
-  const testsuites = junit.testsuites
-  const success = !(testsuites.$?.failures > 0 || testsuites.$?.errors > 0)
+export async function parseJestJunit(files: FileContent[], options: ParseOptions): Promise<TestResult> {
+  const junit: JunitReport[] = []
+  const testRuns: TestRunResult[] = []
+
+  for (const file of files) {
+    const ju = await getJunitReport(file.content)
+    const tr = getTestRunResult(file.path, ju)
+    junit.push(ju)
+    testRuns.push(tr)
+  }
+
+  const success = testRuns.every(tr => tr.result === 'success')
   const icon = success ? Icon.success : Icon.fail
 
   return {
     success,
     output: {
       title: `${options.name.trim()} ${icon}`,
-      summary: getSummary(junit),
+      summary: getReport(testRuns),
       annotations: options.annotations ? getAnnotations(junit, options.workDir, options.trackedFiles) : undefined
     }
   }
 }
 
-function getSummary(junit: JunitReport): string {
+async function getJunitReport(content: string): Promise<JunitReport> {
+  return (await parseStringPromise(content, {
+    attrValueProcessors: [parseAttribute]
+  })) as JunitReport
+}
+
+function getTestRunResult(path: string, junit: JunitReport): TestRunResult {
   const suites = junit.testsuites.testsuite.map(ts => {
     const name = ts.$.name.trim()
     const time = ts.$.time * 1000
@@ -42,8 +54,7 @@ function getSummary(junit: JunitReport): string {
   })
 
   const time = junit.testsuites.$.time * 1000
-  const tr = new TestRunResult(suites, time)
-  return getReport(tr)
+  return new TestRunResult(path, suites, time)
 }
 
 function getGroups(suite: TestSuite): TestGroupResult[] {
@@ -74,26 +85,28 @@ function getTestCaseResult(test: TestCase): TestExecutionResult {
   return 'success'
 }
 
-function getAnnotations(junit: JunitReport, workDir: string, trackedFiles: string[]): Annotation[] {
+function getAnnotations(junitReports: JunitReport[], workDir: string, trackedFiles: string[]): Annotation[] {
   const annotations: Annotation[] = []
-  for (const suite of junit.testsuites.testsuite) {
-    for (const tc of suite.testcase) {
-      if (!tc.failure) {
-        continue
-      }
-      for (const ex of tc.failure) {
-        const src = exceptionThrowSource(ex, workDir, trackedFiles)
-        if (src === null) {
+  for (const junit of junitReports) {
+    for (const suite of junit.testsuites.testsuite) {
+      for (const tc of suite.testcase) {
+        if (!tc.failure) {
           continue
         }
-        annotations.push({
-          annotation_level: 'failure',
-          start_line: src.line,
-          end_line: src.line,
-          path: src.file,
-          message: fixEol(ex),
-          title: `[${suite.$.name}] ${tc.$.name.trim()}`
-        })
+        for (const ex of tc.failure) {
+          const src = exceptionThrowSource(ex, workDir, trackedFiles)
+          if (src === null) {
+            continue
+          }
+          annotations.push({
+            annotation_level: 'failure',
+            start_line: src.line,
+            end_line: src.line,
+            path: src.file,
+            message: fixEol(ex),
+            title: `[${suite.$.name}] ${tc.$.name.trim()}`
+          })
+        }
       }
     }
   }

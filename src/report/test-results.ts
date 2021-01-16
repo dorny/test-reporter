@@ -1,5 +1,5 @@
 export class TestRunResult {
-  constructor(readonly suites: TestSuiteResult[], private totalTime?: number) {}
+  constructor(readonly path: string, readonly suites: TestSuiteResult[], private totalTime?: number) {}
 
   get tests(): number {
     return this.suites.reduce((sum, g) => sum + g.tests, 0)

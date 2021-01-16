@@ -13,7 +13,9 @@ export type Annotation = {
   raw_details?: string
 }
 
-export type ParseTestResult = (content: string, options: ParseOptions) => Promise<TestResult>
+export type ParseTestResult = (files: FileContent[], options: ParseOptions) => Promise<TestResult>
+
+export type FileContent = {path: string; content: string}
 
 export interface ParseOptions {
   name: string

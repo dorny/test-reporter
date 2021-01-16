@@ -1,4 +1,4 @@
-import {Annotation, ParseOptions, TestResult} from '../parser-types'
+import {Annotation, FileContent, ParseOptions, TestResult} from '../parser-types'
 
 import getReport from '../../report/get-report'
 import {normalizeFilePath} from '../../utils/file-utils'
@@ -28,7 +28,7 @@ import {
 } from '../../report/test-results'
 
 class TestRun {
-  constructor(readonly suites: TestSuite[], readonly success: boolean, readonly time: number) {}
+  constructor(readonly path: string, readonly suites: TestSuite[], readonly success: boolean, readonly time: number) {}
 }
 
 class TestSuite {
@@ -68,21 +68,23 @@ class TestCase {
   }
 }
 
-export async function parseDartJson(content: string, options: ParseOptions): Promise<TestResult> {
-  const testRun = getTestRun(content)
-  const icon = testRun.success ? Icon.success : Icon.fail
+export async function parseDartJson(files: FileContent[], options: ParseOptions): Promise<TestResult> {
+  const testRuns = files.map(f => getTestRun(f.path, f.content))
+  const testRunsResults = testRuns.map(getTestRunResult)
+  const success = testRuns.every(tr => tr.success)
+  const icon = success ? Icon.success : Icon.fail
 
   return {
-    success: testRun.success,
+    success,
     output: {
       title: `${options.name.trim()} ${icon}`,
-      summary: getReport(getTestRunResult(testRun)),
-      annotations: options.annotations ? getAnnotations(testRun, options.workDir, options.trackedFiles) : undefined
+      summary: getReport(testRunsResults),
+      annotations: options.annotations ? getAnnotations(testRuns, options.workDir, options.trackedFiles) : undefined
     }
   }
 }
 
-function getTestRun(content: string): TestRun {
+function getTestRun(path: string, content: string): TestRun {
   const lines = content.split(/\n\r?/g).filter(line => line !== '')
   const events = lines.map(str => JSON.parse(str)) as ReportEvent[]
 
@@ -112,7 +114,7 @@ function getTestRun(content: string): TestRun {
     }
   }
 
-  return new TestRun(Object.values(suites), success, totalTime)
+  return new TestRun(path, Object.values(suites), success, totalTime)
 }
 
 function getTestRunResult(tr: TestRun): TestRunResult {
@@ -120,7 +122,7 @@ function getTestRunResult(tr: TestRun): TestRunResult {
     return new TestSuiteResult(s.suite.path, getGroups(s))
   })
 
-  return new TestRunResult(suites, tr.time)
+  return new TestRunResult(tr.path, suites, tr.time)
 }
 
 function getGroups(suite: TestSuite): TestGroupResult[] {
@@ -134,15 +136,17 @@ function getGroups(suite: TestSuite): TestGroupResult[] {
   })
 }
 
-function getAnnotations(tr: TestRun, workDir: string, trackedFiles: string[]): Annotation[] {
+function getAnnotations(testRuns: TestRun[], workDir: string, trackedFiles: string[]): Annotation[] {
   const annotations: Annotation[] = []
-  for (const suite of tr.suites) {
-    for (const group of Object.values(suite.groups)) {
-      for (const test of group.tests) {
-        if (test.error) {
-          const err = getAnnotation(test, suite, workDir, trackedFiles)
-          if (err !== null) {
-            annotations.push(err)
+  for (const tr of testRuns) {
+    for (const suite of tr.suites) {
+      for (const group of Object.values(suite.groups)) {
+        for (const test of group.tests) {
+          if (test.error) {
+            const err = getAnnotation(test, suite, workDir, trackedFiles)
+            if (err !== null) {
+              annotations.push(err)
+            }
           }
         }
       }
