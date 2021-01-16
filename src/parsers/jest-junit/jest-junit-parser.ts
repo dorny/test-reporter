@@ -1,4 +1,4 @@
-import {Annotation, ParseOptions, TestResult} from '../parser-types'
+import {Annotation, FileContent, ParseOptions, TestResult} from '../parser-types'
 import {parseStringPromise} from 'xml2js'
 
 import {JunitReport, TestCase, TestSuite} from './jest-junit-types'
@@ -15,8 +15,8 @@ import {
 } from '../../report/test-results'
 import getReport from '../../report/get-report'
 
-export async function parseJestJunit(content: string, options: ParseOptions): Promise<TestResult> {
-  const junit = (await parseStringPromise(content, {
+export async function parseJestJunit(files: FileContent[], options: ParseOptions): Promise<TestResult> {
+  const junit = (await parseStringPromise(files[0].content, {
     attrValueProcessors: [parseAttribute]
   })) as JunitReport
   const testsuites = junit.testsuites

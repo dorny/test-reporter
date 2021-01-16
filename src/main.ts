@@ -5,7 +5,7 @@ import glob from 'fast-glob'
 import {parseDartJson} from './parsers/dart-json/dart-json-parser'
 import {parseDotnetTrx} from './parsers/dotnet-trx/dotnet-trx-parser'
 import {parseJestJunit} from './parsers/jest-junit/jest-junit-parser'
-import {ParseOptions, ParseTestResult} from './parsers/parser-types'
+import {FileContent, ParseOptions, ParseTestResult} from './parsers/parser-types'
 import {normalizeDirPath} from './utils/file-utils'
 import {listFiles} from './utils/git'
 import {getCheckRunSha} from './utils/github-utils'
@@ -54,7 +54,7 @@ async function main(): Promise<void> {
     return
   }
 
-  const result = await parser(files[0].content, opts)
+  const result = await parser(files, opts)
   const conclusion = result.success ? 'success' : 'failure'
 
   await octokit.checks.create({
@@ -87,7 +87,7 @@ function getParser(reporter: string): ParseTestResult {
   }
 }
 
-export async function getFiles(pattern: string): Promise<{path: string; content: string}[]> {
+export async function getFiles(pattern: string): Promise<FileContent[]> {
   const paths = await glob(pattern, {dot: true})
   return Promise.all(
     paths.map(async path => {

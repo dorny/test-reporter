@@ -4,8 +4,12 @@ import * as path from 'path'
 import {parseJestJunit} from '../src/parsers/jest-junit/jest-junit-parser'
 import {ParseOptions} from '../src/parsers/parser-types'
 
-const xmlFixture = fs.readFileSync(path.join(__dirname, 'fixtures', 'jest-junit.xml'), {encoding: 'utf8'})
-const outputPath = __dirname + '/__outputs__/jest-junit.md'
+const fixturePath = path.join(__dirname, 'fixtures', 'jest-junit.xml')
+const outputPath = path.join(__dirname, '__outputs__', 'jest-junit.md')
+const xmlFixture = {
+  path: fixturePath,
+  content: fs.readFileSync(fixturePath, {encoding: 'utf8'})
+}
 
 describe('jest-junit tests', () => {
   it('matches report snapshot', async () => {
@@ -16,7 +20,7 @@ describe('jest-junit tests', () => {
       workDir: 'C:/Users/Michal/Workspace/dorny/test-check/reports/jest/'
     }
 
-    const result = await parseJestJunit(xmlFixture, opts)
+    const result = await parseJestJunit([xmlFixture], opts)
     fs.mkdirSync(path.dirname(outputPath), {recursive: true})
     fs.writeFileSync(outputPath, result?.output?.summary ?? '')
 

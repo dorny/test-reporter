@@ -1,6 +1,6 @@
 import {ErrorInfo, Outcome, TestMethod, TrxReport} from './dotnet-trx-types'
 
-import {Annotation, ParseOptions, TestResult} from '../parser-types'
+import {Annotation, FileContent, ParseOptions, TestResult} from '../parser-types'
 import {parseStringPromise} from 'xml2js'
 
 import {normalizeFilePath} from '../../utils/file-utils'
@@ -41,8 +41,8 @@ class Test {
   }
 }
 
-export async function parseDotnetTrx(content: string, options: ParseOptions): Promise<TestResult> {
-  const trx = (await parseStringPromise(content, {
+export async function parseDotnetTrx(files: FileContent[], options: ParseOptions): Promise<TestResult> {
+  const trx = (await parseStringPromise(files[0].content, {
     attrValueProcessors: [parseAttribute]
   })) as TrxReport
 

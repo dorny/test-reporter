@@ -4,8 +4,12 @@ import * as path from 'path'
 import {parseDotnetTrx} from '../src/parsers/dotnet-trx/dotnet-trx-parser'
 import {ParseOptions} from '../src/parsers/parser-types'
 
-const xmlFixture = fs.readFileSync(path.join(__dirname, 'fixtures', 'dotnet-trx.trx'), {encoding: 'utf8'})
-const outputPath = __dirname + '/__outputs__/dotnet-trx.md'
+const fixturePath = path.join(__dirname, 'fixtures', 'dotnet-trx.trx')
+const outputPath = path.join(__dirname, '__outputs__', 'dotnet-trx.md')
+const xmlFixture = {
+  path: fixturePath,
+  content: fs.readFileSync(fixturePath, {encoding: 'utf8'})
+}
 
 describe('dotnet-trx tests', () => {
   it('matches report snapshot', async () => {
@@ -16,7 +20,7 @@ describe('dotnet-trx tests', () => {
       workDir: 'C:/Users/Michal/Workspace/dorny/test-check/reports/dotnet/'
     }
 
-    const result = await parseDotnetTrx(xmlFixture, opts)
+    const result = await parseDotnetTrx([xmlFixture], opts)
     fs.mkdirSync(path.dirname(outputPath), {recursive: true})
     fs.writeFileSync(outputPath, result?.output?.summary ?? '')
 

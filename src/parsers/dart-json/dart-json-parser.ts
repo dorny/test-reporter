@@ -1,4 +1,4 @@
-import {Annotation, ParseOptions, TestResult} from '../parser-types'
+import {Annotation, FileContent, ParseOptions, TestResult} from '../parser-types'
 
 import getReport from '../../report/get-report'
 import {normalizeFilePath} from '../../utils/file-utils'
@@ -68,8 +68,8 @@ class TestCase {
   }
 }
 
-export async function parseDartJson(content: string, options: ParseOptions): Promise<TestResult> {
-  const testRun = getTestRun(content)
+export async function parseDartJson(files: FileContent[], options: ParseOptions): Promise<TestResult> {
+  const testRun = getTestRun(files[0].content)
   const icon = testRun.success ? Icon.success : Icon.fail
 
   return {
