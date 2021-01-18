@@ -1,3 +1,4 @@
+import * as core from '@actions/core'
 import {Annotation, FileContent, ParseOptions, TestResult} from '../parser-types'
 import {parseStringPromise} from 'xml2js'
 
@@ -20,7 +21,7 @@ export async function parseJestJunit(files: FileContent[], options: ParseOptions
   const testRuns: TestRunResult[] = []
 
   for (const file of files) {
-    const ju = await getJunitReport(file.content)
+    const ju = await getJunitReport(file)
     const tr = getTestRunResult(file.path, ju)
     junit.push(ju)
     testRuns.push(tr)
@@ -39,10 +40,15 @@ export async function parseJestJunit(files: FileContent[], options: ParseOptions
   }
 }
 
-async function getJunitReport(content: string): Promise<JunitReport> {
-  return (await parseStringPromise(content, {
-    attrValueProcessors: [parseAttribute]
-  })) as JunitReport
+async function getJunitReport(file: FileContent): Promise<JunitReport> {
+  core.info(`Parsing content of '${file.path}'`)
+  try {
+    return (await parseStringPromise(file.content, {
+      attrValueProcessors: [parseAttribute]
+    })) as JunitReport
+  } catch (e) {
+    throw new Error(`Invalid XML at ${file.path}\n\n${e}`)
+  }
 }
 
 function getTestRunResult(path: string, junit: JunitReport): TestRunResult {

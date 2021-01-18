@@ -75,11 +75,13 @@ async function main() {
     const parser = getParser(reporter);
     const files = await getFiles(path);
     if (files.length === 0) {
-        core.setFailed(`No file matches path ${path}`);
+        core.setFailed(`No file matches path '${path}'`);
         return;
     }
+    core.info(`Using test report parser '${reporter}'`);
     const result = await parser(files, opts);
     const conclusion = result.success ? 'success' : 'failure';
+    core.info(`Creating check run '${name}' with conclusion '${conclusion}'`);
     await octokit.checks.create({
         head_sha: sha,
         name,
@@ -90,7 +92,7 @@ async function main() {
     });
     core.setOutput('conclusion', conclusion);
     if (failOnError && !result.success) {
-        core.setFailed(`Failed test has been found and 'fail-on-error' option is set to ${failOnError}.`);
+        core.setFailed(`Failed test has been found and 'fail-on-error' option is set to ${failOnError}`);
     }
 }
 function getParser(reporter) {
@@ -104,12 +106,13 @@ function getParser(reporter) {
         case 'jest-junit':
             return jest_junit_parser_1.parseJestJunit;
         default:
-            throw new Error(`Input parameter 'reporter' is set to invalid value '${reporter}'`);
+            throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`);
     }
 }
 async function getFiles(pattern) {
     const paths = await fast_glob_1.default(pattern, { dot: true });
     return Promise.all(paths.map(async (path) => {
+        core.info(`Reading test report '${path}'`);
         const content = await fs.promises.readFile(path, { encoding: 'utf8' });
         return { path, content };
     }));
@@ -125,11 +128,31 @@ run();
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.parseDartJson = void 0;
+const core = __importStar(__webpack_require__(2186));
 const get_report_1 = __importDefault(__webpack_require__(3737));
 const file_utils_1 = __webpack_require__(2711);
 const markdown_utils_1 = __webpack_require__(6482);
@@ -193,8 +216,22 @@ async function parseDartJson(files, options) {
 }
 exports.parseDartJson = parseDartJson;
 function getTestRun(path, content) {
-    const lines = content.split(/\n\r?/g).filter(line => line !== '');
-    const events = lines.map(str => JSON.parse(str));
+    core.info(`Parsing content of '${path}'`);
+    const lines = content.split(/\n\r?/g);
+    const events = lines
+        .map((str, i) => {
+        if (str.trim() === '') {
+            return null;
+        }
+        try {
+            return JSON.parse(str);
+        }
+        catch (e) {
+            const col = e.columnNumber !== undefined ? `:${e.columnNumber}` : '';
+            new Error(`Invalid JSON at ${path}:${i + 1}${col}\n\n${e}`);
+        }
+    })
+        .filter(evt => evt != null);
     let success = false;
     let totalTime = 0;
     const suites = {};
@@ -356,11 +393,31 @@ exports.isDoneEvent = isDoneEvent;
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.exceptionThrowSource = exports.parseDotnetTrx = void 0;
+const core = __importStar(__webpack_require__(2186));
 const xml2js_1 = __webpack_require__(6189);
 const file_utils_1 = __webpack_require__(2711);
 const xml_utils_1 = __webpack_require__(8653);
@@ -395,7 +452,7 @@ async function parseDotnetTrx(files, options) {
     const testRuns = [];
     const testClasses = [];
     for (const file of files) {
-        const trx = await getTrxReport(file.content);
+        const trx = await getTrxReport(file);
         const tc = getTestClasses(trx);
         const tr = getTestRunResult(file.path, trx, tc);
         testRuns.push(tr);
@@ -413,10 +470,16 @@ async function parseDotnetTrx(files, options) {
     };
 }
 exports.parseDotnetTrx = parseDotnetTrx;
-async function getTrxReport(content) {
-    return (await xml2js_1.parseStringPromise(content, {
-        attrValueProcessors: [xml_utils_1.parseAttribute]
-    }));
+async function getTrxReport(file) {
+    core.info(`Parsing content of '${file.path}'`);
+    try {
+        return (await xml2js_1.parseStringPromise(file.content, {
+            attrValueProcessors: [xml_utils_1.parseAttribute]
+        }));
+    }
+    catch (e) {
+        throw new Error(`Invalid XML at ${file.path}\n\n${e}`);
+    }
 }
 function getTestRunResult(path, trx, testClasses) {
     const times = trx.TestRun.Times[0].$;
@@ -508,11 +571,31 @@ exports.exceptionThrowSource = exceptionThrowSource;
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.exceptionThrowSource = exports.parseJestJunit = void 0;
+const core = __importStar(__webpack_require__(2186));
 const xml2js_1 = __webpack_require__(6189);
 const markdown_utils_1 = __webpack_require__(6482);
 const file_utils_1 = __webpack_require__(2711);
@@ -523,7 +606,7 @@ async function parseJestJunit(files, options) {
     const junit = [];
     const testRuns = [];
     for (const file of files) {
-        const ju = await getJunitReport(file.content);
+        const ju = await getJunitReport(file);
         const tr = getTestRunResult(file.path, ju);
         junit.push(ju);
         testRuns.push(tr);
@@ -540,10 +623,16 @@ async function parseJestJunit(files, options) {
     };
 }
 exports.parseJestJunit = parseJestJunit;
-async function getJunitReport(content) {
-    return (await xml2js_1.parseStringPromise(content, {
-        attrValueProcessors: [xml_utils_1.parseAttribute]
-    }));
+async function getJunitReport(file) {
+    core.info(`Parsing content of '${file.path}'`);
+    try {
+        return (await xml2js_1.parseStringPromise(file.content, {
+            attrValueProcessors: [xml_utils_1.parseAttribute]
+        }));
+    }
+    catch (e) {
+        throw new Error(`Invalid XML at ${file.path}\n\n${e}`);
+    }
 }
 function getTestRunResult(path, junit) {
     const suites = junit.testsuites.testsuite.map(ts => {
@@ -633,11 +722,31 @@ exports.exceptionThrowSource = exceptionThrowSource;
 /***/ }),
 
 /***/ 3737:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+const core = __importStar(__webpack_require__(2186));
 const markdown_utils_1 = __webpack_require__(6482);
 const slugger_1 = __webpack_require__(3328);
 function getReport(results) {
@@ -651,6 +760,7 @@ function getReport(results) {
 }
 exports.default = getReport;
 function getRunSummary(tr) {
+    core.info('Generating check run summary');
     const time = `${(tr.time / 1000).toFixed(3)}s`;
     const headingLine1 = `### ${tr.path}`;
     const headingLine2 = `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.skipped}** skipped and **${tr.failed}** failed.`;

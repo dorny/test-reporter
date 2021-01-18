@@ -1,3 +1,4 @@
+import * as core from '@actions/core'
 import {TestExecutionResult, TestRunResult, TestSuiteResult} from './test-results'
 import {Align, Icon, link, table} from '../utils/markdown-utils'
 import {slug} from '../utils/slugger'
@@ -14,6 +15,7 @@ export default function getReport(results: TestRunResult[]): string {
 }
 
 function getRunSummary(tr: TestRunResult): string {
+  core.info('Generating check run summary')
   const time = `${(tr.time / 1000).toFixed(3)}s`
   const headingLine1 = `### ${tr.path}`
   const headingLine2 = `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.skipped}** skipped and **${tr.failed}** failed.`
