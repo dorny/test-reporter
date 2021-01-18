@@ -1,3 +1,4 @@
+import * as core from '@actions/core'
 import {ErrorInfo, Outcome, TestMethod, TrxReport} from './dotnet-trx-types'
 
 import {Annotation, FileContent, ParseOptions, TestResult} from '../parser-types'
@@ -29,7 +30,7 @@ class Test {
     readonly error?: ErrorInfo
   ) {}
 
-  get result(): TestExecutionResult {
+  get result(): TestExecutionResult | undefined {
     switch (this.outcome) {
       case 'Passed':
         return 'success'
@@ -46,7 +47,7 @@ export async function parseDotnetTrx(files: FileContent[], options: ParseOptions
   const testClasses: TestClass[] = []
 
   for (const file of files) {
-    const trx = await getTrxReport(file.content)
+    const trx = await getTrxReport(file)
     const tc = getTestClasses(trx)
     const tr = getTestRunResult(file.path, trx, tc)
     testRuns.push(tr)
@@ -66,10 +67,15 @@ export async function parseDotnetTrx(files: FileContent[], options: ParseOptions
   }
 }
 
-async function getTrxReport(content: string): Promise<TrxReport> {
-  return (await parseStringPromise(content, {
-    attrValueProcessors: [parseAttribute]
-  })) as TrxReport
+async function getTrxReport(file: FileContent): Promise<TrxReport> {
+  core.info(`Parsing content of '${file.path}'`)
+  try {
+    return (await parseStringPromise(file.content, {
+      attrValueProcessors: [parseAttribute]
+    })) as TrxReport
+  } catch (e) {
+    throw new Error(`Invalid XML at ${file.path}\n\n${e}`)
+  }
 }
 
 function getTestRunResult(path: string, trx: TrxReport, testClasses: TestClass[]): TestRunResult {

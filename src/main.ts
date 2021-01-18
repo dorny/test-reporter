@@ -50,13 +50,15 @@ async function main(): Promise<void> {
   const files = await getFiles(path)
 
   if (files.length === 0) {
-    core.setFailed(`No file matches path ${path}`)
+    core.setFailed(`No file matches path '${path}'`)
     return
   }
 
+  core.info(`Using test report parser '${reporter}'`)
   const result = await parser(files, opts)
   const conclusion = result.success ? 'success' : 'failure'
 
+  core.info(`Creating check run '${name}' with conclusion '${conclusion}'`)
   await octokit.checks.create({
     head_sha: sha,
     name,
@@ -68,7 +70,7 @@ async function main(): Promise<void> {
 
   core.setOutput('conclusion', conclusion)
   if (failOnError && !result.success) {
-    core.setFailed(`Failed test has been found and 'fail-on-error' option is set to ${failOnError}.`)
+    core.setFailed(`Failed test has been found and 'fail-on-error' option is set to ${failOnError}`)
   }
 }
 
@@ -83,7 +85,7 @@ function getParser(reporter: string): ParseTestResult {
     case 'jest-junit':
       return parseJestJunit
     default:
-      throw new Error(`Input parameter 'reporter' is set to invalid value '${reporter}'`)
+      throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`)
   }
 }
 
@@ -91,6 +93,7 @@ export async function getFiles(pattern: string): Promise<FileContent[]> {
   const paths = await glob(pattern, {dot: true})
   return Promise.all(
     paths.map(async path => {
+      core.info(`Reading test report '${path}'`)
       const content = await fs.promises.readFile(path, {encoding: 'utf8'})
       return {path, content}
     })

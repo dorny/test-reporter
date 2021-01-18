@@ -1,3 +1,4 @@
+import * as core from '@actions/core'
 import {Annotation, FileContent, ParseOptions, TestResult} from '../parser-types'
 
 import getReport from '../../report/get-report'
@@ -85,8 +86,21 @@ export async function parseDartJson(files: FileContent[], options: ParseOptions)
 }
 
 function getTestRun(path: string, content: string): TestRun {
-  const lines = content.split(/\n\r?/g).filter(line => line !== '')
-  const events = lines.map(str => JSON.parse(str)) as ReportEvent[]
+  core.info(`Parsing content of '${path}'`)
+  const lines = content.split(/\n\r?/g)
+  const events = lines
+    .map((str, i) => {
+      if (str.trim() === '') {
+        return null
+      }
+      try {
+        return JSON.parse(str)
+      } catch (e) {
+        const col = e.columnNumber !== undefined ? `:${e.columnNumber}` : ''
+        new Error(`Invalid JSON at ${path}:${i + 1}${col}\n\n${e}`)
+      }
+    })
+    .filter(evt => evt != null) as ReportEvent[]
 
   let success = false
   let totalTime = 0
