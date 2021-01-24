@@ -90,14 +90,17 @@ function getParser(reporter: string): ParseTestResult {
 }
 
 export async function getFiles(pattern: string): Promise<FileContent[]> {
-  const paths = await glob(pattern, {dot: true})
-  return Promise.all(
+  const paths = (await Promise.all(pattern.split(',').map(async pat => glob(pat, {dot: true})))).flat()
+
+  const files = Promise.all(
     paths.map(async path => {
       core.info(`Reading test report '${path}'`)
       const content = await fs.promises.readFile(path, {encoding: 'utf8'})
       return {path, content}
     })
   )
+
+  return files
 }
 
 run()

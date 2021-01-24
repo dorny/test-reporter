@@ -49,9 +49,9 @@ jobs:
     # Name of the Check Run which will be created
     name: ''
 
-    # Path to test report
+    # Coma separated list of paths to test reports
     # Supports wildcards via [fast-glob](https://github.com/mrmlnc/fast-glob)
-    # Path may match multiple result files of same format
+    # All matched result files must be of same format
     path: ''
 
     # Format of test report. Supported options:

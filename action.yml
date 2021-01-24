@@ -16,7 +16,10 @@ inputs:
     description: Name of the check run
     required: true
   path:
-    description: Path to test report
+    description: |
+      Coma separated list of paths to test reports
+      Supports wildcards via [fast-glob](https://github.com/mrmlnc/fast-glob)
+      All matched files must be of same format
     required: true
   reporter:
     description: |
