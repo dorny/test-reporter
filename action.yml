@@ -1,26 +1,22 @@
-name: 'Test Check Reporter'
+name: Test Reporter
 description: |
-  Presents test results from popular testing frameworks as Github check run.
-  Supports:
-    - dotnet (trx logger)
-    - flutter (JSON output with '--machine' flag )
-    - jest (jest-junit reporter)
-
-author: 'Michal Dorner <dorner.michal@gmail.com>'
+  Displays test results from popular testing frameworks directly in GitHub.
+  Supports .NET (xUnit, NUnit, MSTest), Dart, Flutter and JavaScript (JEST).
+author: Michal Dorner <dorner.michal@gmail.com>
 inputs:
   annotations:
-    description: 'Annotate code where exceptions in tests were thrown'
+    description: Enables code annotations with error message and stack trace captured during test execution
     required: true
     default: 'true'
   fail-on-error:
-    description: 'Set this action as failed if test report contains any failed test'
+    description: Set this action as failed if test report contain any failed test
     required: true
     default: 'true'
   name:
-    description: 'Name of the check run'
+    description: Name of the check run
     required: true
   path:
-    description: 'Path to test report'
+    description: Path to test report
     required: true
   reporter:
     description: |
@@ -31,11 +27,11 @@ inputs:
         - jest-junit
     required: true
   token:
-    description: 'GitHub Access Token'
+    description: GitHub Access Token
     required: false
     default: ${{ github.token }}
   working-directory:
-    description: 'Relative path under $GITHUB_WORKSPACE where the repository was checked out.'
+    description: Relative path under $GITHUB_WORKSPACE where the repository was checked out
     required: false
 outputs:
   conclusion:
@@ -46,3 +42,6 @@ outputs:
 runs:
   using: 'node12'
   main: 'dist/index.js'
+branding:
+  color: blue
+  icon: file-text

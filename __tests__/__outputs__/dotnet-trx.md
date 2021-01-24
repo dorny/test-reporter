@@ -1,3 +1,5 @@
+![Tests failed](https://img.shields.io/badge/tests-3%20passed%2C%201%20skipped%2C%203%20failed-critical)
+
 ### fixtures/dotnet-trx.trx
 
 **7** tests were completed in **1.061s** with **3** passed, **1** skipped and **3** failed.
