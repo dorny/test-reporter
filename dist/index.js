@@ -110,12 +110,13 @@ function getParser(reporter) {
     }
 }
 async function getFiles(pattern) {
-    const paths = await fast_glob_1.default(pattern, { dot: true });
-    return Promise.all(paths.map(async (path) => {
+    const paths = (await Promise.all(pattern.split(',').map(async (pat) => fast_glob_1.default(pat, { dot: true })))).flat();
+    const files = Promise.all(paths.map(async (path) => {
         core.info(`Reading test report '${path}'`);
         const content = await fs.promises.readFile(path, { encoding: 'utf8' });
         return { path, content };
     }));
+    return files;
 }
 exports.getFiles = getFiles;
 run();
@@ -420,8 +421,8 @@ exports.exceptionThrowSource = exports.parseDotnetTrx = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const xml2js_1 = __nccwpck_require__(6189);
 const file_utils_1 = __nccwpck_require__(2711);
-const xml_utils_1 = __nccwpck_require__(8653);
 const markdown_utils_1 = __nccwpck_require__(6482);
+const parse_utils_1 = __nccwpck_require__(7811);
 const test_results_1 = __nccwpck_require__(8407);
 const get_report_1 = __importDefault(__nccwpck_require__(3737));
 class TestClass {
@@ -473,9 +474,7 @@ exports.parseDotnetTrx = parseDotnetTrx;
 async function getTrxReport(file) {
     core.info(`Parsing content of '${file.path}'`);
     try {
-        return (await xml2js_1.parseStringPromise(file.content, {
-            attrValueProcessors: [xml_utils_1.parseAttribute]
-        }));
+        return (await xml2js_1.parseStringPromise(file.content));
     }
     catch (e) {
         throw new Error(`Invalid XML at ${file.path}\n\n${e}`);
@@ -483,7 +482,7 @@ async function getTrxReport(file) {
 }
 function getTestRunResult(path, trx, testClasses) {
     const times = trx.TestRun.Times[0].$;
-    const totalTime = times.finish.getTime() - times.start.getTime();
+    const totalTime = parse_utils_1.parseIsoDate(times.finish).getTime() - parse_utils_1.parseIsoDate(times.start).getTime();
     const suites = testClasses.map(tc => {
         const tests = tc.tests.map(t => new test_results_1.TestCaseResult(t.name, t.result, t.duration));
         const group = new test_results_1.TestGroupResult(null, tests);
@@ -512,7 +511,8 @@ function getTestClasses(trx) {
         }
         const output = r.unitTestResult.Output;
         const error = (output === null || output === void 0 ? void 0 : output.length) > 0 && ((_a = output[0].ErrorInfo) === null || _a === void 0 ? void 0 : _a.length) > 0 ? output[0].ErrorInfo[0] : undefined;
-        const test = new Test(r.testMethod.$.name, r.unitTestResult.$.outcome, r.unitTestResult.$.duration, error);
+        const duration = parse_utils_1.parseNetDuration(r.unitTestResult.$.duration);
+        const test = new Test(r.testMethod.$.name, r.unitTestResult.$.outcome, duration, error);
         tc.tests.push(test);
     }
     const result = Object.values(testClasses);
@@ -599,7 +599,6 @@ const core = __importStar(__nccwpck_require__(2186));
 const xml2js_1 = __nccwpck_require__(6189);
 const markdown_utils_1 = __nccwpck_require__(6482);
 const file_utils_1 = __nccwpck_require__(2711);
-const xml_utils_1 = __nccwpck_require__(8653);
 const test_results_1 = __nccwpck_require__(8407);
 const get_report_1 = __importDefault(__nccwpck_require__(3737));
 async function parseJestJunit(files, options) {
@@ -626,9 +625,7 @@ exports.parseJestJunit = parseJestJunit;
 async function getJunitReport(file) {
     core.info(`Parsing content of '${file.path}'`);
     try {
-        return (await xml2js_1.parseStringPromise(file.content, {
-            attrValueProcessors: [xml_utils_1.parseAttribute]
-        }));
+        return (await xml2js_1.parseStringPromise(file.content));
     }
     catch (e) {
         throw new Error(`Invalid XML at ${file.path}\n\n${e}`);
@@ -637,11 +634,11 @@ async function getJunitReport(file) {
 function getTestRunResult(path, junit) {
     const suites = junit.testsuites.testsuite.map(ts => {
         const name = ts.$.name.trim();
-        const time = ts.$.time * 1000;
+        const time = parseFloat(ts.$.time) * 1000;
         const sr = new test_results_1.TestSuiteResult(name, getGroups(ts), time);
         return sr;
     });
-    const time = junit.testsuites.$.time * 1000;
+    const time = parseFloat(junit.testsuites.$.time) * 1000;
     return new test_results_1.TestRunResult(path, suites, time);
 }
 function getGroups(suite) {
@@ -658,7 +655,7 @@ function getGroups(suite) {
         const tests = grp.tests.map(tc => {
             const name = tc.$.name.trim();
             const result = getTestCaseResult(tc);
-            const time = tc.$.time * 1000;
+            const time = parseFloat(tc.$.time) * 1000;
             return new test_results_1.TestCaseResult(name, result, time);
         });
         return new test_results_1.TestGroupResult(grp.describe, tests);
@@ -1123,6 +1120,36 @@ exports.fixEol = fixEol;
 
 /***/ }),
 
+/***/ 7811:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.parseIsoDate = exports.parseNetDuration = void 0;
+function parseNetDuration(str) {
+    // matches dotnet duration: 00:00:00.0010000
+    const durationRe = /^(\d\d):(\d\d):(\d\d\.\d+)$/;
+    const durationMatch = str.match(durationRe);
+    if (durationMatch === null) {
+        throw new Error(`Invalid format: "${str}" is not NET duration`);
+    }
+    const [_, hourStr, minStr, secStr] = durationMatch;
+    return (parseInt(hourStr) * 3600 + parseInt(minStr) * 60 + parseFloat(secStr)) * 1000;
+}
+exports.parseNetDuration = parseNetDuration;
+function parseIsoDate(str) {
+    const isoDateRe = /^\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)$/;
+    if (str === undefined || !isoDateRe.test(str)) {
+        throw new Error(`Invalid format: "${str}" is not ISO date`);
+    }
+    return new Date(str);
+}
+exports.parseIsoDate = parseIsoDate;
+
+
+/***/ }),
+
 /***/ 3328:
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -1144,39 +1171,6 @@ function slug(name) {
     return { id, link };
 }
 exports.slug = slug;
-
-
-/***/ }),
-
-/***/ 8653:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.parseAttribute = void 0;
-const isoDateRe = /^\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)$/;
-// matches dotnet duration: 00:00:00.0010000
-const durationRe = /^(\d\d):(\d\d):(\d\d\.\d+)$/;
-function parseAttribute(str) {
-    if (str === '' || str === undefined) {
-        return str;
-    }
-    if (isoDateRe.test(str)) {
-        return new Date(str);
-    }
-    const durationMatch = str.match(durationRe);
-    if (durationMatch !== null) {
-        const [_, hourStr, minStr, secStr] = durationMatch;
-        return (parseInt(hourStr) * 3600 + parseInt(minStr) * 60 + parseFloat(secStr)) * 1000;
-    }
-    const num = parseFloat(str);
-    if (isNaN(num)) {
-        return str;
-    }
-    return num;
-}
-exports.parseAttribute = parseAttribute;
 
 
 /***/ }),
