@@ -5,8 +5,8 @@ import {Annotation, FileContent, ParseOptions, TestResult} from '../parser-types
 import {parseStringPromise} from 'xml2js'
 
 import {normalizeFilePath} from '../../utils/file-utils'
-import {parseAttribute} from '../../utils/xml-utils'
 import {Icon, fixEol} from '../../utils/markdown-utils'
+import {parseIsoDate, parseNetDuration} from '../../utils/parse-utils'
 
 import {
   TestExecutionResult,
@@ -70,9 +70,7 @@ export async function parseDotnetTrx(files: FileContent[], options: ParseOptions
 async function getTrxReport(file: FileContent): Promise<TrxReport> {
   core.info(`Parsing content of '${file.path}'`)
   try {
-    return (await parseStringPromise(file.content, {
-      attrValueProcessors: [parseAttribute]
-    })) as TrxReport
+    return (await parseStringPromise(file.content)) as TrxReport
   } catch (e) {
     throw new Error(`Invalid XML at ${file.path}\n\n${e}`)
   }
@@ -80,7 +78,7 @@ async function getTrxReport(file: FileContent): Promise<TrxReport> {
 
 function getTestRunResult(path: string, trx: TrxReport, testClasses: TestClass[]): TestRunResult {
   const times = trx.TestRun.Times[0].$
-  const totalTime = times.finish.getTime() - times.start.getTime()
+  const totalTime = parseIsoDate(times.finish).getTime() - parseIsoDate(times.start).getTime()
 
   const suites = testClasses.map(tc => {
     const tests = tc.tests.map(t => new TestCaseResult(t.name, t.result, t.duration))
@@ -113,7 +111,8 @@ function getTestClasses(trx: TrxReport): TestClass[] {
     }
     const output = r.unitTestResult.Output
     const error = output?.length > 0 && output[0].ErrorInfo?.length > 0 ? output[0].ErrorInfo[0] : undefined
-    const test = new Test(r.testMethod.$.name, r.unitTestResult.$.outcome, r.unitTestResult.$.duration, error)
+    const duration = parseNetDuration(r.unitTestResult.$.duration)
+    const test = new Test(r.testMethod.$.name, r.unitTestResult.$.outcome, duration, error)
     tc.tests.push(test)
   }
 

@@ -5,7 +5,6 @@ import {parseStringPromise} from 'xml2js'
 import {JunitReport, TestCase, TestSuite} from './jest-junit-types'
 import {fixEol, Icon} from '../../utils/markdown-utils'
 import {normalizeFilePath} from '../../utils/file-utils'
-import {parseAttribute} from '../../utils/xml-utils'
 
 import {
   TestExecutionResult,
@@ -43,9 +42,7 @@ export async function parseJestJunit(files: FileContent[], options: ParseOptions
 async function getJunitReport(file: FileContent): Promise<JunitReport> {
   core.info(`Parsing content of '${file.path}'`)
   try {
-    return (await parseStringPromise(file.content, {
-      attrValueProcessors: [parseAttribute]
-    })) as JunitReport
+    return (await parseStringPromise(file.content)) as JunitReport
   } catch (e) {
     throw new Error(`Invalid XML at ${file.path}\n\n${e}`)
   }
@@ -54,12 +51,12 @@ async function getJunitReport(file: FileContent): Promise<JunitReport> {
 function getTestRunResult(path: string, junit: JunitReport): TestRunResult {
   const suites = junit.testsuites.testsuite.map(ts => {
     const name = ts.$.name.trim()
-    const time = ts.$.time * 1000
+    const time = parseFloat(ts.$.time) * 1000
     const sr = new TestSuiteResult(name, getGroups(ts), time)
     return sr
   })
 
-  const time = junit.testsuites.$.time * 1000
+  const time = parseFloat(junit.testsuites.$.time) * 1000
   return new TestRunResult(path, suites, time)
 }
 
@@ -78,7 +75,7 @@ function getGroups(suite: TestSuite): TestGroupResult[] {
     const tests = grp.tests.map(tc => {
       const name = tc.$.name.trim()
       const result = getTestCaseResult(tc)
-      const time = tc.$.time * 1000
+      const time = parseFloat(tc.$.time) * 1000
       return new TestCaseResult(name, result, time)
     })
     return new TestGroupResult(grp.describe, tests)
