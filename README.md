@@ -27,17 +27,17 @@ jobs:
     name: 'Build & Test'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2          # checkout the repo
-      - run: npm ci                        # install packages
-      - run: npm test                      # run tests (configured to use jest-junit reporter)
+      - uses: actions/checkout@v2     # checkout the repo
+      - run: npm ci                   # install packages
+      - run: npm test                 # run tests (configured to use jest-junit reporter)
 
       - name: 'Test Report'
         uses: dorny/test-reporter@v1
-        if: always()                       # run this step even if previous step failed
+        if: always()                  # run this step even if previous step failed
         with:
-          name: 'JEST Tests'               # Name of the check run which will be created
-          path: '__reports__/jest-*.xml'   # Path to test report
-          reporter: 'jest-junit'           # Format of test report
+          name: 'JEST Tests'          # Name of the check run which will be created
+          path: 'reports/jest-*.xml'  # Path to test report
+          reporter: 'jest-junit'      # Format of test report
 ```
 
 ## Usage
@@ -61,7 +61,7 @@ jobs:
     #   jest-junit
     reporter: ''
 
-    # Enables code annotations with error message and stack trace
+    # Enables code annotations with error message and stack trace captured during test execution
     annotations: 'true'
 
     # Set action as failed if test report contain any failed test
@@ -162,7 +162,7 @@ You can use following example configuration in `package.json`:
   "jest-junit": "^12.0.0"
 },
 "jest-junit": {
-  "outputDirectory": "__reports__",
+  "outputDirectory": "reports",
   "outputName": "jest-junit.xml",
   "ancestorSeparator": " › ",
   "uniqueOutputName": "false",
@@ -174,6 +174,9 @@ You can use following example configuration in `package.json`:
 
 Configuration of `uniqueOutputName`, `suiteNameTemplate`, `classNameTemplate`, `titleTemplate` is important for proper visualization of test results.
 </details>
+
+## See also
+- [paths-filter](https://github.com/dorny/paths-filter) - Conditionally run actions based on files modified by PR, feature branch or pushed commits
 
 ## License
 
