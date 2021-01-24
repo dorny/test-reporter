@@ -1,3 +1,5 @@
+![Tests failed](https://img.shields.io/badge/tests-1%20passed%2C%201%20skipped%2C%204%20failed-critical)
+
 ### fixtures/dart-json.json
 
 **6** tests were completed in **3.760s** with **1** passed, **1** skipped and **4** failed.

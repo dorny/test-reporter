@@ -4,6 +4,7 @@ import {Align, Icon, link, table} from '../utils/markdown-utils'
 import {slug} from '../utils/slugger'
 
 export default function getReport(results: TestRunResult[]): string {
+  const badge = getBadge(results)
   const runsSummary = results.map(getRunSummary).join('\n\n')
   const suites = results
     .flatMap(tr => tr.suites)
@@ -11,7 +12,28 @@ export default function getReport(results: TestRunResult[]): string {
     .join('\n')
 
   const suitesSection = `# Test Suites\n\n${suites}`
-  return [runsSummary, suitesSection].join('\n\n')
+  return [badge, runsSummary, suitesSection].join('\n\n')
+}
+
+function getBadge(results: TestRunResult[]): string {
+  const passed = results.reduce((sum, tr) => sum + tr.passed, 0)
+  const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0)
+  const failed = results.reduce((sum, tr) => sum + tr.failed, 0)
+
+  const passedText = passed > 0 ? `${passed} passed` : null
+  const skippedText = skipped > 0 ? `${skipped} skipped` : null
+  const failedText = failed > 0 ? `${failed} failed` : null
+  const message = [passedText, skippedText, failedText].filter(s => s != null).join(', ') || 'none'
+  let color = 'success'
+  if (failed > 0) {
+    color = 'critical'
+  } else if (passed === 0 && failed === 0) {
+    color = 'yellow'
+  }
+
+  const uri = encodeURIComponent(`tests-${message}-${color}`)
+  const text = failed > 0 ? 'Tests failed' : 'Tests passed successfully'
+  return `![${text}](https://img.shields.io/badge/${uri})`
 }
 
 function getRunSummary(tr: TestRunResult): string {
