@@ -38,9 +38,11 @@ const fast_glob_1 = __importDefault(__nccwpck_require__(3664));
 const dart_json_parser_1 = __nccwpck_require__(4528);
 const dotnet_trx_parser_1 = __nccwpck_require__(2664);
 const jest_junit_parser_1 = __nccwpck_require__(1113);
+const get_report_1 = __nccwpck_require__(3737);
 const file_utils_1 = __nccwpck_require__(2711);
 const git_1 = __nccwpck_require__(9844);
 const github_utils_1 = __nccwpck_require__(3522);
+const markdown_utils_1 = __nccwpck_require__(6482);
 async function run() {
     try {
         await main();
@@ -50,13 +52,27 @@ async function run() {
     }
 }
 async function main() {
-    const annotations = core.getInput('annotations', { required: true }) === 'true';
-    const failOnError = core.getInput('fail-on-error', { required: true }) === 'true';
     const name = core.getInput('name', { required: true });
     const path = core.getInput('path', { required: true });
     const reporter = core.getInput('reporter', { required: true });
-    const token = core.getInput('token', { required: true });
+    const listSuites = core.getInput('list-suites', { required: true });
+    const listTests = core.getInput('list-tests', { required: true });
+    const maxAnnotations = parseInt(core.getInput('max-annotations', { required: true }));
+    const failOnError = core.getInput('fail-on-error', { required: true }) === 'true';
     const workDirInput = core.getInput('working-directory', { required: false });
+    const token = core.getInput('token', { required: true });
+    if (listSuites !== 'all' && listSuites !== 'only-failed') {
+        core.setFailed(`Input parameter 'list-suites' has invalid value`);
+        return;
+    }
+    if (listTests !== 'all' && listTests !== 'only-failed' && listTests !== 'none') {
+        core.setFailed(`Input parameter 'list-tests' has invalid value`);
+        return;
+    }
+    if (isNaN(maxAnnotations) || maxAnnotations < 0 || maxAnnotations > 50) {
+        core.setFailed(`Input parameter 'max-annotations' has invalid value`);
+        return;
+    }
     if (workDirInput) {
         core.info(`Changing directory to ${workDirInput}`);
         process.chdir(workDirInput);
@@ -65,12 +81,12 @@ async function main() {
     const octokit = github.getOctokit(token);
     const sha = github_utils_1.getCheckRunSha();
     // We won't need tracked files if we are not going to create annotations
+    const annotations = maxAnnotations > 0;
     const trackedFiles = annotations ? await git_1.listFiles() : [];
     const opts = {
-        name,
-        annotations,
         trackedFiles,
-        workDir
+        workDir,
+        annotations
     };
     const parser = getParser(reporter);
     const files = await getFiles(path);
@@ -80,18 +96,25 @@ async function main() {
     }
     core.info(`Using test report parser '${reporter}'`);
     const result = await parser(files, opts);
-    const conclusion = result.success ? 'success' : 'failure';
+    github_utils_1.enforceCheckRunLimits(result, maxAnnotations);
+    const isFailed = result.testRuns.some(tr => tr.result === 'failed');
+    const conclusion = isFailed ? 'failure' : 'success';
+    const icon = isFailed ? markdown_utils_1.Icon.fail : markdown_utils_1.Icon.success;
     core.info(`Creating check run '${name}' with conclusion '${conclusion}'`);
     await octokit.checks.create({
         head_sha: sha,
         name,
         conclusion,
         status: 'completed',
-        output: result.output,
+        output: {
+            title: `${name} ${icon}`,
+            summary: get_report_1.getReport(result.testRuns, { listSuites, listTests }),
+            annotations: result.annotations
+        },
         ...github.context.repo
     });
     core.setOutput('conclusion', conclusion);
-    if (failOnError && !result.success) {
+    if (failOnError && isFailed) {
         core.setFailed(`Failed test has been found and 'fail-on-error' option is set to ${failOnError}`);
     }
 }
@@ -148,13 +171,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.parseDartJson = void 0;
 const core = __importStar(__nccwpck_require__(2186));
-const get_report_1 = __importDefault(__nccwpck_require__(3737));
 const file_utils_1 = __nccwpck_require__(2711);
 const markdown_utils_1 = __nccwpck_require__(6482);
 const dart_json_types_1 = __nccwpck_require__(7887);
@@ -204,15 +223,9 @@ class TestCase {
 async function parseDartJson(files, options) {
     const testRuns = files.map(f => getTestRun(f.path, f.content));
     const testRunsResults = testRuns.map(getTestRunResult);
-    const success = testRuns.every(tr => tr.success);
-    const icon = success ? markdown_utils_1.Icon.success : markdown_utils_1.Icon.fail;
     return {
-        success,
-        output: {
-            title: `${options.name.trim()} ${icon}`,
-            summary: get_report_1.default(testRunsResults),
-            annotations: options.annotations ? getAnnotations(testRuns, options.workDir, options.trackedFiles) : undefined
-        }
+        testRuns: testRunsResults,
+        annotations: options.annotations ? getAnnotations(testRuns, options.workDir, options.trackedFiles) : []
     };
 }
 exports.parseDartJson = parseDartJson;
@@ -413,9 +426,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.exceptionThrowSource = exports.parseDotnetTrx = void 0;
 const core = __importStar(__nccwpck_require__(2186));
@@ -424,7 +434,6 @@ const file_utils_1 = __nccwpck_require__(2711);
 const markdown_utils_1 = __nccwpck_require__(6482);
 const parse_utils_1 = __nccwpck_require__(7811);
 const test_results_1 = __nccwpck_require__(8407);
-const get_report_1 = __importDefault(__nccwpck_require__(3737));
 class TestClass {
     constructor(name) {
         this.name = name;
@@ -459,15 +468,9 @@ async function parseDotnetTrx(files, options) {
         testRuns.push(tr);
         testClasses.push(...tc);
     }
-    const success = testRuns.every(tr => tr.result === 'success');
-    const icon = success ? markdown_utils_1.Icon.success : markdown_utils_1.Icon.fail;
     return {
-        success,
-        output: {
-            title: `${options.name.trim()} ${icon}`,
-            summary: get_report_1.default(testRuns),
-            annotations: options.annotations ? getAnnotations(testClasses, options.workDir, options.trackedFiles) : undefined
-        }
+        testRuns,
+        annotations: options.annotations ? getAnnotations(testClasses, options.workDir, options.trackedFiles) : []
     };
 }
 exports.parseDotnetTrx = parseDotnetTrx;
@@ -590,9 +593,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.exceptionThrowSource = exports.parseJestJunit = void 0;
 const core = __importStar(__nccwpck_require__(2186));
@@ -600,7 +600,6 @@ const xml2js_1 = __nccwpck_require__(6189);
 const markdown_utils_1 = __nccwpck_require__(6482);
 const file_utils_1 = __nccwpck_require__(2711);
 const test_results_1 = __nccwpck_require__(8407);
-const get_report_1 = __importDefault(__nccwpck_require__(3737));
 async function parseJestJunit(files, options) {
     const junit = [];
     const testRuns = [];
@@ -610,15 +609,9 @@ async function parseJestJunit(files, options) {
         junit.push(ju);
         testRuns.push(tr);
     }
-    const success = testRuns.every(tr => tr.result === 'success');
-    const icon = success ? markdown_utils_1.Icon.success : markdown_utils_1.Icon.fail;
     return {
-        success,
-        output: {
-            title: `${options.name.trim()} ${icon}`,
-            summary: get_report_1.default(testRuns),
-            annotations: options.annotations ? getAnnotations(junit, options.workDir, options.trackedFiles) : undefined
-        }
+        testRuns,
+        annotations: options.annotations ? getAnnotations(junit, options.workDir, options.trackedFiles) : []
     };
 }
 exports.parseJestJunit = parseJestJunit;
@@ -743,20 +736,44 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getReport = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const markdown_utils_1 = __nccwpck_require__(6482);
 const slugger_1 = __nccwpck_require__(3328);
-function getReport(results) {
+function getReport(results, options = {}) {
+    const maxReportLength = 65535;
+    const sections = [];
     const badge = getBadge(results);
-    const runsSummary = results.map(getRunSummary).join('\n\n');
-    const suites = results
-        .flatMap(tr => tr.suites)
-        .map((ts, i) => getSuiteSummary(ts, i))
-        .join('\n');
-    const suitesSection = `# Test Suites\n\n${suites}`;
-    return [badge, runsSummary, suitesSection].join('\n\n');
+    sections.push(badge);
+    const runsSummary = results.map((tr, i) => getRunSummary(tr, i, options)).join('\n\n');
+    sections.push(runsSummary);
+    if (options.listTests !== 'none') {
+        const suitesSummary = results
+            .map((tr, runIndex) => {
+            const suites = options.listSuites === 'only-failed' ? tr.failedSuites : tr.suites;
+            return suites
+                .map((ts, suiteIndex) => getSuiteSummary(ts, runIndex, suiteIndex, options))
+                .filter(str => str !== '');
+        })
+            .flat()
+            .join('\n');
+        const suitesSection = `# Test Suites\n\n${suitesSummary}`;
+        sections.push(suitesSection);
+    }
+    const report = sections.join('\n\n');
+    if (report.length > maxReportLength) {
+        let msg = `**Check Run summary limit of ${maxReportLength} chars was exceed**`;
+        if (options.listTests !== 'all') {
+            msg += '\n- Consider setting `list-tests` option to `only-failed` or `none`';
+        }
+        if (options.listSuites !== 'all') {
+            msg += '\n- Consider setting `list-suites` option to `only-failed`';
+        }
+        return `${badge}\n\n${msg}`;
+    }
+    return report;
 }
-exports.default = getReport;
+exports.getReport = getReport;
 function getBadge(results) {
     const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
     const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
@@ -776,44 +793,55 @@ function getBadge(results) {
     const text = failed > 0 ? 'Tests failed' : 'Tests passed successfully';
     return `![${text}](https://img.shields.io/badge/${uri})`;
 }
-function getRunSummary(tr) {
+function getRunSummary(tr, runIndex, options) {
     core.info('Generating check run summary');
     const time = `${(tr.time / 1000).toFixed(3)}s`;
     const headingLine1 = `### ${tr.path}`;
     const headingLine2 = `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.skipped}** skipped and **${tr.failed}** failed.`;
-    const suitesSummary = tr.suites.map((s, i) => {
+    const suites = options.listSuites === 'only-failed' ? tr.failedSuites : tr.suites;
+    const suitesSummary = suites.map((s, suiteIndex) => {
         const icon = getResultIcon(s.result);
         const tsTime = `${s.time}ms`;
         const tsName = s.name;
-        const tsAddr = makeSuiteSlug(i, tsName).link;
+        const tsAddr = makeSuiteSlug(runIndex, suiteIndex, tsName).link;
         const tsNameLink = markdown_utils_1.link(tsName, tsAddr);
         return [icon, tsNameLink, s.tests, tsTime, s.passed, s.skipped, s.failed];
     });
-    const summary = markdown_utils_1.table(['Result', 'Suite', 'Tests', 'Time', `Passed ${markdown_utils_1.Icon.success}`, `Skipped ${markdown_utils_1.Icon.skip}`, `Failed ${markdown_utils_1.Icon.fail}`], [markdown_utils_1.Align.Center, markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...suitesSummary);
+    const summary = suites.length === 0
+        ? ''
+        : markdown_utils_1.table(['Result', 'Suite', 'Tests', 'Time', `Passed ${markdown_utils_1.Icon.success}`, `Skipped ${markdown_utils_1.Icon.skip}`, `Failed ${markdown_utils_1.Icon.fail}`], [markdown_utils_1.Align.Center, markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...suitesSummary);
     return [headingLine1, headingLine2, summary].join('\n\n');
 }
-function getSuiteSummary(ts, index) {
+function getSuiteSummary(ts, runIndex, suiteIndex, options) {
+    const groups = options.listTests === 'only-failed' ? ts.failedGroups : ts.groups;
+    if (groups.length === 0) {
+        return '';
+    }
     const icon = getResultIcon(ts.result);
-    const content = ts.groups
+    const content = groups
         .map(grp => {
+        const tests = options.listTests === 'only-failed' ? grp.failedTests : grp.tests;
+        if (tests.length === 0) {
+            return '';
+        }
         const header = grp.name ? `### ${grp.name}\n\n` : '';
-        const tests = markdown_utils_1.table(['Result', 'Test', 'Time'], [markdown_utils_1.Align.Center, markdown_utils_1.Align.Left, markdown_utils_1.Align.Right], ...grp.tests.map(tc => {
+        const testsTable = markdown_utils_1.table(['Result', 'Test', 'Time'], [markdown_utils_1.Align.Center, markdown_utils_1.Align.Left, markdown_utils_1.Align.Right], ...grp.tests.map(tc => {
             const name = tc.name;
             const time = `${tc.time}ms`;
             const result = getResultIcon(tc.result);
             return [result, name, time];
         }));
-        return `${header}${tests}\n`;
+        return `${header}${testsTable}\n`;
     })
         .join('\n');
     const tsName = ts.name;
-    const tsSlug = makeSuiteSlug(index, tsName);
+    const tsSlug = makeSuiteSlug(runIndex, suiteIndex, tsName);
     const tsNameLink = `<a id="${tsSlug.id}" href="${tsSlug.link}">${tsName}</a>`;
     return `## ${tsNameLink} ${icon}\n\n${content}`;
 }
-function makeSuiteSlug(index, name) {
-    // use "ts-$index-" as prefix to avoid slug conflicts after escaping the paths
-    return slugger_1.slug(`ts-${index}-${name}`);
+function makeSuiteSlug(runIndex, suiteIndex, name) {
+    // use prefix to avoid slug conflicts after escaping the paths
+    return slugger_1.slug(`r${runIndex}s${suiteIndex}-${name}`);
 }
 function getResultIcon(result) {
     switch (result) {
@@ -863,6 +891,9 @@ class TestRunResult {
     get result() {
         return this.suites.some(t => t.result === 'failed') ? 'failed' : 'success';
     }
+    get failedSuites() {
+        return this.suites.filter(s => s.result === 'failed');
+    }
 }
 exports.TestRunResult = TestRunResult;
 class TestSuiteResult {
@@ -890,6 +921,9 @@ class TestSuiteResult {
     get result() {
         return this.groups.some(t => t.result === 'failed') ? 'failed' : 'success';
     }
+    get failedGroups() {
+        return this.groups.filter(grp => grp.result === 'failed');
+    }
 }
 exports.TestSuiteResult = TestSuiteResult;
 class TestGroupResult {
@@ -911,6 +945,9 @@ class TestGroupResult {
     }
     get result() {
         return this.tests.some(t => t.result === 'failed') ? 'failed' : 'success';
+    }
+    get failedTests() {
+        return this.tests.filter(tc => tc.result === 'failed');
     }
 }
 exports.TestGroupResult = TestGroupResult;
@@ -1059,8 +1096,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getCheckRunSha = void 0;
+exports.enforceCheckRunLimits = exports.getCheckRunSha = void 0;
 const github = __importStar(__nccwpck_require__(5438));
+const markdown_utils_1 = __nccwpck_require__(6482);
 function getCheckRunSha() {
     if (github.context.payload.pull_request) {
         const pr = github.context.payload.pull_request;
@@ -1069,6 +1107,16 @@ function getCheckRunSha() {
     return github.context.sha;
 }
 exports.getCheckRunSha = getCheckRunSha;
+function enforceCheckRunLimits(result, maxAnnotations) {
+    // Limit number of created annotations
+    result.annotations.splice(maxAnnotations + 1);
+    // Limit number of characters in annotation fields
+    for (const err of result.annotations) {
+        err.title = markdown_utils_1.ellipsis(err.title || '', 255);
+        err.message = markdown_utils_1.ellipsis(err.message, 65535);
+    }
+}
+exports.enforceCheckRunLimits = enforceCheckRunLimits;
 
 
 /***/ }),
@@ -1079,7 +1127,7 @@ exports.getCheckRunSha = getCheckRunSha;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.fixEol = exports.tableEscape = exports.table = exports.link = exports.details = exports.Icon = exports.Align = void 0;
+exports.ellipsis = exports.fixEol = exports.tableEscape = exports.table = exports.link = exports.details = exports.Icon = exports.Align = void 0;
 var Align;
 (function (Align) {
     Align["Left"] = ":---";
@@ -1116,6 +1164,13 @@ function fixEol(text) {
     return (_a = text === null || text === void 0 ? void 0 : text.replace(/\r/g, '')) !== null && _a !== void 0 ? _a : '';
 }
 exports.fixEol = fixEol;
+function ellipsis(text, maxLength) {
+    if (text.length <= maxLength) {
+        return text;
+    }
+    return text.substr(0, maxLength - 3) + '...';
+}
+exports.ellipsis = ellipsis;
 
 
 /***/ }),
