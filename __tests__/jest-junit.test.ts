@@ -5,20 +5,46 @@ import {parseJestJunit} from '../src/parsers/jest-junit/jest-junit-parser'
 import {ParseOptions} from '../src/parsers/parser-types'
 import {normalizeFilePath} from '../src/utils/file-utils'
 
-const fixturePath = path.join(__dirname, 'fixtures', 'jest-junit.xml')
-const outputPath = path.join(__dirname, '__outputs__', 'jest-junit.md')
-const xmlFixture = {
-  path: normalizeFilePath(path.relative(__dirname, fixturePath)),
-  content: fs.readFileSync(fixturePath, {encoding: 'utf8'})
-}
-
 describe('jest-junit tests', () => {
-  it('matches report snapshot', async () => {
+
+  it('report from ./reports/jest test results matches snapshot', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'jest-junit.xml')
+    const outputPath = path.join(__dirname, '__outputs__', 'jest-junit.md')
+    const xmlFixture = {
+      path: normalizeFilePath(path.relative(__dirname, fixturePath)),
+      content: fs.readFileSync(fixturePath, {encoding: 'utf8'})
+    }
+
     const opts: ParseOptions = {
       name: 'jest tests',
       annotations: true,
       trackedFiles: ['__tests__/main.test.js', '__tests__/second.test.js', 'lib/main.js'],
       workDir: 'C:/Users/Michal/Workspace/dorny/test-check/reports/jest/'
+    }
+
+    const result = await parseJestJunit([xmlFixture], opts)
+    fs.mkdirSync(path.dirname(outputPath), {recursive: true})
+    fs.writeFileSync(outputPath, result?.output?.summary ?? '')
+
+    expect(result.success).toBeFalsy()
+    expect(result?.output).toMatchSnapshot()
+  })
+
+  it('report from facebook/jest test results matches snapshot', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'external', 'jest', 'jest-test-results.xml')
+    const filesPath = path.join(__dirname, 'fixtures', 'external', 'jest', 'files.txt')
+    const outputPath = path.join(__dirname, '__outputs__', 'jest-test-results.md')
+    const xmlFixture = {
+      path: normalizeFilePath(path.relative(__dirname, fixturePath)),
+      content: fs.readFileSync(fixturePath, {encoding: 'utf8'})
+    }
+
+    const trackedFiles = fs.readFileSync(filesPath, {encoding: 'utf8'}).split(/\n\r?/g)
+    const opts: ParseOptions = {
+      trackedFiles,
+      name: 'jest tests',
+      annotations: true,
+      workDir: '/home/dorny/dorny/jest/'
     }
 
     const result = await parseJestJunit([xmlFixture], opts)

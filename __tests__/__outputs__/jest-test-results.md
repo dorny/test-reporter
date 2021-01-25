@@ -1,170 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`jest-junit tests report from ./reports/jest test results matches snapshot 1`] = `
-Object {
-  "annotations": Array [
-    Object {
-      "annotation_level": "failure",
-      "end_line": 10,
-      "message": "Error: expect(received).toBeTruthy()
-
-Received: false
-    at Object.<anonymous> (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\__tests__\\\\main.test.js:10:21)
-    at Object.asyncJestTest (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\jasmineAsyncInstall.js:106:37)
-    at C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\queueRunner.js:45:12
-    at new Promise (<anonymous>)
-    at mapper (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\queueRunner.js:28:19)
-    at C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\queueRunner.js:75:41
-    at processTicksAndRejections (internal/process/task_queues.js:97:5)",
-      "path": "__tests__/main.test.js",
-      "start_line": 10,
-      "title": "[__tests__\\\\main.test.js] Failing test",
-    },
-    Object {
-      "annotation_level": "failure",
-      "end_line": 2,
-      "message": "Error: Some error
-    at Object.throwError (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\lib\\\\main.js:2:9)
-    at Object.<anonymous> (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\__tests__\\\\main.test.js:14:11)
-    at Object.asyncJestTest (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\jasmineAsyncInstall.js:106:37)
-    at C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\queueRunner.js:45:12
-    at new Promise (<anonymous>)
-    at mapper (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\queueRunner.js:28:19)
-    at C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\queueRunner.js:75:41
-    at processTicksAndRejections (internal/process/task_queues.js:97:5)",
-      "path": "lib/main.js",
-      "start_line": 2,
-      "title": "[__tests__\\\\main.test.js] Exception in target unit",
-    },
-    Object {
-      "annotation_level": "failure",
-      "end_line": 21,
-      "message": "Error: Some error
-    at Object.<anonymous> (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\__tests__\\\\main.test.js:21:11)
-    at Object.asyncJestTest (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\jasmineAsyncInstall.js:106:37)
-    at C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\queueRunner.js:45:12
-    at new Promise (<anonymous>)
-    at mapper (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\queueRunner.js:28:19)
-    at C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\queueRunner.js:75:41
-    at processTicksAndRejections (internal/process/task_queues.js:97:5)",
-      "path": "__tests__/main.test.js",
-      "start_line": 21,
-      "title": "[__tests__\\\\main.test.js] Exception in test",
-    },
-    Object {
-      "annotation_level": "failure",
-      "end_line": 1,
-      "message": ": Timeout - Async callback was not invoked within the 1 ms timeout specified by jest.setTimeout.Timeout - Async callback was not invoked within the 1 ms timeout specified by jest.setTimeout.Error: 
-    at new Spec (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\jasmine\\\\Spec.js:116:22)
-    at new Spec (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\setup_jest_globals.js:78:9)
-    at specFactory (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\jasmine\\\\Env.js:523:24)
-    at Env.it (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\jasmine\\\\Env.js:592:24)
-    at Env.it (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\jasmineAsyncInstall.js:134:23)
-    at it (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\jasmine\\\\jasmineLight.js:100:21)
-    at Object.<anonymous> (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\__tests__\\\\second.test.js:1:34)
-    at Runtime._execModule (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-runtime\\\\build\\\\index.js:1245:24)
-    at Runtime._loadModule (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-runtime\\\\build\\\\index.js:844:12)
-    at Runtime.requireModule (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-runtime\\\\build\\\\index.js:694:10)
-    at jasmine2 (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-jasmine2\\\\build\\\\index.js:230:13)
-    at runTestInternal (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-runner\\\\build\\\\runTest.js:380:22)
-    at runTest (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-check\\\\reports\\\\jest\\\\node_modules\\\\jest-runner\\\\build\\\\runTest.js:472:34)",
-      "path": "__tests__/second.test.js",
-      "start_line": 1,
-      "title": "[__tests__\\\\second.test.js] Timeout test",
-    },
-  ],
-  "summary": "![Tests failed](https://img.shields.io/badge/tests-1%20passed%2C%201%20skipped%2C%204%20failed-critical)
-
-### fixtures/jest-junit.xml
-
-**6** tests were completed in **1.360s** with **1** passed, **1** skipped and **4** failed.
-
-| Result | Suite | Tests | Time | Passed ✔️ | Skipped ✖️ | Failed ❌ |
-| :---: | :--- | ---: | ---: | ---: | ---: | ---: |
-| ❌ | [__tests__\\\\main.test.js](#ts-0-tests-main-test-js) | 4 | 486ms | 1 | 0 | 3 |
-| ❌ | [__tests__\\\\second.test.js](#ts-1-tests-second-test-js) | 2 | 82ms | 0 | 1 | 1 |
-
-# Test Suites
-
-## <a id=\\"user-content-ts-0-tests-main-test-js\\" href=\\"#ts-0-tests-main-test-js\\">__tests__\\\\main.test.js</a> ❌
-
-### Test 1
-
-| Result | Test | Time |
-| :---: | :--- | ---: |
-| ✔️ | Passing test | 1ms |
-
-### Test 1 › Test 1.1
-
-| Result | Test | Time |
-| :---: | :--- | ---: |
-| ❌ | Failing test | 2ms |
-| ❌ | Exception in target unit | 0ms |
-
-### Test 2
-
-| Result | Test | Time |
-| :---: | :--- | ---: |
-| ❌ | Exception in test | 0ms |
-
-## <a id=\\"user-content-ts-1-tests-second-test-js\\" href=\\"#ts-1-tests-second-test-js\\">__tests__\\\\second.test.js</a> ❌
-
-| Result | Test | Time |
-| :---: | :--- | ---: |
-| ❌ | Timeout test | 4ms |
-| ✖️ | Skipped test | 0ms |
-",
-  "title": "jest tests ❌",
-}
-`;
-
-exports[`jest-junit tests report from facebook/jest test results matches snapshot 1`] = `
-Object {
-  "annotations": Array [
-    Object {
-      "annotation_level": "failure",
-      "end_line": 418,
-      "message": "Error: abort: empty revision range
-    at makeError (/home/dorny/dorny/jest/node_modules/execa/lib/error.js:59:11)
-    at handlePromise (/home/dorny/dorny/jest/node_modules/execa/index.js:114:26)
-    at runMicrotasks (<anonymous>)
-    at processTicksAndRejections (internal/process/task_queues.js:97:5)
-    at Object.findChangedFiles (/home/dorny/dorny/jest/packages/jest-changed-files/build/hg.js:99:16)
-    at async Promise.all (index 0)
-    at getChangedFilesForRoots (/home/dorny/dorny/jest/packages/jest-changed-files/build/index.js:57:5)
-    at Object.<anonymous> (/home/dorny/dorny/jest/e2e/__tests__/jestChangedFiles.test.ts:418:28)
-    at _callCircusTest (/home/dorny/dorny/jest/packages/jest-circus/build/run.js:218:5)
-    at _runTest (/home/dorny/dorny/jest/packages/jest-circus/build/run.js:155:3)",
-      "path": "e2e/__tests__/jestChangedFiles.test.ts",
-      "start_line": 418,
-      "title": "[e2e/__tests__/jestChangedFiles.test.ts] gets changed files for hg",
-    },
-    Object {
-      "annotation_level": "failure",
-      "end_line": 360,
-      "message": "Error: expect(received).toMatch(expected)
-
-Expected pattern: /PASS __tests__(\\\\/|\\\\\\\\)file2.test.js/
-Received string:  \\"·
-  ● Test suite failed to run·
-    abort: empty revision range
-\\"
-    at Object.toMatch (/home/dorny/dorny/jest/e2e/__tests__/onlyChanged.test.ts:360:18)
-    at Promise.then.completed (/home/dorny/dorny/jest/packages/jest-circus/build/utils.js:307:28)
-    at new Promise (<anonymous>)
-    at callAsyncCircusFn (/home/dorny/dorny/jest/packages/jest-circus/build/utils.js:229:10)
-    at _callCircusTest (/home/dorny/dorny/jest/packages/jest-circus/build/run.js:218:40)
-    at processTicksAndRejections (internal/process/task_queues.js:97:5)
-    at _runTest (/home/dorny/dorny/jest/packages/jest-circus/build/run.js:155:3)
-    at _runTestsForDescribeBlock (/home/dorny/dorny/jest/packages/jest-circus/build/run.js:66:9)
-    at run (/home/dorny/dorny/jest/packages/jest-circus/build/run.js:25:3)
-    at runAndTransformResultsToJestFormat (/home/dorny/dorny/jest/packages/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:163:21)",
-      "path": "e2e/__tests__/onlyChanged.test.ts",
-      "start_line": 360,
-      "title": "[e2e/__tests__/onlyChanged.test.ts] gets changed files for hg",
-    },
-  ],
-  "summary": "![Tests failed](https://img.shields.io/badge/tests-4207%20passed%2C%2030%20skipped%2C%202%20failed-critical)
+![Tests failed](https://img.shields.io/badge/tests-4207%20passed%2C%2030%20skipped%2C%202%20failed-critical)
 
 ### fixtures/external/jest/jest-test-results.xml
 
@@ -575,7 +409,7 @@ Received string:  \\"·
 
 # Test Suites
 
-## <a id=\\"user-content-ts-0-packages-jest-config-src-tests-normalize-test-js\\" href=\\"#ts-0-packages-jest-config-src-tests-normalize-test-js\\">packages/jest-config/src/__tests__/normalize.test.js</a> ✔️
+## <a id="user-content-ts-0-packages-jest-config-src-tests-normalize-test-js" href="#ts-0-packages-jest-config-src-tests-normalize-test-js">packages/jest-config/src/__tests__/normalize.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -650,8 +484,8 @@ Received string:  \\"·
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | logs a deprecation warning when \`setupTestFrameworkScriptFile\` is used | 1ms |
-| ✔️ | logs an error when \`setupTestFrameworkScriptFile\` and \`setupFilesAfterEnv\` are used | 1ms |
+| ✔️ | logs a deprecation warning when `setupTestFrameworkScriptFile` is used | 1ms |
+| ✔️ | logs an error when `setupTestFrameworkScriptFile` and `setupFilesAfterEnv` are used | 1ms |
 
 ### coveragePathIgnorePatterns
 
@@ -703,7 +537,7 @@ Received string:  \\"·
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | resolves to an environment and prefers jest-environment-\`name\` | 0ms |
+| ✔️ | resolves to an environment and prefers jest-environment-`name` | 0ms |
 | ✔️ | throws on invalid environment names | 1ms |
 | ✔️ | works with rootDir | 1ms |
 
@@ -718,7 +552,7 @@ Received string:  \\"·
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | logs a warning when \`scriptPreprocessor\` and/or \`preprocessorIgnorePatterns\` are used | 2ms |
+| ✔️ | logs a warning when `scriptPreprocessor` and/or `preprocessorIgnorePatterns` are used | 2ms |
 
 ### testRegex
 
@@ -749,11 +583,11 @@ Received string:  \\"·
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | throws when preset not found | 1ms |
-| ✔️ | throws when module was found but no \\"jest-preset.js\\" or \\"jest-preset.json\\" files | 1ms |
+| ✔️ | throws when module was found but no "jest-preset.js" or "jest-preset.json" files | 1ms |
 | ✔️ | throws when a dependency is missing in the preset | 44ms |
 | ✔️ | throws when preset is invalid | 59ms |
 | ✔️ | throws when preset evaluation throws type error | 1ms |
-| ✔️ | works with \\"react-native\\" | 3ms |
+| ✔️ | works with "react-native" | 3ms |
 | ✔️ | searches for .json and .js preset files | 0ms |
 | ✔️ | merges with options | 1ms |
 | ✔️ | merges with options and moduleNameMapper preset is overridden by options | 1ms |
@@ -782,9 +616,9 @@ Received string:  \\"·
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | defaults to \`jest-runner\` | 1ms |
+| ✔️ | defaults to `jest-runner` | 1ms |
 | ✔️ | resolves to runners that do not have the prefix | 1ms |
-| ✔️ | resolves to runners and prefers jest-runner-\`name\` | 1ms |
+| ✔️ | resolves to runners and prefers jest-runner-`name` | 1ms |
 | ✔️ | throw error when a runner is not found | 7ms |
 
 ### watchPlugins
@@ -792,7 +626,7 @@ Received string:  \\"·
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | defaults to undefined | 0ms |
-| ✔️ | resolves to watch plugins and prefers jest-watch-\`name\` | 0ms |
+| ✔️ | resolves to watch plugins and prefers jest-watch-`name` | 0ms |
 | ✔️ | resolves watch plugins that do not have the prefix | 1ms |
 | ✔️ | normalizes multiple watchPlugins | 4ms |
 | ✔️ | throw error when a watch plugin is not found | 1ms |
@@ -823,7 +657,7 @@ Received string:  \\"·
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | preserves any use of \\"\\\\\\" | 1ms |
+| ✔️ | preserves any use of "\" | 1ms |
 | ✔️ | replaces POSIX path separators | 9ms |
 | ✔️ | replaces POSIX paths in multiple args | 8ms |
 | ✔️ | coerces all patterns to strings | 2ms |
@@ -846,7 +680,7 @@ Received string:  \\"·
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | preserves any use of \\"\\\\\\" | 15ms |
+| ✔️ | preserves any use of "\" | 15ms |
 | ✔️ | replaces POSIX path separators | 14ms |
 | ✔️ | replaces POSIX paths in multiple args | 11ms |
 | ✔️ | coerces all patterns to strings | 4ms |
@@ -856,8 +690,8 @@ Received string:  \\"·
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | defaults to something useful | 0ms |
-| ✔️ | throws if missing \`js\` but using jest-runner | 1ms |
-| ✔️ | does not throw if missing \`js\` with a custom runner | 2ms |
+| ✔️ | throws if missing `js` but using jest-runner | 1ms |
+| ✔️ | does not throw if missing `js` with a custom runner | 2ms |
 
 ### cwd
 
@@ -903,7 +737,7 @@ Received string:  \\"·
 | ✔️ | throws on .mjs | 0ms |
 | ✔️ | throws on .cjs | 1ms |
 
-## <a id=\\"user-content-ts-1-packages-jest-repl-src-tests-jestrepl-test-js\\" href=\\"#ts-1-packages-jest-repl-src-tests-jestrepl-test-js\\">packages/jest-repl/src/__tests__/jest_repl.test.js</a> ✔️
+## <a id="user-content-ts-1-packages-jest-repl-src-tests-jestrepl-test-js" href="#ts-1-packages-jest-repl-src-tests-jestrepl-test-js">packages/jest-repl/src/__tests__/jest_repl.test.js</a> ✔️
 
 ### Repl cli
 
@@ -911,7 +745,7 @@ Received string:  \\"·
 | :---: | :--- | ---: |
 | ✔️ | runs without errors | 1028ms |
 
-## <a id=\\"user-content-ts-2-packages-jest-snapshot-src-tests-printSnapshot-test-ts\\" href=\\"#ts-2-packages-jest-snapshot-src-tests-printSnapshot-test-ts\\">packages/jest-snapshot/src/__tests__/printSnapshot.test.ts</a> ✔️
+## <a id="user-content-ts-2-packages-jest-snapshot-src-tests-printSnapshot-test-ts" href="#ts-2-packages-jest-snapshot-src-tests-printSnapshot-test-ts">packages/jest-snapshot/src/__tests__/printSnapshot.test.ts</a> ✔️
 
 ### chalk
 
@@ -1124,22 +958,22 @@ Received string:  \\"·
 | ✔️ | has no common after clean up chaff single line | 0ms |
 | ✔️ | prettier/pull/5590 | 1ms |
 
-## <a id=\\"user-content-ts-3-packages-jest-config-src-tests-Defaults-test-ts\\" href=\\"#ts-3-packages-jest-config-src-tests-Defaults-test-ts\\">packages/jest-config/src/__tests__/Defaults.test.ts</a> ✔️
+## <a id="user-content-ts-3-packages-jest-config-src-tests-Defaults-test-ts" href="#ts-3-packages-jest-config-src-tests-Defaults-test-ts">packages/jest-config/src/__tests__/Defaults.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | get configuration defaults | 0ms |
 
-## <a id=\\"user-content-ts-4-packages-jest-resolve-src-tests-resolve-test-ts\\" href=\\"#ts-4-packages-jest-resolve-src-tests-resolve-test-ts\\">packages/jest-resolve/src/__tests__/resolve.test.ts</a> ✔️
+## <a id="user-content-ts-4-packages-jest-resolve-src-tests-resolve-test-ts" href="#ts-4-packages-jest-resolve-src-tests-resolve-test-ts">packages/jest-resolve/src/__tests__/resolve.test.ts</a> ✔️
 
 ### isCoreModule
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | returns false if \`hasCoreModules\` is false. | 0ms |
-| ✔️ | returns true if \`hasCoreModules\` is true and \`moduleName\` is a core module. | 0ms |
-| ✔️ | returns false if \`hasCoreModules\` is true and \`moduleName\` is not a core module. | 0ms |
-| ✔️ | returns false if \`hasCoreModules\` is true and \`moduleNameMapper\` alias a module same name with core module | 1ms |
+| ✔️ | returns false if `hasCoreModules` is false. | 0ms |
+| ✔️ | returns true if `hasCoreModules` is true and `moduleName` is a core module. | 0ms |
+| ✔️ | returns false if `hasCoreModules` is true and `moduleName` is not a core module. | 0ms |
+| ✔️ | returns false if `hasCoreModules` is true and `moduleNameMapper` alias a module same name with core module | 1ms |
 
 ### findNodeModule
 
@@ -1175,10 +1009,10 @@ Received string:  \\"·
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | can resolve node modules relative to absolute paths in \\"moduleDirectories\\" on Windows platforms | 21ms |
-| ✔️ | can resolve node modules relative to absolute paths in \\"moduleDirectories\\" on Posix platforms | 8ms |
+| ✔️ | can resolve node modules relative to absolute paths in "moduleDirectories" on Windows platforms | 21ms |
+| ✔️ | can resolve node modules relative to absolute paths in "moduleDirectories" on Posix platforms | 8ms |
 
-## <a id=\\"user-content-ts-5-packages-expect-src-tests-matchers-toEqual-property-test-ts\\" href=\\"#ts-5-packages-expect-src-tests-matchers-toEqual-property-test-ts\\">packages/expect/src/__tests__/matchers-toEqual.property.test.ts</a> ✔️
+## <a id="user-content-ts-5-packages-expect-src-tests-matchers-toEqual-property-test-ts" href="#ts-5-packages-expect-src-tests-matchers-toEqual-property-test-ts">packages/expect/src/__tests__/matchers-toEqual.property.test.ts</a> ✔️
 
 ### toEqual
 
@@ -1187,7 +1021,7 @@ Received string:  \\"·
 | ✔️ | should be reflexive | 58ms |
 | ✔️ | should be symmetric | 204ms |
 
-## <a id=\\"user-content-ts-6-packages-jest-reporters-src-tests-SummaryReporter-test-js\\" href=\\"#ts-6-packages-jest-reporters-src-tests-SummaryReporter-test-js\\">packages/jest-reporters/src/__tests__/SummaryReporter.test.js</a> ✔️
+## <a id="user-content-ts-6-packages-jest-reporters-src-tests-SummaryReporter-test-js" href="#ts-6-packages-jest-reporters-src-tests-SummaryReporter-test-js">packages/jest-reporters/src/__tests__/SummaryReporter.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -1196,7 +1030,7 @@ Received string:  \\"·
 | ✔️ | snapshots all have results (no update) | 4ms |
 | ✔️ | snapshots all have results (after update) | 10ms |
 
-## <a id=\\"user-content-ts-7-packages-jest-config-src-tests-readConfigs-test-ts\\" href=\\"#ts-7-packages-jest-config-src-tests-readConfigs-test-ts\\">packages/jest-config/src/__tests__/readConfigs.test.ts</a> ✔️
+## <a id="user-content-ts-7-packages-jest-config-src-tests-readConfigs-test-ts" href="#ts-7-packages-jest-config-src-tests-readConfigs-test-ts">packages/jest-config/src/__tests__/readConfigs.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -1204,7 +1038,7 @@ Received string:  \\"·
 | ✔️ | readConfigs() loads async config file | 10ms |
 | ✔️ | readConfigs() reject if async was rejected | 0ms |
 
-## <a id=\\"user-content-ts-8-packages-jest-reporters-src-tests-generateEmptyCoverage-test-js\\" href=\\"#ts-8-packages-jest-reporters-src-tests-generateEmptyCoverage-test-js\\">packages/jest-reporters/src/__tests__/generateEmptyCoverage.test.js</a> ✔️
+## <a id="user-content-ts-8-packages-jest-reporters-src-tests-generateEmptyCoverage-test-js" href="#ts-8-packages-jest-reporters-src-tests-generateEmptyCoverage-test-js">packages/jest-reporters/src/__tests__/generateEmptyCoverage.test.js</a> ✔️
 
 ### generateEmptyCoverage
 
@@ -1214,7 +1048,7 @@ Received string:  \\"·
 | ✔️ | generates a null coverage result when using /* istanbul ignore file */ | 15ms |
 | ✔️ | generates a null coverage result when collectCoverage global config is false | 1ms |
 
-## <a id=\\"user-content-ts-9-packages-expect-src-tests-asymmetricMatchers-test-ts\\" href=\\"#ts-9-packages-expect-src-tests-asymmetricMatchers-test-ts\\">packages/expect/src/__tests__/asymmetricMatchers.test.ts</a> ✔️
+## <a id="user-content-ts-9-packages-expect-src-tests-asymmetricMatchers-test-ts" href="#ts-9-packages-expect-src-tests-asymmetricMatchers-test-ts">packages/expect/src/__tests__/asymmetricMatchers.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -1257,7 +1091,7 @@ Received string:  \\"·
 | ✔️ | StringNotMatching throws if expected value is neither string nor regexp | 0ms |
 | ✔️ | StringNotMatching returns true if received value is not string | 0ms |
 
-## <a id=\\"user-content-ts-10-packages-jest-reporters-src-tests-CoverageReporter-test-js\\" href=\\"#ts-10-packages-jest-reporters-src-tests-CoverageReporter-test-js\\">packages/jest-reporters/src/__tests__/CoverageReporter.test.js</a> ✔️
+## <a id="user-content-ts-10-packages-jest-reporters-src-tests-CoverageReporter-test-js" href="#ts-10-packages-jest-reporters-src-tests-CoverageReporter-test-js">packages/jest-reporters/src/__tests__/CoverageReporter.test.js</a> ✔️
 
 ### onRunComplete
 
@@ -1265,10 +1099,10 @@ Received string:  \\"·
 | :---: | :--- | ---: |
 | ✔️ | getLastError() returns an error when threshold is not met for global | 299ms |
 | ✔️ | getLastError() returns an error when threshold is not met for file | 3ms |
-| ✔️ | getLastError() returns \`undefined\` when threshold is met | 2ms |
+| ✔️ | getLastError() returns `undefined` when threshold is met | 2ms |
 | ✔️ | getLastError() returns an error when threshold is not met for non-covered file | 1ms |
 | ✔️ | getLastError() returns an error when threshold is not met for directory | 1ms |
-| ✔️ | getLastError() returns \`undefined\` when threshold is met for directory | 1ms |
+| ✔️ | getLastError() returns `undefined` when threshold is met for directory | 1ms |
 | ✔️ | getLastError() returns an error when there is no coverage data for a threshold | 0ms |
 | ✔️ | getLastError() returns 'undefined' when global threshold group
    is empty because PATH and GLOB threshold groups have matched all the
@@ -1281,7 +1115,7 @@ Received string:  \\"·
 | ✔️ | that files are matched by all matching threshold groups | 1ms |
 | ✔️ | that it passes custom options when creating reporters | 2ms |
 
-## <a id=\\"user-content-ts-11-packages-jest-snapshot-src-tests-InlineSnapshots-test-ts\\" href=\\"#ts-11-packages-jest-snapshot-src-tests-InlineSnapshots-test-ts\\">packages/jest-snapshot/src/__tests__/InlineSnapshots.test.ts</a> ✔️
+## <a id="user-content-ts-11-packages-jest-snapshot-src-tests-InlineSnapshots-test-ts" href="#ts-11-packages-jest-snapshot-src-tests-InlineSnapshots-test-ts">packages/jest-snapshot/src/__tests__/InlineSnapshots.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -1308,13 +1142,13 @@ Received string:  \\"·
 | ✔️ | saveInlineSnapshots() indents snapshots after prettier reformats | 16ms |
 | ✔️ | saveInlineSnapshots() does not indent empty lines | 7ms |
 
-## <a id=\\"user-content-ts-12-packages-jest-config-src-tests-readConfig-test-ts\\" href=\\"#ts-12-packages-jest-config-src-tests-readConfig-test-ts\\">packages/jest-config/src/__tests__/readConfig.test.ts</a> ✔️
+## <a id="user-content-ts-12-packages-jest-config-src-tests-readConfig-test-ts" href="#ts-12-packages-jest-config-src-tests-readConfig-test-ts">packages/jest-config/src/__tests__/readConfig.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | readConfig() throws when an object is passed without a file path | 16ms |
 
-## <a id=\\"user-content-ts-13-packages-jest-watcher-src-lib-tests-scroll-test-ts\\" href=\\"#ts-13-packages-jest-watcher-src-lib-tests-scroll-test-ts\\">packages/jest-watcher/src/lib/__tests__/scroll.test.ts</a> ✔️
+## <a id="user-content-ts-13-packages-jest-watcher-src-lib-tests-scroll-test-ts" href="#ts-13-packages-jest-watcher-src-lib-tests-scroll-test-ts">packages/jest-watcher/src/lib/__tests__/scroll.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -1324,7 +1158,7 @@ Received string:  \\"·
 | ✔️ | When offset is at the end of the list | 1ms |
 | ✔️ | When offset is at the end and size is smaller than max | 0ms |
 
-## <a id=\\"user-content-ts-14-packages-expect-src-tests-toThrowMatchers-test-ts\\" href=\\"#ts-14-packages-expect-src-tests-toThrowMatchers-test-ts\\">packages/expect/src/__tests__/toThrowMatchers.test.ts</a> ✔️
+## <a id="user-content-ts-14-packages-expect-src-tests-toThrowMatchers-test-ts" href="#ts-14-packages-expect-src-tests-toThrowMatchers-test-ts">packages/expect/src/__tests__/toThrowMatchers.test.ts</a> ✔️
 
 ### toThrowError
 
@@ -1584,7 +1418,7 @@ Received string:  \\"·
 | :---: | :--- | ---: |
 | ✔️ | threw, but should not have (non-error falsey) | 0ms |
 
-## <a id=\\"user-content-ts-15-packages-jest-validate-src-tests-validate-test-ts\\" href=\\"#ts-15-packages-jest-validate-src-tests-validate-test-ts\\">packages/jest-validate/src/__tests__/validate.test.ts</a> ✔️
+## <a id="user-content-ts-15-packages-jest-validate-src-tests-validate-test-ts" href="#ts-15-packages-jest-validate-src-tests-validate-test-ts">packages/jest-validate/src/__tests__/validate.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -1610,9 +1444,9 @@ Received string:  \\"·
 | ✔️ | works with multiple valid types | 0ms |
 | ✔️ | reports errors nicely when failing with multiple valid options | 0ms |
 | ✔️ | Repeated types within multiple valid examples are coalesced in error report | 1ms |
-| ✔️ | Comments in config JSON using \\"//\\" key are not warned | 0ms |
+| ✔️ | Comments in config JSON using "//" key are not warned | 0ms |
 
-## <a id=\\"user-content-ts-16-packages-jest-snapshot-src-tests-SnapshotResolver-test-ts\\" href=\\"#ts-16-packages-jest-snapshot-src-tests-SnapshotResolver-test-ts\\">packages/jest-snapshot/src/__tests__/SnapshotResolver.test.ts</a> ✔️
+## <a id="user-content-ts-16-packages-jest-snapshot-src-tests-SnapshotResolver-test-ts" href="#ts-16-packages-jest-snapshot-src-tests-SnapshotResolver-test-ts">packages/jest-snapshot/src/__tests__/SnapshotResolver.test.ts</a> ✔️
 
 ### defaults
 
@@ -1639,14 +1473,14 @@ Received string:  \\"·
 | ✔️ | missing testPathForConsistencyCheck throws | 4ms |
 | ✔️ | inconsistent functions throws | 20ms |
 
-## <a id=\\"user-content-ts-17-packages-jest-reporters-src-tests-CoverageWorker-test-js\\" href=\\"#ts-17-packages-jest-reporters-src-tests-CoverageWorker-test-js\\">packages/jest-reporters/src/__tests__/CoverageWorker.test.js</a> ✔️
+## <a id="user-content-ts-17-packages-jest-reporters-src-tests-CoverageWorker-test-js" href="#ts-17-packages-jest-reporters-src-tests-CoverageWorker-test-js">packages/jest-reporters/src/__tests__/CoverageWorker.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | resolves to the result of generateEmptyCoverage upon success | 127ms |
 | ✔️ | throws errors on invalid JavaScript | 5ms |
 
-## <a id=\\"user-content-ts-18-packages-babel-jest-src-tests-index-ts\\" href=\\"#ts-18-packages-babel-jest-src-tests-index-ts\\">packages/babel-jest/src/__tests__/index.ts</a> ✔️
+## <a id="user-content-ts-18-packages-babel-jest-src-tests-index-ts" href="#ts-18-packages-babel-jest-src-tests-index-ts">packages/babel-jest/src/__tests__/index.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -1657,49 +1491,49 @@ Received string:  \\"·
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | {\\"supportsDynamicImport\\":true,\\"supportsStaticESM\\":true} -> {\\"supportsDynamicImport\\":true,\\"supportsStaticESM\\":true} | 6ms |
-| ✔️ | {\\"supportsDynamicImport\\":false,\\"supportsStaticESM\\":false} -> {\\"supportsDynamicImport\\":false,\\"supportsStaticESM\\":false} | 11ms |
-| ✔️ | {\\"supportsStaticESM\\":false} -> {\\"supportsDynamicImport\\":false,\\"supportsStaticESM\\":false} | 13ms |
-| ✔️ | {\\"supportsDynamicImport\\":true} -> {\\"supportsDynamicImport\\":true,\\"supportsStaticESM\\":false} | 11ms |
+| ✔️ | {"supportsDynamicImport":true,"supportsStaticESM":true} -> {"supportsDynamicImport":true,"supportsStaticESM":true} | 6ms |
+| ✔️ | {"supportsDynamicImport":false,"supportsStaticESM":false} -> {"supportsDynamicImport":false,"supportsStaticESM":false} | 11ms |
+| ✔️ | {"supportsStaticESM":false} -> {"supportsDynamicImport":false,"supportsStaticESM":false} | 13ms |
+| ✔️ | {"supportsDynamicImport":true} -> {"supportsDynamicImport":true,"supportsStaticESM":false} | 11ms |
 
-## <a id=\\"user-content-ts-19-packages-jest-config-src-tests-resolveConfigPath-test-ts\\" href=\\"#ts-19-packages-jest-config-src-tests-resolveConfigPath-test-ts\\">packages/jest-config/src/__tests__/resolveConfigPath.test.ts</a> ✔️
+## <a id="user-content-ts-19-packages-jest-config-src-tests-resolveConfigPath-test-ts" href="#ts-19-packages-jest-config-src-tests-resolveConfigPath-test-ts">packages/jest-config/src/__tests__/resolveConfigPath.test.ts</a> ✔️
 
 ### Resolve config path .js
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | file path with \\".js\\" | 9ms |
-| ✔️ | directory path with \\".js\\" | 11ms |
+| ✔️ | file path with ".js" | 9ms |
+| ✔️ | directory path with ".js" | 11ms |
 
 ### Resolve config path .ts
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | file path with \\".ts\\" | 2ms |
-| ✔️ | directory path with \\".ts\\" | 3ms |
+| ✔️ | file path with ".ts" | 2ms |
+| ✔️ | directory path with ".ts" | 3ms |
 
 ### Resolve config path .mjs
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | file path with \\".mjs\\" | 1ms |
-| ✔️ | directory path with \\".mjs\\" | 7ms |
+| ✔️ | file path with ".mjs" | 1ms |
+| ✔️ | directory path with ".mjs" | 7ms |
 
 ### Resolve config path .cjs
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | file path with \\".cjs\\" | 2ms |
-| ✔️ | directory path with \\".cjs\\" | 2ms |
+| ✔️ | file path with ".cjs" | 2ms |
+| ✔️ | directory path with ".cjs" | 2ms |
 
 ### Resolve config path .json
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | file path with \\".json\\" | 1ms |
-| ✔️ | directory path with \\".json\\" | 3ms |
+| ✔️ | file path with ".json" | 1ms |
+| ✔️ | directory path with ".json" | 3ms |
 
-## <a id=\\"user-content-ts-20-packages-jest-reporters-src-tests-VerboseReporter-test-js\\" href=\\"#ts-20-packages-jest-reporters-src-tests-VerboseReporter-test-js\\">packages/jest-reporters/src/__tests__/VerboseReporter.test.js</a> ✔️
+## <a id="user-content-ts-20-packages-jest-reporters-src-tests-VerboseReporter-test-js" href="#ts-20-packages-jest-reporters-src-tests-VerboseReporter-test-js">packages/jest-reporters/src/__tests__/VerboseReporter.test.js</a> ✔️
 
 ### groupTestsBySuites
 
@@ -1717,7 +1551,7 @@ Received string:  \\"·
 | ✔️ | should group AB1 in AB; CD1 in CD | 1ms |
 | ✔️ | should group ABC1 in ABC; BC1 in BC; D1 in D; A1 in A | 0ms |
 
-## <a id=\\"user-content-ts-21-packages-jest-snapshot-src-tests-utils-test-ts\\" href=\\"#ts-21-packages-jest-snapshot-src-tests-utils-test-ts\\">packages/jest-snapshot/src/__tests__/utils.test.ts</a> ✔️
+## <a id="user-content-ts-21-packages-jest-snapshot-src-tests-utils-test-ts" href="#ts-21-packages-jest-snapshot-src-tests-utils-test-ts">packages/jest-snapshot/src/__tests__/utils.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -1732,7 +1566,7 @@ Received string:  \\"·
 | ✔️ | getSnapshotData() marks invalid snapshot dirty when updating | 0ms |
 | ✔️ | getSnapshotData() marks valid snapshot not dirty when updating | 0ms |
 | ✔️ | escaping | 0ms |
-| ✔️ | serialize handles \\\\r\\\\n | 1ms |
+| ✔️ | serialize handles \r\n | 1ms |
 
 ### ExtraLineBreaks
 
@@ -1763,7 +1597,7 @@ Received string:  \\"·
 | ✔️ | Correctly merges an array of objects | 1ms |
 | ✔️ | Correctly merges an array of arrays | 0ms |
 
-## <a id=\\"user-content-ts-22-packages-jest-reporters-src-tests-NotifyReporter-test-ts\\" href=\\"#ts-22-packages-jest-reporters-src-tests-NotifyReporter-test-ts\\">packages/jest-reporters/src/__tests__/NotifyReporter.test.ts</a> ✔️
+## <a id="user-content-ts-22-packages-jest-reporters-src-tests-NotifyReporter-test-ts" href="#ts-22-packages-jest-reporters-src-tests-NotifyReporter-test-ts">packages/jest-reporters/src/__tests__/NotifyReporter.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -1791,7 +1625,7 @@ Received string:  \\"·
 | ✔️ | throws the error when require throws an unexpected error | 0ms |
 | ✔️ | uses node-notifier when it is available | 1ms |
 
-## <a id=\\"user-content-ts-23-packages-jest-repl-src-tests-runtimecli-test-js\\" href=\\"#ts-23-packages-jest-repl-src-tests-runtimecli-test-js\\">packages/jest-repl/src/__tests__/runtime_cli.test.js</a> ✔️
+## <a id="user-content-ts-23-packages-jest-repl-src-tests-runtimecli-test-js" href="#ts-23-packages-jest-repl-src-tests-runtimecli-test-js">packages/jest-repl/src/__tests__/runtime_cli.test.js</a> ✔️
 
 ### Runtime CLI
 
@@ -1802,7 +1636,7 @@ Received string:  \\"·
 | ✔️ | always disables automocking | 1424ms |
 | ✔️ | throws script errors | 1209ms |
 
-## <a id=\\"user-content-ts-24-packages-expect-src-tests-extend-test-ts\\" href=\\"#ts-24-packages-expect-src-tests-extend-test-ts\\">packages/expect/src/__tests__/extend.test.ts</a> ✔️
+## <a id="user-content-ts-24-packages-expect-src-tests-extend-test-ts" href="#ts-24-packages-expect-src-tests-extend-test-ts">packages/expect/src/__tests__/extend.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -1817,7 +1651,7 @@ Received string:  \\"·
 | ✔️ | defines asymmetric variadic matchers that can be prefixed by not | 0ms |
 | ✔️ | prints the Symbol into the error message | 1ms |
 
-## <a id=\\"user-content-ts-25-packages-jest-source-map-src-tests-getCallsite-test-ts\\" href=\\"#ts-25-packages-jest-source-map-src-tests-getCallsite-test-ts\\">packages/jest-source-map/src/__tests__/getCallsite.test.ts</a> ✔️
+## <a id="user-content-ts-25-packages-jest-source-map-src-tests-getCallsite-test-ts" href="#ts-25-packages-jest-source-map-src-tests-getCallsite-test-ts">packages/jest-source-map/src/__tests__/getCallsite.test.ts</a> ✔️
 
 ### getCallsite
 
@@ -1827,7 +1661,7 @@ Received string:  \\"·
 | ✔️ | ignores errors when fs throws | 1ms |
 | ✔️ | reads source map file to determine line and column | 0ms |
 
-## <a id=\\"user-content-ts-26-packages-jest-config-src-tests-setFromArgv-test-ts\\" href=\\"#ts-26-packages-jest-config-src-tests-setFromArgv-test-ts\\">packages/jest-config/src/__tests__/setFromArgv.test.ts</a> ✔️
+## <a id="user-content-ts-26-packages-jest-config-src-tests-setFromArgv-test-ts" href="#ts-26-packages-jest-config-src-tests-setFromArgv-test-ts">packages/jest-config/src/__tests__/setFromArgv.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -1836,7 +1670,7 @@ Received string:  \\"·
 | ✔️ | works with string objects | 0ms |
 | ✔️ | explicit flags override those from --config | 0ms |
 
-## <a id=\\"user-content-ts-27-packages-jest-watcher-src-lib-tests-prompt-test-ts\\" href=\\"#ts-27-packages-jest-watcher-src-lib-tests-prompt-test-ts\\">packages/jest-watcher/src/lib/__tests__/prompt.test.ts</a> ✔️
+## <a id="user-content-ts-27-packages-jest-watcher-src-lib-tests-prompt-test-ts" href="#ts-27-packages-jest-watcher-src-lib-tests-prompt-test-ts">packages/jest-watcher/src/lib/__tests__/prompt.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -1844,7 +1678,7 @@ Received string:  \\"·
 | ✔️ | calls handler on success prompt | 0ms |
 | ✔️ | calls handler on cancel prompt | 1ms |
 
-## <a id=\\"user-content-ts-28-packages-jest-docblock-src-tests-index-test-ts\\" href=\\"#ts-28-packages-jest-docblock-src-tests-index-test-ts\\">packages/jest-docblock/src/__tests__/index.test.ts</a> ✔️
+## <a id="user-content-ts-28-packages-jest-docblock-src-tests-index-test-ts" href="#ts-28-packages-jest-docblock-src-tests-index-test-ts">packages/jest-docblock/src/__tests__/index.test.ts</a> ✔️
 
 ### docblock
 
@@ -1887,7 +1721,7 @@ Received string:  \\"·
 | ✔️ | prints docblocks using CRLF if comments contains CRLF | 0ms |
 | ✔️ | prints docblocks using LF if comments contains LF | 1ms |
 
-## <a id=\\"user-content-ts-29-packages-jest-snapshot-src-tests-dedentLines-test-ts\\" href=\\"#ts-29-packages-jest-snapshot-src-tests-dedentLines-test-ts\\">packages/jest-snapshot/src/__tests__/dedentLines.test.ts</a> ✔️
+## <a id="user-content-ts-29-packages-jest-snapshot-src-tests-dedentLines-test-ts" href="#ts-29-packages-jest-snapshot-src-tests-dedentLines-test-ts">packages/jest-snapshot/src/__tests__/dedentLines.test.ts</a> ✔️
 
 ### dedentLines non-null
 
@@ -1916,7 +1750,7 @@ Received string:  \\"·
 | ✔️ | markup unclosed self-closing start tag | 1ms |
 | ✔️ | markup unclosed because no end tag | 0ms |
 
-## <a id=\\"user-content-ts-30-packages-jest-config-src-tests-getMaxWorkers-test-ts\\" href=\\"#ts-30-packages-jest-config-src-tests-getMaxWorkers-test-ts\\">packages/jest-config/src/__tests__/getMaxWorkers.test.ts</a> ✔️
+## <a id="user-content-ts-30-packages-jest-config-src-tests-getMaxWorkers-test-ts" href="#ts-30-packages-jest-config-src-tests-getMaxWorkers-test-ts">packages/jest-config/src/__tests__/getMaxWorkers.test.ts</a> ✔️
 
 ### getMaxWorkers
 
@@ -1924,7 +1758,7 @@ Received string:  \\"·
 | :---: | :--- | ---: |
 | ✔️ | Returns 1 when runInBand | 0ms |
 | ✔️ | Returns 1 when the OS CPUs are not available | 0ms |
-| ✔️ | Returns the \`maxWorkers\` when specified | 0ms |
+| ✔️ | Returns the `maxWorkers` when specified | 0ms |
 | ✔️ | Returns based on the number of cpus | 1ms |
 
 ### getMaxWorkers % based
@@ -1935,7 +1769,7 @@ Received string:  \\"·
 | ✔️ | < 0 workers should become 1 | 1ms |
 | ✔️ | 0% shouldn't break | 0ms |
 
-## <a id=\\"user-content-ts-31-packages-jest-reporters-src-tests-utils-test-ts\\" href=\\"#ts-31-packages-jest-reporters-src-tests-utils-test-ts\\">packages/jest-reporters/src/__tests__/utils.test.ts</a> ✔️
+## <a id="user-content-ts-31-packages-jest-reporters-src-tests-utils-test-ts" href="#ts-31-packages-jest-reporters-src-tests-utils-test-ts">packages/jest-reporters/src/__tests__/utils.test.ts</a> ✔️
 
 ### wrapAnsiString()
 
@@ -1962,7 +1796,7 @@ Received string:  \\"·
 | ✔️ | should default displayName color to white when color is not a valid value | 1ms |
 | ✔️ | should correctly print the displayName when color and name are valid values | 0ms |
 
-## <a id=\\"user-content-ts-32-packages-jest-snapshot-src-tests-throwMatcher-test-ts\\" href=\\"#ts-32-packages-jest-snapshot-src-tests-throwMatcher-test-ts\\">packages/jest-snapshot/src/__tests__/throwMatcher.test.ts</a> ✔️
+## <a id="user-content-ts-32-packages-jest-snapshot-src-tests-throwMatcher-test-ts" href="#ts-32-packages-jest-snapshot-src-tests-throwMatcher-test-ts">packages/jest-snapshot/src/__tests__/throwMatcher.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -1975,13 +1809,13 @@ Received string:  \\"·
 | ✔️ | can take error | 0ms |
 | ✔️ | can take custom error | 1ms |
 
-## <a id=\\"user-content-ts-33-packages-jest-snapshot-src-tests-matcher-test-ts\\" href=\\"#ts-33-packages-jest-snapshot-src-tests-matcher-test-ts\\">packages/jest-snapshot/src/__tests__/matcher.test.ts</a> ✔️
+## <a id="user-content-ts-33-packages-jest-snapshot-src-tests-matcher-test-ts" href="#ts-33-packages-jest-snapshot-src-tests-matcher-test-ts">packages/jest-snapshot/src/__tests__/matcher.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | matcher returns matcher name, expected and actual values | 7ms |
 
-## <a id=\\"user-content-ts-34-packages-jest-config-src-tests-validatePattern-test-ts\\" href=\\"#ts-34-packages-jest-config-src-tests-validatePattern-test-ts\\">packages/jest-config/src/__tests__/validatePattern.test.ts</a> ✔️
+## <a id="user-content-ts-34-packages-jest-config-src-tests-validatePattern-test-ts" href="#ts-34-packages-jest-config-src-tests-validatePattern-test-ts">packages/jest-config/src/__tests__/validatePattern.test.ts</a> ✔️
 
 ### validate pattern function
 
@@ -1992,24 +1826,24 @@ Received string:  \\"·
 | ✔️ | returns true for valid pattern | 0ms |
 | ✔️ | returns false for invalid pattern | 1ms |
 
-## <a id=\\"user-content-ts-35-packages-jest-resolve-src-tests-isBuiltinModule-test-ts\\" href=\\"#ts-35-packages-jest-resolve-src-tests-isBuiltinModule-test-ts\\">packages/jest-resolve/src/__tests__/isBuiltinModule.test.ts</a> ✔️
+## <a id="user-content-ts-35-packages-jest-resolve-src-tests-isBuiltinModule-test-ts" href="#ts-35-packages-jest-resolve-src-tests-isBuiltinModule-test-ts">packages/jest-resolve/src/__tests__/isBuiltinModule.test.ts</a> ✔️
 
 ### isBuiltinModule
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | should return true for the \`path\` module | 0ms |
-| ✔️ | should return false for the \`chalk\` module | 0ms |
-| ✔️ | should return true for the \`_http_common\` module | 0ms |
+| ✔️ | should return true for the `path` module | 0ms |
+| ✔️ | should return false for the `chalk` module | 0ms |
+| ✔️ | should return true for the `_http_common` module | 0ms |
 | ✔️ | should return false for any internal node builtins | 0ms |
 
-## <a id=\\"user-content-ts-36-packages-jest-globals-src-tests-index-ts\\" href=\\"#ts-36-packages-jest-globals-src-tests-index-ts\\">packages/jest-globals/src/__tests__/index.ts</a> ✔️
+## <a id="user-content-ts-36-packages-jest-globals-src-tests-index-ts" href="#ts-36-packages-jest-globals-src-tests-index-ts">packages/jest-globals/src/__tests__/index.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | throw when directly imported | 505ms |
 
-## <a id=\\"user-content-ts-37-packages-jest-regex-util-src-tests-index-test-ts\\" href=\\"#ts-37-packages-jest-regex-util-src-tests-index-test-ts\\">packages/jest-regex-util/src/__tests__/index.test.ts</a> ✔️
+## <a id="user-content-ts-37-packages-jest-regex-util-src-tests-index-test-ts" href="#ts-37-packages-jest-regex-util-src-tests-index-test-ts">packages/jest-regex-util/src/__tests__/index.test.ts</a> ✔️
 
 ### replacePathSepForRegex() posix
 
@@ -2029,7 +1863,7 @@ Received string:  \\"·
 | ✔️ | should escape Windows path separator at the beginning | 1ms |
 | ✔️ | should not escape several already escaped path separators | 0ms |
 
-## <a id=\\"user-content-ts-38-packages-jest-snapshot-src-tests-mockSerializer-test-ts\\" href=\\"#ts-38-packages-jest-snapshot-src-tests-mockSerializer-test-ts\\">packages/jest-snapshot/src/__tests__/mockSerializer.test.ts</a> ✔️
+## <a id="user-content-ts-38-packages-jest-snapshot-src-tests-mockSerializer-test-ts" href="#ts-38-packages-jest-snapshot-src-tests-mockSerializer-test-ts">packages/jest-snapshot/src/__tests__/mockSerializer.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -2044,7 +1878,7 @@ Received string:  \\"·
 | ✔️ | min option | 1ms |
 | ✔️ | maxDepth option | 0ms |
 
-## <a id=\\"user-content-ts-39-packages-jest-reporters-src-tests-getWatermarks-test-ts\\" href=\\"#ts-39-packages-jest-reporters-src-tests-getWatermarks-test-ts\\">packages/jest-reporters/src/__tests__/getWatermarks.test.ts</a> ✔️
+## <a id="user-content-ts-39-packages-jest-reporters-src-tests-getWatermarks-test-ts" href="#ts-39-packages-jest-reporters-src-tests-getWatermarks-test-ts">packages/jest-reporters/src/__tests__/getWatermarks.test.ts</a> ✔️
 
 ### getWatermarks
 
@@ -2053,23 +1887,23 @@ Received string:  \\"·
 | ✔️ | that watermarks use thresholds as upper target | 1ms |
 | ✔️ | that watermarks are created always created | 1ms |
 
-## <a id=\\"user-content-ts-40-packages-jest-reporters-src-tests-DefaultReporter-test-js\\" href=\\"#ts-40-packages-jest-reporters-src-tests-DefaultReporter-test-js\\">packages/jest-reporters/src/__tests__/DefaultReporter.test.js</a> ✔️
+## <a id="user-content-ts-40-packages-jest-reporters-src-tests-DefaultReporter-test-js" href="#ts-40-packages-jest-reporters-src-tests-DefaultReporter-test-js">packages/jest-reporters/src/__tests__/DefaultReporter.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | normal output, everything goes to stdout | 3ms |
 | ✔️ | when using stderr as output, no stdout call is made | 1ms |
 
-## <a id=\\"user-content-ts-41-packages-jest-reporters-src-tests-getResultHeader-test-js\\" href=\\"#ts-41-packages-jest-reporters-src-tests-getResultHeader-test-js\\">packages/jest-reporters/src/__tests__/getResultHeader.test.js</a> ✔️
+## <a id="user-content-ts-41-packages-jest-reporters-src-tests-getResultHeader-test-js" href="#ts-41-packages-jest-reporters-src-tests-getResultHeader-test-js">packages/jest-reporters/src/__tests__/getResultHeader.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | should call \`terminal-link\` correctly | 0ms |
+| ✔️ | should call `terminal-link` correctly | 0ms |
 | ✔️ | should render the terminal link | 0ms |
 | ✔️ | should display test time for slow test | 0ms |
 | ✔️ | should not display test time for fast test | 0ms |
 
-## <a id=\\"user-content-ts-42-packages-expect-src-tests-toEqual-dom-test-ts\\" href=\\"#ts-42-packages-expect-src-tests-toEqual-dom-test-ts\\">packages/expect/src/__tests__/toEqual-dom.test.ts</a> ✔️
+## <a id="user-content-ts-42-packages-expect-src-tests-toEqual-dom-test-ts" href="#ts-42-packages-expect-src-tests-toEqual-dom-test-ts">packages/expect/src/__tests__/toEqual-dom.test.ts</a> ✔️
 
 ### toEqual duck type Text
 
@@ -2113,7 +1947,7 @@ Received string:  \\"·
 | ✔️ | isNot false | 2ms |
 | ✔️ | isNot true | 1ms |
 
-## <a id=\\"user-content-ts-43-packages-jest-environment-node-src-tests-nodeenvironment-test-ts\\" href=\\"#ts-43-packages-jest-environment-node-src-tests-nodeenvironment-test-ts\\">packages/jest-environment-node/src/__tests__/node_environment.test.ts</a> ✔️
+## <a id="user-content-ts-43-packages-jest-environment-node-src-tests-nodeenvironment-test-ts" href="#ts-43-packages-jest-environment-node-src-tests-nodeenvironment-test-ts">packages/jest-environment-node/src/__tests__/node_environment.test.ts</a> ✔️
 
 ### NodeEnvironment
 
@@ -2126,7 +1960,7 @@ Received string:  \\"·
 | ✔️ | has modern fake timers implementation | 1ms |
 | ✔️ | TextEncoder references the same global Uint8Array constructor | 0ms |
 
-## <a id=\\"user-content-ts-44-packages-jest-reporters-src-tests-getSnapshotStatus-test-js\\" href=\\"#ts-44-packages-jest-reporters-src-tests-getSnapshotStatus-test-js\\">packages/jest-reporters/src/__tests__/getSnapshotStatus.test.js</a> ✔️
+## <a id="user-content-ts-44-packages-jest-reporters-src-tests-getSnapshotStatus-test-js" href="#ts-44-packages-jest-reporters-src-tests-getSnapshotStatus-test-js">packages/jest-reporters/src/__tests__/getSnapshotStatus.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -2134,7 +1968,7 @@ Received string:  \\"·
 | ✔️ | Shows no snapshot updates if all snapshots matched | 1ms |
 | ✔️ | Retrieves the snapshot status after a snapshot update | 0ms |
 
-## <a id=\\"user-content-ts-45-packages-jest-validate-src-tests-validateCLIOptions-test-js\\" href=\\"#ts-45-packages-jest-validate-src-tests-validateCLIOptions-test-js\\">packages/jest-validate/src/__tests__/validateCLIOptions.test.js</a> ✔️
+## <a id="user-content-ts-45-packages-jest-validate-src-tests-validateCLIOptions-test-js" href="#ts-45-packages-jest-validate-src-tests-validateCLIOptions-test-js">packages/jest-validate/src/__tests__/validateCLIOptions.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -2145,7 +1979,7 @@ Received string:  \\"·
 | ✔️ | does not show suggestion when unrecognized cli param length <= 1 | 1ms |
 | ✔️ | shows suggestion when unrecognized cli param length > 1 | 0ms |
 
-## <a id=\\"user-content-ts-46-packages-jest-reporters-src-tests-getSnapshotSummary-test-js\\" href=\\"#ts-46-packages-jest-reporters-src-tests-getSnapshotSummary-test-js\\">packages/jest-reporters/src/__tests__/getSnapshotSummary.test.js</a> ✔️
+## <a id="user-content-ts-46-packages-jest-reporters-src-tests-getSnapshotSummary-test-js" href="#ts-46-packages-jest-reporters-src-tests-getSnapshotSummary-test-js">packages/jest-reporters/src/__tests__/getSnapshotSummary.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -2154,7 +1988,7 @@ Received string:  \\"·
 | ✔️ | creates a snapshot summary with multiple snapshot being written/updated | 0ms |
 | ✔️ | returns nothing if there are no updates | 1ms |
 
-## <a id=\\"user-content-ts-47-packages-jest-watcher-src-lib-tests-formatTestNameByPattern-test-ts\\" href=\\"#ts-47-packages-jest-watcher-src-lib-tests-formatTestNameByPattern-test-ts\\">packages/jest-watcher/src/lib/__tests__/formatTestNameByPattern.test.ts</a> ✔️
+## <a id="user-content-ts-47-packages-jest-watcher-src-lib-tests-formatTestNameByPattern-test-ts" href="#ts-47-packages-jest-watcher-src-lib-tests-formatTestNameByPattern-test-ts">packages/jest-watcher/src/lib/__tests__/formatTestNameByPattern.test.ts</a> ✔️
 
 ### for multiline test name returns
 
@@ -2187,7 +2021,7 @@ Received string:  \\"·
 | ✔️ | test name with cutted tail and cutted highlighted pattern | 0ms |
 | ✔️ | test name with highlighted cutted | 1ms |
 
-## <a id=\\"user-content-ts-48-packages-jest-transform-src-tests-shouldInstrument-test-ts\\" href=\\"#ts-48-packages-jest-transform-src-tests-shouldInstrument-test-ts\\">packages/jest-transform/src/__tests__/shouldInstrument.test.ts</a> ✔️
+## <a id="user-content-ts-48-packages-jest-transform-src-tests-shouldInstrument-test-ts" href="#ts-48-packages-jest-transform-src-tests-shouldInstrument-test-ts">packages/jest-transform/src/__tests__/shouldInstrument.test.ts</a> ✔️
 
 ### shouldInstrument should return true
 
@@ -2224,7 +2058,7 @@ Received string:  \\"·
 | ✔️ | if file is in setupFiles | 11ms |
 | ✔️ | if file is in setupFilesAfterEnv | 0ms |
 
-## <a id=\\"user-content-ts-49-packages-jest-transform-src-tests-ScriptTransformer-test-ts\\" href=\\"#ts-49-packages-jest-transform-src-tests-ScriptTransformer-test-ts\\">packages/jest-transform/src/__tests__/ScriptTransformer.test.ts</a> ✔️
+## <a id="user-content-ts-49-packages-jest-transform-src-tests-ScriptTransformer-test-ts" href="#ts-49-packages-jest-transform-src-tests-ScriptTransformer-test-ts">packages/jest-transform/src/__tests__/ScriptTransformer.test.ts</a> ✔️
 
 ### ScriptTransformer
 
@@ -2232,9 +2066,9 @@ Received string:  \\"·
 | :---: | :--- | ---: |
 | ✔️ | transforms a file properly | 204ms |
 | ✔️ | does not transform Node core modules | 51ms |
-| ✔️ | throws an error if \`process\` doesn't return a string or an objectcontaining \`code\` key with processed string | 79ms |
-| ✔️ | throws an error if \`process\` doesn't defined | 42ms |
-| ✔️ | throws an error if createTransformer returns object without \`process\` method | 98ms |
+| ✔️ | throws an error if `process` doesn't return a string or an objectcontaining `code` key with processed string | 79ms |
+| ✔️ | throws an error if `process` doesn't defined | 42ms |
+| ✔️ | throws an error if createTransformer returns object without `process` method | 98ms |
 | ✔️ | shouldn't throw error without process method. But with corrent createTransformer method | 66ms |
 | ✔️ | uses the supplied preprocessor | 45ms |
 | ✔️ | uses multiple preprocessors | 35ms |
@@ -2251,22 +2085,22 @@ Received string:  \\"·
 | ✔️ | reads values from the cache when the file contains colons | 84ms |
 | ✔️ | should reuse the value from in-memory cache which is set by custom transformer | 25ms |
 | ✔️ | does not reuse the in-memory cache between different projects | 37ms |
-| ✔️ | preload transformer when using \`preloadTransformer\` | 36ms |
+| ✔️ | preload transformer when using `preloadTransformer` | 36ms |
 
-## <a id=\\"user-content-ts-50-packages-jest-circus-src-tests-baseTest-test-ts\\" href=\\"#ts-50-packages-jest-circus-src-tests-baseTest-test-ts\\">packages/jest-circus/src/__tests__/baseTest.test.ts</a> ✔️
+## <a id="user-content-ts-50-packages-jest-circus-src-tests-baseTest-test-ts" href="#ts-50-packages-jest-circus-src-tests-baseTest-test-ts">packages/jest-circus/src/__tests__/baseTest.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | simple test | 2145ms |
 | ✔️ | failures | 707ms |
 
-## <a id=\\"user-content-ts-51-packages-jest-mock-src-tests-index-test-ts\\" href=\\"#ts-51-packages-jest-mock-src-tests-index-test-ts\\">packages/jest-mock/src/__tests__/index.test.ts</a> ✔️
+## <a id="user-content-ts-51-packages-jest-mock-src-tests-index-test-ts" href="#ts-51-packages-jest-mock-src-tests-index-test-ts">packages/jest-mock/src/__tests__/index.test.ts</a> ✔️
 
 ### moduleMocker getMetadata
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | returns the function \`name\` property | 2ms |
+| ✔️ | returns the function `name` property | 2ms |
 | ✔️ | mocks constant values | 1ms |
 | ✔️ | does not retrieve metadata for arrays | 1ms |
 | ✔️ | does not retrieve metadata for undefined | 1ms |
@@ -2346,7 +2180,7 @@ Received string:  \\"·
 | ✔️ | tracks invocationCallOrder made by mocks | 1ms |
 | ✔️ | supports clearing mock invocationCallOrder | 1ms |
 | ✔️ | supports clearing all mocks invocationCallOrder | 1ms |
-| ✔️ | handles a property called \`prototype\` | 1ms |
+| ✔️ | handles a property called `prototype` | 1ms |
 
 ### moduleMocker getMockImplementation
 
@@ -2396,7 +2230,7 @@ Received string:  \\"·
 | ✔️ | should work with setters on the prototype chain | 1ms |
 | ✔️ | supports restoring all spies on the prototype chain | 1ms |
 
-## <a id=\\"user-content-ts-52-packages-jest-circus-src-tests-hooks-test-ts\\" href=\\"#ts-52-packages-jest-circus-src-tests-hooks-test-ts\\">packages/jest-circus/src/__tests__/hooks.test.ts</a> ✔️
+## <a id="user-content-ts-52-packages-jest-circus-src-tests-hooks-test-ts" href="#ts-52-packages-jest-circus-src-tests-hooks-test-ts">packages/jest-circus/src/__tests__/hooks.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -2404,22 +2238,22 @@ Received string:  \\"·
 | ✔️ | multiple before each hooks in one describe are executed in the right order | 678ms |
 | ✔️ | beforeAll is exectued correctly | 625ms |
 
-## <a id=\\"user-content-ts-53-packages-jest-runtime-src-tests-runtimerequiremodule-test-js\\" href=\\"#ts-53-packages-jest-runtime-src-tests-runtimerequiremodule-test-js\\">packages/jest-runtime/src/__tests__/runtime_require_module.test.js</a> ✔️
+## <a id="user-content-ts-53-packages-jest-runtime-src-tests-runtimerequiremodule-test-js" href="#ts-53-packages-jest-runtime-src-tests-runtimerequiremodule-test-js">packages/jest-runtime/src/__tests__/runtime_require_module.test.js</a> ✔️
 
 ### Runtime requireModule
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | finds haste modules | 1124ms |
-| ✔️ | provides \`module\` to modules | 26ms |
-| ✔️ | provides \`module.parent\` to modules | 80ms |
-| ✔️ | \`module.parent\` should be undefined for entrypoints | 25ms |
+| ✔️ | provides `module` to modules | 26ms |
+| ✔️ | provides `module.parent` to modules | 80ms |
+| ✔️ | `module.parent` should be undefined for entrypoints | 25ms |
 | ✔️ | resolve module.parent.require correctly | 49ms |
 | ✔️ | resolve module.parent.filename correctly | 23ms |
-| ✔️ | provides \`module.loaded\` to modules | 27ms |
-| ✔️ | provides \`module.filename\` to modules | 36ms |
-| ✔️ | provides \`module.paths\` to modules | 49ms |
-| ✔️ | provides \`require.main\` to modules | 52ms |
+| ✔️ | provides `module.loaded` to modules | 27ms |
+| ✔️ | provides `module.filename` to modules | 36ms |
+| ✔️ | provides `module.paths` to modules | 49ms |
+| ✔️ | provides `require.main` to modules | 52ms |
 | ✔️ | throws on non-existent haste modules | 68ms |
 | ✔️ | finds relative-path modules without file extension | 46ms |
 | ✔️ | finds relative-path modules with file extension | 21ms |
@@ -2443,7 +2277,7 @@ Received string:  \\"·
 | :---: | :--- | ---: |
 | ✔️ | overrides module.createRequire | 28ms |
 
-## <a id=\\"user-content-ts-54-packages-jest-runtime-src-tests-runtimemock-test-js\\" href=\\"#ts-54-packages-jest-runtime-src-tests-runtimemock-test-js\\">packages/jest-runtime/src/__tests__/runtime_mock.test.js</a> ✔️
+## <a id="user-content-ts-54-packages-jest-runtime-src-tests-runtimemock-test-js" href="#ts-54-packages-jest-runtime-src-tests-runtimemock-test-js">packages/jest-runtime/src/__tests__/runtime_mock.test.js</a> ✔️
 
 ### Runtime jest.mock
 
@@ -2459,7 +2293,7 @@ Received string:  \\"·
 | :---: | :--- | ---: |
 | ✔️ | uses explicitly set mocks instead of automocking | 21ms |
 
-## <a id=\\"user-content-ts-55-packages-jest-circus-src-tests-circusItTestError-test-ts\\" href=\\"#ts-55-packages-jest-circus-src-tests-circusItTestError-test-ts\\">packages/jest-circus/src/__tests__/circusItTestError.test.ts</a> ✔️
+## <a id="user-content-ts-55-packages-jest-circus-src-tests-circusItTestError-test-ts" href="#ts-55-packages-jest-circus-src-tests-circusItTestError-test-ts">packages/jest-circus/src/__tests__/circusItTestError.test.ts</a> ✔️
 
 ### test/it error throwing
 
@@ -2474,7 +2308,7 @@ Received string:  \\"·
 | ✔️ | test throws an error when first argument isn't a string | 0ms |
 | ✔️ | test throws an error when callback function is not a function | 1ms |
 
-## <a id=\\"user-content-ts-56-packages-jest-worker-src-base-tests-BaseWorkerPool-test-js\\" href=\\"#ts-56-packages-jest-worker-src-base-tests-BaseWorkerPool-test-js\\">packages/jest-worker/src/base/__tests__/BaseWorkerPool.test.js</a> ✔️
+## <a id="user-content-ts-56-packages-jest-worker-src-base-tests-BaseWorkerPool-test-js" href="#ts-56-packages-jest-worker-src-base-tests-BaseWorkerPool-test-js">packages/jest-worker/src/base/__tests__/BaseWorkerPool.test.js</a> ✔️
 
 ### BaseWorkerPool
 
@@ -2497,7 +2331,7 @@ Received string:  \\"·
 | ✔️ | resolves with forceExited=false if workers exited gracefully | 1ms |
 | ✔️ | force exits workers that do not exit gracefully and resolves with forceExited=true | 501ms |
 
-## <a id=\\"user-content-ts-57-packages-pretty-format-src-tests-Immutable-test-ts\\" href=\\"#ts-57-packages-pretty-format-src-tests-Immutable-test-ts\\">packages/pretty-format/src/__tests__/Immutable.test.ts</a> ✔️
+## <a id="user-content-ts-57-packages-pretty-format-src-tests-Immutable-test-ts" href="#ts-57-packages-pretty-format-src-tests-Immutable-test-ts">packages/pretty-format/src/__tests__/Immutable.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -2678,7 +2512,7 @@ Received string:  \\"·
 | ✔️ | from Immutable.List values | 1ms |
 | ✔️ | from ECMAScript Set values | 0ms |
 
-## <a id=\\"user-content-ts-58-packages-jest-runtime-src-tests-Runtime-sourceMaps-test-js\\" href=\\"#ts-58-packages-jest-runtime-src-tests-Runtime-sourceMaps-test-js\\">packages/jest-runtime/src/__tests__/Runtime-sourceMaps.test.js</a> ✔️
+## <a id="user-content-ts-58-packages-jest-runtime-src-tests-Runtime-sourceMaps-test-js" href="#ts-58-packages-jest-runtime-src-tests-Runtime-sourceMaps-test-js">packages/jest-runtime/src/__tests__/Runtime-sourceMaps.test.js</a> ✔️
 
 ### Runtime requireModule
 
@@ -2686,7 +2520,7 @@ Received string:  \\"·
 | :---: | :--- | ---: |
 | ✔️ | installs source maps if available | 560ms |
 
-## <a id=\\"user-content-ts-59-packages-jest-environment-jsdom-src-tests-jsdomenvironment-test-ts\\" href=\\"#ts-59-packages-jest-environment-jsdom-src-tests-jsdomenvironment-test-ts\\">packages/jest-environment-jsdom/src/__tests__/jsdom_environment.test.ts</a> ✔️
+## <a id="user-content-ts-59-packages-jest-environment-jsdom-src-tests-jsdomenvironment-test-ts" href="#ts-59-packages-jest-environment-jsdom-src-tests-jsdomenvironment-test-ts">packages/jest-environment-jsdom/src/__tests__/jsdom_environment.test.ts</a> ✔️
 
 ### JSDomEnvironment
 
@@ -2695,7 +2529,7 @@ Received string:  \\"·
 | ✔️ | should configure setTimeout/setInterval to use the browser api | 47ms |
 | ✔️ | has modern fake timers implementation | 19ms |
 
-## <a id=\\"user-content-ts-60-packages-babel-plugin-jest-hoist-src-tests-hoistPlugin-test-ts\\" href=\\"#ts-60-packages-babel-plugin-jest-hoist-src-tests-hoistPlugin-test-ts\\">packages/babel-plugin-jest-hoist/src/__tests__/hoistPlugin.test.ts</a> ✔️
+## <a id="user-content-ts-60-packages-babel-plugin-jest-hoist-src-tests-hoistPlugin-test-ts" href="#ts-60-packages-babel-plugin-jest-hoist-src-tests-hoistPlugin-test-ts">packages/babel-plugin-jest-hoist/src/__tests__/hoistPlugin.test.ts</a> ✔️
 
 ### babel-plugin-jest-hoist
 
@@ -2706,7 +2540,7 @@ Received string:  \\"·
 | ✔️ | within a block | 10ms |
 | ✔️ | within a block with no siblings | 7ms |
 
-## <a id=\\"user-content-ts-61-packages-jest-worker-src-workers-tests-ChildProcessWorker-test-js\\" href=\\"#ts-61-packages-jest-worker-src-workers-tests-ChildProcessWorker-test-js\\">packages/jest-worker/src/workers/__tests__/ChildProcessWorker.test.js</a> ✔️
+## <a id="user-content-ts-61-packages-jest-worker-src-workers-tests-ChildProcessWorker-test-js" href="#ts-61-packages-jest-worker-src-workers-tests-ChildProcessWorker-test-js">packages/jest-worker/src/workers/__tests__/ChildProcessWorker.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -2728,7 +2562,7 @@ Received string:  \\"·
 | ✔️ | sends SIGKILL some time after SIGTERM | 1ms |
 | ✔️ | does not send SIGKILL if SIGTERM exited the process | 2ms |
 
-## <a id=\\"user-content-ts-62-packages-jest-each-src-tests-array-test-ts\\" href=\\"#ts-62-packages-jest-each-src-tests-array-test-ts\\">packages/jest-each/src/__tests__/array.test.ts</a> ✔️
+## <a id="user-content-ts-62-packages-jest-each-src-tests-array-test-ts" href="#ts-62-packages-jest-each-src-tests-array-test-ts">packages/jest-each/src/__tests__/array.test.ts</a> ✔️
 
 ### jest-each .test
 
@@ -2979,7 +2813,7 @@ Received string:  \\"·
 | ✔️ | calls global with title containing param values when using sprintf format | 0ms |
 | ✔️ | calls global with title with placeholder values correctly interpolated | 0ms |
 
-## <a id=\\"user-content-ts-63-packages-jest-each-src-tests-template-test-ts\\" href=\\"#ts-63-packages-jest-each-src-tests-template-test-ts\\">packages/jest-each/src/__tests__/template.test.ts</a> ✔️
+## <a id="user-content-ts-63-packages-jest-each-src-tests-template-test-ts" href="#ts-63-packages-jest-each-src-tests-template-test-ts">packages/jest-each/src/__tests__/template.test.ts</a> ✔️
 
 ### jest-each .test
 
@@ -3313,7 +3147,7 @@ Received string:  \\"·
 | ✔️ | calls global with given title when multiple tests cases exist | 0ms |
 | ✔️ | calls global with title containing param values when using $variable format | 1ms |
 
-## <a id=\\"user-content-ts-64-packages-pretty-format-src-tests-react-test-tsx\\" href=\\"#ts-64-packages-pretty-format-src-tests-react-test-tsx\\">packages/pretty-format/src/__tests__/react.test.tsx</a> ✔️
+## <a id="user-content-ts-64-packages-pretty-format-src-tests-react-test-tsx" href="#ts-64-packages-pretty-format-src-tests-react-test-tsx">packages/pretty-format/src/__tests__/react.test.tsx</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -3352,7 +3186,7 @@ Received string:  \\"·
 | ✔️ | ReactElement plugin highlights syntax | 1ms |
 | ✔️ | ReactTestComponent plugin highlights syntax | 0ms |
 | ✔️ | throws if theme option is null | 50ms |
-| ✔️ | throws if theme option is not of type \\"object\\" | 0ms |
+| ✔️ | throws if theme option is not of type "object" | 0ms |
 | ✔️ | throws if theme option has value that is undefined in ansi-styles | 1ms |
 | ✔️ | ReactElement plugin highlights syntax with color from theme option | 0ms |
 | ✔️ | ReactTestComponent plugin highlights syntax with color from theme option | 0ms |
@@ -3398,7 +3232,7 @@ Received string:  \\"·
 | ✔️ | renders the displayName of component before memoizing | 0ms |
 | ✔️ | renders the displayName of memoized component | 0ms |
 
-## <a id=\\"user-content-ts-65-packages-jest-circus-src-tests-afterAll-test-ts\\" href=\\"#ts-65-packages-jest-circus-src-tests-afterAll-test-ts\\">packages/jest-circus/src/__tests__/afterAll.test.ts</a> ✔️
+## <a id="user-content-ts-65-packages-jest-circus-src-tests-afterAll-test-ts" href="#ts-65-packages-jest-circus-src-tests-afterAll-test-ts">packages/jest-circus/src/__tests__/afterAll.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -3409,7 +3243,7 @@ Received string:  \\"·
 | ✔️ | child tests marked with todo should not run if describe block is skipped | 677ms |
 | ✔️ | child tests marked with only should not run if describe block is skipped | 724ms |
 
-## <a id=\\"user-content-ts-66-packages-pretty-format-src-tests-prettyFormat-test-ts\\" href=\\"#ts-66-packages-pretty-format-src-tests-prettyFormat-test-ts\\">packages/pretty-format/src/__tests__/prettyFormat.test.ts</a> ✔️
+## <a id="user-content-ts-66-packages-pretty-format-src-tests-prettyFormat-test-ts" href="#ts-66-packages-pretty-format-src-tests-prettyFormat-test-ts">packages/pretty-format/src/__tests__/prettyFormat.test.ts</a> ✔️
 
 ### prettyFormat()
 
@@ -3512,7 +3346,7 @@ Received string:  \\"·
 | ✔️ | prints some complex values in min mode | 0ms |
 | ✔️ | does not allow indent !== 0 in min mode | 1ms |
 
-## <a id=\\"user-content-ts-67-packages-jest-worker-src-tests-Farm-test-js\\" href=\\"#ts-67-packages-jest-worker-src-tests-Farm-test-js\\">packages/jest-worker/src/__tests__/Farm.test.js</a> ✔️
+## <a id="user-content-ts-67-packages-jest-worker-src-tests-Farm-test-js" href="#ts-67-packages-jest-worker-src-tests-Farm-test-js">packages/jest-worker/src/__tests__/Farm.test.js</a> ✔️
 
 ### Farm
 
@@ -3529,7 +3363,7 @@ Received string:  \\"·
 | ✔️ | checks that locking works, and jobs are never lost | 1ms |
 | ✔️ | can receive custom messages from workers | 0ms |
 
-## <a id=\\"user-content-ts-68-packages-jest-worker-src-workers-tests-threadChild-test-js\\" href=\\"#ts-68-packages-jest-worker-src-workers-tests-threadChild-test-js\\">packages/jest-worker/src/workers/__tests__/threadChild.test.js</a> ✔️
+## <a id="user-content-ts-68-packages-jest-worker-src-workers-tests-threadChild-test-js" href="#ts-68-packages-jest-worker-src-workers-tests-threadChild-test-js">packages/jest-worker/src/workers/__tests__/threadChild.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -3537,27 +3371,27 @@ Received string:  \\"·
 | ✔️ | calls initialize with the correct arguments | 1ms |
 | ✔️ | returns results immediately when function is synchronous | 15ms |
 | ✔️ | returns results when it gets resolved if function is asynchronous | 22ms |
-| ✔️ | calls the main module if the method call is \\"default\\" | 1ms |
-| ✔️ | calls the main export if the method call is \\"default\\" and it is a Babel transpiled one | 1ms |
+| ✔️ | calls the main module if the method call is "default" | 1ms |
+| ✔️ | calls the main export if the method call is "default" and it is a Babel transpiled one | 1ms |
 | ✔️ | removes the message listener on END message | 0ms |
 | ✔️ | calls the teardown method | 1ms |
 | ✔️ | throws if an invalid message is detected | 1ms |
 | ✔️ | throws if child is not forked | 1ms |
 
-## <a id=\\"user-content-ts-69-packages-jest-jasmine2-src-tests-queueRunner-test-ts\\" href=\\"#ts-69-packages-jest-jasmine2-src-tests-queueRunner-test-ts\\">packages/jest-jasmine2/src/__tests__/queueRunner.test.ts</a> ✔️
+## <a id="user-content-ts-69-packages-jest-jasmine2-src-tests-queueRunner-test-ts" href="#ts-69-packages-jest-jasmine2-src-tests-queueRunner-test-ts">packages/jest-jasmine2/src/__tests__/queueRunner.test.ts</a> ✔️
 
 ### queueRunner
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | runs every function in the queue. | 1ms |
-| ✔️ | exposes \`fail\` to \`next\`. | 1ms |
-| ✔️ | passes errors to \`onException\`. | 0ms |
-| ✔️ | passes an error to \`onException\` on timeout. | 4ms |
-| ✔️ | calls \`fail\` with arguments | 1ms |
-| ✔️ | calls \`fail\` when done(error) is invoked | 0ms |
+| ✔️ | exposes `fail` to `next`. | 1ms |
+| ✔️ | passes errors to `onException`. | 0ms |
+| ✔️ | passes an error to `onException` on timeout. | 4ms |
+| ✔️ | calls `fail` with arguments | 1ms |
+| ✔️ | calls `fail` when done(error) is invoked | 0ms |
 
-## <a id=\\"user-content-ts-70-packages-jest-worker-src-workers-tests-NodeThreadsWorker-test-js\\" href=\\"#ts-70-packages-jest-worker-src-workers-tests-NodeThreadsWorker-test-js\\">packages/jest-worker/src/workers/__tests__/NodeThreadsWorker.test.js</a> ✔️
+## <a id="user-content-ts-70-packages-jest-worker-src-workers-tests-NodeThreadsWorker-test-js" href="#ts-70-packages-jest-worker-src-workers-tests-NodeThreadsWorker-test-js">packages/jest-worker/src/workers/__tests__/NodeThreadsWorker.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -3577,7 +3411,7 @@ Received string:  \\"·
 | ✔️ | restarts the thread when the thread dies | 0ms |
 | ✔️ | terminates the thread when forceExit() is called | 0ms |
 
-## <a id=\\"user-content-ts-71-packages-jest-worker-src-workers-tests-processChild-test-js\\" href=\\"#ts-71-packages-jest-worker-src-workers-tests-processChild-test-js\\">packages/jest-worker/src/workers/__tests__/processChild.test.js</a> ✔️
+## <a id="user-content-ts-71-packages-jest-worker-src-workers-tests-processChild-test-js" href="#ts-71-packages-jest-worker-src-workers-tests-processChild-test-js">packages/jest-worker/src/workers/__tests__/processChild.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -3585,27 +3419,27 @@ Received string:  \\"·
 | ✔️ | calls initialize with the correct arguments | 1ms |
 | ✔️ | returns results immediately when function is synchronous | 13ms |
 | ✔️ | returns results when it gets resolved if function is asynchronous | 23ms |
-| ✔️ | calls the main module if the method call is \\"default\\" | 0ms |
-| ✔️ | calls the main export if the method call is \\"default\\" and it is a Babel transpiled one | 1ms |
+| ✔️ | calls the main module if the method call is "default" | 0ms |
+| ✔️ | calls the main export if the method call is "default" and it is a Babel transpiled one | 1ms |
 | ✔️ | removes the message listener on END message | 1ms |
 | ✔️ | calls the teardown method | 0ms |
 | ✔️ | throws if an invalid message is detected | 1ms |
 | ✔️ | throws if child is not forked | 1ms |
 
-## <a id=\\"user-content-ts-72-packages-jest-runner-src-tests-testRunner-test-ts\\" href=\\"#ts-72-packages-jest-runner-src-tests-testRunner-test-ts\\">packages/jest-runner/src/__tests__/testRunner.test.ts</a> ✔️
+## <a id="user-content-ts-72-packages-jest-runner-src-tests-testRunner-test-ts" href="#ts-72-packages-jest-runner-src-tests-testRunner-test-ts">packages/jest-runner/src/__tests__/testRunner.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | injects the serializable module map into each worker in watch mode | 2ms |
 | ✔️ | assign process.env.JEST_WORKER_ID = 1 when in runInBand mode | 1ms |
 
-## <a id=\\"user-content-ts-73-packages-jest-circus-src-tests-hooksError-test-ts\\" href=\\"#ts-73-packages-jest-circus-src-tests-hooksError-test-ts\\">packages/jest-circus/src/__tests__/hooksError.test.ts</a> ✔️
+## <a id="user-content-ts-73-packages-jest-circus-src-tests-hooksError-test-ts" href="#ts-73-packages-jest-circus-src-tests-hooksError-test-ts">packages/jest-circus/src/__tests__/hooksError.test.ts</a> ✔️
 
 ### beforeEach hooks error throwing
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | beforeEach throws an error when \\"String\\" is provided as a first argument to it | 19ms |
+| ✔️ | beforeEach throws an error when "String" is provided as a first argument to it | 19ms |
 | ✔️ | beforeEach throws an error when 1 is provided as a first argument to it | 1ms |
 | ✔️ | beforeEach throws an error when [] is provided as a first argument to it | 0ms |
 | ✔️ | beforeEach throws an error when {} is provided as a first argument to it | 0ms |
@@ -3618,7 +3452,7 @@ Received string:  \\"·
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | beforeAll throws an error when \\"String\\" is provided as a first argument to it | 0ms |
+| ✔️ | beforeAll throws an error when "String" is provided as a first argument to it | 0ms |
 | ✔️ | beforeAll throws an error when 1 is provided as a first argument to it | 0ms |
 | ✔️ | beforeAll throws an error when [] is provided as a first argument to it | 0ms |
 | ✔️ | beforeAll throws an error when {} is provided as a first argument to it | 0ms |
@@ -3631,7 +3465,7 @@ Received string:  \\"·
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | afterEach throws an error when \\"String\\" is provided as a first argument to it | 0ms |
+| ✔️ | afterEach throws an error when "String" is provided as a first argument to it | 0ms |
 | ✔️ | afterEach throws an error when 1 is provided as a first argument to it | 0ms |
 | ✔️ | afterEach throws an error when [] is provided as a first argument to it | 0ms |
 | ✔️ | afterEach throws an error when {} is provided as a first argument to it | 1ms |
@@ -3644,7 +3478,7 @@ Received string:  \\"·
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | afterAll throws an error when \\"String\\" is provided as a first argument to it | 1ms |
+| ✔️ | afterAll throws an error when "String" is provided as a first argument to it | 1ms |
 | ✔️ | afterAll throws an error when 1 is provided as a first argument to it | 0ms |
 | ✔️ | afterAll throws an error when [] is provided as a first argument to it | 1ms |
 | ✔️ | afterAll throws an error when {} is provided as a first argument to it | 3ms |
@@ -3653,7 +3487,7 @@ Received string:  \\"·
 | ✔️ | afterAll throws an error when null is provided as a first argument to it | 0ms |
 | ✔️ | afterAll throws an error when undefined is provided as a first argument to it | 0ms |
 
-## <a id=\\"user-content-ts-74-packages-jest-serializer-src-tests-index-test-ts\\" href=\\"#ts-74-packages-jest-serializer-src-tests-index-test-ts\\">packages/jest-serializer/src/__tests__/index.test.ts</a> ✔️
+## <a id="user-content-ts-74-packages-jest-serializer-src-tests-index-test-ts" href="#ts-74-packages-jest-serializer-src-tests-index-test-ts">packages/jest-serializer/src/__tests__/index.test.ts</a> ✔️
 
 ### Using V8 implementation
 
@@ -3717,7 +3551,7 @@ Received string:  \\"·
 | ✔️ | serializes/deserializes in memory | 1ms |
 | ✔️ | serializes/deserializes in disk | 0ms |
 
-## <a id=\\"user-content-ts-75-packages-jest-console-src-tests-bufferedConsole-test-ts\\" href=\\"#ts-75-packages-jest-console-src-tests-bufferedConsole-test-ts\\">packages/jest-console/src/__tests__/bufferedConsole.test.ts</a> ✔️
+## <a id="user-content-ts-75-packages-jest-console-src-tests-bufferedConsole-test-ts" href="#ts-75-packages-jest-console-src-tests-bufferedConsole-test-ts">packages/jest-console/src/__tests__/bufferedConsole.test.ts</a> ✔️
 
 ### CustomConsole assert
 
@@ -3774,7 +3608,7 @@ Received string:  \\"·
 | :---: | :--- | ---: |
 | ✔️ | should be able to initialize console instance | 0ms |
 
-## <a id=\\"user-content-ts-76-packages-jest-console-src-tests-CustomConsole-test-ts\\" href=\\"#ts-76-packages-jest-console-src-tests-CustomConsole-test-ts\\">packages/jest-console/src/__tests__/CustomConsole.test.ts</a> ✔️
+## <a id="user-content-ts-76-packages-jest-console-src-tests-CustomConsole-test-ts" href="#ts-76-packages-jest-console-src-tests-CustomConsole-test-ts">packages/jest-console/src/__tests__/CustomConsole.test.ts</a> ✔️
 
 ### CustomConsole log
 
@@ -3849,7 +3683,7 @@ Received string:  \\"·
 | :---: | :--- | ---: |
 | ✔️ | should be able to initialize console instance | 0ms |
 
-## <a id=\\"user-content-ts-77-packages-pretty-format-src-tests-DOMCollection-test-ts\\" href=\\"#ts-77-packages-pretty-format-src-tests-DOMCollection-test-ts\\">packages/pretty-format/src/__tests__/DOMCollection.test.ts</a> ✔️
+## <a id="user-content-ts-77-packages-pretty-format-src-tests-DOMCollection-test-ts" href="#ts-77-packages-pretty-format-src-tests-DOMCollection-test-ts">packages/pretty-format/src/__tests__/DOMCollection.test.ts</a> ✔️
 
 ### DOMCollection plugin for object properties
 
@@ -3871,7 +3705,7 @@ Received string:  \\"·
 | ✔️ | supports HTMLOptionsCollection for select options | 0ms |
 | ✔️ | supports HTMLCollection for form elements | 1ms |
 
-## <a id=\\"user-content-ts-78-packages-jest-circus-src-tests-circusItTodoTestError-test-ts\\" href=\\"#ts-78-packages-jest-circus-src-tests-circusItTodoTestError-test-ts\\">packages/jest-circus/src/__tests__/circusItTodoTestError.test.ts</a> ✔️
+## <a id="user-content-ts-78-packages-jest-circus-src-tests-circusItTodoTestError-test-ts" href="#ts-78-packages-jest-circus-src-tests-circusItTodoTestError-test-ts">packages/jest-circus/src/__tests__/circusItTodoTestError.test.ts</a> ✔️
 
 ### test/it.todo error throwing
 
@@ -3881,7 +3715,7 @@ Received string:  \\"·
 | ✔️ | todo throws error when given more than one argument | 1ms |
 | ✔️ | todo throws error when given none string description | 0ms |
 
-## <a id=\\"user-content-ts-79-packages-jest-test-sequencer-src-tests-testsequencer-test-js\\" href=\\"#ts-79-packages-jest-test-sequencer-src-tests-testsequencer-test-js\\">packages/jest-test-sequencer/src/__tests__/test_sequencer.test.js</a> ✔️
+## <a id="user-content-ts-79-packages-jest-test-sequencer-src-tests-testsequencer-test-js" href="#ts-79-packages-jest-test-sequencer-src-tests-testsequencer-test-js">packages/jest-test-sequencer/src/__tests__/test_sequencer.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -3894,7 +3728,7 @@ Received string:  \\"·
 | ✔️ | writes the cache based on the results | 13ms |
 | ✔️ | works with multiple contexts | 0ms |
 
-## <a id=\\"user-content-ts-80-packages-jest-jasmine2-src-tests-Suite-test-ts\\" href=\\"#ts-80-packages-jest-jasmine2-src-tests-Suite-test-ts\\">packages/jest-jasmine2/src/__tests__/Suite.test.ts</a> ✔️
+## <a id="user-content-ts-80-packages-jest-jasmine2-src-tests-Suite-test-ts" href="#ts-80-packages-jest-jasmine2-src-tests-Suite-test-ts">packages/jest-jasmine2/src/__tests__/Suite.test.ts</a> ✔️
 
 ### Suite
 
@@ -3902,7 +3736,7 @@ Received string:  \\"·
 | :---: | :--- | ---: |
 | ✔️ | doesn't throw on addExpectationResult when there are no children | 0ms |
 
-## <a id=\\"user-content-ts-81-packages-pretty-format-src-tests-AsymmetricMatcher-test-ts\\" href=\\"#ts-81-packages-pretty-format-src-tests-AsymmetricMatcher-test-ts\\">packages/pretty-format/src/__tests__/AsymmetricMatcher.test.ts</a> ✔️
+## <a id="user-content-ts-81-packages-pretty-format-src-tests-AsymmetricMatcher-test-ts" href="#ts-81-packages-pretty-format-src-tests-AsymmetricMatcher-test-ts">packages/pretty-format/src/__tests__/AsymmetricMatcher.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -3955,7 +3789,7 @@ Received string:  \\"·
 | ✔️ | matchers as leaf nodes | 0ms |
 | ✔️ | matchers as internal nodes | 1ms |
 
-## <a id=\\"user-content-ts-82-packages-pretty-format-src-tests-ConvertAnsi-test-ts\\" href=\\"#ts-82-packages-pretty-format-src-tests-ConvertAnsi-test-ts\\">packages/pretty-format/src/__tests__/ConvertAnsi.test.ts</a> ✔️
+## <a id="user-content-ts-82-packages-pretty-format-src-tests-ConvertAnsi-test-ts" href="#ts-82-packages-pretty-format-src-tests-ConvertAnsi-test-ts">packages/pretty-format/src/__tests__/ConvertAnsi.test.ts</a> ✔️
 
 ### ConvertAnsi plugin
 
@@ -3968,7 +3802,7 @@ Received string:  \\"·
 | ✔️ | supports style.dim | 1ms |
 | ✔️ | does not support other colors | 0ms |
 
-## <a id=\\"user-content-ts-83-packages-jest-console-src-tests-getConsoleOutput-test-ts\\" href=\\"#ts-83-packages-jest-console-src-tests-getConsoleOutput-test-ts\\">packages/jest-console/src/__tests__/getConsoleOutput.test.ts</a> ✔️
+## <a id="user-content-ts-83-packages-jest-console-src-tests-getConsoleOutput-test-ts" href="#ts-83-packages-jest-console-src-tests-getConsoleOutput-test-ts">packages/jest-console/src/__tests__/getConsoleOutput.test.ts</a> ✔️
 
 ### getConsoleOutput
 
@@ -3987,7 +3821,7 @@ Received string:  \\"·
 | ✔️ | takes noStackTrace and pass it on for time | 1ms |
 | ✔️ | takes noStackTrace and pass it on for warn | 0ms |
 
-## <a id=\\"user-content-ts-84-packages-jest-jasmine2-src-tests-expectationResultFactory-test-ts\\" href=\\"#ts-84-packages-jest-jasmine2-src-tests-expectationResultFactory-test-ts\\">packages/jest-jasmine2/src/__tests__/expectationResultFactory.test.ts</a> ✔️
+## <a id="user-content-ts-84-packages-jest-jasmine2-src-tests-expectationResultFactory-test-ts" href="#ts-84-packages-jest-jasmine2-src-tests-expectationResultFactory-test-ts">packages/jest-jasmine2/src/__tests__/expectationResultFactory.test.ts</a> ✔️
 
 ### expectationResultFactory
 
@@ -3995,13 +3829,13 @@ Received string:  \\"·
 | :---: | :--- | ---: |
 | ✔️ | returns the result if passed. | 1ms |
 | ✔️ | returns the result if failed. | 5ms |
-| ✔️ | returns the result if failed (with \`message\`). | 1ms |
-| ✔️ | returns the result if failed (with \`error\`). | 1ms |
+| ✔️ | returns the result if failed (with `message`). | 1ms |
+| ✔️ | returns the result if failed (with `error`). | 1ms |
 | ✔️ | returns the error name if the error message is empty | 0ms |
-| ✔️ | returns the result if failed (with \`error\` as a string). | 0ms |
-| ✔️ | returns the result if failed (with \`error.stack\` not as a string). | 1ms |
+| ✔️ | returns the result if failed (with `error` as a string). | 0ms |
+| ✔️ | returns the result if failed (with `error.stack` not as a string). | 1ms |
 
-## <a id=\\"user-content-ts-85-packages-jest-each-src-tests-index-test-ts\\" href=\\"#ts-85-packages-jest-each-src-tests-index-test-ts\\">packages/jest-each/src/__tests__/index.test.ts</a> ✔️
+## <a id="user-content-ts-85-packages-jest-each-src-tests-index-test-ts" href="#ts-85-packages-jest-each-src-tests-index-test-ts">packages/jest-each/src/__tests__/index.test.ts</a> ✔️
 
 ### array .add
 
@@ -4031,7 +3865,7 @@ Received string:  \\"·
 | :---: | :--- | ---: |
 | ✔️ | throws an error when not called with the right number of arguments | 0ms |
 
-## <a id=\\"user-content-ts-86-packages-pretty-format-src-tests-DOMElement-test-ts\\" href=\\"#ts-86-packages-pretty-format-src-tests-DOMElement-test-ts\\">packages/pretty-format/src/__tests__/DOMElement.test.ts</a> ✔️
+## <a id="user-content-ts-86-packages-pretty-format-src-tests-DOMElement-test-ts" href="#ts-86-packages-pretty-format-src-tests-DOMElement-test-ts">packages/pretty-format/src/__tests__/DOMElement.test.ts</a> ✔️
 
 ### pretty-format
 
@@ -4067,7 +3901,7 @@ Received string:  \\"·
 | ✔️ | supports SVG elements | 3ms |
 | ✔️ | supports indentation for array of elements | 2ms |
 | ✔️ | supports maxDepth option | 2ms |
-| ✔️ | handles \`tagName\` not being a string | 1ms |
+| ✔️ | handles `tagName` not being a string | 1ms |
 
 ### DOMElement Plugin matches constructor name of SVG elements
 
@@ -4076,7 +3910,7 @@ Received string:  \\"·
 | ✔️ | jsdom 9 and 10 | 1ms |
 | ✔️ | jsdom 11 | 0ms |
 
-## <a id=\\"user-content-ts-87-packages-jest-test-result-src-tests-formatTestResults-test-ts\\" href=\\"#ts-87-packages-jest-test-result-src-tests-formatTestResults-test-ts\\">packages/jest-test-result/src/__tests__/formatTestResults.test.ts</a> ✔️
+## <a id="user-content-ts-87-packages-jest-test-result-src-tests-formatTestResults-test-ts" href="#ts-87-packages-jest-test-result-src-tests-formatTestResults-test-ts">packages/jest-test-result/src/__tests__/formatTestResults.test.ts</a> ✔️
 
 ### formatTestResults
 
@@ -4084,7 +3918,7 @@ Received string:  \\"·
 | :---: | :--- | ---: |
 | ✔️ | includes test full name | 1ms |
 
-## <a id=\\"user-content-ts-88-packages-jest-worker-src-tests-index-test-js\\" href=\\"#ts-88-packages-jest-worker-src-tests-index-test-js\\">packages/jest-worker/src/__tests__/index.test.js</a> ✔️
+## <a id="user-content-ts-88-packages-jest-worker-src-tests-index-test-js" href="#ts-88-packages-jest-worker-src-tests-index-test-js">packages/jest-worker/src/__tests__/index.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -4097,13 +3931,13 @@ Received string:  \\"·
 | ✔️ | calls doWork | 9ms |
 | ✔️ | calls getStderr and getStdout from worker | 1ms |
 
-## <a id=\\"user-content-ts-89-packages-jest-jasmine2-src-tests-hooksError-test-ts\\" href=\\"#ts-89-packages-jest-jasmine2-src-tests-hooksError-test-ts\\">packages/jest-jasmine2/src/__tests__/hooksError.test.ts</a> ✔️
+## <a id="user-content-ts-89-packages-jest-jasmine2-src-tests-hooksError-test-ts" href="#ts-89-packages-jest-jasmine2-src-tests-hooksError-test-ts">packages/jest-jasmine2/src/__tests__/hooksError.test.ts</a> ✔️
 
 ### beforeEach hooks error throwing
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | beforeEach throws an error when \\"String\\" is provided as a first argument to it | 2ms |
+| ✔️ | beforeEach throws an error when "String" is provided as a first argument to it | 2ms |
 | ✔️ | beforeEach throws an error when 1 is provided as a first argument to it | 1ms |
 | ✔️ | beforeEach throws an error when [] is provided as a first argument to it | 0ms |
 | ✔️ | beforeEach throws an error when {} is provided as a first argument to it | 1ms |
@@ -4116,7 +3950,7 @@ Received string:  \\"·
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | beforeAll throws an error when \\"String\\" is provided as a first argument to it | 0ms |
+| ✔️ | beforeAll throws an error when "String" is provided as a first argument to it | 0ms |
 | ✔️ | beforeAll throws an error when 1 is provided as a first argument to it | 0ms |
 | ✔️ | beforeAll throws an error when [] is provided as a first argument to it | 1ms |
 | ✔️ | beforeAll throws an error when {} is provided as a first argument to it | 0ms |
@@ -4129,7 +3963,7 @@ Received string:  \\"·
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | afterEach throws an error when \\"String\\" is provided as a first argument to it | 0ms |
+| ✔️ | afterEach throws an error when "String" is provided as a first argument to it | 0ms |
 | ✔️ | afterEach throws an error when 1 is provided as a first argument to it | 1ms |
 | ✔️ | afterEach throws an error when [] is provided as a first argument to it | 0ms |
 | ✔️ | afterEach throws an error when {} is provided as a first argument to it | 1ms |
@@ -4142,7 +3976,7 @@ Received string:  \\"·
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | afterAll throws an error when \\"String\\" is provided as a first argument to it | 1ms |
+| ✔️ | afterAll throws an error when "String" is provided as a first argument to it | 1ms |
 | ✔️ | afterAll throws an error when 1 is provided as a first argument to it | 0ms |
 | ✔️ | afterAll throws an error when [] is provided as a first argument to it | 1ms |
 | ✔️ | afterAll throws an error when {} is provided as a first argument to it | 1ms |
@@ -4151,7 +3985,7 @@ Received string:  \\"·
 | ✔️ | afterAll throws an error when null is provided as a first argument to it | 1ms |
 | ✔️ | afterAll throws an error when undefined is provided as a first argument to it | 0ms |
 
-## <a id=\\"user-content-ts-90-packages-jest-jasmine2-src-tests-reporter-test-ts\\" href=\\"#ts-90-packages-jest-jasmine2-src-tests-reporter-test-ts\\">packages/jest-jasmine2/src/__tests__/reporter.test.ts</a> ✔️
+## <a id="user-content-ts-90-packages-jest-jasmine2-src-tests-reporter-test-ts" href="#ts-90-packages-jest-jasmine2-src-tests-reporter-test-ts">packages/jest-jasmine2/src/__tests__/reporter.test.ts</a> ✔️
 
 ### Jasmine2Reporter
 
@@ -4159,7 +3993,7 @@ Received string:  \\"·
 | :---: | :--- | ---: |
 | ✔️ | reports nested suites | 2ms |
 
-## <a id=\\"user-content-ts-91-packages-jest-jasmine2-src-tests-todoError-test-ts\\" href=\\"#ts-91-packages-jest-jasmine2-src-tests-todoError-test-ts\\">packages/jest-jasmine2/src/__tests__/todoError.test.ts</a> ✔️
+## <a id="user-content-ts-91-packages-jest-jasmine2-src-tests-todoError-test-ts" href="#ts-91-packages-jest-jasmine2-src-tests-todoError-test-ts">packages/jest-jasmine2/src/__tests__/todoError.test.ts</a> ✔️
 
 ### test/it.todo error throwing
 
@@ -4169,7 +4003,7 @@ Received string:  \\"·
 | ✔️ | it throws error when given more than one argument | 0ms |
 | ✔️ | it throws error when given none string description | 1ms |
 
-## <a id=\\"user-content-ts-92-packages-jest-jasmine2-src-tests-itTestError-test-ts\\" href=\\"#ts-92-packages-jest-jasmine2-src-tests-itTestError-test-ts\\">packages/jest-jasmine2/src/__tests__/itTestError.test.ts</a> ✔️
+## <a id="user-content-ts-92-packages-jest-jasmine2-src-tests-itTestError-test-ts" href="#ts-92-packages-jest-jasmine2-src-tests-itTestError-test-ts">packages/jest-jasmine2/src/__tests__/itTestError.test.ts</a> ✔️
 
 ### test/it error throwing
 
@@ -4182,7 +4016,7 @@ Received string:  \\"·
 | ✔️ | test throws an error when first argument isn't a string | 1ms |
 | ✔️ | test throws an error when callback function is not a function | 0ms |
 
-## <a id=\\"user-content-ts-93-packages-jest-jasmine2-src-tests-iterators-test-ts\\" href=\\"#ts-93-packages-jest-jasmine2-src-tests-iterators-test-ts\\">packages/jest-jasmine2/src/__tests__/iterators.test.ts</a> ✔️
+## <a id="user-content-ts-93-packages-jest-jasmine2-src-tests-iterators-test-ts" href="#ts-93-packages-jest-jasmine2-src-tests-iterators-test-ts">packages/jest-jasmine2/src/__tests__/iterators.test.ts</a> ✔️
 
 ### iterators
 
@@ -4193,23 +4027,23 @@ Received string:  \\"·
 | ✔️ | works for Sets | 0ms |
 | ✔️ | works for Maps | 1ms |
 
-## <a id=\\"user-content-ts-94-packages-jest-jasmine2-src-tests-pTimeout-test-ts\\" href=\\"#ts-94-packages-jest-jasmine2-src-tests-pTimeout-test-ts\\">packages/jest-jasmine2/src/__tests__/pTimeout.test.ts</a> ✔️
+## <a id="user-content-ts-94-packages-jest-jasmine2-src-tests-pTimeout-test-ts" href="#ts-94-packages-jest-jasmine2-src-tests-pTimeout-test-ts">packages/jest-jasmine2/src/__tests__/pTimeout.test.ts</a> ✔️
 
 ### pTimeout
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | calls \`clearTimeout\` and resolves when \`promise\` resolves. | 1ms |
-| ✔️ | calls \`clearTimeout\` and rejects when \`promise\` rejects. | 1ms |
-| ✔️ | calls \`onTimeout\` on timeout. | 0ms |
+| ✔️ | calls `clearTimeout` and resolves when `promise` resolves. | 1ms |
+| ✔️ | calls `clearTimeout` and rejects when `promise` rejects. | 1ms |
+| ✔️ | calls `onTimeout` on timeout. | 0ms |
 
-## <a id=\\"user-content-ts-95-packages-jest-create-cache-key-function-src-tests-index-test-ts\\" href=\\"#ts-95-packages-jest-create-cache-key-function-src-tests-index-test-ts\\">packages/jest-create-cache-key-function/src/__tests__/index.test.ts</a> ✔️
+## <a id="user-content-ts-95-packages-jest-create-cache-key-function-src-tests-index-test-ts" href="#ts-95-packages-jest-create-cache-key-function-src-tests-index-test-ts">packages/jest-create-cache-key-function/src/__tests__/index.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | creation of a cache key | 33ms |
 
-## <a id=\\"user-content-ts-96-packages-jest-jasmine2-src-tests-concurrent-test-ts\\" href=\\"#ts-96-packages-jest-jasmine2-src-tests-concurrent-test-ts\\">packages/jest-jasmine2/src/__tests__/concurrent.test.ts</a> ✔️
+## <a id="user-content-ts-96-packages-jest-jasmine2-src-tests-concurrent-test-ts" href="#ts-96-packages-jest-jasmine2-src-tests-concurrent-test-ts">packages/jest-jasmine2/src/__tests__/concurrent.test.ts</a> ✔️
 
 ### concurrent
 
@@ -4219,13 +4053,13 @@ Received string:  \\"·
 | ✔️ | should add 1 to number | 0ms |
 | ✔️ | should add 1 to number | 0ms |
 
-## <a id=\\"user-content-ts-97-packages-jest-jasmine2-src-tests-itToTestAlias-test-ts\\" href=\\"#ts-97-packages-jest-jasmine2-src-tests-itToTestAlias-test-ts\\">packages/jest-jasmine2/src/__tests__/itToTestAlias.test.ts</a> ✔️
+## <a id="user-content-ts-97-packages-jest-jasmine2-src-tests-itToTestAlias-test-ts" href="#ts-97-packages-jest-jasmine2-src-tests-itToTestAlias-test-ts">packages/jest-jasmine2/src/__tests__/itToTestAlias.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | global.test | 0ms |
 
-## <a id=\\"user-content-ts-98-packages-pretty-format-src-tests-ReactElement-test-ts\\" href=\\"#ts-98-packages-pretty-format-src-tests-ReactElement-test-ts\\">packages/pretty-format/src/__tests__/ReactElement.test.ts</a> ✔️
+## <a id="user-content-ts-98-packages-pretty-format-src-tests-ReactElement-test-ts" href="#ts-98-packages-pretty-format-src-tests-ReactElement-test-ts">packages/pretty-format/src/__tests__/ReactElement.test.ts</a> ✔️
 
 ### ReactElement Plugin
 
@@ -4235,7 +4069,7 @@ Received string:  \\"·
 | ✔️ | serializes forwardRef with displayName | 0ms |
 | ✔️ | serializes forwardRef component with displayName | 0ms |
 
-## <a id=\\"user-content-ts-99-packages-jest-worker-src-tests-FifoQueue-test-js\\" href=\\"#ts-99-packages-jest-worker-src-tests-FifoQueue-test-js\\">packages/jest-worker/src/__tests__/FifoQueue.test.js</a> ✔️
+## <a id="user-content-ts-99-packages-jest-worker-src-tests-FifoQueue-test-js" href="#ts-99-packages-jest-worker-src-tests-FifoQueue-test-js">packages/jest-worker/src/__tests__/FifoQueue.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -4243,7 +4077,7 @@ Received string:  \\"·
 | ✔️ | returns the worker specific tasks in FIFO ordering | 1ms |
 | ✔️ | maintains global FIFO ordering between worker specific and shared tasks | 1ms |
 
-## <a id=\\"user-content-ts-100-packages-jest-worker-src-tests-PriorityQueue-test-js\\" href=\\"#ts-100-packages-jest-worker-src-tests-PriorityQueue-test-js\\">packages/jest-worker/src/__tests__/PriorityQueue.test.js</a> ✔️
+## <a id="user-content-ts-100-packages-jest-worker-src-tests-PriorityQueue-test-js" href="#ts-100-packages-jest-worker-src-tests-PriorityQueue-test-js">packages/jest-worker/src/__tests__/PriorityQueue.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -4253,7 +4087,7 @@ Received string:  \\"·
 | ✔️ | uses different queues for each worker | 0ms |
 | ✔️ | process task in the global and shared queue in order | 1ms |
 
-## <a id=\\"user-content-ts-101-packages-jest-core-src-tests-SearchSource-test-ts\\" href=\\"#ts-101-packages-jest-core-src-tests-SearchSource-test-ts\\">packages/jest-core/src/__tests__/SearchSource.test.ts</a> ✔️
+## <a id="user-content-ts-101-packages-jest-core-src-tests-SearchSource-test-ts" href="#ts-101-packages-jest-core-src-tests-SearchSource-test-ts">packages/jest-core/src/__tests__/SearchSource.test.ts</a> ✔️
 
 ### SearchSource isTestFilePath
 
@@ -4307,7 +4141,7 @@ Received string:  \\"·
 | ✔️ | return empty set if no SCM | 22ms |
 | ✔️ | return sources required by tests | 17ms |
 
-## <a id=\\"user-content-ts-102-packages-expect-src-tests-matchers-test-js\\" href=\\"#ts-102-packages-expect-src-tests-matchers-test-js\\">packages/expect/src/__tests__/matchers.test.js</a> ✔️
+## <a id="user-content-ts-102-packages-expect-src-tests-matchers-test-js" href="#ts-102-packages-expect-src-tests-matchers-test-js">packages/expect/src/__tests__/matchers.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -4320,14 +4154,14 @@ Received string:  \\"·
 | ✔️ | should reject | 2ms |
 | ✔️ | should reject with toThrow | 1ms |
 | ✔️ | should reject async function to toThrow | 1ms |
-| ✔️ | fails non-promise value \\"a\\" synchronously | 0ms |
-| ✔️ | fails non-promise value \\"a\\" | 2ms |
+| ✔️ | fails non-promise value "a" synchronously | 0ms |
+| ✔️ | fails non-promise value "a" | 2ms |
 | ✔️ | fails non-promise value [1] synchronously | 1ms |
 | ✔️ | fails non-promise value [1] | 0ms |
 | ✔️ | fails non-promise value [Function anonymous] synchronously | 0ms |
 | ✔️ | fails non-promise value [Function anonymous] | 7ms |
-| ✔️ | fails non-promise value {\\"a\\": 1} synchronously | 0ms |
-| ✔️ | fails non-promise value {\\"a\\": 1} | 0ms |
+| ✔️ | fails non-promise value {"a": 1} synchronously | 0ms |
+| ✔️ | fails non-promise value {"a": 1} | 0ms |
 | ✔️ | fails non-promise value 4 synchronously | 1ms |
 | ✔️ | fails non-promise value 4 | 3ms |
 | ✔️ | fails non-promise value null synchronously | 0ms |
@@ -4343,14 +4177,14 @@ Received string:  \\"·
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | should resolve | 1ms |
-| ✔️ | fails non-promise value \\"a\\" synchronously | 0ms |
-| ✔️ | fails non-promise value \\"a\\" | 0ms |
+| ✔️ | fails non-promise value "a" synchronously | 0ms |
+| ✔️ | fails non-promise value "a" | 0ms |
 | ✔️ | fails non-promise value [1] synchronously | 1ms |
 | ✔️ | fails non-promise value [1] | 0ms |
 | ✔️ | fails non-promise value [Function anonymous] synchronously | 1ms |
 | ✔️ | fails non-promise value [Function anonymous] | 0ms |
-| ✔️ | fails non-promise value {\\"a\\": 1} synchronously | 1ms |
-| ✔️ | fails non-promise value {\\"a\\": 1} | 0ms |
+| ✔️ | fails non-promise value {"a": 1} synchronously | 1ms |
+| ✔️ | fails non-promise value {"a": 1} | 0ms |
 | ✔️ | fails non-promise value 4 synchronously | 1ms |
 | ✔️ | fails non-promise value 4 | 0ms |
 | ✔️ | fails non-promise value null synchronously | 0ms |
@@ -4370,34 +4204,34 @@ Received string:  \\"·
 | ✔️ | fails for: true and false | 0ms |
 | ✔️ | fails for: [Function anonymous] and [Function anonymous] | 1ms |
 | ✔️ | fails for: {} and {} | 1ms |
-| ✔️ | fails for: {\\"a\\": 1} and {\\"a\\": 1} | 0ms |
-| ✔️ | fails for: {\\"a\\": 1} and {\\"a\\": 5} | 2ms |
-| ✔️ | fails for: {\\"a\\": [Function a], \\"b\\": 2} and {\\"a\\": Any<Function>, \\"b\\": 2} | 1ms |
-| ✔️ | fails for: {\\"a\\": undefined, \\"b\\": 2} and {\\"b\\": 2} | 8ms |
+| ✔️ | fails for: {"a": 1} and {"a": 1} | 0ms |
+| ✔️ | fails for: {"a": 1} and {"a": 5} | 2ms |
+| ✔️ | fails for: {"a": [Function a], "b": 2} and {"a": Any<Function>, "b": 2} | 1ms |
+| ✔️ | fails for: {"a": undefined, "b": 2} and {"b": 2} | 8ms |
 | ✔️ | fails for: 2020-02-20T00:00:00.000Z and 2020-02-20T00:00:00.000Z | 0ms |
 | ✔️ | fails for: 2020-02-21T00:00:00.000Z and 2020-02-20T00:00:00.000Z | 1ms |
 | ✔️ | fails for: /received/ and /expected/ | 0ms |
 | ✔️ | fails for: Symbol(received) and Symbol(expected) | 0ms |
 | ✔️ | fails for: [Error: received] and [Error: expected] | 1ms |
-| ✔️ | fails for: \\"abc\\" and \\"cde\\" | 1ms |
-| ✔️ | fails for: \\"painless JavaScript testing\\" and \\"delightful JavaScript testing\\" | 0ms |
-| ✔️ | fails for: \\"\\" and \\"compare one-line string to empty string\\" | 1ms |
-| ✔️ | fails for: \\"with 
-trailing space\\" and \\"without trailing space\\" | 8ms |
-| ✔️ | fails for: \\"four
+| ✔️ | fails for: "abc" and "cde" | 1ms |
+| ✔️ | fails for: "painless JavaScript testing" and "delightful JavaScript testing" | 0ms |
+| ✔️ | fails for: "" and "compare one-line string to empty string" | 1ms |
+| ✔️ | fails for: "with 
+trailing space" and "without trailing space" | 8ms |
+| ✔️ | fails for: "four
 4
 line
-string\\" and \\"3
+string" and "3
 line
-string\\" | 0ms |
+string" | 0ms |
 | ✔️ | fails for: [] and [] | 1ms |
 | ✔️ | fails for: null and undefined | 0ms |
 | ✔️ | fails for: -0 and 0 | 0ms |
 | ✔️ | fails for: 1n and 2n | 1ms |
-| ✔️ | fails for: {\\"a\\": 1n} and {\\"a\\": 1n} | 0ms |
+| ✔️ | fails for: {"a": 1n} and {"a": 1n} | 0ms |
 | ✔️ | fails for 'false' with '.not' | 0ms |
 | ✔️ | fails for '1' with '.not' | 0ms |
-| ✔️ | fails for '\\"a\\"' with '.not' | 0ms |
+| ✔️ | fails for '"a"' with '.not' | 0ms |
 | ✔️ | fails for 'undefined' with '.not' | 0ms |
 | ✔️ | fails for 'null' with '.not' | 0ms |
 | ✔️ | fails for '{}' with '.not' | 0ms |
@@ -4436,23 +4270,23 @@ string\\" | 0ms |
 | ✔️ | {pass: false} expect(0).toEqual({}) | 1ms |
 | ✔️ | {pass: false} expect({}).toEqual(0) | 0ms |
 | ✔️ | {pass: false} expect({}).toEqual({}) | 1ms |
-| ✔️ | {pass: false} expect(\\"abc\\").toEqual({\\"0\\": \\"a\\", \\"1\\": \\"b\\", \\"2\\": \\"c\\"}) | 0ms |
-| ✔️ | {pass: false} expect({\\"0\\": \\"a\\", \\"1\\": \\"b\\", \\"2\\": \\"c\\"}).toEqual(\\"abc\\") | 1ms |
+| ✔️ | {pass: false} expect("abc").toEqual({"0": "a", "1": "b", "2": "c"}) | 0ms |
+| ✔️ | {pass: false} expect({"0": "a", "1": "b", "2": "c"}).toEqual("abc") | 1ms |
 | ✔️ | {pass: false} expect(/abc/gsy).toEqual(/abc/g) | 0ms |
-| ✔️ | {pass: false} expect({\\"a\\": 1}).toEqual({\\"a\\": 2}) | 1ms |
-| ✔️ | {pass: false} expect({\\"a\\": 5}).toEqual({\\"b\\": 6}) | 0ms |
-| ✔️ | {pass: false} expect({\\"foo\\": {\\"bar\\": 1}}).toEqual({\\"foo\\": {}}) | 1ms |
-| ✔️ | {pass: false} expect({\\"getterAndSetter\\": {}}).toEqual({\\"getterAndSetter\\": {\\"foo\\": \\"bar\\"}}) | 1ms |
-| ✔️ | {pass: false} expect({\\"frozenGetterAndSetter\\": {}}).toEqual({\\"frozenGetterAndSetter\\": {\\"foo\\": \\"bar\\"}}) | 0ms |
-| ✔️ | {pass: false} expect({\\"getter\\": {}}).toEqual({\\"getter\\": {\\"foo\\": \\"bar\\"}}) | 1ms |
-| ✔️ | {pass: false} expect({\\"frozenGetter\\": {}}).toEqual({\\"frozenGetter\\": {\\"foo\\": \\"bar\\"}}) | 0ms |
-| ✔️ | {pass: false} expect({\\"setter\\": undefined}).toEqual({\\"setter\\": {\\"foo\\": \\"bar\\"}}) | 1ms |
-| ✔️ | {pass: false} expect({\\"frozenSetter\\": undefined}).toEqual({\\"frozenSetter\\": {\\"foo\\": \\"bar\\"}}) | 1ms |
-| ✔️ | {pass: false} expect(\\"banana\\").toEqual(\\"apple\\") | 0ms |
-| ✔️ | {pass: false} expect(\\"1 234,57 $\\").toEqual(\\"1 234,57 $\\") | 0ms |
-| ✔️ | {pass: false} expect(\\"type TypeName<T> = T extends Function ? \\\\\\"function\\\\\\" : \\\\\\"object\\\\\\";\\").toEqual(\\"type TypeName<T> = T extends Function
-? \\\\\\"function\\\\\\"
-: \\\\\\"object\\\\\\";\\") | 1ms |
+| ✔️ | {pass: false} expect({"a": 1}).toEqual({"a": 2}) | 1ms |
+| ✔️ | {pass: false} expect({"a": 5}).toEqual({"b": 6}) | 0ms |
+| ✔️ | {pass: false} expect({"foo": {"bar": 1}}).toEqual({"foo": {}}) | 1ms |
+| ✔️ | {pass: false} expect({"getterAndSetter": {}}).toEqual({"getterAndSetter": {"foo": "bar"}}) | 1ms |
+| ✔️ | {pass: false} expect({"frozenGetterAndSetter": {}}).toEqual({"frozenGetterAndSetter": {"foo": "bar"}}) | 0ms |
+| ✔️ | {pass: false} expect({"getter": {}}).toEqual({"getter": {"foo": "bar"}}) | 1ms |
+| ✔️ | {pass: false} expect({"frozenGetter": {}}).toEqual({"frozenGetter": {"foo": "bar"}}) | 0ms |
+| ✔️ | {pass: false} expect({"setter": undefined}).toEqual({"setter": {"foo": "bar"}}) | 1ms |
+| ✔️ | {pass: false} expect({"frozenSetter": undefined}).toEqual({"frozenSetter": {"foo": "bar"}}) | 1ms |
+| ✔️ | {pass: false} expect("banana").toEqual("apple") | 0ms |
+| ✔️ | {pass: false} expect("1 234,57 $").toEqual("1 234,57 $") | 0ms |
+| ✔️ | {pass: false} expect("type TypeName<T> = T extends Function ? \"function\" : \"object\";").toEqual("type TypeName<T> = T extends Function
+? \"function\"
+: \"object\";") | 1ms |
 | ✔️ | {pass: false} expect(null).toEqual(undefined) | 0ms |
 | ✔️ | {pass: false} expect([1]).toEqual([2]) | 1ms |
 | ✔️ | {pass: false} expect([1, 2]).toEqual([2, 1]) | 0ms |
@@ -4467,27 +4301,27 @@ string\\" | 0ms |
 | ✔️ | {pass: false} expect(Immutable.Set [1, 2]).toEqual(Immutable.Set []) | 1ms |
 | ✔️ | {pass: false} expect(Immutable.Set [1, 2]).toEqual(Immutable.Set [1, 2, 3]) | 1ms |
 | ✔️ | {pass: false} expect(Immutable.OrderedSet [1, 2]).toEqual(Immutable.OrderedSet [2, 1]) | 1ms |
-| ✔️ | {pass: false} expect(Map {1 => \\"one\\", 2 => \\"two\\"}).toEqual(Map {1 => \\"one\\"}) | 0ms |
-| ✔️ | {pass: false} expect(Map {\\"a\\" => 0}).toEqual(Map {\\"b\\" => 0}) | 1ms |
-| ✔️ | {pass: false} expect(Map {\\"v\\" => 1}).toEqual(Map {\\"v\\" => 2}) | 0ms |
-| ✔️ | {pass: false} expect(Map {[\\"v\\"] => 1}).toEqual(Map {[\\"v\\"] => 2}) | 1ms |
-| ✔️ | {pass: false} expect(Map {[1] => Map {[1] => \\"one\\"}}).toEqual(Map {[1] => Map {[1] => \\"two\\"}}) | 1ms |
-| ✔️ | {pass: false} expect(Immutable.Map {\\"a\\": 0}).toEqual(Immutable.Map {\\"b\\": 0}) | 0ms |
-| ✔️ | {pass: false} expect(Immutable.Map {\\"v\\": 1}).toEqual(Immutable.Map {\\"v\\": 2}) | 1ms |
-| ✔️ | {pass: false} expect(Immutable.OrderedMap {1: \\"one\\", 2: \\"two\\"}).toEqual(Immutable.OrderedMap {2: \\"two\\", 1: \\"one\\"}) | 1ms |
-| ✔️ | {pass: false} expect(Immutable.Map {\\"1\\": Immutable.Map {\\"2\\": {\\"a\\": 99}}}).toEqual(Immutable.Map {\\"1\\": Immutable.Map {\\"2\\": {\\"a\\": 11}}}) | 1ms |
+| ✔️ | {pass: false} expect(Map {1 => "one", 2 => "two"}).toEqual(Map {1 => "one"}) | 0ms |
+| ✔️ | {pass: false} expect(Map {"a" => 0}).toEqual(Map {"b" => 0}) | 1ms |
+| ✔️ | {pass: false} expect(Map {"v" => 1}).toEqual(Map {"v" => 2}) | 0ms |
+| ✔️ | {pass: false} expect(Map {["v"] => 1}).toEqual(Map {["v"] => 2}) | 1ms |
+| ✔️ | {pass: false} expect(Map {[1] => Map {[1] => "one"}}).toEqual(Map {[1] => Map {[1] => "two"}}) | 1ms |
+| ✔️ | {pass: false} expect(Immutable.Map {"a": 0}).toEqual(Immutable.Map {"b": 0}) | 0ms |
+| ✔️ | {pass: false} expect(Immutable.Map {"v": 1}).toEqual(Immutable.Map {"v": 2}) | 1ms |
+| ✔️ | {pass: false} expect(Immutable.OrderedMap {1: "one", 2: "two"}).toEqual(Immutable.OrderedMap {2: "two", 1: "one"}) | 1ms |
+| ✔️ | {pass: false} expect(Immutable.Map {"1": Immutable.Map {"2": {"a": 99}}}).toEqual(Immutable.Map {"1": Immutable.Map {"2": {"a": 11}}}) | 1ms |
 | ✔️ | {pass: false} expect([97, 98, 99]).toEqual([97, 98, 100]) | 0ms |
-| ✔️ | {pass: false} expect({\\"a\\": 1, \\"b\\": 2}).toEqual(ObjectContaining {\\"a\\": 2}) | 1ms |
-| ✔️ | {pass: false} expect(false).toEqual(ObjectContaining {\\"a\\": 2}) | 0ms |
+| ✔️ | {pass: false} expect({"a": 1, "b": 2}).toEqual(ObjectContaining {"a": 2}) | 1ms |
+| ✔️ | {pass: false} expect(false).toEqual(ObjectContaining {"a": 2}) | 0ms |
 | ✔️ | {pass: false} expect([1, 3]).toEqual(ArrayContaining [1, 2]) | 1ms |
 | ✔️ | {pass: false} expect(1).toEqual(ArrayContaining [1, 2]) | 0ms |
-| ✔️ | {pass: false} expect(\\"abd\\").toEqual(StringContaining \\"bc\\") | 1ms |
-| ✔️ | {pass: false} expect(\\"abd\\").toEqual(StringMatching /bc/i) | 0ms |
+| ✔️ | {pass: false} expect("abd").toEqual(StringContaining "bc") | 1ms |
+| ✔️ | {pass: false} expect("abd").toEqual(StringMatching /bc/i) | 0ms |
 | ✔️ | {pass: false} expect(undefined).toEqual(Anything) | 1ms |
 | ✔️ | {pass: false} expect(undefined).toEqual(Any<Function>) | 0ms |
-| ✔️ | {pass: false} expect(\\"Eve\\").toEqual({\\"asymmetricMatch\\": [Function asymmetricMatch]}) | 1ms |
-| ✔️ | {pass: false} expect({\\"target\\": {\\"nodeType\\": 1, \\"value\\": \\"a\\"}}).toEqual({\\"target\\": {\\"nodeType\\": 1, \\"value\\": \\"b\\"}}) | 0ms |
-| ✔️ | {pass: false} expect({\\"nodeName\\": \\"div\\", \\"nodeType\\": 1}).toEqual({\\"nodeName\\": \\"p\\", \\"nodeType\\": 1}) | 1ms |
+| ✔️ | {pass: false} expect("Eve").toEqual({"asymmetricMatch": [Function asymmetricMatch]}) | 1ms |
+| ✔️ | {pass: false} expect({"target": {"nodeType": 1, "value": "a"}}).toEqual({"target": {"nodeType": 1, "value": "b"}}) | 0ms |
+| ✔️ | {pass: false} expect({"nodeName": "div", "nodeType": 1}).toEqual({"nodeName": "p", "nodeType": 1}) | 1ms |
 | ✔️ | {pass: false} expect({Symbol(foo): 1, Symbol(bar): 2}).toEqual({Symbol(foo): Any<Number>, Symbol(bar): 1}) | 1ms |
 | ✔️ | {pass: false} expect(1n).toEqual(2n) | 1ms |
 | ✔️ | {pass: false} expect(1n).toEqual(1) | 0ms |
@@ -4497,57 +4331,57 @@ string\\" | 0ms |
 | ✔️ | {pass: true} expect(0).not.toEqual(0) | 0ms |
 | ✔️ | {pass: true} expect(0).not.toEqual(0) | 0ms |
 | ✔️ | {pass: true} expect({}).not.toEqual({}) | 1ms |
-| ✔️ | {pass: true} expect(\\"abc\\").not.toEqual(\\"abc\\") | 0ms |
-| ✔️ | {pass: true} expect(\\"abc\\").not.toEqual(\\"abc\\") | 0ms |
-| ✔️ | {pass: true} expect(\\"abc\\").not.toEqual(\\"abc\\") | 1ms |
+| ✔️ | {pass: true} expect("abc").not.toEqual("abc") | 0ms |
+| ✔️ | {pass: true} expect("abc").not.toEqual("abc") | 0ms |
+| ✔️ | {pass: true} expect("abc").not.toEqual("abc") | 1ms |
 | ✔️ | {pass: true} expect([1]).not.toEqual([1]) | 0ms |
 | ✔️ | {pass: true} expect([1, 2]).not.toEqual([1, 2]) | 0ms |
 | ✔️ | {pass: true} expect(Immutable.List [1]).not.toEqual(Immutable.List [1]) | 1ms |
 | ✔️ | {pass: true} expect(Immutable.List [1, 2]).not.toEqual(Immutable.List [1, 2]) | 0ms |
 | ✔️ | {pass: true} expect({}).not.toEqual({}) | 1ms |
-| ✔️ | {pass: true} expect({\\"a\\": 99}).not.toEqual({\\"a\\": 99}) | 1ms |
+| ✔️ | {pass: true} expect({"a": 99}).not.toEqual({"a": 99}) | 1ms |
 | ✔️ | {pass: true} expect(Set {}).not.toEqual(Set {}) | 0ms |
 | ✔️ | {pass: true} expect(Set {1, 2}).not.toEqual(Set {1, 2}) | 0ms |
 | ✔️ | {pass: true} expect(Set {1, 2}).not.toEqual(Set {2, 1}) | 1ms |
 | ✔️ | {pass: true} expect(Set {[1], [2]}).not.toEqual(Set {[2], [1]}) | 0ms |
 | ✔️ | {pass: true} expect(Set {Set {[1]}, Set {[2]}}).not.toEqual(Set {Set {[2]}, Set {[1]}}) | 1ms |
 | ✔️ | {pass: true} expect(Set {[1], [2], [3], [3]}).not.toEqual(Set {[3], [3], [2], [1]}) | 1ms |
-| ✔️ | {pass: true} expect(Set {{\\"a\\": 1}, {\\"b\\": 2}}).not.toEqual(Set {{\\"b\\": 2}, {\\"a\\": 1}}) | 0ms |
+| ✔️ | {pass: true} expect(Set {{"a": 1}, {"b": 2}}).not.toEqual(Set {{"b": 2}, {"a": 1}}) | 0ms |
 | ✔️ | {pass: true} expect(Immutable.Set []).not.toEqual(Immutable.Set []) | 7ms |
 | ✔️ | {pass: true} expect(Immutable.Set [1, 2]).not.toEqual(Immutable.Set [1, 2]) | 0ms |
 | ✔️ | {pass: true} expect(Immutable.Set [1, 2]).not.toEqual(Immutable.Set [2, 1]) | 0ms |
 | ✔️ | {pass: true} expect(Immutable.OrderedSet []).not.toEqual(Immutable.OrderedSet []) | 0ms |
 | ✔️ | {pass: true} expect(Immutable.OrderedSet [1, 2]).not.toEqual(Immutable.OrderedSet [1, 2]) | 0ms |
 | ✔️ | {pass: true} expect(Map {}).not.toEqual(Map {}) | 1ms |
-| ✔️ | {pass: true} expect(Map {1 => \\"one\\", 2 => \\"two\\"}).not.toEqual(Map {1 => \\"one\\", 2 => \\"two\\"}) | 0ms |
-| ✔️ | {pass: true} expect(Map {1 => \\"one\\", 2 => \\"two\\"}).not.toEqual(Map {2 => \\"two\\", 1 => \\"one\\"}) | 1ms |
-| ✔️ | {pass: true} expect(Map {[1] => \\"one\\", [2] => \\"two\\", [3] => \\"three\\", [3] => \\"four\\"}).not.toEqual(Map {[3] => \\"three\\", [3] => \\"four\\", [2] => \\"two\\", [1] => \\"one\\"}) | 0ms |
-| ✔️ | {pass: true} expect(Map {[1] => Map {[1] => \\"one\\"}, [2] => Map {[2] => \\"two\\"}}).not.toEqual(Map {[2] => Map {[2] => \\"two\\"}, [1] => Map {[1] => \\"one\\"}}) | 1ms |
-| ✔️ | {pass: true} expect(Map {[1] => \\"one\\", [2] => \\"two\\"}).not.toEqual(Map {[2] => \\"two\\", [1] => \\"one\\"}) | 1ms |
-| ✔️ | {pass: true} expect(Map {{\\"a\\": 1} => \\"one\\", {\\"b\\": 2} => \\"two\\"}).not.toEqual(Map {{\\"b\\": 2} => \\"two\\", {\\"a\\": 1} => \\"one\\"}) | 0ms |
-| ✔️ | {pass: true} expect(Map {1 => [\\"one\\"], 2 => [\\"two\\"]}).not.toEqual(Map {2 => [\\"two\\"], 1 => [\\"one\\"]}) | 1ms |
+| ✔️ | {pass: true} expect(Map {1 => "one", 2 => "two"}).not.toEqual(Map {1 => "one", 2 => "two"}) | 0ms |
+| ✔️ | {pass: true} expect(Map {1 => "one", 2 => "two"}).not.toEqual(Map {2 => "two", 1 => "one"}) | 1ms |
+| ✔️ | {pass: true} expect(Map {[1] => "one", [2] => "two", [3] => "three", [3] => "four"}).not.toEqual(Map {[3] => "three", [3] => "four", [2] => "two", [1] => "one"}) | 0ms |
+| ✔️ | {pass: true} expect(Map {[1] => Map {[1] => "one"}, [2] => Map {[2] => "two"}}).not.toEqual(Map {[2] => Map {[2] => "two"}, [1] => Map {[1] => "one"}}) | 1ms |
+| ✔️ | {pass: true} expect(Map {[1] => "one", [2] => "two"}).not.toEqual(Map {[2] => "two", [1] => "one"}) | 1ms |
+| ✔️ | {pass: true} expect(Map {{"a": 1} => "one", {"b": 2} => "two"}).not.toEqual(Map {{"b": 2} => "two", {"a": 1} => "one"}) | 0ms |
+| ✔️ | {pass: true} expect(Map {1 => ["one"], 2 => ["two"]}).not.toEqual(Map {2 => ["two"], 1 => ["one"]}) | 1ms |
 | ✔️ | {pass: true} expect(Immutable.Map {}).not.toEqual(Immutable.Map {}) | 0ms |
-| ✔️ | {pass: true} expect(Immutable.Map {1: \\"one\\", 2: \\"two\\"}).not.toEqual(Immutable.Map {1: \\"one\\", 2: \\"two\\"}) | 0ms |
-| ✔️ | {pass: true} expect(Immutable.Map {1: \\"one\\", 2: \\"two\\"}).not.toEqual(Immutable.Map {2: \\"two\\", 1: \\"one\\"}) | 0ms |
-| ✔️ | {pass: true} expect(Immutable.OrderedMap {1: \\"one\\", 2: \\"two\\"}).not.toEqual(Immutable.OrderedMap {1: \\"one\\", 2: \\"two\\"}) | 1ms |
-| ✔️ | {pass: true} expect(Immutable.Map {\\"1\\": Immutable.Map {\\"2\\": {\\"a\\": 99}}}).not.toEqual(Immutable.Map {\\"1\\": Immutable.Map {\\"2\\": {\\"a\\": 99}}}) | 1ms |
+| ✔️ | {pass: true} expect(Immutable.Map {1: "one", 2: "two"}).not.toEqual(Immutable.Map {1: "one", 2: "two"}) | 0ms |
+| ✔️ | {pass: true} expect(Immutable.Map {1: "one", 2: "two"}).not.toEqual(Immutable.Map {2: "two", 1: "one"}) | 0ms |
+| ✔️ | {pass: true} expect(Immutable.OrderedMap {1: "one", 2: "two"}).not.toEqual(Immutable.OrderedMap {1: "one", 2: "two"}) | 1ms |
+| ✔️ | {pass: true} expect(Immutable.Map {"1": Immutable.Map {"2": {"a": 99}}}).not.toEqual(Immutable.Map {"1": Immutable.Map {"2": {"a": 99}}}) | 1ms |
 | ✔️ | {pass: true} expect([97, 98, 99]).not.toEqual([97, 98, 99]) | 0ms |
-| ✔️ | {pass: true} expect({\\"a\\": 1, \\"b\\": 2}).not.toEqual(ObjectContaining {\\"a\\": 1}) | 0ms |
+| ✔️ | {pass: true} expect({"a": 1, "b": 2}).not.toEqual(ObjectContaining {"a": 1}) | 0ms |
 | ✔️ | {pass: true} expect([1, 2, 3]).not.toEqual(ArrayContaining [2, 3]) | 0ms |
-| ✔️ | {pass: true} expect(\\"abcd\\").not.toEqual(StringContaining \\"bc\\") | 0ms |
-| ✔️ | {pass: true} expect(\\"abcd\\").not.toEqual(StringMatching /bc/) | 1ms |
+| ✔️ | {pass: true} expect("abcd").not.toEqual(StringContaining "bc") | 0ms |
+| ✔️ | {pass: true} expect("abcd").not.toEqual(StringMatching /bc/) | 1ms |
 | ✔️ | {pass: true} expect(true).not.toEqual(Anything) | 0ms |
 | ✔️ | {pass: true} expect([Function anonymous]).not.toEqual(Any<Function>) | 0ms |
-| ✔️ | {pass: true} expect({\\"a\\": 1, \\"b\\": [Function b], \\"c\\": true}).not.toEqual({\\"a\\": 1, \\"b\\": Any<Function>, \\"c\\": Anything}) | 1ms |
-| ✔️ | {pass: true} expect(\\"Alice\\").not.toEqual({\\"asymmetricMatch\\": [Function asymmetricMatch]}) | 1ms |
-| ✔️ | {pass: true} expect({\\"nodeName\\": \\"div\\", \\"nodeType\\": 1}).not.toEqual({\\"nodeName\\": \\"div\\", \\"nodeType\\": 1}) | 0ms |
+| ✔️ | {pass: true} expect({"a": 1, "b": [Function b], "c": true}).not.toEqual({"a": 1, "b": Any<Function>, "c": Anything}) | 1ms |
+| ✔️ | {pass: true} expect("Alice").not.toEqual({"asymmetricMatch": [Function asymmetricMatch]}) | 1ms |
+| ✔️ | {pass: true} expect({"nodeName": "div", "nodeType": 1}).not.toEqual({"nodeName": "div", "nodeType": 1}) | 0ms |
 | ✔️ | {pass: true} expect({Symbol(foo): 1, Symbol(bar): 2}).not.toEqual({Symbol(foo): Any<Number>, Symbol(bar): 2}) | 1ms |
 | ✔️ | {pass: true} expect(1n).not.toEqual(1n) | 0ms |
 | ✔️ | {pass: true} expect(0n).not.toEqual(0n) | 1ms |
 | ✔️ | {pass: true} expect([1n]).not.toEqual([1n]) | 0ms |
 | ✔️ | {pass: true} expect([1n, 2]).not.toEqual([1n, 2]) | 0ms |
 | ✔️ | {pass: true} expect(Immutable.List [1n]).not.toEqual(Immutable.List [1n]) | 1ms |
-| ✔️ | {pass: true} expect({\\"a\\": 99n}).not.toEqual({\\"a\\": 99n}) | 0ms |
+| ✔️ | {pass: true} expect({"a": 99n}).not.toEqual({"a": 99n}) | 0ms |
 | ✔️ | {pass: true} expect(Set {1n, 2n}).not.toEqual(Set {1n, 2n}) | 1ms |
 | ✔️ | assertion error matcherResult property contains matcher name, expected and actual values | 0ms |
 | ✔️ | symbol based keys in arrays are processed correctly | 1ms |
@@ -4574,14 +4408,14 @@ string\\" | 0ms |
 | ✔️ | passing {} and [Function anonymous] | 2ms |
 | ✔️ | passing {} and [Function B] | 0ms |
 | ✔️ | passing {} and [Function name() {}] | 1ms |
-| ✔️ | failing \\"a\\" and [Function String] | 0ms |
+| ✔️ | failing "a" and [Function String] | 0ms |
 | ✔️ | failing 1 and [Function Number] | 0ms |
 | ✔️ | failing true and [Function Boolean] | 1ms |
 | ✔️ | failing {} and [Function B] | 0ms |
 | ✔️ | failing {} and [Function A] | 0ms |
 | ✔️ | failing undefined and [Function String] | 2ms |
 | ✔️ | failing null and [Function String] | 0ms |
-| ✔️ | failing /\\\\w+/ and [Function anonymous] | 1ms |
+| ✔️ | failing /\w+/ and [Function anonymous] | 1ms |
 | ✔️ | failing {} and [Function RegExp] | 0ms |
 | ✔️ | throws if constructor is not a function | 0ms |
 
@@ -4594,7 +4428,7 @@ string\\" | 0ms |
 | ✔️ | '[]' is truthy | 3ms |
 | ✔️ | 'true' is truthy | 4ms |
 | ✔️ | '1' is truthy | 1ms |
-| ✔️ | '\\"a\\"' is truthy | 1ms |
+| ✔️ | '"a"' is truthy | 1ms |
 | ✔️ | '0.5' is truthy | 1ms |
 | ✔️ | 'Map {}' is truthy | 0ms |
 | ✔️ | '[Function anonymous]' is truthy | 1ms |
@@ -4604,7 +4438,7 @@ string\\" | 0ms |
 | ✔️ | 'null' is falsy | 1ms |
 | ✔️ | 'NaN' is falsy | 3ms |
 | ✔️ | '0' is falsy | 0ms |
-| ✔️ | '\\"\\"' is falsy | 1ms |
+| ✔️ | '""' is falsy | 1ms |
 | ✔️ | 'undefined' is falsy | 1ms |
 | ✔️ | '0n' is falsy | 2ms |
 
@@ -4623,7 +4457,7 @@ string\\" | 0ms |
 | ✔️ | fails for '[]' | 0ms |
 | ✔️ | fails for 'true' | 0ms |
 | ✔️ | fails for '1' | 1ms |
-| ✔️ | fails for '\\"a\\"' | 0ms |
+| ✔️ | fails for '"a"' | 0ms |
 | ✔️ | fails for '0.5' | 2ms |
 | ✔️ | fails for 'Map {}' | 0ms |
 | ✔️ | fails for '[Function anonymous]' | 1ms |
@@ -4639,7 +4473,7 @@ string\\" | 0ms |
 | ✔️ | '[]' is defined | 1ms |
 | ✔️ | 'true' is defined | 0ms |
 | ✔️ | '1' is defined | 1ms |
-| ✔️ | '\\"a\\"' is defined | 0ms |
+| ✔️ | '"a"' is defined | 0ms |
 | ✔️ | '0.5' is defined | 0ms |
 | ✔️ | 'Map {}' is defined | 1ms |
 | ✔️ | '[Function anonymous]' is defined | 0ms |
@@ -4756,13 +4590,13 @@ string\\" | 0ms |
 | :---: | :--- | ---: |
 | ✔️ | iterable | 1ms |
 | ✔️ | '[1, 2, 3, 4]' contains '1' | 0ms |
-| ✔️ | '[\\"a\\", \\"b\\", \\"c\\", \\"d\\"]' contains '\\"a\\"' | 1ms |
+| ✔️ | '["a", "b", "c", "d"]' contains '"a"' | 1ms |
 | ✔️ | '[undefined, null]' contains 'null' | 0ms |
 | ✔️ | '[undefined, null]' contains 'undefined' | 0ms |
 | ✔️ | '[Symbol(a)]' contains 'Symbol(a)' | 1ms |
-| ✔️ | '\\"abcdef\\"' contains '\\"abc\\"' | 0ms |
-| ✔️ | '\\"11112111\\"' contains '\\"2\\"' | 1ms |
-| ✔️ | 'Set {\\"abc\\", \\"def\\"}' contains '\\"abc\\"' | 0ms |
+| ✔️ | '"abcdef"' contains '"abc"' | 0ms |
+| ✔️ | '"11112111"' contains '"2"' | 1ms |
+| ✔️ | 'Set {"abc", "def"}' contains '"abc"' | 0ms |
 | ✔️ | '[0, 1]' contains '1' | 0ms |
 | ✔️ | '[1n, 2n, 3n, 4n]' contains '1n' | 1ms |
 | ✔️ | '[1, 2, 3, 3n, 4]' contains '3n' | 0ms |
@@ -4773,14 +4607,14 @@ string\\" | 0ms |
 | ✔️ | '[1n, 2n, 3n]' does not contain '3' | 1ms |
 | ✔️ | error cases | 1ms |
 | ✔️ | '[1, 2, 3, 4]' contains a value equal to '1' | 0ms |
-| ✔️ | '[\\"a\\", \\"b\\", \\"c\\", \\"d\\"]' contains a value equal to '\\"a\\"' | 0ms |
+| ✔️ | '["a", "b", "c", "d"]' contains a value equal to '"a"' | 0ms |
 | ✔️ | '[undefined, null]' contains a value equal to 'null' | 1ms |
 | ✔️ | '[undefined, null]' contains a value equal to 'undefined' | 0ms |
 | ✔️ | '[Symbol(a)]' contains a value equal to 'Symbol(a)' | 0ms |
-| ✔️ | '[{\\"a\\": \\"b\\"}, {\\"a\\": \\"c\\"}]' contains a value equal to '{\\"a\\": \\"b\\"}' | 1ms |
+| ✔️ | '[{"a": "b"}, {"a": "c"}]' contains a value equal to '{"a": "b"}' | 1ms |
 | ✔️ | 'Set {1, 2, 3, 4}' contains a value equal to '1' | 1ms |
 | ✔️ | '[0, 1]' contains a value equal to '1' | 0ms |
-| ✔️ | '[{\\"a\\": \\"b\\"}, {\\"a\\": \\"c\\"}]' does not contain a value equal to'{\\"a\\": \\"d\\"}' | 2ms |
+| ✔️ | '[{"a": "b"}, {"a": "c"}]' does not contain a value equal to'{"a": "d"}' | 2ms |
 | ✔️ | error cases for toContainEqual | 1ms |
 
 ### .toBeCloseTo
@@ -4827,19 +4661,19 @@ string\\" | 0ms |
 | ✔️ | {pass: true} expect(Foo bar).toMatch(/^foo/i) | 0ms |
 | ✔️ | throws: [bar, foo] | 0ms |
 | ✔️ | throws: [bar, /foo/] | 1ms |
-| ✔️ | throws if non String actual value passed: [1, \\"foo\\"] | 0ms |
-| ✔️ | throws if non String actual value passed: [{}, \\"foo\\"] | 0ms |
-| ✔️ | throws if non String actual value passed: [[], \\"foo\\"] | 0ms |
-| ✔️ | throws if non String actual value passed: [true, \\"foo\\"] | 0ms |
-| ✔️ | throws if non String actual value passed: [/foo/i, \\"foo\\"] | 0ms |
-| ✔️ | throws if non String actual value passed: [[Function anonymous], \\"foo\\"] | 0ms |
-| ✔️ | throws if non String actual value passed: [undefined, \\"foo\\"] | 1ms |
-| ✔️ | throws if non String/RegExp expected value passed: [\\"foo\\", 1] | 0ms |
-| ✔️ | throws if non String/RegExp expected value passed: [\\"foo\\", {}] | 0ms |
-| ✔️ | throws if non String/RegExp expected value passed: [\\"foo\\", []] | 0ms |
-| ✔️ | throws if non String/RegExp expected value passed: [\\"foo\\", true] | 1ms |
-| ✔️ | throws if non String/RegExp expected value passed: [\\"foo\\", [Function anonymous]] | 0ms |
-| ✔️ | throws if non String/RegExp expected value passed: [\\"foo\\", undefined] | 0ms |
+| ✔️ | throws if non String actual value passed: [1, "foo"] | 0ms |
+| ✔️ | throws if non String actual value passed: [{}, "foo"] | 0ms |
+| ✔️ | throws if non String actual value passed: [[], "foo"] | 0ms |
+| ✔️ | throws if non String actual value passed: [true, "foo"] | 0ms |
+| ✔️ | throws if non String actual value passed: [/foo/i, "foo"] | 0ms |
+| ✔️ | throws if non String actual value passed: [[Function anonymous], "foo"] | 0ms |
+| ✔️ | throws if non String actual value passed: [undefined, "foo"] | 1ms |
+| ✔️ | throws if non String/RegExp expected value passed: ["foo", 1] | 0ms |
+| ✔️ | throws if non String/RegExp expected value passed: ["foo", {}] | 0ms |
+| ✔️ | throws if non String/RegExp expected value passed: ["foo", []] | 0ms |
+| ✔️ | throws if non String/RegExp expected value passed: ["foo", true] | 1ms |
+| ✔️ | throws if non String/RegExp expected value passed: ["foo", [Function anonymous]] | 0ms |
+| ✔️ | throws if non String/RegExp expected value passed: ["foo", undefined] | 0ms |
 | ✔️ | escapes strings properly | 1ms |
 | ✔️ | does not maintain RegExp state between calls | 0ms |
 
@@ -4849,15 +4683,15 @@ string\\" | 0ms |
 | :---: | :--- | ---: |
 | ✔️ | {pass: true} expect([1, 2]).toHaveLength(2) | 1ms |
 | ✔️ | {pass: true} expect([]).toHaveLength(0) | 0ms |
-| ✔️ | {pass: true} expect([\\"a\\", \\"b\\"]).toHaveLength(2) | 0ms |
-| ✔️ | {pass: true} expect(\\"abc\\").toHaveLength(3) | 1ms |
-| ✔️ | {pass: true} expect(\\"\\").toHaveLength(0) | 0ms |
+| ✔️ | {pass: true} expect(["a", "b"]).toHaveLength(2) | 0ms |
+| ✔️ | {pass: true} expect("abc").toHaveLength(3) | 1ms |
+| ✔️ | {pass: true} expect("").toHaveLength(0) | 0ms |
 | ✔️ | {pass: true} expect([Function anonymous]).toHaveLength(0) | 0ms |
 | ✔️ | {pass: false} expect([1, 2]).toHaveLength(3) | 1ms |
 | ✔️ | {pass: false} expect([]).toHaveLength(1) | 0ms |
-| ✔️ | {pass: false} expect([\\"a\\", \\"b\\"]).toHaveLength(99) | 1ms |
-| ✔️ | {pass: false} expect(\\"abc\\").toHaveLength(66) | 0ms |
-| ✔️ | {pass: false} expect(\\"\\").toHaveLength(1) | 1ms |
+| ✔️ | {pass: false} expect(["a", "b"]).toHaveLength(99) | 1ms |
+| ✔️ | {pass: false} expect("abc").toHaveLength(66) | 0ms |
+| ✔️ | {pass: false} expect("").toHaveLength(1) | 1ms |
 | ✔️ | error cases | 1ms |
 
 ### .toHaveLength matcher error expected length
@@ -4874,165 +4708,165 @@ string\\" | 0ms |
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | {pass: true} expect({\\"a\\": {\\"b\\": {\\"c\\": {\\"d\\": 1}}}}).toHaveProperty('a.b.c.d', 1) | 1ms |
-| ✔️ | {pass: true} expect({\\"a\\": {\\"b\\": {\\"c\\": {\\"d\\": 1}}}}).toHaveProperty('a,b,c,d', 1) | 0ms |
-| ✔️ | {pass: true} expect({\\"a.b.c.d\\": 1}).toHaveProperty('a.b.c.d', 1) | 0ms |
-| ✔️ | {pass: true} expect({\\"a\\": {\\"b\\": [1, 2, 3]}}).toHaveProperty('a,b,1', 2) | 0ms |
-| ✔️ | {pass: true} expect({\\"a\\": {\\"b\\": [1, 2, 3]}}).toHaveProperty('a,b,1', Any<Number>) | 0ms |
-| ✔️ | {pass: true} expect({\\"a\\": 0}).toHaveProperty('a', 0) | 1ms |
-| ✔️ | {pass: true} expect({\\"a\\": {\\"b\\": undefined}}).toHaveProperty('a.b', undefined) | 0ms |
-| ✔️ | {pass: true} expect({\\"a\\": {}}).toHaveProperty('a.b', undefined) | 1ms |
-| ✔️ | {pass: true} expect({\\"a\\": {\\"b\\": {\\"c\\": 5}}}).toHaveProperty('a.b', {\\"c\\": 5}) | 2ms |
-| ✔️ | {pass: true} expect({\\"property\\": 1}).toHaveProperty('property', 1) | 0ms |
+| ✔️ | {pass: true} expect({"a": {"b": {"c": {"d": 1}}}}).toHaveProperty('a.b.c.d', 1) | 1ms |
+| ✔️ | {pass: true} expect({"a": {"b": {"c": {"d": 1}}}}).toHaveProperty('a,b,c,d', 1) | 0ms |
+| ✔️ | {pass: true} expect({"a.b.c.d": 1}).toHaveProperty('a.b.c.d', 1) | 0ms |
+| ✔️ | {pass: true} expect({"a": {"b": [1, 2, 3]}}).toHaveProperty('a,b,1', 2) | 0ms |
+| ✔️ | {pass: true} expect({"a": {"b": [1, 2, 3]}}).toHaveProperty('a,b,1', Any<Number>) | 0ms |
+| ✔️ | {pass: true} expect({"a": 0}).toHaveProperty('a', 0) | 1ms |
+| ✔️ | {pass: true} expect({"a": {"b": undefined}}).toHaveProperty('a.b', undefined) | 0ms |
+| ✔️ | {pass: true} expect({"a": {}}).toHaveProperty('a.b', undefined) | 1ms |
+| ✔️ | {pass: true} expect({"a": {"b": {"c": 5}}}).toHaveProperty('a.b', {"c": 5}) | 2ms |
+| ✔️ | {pass: true} expect({"property": 1}).toHaveProperty('property', 1) | 0ms |
 | ✔️ | {pass: true} expect({}).toHaveProperty('a', undefined) | 1ms |
-| ✔️ | {pass: true} expect({}).toHaveProperty('b', \\"b\\") | 0ms |
+| ✔️ | {pass: true} expect({}).toHaveProperty('b', "b") | 0ms |
 | ✔️ | {pass: true} expect({}).toHaveProperty('setter', undefined) | 0ms |
-| ✔️ | {pass: true} expect({\\"val\\": true}).toHaveProperty('a', undefined) | 0ms |
-| ✔️ | {pass: true} expect({\\"val\\": true}).toHaveProperty('c', \\"c\\") | 0ms |
-| ✔️ | {pass: true} expect({\\"val\\": true}).toHaveProperty('val', true) | 1ms |
-| ✔️ | {pass: true} expect({\\"nodeName\\": \\"DIV\\"}).toHaveProperty('nodeType', 1) | 0ms |
-| ✔️ | {pass: true} expect(\\"\\").toHaveProperty('length', 0) | 0ms |
+| ✔️ | {pass: true} expect({"val": true}).toHaveProperty('a', undefined) | 0ms |
+| ✔️ | {pass: true} expect({"val": true}).toHaveProperty('c', "c") | 0ms |
+| ✔️ | {pass: true} expect({"val": true}).toHaveProperty('val', true) | 1ms |
+| ✔️ | {pass: true} expect({"nodeName": "DIV"}).toHaveProperty('nodeType', 1) | 0ms |
+| ✔️ | {pass: true} expect("").toHaveProperty('length', 0) | 0ms |
 | ✔️ | {pass: true} expect([Function memoized]).toHaveProperty('memo', []) | 1ms |
-| ✔️ | {pass: false} expect({\\"a\\": {\\"b\\": {\\"c\\": {\\"d\\": 1}}}}).toHaveProperty('a.b.ttt.d', 1) | 0ms |
-| ✔️ | {pass: false} expect({\\"a\\": {\\"b\\": {\\"c\\": {\\"d\\": 1}}}}).toHaveProperty('a.b.c.d', 2) | 1ms |
-| ✔️ | {pass: false} expect({\\"a.b.c.d\\": 1}).toHaveProperty('a.b.c.d', 2) | 2ms |
-| ✔️ | {pass: false} expect({\\"a.b.c.d\\": 1}).toHaveProperty('a.b.c.d', 2) | 0ms |
-| ✔️ | {pass: false} expect({\\"children\\": [\\"\\\\\\"That cartoon\\\\\\"\\"], \\"props\\": null, \\"type\\": \\"p\\"}).toHaveProperty('children,0', \\"\\\\\\"That cat cartoon\\\\\\"\\") | 1ms |
-| ✔️ | {pass: false} expect({\\"children\\": [\\"Roses are red.
+| ✔️ | {pass: false} expect({"a": {"b": {"c": {"d": 1}}}}).toHaveProperty('a.b.ttt.d', 1) | 0ms |
+| ✔️ | {pass: false} expect({"a": {"b": {"c": {"d": 1}}}}).toHaveProperty('a.b.c.d', 2) | 1ms |
+| ✔️ | {pass: false} expect({"a.b.c.d": 1}).toHaveProperty('a.b.c.d', 2) | 2ms |
+| ✔️ | {pass: false} expect({"a.b.c.d": 1}).toHaveProperty('a.b.c.d', 2) | 0ms |
+| ✔️ | {pass: false} expect({"children": ["\"That cartoon\""], "props": null, "type": "p"}).toHaveProperty('children,0', "\"That cat cartoon\"") | 1ms |
+| ✔️ | {pass: false} expect({"children": ["Roses are red.
 Violets are blue.
-Testing with Jest is good for you.\\"], \\"props\\": null, \\"type\\": \\"pre\\"}).toHaveProperty('children,0', \\"Roses are red, violets are blue.
+Testing with Jest is good for you."], "props": null, "type": "pre"}).toHaveProperty('children,0', "Roses are red, violets are blue.
 Testing with Jest
-Is good for you.\\") | 1ms |
-| ✔️ | {pass: false} expect({\\"a\\": {\\"b\\": {\\"c\\": {\\"d\\": 1}}}}).toHaveProperty('a,b,c,d', 2) | 0ms |
-| ✔️ | {pass: false} expect({\\"a\\": {\\"b\\": {\\"c\\": {}}}}).toHaveProperty('a.b.c.d', 1) | 0ms |
-| ✔️ | {pass: false} expect({\\"a\\": 1}).toHaveProperty('a.b.c.d', 5) | 0ms |
-| ✔️ | {pass: false} expect({}).toHaveProperty('a', \\"test\\") | 0ms |
-| ✔️ | {pass: false} expect({\\"a\\": {\\"b\\": 3}}).toHaveProperty('a.b', undefined) | 1ms |
-| ✔️ | {pass: false} expect(1).toHaveProperty('a.b.c', \\"test\\") | 0ms |
-| ✔️ | {pass: false} expect(\\"abc\\").toHaveProperty('a.b.c', {\\"a\\": 5}) | 1ms |
-| ✔️ | {pass: false} expect({\\"a\\": {\\"b\\": {\\"c\\": 5}}}).toHaveProperty('a.b', {\\"c\\": 4}) | 0ms |
-| ✔️ | {pass: false} expect({}).toHaveProperty('a', \\"a\\") | 1ms |
+Is good for you.") | 1ms |
+| ✔️ | {pass: false} expect({"a": {"b": {"c": {"d": 1}}}}).toHaveProperty('a,b,c,d', 2) | 0ms |
+| ✔️ | {pass: false} expect({"a": {"b": {"c": {}}}}).toHaveProperty('a.b.c.d', 1) | 0ms |
+| ✔️ | {pass: false} expect({"a": 1}).toHaveProperty('a.b.c.d', 5) | 0ms |
+| ✔️ | {pass: false} expect({}).toHaveProperty('a', "test") | 0ms |
+| ✔️ | {pass: false} expect({"a": {"b": 3}}).toHaveProperty('a.b', undefined) | 1ms |
+| ✔️ | {pass: false} expect(1).toHaveProperty('a.b.c', "test") | 0ms |
+| ✔️ | {pass: false} expect("abc").toHaveProperty('a.b.c', {"a": 5}) | 1ms |
+| ✔️ | {pass: false} expect({"a": {"b": {"c": 5}}}).toHaveProperty('a.b', {"c": 4}) | 0ms |
+| ✔️ | {pass: false} expect({}).toHaveProperty('a', "a") | 1ms |
 | ✔️ | {pass: false} expect({}).toHaveProperty('b', undefined) | 0ms |
-| ✔️ | {pass: true} expect({\\"a\\": {\\"b\\": {\\"c\\": {\\"d\\": 1}}}}).toHaveProperty('a.b.c.d') | 0ms |
-| ✔️ | {pass: true} expect({\\"a\\": {\\"b\\": {\\"c\\": {\\"d\\": 1}}}}).toHaveProperty('a,b,c,d') | 1ms |
-| ✔️ | {pass: true} expect({\\"a.b.c.d\\": 1}).toHaveProperty('a.b.c.d') | 0ms |
-| ✔️ | {pass: true} expect({\\"a\\": {\\"b\\": [1, 2, 3]}}).toHaveProperty('a,b,1') | 0ms |
-| ✔️ | {pass: true} expect({\\"a\\": 0}).toHaveProperty('a') | 0ms |
-| ✔️ | {pass: true} expect({\\"a\\": {\\"b\\": undefined}}).toHaveProperty('a.b') | 0ms |
-| ✔️ | {pass: false} expect({\\"a\\": {\\"b\\": {\\"c\\": {}}}}).toHaveProperty('a.b.c.d') | 1ms |
-| ✔️ | {pass: false} expect({\\"a\\": 1}).toHaveProperty('a.b.c.d') | 0ms |
+| ✔️ | {pass: true} expect({"a": {"b": {"c": {"d": 1}}}}).toHaveProperty('a.b.c.d') | 0ms |
+| ✔️ | {pass: true} expect({"a": {"b": {"c": {"d": 1}}}}).toHaveProperty('a,b,c,d') | 1ms |
+| ✔️ | {pass: true} expect({"a.b.c.d": 1}).toHaveProperty('a.b.c.d') | 0ms |
+| ✔️ | {pass: true} expect({"a": {"b": [1, 2, 3]}}).toHaveProperty('a,b,1') | 0ms |
+| ✔️ | {pass: true} expect({"a": 0}).toHaveProperty('a') | 0ms |
+| ✔️ | {pass: true} expect({"a": {"b": undefined}}).toHaveProperty('a.b') | 0ms |
+| ✔️ | {pass: false} expect({"a": {"b": {"c": {}}}}).toHaveProperty('a.b.c.d') | 1ms |
+| ✔️ | {pass: false} expect({"a": 1}).toHaveProperty('a.b.c.d') | 0ms |
 | ✔️ | {pass: false} expect({}).toHaveProperty('a') | 0ms |
 | ✔️ | {pass: false} expect(1).toHaveProperty('a.b.c') | 1ms |
-| ✔️ | {pass: false} expect(\\"abc\\").toHaveProperty('a.b.c') | 0ms |
+| ✔️ | {pass: false} expect("abc").toHaveProperty('a.b.c') | 0ms |
 | ✔️ | {pass: false} expect(false).toHaveProperty('key') | 0ms |
 | ✔️ | {pass: false} expect(0).toHaveProperty('key') | 0ms |
-| ✔️ | {pass: false} expect(\\"\\").toHaveProperty('key') | 0ms |
+| ✔️ | {pass: false} expect("").toHaveProperty('key') | 0ms |
 | ✔️ | {pass: false} expect(Symbol()).toHaveProperty('key') | 1ms |
-| ✔️ | {pass: false} expect({\\"key\\": 1}).toHaveProperty('not') | 0ms |
+| ✔️ | {pass: false} expect({"key": 1}).toHaveProperty('not') | 0ms |
 | ✔️ | {error} expect(null).toHaveProperty('a.b') | 0ms |
 | ✔️ | {error} expect(undefined).toHaveProperty('a') | 1ms |
-| ✔️ | {error} expect({\\"a\\": {\\"b\\": {}}}).toHaveProperty('undefined') | 0ms |
-| ✔️ | {error} expect({\\"a\\": {\\"b\\": {}}}).toHaveProperty('null') | 0ms |
-| ✔️ | {error} expect({\\"a\\": {\\"b\\": {}}}).toHaveProperty('1') | 0ms |
+| ✔️ | {error} expect({"a": {"b": {}}}).toHaveProperty('undefined') | 0ms |
+| ✔️ | {error} expect({"a": {"b": {}}}).toHaveProperty('null') | 0ms |
+| ✔️ | {error} expect({"a": {"b": {}}}).toHaveProperty('1') | 0ms |
 | ✔️ | {error} expect({}).toHaveProperty('') | 1ms |
 
 ### toMatchObject() circular references simple circular references
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | {pass: true} expect({\\"a\\": \\"hello\\", \\"ref\\": [Circular]}).toMatchObject({}) | 3ms |
-| ✔️ | {pass: true} expect({\\"a\\": \\"hello\\", \\"ref\\": [Circular]}).toMatchObject({\\"a\\": \\"hello\\", \\"ref\\": [Circular]}) | 0ms |
-| ✔️ | {pass: false} expect({}).toMatchObject({\\"a\\": \\"hello\\", \\"ref\\": [Circular]}) | 1ms |
-| ✔️ | {pass: false} expect({\\"a\\": \\"hello\\", \\"ref\\": [Circular]}).toMatchObject({\\"a\\": \\"world\\", \\"ref\\": [Circular]}) | 0ms |
-| ✔️ | {pass: false} expect({\\"ref\\": \\"not a ref\\"}).toMatchObject({\\"a\\": \\"hello\\", \\"ref\\": [Circular]}) | 1ms |
+| ✔️ | {pass: true} expect({"a": "hello", "ref": [Circular]}).toMatchObject({}) | 3ms |
+| ✔️ | {pass: true} expect({"a": "hello", "ref": [Circular]}).toMatchObject({"a": "hello", "ref": [Circular]}) | 0ms |
+| ✔️ | {pass: false} expect({}).toMatchObject({"a": "hello", "ref": [Circular]}) | 1ms |
+| ✔️ | {pass: false} expect({"a": "hello", "ref": [Circular]}).toMatchObject({"a": "world", "ref": [Circular]}) | 0ms |
+| ✔️ | {pass: false} expect({"ref": "not a ref"}).toMatchObject({"a": "hello", "ref": [Circular]}) | 1ms |
 
 ### toMatchObject() circular references transitive circular references
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | {pass: true} expect({\\"a\\": \\"hello\\", \\"nestedObj\\": {\\"parentObj\\": [Circular]}}).toMatchObject({}) | 0ms |
-| ✔️ | {pass: true} expect({\\"a\\": \\"hello\\", \\"nestedObj\\": {\\"parentObj\\": [Circular]}}).toMatchObject({\\"a\\": \\"hello\\", \\"nestedObj\\": {\\"parentObj\\": [Circular]}}) | 1ms |
-| ✔️ | {pass: false} expect({}).toMatchObject({\\"a\\": \\"hello\\", \\"nestedObj\\": {\\"parentObj\\": [Circular]}}) | 0ms |
-| ✔️ | {pass: false} expect({\\"a\\": \\"world\\", \\"nestedObj\\": {\\"parentObj\\": [Circular]}}).toMatchObject({\\"a\\": \\"hello\\", \\"nestedObj\\": {\\"parentObj\\": [Circular]}}) | 0ms |
-| ✔️ | {pass: false} expect({\\"nestedObj\\": {\\"parentObj\\": \\"not the parent ref\\"}}).toMatchObject({\\"a\\": \\"hello\\", \\"nestedObj\\": {\\"parentObj\\": [Circular]}}) | 1ms |
+| ✔️ | {pass: true} expect({"a": "hello", "nestedObj": {"parentObj": [Circular]}}).toMatchObject({}) | 0ms |
+| ✔️ | {pass: true} expect({"a": "hello", "nestedObj": {"parentObj": [Circular]}}).toMatchObject({"a": "hello", "nestedObj": {"parentObj": [Circular]}}) | 1ms |
+| ✔️ | {pass: false} expect({}).toMatchObject({"a": "hello", "nestedObj": {"parentObj": [Circular]}}) | 0ms |
+| ✔️ | {pass: false} expect({"a": "world", "nestedObj": {"parentObj": [Circular]}}).toMatchObject({"a": "hello", "nestedObj": {"parentObj": [Circular]}}) | 0ms |
+| ✔️ | {pass: false} expect({"nestedObj": {"parentObj": "not the parent ref"}}).toMatchObject({"a": "hello", "nestedObj": {"parentObj": [Circular]}}) | 1ms |
 
 ### toMatchObject()
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | {pass: true} expect({\\"a\\": \\"b\\", \\"c\\": \\"d\\"}).toMatchObject({\\"a\\": \\"b\\"}) | 1ms |
-| ✔️ | {pass: true} expect({\\"a\\": \\"b\\", \\"c\\": \\"d\\"}).toMatchObject({\\"a\\": \\"b\\", \\"c\\": \\"d\\"}) | 1ms |
-| ✔️ | {pass: true} expect({\\"a\\": \\"b\\", \\"t\\": {\\"x\\": {\\"r\\": \\"r\\"}, \\"z\\": \\"z\\"}}).toMatchObject({\\"a\\": \\"b\\", \\"t\\": {\\"z\\": \\"z\\"}}) | 0ms |
-| ✔️ | {pass: true} expect({\\"a\\": \\"b\\", \\"t\\": {\\"x\\": {\\"r\\": \\"r\\"}, \\"z\\": \\"z\\"}}).toMatchObject({\\"t\\": {\\"x\\": {\\"r\\": \\"r\\"}}}) | 0ms |
-| ✔️ | {pass: true} expect({\\"a\\": [3, 4, 5], \\"b\\": \\"b\\"}).toMatchObject({\\"a\\": [3, 4, 5]}) | 1ms |
-| ✔️ | {pass: true} expect({\\"a\\": [3, 4, 5, \\"v\\"], \\"b\\": \\"b\\"}).toMatchObject({\\"a\\": [3, 4, 5, \\"v\\"]}) | 0ms |
-| ✔️ | {pass: true} expect({\\"a\\": 1, \\"c\\": 2}).toMatchObject({\\"a\\": Any<Number>}) | 1ms |
-| ✔️ | {pass: true} expect({\\"a\\": {\\"x\\": \\"x\\", \\"y\\": \\"y\\"}}).toMatchObject({\\"a\\": {\\"x\\": Any<String>}}) | 0ms |
+| ✔️ | {pass: true} expect({"a": "b", "c": "d"}).toMatchObject({"a": "b"}) | 1ms |
+| ✔️ | {pass: true} expect({"a": "b", "c": "d"}).toMatchObject({"a": "b", "c": "d"}) | 1ms |
+| ✔️ | {pass: true} expect({"a": "b", "t": {"x": {"r": "r"}, "z": "z"}}).toMatchObject({"a": "b", "t": {"z": "z"}}) | 0ms |
+| ✔️ | {pass: true} expect({"a": "b", "t": {"x": {"r": "r"}, "z": "z"}}).toMatchObject({"t": {"x": {"r": "r"}}}) | 0ms |
+| ✔️ | {pass: true} expect({"a": [3, 4, 5], "b": "b"}).toMatchObject({"a": [3, 4, 5]}) | 1ms |
+| ✔️ | {pass: true} expect({"a": [3, 4, 5, "v"], "b": "b"}).toMatchObject({"a": [3, 4, 5, "v"]}) | 0ms |
+| ✔️ | {pass: true} expect({"a": 1, "c": 2}).toMatchObject({"a": Any<Number>}) | 1ms |
+| ✔️ | {pass: true} expect({"a": {"x": "x", "y": "y"}}).toMatchObject({"a": {"x": Any<String>}}) | 0ms |
 | ✔️ | {pass: true} expect(Set {1, 2}).toMatchObject(Set {1, 2}) | 1ms |
 | ✔️ | {pass: true} expect(Set {1, 2}).toMatchObject(Set {2, 1}) | 0ms |
 | ✔️ | {pass: true} expect(2015-11-30T00:00:00.000Z).toMatchObject(2015-11-30T00:00:00.000Z) | 1ms |
-| ✔️ | {pass: true} expect({\\"a\\": 2015-11-30T00:00:00.000Z, \\"b\\": \\"b\\"}).toMatchObject({\\"a\\": 2015-11-30T00:00:00.000Z}) | 0ms |
-| ✔️ | {pass: true} expect({\\"a\\": null, \\"b\\": \\"b\\"}).toMatchObject({\\"a\\": null}) | 2ms |
-| ✔️ | {pass: true} expect({\\"a\\": undefined, \\"b\\": \\"b\\"}).toMatchObject({\\"a\\": undefined}) | 0ms |
-| ✔️ | {pass: true} expect({\\"a\\": [{\\"a\\": \\"a\\", \\"b\\": \\"b\\"}]}).toMatchObject({\\"a\\": [{\\"a\\": \\"a\\"}]}) | 1ms |
+| ✔️ | {pass: true} expect({"a": 2015-11-30T00:00:00.000Z, "b": "b"}).toMatchObject({"a": 2015-11-30T00:00:00.000Z}) | 0ms |
+| ✔️ | {pass: true} expect({"a": null, "b": "b"}).toMatchObject({"a": null}) | 2ms |
+| ✔️ | {pass: true} expect({"a": undefined, "b": "b"}).toMatchObject({"a": undefined}) | 0ms |
+| ✔️ | {pass: true} expect({"a": [{"a": "a", "b": "b"}]}).toMatchObject({"a": [{"a": "a"}]}) | 1ms |
 | ✔️ | {pass: true} expect([1, 2]).toMatchObject([1, 2]) | 0ms |
-| ✔️ | {pass: true} expect({\\"a\\": undefined}).toMatchObject({\\"a\\": undefined}) | 1ms |
+| ✔️ | {pass: true} expect({"a": undefined}).toMatchObject({"a": undefined}) | 1ms |
 | ✔️ | {pass: true} expect([]).toMatchObject([]) | 0ms |
 | ✔️ | {pass: true} expect([Error: foo]).toMatchObject([Error: foo]) | 0ms |
-| ✔️ | {pass: true} expect([Error: bar]).toMatchObject({\\"message\\": \\"bar\\"}) | 1ms |
-| ✔️ | {pass: true} expect({}).toMatchObject({\\"a\\": undefined, \\"b\\": \\"b\\"}) | 0ms |
-| ✔️ | {pass: true} expect({\\"a\\": \\"b\\"}).toMatchObject({\\"a\\": \\"b\\"}) | 1ms |
-| ✔️ | {pass: true} expect({\\"a\\": \\"b\\", \\"c\\": \\"d\\", Symbol(jest): \\"jest\\"}).toMatchObject({\\"a\\": \\"b\\", Symbol(jest): \\"jest\\"}) | 0ms |
-| ✔️ | {pass: true} expect({\\"a\\": \\"b\\", \\"c\\": \\"d\\", Symbol(jest): \\"jest\\"}).toMatchObject({\\"a\\": \\"b\\", \\"c\\": \\"d\\", Symbol(jest): \\"jest\\"}) | 1ms |
-| ✔️ | {pass: true} expect({}).toMatchObject({\\"a\\": undefined, \\"b\\": \\"b\\", \\"c\\": \\"c\\"}) | 0ms |
-| ✔️ | {pass: true} expect({}).toMatchObject({\\"d\\": 4}) | 1ms |
-| ✔️ | {pass: true} expect({\\"a\\": \\"b\\", \\"toString\\": [Function toString]}).toMatchObject({\\"toString\\": Any<Function>}) | 0ms |
-| ✔️ | {pass: false} expect({\\"a\\": \\"b\\", \\"c\\": \\"d\\"}).toMatchObject({\\"e\\": \\"b\\"}) | 1ms |
-| ✔️ | {pass: false} expect({\\"a\\": \\"b\\", \\"c\\": \\"d\\"}).toMatchObject({\\"a\\": \\"b!\\", \\"c\\": \\"d\\"}) | 0ms |
-| ✔️ | {pass: false} expect({\\"a\\": \\"a\\", \\"c\\": \\"d\\"}).toMatchObject({\\"a\\": Any<Number>}) | 1ms |
-| ✔️ | {pass: false} expect({\\"a\\": \\"b\\", \\"t\\": {\\"x\\": {\\"r\\": \\"r\\"}, \\"z\\": \\"z\\"}}).toMatchObject({\\"a\\": \\"b\\", \\"t\\": {\\"z\\": [3]}}) | 1ms |
-| ✔️ | {pass: false} expect({\\"a\\": \\"b\\", \\"t\\": {\\"x\\": {\\"r\\": \\"r\\"}, \\"z\\": \\"z\\"}}).toMatchObject({\\"t\\": {\\"l\\": {\\"r\\": \\"r\\"}}}) | 2ms |
-| ✔️ | {pass: false} expect({\\"a\\": [3, 4, 5], \\"b\\": \\"b\\"}).toMatchObject({\\"a\\": [3, 4, 5, 6]}) | 0ms |
-| ✔️ | {pass: false} expect({\\"a\\": [3, 4, 5], \\"b\\": \\"b\\"}).toMatchObject({\\"a\\": [3, 4]}) | 1ms |
-| ✔️ | {pass: false} expect({\\"a\\": [3, 4, \\"v\\"], \\"b\\": \\"b\\"}).toMatchObject({\\"a\\": [\\"v\\"]}) | 0ms |
-| ✔️ | {pass: false} expect({\\"a\\": [3, 4, 5], \\"b\\": \\"b\\"}).toMatchObject({\\"a\\": {\\"b\\": 4}}) | 0ms |
-| ✔️ | {pass: false} expect({\\"a\\": [3, 4, 5], \\"b\\": \\"b\\"}).toMatchObject({\\"a\\": {\\"b\\": Any<String>}}) | 1ms |
+| ✔️ | {pass: true} expect([Error: bar]).toMatchObject({"message": "bar"}) | 1ms |
+| ✔️ | {pass: true} expect({}).toMatchObject({"a": undefined, "b": "b"}) | 0ms |
+| ✔️ | {pass: true} expect({"a": "b"}).toMatchObject({"a": "b"}) | 1ms |
+| ✔️ | {pass: true} expect({"a": "b", "c": "d", Symbol(jest): "jest"}).toMatchObject({"a": "b", Symbol(jest): "jest"}) | 0ms |
+| ✔️ | {pass: true} expect({"a": "b", "c": "d", Symbol(jest): "jest"}).toMatchObject({"a": "b", "c": "d", Symbol(jest): "jest"}) | 1ms |
+| ✔️ | {pass: true} expect({}).toMatchObject({"a": undefined, "b": "b", "c": "c"}) | 0ms |
+| ✔️ | {pass: true} expect({}).toMatchObject({"d": 4}) | 1ms |
+| ✔️ | {pass: true} expect({"a": "b", "toString": [Function toString]}).toMatchObject({"toString": Any<Function>}) | 0ms |
+| ✔️ | {pass: false} expect({"a": "b", "c": "d"}).toMatchObject({"e": "b"}) | 1ms |
+| ✔️ | {pass: false} expect({"a": "b", "c": "d"}).toMatchObject({"a": "b!", "c": "d"}) | 0ms |
+| ✔️ | {pass: false} expect({"a": "a", "c": "d"}).toMatchObject({"a": Any<Number>}) | 1ms |
+| ✔️ | {pass: false} expect({"a": "b", "t": {"x": {"r": "r"}, "z": "z"}}).toMatchObject({"a": "b", "t": {"z": [3]}}) | 1ms |
+| ✔️ | {pass: false} expect({"a": "b", "t": {"x": {"r": "r"}, "z": "z"}}).toMatchObject({"t": {"l": {"r": "r"}}}) | 2ms |
+| ✔️ | {pass: false} expect({"a": [3, 4, 5], "b": "b"}).toMatchObject({"a": [3, 4, 5, 6]}) | 0ms |
+| ✔️ | {pass: false} expect({"a": [3, 4, 5], "b": "b"}).toMatchObject({"a": [3, 4]}) | 1ms |
+| ✔️ | {pass: false} expect({"a": [3, 4, "v"], "b": "b"}).toMatchObject({"a": ["v"]}) | 0ms |
+| ✔️ | {pass: false} expect({"a": [3, 4, 5], "b": "b"}).toMatchObject({"a": {"b": 4}}) | 0ms |
+| ✔️ | {pass: false} expect({"a": [3, 4, 5], "b": "b"}).toMatchObject({"a": {"b": Any<String>}}) | 1ms |
 | ✔️ | {pass: false} expect([1, 2]).toMatchObject([1, 3]) | 2ms |
 | ✔️ | {pass: false} expect([0]).toMatchObject([-0]) | 1ms |
 | ✔️ | {pass: false} expect(Set {1, 2}).toMatchObject(Set {2}) | 1ms |
 | ✔️ | {pass: false} expect(2015-11-30T00:00:00.000Z).toMatchObject(2015-10-10T00:00:00.000Z) | 0ms |
-| ✔️ | {pass: false} expect({\\"a\\": 2015-11-30T00:00:00.000Z, \\"b\\": \\"b\\"}).toMatchObject({\\"a\\": 2015-10-10T00:00:00.000Z}) | 1ms |
-| ✔️ | {pass: false} expect({\\"a\\": null, \\"b\\": \\"b\\"}).toMatchObject({\\"a\\": \\"4\\"}) | 0ms |
-| ✔️ | {pass: false} expect({\\"a\\": null, \\"b\\": \\"b\\"}).toMatchObject({\\"a\\": undefined}) | 1ms |
-| ✔️ | {pass: false} expect({\\"a\\": undefined}).toMatchObject({\\"a\\": null}) | 0ms |
-| ✔️ | {pass: false} expect({\\"a\\": [{\\"a\\": \\"a\\", \\"b\\": \\"b\\"}]}).toMatchObject({\\"a\\": [{\\"a\\": \\"c\\"}]}) | 0ms |
-| ✔️ | {pass: false} expect({\\"a\\": 1, \\"b\\": 1, \\"c\\": 1, \\"d\\": {\\"e\\": {\\"f\\": 555}}}).toMatchObject({\\"d\\": {\\"e\\": {\\"f\\": 222}}}) | 1ms |
-| ✔️ | {pass: false} expect({}).toMatchObject({\\"a\\": undefined}) | 0ms |
+| ✔️ | {pass: false} expect({"a": 2015-11-30T00:00:00.000Z, "b": "b"}).toMatchObject({"a": 2015-10-10T00:00:00.000Z}) | 1ms |
+| ✔️ | {pass: false} expect({"a": null, "b": "b"}).toMatchObject({"a": "4"}) | 0ms |
+| ✔️ | {pass: false} expect({"a": null, "b": "b"}).toMatchObject({"a": undefined}) | 1ms |
+| ✔️ | {pass: false} expect({"a": undefined}).toMatchObject({"a": null}) | 0ms |
+| ✔️ | {pass: false} expect({"a": [{"a": "a", "b": "b"}]}).toMatchObject({"a": [{"a": "c"}]}) | 0ms |
+| ✔️ | {pass: false} expect({"a": 1, "b": 1, "c": 1, "d": {"e": {"f": 555}}}).toMatchObject({"d": {"e": {"f": 222}}}) | 1ms |
+| ✔️ | {pass: false} expect({}).toMatchObject({"a": undefined}) | 0ms |
 | ✔️ | {pass: false} expect([1, 2, 3]).toMatchObject([2, 3, 1]) | 0ms |
 | ✔️ | {pass: false} expect([1, 2, 3]).toMatchObject([1, 2, 2]) | 0ms |
 | ✔️ | {pass: false} expect([Error: foo]).toMatchObject([Error: bar]) | 0ms |
-| ✔️ | {pass: false} expect({\\"a\\": \\"b\\"}).toMatchObject({\\"c\\": \\"d\\"}) | 4ms |
-| ✔️ | {pass: false} expect({\\"a\\": \\"b\\", \\"c\\": \\"d\\", Symbol(jest): \\"jest\\"}).toMatchObject({\\"a\\": \\"c\\", Symbol(jest): Any<String>}) | 1ms |
-| ✔️ | {pass: false} expect({\\"a\\": \\"b\\"}).toMatchObject({\\"toString\\": Any<Function>}) | 0ms |
+| ✔️ | {pass: false} expect({"a": "b"}).toMatchObject({"c": "d"}) | 4ms |
+| ✔️ | {pass: false} expect({"a": "b", "c": "d", Symbol(jest): "jest"}).toMatchObject({"a": "c", Symbol(jest): Any<String>}) | 1ms |
+| ✔️ | {pass: false} expect({"a": "b"}).toMatchObject({"toString": Any<Function>}) | 0ms |
 | ✔️ | throws expect(null).toMatchObject({}) | 0ms |
 | ✔️ | throws expect(4).toMatchObject({}) | 0ms |
-| ✔️ | throws expect(\\"44\\").toMatchObject({}) | 0ms |
+| ✔️ | throws expect("44").toMatchObject({}) | 0ms |
 | ✔️ | throws expect(true).toMatchObject({}) | 3ms |
 | ✔️ | throws expect(undefined).toMatchObject({}) | 0ms |
 | ✔️ | throws expect({}).toMatchObject(null) | 0ms |
 | ✔️ | throws expect({}).toMatchObject(4) | 0ms |
-| ✔️ | throws expect({}).toMatchObject(\\"some string\\") | 0ms |
+| ✔️ | throws expect({}).toMatchObject("some string") | 0ms |
 | ✔️ | throws expect({}).toMatchObject(true) | 7ms |
 | ✔️ | throws expect({}).toMatchObject(undefined) | 0ms |
 | ✔️ | does not match properties up in the prototype chain | 1ms |
 
-## <a id=\\"user-content-ts-103-e2e-tests-jestRequireActual-test-ts\\" href=\\"#ts-103-e2e-tests-jestRequireActual-test-ts\\">e2e/__tests__/jestRequireActual.test.ts</a> ✔️
+## <a id="user-content-ts-103-e2e-tests-jestRequireActual-test-ts" href="#ts-103-e2e-tests-jestRequireActual-test-ts">e2e/__tests__/jestRequireActual.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | understands dependencies using jest.requireActual | 1614ms |
 
-## <a id=\\"user-content-ts-104-packages-jest-core-src-tests-watch-test-js\\" href=\\"#ts-104-packages-jest-core-src-tests-watch-test-js\\">packages/jest-core/src/__tests__/watch.test.js</a> ✔️
+## <a id="user-content-ts-104-packages-jest-core-src-tests-watch-test-js" href="#ts-104-packages-jest-core-src-tests-watch-test-js">packages/jest-core/src/__tests__/watch.test.js</a> ✔️
 
 ### Watch mode flows
 
@@ -5103,15 +4937,15 @@ Is good for you.\\") | 1ms |
 | ✔️ | allows WatchPlugins to modify only white-listed global config keys | 60ms |
 | ✔️ | triggers enter on a WatchPlugin when its key is pressed | 73ms |
 | ✔️ | prevents Jest from handling keys when active and returns control when end is called | 68ms |
-| ✔️ | Pressing \\"o\\" runs test in \\"only changed files\\" mode | 69ms |
-| ✔️ | Pressing \\"a\\" runs test in \\"watch all\\" mode | 62ms |
-| ✔️ | Pressing \\"ENTER\\" reruns the tests | 108ms |
-| ✔️ | Pressing \\"t\\" reruns the tests in \\"test name pattern\\" mode | 93ms |
-| ✔️ | Pressing \\"p\\" reruns the tests in \\"filename pattern\\" mode | 80ms |
-| ✔️ | Can combine \\"p\\" and \\"t\\" filters | 68ms |
-| ✔️ | Pressing \\"u\\" reruns the tests in \\"update snapshot\\" mode | 67ms |
+| ✔️ | Pressing "o" runs test in "only changed files" mode | 69ms |
+| ✔️ | Pressing "a" runs test in "watch all" mode | 62ms |
+| ✔️ | Pressing "ENTER" reruns the tests | 108ms |
+| ✔️ | Pressing "t" reruns the tests in "test name pattern" mode | 93ms |
+| ✔️ | Pressing "p" reruns the tests in "filename pattern" mode | 80ms |
+| ✔️ | Can combine "p" and "t" filters | 68ms |
+| ✔️ | Pressing "u" reruns the tests in "update snapshot" mode | 67ms |
 | ✔️ | passWithNoTest should be set to true in watch mode | 65ms |
-| ✔️ | shows the correct usage for the f key in \\"only failed tests\\" mode | 62ms |
+| ✔️ | shows the correct usage for the f key in "only failed tests" mode | 62ms |
 
 ### Watch mode flows when dealing with potential watch plugin key conflicts
 
@@ -5124,7 +4958,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | allows WatchPlugins to override non-reserved internal plugins | 62ms |
 | ✔️ | forbids third-party WatchPlugins overriding each other | 78ms |
 
-## <a id=\\"user-content-ts-105-packages-jest-runtime-src-tests-runtimerequiremoduleormocktransitivedeps-test-js\\" href=\\"#ts-105-packages-jest-runtime-src-tests-runtimerequiremoduleormocktransitivedeps-test-js\\">packages/jest-runtime/src/__tests__/runtime_require_module_or_mock_transitive_deps.test.js</a> ✔️
+## <a id="user-content-ts-105-packages-jest-runtime-src-tests-runtimerequiremoduleormocktransitivedeps-test-js" href="#ts-105-packages-jest-runtime-src-tests-runtimerequiremoduleormocktransitivedeps-test-js">packages/jest-runtime/src/__tests__/runtime_require_module_or_mock_transitive_deps.test.js</a> ✔️
 
 ### transitive dependencies
 
@@ -5137,7 +4971,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | mocks deep dependencies when using unmock | 299ms |
 | ✔️ | does not mock deep dependencies when using deepUnmock | 258ms |
 
-## <a id=\\"user-content-ts-106-packages-jest-core-src-tests-watchFileChanges-test-ts\\" href=\\"#ts-106-packages-jest-core-src-tests-watchFileChanges-test-ts\\">packages/jest-core/src/__tests__/watchFileChanges.test.ts</a> ✔️
+## <a id="user-content-ts-106-packages-jest-core-src-tests-watchFileChanges-test-ts" href="#ts-106-packages-jest-core-src-tests-watchFileChanges-test-ts">packages/jest-core/src/__tests__/watchFileChanges.test.ts</a> ✔️
 
 ### Watch mode flows with changed files
 
@@ -5145,7 +4979,7 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | should correct require new files without legacy cache | 1430ms |
 
-## <a id=\\"user-content-ts-107-packages-jest-haste-map-src-tests-index-test-js\\" href=\\"#ts-107-packages-jest-haste-map-src-tests-index-test-js\\">packages/jest-haste-map/src/__tests__/index.test.js</a> ✔️
+## <a id="user-content-ts-107-packages-jest-haste-map-src-tests-index-test-js" href="#ts-107-packages-jest-haste-map-src-tests-index-test-js">packages/jest-haste-map/src/__tests__/index.test.js</a> ✔️
 
 ### HasteMap
 
@@ -5164,11 +4998,11 @@ Is good for you.\\") | 1ms |
 | ✔️ | warn on ignore pattern except for regex | 6ms |
 | ✔️ | builds a haste map on a fresh cache | 7ms |
 | ✔️ | does not crawl native files even if requested to do so | 5ms |
-| ✔️ | retains all files if \`retainAllFiles\` is specified | 9ms |
+| ✔️ | retains all files if `retainAllFiles` is specified | 9ms |
 | ✔️ | warns on duplicate mock files | 5ms |
 | ✔️ | warns on duplicate module ids | 6ms |
 | ✔️ | warns on duplicate module ids only once | 5ms |
-| ✔️ | throws on duplicate module ids if \\"throwOnModuleCollision\\" is set to true | 5ms |
+| ✔️ | throws on duplicate module ids if "throwOnModuleCollision" is set to true | 5ms |
 | ✔️ | splits up modules by platform | 5ms |
 | ✔️ | does not access the file system on a warm cache with no changes | 11ms |
 | ✔️ | only does minimal file system access when files change | 6ms |
@@ -5216,31 +5050,31 @@ Is good for you.\\") | 1ms |
 | ✔️ | recovers when the most recent duplicate is fixed | 90ms |
 | ✔️ | ignore directories | 37ms |
 
-## <a id=\\"user-content-ts-108-e2e-tests-coverageHandlebars-test-ts\\" href=\\"#ts-108-e2e-tests-coverageHandlebars-test-ts\\">e2e/__tests__/coverageHandlebars.test.ts</a> ✔️
+## <a id="user-content-ts-108-e2e-tests-coverageHandlebars-test-ts" href="#ts-108-e2e-tests-coverageHandlebars-test-ts">e2e/__tests__/coverageHandlebars.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | code coverage for Handlebars | 1830ms |
 
-## <a id=\\"user-content-ts-109-e2e-tests-compareDomNodes-test-ts\\" href=\\"#ts-109-e2e-tests-compareDomNodes-test-ts\\">e2e/__tests__/compareDomNodes.test.ts</a> ✔️
+## <a id="user-content-ts-109-e2e-tests-compareDomNodes-test-ts" href="#ts-109-e2e-tests-compareDomNodes-test-ts">e2e/__tests__/compareDomNodes.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | does not crash when expect involving a DOM node fails | 1355ms |
 
-## <a id=\\"user-content-ts-110-e2e-tests-jestEnvironmentJsdom-test-ts\\" href=\\"#ts-110-e2e-tests-jestEnvironmentJsdom-test-ts\\">e2e/__tests__/jestEnvironmentJsdom.test.ts</a> ✔️
+## <a id="user-content-ts-110-e2e-tests-jestEnvironmentJsdom-test-ts" href="#ts-110-e2e-tests-jestEnvironmentJsdom-test-ts">e2e/__tests__/jestEnvironmentJsdom.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | check is not leaking memory | 1702ms |
 
-## <a id=\\"user-content-ts-111-e2e-tests-resolve-test-ts\\" href=\\"#ts-111-e2e-tests-resolve-test-ts\\">e2e/__tests__/resolve.test.ts</a> ✔️
+## <a id="user-content-ts-111-e2e-tests-resolve-test-ts" href="#ts-111-e2e-tests-resolve-test-ts">e2e/__tests__/resolve.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | resolve platform modules | 1764ms |
 
-## <a id=\\"user-content-ts-112-e2e-tests-snapshot-test-ts\\" href=\\"#ts-112-e2e-tests-snapshot-test-ts\\">e2e/__tests__/snapshot.test.ts</a> ✔️
+## <a id="user-content-ts-112-e2e-tests-snapshot-test-ts" href="#ts-112-e2e-tests-snapshot-test-ts">e2e/__tests__/snapshot.test.ts</a> ✔️
 
 ### Snapshot
 
@@ -5256,12 +5090,12 @@ Is good for you.\\") | 1ms |
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | does not save snapshots in CI mode by default | 890ms |
-| ✔️ | works on subsequent runs without \`-u\` | 1752ms |
+| ✔️ | works on subsequent runs without `-u` | 1752ms |
 | ✔️ | deletes the snapshot if the test suite has been removed | 1549ms |
 | ✔️ | deletes a snapshot when a test does removes all the snapshots | 1766ms |
 | ✔️ | updates the snapshot when a test removes some snapshots | 1800ms |
 
-## <a id=\\"user-content-ts-113-packages-jest-runtime-src-tests-runtimerequiremoduleormock-test-js\\" href=\\"#ts-113-packages-jest-runtime-src-tests-runtimerequiremoduleormock-test-js\\">packages/jest-runtime/src/__tests__/runtime_require_module_or_mock.test.js</a> ✔️
+## <a id="user-content-ts-113-packages-jest-runtime-src-tests-runtimerequiremoduleormock-test-js" href="#ts-113-packages-jest-runtime-src-tests-runtimerequiremoduleormock-test-js">packages/jest-runtime/src/__tests__/runtime_require_module_or_mock.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -5298,7 +5132,7 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | can use the required module from beforeEach and re-require it | 9ms |
 
-## <a id=\\"user-content-ts-114-packages-jest-runtime-src-tests-runtimerequiremock-test-js\\" href=\\"#ts-114-packages-jest-runtime-src-tests-runtimerequiremock-test-js\\">packages/jest-runtime/src/__tests__/runtime_require_mock.test.js</a> ✔️
+## <a id="user-content-ts-114-packages-jest-runtime-src-tests-runtimerequiremock-test-js" href="#ts-114-packages-jest-runtime-src-tests-runtimerequiremock-test-js">packages/jest-runtime/src/__tests__/runtime_require_mock.test.js</a> ✔️
 
 ### Runtime requireMock
 
@@ -5316,9 +5150,9 @@ Is good for you.\\") | 1ms |
 | ✔️ | multiple node core modules returns correct module | 74ms |
 | ✔️ | throws on non-existent haste modules | 69ms |
 | ✔️ | uses manual mocks when using a custom resolver | 49ms |
-| ✔️ | provides \`require.main\` in mock | 33ms |
+| ✔️ | provides `require.main` in mock | 33ms |
 
-## <a id=\\"user-content-ts-115-packages-jest-runtime-src-tests-runtimenodepath-test-js\\" href=\\"#ts-115-packages-jest-runtime-src-tests-runtimenodepath-test-js\\">packages/jest-runtime/src/__tests__/runtime_node_path.test.js</a> ✔️
+## <a id="user-content-ts-115-packages-jest-runtime-src-tests-runtimenodepath-test-js" href="#ts-115-packages-jest-runtime-src-tests-runtimenodepath-test-js">packages/jest-runtime/src/__tests__/runtime_node_path.test.js</a> ✔️
 
 ### Runtime
 
@@ -5329,7 +5163,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | finds modules in NODE_PATH containing multiple paths | 248ms |
 | ✔️ | does not find modules if NODE_PATH is relative | 260ms |
 
-## <a id=\\"user-content-ts-116-packages-jest-runtime-src-tests-runtimerequireresolve-test-ts\\" href=\\"#ts-116-packages-jest-runtime-src-tests-runtimerequireresolve-test-ts\\">packages/jest-runtime/src/__tests__/runtime_require_resolve.test.ts</a> ✔️
+## <a id="user-content-ts-116-packages-jest-runtime-src-tests-runtimerequireresolve-test-ts" href="#ts-116-packages-jest-runtime-src-tests-runtimerequireresolve-test-ts">packages/jest-runtime/src/__tests__/runtime_require_resolve.test.ts</a> ✔️
 
 ### Runtime require.resolve
 
@@ -5346,7 +5180,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | ignores the option in an external context | 127ms |
 | ✔️ | does not understand a self-constructed outsideJestVmPath in an external context | 87ms |
 
-## <a id=\\"user-content-ts-117-packages-jest-leak-detector-src-tests-index-test-ts\\" href=\\"#ts-117-packages-jest-leak-detector-src-tests-index-test-ts\\">packages/jest-leak-detector/src/__tests__/index.test.ts</a> ✔️
+## <a id="user-content-ts-117-packages-jest-leak-detector-src-tests-index-test-ts" href="#ts-117-packages-jest-leak-detector-src-tests-index-test-ts">packages/jest-leak-detector/src/__tests__/index.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -5357,7 +5191,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | tests different objects | 445ms |
 | ✔️ | correctly checks more complex leaks | 240ms |
 
-## <a id=\\"user-content-ts-118-e2e-tests-jasmineAsyncWithPendingDuringTest-ts\\" href=\\"#ts-118-e2e-tests-jasmineAsyncWithPendingDuringTest-ts\\">e2e/__tests__/jasmineAsyncWithPendingDuringTest.ts</a> ✔️
+## <a id="user-content-ts-118-e2e-tests-jasmineAsyncWithPendingDuringTest-ts" href="#ts-118-e2e-tests-jasmineAsyncWithPendingDuringTest-ts">e2e/__tests__/jasmineAsyncWithPendingDuringTest.ts</a> ✔️
 
 ### async jasmine with pending during test
 
@@ -5366,26 +5200,26 @@ Is good for you.\\") | 1ms |
 | ✔️ | does not work on jest-circus | 18ms |
 | ✖️ | should be reported as a pending test | 0ms |
 
-## <a id=\\"user-content-ts-119-packages-jest-core-src-tests-TestScheduler-test-js\\" href=\\"#ts-119-packages-jest-core-src-tests-TestScheduler-test-js\\">packages/jest-core/src/__tests__/TestScheduler.test.js</a> ✔️
+## <a id="user-content-ts-119-packages-jest-core-src-tests-TestScheduler-test-js" href="#ts-119-packages-jest-core-src-tests-TestScheduler-test-js">packages/jest-core/src/__tests__/TestScheduler.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | config for reporters supports \`default\` | 14ms |
+| ✔️ | config for reporters supports `default` | 14ms |
 | ✔️ | .addReporter() .removeReporter() | 1ms |
 | ✔️ | schedule tests run in parallel per default | 4ms |
 | ✔️ | schedule tests run in serial if the runner flags them | 1ms |
-| ✔️ | should bail after \`n\` failures | 2ms |
-| ✔️ | should not bail if less than \`n\` failures | 0ms |
+| ✔️ | should bail after `n` failures | 2ms |
+| ✔️ | should not bail if less than `n` failures | 0ms |
 | ✔️ | should set runInBand to run in serial | 2ms |
 | ✔️ | should set runInBand to not run in serial | 2ms |
 
-## <a id=\\"user-content-ts-120-e2e-tests-expectInVm-test-ts\\" href=\\"#ts-120-e2e-tests-expectInVm-test-ts\\">e2e/__tests__/expectInVm.test.ts</a> ✔️
+## <a id="user-content-ts-120-e2e-tests-expectInVm-test-ts" href="#ts-120-e2e-tests-expectInVm-test-ts">e2e/__tests__/expectInVm.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | expect works correctly with RegExps created inside a VM | 1477ms |
 
-## <a id=\\"user-content-ts-121-packages-jest-runtime-src-tests-runtimerequireactual-test-js\\" href=\\"#ts-121-packages-jest-runtime-src-tests-runtimerequireactual-test-js\\">packages/jest-runtime/src/__tests__/runtime_require_actual.test.js</a> ✔️
+## <a id="user-content-ts-121-packages-jest-runtime-src-tests-runtimerequireactual-test-js" href="#ts-121-packages-jest-runtime-src-tests-runtimerequireactual-test-js">packages/jest-runtime/src/__tests__/runtime_require_actual.test.js</a> ✔️
 
 ### Runtime requireActual
 
@@ -5394,7 +5228,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | requires node module when manual mock exists | 314ms |
 | ✔️ | requireActual with moduleNameMapper | 51ms |
 
-## <a id=\\"user-content-ts-122-packages-jest-runtime-src-tests-runtimerequirecache-test-js\\" href=\\"#ts-122-packages-jest-runtime-src-tests-runtimerequirecache-test-js\\">packages/jest-runtime/src/__tests__/runtime_require_cache.test.js</a> ✔️
+## <a id="user-content-ts-122-packages-jest-runtime-src-tests-runtimerequirecache-test-js" href="#ts-122-packages-jest-runtime-src-tests-runtimerequirecache-test-js">packages/jest-runtime/src/__tests__/runtime_require_cache.test.js</a> ✔️
 
 ### Runtime require.cache
 
@@ -5403,7 +5237,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | require.cache returns loaded module list as native Nodejs require does | 388ms |
 | ✔️ | require.cache is tolerant readonly | 31ms |
 
-## <a id=\\"user-content-ts-123-packages-jest-runtime-src-tests-runtimemoduledirectories-test-js\\" href=\\"#ts-123-packages-jest-runtime-src-tests-runtimemoduledirectories-test-js\\">packages/jest-runtime/src/__tests__/runtime_module_directories.test.js</a> ✔️
+## <a id="user-content-ts-123-packages-jest-runtime-src-tests-runtimemoduledirectories-test-js" href="#ts-123-packages-jest-runtime-src-tests-runtimemoduledirectories-test-js">packages/jest-runtime/src/__tests__/runtime_module_directories.test.js</a> ✔️
 
 ### Runtime
 
@@ -5414,7 +5248,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | finds closest module from moduleDirectories | 44ms |
 | ✔️ | only checks the configured directories | 103ms |
 
-## <a id=\\"user-content-ts-124-packages-jest-runtime-src-tests-runtimeinternalmodule-test-js\\" href=\\"#ts-124-packages-jest-runtime-src-tests-runtimeinternalmodule-test-js\\">packages/jest-runtime/src/__tests__/runtime_internal_module.test.js</a> ✔️
+## <a id="user-content-ts-124-packages-jest-runtime-src-tests-runtimeinternalmodule-test-js" href="#ts-124-packages-jest-runtime-src-tests-runtimeinternalmodule-test-js">packages/jest-runtime/src/__tests__/runtime_internal_module.test.js</a> ✔️
 
 ### Runtime internalModule
 
@@ -5425,7 +5259,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | loads JSON modules and applies transforms | 189ms |
 | ✔️ | loads internal JSON modules without applying transforms | 123ms |
 
-## <a id=\\"user-content-ts-125-packages-jest-cli-src-tests-cli-args-test-ts\\" href=\\"#ts-125-packages-jest-cli-src-tests-cli-args-test-ts\\">packages/jest-cli/src/__tests__/cli/args.test.ts</a> ✔️
+## <a id="user-content-ts-125-packages-jest-cli-src-tests-cli-args-test-ts" href="#ts-125-packages-jest-cli-src-tests-cli-args-test-ts">packages/jest-cli/src/__tests__/cli/args.test.ts</a> ✔️
 
 ### check
 
@@ -5439,11 +5273,11 @@ Is good for you.\\") | 1ms |
 | ✔️ | raises an exception if findRelatedTests is specified with no file paths | 1ms |
 | ✔️ | raises an exception if maxWorkers is specified with no number | 0ms |
 | ✔️ | allows maxWorkers to be a % | 1ms |
-| ✔️ | allows using \\"js\\" file for --config option | 10ms |
-| ✔️ | allows using \\"ts\\" file for --config option | 0ms |
-| ✔️ | allows using \\"mjs\\" file for --config option | 0ms |
-| ✔️ | allows using \\"cjs\\" file for --config option | 1ms |
-| ✔️ | allows using \\"json\\" file for --config option | 0ms |
+| ✔️ | allows using "js" file for --config option | 10ms |
+| ✔️ | allows using "ts" file for --config option | 0ms |
+| ✔️ | allows using "mjs" file for --config option | 0ms |
+| ✔️ | allows using "cjs" file for --config option | 1ms |
+| ✔️ | allows using "json" file for --config option | 0ms |
 | ✔️ | raises an exception if selectProjects is not provided any project names | 0ms |
 | ✔️ | raises an exception if config is not a valid JSON string | 1ms |
 | ✔️ | raises an exception if config is not a supported file type | 1ms |
@@ -5454,7 +5288,7 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | should return only camelcased args | 14ms |
 
-## <a id=\\"user-content-ts-126-packages-jest-runtime-src-tests-runtimejestspyon-test-js\\" href=\\"#ts-126-packages-jest-runtime-src-tests-runtimejestspyon-test-js\\">packages/jest-runtime/src/__tests__/runtime_jest_spy_on.test.js</a> ✔️
+## <a id="user-content-ts-126-packages-jest-runtime-src-tests-runtimejestspyon-test-js" href="#ts-126-packages-jest-runtime-src-tests-runtimejestspyon-test-js">packages/jest-runtime/src/__tests__/runtime_jest_spy_on.test.js</a> ✔️
 
 ### Runtime jest.spyOn
 
@@ -5468,7 +5302,7 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | calls the original function | 43ms |
 
-## <a id=\\"user-content-ts-127-packages-jest-resolve-dependencies-src-tests-dependencyresolver-test-ts\\" href=\\"#ts-127-packages-jest-resolve-dependencies-src-tests-dependencyresolver-test-ts\\">packages/jest-resolve-dependencies/src/__tests__/dependency_resolver.test.ts</a> ✔️
+## <a id="user-content-ts-127-packages-jest-resolve-dependencies-src-tests-dependencyresolver-test-ts" href="#ts-127-packages-jest-resolve-dependencies-src-tests-dependencyresolver-test-ts">packages/jest-resolve-dependencies/src/__tests__/dependency_resolver.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -5484,7 +5318,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | resolves dependencies correctly when dependency resolution fails | 41ms |
 | ✔️ | resolves dependencies correctly when mock dependency resolution fails | 27ms |
 
-## <a id=\\"user-content-ts-128-packages-jest-message-util-src-tests-messages-test-ts\\" href=\\"#ts-128-packages-jest-message-util-src-tests-messages-test-ts\\">packages/jest-message-util/src/__tests__/messages.test.ts</a> ✔️
+## <a id="user-content-ts-128-packages-jest-message-util-src-tests-messages-test-ts" href="#ts-128-packages-jest-message-util-src-tests-messages-test-ts">packages/jest-message-util/src/__tests__/messages.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -5505,7 +5339,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | does not print code frame when noCodeFrame = true | 1ms |
 | ✔️ | does not print codeframe when noStackTrace = true | 0ms |
 
-## <a id=\\"user-content-ts-129-packages-jest-diff-src-tests-diff-test-ts\\" href=\\"#ts-129-packages-jest-diff-src-tests-diff-test-ts\\">packages/jest-diff/src/__tests__/diff.test.ts</a> ✔️
+## <a id="user-content-ts-129-packages-jest-diff-src-tests-diff-test-ts" href="#ts-129-packages-jest-diff-src-tests-diff-test-ts">packages/jest-diff/src/__tests__/diff.test.ts</a> ✔️
 
 ### different types
 
@@ -5521,7 +5355,7 @@ Is good for you.\\") | 1ms |
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | '\\"a\\"' and '\\"a\\"' | 2ms |
+| ✔️ | '"a"' and '"a"' | 2ms |
 | ✔️ | '{}' and '{}' | 1ms |
 | ✔️ | '[]' and '[]' | 0ms |
 | ✔️ | '[1,2]' and '[1,2]' | 0ms |
@@ -5532,8 +5366,8 @@ Is good for you.\\") | 1ms |
 | ✔️ | 'null' and 'null' | 0ms |
 | ✔️ | 'undefined' and 'undefined' | 1ms |
 | ✔️ | 'false' and 'false' | 0ms |
-| ✔️ | '{\\"a\\":1}' and '{\\"a\\":1}' | 0ms |
-| ✔️ | '{\\"a\\":{\\"b\\":5}}' and '{\\"a\\":{\\"b\\":5}}' | 0ms |
+| ✔️ | '{"a":1}' and '{"a":1}' | 0ms |
+| ✔️ | '{"a":{"b":5}}' and '{"a":{"b":5}}' | 0ms |
 | ✔️ | Map key order should be irrelevant | 1ms |
 | ✔️ | Set value order should be irrelevant | 1ms |
 
@@ -5797,15 +5631,15 @@ Is good for you.\\") | 1ms |
 | ✔️ | diffDefault | 0ms |
 | ✔️ | diffStringsUnified | 0ms |
 
-## <a id=\\"user-content-ts-130-packages-jest-core-src-tests-watchTestNamePatternMode-test-js\\" href=\\"#ts-130-packages-jest-core-src-tests-watchTestNamePatternMode-test-js\\">packages/jest-core/src/__tests__/watchTestNamePatternMode.test.js</a> ✔️
+## <a id="user-content-ts-130-packages-jest-core-src-tests-watchTestNamePatternMode-test-js" href="#ts-130-packages-jest-core-src-tests-watchTestNamePatternMode-test-js">packages/jest-core/src/__tests__/watchTestNamePatternMode.test.js</a> ✔️
 
 ### Watch mode flows
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | Pressing \\"T\\" enters pattern mode | 8ms |
+| ✔️ | Pressing "T" enters pattern mode | 8ms |
 
-## <a id=\\"user-content-ts-131-packages-expect-src-tests-spyMatchers-test-ts\\" href=\\"#ts-131-packages-expect-src-tests-spyMatchers-test-ts\\">packages/expect/src/__tests__/spyMatchers.test.ts</a> ✔️
+## <a id="user-content-ts-131-packages-expect-src-tests-spyMatchers-test-ts" href="#ts-131-packages-expect-src-tests-spyMatchers-test-ts">packages/expect/src/__tests__/spyMatchers.test.ts</a> ✔️
 
 ### toBeCalled
 
@@ -6185,7 +6019,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | works with more calls than the limit | 1ms |
 | ✔️ | incomplete recursive calls are handled properly | 0ms |
 
-## <a id=\\"user-content-ts-132-e2e-tests-jestChangedFiles-test-ts\\" href=\\"#ts-132-e2e-tests-jestChangedFiles-test-ts\\">e2e/__tests__/jestChangedFiles.test.ts</a> ❌
+## <a id="user-content-ts-132-e2e-tests-jestChangedFiles-test-ts" href="#ts-132-e2e-tests-jestChangedFiles-test-ts">e2e/__tests__/jestChangedFiles.test.ts</a> ❌
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -6195,12 +6029,12 @@ Is good for you.\\") | 1ms |
 | ✔️ | gets changed files for git | 2298ms |
 | ✔️ | monitors only root paths for git | 151ms |
 | ✔️ | does not find changes in files with no diff, for git | 628ms |
-| ✔️ | handles a bad revision for \\"changedSince\\", for git | 878ms |
+| ✔️ | handles a bad revision for "changedSince", for git | 878ms |
 | ❌ | gets changed files for hg | 2219ms |
 | ✔️ | monitors only root paths for hg | 281ms |
-| ✔️ | handles a bad revision for \\"changedSince\\", for hg | 949ms |
+| ✔️ | handles a bad revision for "changedSince", for hg | 949ms |
 
-## <a id=\\"user-content-ts-133-packages-jest-matcher-utils-src-tests-index-test-ts\\" href=\\"#ts-133-packages-jest-matcher-utils-src-tests-index-test-ts\\">packages/jest-matcher-utils/src/__tests__/index.test.ts</a> ✔️
+## <a id="user-content-ts-133-packages-jest-matcher-utils-src-tests-index-test-ts" href="#ts-133-packages-jest-matcher-utils-src-tests-index-test-ts">packages/jest-matcher-utils/src/__tests__/index.test.ts</a> ✔️
 
 ### stringify()
 
@@ -6213,12 +6047,12 @@ Is good for you.\\") | 1ms |
 | ✔️ | 1.5 | 1ms |
 | ✔️ | null | 0ms |
 | ✔️ | undefined | 0ms |
-| ✔️ | \\"abc\\" | 0ms |
+| ✔️ | "abc" | 0ms |
 | ✔️ | Symbol(abc) | 0ms |
 | ✔️ | NaN | 0ms |
 | ✔️ | Infinity | 0ms |
 | ✔️ | -Infinity | 1ms |
-| ✔️ | /ab\\\\.c/gi | 0ms |
+| ✔️ | /ab\.c/gi | 0ms |
 | ✔️ | 1n | 0ms |
 | ✔️ | 0n | 0ms |
 | ✔️ | circular references | 0ms |
@@ -6290,16 +6124,16 @@ Is good for you.\\") | 1ms |
 | ✔️ | receivedColor | 1ms |
 | ✔️ | secondArgumentColor | 0ms |
 
-## <a id=\\"user-content-ts-134-packages-jest-core-src-tests-watchFilenamePatternMode-test-js\\" href=\\"#ts-134-packages-jest-core-src-tests-watchFilenamePatternMode-test-js\\">packages/jest-core/src/__tests__/watchFilenamePatternMode.test.js</a> ✔️
+## <a id="user-content-ts-134-packages-jest-core-src-tests-watchFilenamePatternMode-test-js" href="#ts-134-packages-jest-core-src-tests-watchFilenamePatternMode-test-js">packages/jest-core/src/__tests__/watchFilenamePatternMode.test.js</a> ✔️
 
 ### Watch mode flows
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | Pressing \\"P\\" enters pattern mode | 7ms |
-| ✔️ | Pressing \\"c\\" clears the filters | 1ms |
+| ✔️ | Pressing "P" enters pattern mode | 7ms |
+| ✔️ | Pressing "c" clears the filters | 1ms |
 
-## <a id=\\"user-content-ts-135-packages-jest-runtime-src-tests-runtimecreatemockfrommodule-test-js\\" href=\\"#ts-135-packages-jest-runtime-src-tests-runtimecreatemockfrommodule-test-js\\">packages/jest-runtime/src/__tests__/runtime_create_mock_from_module.test.js</a> ✔️
+## <a id="user-content-ts-135-packages-jest-runtime-src-tests-runtimecreatemockfrommodule-test-js" href="#ts-135-packages-jest-runtime-src-tests-runtimecreatemockfrommodule-test-js">packages/jest-runtime/src/__tests__/runtime_create_mock_from_module.test.js</a> ✔️
 
 ### Runtime createMockFromModule
 
@@ -6314,7 +6148,7 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | creates mock objects in the right environment | 37ms |
 
-## <a id=\\"user-content-ts-136-packages-jest-runtime-src-tests-runtimeenvironment-test-js\\" href=\\"#ts-136-packages-jest-runtime-src-tests-runtimeenvironment-test-js\\">packages/jest-runtime/src/__tests__/runtime_environment.test.js</a> ✔️
+## <a id="user-content-ts-136-packages-jest-runtime-src-tests-runtimeenvironment-test-js" href="#ts-136-packages-jest-runtime-src-tests-runtimeenvironment-test-js">packages/jest-runtime/src/__tests__/runtime_environment.test.js</a> ✔️
 
 ### Runtime requireModule
 
@@ -6323,13 +6157,13 @@ Is good for you.\\") | 1ms |
 | ✔️ | emulates a node stack trace during module load | 398ms |
 | ✔️ | emulates a node stack trace during function execution | 70ms |
 
-## <a id=\\"user-content-ts-137-packages-jest-haste-map-src-tests-includesdotfiles-test-ts\\" href=\\"#ts-137-packages-jest-haste-map-src-tests-includesdotfiles-test-ts\\">packages/jest-haste-map/src/__tests__/includes_dotfiles.test.ts</a> ✔️
+## <a id="user-content-ts-137-packages-jest-haste-map-src-tests-includesdotfiles-test-ts" href="#ts-137-packages-jest-haste-map-src-tests-includesdotfiles-test-ts">packages/jest-haste-map/src/__tests__/includes_dotfiles.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | watchman crawler and node crawler both include dotfiles | 77ms |
 
-## <a id=\\"user-content-ts-138-packages-jest-haste-map-src-crawlers-tests-watchman-test-js\\" href=\\"#ts-138-packages-jest-haste-map-src-crawlers-tests-watchman-test-js\\">packages/jest-haste-map/src/crawlers/__tests__/watchman.test.js</a> ✔️
+## <a id="user-content-ts-138-packages-jest-haste-map-src-crawlers-tests-watchman-test-js" href="#ts-138-packages-jest-haste-map-src-crawlers-tests-watchman-test-js">packages/jest-haste-map/src/crawlers/__tests__/watchman.test.js</a> ✔️
 
 ### watchman watch
 
@@ -6344,7 +6178,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | SHA-1 requested and NOT available | 1ms |
 | ✔️ | source control query | 1ms |
 
-## <a id=\\"user-content-ts-139-packages-jest-fake-timers-src-tests-legacyFakeTimers-test-ts\\" href=\\"#ts-139-packages-jest-fake-timers-src-tests-legacyFakeTimers-test-ts\\">packages/jest-fake-timers/src/__tests__/legacyFakeTimers.test.ts</a> ✔️
+## <a id="user-content-ts-139-packages-jest-fake-timers-src-tests-legacyFakeTimers-test-ts" href="#ts-139-packages-jest-fake-timers-src-tests-legacyFakeTimers-test-ts">packages/jest-fake-timers/src/__tests__/legacyFakeTimers.test.ts</a> ✔️
 
 ### FakeTimers construction
 
@@ -6451,7 +6285,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | includes immediates and ticks | 10ms |
 | ✔️ | not includes cancelled immediates | 1ms |
 
-## <a id=\\"user-content-ts-140-packages-jest-runtime-src-tests-runtimejestfn-js\\" href=\\"#ts-140-packages-jest-runtime-src-tests-runtimejestfn-js\\">packages/jest-runtime/src/__tests__/runtime_jest_fn.js</a> ✔️
+## <a id="user-content-ts-140-packages-jest-runtime-src-tests-runtimejestfn-js" href="#ts-140-packages-jest-runtime-src-tests-runtimejestfn-js">packages/jest-runtime/src/__tests__/runtime_jest_fn.js</a> ✔️
 
 ### Runtime jest.fn
 
@@ -6472,7 +6306,7 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | clears all mocks | 29ms |
 
-## <a id=\\"user-content-ts-141-packages-expect-src-tests-matchers-toStrictEqual-property-test-ts\\" href=\\"#ts-141-packages-expect-src-tests-matchers-toStrictEqual-property-test-ts\\">packages/expect/src/__tests__/matchers-toStrictEqual.property.test.ts</a> ✔️
+## <a id="user-content-ts-141-packages-expect-src-tests-matchers-toStrictEqual-property-test-ts" href="#ts-141-packages-expect-src-tests-matchers-toStrictEqual-property-test-ts">packages/expect/src/__tests__/matchers-toStrictEqual.property.test.ts</a> ✔️
 
 ### toStrictEqual
 
@@ -6487,7 +6321,7 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | should be equivalent to Node deepStrictEqual | 113ms |
 
-## <a id=\\"user-content-ts-142-packages-diff-sequences-src-tests-index-property-test-ts\\" href=\\"#ts-142-packages-diff-sequences-src-tests-index-property-test-ts\\">packages/diff-sequences/src/__tests__/index.property.test.ts</a> ✔️
+## <a id="user-content-ts-142-packages-diff-sequences-src-tests-index-property-test-ts" href="#ts-142-packages-diff-sequences-src-tests-index-property-test-ts">packages/diff-sequences/src/__tests__/index.property.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -6499,7 +6333,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | should be no-op when passing common items | 30ms |
 | ✔️ | should find the exact common items when one array is subarray of the other | 22ms |
 
-## <a id=\\"user-content-ts-143-packages-jest-fake-timers-src-tests-modernFakeTimers-test-ts\\" href=\\"#ts-143-packages-jest-fake-timers-src-tests-modernFakeTimers-test-ts\\">packages/jest-fake-timers/src/__tests__/modernFakeTimers.test.ts</a> ✔️
+## <a id="user-content-ts-143-packages-jest-fake-timers-src-tests-modernFakeTimers-test-ts" href="#ts-143-packages-jest-fake-timers-src-tests-modernFakeTimers-test-ts">packages/jest-fake-timers/src/__tests__/modernFakeTimers.test.ts</a> ✔️
 
 ### FakeTimers construction
 
@@ -6591,7 +6425,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | includes immediates and ticks | 0ms |
 | ✔️ | not includes cancelled immediates | 1ms |
 
-## <a id=\\"user-content-ts-144-packages-expect-src-tests-matchers-toContain-property-test-ts\\" href=\\"#ts-144-packages-expect-src-tests-matchers-toContain-property-test-ts\\">packages/expect/src/__tests__/matchers-toContain.property.test.ts</a> ✔️
+## <a id="user-content-ts-144-packages-expect-src-tests-matchers-toContain-property-test-ts" href="#ts-144-packages-expect-src-tests-matchers-toContain-property-test-ts">packages/expect/src/__tests__/matchers-toContain.property.test.ts</a> ✔️
 
 ### toContain
 
@@ -6600,16 +6434,16 @@ Is good for you.\\") | 1ms |
 | ✔️ | should always find the value when inside the array | 122ms |
 | ✔️ | should not find the value if it has been cloned into the array | 56ms |
 
-## <a id=\\"user-content-ts-145-packages-jest-runtime-src-tests-runtimewrap-js\\" href=\\"#ts-145-packages-jest-runtime-src-tests-runtimewrap-js\\">packages/jest-runtime/src/__tests__/runtime_wrap.js</a> ✔️
+## <a id="user-content-ts-145-packages-jest-runtime-src-tests-runtimewrap-js" href="#ts-145-packages-jest-runtime-src-tests-runtimewrap-js">packages/jest-runtime/src/__tests__/runtime_wrap.js</a> ✔️
 
 ### Runtime wrapCodeInModuleWrapper
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | generates the correct args for the module wrapper | 194ms |
-| ✔️ | injects \\"extra globals\\" | 43ms |
+| ✔️ | injects "extra globals" | 43ms |
 
-## <a id=\\"user-content-ts-146-packages-expect-src-tests-matchers-toContainEqual-property-test-ts\\" href=\\"#ts-146-packages-expect-src-tests-matchers-toContainEqual-property-test-ts\\">packages/expect/src/__tests__/matchers-toContainEqual.property.test.ts</a> ✔️
+## <a id="user-content-ts-146-packages-expect-src-tests-matchers-toContainEqual-property-test-ts" href="#ts-146-packages-expect-src-tests-matchers-toContainEqual-property-test-ts">packages/expect/src/__tests__/matchers-toContainEqual.property.test.ts</a> ✔️
 
 ### toContainEqual
 
@@ -6618,7 +6452,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | should always find the value when inside the array | 91ms |
 | ✔️ | should always find the value when cloned inside the array | 52ms |
 
-## <a id=\\"user-content-ts-147-packages-diff-sequences-src-tests-index-test-ts\\" href=\\"#ts-147-packages-diff-sequences-src-tests-index-test-ts\\">packages/diff-sequences/src/__tests__/index.test.ts</a> ✔️
+## <a id="user-content-ts-147-packages-diff-sequences-src-tests-index-test-ts" href="#ts-147-packages-diff-sequences-src-tests-index-test-ts">packages/diff-sequences/src/__tests__/index.test.ts</a> ✔️
 
 ### invalid arg length
 
@@ -6738,7 +6572,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | regression | 12ms |
 | ✔️ | wrapping | 1ms |
 
-## <a id=\\"user-content-ts-148-packages-jest-get-type-src-tests-getType-test-ts\\" href=\\"#ts-148-packages-jest-get-type-src-tests-getType-test-ts\\">packages/jest-get-type/src/__tests__/getType.test.ts</a> ✔️
+## <a id="user-content-ts-148-packages-jest-get-type-src-tests-getType-test-ts" href="#ts-148-packages-jest-get-type-src-tests-getType-test-ts">packages/jest-get-type/src/__tests__/getType.test.ts</a> ✔️
 
 ### .getType()
 
@@ -6759,25 +6593,25 @@ Is good for you.\\") | 1ms |
 | ✔️ | date | 0ms |
 | ✔️ | bigint | 1ms |
 
-## <a id=\\"user-content-ts-149-packages-jest-cli-src-init-tests-init-test-js\\" href=\\"#ts-149-packages-jest-cli-src-init-tests-init-test-js\\">packages/jest-cli/src/init/__tests__/init.test.js</a> ✔️
+## <a id="user-content-ts-149-packages-jest-cli-src-init-tests-init-test-js" href="#ts-149-packages-jest-cli-src-init-tests-init-test-js">packages/jest-cli/src/init/__tests__/init.test.js</a> ✔️
 
-### init project with package.json and no jest config all questions answered with answer: \\"No\\"
+### init project with package.json and no jest config all questions answered with answer: "No"
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | should return the default configuration (an empty config) | 1ms |
 | ✔️ | should generate empty config with mjs extension | 1ms |
 
-### init project with package.json and no jest config some questions answered with answer: \\"Yes\\"
+### init project with package.json and no jest config some questions answered with answer: "Yes"
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | should create configuration for {clearMocks: true} | 1ms |
 | ✔️ | should create configuration for {coverage: true} | 1ms |
-| ✔️ | should create configuration for {coverageProvider: \\"babel\\"} | 0ms |
-| ✔️ | should create configuration for {coverageProvider: \\"v8\\"} | 0ms |
-| ✔️ | should create configuration for {environment: \\"jsdom\\"} | 0ms |
-| ✔️ | should create configuration for {environment: \\"node\\"} | 1ms |
+| ✔️ | should create configuration for {coverageProvider: "babel"} | 0ms |
+| ✔️ | should create configuration for {coverageProvider: "v8"} | 0ms |
+| ✔️ | should create configuration for {environment: "jsdom"} | 0ms |
+| ✔️ | should create configuration for {environment: "node"} | 1ms |
 | ✔️ | should create package.json with configured test command when {scripts: true} | 1ms |
 
 ### init no package json
@@ -6790,43 +6624,43 @@ Is good for you.\\") | 1ms |
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | user answered with \\"Yes\\" | 1ms |
-| ✔️ | user answered with \\"No\\" | 0ms |
+| ✔️ | user answered with "Yes" | 1ms |
+| ✔️ | user answered with "No" | 0ms |
 
 ### init has-jest-config-file-ts ask the user whether to override config or not
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | user answered with \\"Yes\\" | 1ms |
-| ✔️ | user answered with \\"No\\" | 0ms |
+| ✔️ | user answered with "Yes" | 1ms |
+| ✔️ | user answered with "No" | 0ms |
 
 ### init has-jest-config-file-mjs ask the user whether to override config or not
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | user answered with \\"Yes\\" | 0ms |
-| ✔️ | user answered with \\"No\\" | 1ms |
+| ✔️ | user answered with "Yes" | 0ms |
+| ✔️ | user answered with "No" | 1ms |
 
 ### init has-jest-config-file-cjs ask the user whether to override config or not
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | user answered with \\"Yes\\" | 1ms |
-| ✔️ | user answered with \\"No\\" | 1ms |
+| ✔️ | user answered with "Yes" | 1ms |
+| ✔️ | user answered with "No" | 1ms |
 
 ### init has-jest-config-file-json ask the user whether to override config or not
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | user answered with \\"Yes\\" | 0ms |
-| ✔️ | user answered with \\"No\\" | 0ms |
+| ✔️ | user answered with "Yes" | 0ms |
+| ✔️ | user answered with "No" | 0ms |
 
 ### init project using jest.config.ts ask the user whether he wants to use Typescript or not
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | user answered with \\"Yes\\" | 1ms |
-| ✔️ | user answered with \\"No\\" | 1ms |
+| ✔️ | user answered with "Yes" | 1ms |
+| ✔️ | user answered with "No" | 1ms |
 
 ### init has jest config in package.json
 
@@ -6834,13 +6668,13 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | should ask the user whether to override config or not | 1ms |
 
-### init already has \\"jest\\" in packageJson.scripts.test
+### init already has "jest" in packageJson.scripts.test
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | should not ask \\"test script question\\" | 0ms |
+| ✔️ | should not ask "test script question" | 0ms |
 
-## <a id=\\"user-content-ts-150-packages-jest-runtime-src-tests-runtimerequiremodulenoext-test-js\\" href=\\"#ts-150-packages-jest-runtime-src-tests-runtimerequiremodulenoext-test-js\\">packages/jest-runtime/src/__tests__/runtime_require_module_no_ext.test.js</a> ✔️
+## <a id="user-content-ts-150-packages-jest-runtime-src-tests-runtimerequiremodulenoext-test-js" href="#ts-150-packages-jest-runtime-src-tests-runtimerequiremodulenoext-test-js">packages/jest-runtime/src/__tests__/runtime_require_module_no_ext.test.js</a> ✔️
 
 ### Runtime requireModule with no extension
 
@@ -6848,7 +6682,7 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | throws error pointing out file with extension | 204ms |
 
-## <a id=\\"user-content-ts-151-packages-jest-util-src-tests-deepCyclicCopy-test-ts\\" href=\\"#ts-151-packages-jest-util-src-tests-deepCyclicCopy-test-ts\\">packages/jest-util/src/__tests__/deepCyclicCopy.test.ts</a> ✔️
+## <a id="user-content-ts-151-packages-jest-util-src-tests-deepCyclicCopy-test-ts" href="#ts-151-packages-jest-util-src-tests-deepCyclicCopy-test-ts">packages/jest-util/src/__tests__/deepCyclicCopy.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -6865,28 +6699,28 @@ Is good for you.\\") | 1ms |
 | ✔️ | does not keep the prototype for objects when keepPrototype = false | 0ms |
 | ✔️ | keeps the prototype for objects when keepPrototype = true | 1ms |
 
-## <a id=\\"user-content-ts-152-e2e-tests-version-test-ts\\" href=\\"#ts-152-e2e-tests-version-test-ts\\">e2e/__tests__/version.test.ts</a> ✔️
+## <a id="user-content-ts-152-e2e-tests-version-test-ts" href="#ts-152-e2e-tests-version-test-ts">e2e/__tests__/version.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | works with jest.config.js | 94ms |
 
-## <a id=\\"user-content-ts-153-packages-jest-util-src-tests-createProcessObject-test-ts\\" href=\\"#ts-153-packages-jest-util-src-tests-createProcessObject-test-ts\\">packages/jest-util/src/__tests__/createProcessObject.test.ts</a> ✔️
+## <a id="user-content-ts-153-packages-jest-util-src-tests-createProcessObject-test-ts" href="#ts-153-packages-jest-util-src-tests-createProcessObject-test-ts">packages/jest-util/src/__tests__/createProcessObject.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | creates a process object that looks like the original one | 32ms |
-| ✔️ | fakes require(\\"process\\") so it is equal to \\"global.process\\" | 0ms |
+| ✔️ | fakes require("process") so it is equal to "global.process" | 0ms |
 | ✔️ | checks that process.env works as expected on Linux platforms | 5ms |
 | ✔️ | checks that process.env works as expected in Windows platforms | 2ms |
 
-## <a id=\\"user-content-ts-154-packages-jest-runtime-src-tests-instrumentation-test-ts\\" href=\\"#ts-154-packages-jest-runtime-src-tests-instrumentation-test-ts\\">packages/jest-runtime/src/__tests__/instrumentation.test.ts</a> ✔️
+## <a id="user-content-ts-154-packages-jest-runtime-src-tests-instrumentation-test-ts" href="#ts-154-packages-jest-runtime-src-tests-instrumentation-test-ts">packages/jest-runtime/src/__tests__/instrumentation.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | instruments files | 239ms |
 
-## <a id=\\"user-content-ts-155-packages-jest-core-src-tests-runJest-test-js\\" href=\\"#ts-155-packages-jest-core-src-tests-runJest-test-js\\">packages/jest-core/src/__tests__/runJest.test.js</a> ✔️
+## <a id="user-content-ts-155-packages-jest-core-src-tests-runJest-test-js" href="#ts-155-packages-jest-core-src-tests-runJest-test-js">packages/jest-core/src/__tests__/runJest.test.js</a> ✔️
 
 ### runJest
 
@@ -6895,7 +6729,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | when watch is set then exit process | 18ms |
 | ✔️ | when watch is set then an error message is printed | 1ms |
 
-## <a id=\\"user-content-ts-156-packages-jest-matcher-utils-src-tests-Replaceable-test-ts\\" href=\\"#ts-156-packages-jest-matcher-utils-src-tests-Replaceable-test-ts\\">packages/jest-matcher-utils/src/__tests__/Replaceable.test.ts</a> ✔️
+## <a id="user-content-ts-156-packages-jest-matcher-utils-src-tests-Replaceable-test-ts" href="#ts-156-packages-jest-matcher-utils-src-tests-Replaceable-test-ts">packages/jest-matcher-utils/src/__tests__/Replaceable.test.ts</a> ✔️
 
 ### Replaceable constructor
 
@@ -6939,7 +6773,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | should return false if two object types not equal | 0ms |
 | ✔️ | should return false if object types not support | 0ms |
 
-## <a id=\\"user-content-ts-157-packages-jest-util-src-tests-formatTime-test-ts\\" href=\\"#ts-157-packages-jest-util-src-tests-formatTime-test-ts\\">packages/jest-util/src/__tests__/formatTime.test.ts</a> ✔️
+## <a id="user-content-ts-157-packages-jest-util-src-tests-formatTime-test-ts" href="#ts-157-packages-jest-util-src-tests-formatTime-test-ts">packages/jest-util/src/__tests__/formatTime.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -6955,7 +6789,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | formats the quantity properly when pad length is equal | 0ms |
 | ✔️ | left pads the quantity properly when pad length is higher | 0ms |
 
-## <a id=\\"user-content-ts-158-packages-jest-worker-src-tests-thread-integration-test-js\\" href=\\"#ts-158-packages-jest-worker-src-tests-thread-integration-test-js\\">packages/jest-worker/src/__tests__/thread-integration.test.js</a> ✔️
+## <a id="user-content-ts-158-packages-jest-worker-src-tests-thread-integration-test-js" href="#ts-158-packages-jest-worker-src-tests-thread-integration-test-js">packages/jest-worker/src/__tests__/thread-integration.test.js</a> ✔️
 
 ### Jest Worker Process Integration
 
@@ -6968,7 +6802,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | distributes concurrent calls across child processes | 6ms |
 | ✔️ | sticks parallel calls to children | 15ms |
 
-## <a id=\\"user-content-ts-159-packages-jest-haste-map-src-tests-worker-test-js\\" href=\\"#ts-159-packages-jest-haste-map-src-tests-worker-test-js\\">packages/jest-haste-map/src/__tests__/worker.test.js</a> ✔️
+## <a id="user-content-ts-159-packages-jest-haste-map-src-tests-worker-test-js" href="#ts-159-packages-jest-haste-map-src-tests-worker-test-js">packages/jest-haste-map/src/__tests__/worker.test.js</a> ✔️
 
 ### worker
 
@@ -6982,7 +6816,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | simply computes SHA-1s when requested (works well with binary data) | 12ms |
 | ✔️ | avoids computing dependencies if not requested and Haste does not need it | 0ms |
 
-## <a id=\\"user-content-ts-160-packages-jest-matcher-utils-src-tests-printDiffOrStringify-test-ts\\" href=\\"#ts-160-packages-jest-matcher-utils-src-tests-printDiffOrStringify-test-ts\\">packages/jest-matcher-utils/src/__tests__/printDiffOrStringify.test.ts</a> ✔️
+## <a id="user-content-ts-160-packages-jest-matcher-utils-src-tests-printDiffOrStringify-test-ts" href="#ts-160-packages-jest-matcher-utils-src-tests-printDiffOrStringify-test-ts">packages/jest-matcher-utils/src/__tests__/printDiffOrStringify.test.ts</a> ✔️
 
 ### printDiffOrStringify
 
@@ -7020,7 +6854,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | circular array | 1ms |
 | ✔️ | circular map | 5ms |
 
-## <a id=\\"user-content-ts-161-packages-expect-src-tests-utils-test-ts\\" href=\\"#ts-161-packages-expect-src-tests-utils-test-ts\\">packages/expect/src/__tests__/utils.test.ts</a> ✔️
+## <a id="user-content-ts-161-packages-expect-src-tests-utils-test-ts" href="#ts-161-packages-expect-src-tests-utils-test-ts">packages/expect/src/__tests__/utils.test.ts</a> ✔️
 
 ### getPath()
 
@@ -7038,11 +6872,11 @@ Is good for you.\\") | 1ms |
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | expect(getObjectSubset({\\"a\\": \\"b\\", \\"c\\": \\"d\\"}, {\\"a\\": \\"d\\"})).toEqual({\\"a\\": \\"b\\"}) | 1ms |
-| ✔️ | expect(getObjectSubset({\\"a\\": [1, 2], \\"b\\": \\"b\\"}, {\\"a\\": [3, 4]})).toEqual({\\"a\\": [1, 2]}) | 0ms |
-| ✔️ | expect(getObjectSubset([{\\"a\\": \\"b\\", \\"c\\": \\"d\\"}], [{\\"a\\": \\"z\\"}])).toEqual([{\\"a\\": \\"b\\"}]) | 1ms |
+| ✔️ | expect(getObjectSubset({"a": "b", "c": "d"}, {"a": "d"})).toEqual({"a": "b"}) | 1ms |
+| ✔️ | expect(getObjectSubset({"a": [1, 2], "b": "b"}, {"a": [3, 4]})).toEqual({"a": [1, 2]}) | 0ms |
+| ✔️ | expect(getObjectSubset([{"a": "b", "c": "d"}], [{"a": "z"}])).toEqual([{"a": "b"}]) | 1ms |
 | ✔️ | expect(getObjectSubset([1, 2], [1, 2, 3])).toEqual([1, 2]) | 0ms |
-| ✔️ | expect(getObjectSubset({\\"a\\": [1]}, {\\"a\\": [1, 2]})).toEqual({\\"a\\": [1]}) | 0ms |
+| ✔️ | expect(getObjectSubset({"a": [1]}, {"a": [1, 2]})).toEqual({"a": [1]}) | 0ms |
 | ✔️ | expect(getObjectSubset(2015-11-30T00:00:00.000Z, 2016-12-30T00:00:00.000Z)).toEqual(2015-11-30T00:00:00.000Z) | 0ms |
 
 ### getObjectSubset returns the object instance if the subset has no extra properties
@@ -7113,7 +6947,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | returns true when given circular key and value in Map | 0ms |
 | ✔️ | returns true when given circular value in Map | 0ms |
 
-## <a id=\\"user-content-ts-162-packages-jest-matcher-utils-src-tests-deepCyclicCopyReplaceable-test-ts\\" href=\\"#ts-162-packages-jest-matcher-utils-src-tests-deepCyclicCopyReplaceable-test-ts\\">packages/jest-matcher-utils/src/__tests__/deepCyclicCopyReplaceable.test.ts</a> ✔️
+## <a id="user-content-ts-162-packages-jest-matcher-utils-src-tests-deepCyclicCopyReplaceable-test-ts" href="#ts-162-packages-jest-matcher-utils-src-tests-deepCyclicCopyReplaceable-test-ts">packages/jest-matcher-utils/src/__tests__/deepCyclicCopyReplaceable.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -7129,7 +6963,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | should copy object symbol key property | 0ms |
 | ✔️ | should set writable, configurable to true | 1ms |
 
-## <a id=\\"user-content-ts-163-packages-expect-src-tests-isError-test-ts\\" href=\\"#ts-163-packages-expect-src-tests-isError-test-ts\\">packages/expect/src/__tests__/isError.test.ts</a> ✔️
+## <a id="user-content-ts-163-packages-expect-src-tests-isError-test-ts" href="#ts-163-packages-expect-src-tests-isError-test-ts">packages/expect/src/__tests__/isError.test.ts</a> ✔️
 
 ### isError
 
@@ -7140,7 +6974,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | should detect errors from another context | 12ms |
 | ✔️ | should detect DOMException errors from another context | 7ms |
 
-## <a id=\\"user-content-ts-164-packages-jest-get-type-src-tests-isPrimitive-test-ts\\" href=\\"#ts-164-packages-jest-get-type-src-tests-isPrimitive-test-ts\\">packages/jest-get-type/src/__tests__/isPrimitive.test.ts</a> ✔️
+## <a id="user-content-ts-164-packages-jest-get-type-src-tests-isPrimitive-test-ts" href="#ts-164-packages-jest-get-type-src-tests-isPrimitive-test-ts">packages/jest-get-type/src/__tests__/isPrimitive.test.ts</a> ✔️
 
 ### .isPrimitive()
 
@@ -7162,10 +6996,10 @@ Is good for you.\\") | 1ms |
 | ✔️ | returns false when given non primitive value of: {} | 0ms |
 | ✔️ | returns false when given non primitive value of: {} | 0ms |
 | ✔️ | returns false when given non primitive value of: {} | 0ms |
-| ✔️ | returns false when given non primitive value of: \\"2021-01-24T19:22:19.272Z\\" | 0ms |
+| ✔️ | returns false when given non primitive value of: "2021-01-24T19:22:19.272Z" | 0ms |
 | ✔️ | returns false when given non primitive value of: {} | 0ms |
 
-## <a id=\\"user-content-ts-165-packages-jest-haste-map-src-crawlers-tests-node-test-js\\" href=\\"#ts-165-packages-jest-haste-map-src-crawlers-tests-node-test-js\\">packages/jest-haste-map/src/crawlers/__tests__/node.test.js</a> ✔️
+## <a id="user-content-ts-165-packages-jest-haste-map-src-crawlers-tests-node-test-js" href="#ts-165-packages-jest-haste-map-src-crawlers-tests-node-test-js">packages/jest-haste-map/src/crawlers/__tests__/node.test.js</a> ✔️
 
 ### node crawler
 
@@ -7176,7 +7010,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | returns removed files | 13ms |
 | ✔️ | uses node fs APIs with incompatible find binary | 9ms |
 | ✔️ | uses node fs APIs without find binary | 8ms |
-| ✔️ | uses node fs APIs if \\"forceNodeFilesystemAPI\\" is set to true, regardless of platform | 6ms |
+| ✔️ | uses node fs APIs if "forceNodeFilesystemAPI" is set to true, regardless of platform | 6ms |
 | ✔️ | completes with empty roots | 0ms |
 | ✔️ | completes with fs.readdir throwing an error | 11ms |
 
@@ -7187,11 +7021,11 @@ Is good for you.\\") | 1ms |
 | ✔️ | calls lstat for directories and symlinks if readdir withFileTypes is not supported | 7ms |
 | ✔️ | avoids calling lstat for directories and symlinks if readdir withFileTypes is supported | 8ms |
 
-## <a id=\\"user-content-ts-166-e2e-tests-onlyChanged-test-ts\\" href=\\"#ts-166-e2e-tests-onlyChanged-test-ts\\">e2e/__tests__/onlyChanged.test.ts</a> ❌
+## <a id="user-content-ts-166-e2e-tests-onlyChanged-test-ts" href="#ts-166-e2e-tests-onlyChanged-test-ts">e2e/__tests__/onlyChanged.test.ts</a> ❌
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | run for \\"onlyChanged\\" and \\"changedSince\\" | 1464ms |
+| ✔️ | run for "onlyChanged" and "changedSince" | 1464ms |
 | ✔️ | run only changed files | 5196ms |
 | ✔️ | report test coverage for only changed files | 1889ms |
 | ✔️ | report test coverage of source on test file change under only changed files | 822ms |
@@ -7201,7 +7035,7 @@ Is good for you.\\") | 1ms |
 | ❌ | gets changed files for hg | 3765ms |
 | ✔️ | path on Windows is case-insensitive | 0ms |
 
-## <a id=\\"user-content-ts-167-packages-jest-diff-src-tests-joinAlignedDiffs-test-ts\\" href=\\"#ts-167-packages-jest-diff-src-tests-joinAlignedDiffs-test-ts\\">packages/jest-diff/src/__tests__/joinAlignedDiffs.test.ts</a> ✔️
+## <a id="user-content-ts-167-packages-jest-diff-src-tests-joinAlignedDiffs-test-ts" href="#ts-167-packages-jest-diff-src-tests-joinAlignedDiffs-test-ts">packages/jest-diff/src/__tests__/joinAlignedDiffs.test.ts</a> ✔️
 
 ### joinAlignedDiffsExpand
 
@@ -7219,7 +7053,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | patch 2 with context 3 | 1ms |
 | ✔️ | patch 3 with context 2 and omit excess common at start | 0ms |
 
-## <a id=\\"user-content-ts-168-packages-jest-core-src-tests-SnapshotInteractiveMode-test-js\\" href=\\"#ts-168-packages-jest-core-src-tests-SnapshotInteractiveMode-test-js\\">packages/jest-core/src/__tests__/SnapshotInteractiveMode.test.js</a> ✔️
+## <a id="user-content-ts-168-packages-jest-core-src-tests-SnapshotInteractiveMode-test-js" href="#ts-168-packages-jest-core-src-tests-SnapshotInteractiveMode-test-js">packages/jest-core/src/__tests__/SnapshotInteractiveMode.test.js</a> ✔️
 
 ### SnapshotInteractiveMode
 
@@ -7239,7 +7073,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | update 1 test, skip 1 test, then finish and restart | 2ms |
 | ✔️ | skip 1 test, update 1 test, then finish and restart | 2ms |
 
-## <a id=\\"user-content-ts-169-packages-jest-runtime-src-tests-Runtime-statics-test-js\\" href=\\"#ts-169-packages-jest-runtime-src-tests-Runtime-statics-test-js\\">packages/jest-runtime/src/__tests__/Runtime-statics.test.js</a> ✔️
+## <a id="user-content-ts-169-packages-jest-runtime-src-tests-Runtime-statics-test-js" href="#ts-169-packages-jest-runtime-src-tests-Runtime-statics-test-js">packages/jest-runtime/src/__tests__/Runtime-statics.test.js</a> ✔️
 
 ### Runtime statics
 
@@ -7248,7 +7082,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | Runtime.createHasteMap passes correct ignore files to HasteMap | 2ms |
 | ✔️ | Runtime.createHasteMap passes correct ignore files to HasteMap in watch mode | 1ms |
 
-## <a id=\\"user-content-ts-170-packages-jest-diff-src-tests-getAlignedDiffs-test-ts\\" href=\\"#ts-170-packages-jest-diff-src-tests-getAlignedDiffs-test-ts\\">packages/jest-diff/src/__tests__/getAlignedDiffs.test.ts</a> ✔️
+## <a id="user-content-ts-170-packages-jest-diff-src-tests-getAlignedDiffs-test-ts" href="#ts-170-packages-jest-diff-src-tests-getAlignedDiffs-test-ts">packages/jest-diff/src/__tests__/getAlignedDiffs.test.ts</a> ✔️
 
 ### getAlignedDiffs lines
 
@@ -7304,7 +7138,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | change at start and delete or insert at end | 1ms |
 | ✔️ | delete or insert at start and change at end | 1ms |
 
-## <a id=\\"user-content-ts-171-packages-expect-src-tests-assertionCounts-test-ts\\" href=\\"#ts-171-packages-expect-src-tests-assertionCounts-test-ts\\">packages/expect/src/__tests__/assertionCounts.test.ts</a> ✔️
+## <a id="user-content-ts-171-packages-expect-src-tests-assertionCounts-test-ts" href="#ts-171-packages-expect-src-tests-assertionCounts-test-ts">packages/expect/src/__tests__/assertionCounts.test.ts</a> ✔️
 
 ### .assertions()
 
@@ -7322,7 +7156,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | throws if expected is not undefined | 1ms |
 | ✔️ | hasAssertions not leaking to global state | 0ms |
 
-## <a id=\\"user-content-ts-172-packages-jest-haste-map-src-lib-tests-getPlatformExtension-test-js\\" href=\\"#ts-172-packages-jest-haste-map-src-lib-tests-getPlatformExtension-test-js\\">packages/jest-haste-map/src/lib/__tests__/getPlatformExtension.test.js</a> ✔️
+## <a id="user-content-ts-172-packages-jest-haste-map-src-lib-tests-getPlatformExtension-test-js" href="#ts-172-packages-jest-haste-map-src-lib-tests-getPlatformExtension-test-js">packages/jest-haste-map/src/lib/__tests__/getPlatformExtension.test.js</a> ✔️
 
 ### getPlatformExtension
 
@@ -7330,7 +7164,7 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | should get platform ext | 1ms |
 
-## <a id=\\"user-content-ts-173-packages-jest-haste-map-src-lib-tests-isRegExpSupported-test-js\\" href=\\"#ts-173-packages-jest-haste-map-src-lib-tests-isRegExpSupported-test-js\\">packages/jest-haste-map/src/lib/__tests__/isRegExpSupported.test.js</a> ✔️
+## <a id="user-content-ts-173-packages-jest-haste-map-src-lib-tests-isRegExpSupported-test-js" href="#ts-173-packages-jest-haste-map-src-lib-tests-isRegExpSupported-test-js">packages/jest-haste-map/src/lib/__tests__/isRegExpSupported.test.js</a> ✔️
 
 ### isRegExpSupported
 
@@ -7339,7 +7173,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | should return true when passing valid regular expression | 0ms |
 | ✔️ | should return false when passing an invalid regular expression | 1ms |
 
-## <a id=\\"user-content-ts-174-packages-expect-src-tests-stacktrace-test-ts\\" href=\\"#ts-174-packages-expect-src-tests-stacktrace-test-ts\\">packages/expect/src/__tests__/stacktrace.test.ts</a> ✔️
+## <a id="user-content-ts-174-packages-expect-src-tests-stacktrace-test-ts" href="#ts-174-packages-expect-src-tests-stacktrace-test-ts">packages/expect/src/__tests__/stacktrace.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -7347,7 +7181,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | stack trace points to correct location when using nested matchers | 21ms |
 | ✔️ | stack trace points to correct location when throwing from a custom matcher | 0ms |
 
-## <a id=\\"user-content-ts-175-packages-jest-worker-src-tests-process-integration-test-js\\" href=\\"#ts-175-packages-jest-worker-src-tests-process-integration-test-js\\">packages/jest-worker/src/__tests__/process-integration.test.js</a> ✔️
+## <a id="user-content-ts-175-packages-jest-worker-src-tests-process-integration-test-js" href="#ts-175-packages-jest-worker-src-tests-process-integration-test-js">packages/jest-worker/src/__tests__/process-integration.test.js</a> ✔️
 
 ### Jest Worker Integration
 
@@ -7359,7 +7193,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | distributes concurrent calls across child processes | 2ms |
 | ✔️ | sticks parallel calls to children | 7ms |
 
-## <a id=\\"user-content-ts-176-packages-jest-core-src-lib-tests-isValidPath-test-ts\\" href=\\"#ts-176-packages-jest-core-src-lib-tests-isValidPath-test-ts\\">packages/jest-core/src/lib/__tests__/isValidPath.test.ts</a> ✔️
+## <a id="user-content-ts-176-packages-jest-core-src-lib-tests-isValidPath-test-ts" href="#ts-176-packages-jest-core-src-lib-tests-isValidPath-test-ts">packages/jest-core/src/lib/__tests__/isValidPath.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -7367,7 +7201,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | is not valid when it is a snapshot file | 0ms |
 | ✔️ | is not valid when it is a file in the coverage dir | 1ms |
 
-## <a id=\\"user-content-ts-177-packages-jest-util-src-tests-errorWithStack-test-ts\\" href=\\"#ts-177-packages-jest-util-src-tests-errorWithStack-test-ts\\">packages/jest-util/src/__tests__/errorWithStack.test.ts</a> ✔️
+## <a id="user-content-ts-177-packages-jest-util-src-tests-errorWithStack-test-ts" href="#ts-177-packages-jest-util-src-tests-errorWithStack-test-ts">packages/jest-util/src/__tests__/errorWithStack.test.ts</a> ✔️
 
 ### ErrorWithStack
 
@@ -7375,14 +7209,14 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | calls Error.captureStackTrace with given callsite when capture exists | 2ms |
 
-## <a id=\\"user-content-ts-178-packages-jest-util-src-tests-isInteractive-test-ts\\" href=\\"#ts-178-packages-jest-util-src-tests-isInteractive-test-ts\\">packages/jest-util/src/__tests__/isInteractive.test.ts</a> ✔️
+## <a id="user-content-ts-178-packages-jest-util-src-tests-isInteractive-test-ts" href="#ts-178-packages-jest-util-src-tests-isInteractive-test-ts">packages/jest-util/src/__tests__/isInteractive.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | Returns true when running on interactive environment | 7ms |
 | ✔️ | Returns false when running on a non-interactive environment | 1ms |
 
-## <a id=\\"user-content-ts-179-packages-jest-diff-src-tests-diffStringsRaw-test-ts\\" href=\\"#ts-179-packages-jest-diff-src-tests-diffStringsRaw-test-ts\\">packages/jest-diff/src/__tests__/diffStringsRaw.test.ts</a> ✔️
+## <a id="user-content-ts-179-packages-jest-diff-src-tests-diffStringsRaw-test-ts" href="#ts-179-packages-jest-diff-src-tests-diffStringsRaw-test-ts">packages/jest-diff/src/__tests__/diffStringsRaw.test.ts</a> ✔️
 
 ### diffStringsRaw
 
@@ -7391,7 +7225,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | one-line with cleanup | 1ms |
 | ✔️ | one-line without cleanup | 1ms |
 
-## <a id=\\"user-content-ts-180-packages-jest-util-src-tests-globsToMatcher-test-ts\\" href=\\"#ts-180-packages-jest-util-src-tests-globsToMatcher-test-ts\\">packages/jest-util/src/__tests__/globsToMatcher.test.ts</a> ✔️
+## <a id="user-content-ts-180-packages-jest-util-src-tests-globsToMatcher-test-ts" href="#ts-180-packages-jest-util-src-tests-globsToMatcher-test-ts">packages/jest-util/src/__tests__/globsToMatcher.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -7400,7 +7234,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | works like micromatch with only negative globs | 1ms |
 | ✔️ | works like micromatch with empty globs | 0ms |
 
-## <a id=\\"user-content-ts-181-packages-jest-core-src-tests-testSchedulerHelper-test-js\\" href=\\"#ts-181-packages-jest-core-src-tests-testSchedulerHelper-test-js\\">packages/jest-core/src/__tests__/testSchedulerHelper.test.js</a> ✔️
+## <a id="user-content-ts-181-packages-jest-core-src-tests-testSchedulerHelper-test-js" href="#ts-181-packages-jest-core-src-tests-testSchedulerHelper-test-js">packages/jest-core/src/__tests__/testSchedulerHelper.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -7417,14 +7251,14 @@ Is good for you.\\") | 1ms |
 | ✔️ | shouldRunInBand() - should return false for runInBand mode | 0ms |
 | ✔️ | shouldRunInBand() - should return true for runInBand mode | 1ms |
 
-## <a id=\\"user-content-ts-182-packages-jest-util-src-tests-installCommonGlobals-test-ts\\" href=\\"#ts-182-packages-jest-util-src-tests-installCommonGlobals-test-ts\\">packages/jest-util/src/__tests__/installCommonGlobals.test.ts</a> ✔️
+## <a id="user-content-ts-182-packages-jest-util-src-tests-installCommonGlobals-test-ts" href="#ts-182-packages-jest-util-src-tests-installCommonGlobals-test-ts">packages/jest-util/src/__tests__/installCommonGlobals.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | returns the passed object | 28ms |
 | ✔️ | turns a V8 global object into a Node global object | 1ms |
 
-## <a id=\\"user-content-ts-183-packages-jest-haste-map-src-tests-getmockname-test-js\\" href=\\"#ts-183-packages-jest-haste-map-src-tests-getmockname-test-js\\">packages/jest-haste-map/src/__tests__/get_mock_name.test.js</a> ✔️
+## <a id="user-content-ts-183-packages-jest-haste-map-src-tests-getmockname-test-js" href="#ts-183-packages-jest-haste-map-src-tests-getmockname-test-js">packages/jest-haste-map/src/__tests__/get_mock_name.test.js</a> ✔️
 
 ### getMockName
 
@@ -7432,7 +7266,7 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | extracts mock name from file path | 0ms |
 
-## <a id=\\"user-content-ts-184-packages-jest-worker-src-tests-WorkerPool-test-js\\" href=\\"#ts-184-packages-jest-worker-src-tests-WorkerPool-test-js\\">packages/jest-worker/src/__tests__/WorkerPool.test.js</a> ✔️
+## <a id="user-content-ts-184-packages-jest-worker-src-tests-WorkerPool-test-js" href="#ts-184-packages-jest-worker-src-tests-WorkerPool-test-js">packages/jest-worker/src/__tests__/WorkerPool.test.js</a> ✔️
 
 ### WorkerPool
 
@@ -7442,7 +7276,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | should create a NodeThreadWorker and send to it | 1ms |
 | ✔️ | should avoid NodeThreadWorker if not passed enableWorkerThreads | 1ms |
 
-## <a id=\\"user-content-ts-185-packages-jest-haste-map-src-lib-tests-dependencyExtractor-test-js\\" href=\\"#ts-185-packages-jest-haste-map-src-lib-tests-dependencyExtractor-test-js\\">packages/jest-haste-map/src/lib/__tests__/dependencyExtractor.test.js</a> ✔️
+## <a id="user-content-ts-185-packages-jest-haste-map-src-lib-tests-dependencyExtractor-test-js" href="#ts-185-packages-jest-haste-map-src-lib-tests-dependencyExtractor-test-js">packages/jest-haste-map/src/lib/__tests__/dependencyExtractor.test.js</a> ✔️
 
 ### dependencyExtractor
 
@@ -7451,20 +7285,20 @@ Is good for you.\\") | 1ms |
 | ✔️ | should not extract dependencies inside comments | 1ms |
 | ✔️ | should not extract dependencies inside comments (windows line endings) | 0ms |
 | ✔️ | should not extract dependencies inside comments (unicode line endings) | 1ms |
-| ✔️ | should extract dependencies from \`import\` statements | 0ms |
-| ✔️ | should extract dependencies from side-effect only \`import\` statements | 0ms |
-| ✔️ | should not extract dependencies from \`import type/typeof\` statements | 1ms |
-| ✔️ | should extract dependencies from \`export\` statements | 0ms |
-| ✔️ | should extract dependencies from \`export-from\` statements | 0ms |
-| ✔️ | should not extract dependencies from \`export type/typeof\` statements | 0ms |
-| ✔️ | should extract dependencies from dynamic \`import\` calls | 1ms |
-| ✔️ | should extract dependencies from \`require\` calls | 0ms |
-| ✔️ | should extract dependencies from \`jest.requireActual\` calls | 0ms |
-| ✔️ | should extract dependencies from \`jest.requireMock\` calls | 0ms |
-| ✔️ | should extract dependencies from \`jest.genMockFromModule\` calls | 1ms |
-| ✔️ | should extract dependencies from \`jest.createMockFromModule\` calls | 0ms |
+| ✔️ | should extract dependencies from `import` statements | 0ms |
+| ✔️ | should extract dependencies from side-effect only `import` statements | 0ms |
+| ✔️ | should not extract dependencies from `import type/typeof` statements | 1ms |
+| ✔️ | should extract dependencies from `export` statements | 0ms |
+| ✔️ | should extract dependencies from `export-from` statements | 0ms |
+| ✔️ | should not extract dependencies from `export type/typeof` statements | 0ms |
+| ✔️ | should extract dependencies from dynamic `import` calls | 1ms |
+| ✔️ | should extract dependencies from `require` calls | 0ms |
+| ✔️ | should extract dependencies from `jest.requireActual` calls | 0ms |
+| ✔️ | should extract dependencies from `jest.requireMock` calls | 0ms |
+| ✔️ | should extract dependencies from `jest.genMockFromModule` calls | 1ms |
+| ✔️ | should extract dependencies from `jest.createMockFromModule` calls | 0ms |
 
-## <a id=\\"user-content-ts-186-packages-jest-haste-map-src-lib-tests-normalizePathSep-test-js\\" href=\\"#ts-186-packages-jest-haste-map-src-lib-tests-normalizePathSep-test-js\\">packages/jest-haste-map/src/lib/__tests__/normalizePathSep.test.js</a> ✔️
+## <a id="user-content-ts-186-packages-jest-haste-map-src-lib-tests-normalizePathSep-test-js" href="#ts-186-packages-jest-haste-map-src-lib-tests-normalizePathSep-test-js">packages/jest-haste-map/src/lib/__tests__/normalizePathSep.test.js</a> ✔️
 
 ### normalizePathSep
 
@@ -7473,7 +7307,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | does nothing on posix | 1ms |
 | ✔️ | replace slashes on windows | 1ms |
 
-## <a id=\\"user-content-ts-187-packages-jest-haste-map-src-lib-tests-fastpath-test-js\\" href=\\"#ts-187-packages-jest-haste-map-src-lib-tests-fastpath-test-js\\">packages/jest-haste-map/src/lib/__tests__/fast_path.test.js</a> ✔️
+## <a id="user-content-ts-187-packages-jest-haste-map-src-lib-tests-fastpath-test-js" href="#ts-187-packages-jest-haste-map-src-lib-tests-fastpath-test-js">packages/jest-haste-map/src/lib/__tests__/fast_path.test.js</a> ✔️
 
 ### fastPath.relative
 
@@ -7490,7 +7324,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | should get the absolute path for paths inside the root | 0ms |
 | ✔️ | should get the absolute path for paths outside the root | 0ms |
 
-## <a id=\\"user-content-ts-188-packages-jest-core-src-tests-FailedTestsCache-test-js\\" href=\\"#ts-188-packages-jest-core-src-tests-FailedTestsCache-test-js\\">packages/jest-core/src/__tests__/FailedTestsCache.test.js</a> ✔️
+## <a id="user-content-ts-188-packages-jest-core-src-tests-FailedTestsCache-test-js" href="#ts-188-packages-jest-core-src-tests-FailedTestsCache-test-js">packages/jest-core/src/__tests__/FailedTestsCache.test.js</a> ✔️
 
 ### FailedTestsCache
 
@@ -7498,7 +7332,7 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | should filter tests | 1ms |
 
-## <a id=\\"user-content-ts-189-packages-jest-core-src-tests-getNoTestsFoundMessage-test-js\\" href=\\"#ts-189-packages-jest-core-src-tests-getNoTestsFoundMessage-test-js\\">packages/jest-core/src/__tests__/getNoTestsFoundMessage.test.js</a> ✔️
+## <a id="user-content-ts-189-packages-jest-core-src-tests-getNoTestsFoundMessage-test-js" href="#ts-189-packages-jest-core-src-tests-getNoTestsFoundMessage-test-js">packages/jest-core/src/__tests__/getNoTestsFoundMessage.test.js</a> ✔️
 
 ### getNoTestsFoundMessage
 
@@ -7510,7 +7344,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | returns correct message without options | 0ms |
 | ✔️ | returns correct message with passWithNoTests | 1ms |
 
-## <a id=\\"user-content-ts-190-packages-jest-core-src-tests-globals-test-ts\\" href=\\"#ts-190-packages-jest-core-src-tests-globals-test-ts\\">packages/jest-core/src/__tests__/globals.test.ts</a> ✔️
+## <a id="user-content-ts-190-packages-jest-core-src-tests-globals-test-ts" href="#ts-190-packages-jest-core-src-tests-globals-test-ts">packages/jest-core/src/__tests__/globals.test.ts</a> ✔️
 
 ### Common globals
 
@@ -7518,7 +7352,7 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | check process | 1ms |
 
-## <a id=\\"user-content-ts-191-packages-jest-core-src-lib-tests-logDebugMessages-test-ts\\" href=\\"#ts-191-packages-jest-core-src-lib-tests-logDebugMessages-test-ts\\">packages/jest-core/src/lib/__tests__/logDebugMessages.test.ts</a> ✔️
+## <a id="user-content-ts-191-packages-jest-core-src-lib-tests-logDebugMessages-test-ts" href="#ts-191-packages-jest-core-src-lib-tests-logDebugMessages-test-ts">packages/jest-core/src/lib/__tests__/logDebugMessages.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -7526,7 +7360,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | prints the test framework name | 0ms |
 | ✔️ | prints the config object | 1ms |
 
-## <a id=\\"user-content-ts-192-packages-jest-util-src-tests-isPromise-test-ts\\" href=\\"#ts-192-packages-jest-util-src-tests-isPromise-test-ts\\">packages/jest-util/src/__tests__/isPromise.test.ts</a> ✔️
+## <a id="user-content-ts-192-packages-jest-util-src-tests-isPromise-test-ts" href="#ts-192-packages-jest-util-src-tests-isPromise-test-ts">packages/jest-util/src/__tests__/isPromise.test.ts</a> ✔️
 
 ### not a Promise: 
 
@@ -7536,7 +7370,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | null | 0ms |
 | ✔️ | true | 1ms |
 | ✔️ | 42 | 0ms |
-| ✔️ | \\"1337\\" | 0ms |
+| ✔️ | "1337" | 0ms |
 | ✔️ | Symbol() | 0ms |
 | ✔️ | [] | 0ms |
 | ✔️ | {} | 1ms |
@@ -7546,7 +7380,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | a resolved Promise | 0ms |
 | ✔️ | a rejected Promise | 0ms |
 
-## <a id=\\"user-content-ts-193-packages-jest-cli-src-init-tests-modifyPackageJson-test-ts\\" href=\\"#ts-193-packages-jest-cli-src-init-tests-modifyPackageJson-test-ts\\">packages/jest-cli/src/init/__tests__/modifyPackageJson.test.ts</a> ✔️
+## <a id="user-content-ts-193-packages-jest-cli-src-init-tests-modifyPackageJson-test-ts" href="#ts-193-packages-jest-cli-src-init-tests-modifyPackageJson-test-ts">packages/jest-cli/src/init/__tests__/modifyPackageJson.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -7555,7 +7389,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | should add test script when there are scripts | 0ms |
 | ✔️ | should not add test script when { shouldModifyScripts: false } | 0ms |
 
-## <a id=\\"user-content-ts-194-packages-expect-src-tests-symbolInObjects-test-ts\\" href=\\"#ts-194-packages-expect-src-tests-symbolInObjects-test-ts\\">packages/expect/src/__tests__/symbolInObjects.test.ts</a> ✔️
+## <a id="user-content-ts-194-packages-expect-src-tests-symbolInObjects-test-ts" href="#ts-194-packages-expect-src-tests-symbolInObjects-test-ts">packages/expect/src/__tests__/symbolInObjects.test.ts</a> ✔️
 
 ### Symbol in objects
 
@@ -7565,32 +7399,32 @@ Is good for you.\\") | 1ms |
 | ✔️ | should compare objects with mixed keys and Symbol | 1ms |
 | ✔️ | should compare objects with different Symbol keys | 0ms |
 
-## <a id=\\"user-content-ts-195-e2e-test-in-root-test-js\\" href=\\"#ts-195-e2e-test-in-root-test-js\\">e2e/test-in-root/test.js</a> ✔️
+## <a id="user-content-ts-195-e2e-test-in-root-test-js" href="#ts-195-e2e-test-in-root-test-js">e2e/test-in-root/test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | stub | 1ms |
 
-## <a id=\\"user-content-ts-196-e2e-test-in-root-spec-js\\" href=\\"#ts-196-e2e-test-in-root-spec-js\\">e2e/test-in-root/spec.js</a> ✔️
+## <a id="user-content-ts-196-e2e-test-in-root-spec-js" href="#ts-196-e2e-test-in-root-spec-js">e2e/test-in-root/spec.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | stub | 1ms |
 
-## <a id=\\"user-content-ts-197-e2e-v8-coverage-empty-sourcemap-test-ts\\" href=\\"#ts-197-e2e-v8-coverage-empty-sourcemap-test-ts\\">e2e/v8-coverage/empty-sourcemap/test.ts</a> ✔️
+## <a id="user-content-ts-197-e2e-v8-coverage-empty-sourcemap-test-ts" href="#ts-197-e2e-v8-coverage-empty-sourcemap-test-ts">e2e/v8-coverage/empty-sourcemap/test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | dummy-test | 0ms |
 
-## <a id=\\"user-content-ts-198-packages-jest-matcher-utils-src-tests-deepCyclicCopyReplaceableDom-test-ts\\" href=\\"#ts-198-packages-jest-matcher-utils-src-tests-deepCyclicCopyReplaceableDom-test-ts\\">packages/jest-matcher-utils/src/__tests__/deepCyclicCopyReplaceableDom.test.ts</a> ✔️
+## <a id="user-content-ts-198-packages-jest-matcher-utils-src-tests-deepCyclicCopyReplaceableDom-test-ts" href="#ts-198-packages-jest-matcher-utils-src-tests-deepCyclicCopyReplaceableDom-test-ts">packages/jest-matcher-utils/src/__tests__/deepCyclicCopyReplaceableDom.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | should copy dom element | 2ms |
 | ✔️ | should copy complex element | 3ms |
 
-## <a id=\\"user-content-ts-199-e2e-tests-nativeEsmTypescript-test-ts\\" href=\\"#ts-199-e2e-tests-nativeEsmTypescript-test-ts\\">e2e/__tests__/nativeEsmTypescript.test.ts</a> ✔️
+## <a id="user-content-ts-199-e2e-tests-nativeEsmTypescript-test-ts" href="#ts-199-e2e-tests-nativeEsmTypescript-test-ts">e2e/__tests__/nativeEsmTypescript.test.ts</a> ✔️
 
 ### on node ^12.16.0 || >=13.7.0
 
@@ -7598,13 +7432,13 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | runs TS test with native ESM | 923ms |
 
-## <a id=\\"user-content-ts-200-e2e-tests-coverageRemapping-test-ts\\" href=\\"#ts-200-e2e-tests-coverageRemapping-test-ts\\">e2e/__tests__/coverageRemapping.test.ts</a> ✔️
+## <a id="user-content-ts-200-e2e-tests-coverageRemapping-test-ts" href="#ts-200-e2e-tests-coverageRemapping-test-ts">e2e/__tests__/coverageRemapping.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | maps code coverage against original source | 12660ms |
 
-## <a id=\\"user-content-ts-201-e2e-tests-globalTeardown-test-ts\\" href=\\"#ts-201-e2e-tests-globalTeardown-test-ts\\">e2e/__tests__/globalTeardown.test.ts</a> ✔️
+## <a id="user-content-ts-201-e2e-tests-globalTeardown-test-ts" href="#ts-201-e2e-tests-globalTeardown-test-ts">e2e/__tests__/globalTeardown.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -7616,13 +7450,13 @@ Is good for you.\\") | 1ms |
 | ✔️ | globalTeardown works with default export | 1045ms |
 | ✔️ | globalTeardown throws with named export | 1041ms |
 
-## <a id=\\"user-content-ts-202-e2e-tests-multiProjectRunner-test-ts\\" href=\\"#ts-202-e2e-tests-multiProjectRunner-test-ts\\">e2e/__tests__/multiProjectRunner.test.ts</a> ✔️
+## <a id="user-content-ts-202-e2e-tests-multiProjectRunner-test-ts" href="#ts-202-e2e-tests-multiProjectRunner-test-ts">e2e/__tests__/multiProjectRunner.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | --listTests doesn't duplicate the test files | 445ms |
 | ✔️ | can pass projects or global config | 3379ms |
-| ✔️ | \\"No tests found\\" message for projects | 977ms |
+| ✔️ | "No tests found" message for projects | 977ms |
 | ✔️ | allows a single non-root project | 1215ms |
 | ✔️ | allows a single non-root project | 751ms |
 | ✔️ | correctly runs a single non-root project | 805ms |
@@ -7640,7 +7474,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | external config files | 1025ms |
 | ✔️ | inline config files | 1101ms |
 
-## <a id=\\"user-content-ts-203-e2e-tests-toMatchSnapshot-test-ts\\" href=\\"#ts-203-e2e-tests-toMatchSnapshot-test-ts\\">e2e/__tests__/toMatchSnapshot.test.ts</a> ✔️
+## <a id="user-content-ts-203-e2e-tests-toMatchSnapshot-test-ts" href="#ts-203-e2e-tests-toMatchSnapshot-test-ts">e2e/__tests__/toMatchSnapshot.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -7654,7 +7488,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | handles property matchers with hint | 1752ms |
 | ✔️ | handles property matchers with deep properties | 2528ms |
 
-## <a id=\\"user-content-ts-204-e2e-tests-detectOpenHandles-ts\\" href=\\"#ts-204-e2e-tests-detectOpenHandles-ts\\">e2e/__tests__/detectOpenHandles.ts</a> ✔️
+## <a id="user-content-ts-204-e2e-tests-detectOpenHandles-ts" href="#ts-204-e2e-tests-detectOpenHandles-ts">e2e/__tests__/detectOpenHandles.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -7682,7 +7516,7 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | does not report timeouts using unref | 763ms |
 
-## <a id=\\"user-content-ts-205-e2e-tests-failures-test-ts\\" href=\\"#ts-205-e2e-tests-failures-test-ts\\">e2e/__tests__/failures.test.ts</a> ✔️
+## <a id="user-content-ts-205-e2e-tests-failures-test-ts" href="#ts-205-e2e-tests-failures-test-ts">e2e/__tests__/failures.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -7694,7 +7528,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | works with snapshot failures with hint | 784ms |
 | ✔️ | errors after test has completed | 782ms |
 
-## <a id=\\"user-content-ts-206-e2e-tests-console-test-ts\\" href=\\"#ts-206-e2e-tests-console-test-ts\\">e2e/__tests__/console.test.ts</a> ✔️
+## <a id="user-content-ts-206-e2e-tests-console-test-ts" href="#ts-206-e2e-tests-console-test-ts">e2e/__tests__/console.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -7706,7 +7540,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | the jsdom console is the same as the test console | 1429ms |
 | ✔️ | does not error out when using winston | 2049ms |
 
-## <a id=\\"user-content-ts-207-e2e-tests-globals-test-ts\\" href=\\"#ts-207-e2e-tests-globals-test-ts\\">e2e/__tests__/globals.test.ts</a> ✔️
+## <a id="user-content-ts-207-e2e-tests-globals-test-ts" href="#ts-207-e2e-tests-globals-test-ts">e2e/__tests__/globals.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -7721,7 +7555,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | cannot test with no implementation with expand arg | 663ms |
 | ✔️ | function as descriptor | 752ms |
 
-## <a id=\\"user-content-ts-208-e2e-tests-coverageThreshold-test-ts\\" href=\\"#ts-208-e2e-tests-coverageThreshold-test-ts\\">e2e/__tests__/coverageThreshold.test.ts</a> ✔️
+## <a id="user-content-ts-208-e2e-tests-coverageThreshold-test-ts" href="#ts-208-e2e-tests-coverageThreshold-test-ts">e2e/__tests__/coverageThreshold.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -7731,13 +7565,13 @@ Is good for you.\\") | 1ms |
 | ✔️ | excludes tests matched by path threshold groups from global group | 1174ms |
 | ✔️ | file is matched by all path and glob threshold groups | 836ms |
 
-## <a id=\\"user-content-ts-209-e2e-tests-testPathPatternReporterMessage-test-ts\\" href=\\"#ts-209-e2e-tests-testPathPatternReporterMessage-test-ts\\">e2e/__tests__/testPathPatternReporterMessage.test.ts</a> ✔️
+## <a id="user-content-ts-209-e2e-tests-testPathPatternReporterMessage-test-ts" href="#ts-209-e2e-tests-testPathPatternReporterMessage-test-ts">e2e/__tests__/testPathPatternReporterMessage.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | prints a message with path pattern at the end | 3030ms |
 
-## <a id=\\"user-content-ts-210-e2e-tests-filter-test-ts\\" href=\\"#ts-210-e2e-tests-filter-test-ts\\">e2e/__tests__/filter.test.ts</a> ✔️
+## <a id="user-content-ts-210-e2e-tests-filter-test-ts" href="#ts-210-e2e-tests-filter-test-ts">e2e/__tests__/filter.test.ts</a> ✔️
 
 ### Dynamic test filtering
 
@@ -7751,44 +7585,44 @@ Is good for you.\\") | 1ms |
 | ✔️ | will print error when filter throws | 369ms |
 | ✔️ | will return no results when setup hook throws | 354ms |
 
-## <a id=\\"user-content-ts-211-e2e-tests-selectProjects-test-ts\\" href=\\"#ts-211-e2e-tests-selectProjects-test-ts\\">e2e/__tests__/selectProjects.test.ts</a> ✔️
+## <a id="user-content-ts-211-e2e-tests-selectProjects-test-ts" href="#ts-211-e2e-tests-selectProjects-test-ts">e2e/__tests__/selectProjects.test.ts</a> ✔️
 
-### Given a config with two named projects, first-project and second-project when Jest is started with \`--selectProjects first-project\`
+### Given a config with two named projects, first-project and second-project when Jest is started with `--selectProjects first-project`
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | runs the tests in the first project only | 1ms |
 | ✔️ | prints that only first-project will run | 0ms |
 
-### Given a config with two named projects, first-project and second-project when Jest is started with \`--selectProjects second-project\`
+### Given a config with two named projects, first-project and second-project when Jest is started with `--selectProjects second-project`
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | runs the tests in the second project only | 1ms |
 | ✔️ | prints that only second-project will run | 0ms |
 
-### Given a config with two named projects, first-project and second-project when Jest is started with \`--selectProjects first-project second-project\`
+### Given a config with two named projects, first-project and second-project when Jest is started with `--selectProjects first-project second-project`
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | runs the tests in the first and second projects | 0ms |
 | ✔️ | prints that both first-project and second-project will run | 1ms |
 
-### Given a config with two named projects, first-project and second-project when Jest is started without providing \`--selectProjects\`
+### Given a config with two named projects, first-project and second-project when Jest is started without providing `--selectProjects`
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | runs the tests in the first and second projects | 1ms |
 | ✔️ | does not print which projects are run | 0ms |
 
-### Given a config with two named projects, first-project and second-project when Jest is started with \`--selectProjects third-project\`
+### Given a config with two named projects, first-project and second-project when Jest is started with `--selectProjects third-project`
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | fails | 0ms |
 | ✔️ | prints that no project was found | 1ms |
 
-### Given a config with two projects, first-project and an unnamed project when Jest is started with \`--selectProjects first-project\`
+### Given a config with two projects, first-project and an unnamed project when Jest is started with `--selectProjects first-project`
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -7796,14 +7630,14 @@ Is good for you.\\") | 1ms |
 | ✔️ | prints that a project does not have a name | 0ms |
 | ✔️ | prints that only first-project will run | 0ms |
 
-### Given a config with two projects, first-project and an unnamed project when Jest is started without providing \`--selectProjects\`
+### Given a config with two projects, first-project and an unnamed project when Jest is started without providing `--selectProjects`
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | runs the tests in the first and second projects | 4ms |
 | ✔️ | does not print that a project has no name | 0ms |
 
-### Given a config with two projects, first-project and an unnamed project when Jest is started with \`--selectProjects third-project\`
+### Given a config with two projects, first-project and an unnamed project when Jest is started with `--selectProjects third-project`
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -7811,7 +7645,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | prints that a project does not have a name | 0ms |
 | ✔️ | prints that no project was found | 0ms |
 
-## <a id=\\"user-content-ts-212-e2e-tests-mockNames-test-ts\\" href=\\"#ts-212-e2e-tests-mockNames-test-ts\\">e2e/__tests__/mockNames.test.ts</a> ✔️
+## <a id="user-content-ts-212-e2e-tests-mockNames-test-ts" href="#ts-212-e2e-tests-mockNames-test-ts">e2e/__tests__/mockNames.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -7824,7 +7658,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | suite with mock name, mock called | 848ms |
 | ✔️ | suite with mock name, mock not called | 948ms |
 
-## <a id=\\"user-content-ts-213-e2e-tests-stackTrace-test-ts\\" href=\\"#ts-213-e2e-tests-stackTrace-test-ts\\">e2e/__tests__/stackTrace.test.ts</a> ✔️
+## <a id="user-content-ts-213-e2e-tests-stackTrace-test-ts" href="#ts-213-e2e-tests-stackTrace-test-ts">e2e/__tests__/stackTrace.test.ts</a> ✔️
 
 ### Stack Trace
 
@@ -7838,7 +7672,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | prints a stack trace for errors without message in stack trace | 602ms |
 | ✔️ | does not print a stack trace for errors when --noStackTrace is given | 520ms |
 
-## <a id=\\"user-content-ts-214-e2e-tests-each-test-ts\\" href=\\"#ts-214-e2e-tests-each-test-ts\\">e2e/__tests__/each.test.ts</a> ✔️
+## <a id="user-content-ts-214-e2e-tests-each-test-ts" href="#ts-214-e2e-tests-each-test-ts">e2e/__tests__/each.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -7850,7 +7684,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | runs only the describe.only.each tests | 562ms |
 | ✔️ | formats args with pretty format when given %p | 580ms |
 
-## <a id=\\"user-content-ts-215-e2e-tests-toThrowErrorMatchingInlineSnapshot-test-ts\\" href=\\"#ts-215-e2e-tests-toThrowErrorMatchingInlineSnapshot-test-ts\\">e2e/__tests__/toThrowErrorMatchingInlineSnapshot.test.ts</a> ✔️
+## <a id="user-content-ts-215-e2e-tests-toThrowErrorMatchingInlineSnapshot-test-ts" href="#ts-215-e2e-tests-toThrowErrorMatchingInlineSnapshot-test-ts">e2e/__tests__/toThrowErrorMatchingInlineSnapshot.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -7859,19 +7693,19 @@ Is good for you.\\") | 1ms |
 | ✔️ | cannot be used with .not | 680ms |
 | ✔️ | should support rejecting promises | 808ms |
 
-## <a id=\\"user-content-ts-216-e2e-tests-watchModeNoAccess-test-ts\\" href=\\"#ts-216-e2e-tests-watchModeNoAccess-test-ts\\">e2e/__tests__/watchModeNoAccess.test.ts</a> ✔️
+## <a id="user-content-ts-216-e2e-tests-watchModeNoAccess-test-ts" href="#ts-216-e2e-tests-watchModeNoAccess-test-ts">e2e/__tests__/watchModeNoAccess.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | does not re-run tests when only access time is modified | 4313ms |
 
-## <a id=\\"user-content-ts-217-e2e-tests-pnp-test-ts\\" href=\\"#ts-217-e2e-tests-pnp-test-ts\\">e2e/__tests__/pnp.test.ts</a> ✔️
+## <a id="user-content-ts-217-e2e-tests-pnp-test-ts" href="#ts-217-e2e-tests-pnp-test-ts">e2e/__tests__/pnp.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | successfully runs the tests inside \`pnp/\` | 2547ms |
+| ✔️ | successfully runs the tests inside `pnp/` | 2547ms |
 
-## <a id=\\"user-content-ts-218-e2e-tests-declarationErrors-test-ts\\" href=\\"#ts-218-e2e-tests-declarationErrors-test-ts\\">e2e/__tests__/declarationErrors.test.ts</a> ✔️
+## <a id="user-content-ts-218-e2e-tests-declarationErrors-test-ts" href="#ts-218-e2e-tests-declarationErrors-test-ts">e2e/__tests__/declarationErrors.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -7879,7 +7713,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | errors if describe returns something | 709ms |
 | ✔️ | errors if describe throws | 778ms |
 
-## <a id=\\"user-content-ts-219-e2e-tests-wrongEnv-test-ts\\" href=\\"#ts-219-e2e-tests-wrongEnv-test-ts\\">e2e/__tests__/wrongEnv.test.ts</a> ✔️
+## <a id="user-content-ts-219-e2e-tests-wrongEnv-test-ts" href="#ts-219-e2e-tests-wrongEnv-test-ts">e2e/__tests__/wrongEnv.test.ts</a> ✔️
 
 ### Wrong globals for environment
 
@@ -7891,7 +7725,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | print useful error for unref | 1301ms |
 | ✔️ | print useful error when it explodes during evaluation | 659ms |
 
-## <a id=\\"user-content-ts-220-e2e-tests-setupFilesAfterEnvConfig-test-ts\\" href=\\"#ts-220-e2e-tests-setupFilesAfterEnvConfig-test-ts\\">e2e/__tests__/setupFilesAfterEnvConfig.test.ts</a> ✔️
+## <a id="user-content-ts-220-e2e-tests-setupFilesAfterEnvConfig-test-ts" href="#ts-220-e2e-tests-setupFilesAfterEnvConfig-test-ts">e2e/__tests__/setupFilesAfterEnvConfig.test.ts</a> ✔️
 
 ### setupFilesAfterEnv
 
@@ -7900,7 +7734,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | requires multiple setup files before each file in the suite | 1063ms |
 | ✔️ | requires setup files *after* the test runners are required | 800ms |
 
-## <a id=\\"user-content-ts-221-e2e-tests-noTestsFound-test-ts\\" href=\\"#ts-221-e2e-tests-noTestsFound-test-ts\\">e2e/__tests__/noTestsFound.test.ts</a> ✔️
+## <a id="user-content-ts-221-e2e-tests-noTestsFound-test-ts" href="#ts-221-e2e-tests-noTestsFound-test-ts">e2e/__tests__/noTestsFound.test.ts</a> ✔️
 
 ### No tests are found
 
@@ -7912,14 +7746,14 @@ Is good for you.\\") | 1ms |
 | ✔️ | doesn't fail the test suite if using --onlyChanged | 565ms |
 | ✔️ | doesn't fail the test suite if using --findRelatedTests | 505ms |
 
-## <a id=\\"user-content-ts-222-e2e-tests-customMatcherStackTrace-test-ts\\" href=\\"#ts-222-e2e-tests-customMatcherStackTrace-test-ts\\">e2e/__tests__/customMatcherStackTrace.test.ts</a> ✔️
+## <a id="user-content-ts-222-e2e-tests-customMatcherStackTrace-test-ts" href="#ts-222-e2e-tests-customMatcherStackTrace-test-ts">e2e/__tests__/customMatcherStackTrace.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | works with custom matchers | 873ms |
 | ✔️ | custom async matchers | 623ms |
 
-## <a id=\\"user-content-ts-223-e2e-tests-nestedTestDefinitions-test-ts\\" href=\\"#ts-223-e2e-tests-nestedTestDefinitions-test-ts\\">e2e/__tests__/nestedTestDefinitions.test.ts</a> ✔️
+## <a id="user-content-ts-223-e2e-tests-nestedTestDefinitions-test-ts" href="#ts-223-e2e-tests-nestedTestDefinitions-test-ts">e2e/__tests__/nestedTestDefinitions.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -7928,89 +7762,89 @@ Is good for you.\\") | 1ms |
 | ✔️ | print correct message when nesting describe inside it | 1047ms |
 | ✔️ | print correct message when nesting a hook inside it | 1027ms |
 
-## <a id=\\"user-content-ts-224-e2e-tests-autoClearMocks-test-ts\\" href=\\"#ts-224-e2e-tests-autoClearMocks-test-ts\\">e2e/__tests__/autoClearMocks.test.ts</a> ✔️
+## <a id="user-content-ts-224-e2e-tests-autoClearMocks-test-ts" href="#ts-224-e2e-tests-autoClearMocks-test-ts">e2e/__tests__/autoClearMocks.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | suite with auto-clear | 801ms |
 | ✔️ | suite without auto-clear | 837ms |
 
-## <a id=\\"user-content-ts-225-e2e-tests-forceExit-test-ts\\" href=\\"#ts-225-e2e-tests-forceExit-test-ts\\">e2e/__tests__/forceExit.test.ts</a> ✔️
+## <a id="user-content-ts-225-e2e-tests-forceExit-test-ts" href="#ts-225-e2e-tests-forceExit-test-ts">e2e/__tests__/forceExit.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | exits the process after test are done but before timers complete | 2157ms |
 
-## <a id=\\"user-content-ts-226-e2e-tests-testFailureExitCode-test-ts\\" href=\\"#ts-226-e2e-tests-testFailureExitCode-test-ts\\">e2e/__tests__/testFailureExitCode.test.ts</a> ✔️
+## <a id="user-content-ts-226-e2e-tests-testFailureExitCode-test-ts" href="#ts-226-e2e-tests-testFailureExitCode-test-ts">e2e/__tests__/testFailureExitCode.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | exits with a specified code when test fail | 2073ms |
 | ✔️ | exits with a specified code when bailing from a failed test | 2188ms |
 
-## <a id=\\"user-content-ts-227-e2e-tests-promiseReject-test-ts\\" href=\\"#ts-227-e2e-tests-promiseReject-test-ts\\">e2e/__tests__/promiseReject.test.ts</a> ✔️
+## <a id="user-content-ts-227-e2e-tests-promiseReject-test-ts" href="#ts-227-e2e-tests-promiseReject-test-ts">e2e/__tests__/promiseReject.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ |  | 905ms |
 
-## <a id=\\"user-content-ts-228-e2e-tests-timerResetMocks-test-ts\\" href=\\"#ts-228-e2e-tests-timerResetMocks-test-ts\\">e2e/__tests__/timerResetMocks.test.ts</a> ✔️
+## <a id="user-content-ts-228-e2e-tests-timerResetMocks-test-ts" href="#ts-228-e2e-tests-timerResetMocks-test-ts">e2e/__tests__/timerResetMocks.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | run timers after resetAllMocks test | 944ms |
 | ✔️ | run timers with resetMocks in config test | 814ms |
 
-## <a id=\\"user-content-ts-229-e2e-tests-testEnvironmentAsync-test-ts\\" href=\\"#ts-229-e2e-tests-testEnvironmentAsync-test-ts\\">e2e/__tests__/testEnvironmentAsync.test.ts</a> ✔️
+## <a id="user-content-ts-229-e2e-tests-testEnvironmentAsync-test-ts" href="#ts-229-e2e-tests-testEnvironmentAsync-test-ts">e2e/__tests__/testEnvironmentAsync.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | triggers setup/teardown hooks | 1422ms |
 
-## <a id=\\"user-content-ts-230-e2e-tests-resolveNoFileExtensions-test-ts\\" href=\\"#ts-230-e2e-tests-resolveNoFileExtensions-test-ts\\">e2e/__tests__/resolveNoFileExtensions.test.ts</a> ✔️
+## <a id="user-content-ts-230-e2e-tests-resolveNoFileExtensions-test-ts" href="#ts-230-e2e-tests-resolveNoFileExtensions-test-ts">e2e/__tests__/resolveNoFileExtensions.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | show error message with matching files | 1064ms |
 | ✔️ | show error message when no js moduleFileExtensions | 117ms |
 
-## <a id=\\"user-content-ts-231-e2e-tests-nestedEventLoop-test-ts\\" href=\\"#ts-231-e2e-tests-nestedEventLoop-test-ts\\">e2e/__tests__/nestedEventLoop.test.ts</a> ✔️
+## <a id="user-content-ts-231-e2e-tests-nestedEventLoop-test-ts" href="#ts-231-e2e-tests-nestedEventLoop-test-ts">e2e/__tests__/nestedEventLoop.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | works with nested event loops | 1392ms |
 
-## <a id=\\"user-content-ts-232-e2e-tests-useStderr-test-ts\\" href=\\"#ts-232-e2e-tests-useStderr-test-ts\\">e2e/__tests__/useStderr.test.ts</a> ✔️
+## <a id="user-content-ts-232-e2e-tests-useStderr-test-ts" href="#ts-232-e2e-tests-useStderr-test-ts">e2e/__tests__/useStderr.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | no tests found message is redirected to stderr | 1257ms |
 
-## <a id=\\"user-content-ts-233-e2e-tests-domDiffing-test-ts\\" href=\\"#ts-233-e2e-tests-domDiffing-test-ts\\">e2e/__tests__/domDiffing.test.ts</a> ✔️
+## <a id="user-content-ts-233-e2e-tests-domDiffing-test-ts" href="#ts-233-e2e-tests-domDiffing-test-ts">e2e/__tests__/domDiffing.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | should work without error | 1310ms |
 
-## <a id=\\"user-content-ts-234-e2e-tests-consoleAfterTeardown-test-ts\\" href=\\"#ts-234-e2e-tests-consoleAfterTeardown-test-ts\\">e2e/__tests__/consoleAfterTeardown.test.ts</a> ✔️
+## <a id="user-content-ts-234-e2e-tests-consoleAfterTeardown-test-ts" href="#ts-234-e2e-tests-consoleAfterTeardown-test-ts">e2e/__tests__/consoleAfterTeardown.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | console printing | 1301ms |
 
-## <a id=\\"user-content-ts-235-e2e-tests-testInRoot-test-ts\\" href=\\"#ts-235-e2e-tests-testInRoot-test-ts\\">e2e/__tests__/testInRoot.test.ts</a> ✔️
+## <a id="user-content-ts-235-e2e-tests-testInRoot-test-ts" href="#ts-235-e2e-tests-testInRoot-test-ts">e2e/__tests__/testInRoot.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | runs tests in only test.js and spec.js | 944ms |
 
-## <a id=\\"user-content-ts-236-e2e-tests-requireMainIsolateModules-test-ts\\" href=\\"#ts-236-e2e-tests-requireMainIsolateModules-test-ts\\">e2e/__tests__/requireMainIsolateModules.test.ts</a> ✔️
+## <a id="user-content-ts-236-e2e-tests-requireMainIsolateModules-test-ts" href="#ts-236-e2e-tests-requireMainIsolateModules-test-ts">e2e/__tests__/requireMainIsolateModules.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | \`require.main\` on using \`jest.isolateModules\` should not be undefined | 867ms |
+| ✔️ | `require.main` on using `jest.isolateModules` should not be undefined | 867ms |
 
-## <a id=\\"user-content-ts-237-e2e-tests-clearCache-test-ts\\" href=\\"#ts-237-e2e-tests-clearCache-test-ts\\">e2e/__tests__/clearCache.test.ts</a> ✔️
+## <a id="user-content-ts-237-e2e-tests-clearCache-test-ts" href="#ts-237-e2e-tests-clearCache-test-ts">e2e/__tests__/clearCache.test.ts</a> ✔️
 
 ### jest --clearCache
 
@@ -8019,7 +7853,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | normal run results in cache directory being written | 792ms |
 | ✔️ | clearCache results in deleted directory and exitCode 0 | 127ms |
 
-## <a id=\\"user-content-ts-238-e2e-tests-runtimeInternalModuleRegistry-test-ts\\" href=\\"#ts-238-e2e-tests-runtimeInternalModuleRegistry-test-ts\\">e2e/__tests__/runtimeInternalModuleRegistry.test.ts</a> ✔️
+## <a id="user-content-ts-238-e2e-tests-runtimeInternalModuleRegistry-test-ts" href="#ts-238-e2e-tests-runtimeInternalModuleRegistry-test-ts">e2e/__tests__/runtimeInternalModuleRegistry.test.ts</a> ✔️
 
 ### Runtime Internal Module Registry
 
@@ -8027,19 +7861,19 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | correctly makes use of internal module registry when requiring modules | 1150ms |
 
-## <a id=\\"user-content-ts-239-e2e-tests-resolveNodeModule-test-ts\\" href=\\"#ts-239-e2e-tests-resolveNodeModule-test-ts\\">e2e/__tests__/resolveNodeModule.test.ts</a> ✔️
+## <a id="user-content-ts-239-e2e-tests-resolveNodeModule-test-ts" href="#ts-239-e2e-tests-resolveNodeModule-test-ts">e2e/__tests__/resolveNodeModule.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | resolve node module | 890ms |
 
-## <a id=\\"user-content-ts-240-e2e-tests-setImmediate-test-ts\\" href=\\"#ts-240-e2e-tests-setImmediate-test-ts\\">e2e/__tests__/setImmediate.test.ts</a> ✔️
+## <a id="user-content-ts-240-e2e-tests-setImmediate-test-ts" href="#ts-240-e2e-tests-setImmediate-test-ts">e2e/__tests__/setImmediate.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | setImmediate | 859ms |
 
-## <a id=\\"user-content-ts-241-e2e-tests-emptySuiteError-test-ts\\" href=\\"#ts-241-e2e-tests-emptySuiteError-test-ts\\">e2e/__tests__/emptySuiteError.test.ts</a> ✔️
+## <a id="user-content-ts-241-e2e-tests-emptySuiteError-test-ts" href="#ts-241-e2e-tests-emptySuiteError-test-ts">e2e/__tests__/emptySuiteError.test.ts</a> ✔️
 
 ### JSON Reporter
 
@@ -8047,44 +7881,44 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | fails the test suite if it contains no tests | 824ms |
 
-## <a id=\\"user-content-ts-242-e2e-tests-badSourceMap-test-ts\\" href=\\"#ts-242-e2e-tests-badSourceMap-test-ts\\">e2e/__tests__/badSourceMap.test.ts</a> ✔️
+## <a id="user-content-ts-242-e2e-tests-badSourceMap-test-ts" href="#ts-242-e2e-tests-badSourceMap-test-ts">e2e/__tests__/badSourceMap.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | suite with test cases that contain malformed sourcemaps | 823ms |
 
-## <a id=\\"user-content-ts-243-e2e-tests-timerUseRealTimers-test-ts\\" href=\\"#ts-243-e2e-tests-timerUseRealTimers-test-ts\\">e2e/__tests__/timerUseRealTimers.test.ts</a> ✔️
+## <a id="user-content-ts-243-e2e-tests-timerUseRealTimers-test-ts" href="#ts-243-e2e-tests-timerUseRealTimers-test-ts">e2e/__tests__/timerUseRealTimers.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | useRealTimers cancels \\"timers\\": \\"fake\\" for whole test file | 986ms |
+| ✔️ | useRealTimers cancels "timers": "fake" for whole test file | 986ms |
 
-## <a id=\\"user-content-ts-244-e2e-tests-global-mutation-test-ts\\" href=\\"#ts-244-e2e-tests-global-mutation-test-ts\\">e2e/__tests__/global-mutation.test.ts</a> ✔️
+## <a id="user-content-ts-244-e2e-tests-global-mutation-test-ts" href="#ts-244-e2e-tests-global-mutation-test-ts">e2e/__tests__/global-mutation.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | can redefine global | 1ms |
 
-## <a id=\\"user-content-ts-245-e2e-tests-runProgrammatically-test-ts\\" href=\\"#ts-245-e2e-tests-runProgrammatically-test-ts\\">e2e/__tests__/runProgrammatically.test.ts</a> ✔️
+## <a id="user-content-ts-245-e2e-tests-runProgrammatically-test-ts" href="#ts-245-e2e-tests-runProgrammatically-test-ts">e2e/__tests__/runProgrammatically.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | run Jest programmatically cjs | 75ms |
 | ✔️ | run Jest programmatically esm | 462ms |
 
-## <a id=\\"user-content-ts-246-e2e-tests-symbol-test-ts\\" href=\\"#ts-246-e2e-tests-symbol-test-ts\\">e2e/__tests__/symbol.test.ts</a> ✔️
+## <a id="user-content-ts-246-e2e-tests-symbol-test-ts" href="#ts-246-e2e-tests-symbol-test-ts">e2e/__tests__/symbol.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | Symbol deletion | 0ms |
 
-## <a id=\\"user-content-ts-247-e2e-tests-hasteMapMockChanged-test-ts\\" href=\\"#ts-247-e2e-tests-hasteMapMockChanged-test-ts\\">e2e/__tests__/hasteMapMockChanged.test.ts</a> ✔️
+## <a id="user-content-ts-247-e2e-tests-hasteMapMockChanged-test-ts" href="#ts-247-e2e-tests-hasteMapMockChanged-test-ts">e2e/__tests__/hasteMapMockChanged.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | should not warn when a mock file changes | 298ms |
 
-## <a id=\\"user-content-ts-248-e2e-tests-existentRoots-test-ts\\" href=\\"#ts-248-e2e-tests-existentRoots-test-ts\\">e2e/__tests__/existentRoots.test.ts</a> ✔️
+## <a id="user-content-ts-248-e2e-tests-existentRoots-test-ts" href="#ts-248-e2e-tests-existentRoots-test-ts">e2e/__tests__/existentRoots.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -8093,19 +7927,19 @@ Is good for you.\\") | 1ms |
 | ✔️ | error when roots directory does not exist | 137ms |
 | ✔️ | error when roots is a file | 129ms |
 
-## <a id=\\"user-content-ts-249-e2e-tests-doneInHooks-test-ts\\" href=\\"#ts-249-e2e-tests-doneInHooks-test-ts\\">e2e/__tests__/doneInHooks.test.ts</a> ✔️
+## <a id="user-content-ts-249-e2e-tests-doneInHooks-test-ts" href="#ts-249-e2e-tests-doneInHooks-test-ts">e2e/__tests__/doneInHooks.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | \`done()\` works properly in hooks | 819ms |
+| ✔️ | `done()` works properly in hooks | 819ms |
 
-## <a id=\\"user-content-ts-250-e2e-tests-testEnvironmentCircusAsync-test-ts\\" href=\\"#ts-250-e2e-tests-testEnvironmentCircusAsync-test-ts\\">e2e/__tests__/testEnvironmentCircusAsync.test.ts</a> ✔️
+## <a id="user-content-ts-250-e2e-tests-testEnvironmentCircusAsync-test-ts" href="#ts-250-e2e-tests-testEnvironmentCircusAsync-test-ts">e2e/__tests__/testEnvironmentCircusAsync.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | calls asynchronous handleTestEvent in testEnvironment | 1458ms |
 
-## <a id=\\"user-content-ts-251-e2e-tests-moduleNameMapper-test-ts\\" href=\\"#ts-251-e2e-tests-moduleNameMapper-test-ts\\">e2e/__tests__/moduleNameMapper.test.ts</a> ✔️
+## <a id="user-content-ts-251-e2e-tests-moduleNameMapper-test-ts" href="#ts-251-e2e-tests-moduleNameMapper-test-ts">e2e/__tests__/moduleNameMapper.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -8115,7 +7949,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | moduleNameMapper correct configuration mocking module of absolute path | 1479ms |
 | ✔️ | moduleNameMapper with mocking | 967ms |
 
-## <a id=\\"user-content-ts-252-e2e-tests-customReporters-test-ts\\" href=\\"#ts-252-e2e-tests-customReporters-test-ts\\">e2e/__tests__/customReporters.test.ts</a> ✔️
+## <a id="user-content-ts-252-e2e-tests-customReporters-test-ts" href="#ts-252-e2e-tests-customReporters-test-ts">e2e/__tests__/customReporters.test.ts</a> ✔️
 
 ### Custom Reporters Integration
 
@@ -8131,7 +7965,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | reporters can be default exports | 792ms |
 | ✔️ | prints reporter errors | 495ms |
 
-## <a id=\\"user-content-ts-253-e2e-tests-findRelatedFiles-test-ts\\" href=\\"#ts-253-e2e-tests-findRelatedFiles-test-ts\\">e2e/__tests__/findRelatedFiles.test.ts</a> ✔️
+## <a id="user-content-ts-253-e2e-tests-findRelatedFiles-test-ts" href="#ts-253-e2e-tests-findRelatedFiles-test-ts">e2e/__tests__/findRelatedFiles.test.ts</a> ✔️
 
 ### --findRelatedTests flag
 
@@ -8143,7 +7977,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | generates coverage report for filename | 2001.9999999999998ms |
 | ✔️ | coverage configuration is applied correctly | 1516ms |
 
-## <a id=\\"user-content-ts-254-e2e-tests-env-test-ts\\" href=\\"#ts-254-e2e-tests-env-test-ts\\">e2e/__tests__/env.test.ts</a> ✔️
+## <a id="user-content-ts-254-e2e-tests-env-test-ts" href="#ts-254-e2e-tests-env-test-ts">e2e/__tests__/env.test.ts</a> ✔️
 
 ### Environment override
 
@@ -8161,7 +7995,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | uses jsdom | 1092ms |
 | ✔️ | uses node | 731ms |
 
-## <a id=\\"user-content-ts-255-e2e-tests-globalSetup-test-ts\\" href=\\"#ts-255-e2e-tests-globalSetup-test-ts\\">e2e/__tests__/globalSetup.test.ts</a> ✔️
+## <a id="user-content-ts-255-e2e-tests-globalSetup-test-ts" href="#ts-255-e2e-tests-globalSetup-test-ts">e2e/__tests__/globalSetup.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -8176,26 +8010,26 @@ Is good for you.\\") | 1ms |
 | ✔️ | should not transpile the transformer | 718ms |
 | ✔️ | should transform node_modules if configured by transformIgnorePatterns | 1165ms |
 
-## <a id=\\"user-content-ts-256-e2e-tests-workerForceExit-test-ts\\" href=\\"#ts-256-e2e-tests-workerForceExit-test-ts\\">e2e/__tests__/workerForceExit.test.ts</a> ✔️
+## <a id="user-content-ts-256-e2e-tests-workerForceExit-test-ts" href="#ts-256-e2e-tests-workerForceExit-test-ts">e2e/__tests__/workerForceExit.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | prints a warning if a worker is force exited | 2355ms |
 | ✔️ | force exits a worker that fails to exit gracefully | 2319ms |
 
-## <a id=\\"user-content-ts-257-e2e-tests-babelPluginJestHoist-test-ts\\" href=\\"#ts-257-e2e-tests-babelPluginJestHoist-test-ts\\">e2e/__tests__/babelPluginJestHoist.test.ts</a> ✔️
+## <a id="user-content-ts-257-e2e-tests-babelPluginJestHoist-test-ts" href="#ts-257-e2e-tests-babelPluginJestHoist-test-ts">e2e/__tests__/babelPluginJestHoist.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | successfully runs the tests inside \`babel-plugin-jest-hoist/\` | 6179ms |
+| ✔️ | successfully runs the tests inside `babel-plugin-jest-hoist/` | 6179ms |
 
-## <a id=\\"user-content-ts-258-e2e-tests-coverageTransformInstrumented-test-ts\\" href=\\"#ts-258-e2e-tests-coverageTransformInstrumented-test-ts\\">e2e/__tests__/coverageTransformInstrumented.test.ts</a> ✔️
+## <a id="user-content-ts-258-e2e-tests-coverageTransformInstrumented-test-ts" href="#ts-258-e2e-tests-coverageTransformInstrumented-test-ts">e2e/__tests__/coverageTransformInstrumented.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | code coverage for transform instrumented code | 4910ms |
 
-## <a id=\\"user-content-ts-259-e2e-tests-timeoutsLegacy-test-ts\\" href=\\"#ts-259-e2e-tests-timeoutsLegacy-test-ts\\">e2e/__tests__/timeoutsLegacy.test.ts</a> ✔️
+## <a id="user-content-ts-259-e2e-tests-timeoutsLegacy-test-ts" href="#ts-259-e2e-tests-timeoutsLegacy-test-ts">e2e/__tests__/timeoutsLegacy.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -8204,13 +8038,13 @@ Is good for you.\\") | 1ms |
 | ✖️ | does not exceed the timeout using jasmine.DEFAULT_TIMEOUT_INTERVAL | 0ms |
 | ✖️ | can read and write jasmine.DEFAULT_TIMEOUT_INTERVAL | 0ms |
 
-## <a id=\\"user-content-ts-260-e2e-tests-asyncRegenerator-test-ts\\" href=\\"#ts-260-e2e-tests-asyncRegenerator-test-ts\\">e2e/__tests__/asyncRegenerator.test.ts</a> ✔️
+## <a id="user-content-ts-260-e2e-tests-asyncRegenerator-test-ts" href="#ts-260-e2e-tests-asyncRegenerator-test-ts">e2e/__tests__/asyncRegenerator.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | successfully transpiles async | 4040ms |
 
-## <a id=\\"user-content-ts-261-e2e-tests-toThrowErrorMatchingSnapshot-test-ts\\" href=\\"#ts-261-e2e-tests-toThrowErrorMatchingSnapshot-test-ts\\">e2e/__tests__/toThrowErrorMatchingSnapshot.test.ts</a> ✔️
+## <a id="user-content-ts-261-e2e-tests-toThrowErrorMatchingSnapshot-test-ts" href="#ts-261-e2e-tests-toThrowErrorMatchingSnapshot-test-ts">e2e/__tests__/toThrowErrorMatchingSnapshot.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -8220,7 +8054,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | cannot be used with .not | 644ms |
 | ✔️ | should support rejecting promises | 647ms |
 
-## <a id=\\"user-content-ts-262-e2e-tests-testTodo-test-ts\\" href=\\"#ts-262-e2e-tests-testTodo-test-ts\\">e2e/__tests__/testTodo.test.ts</a> ✔️
+## <a id="user-content-ts-262-e2e-tests-testTodo-test-ts" href="#ts-262-e2e-tests-testTodo-test-ts">e2e/__tests__/testTodo.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -8230,27 +8064,27 @@ Is good for you.\\") | 1ms |
 | ✔️ | shows error messages when called with invalid argument | 624ms |
 | ✔️ | shows todo messages when in verbose mode | 710ms |
 
-## <a id=\\"user-content-ts-263-e2e-tests-onlyFailuresNonWatch-test-ts\\" href=\\"#ts-263-e2e-tests-onlyFailuresNonWatch-test-ts\\">e2e/__tests__/onlyFailuresNonWatch.test.ts</a> ✔️
+## <a id="user-content-ts-263-e2e-tests-onlyFailuresNonWatch-test-ts" href="#ts-263-e2e-tests-onlyFailuresNonWatch-test-ts">e2e/__tests__/onlyFailuresNonWatch.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | onlyFailures flag works in non-watch mode | 2841ms |
 
-## <a id=\\"user-content-ts-264-e2e-tests-presets-test-ts\\" href=\\"#ts-264-e2e-tests-presets-test-ts\\">e2e/__tests__/presets.test.ts</a> ✔️
+## <a id="user-content-ts-264-e2e-tests-presets-test-ts" href="#ts-264-e2e-tests-presets-test-ts">e2e/__tests__/presets.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | supports json preset | 860ms |
 | ✔️ | supports js preset | 956ms |
 
-## <a id=\\"user-content-ts-265-e2e-tests-expectAsyncMatcher-test-ts\\" href=\\"#ts-265-e2e-tests-expectAsyncMatcher-test-ts\\">e2e/__tests__/expectAsyncMatcher.test.ts</a> ✔️
+## <a id="user-content-ts-265-e2e-tests-expectAsyncMatcher-test-ts" href="#ts-265-e2e-tests-expectAsyncMatcher-test-ts">e2e/__tests__/expectAsyncMatcher.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | works with passing tests | 1173ms |
 | ✔️ | shows the correct errors in stderr when failing tests | 760ms |
 
-## <a id=\\"user-content-ts-266-e2e-tests-transform-test-ts\\" href=\\"#ts-266-e2e-tests-transform-test-ts\\">e2e/__tests__/transform.test.ts</a> ✔️
+## <a id="user-content-ts-266-e2e-tests-transform-test-ts" href="#ts-266-e2e-tests-transform-test-ts">e2e/__tests__/transform.test.ts</a> ✔️
 
 ### babel-jest
 
@@ -8328,19 +8162,19 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | should transform testRunner | 783ms |
 
-## <a id=\\"user-content-ts-267-e2e-tests-chaiAssertionLibrary-ts\\" href=\\"#ts-267-e2e-tests-chaiAssertionLibrary-ts\\">e2e/__tests__/chaiAssertionLibrary.ts</a> ✔️
+## <a id="user-content-ts-267-e2e-tests-chaiAssertionLibrary-ts" href="#ts-267-e2e-tests-chaiAssertionLibrary-ts">e2e/__tests__/chaiAssertionLibrary.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | chai assertion errors should display properly | 1817ms |
 
-## <a id=\\"user-content-ts-268-e2e-tests-stackTraceSourceMapsWithCoverage-test-ts\\" href=\\"#ts-268-e2e-tests-stackTraceSourceMapsWithCoverage-test-ts\\">e2e/__tests__/stackTraceSourceMapsWithCoverage.test.ts</a> ✔️
+## <a id="user-content-ts-268-e2e-tests-stackTraceSourceMapsWithCoverage-test-ts" href="#ts-268-e2e-tests-stackTraceSourceMapsWithCoverage-test-ts">e2e/__tests__/stackTraceSourceMapsWithCoverage.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | processes stack traces and code frames with source maps with coverage | 2394ms |
 
-## <a id=\\"user-content-ts-269-e2e-tests-customTestSequencers-test-ts\\" href=\\"#ts-269-e2e-tests-customTestSequencers-test-ts\\">e2e/__tests__/customTestSequencers.test.ts</a> ✔️
+## <a id="user-content-ts-269-e2e-tests-customTestSequencers-test-ts" href="#ts-269-e2e-tests-customTestSequencers-test-ts">e2e/__tests__/customTestSequencers.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -8348,7 +8182,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | run prioritySequence first async | 901ms |
 | ✔️ | run failed tests async | 849ms |
 
-## <a id=\\"user-content-ts-270-e2e-tests-beforeAllFiltered-ts\\" href=\\"#ts-270-e2e-tests-beforeAllFiltered-ts\\">e2e/__tests__/beforeAllFiltered.ts</a> ✔️
+## <a id="user-content-ts-270-e2e-tests-beforeAllFiltered-ts" href="#ts-270-e2e-tests-beforeAllFiltered-ts">e2e/__tests__/beforeAllFiltered.ts</a> ✔️
 
 ### Correct BeforeAll run
 
@@ -8356,7 +8190,7 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | ensures the BeforeAll of ignored suite is not run | 905ms |
 
-## <a id=\\"user-content-ts-271-e2e-tests-fakePromises-test-ts\\" href=\\"#ts-271-e2e-tests-fakePromises-test-ts\\">e2e/__tests__/fakePromises.test.ts</a> ✔️
+## <a id="user-content-ts-271-e2e-tests-fakePromises-test-ts" href="#ts-271-e2e-tests-fakePromises-test-ts">e2e/__tests__/fakePromises.test.ts</a> ✔️
 
 ### Fake promises
 
@@ -8365,69 +8199,69 @@ Is good for you.\\") | 1ms |
 | ✔️ | should be possible to resolve with fake timers using immediates | 901ms |
 | ✔️ | should be possible to resolve with fake timers using asap | 780ms |
 
-## <a id=\\"user-content-ts-272-e2e-tests-stackTraceSourceMaps-test-ts\\" href=\\"#ts-272-e2e-tests-stackTraceSourceMaps-test-ts\\">e2e/__tests__/stackTraceSourceMaps.test.ts</a> ✔️
+## <a id="user-content-ts-272-e2e-tests-stackTraceSourceMaps-test-ts" href="#ts-272-e2e-tests-stackTraceSourceMaps-test-ts">e2e/__tests__/stackTraceSourceMaps.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | processes stack traces and code frames with source maps | 2153ms |
 
-## <a id=\\"user-content-ts-273-e2e-tests-dynamicRequireDependencies-ts\\" href=\\"#ts-273-e2e-tests-dynamicRequireDependencies-ts\\">e2e/__tests__/dynamicRequireDependencies.ts</a> ✔️
+## <a id="user-content-ts-273-e2e-tests-dynamicRequireDependencies-ts" href="#ts-273-e2e-tests-dynamicRequireDependencies-ts">e2e/__tests__/dynamicRequireDependencies.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | successfully runs tests with dynamic dependencies | 811ms |
 
-## <a id=\\"user-content-ts-274-e2e-tests-overrideGlobals-test-ts\\" href=\\"#ts-274-e2e-tests-overrideGlobals-test-ts\\">e2e/__tests__/overrideGlobals.test.ts</a> ✔️
+## <a id="user-content-ts-274-e2e-tests-overrideGlobals-test-ts" href="#ts-274-e2e-tests-overrideGlobals-test-ts">e2e/__tests__/overrideGlobals.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | overriding native promise does not freeze Jest | 1116ms |
 | ✔️ | has a duration even if time is faked | 859ms |
 
-## <a id=\\"user-content-ts-275-e2e-tests-executeTestsOnceInMpr-ts\\" href=\\"#ts-275-e2e-tests-executeTestsOnceInMpr-ts\\">e2e/__tests__/executeTestsOnceInMpr.ts</a> ✔️
+## <a id="user-content-ts-275-e2e-tests-executeTestsOnceInMpr-ts" href="#ts-275-e2e-tests-executeTestsOnceInMpr-ts">e2e/__tests__/executeTestsOnceInMpr.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | Tests are executed only once even in an MPR | 908ms |
 
-## <a id=\\"user-content-ts-276-e2e-tests-moduleParentNullInTest-ts\\" href=\\"#ts-276-e2e-tests-moduleParentNullInTest-ts\\">e2e/__tests__/moduleParentNullInTest.ts</a> ✔️
+## <a id="user-content-ts-276-e2e-tests-moduleParentNullInTest-ts" href="#ts-276-e2e-tests-moduleParentNullInTest-ts">e2e/__tests__/moduleParentNullInTest.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | module.parent should be null in test files | 830ms |
 
-## <a id=\\"user-content-ts-277-e2e-tests-requireAfterTeardown-test-ts\\" href=\\"#ts-277-e2e-tests-requireAfterTeardown-test-ts\\">e2e/__tests__/requireAfterTeardown.test.ts</a> ✔️
+## <a id="user-content-ts-277-e2e-tests-requireAfterTeardown-test-ts" href="#ts-277-e2e-tests-requireAfterTeardown-test-ts">e2e/__tests__/requireAfterTeardown.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | prints useful error for requires after test is done | 842ms |
 
-## <a id=\\"user-content-ts-278-e2e-tests-lifecycles-ts\\" href=\\"#ts-278-e2e-tests-lifecycles-ts\\">e2e/__tests__/lifecycles.ts</a> ✔️
+## <a id="user-content-ts-278-e2e-tests-lifecycles-ts" href="#ts-278-e2e-tests-lifecycles-ts">e2e/__tests__/lifecycles.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | suite with invalid assertions in afterAll | 827ms |
 
-## <a id=\\"user-content-ts-279-e2e-tests-hasteMapSha1-test-ts\\" href=\\"#ts-279-e2e-tests-hasteMapSha1-test-ts\\">e2e/__tests__/hasteMapSha1.test.ts</a> ✔️
+## <a id="user-content-ts-279-e2e-tests-hasteMapSha1-test-ts" href="#ts-279-e2e-tests-hasteMapSha1-test-ts">e2e/__tests__/hasteMapSha1.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | exits the process after test are done but before timers complete | 187ms |
 
-## <a id=\\"user-content-ts-280-e2e-tests-json-test-ts\\" href=\\"#ts-280-e2e-tests-json-test-ts\\">e2e/__tests__/json.test.ts</a> ✔️
+## <a id="user-content-ts-280-e2e-tests-json-test-ts" href="#ts-280-e2e-tests-json-test-ts">e2e/__tests__/json.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | JSON is available in the global scope | 1ms |
 | ✔️ | JSON.parse creates objects from within this context | 0ms |
 
-## <a id=\\"user-content-ts-281-e2e-tests-testResultsProcessor-test-ts\\" href=\\"#ts-281-e2e-tests-testResultsProcessor-test-ts\\">e2e/__tests__/testResultsProcessor.test.ts</a> ✔️
+## <a id="user-content-ts-281-e2e-tests-testResultsProcessor-test-ts" href="#ts-281-e2e-tests-testResultsProcessor-test-ts">e2e/__tests__/testResultsProcessor.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | testNamePattern | 859ms |
 
-## <a id=\\"user-content-ts-282-e2e-tests-debug-test-ts\\" href=\\"#ts-282-e2e-tests-debug-test-ts\\">e2e/__tests__/debug.test.ts</a> ✔️
+## <a id="user-content-ts-282-e2e-tests-debug-test-ts" href="#ts-282-e2e-tests-debug-test-ts">e2e/__tests__/debug.test.ts</a> ✔️
 
 ### jest --debug
 
@@ -8435,44 +8269,44 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | outputs debugging info before running the test | 857ms |
 
-## <a id=\\"user-content-ts-283-e2e-tests-importedGlobals-test-ts\\" href=\\"#ts-283-e2e-tests-importedGlobals-test-ts\\">e2e/__tests__/importedGlobals.test.ts</a> ✔️
+## <a id="user-content-ts-283-e2e-tests-importedGlobals-test-ts" href="#ts-283-e2e-tests-importedGlobals-test-ts">e2e/__tests__/importedGlobals.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | imported globals | 1012ms |
 
-## <a id=\\"user-content-ts-284-e2e-tests-customResolver-test-ts\\" href=\\"#ts-284-e2e-tests-customResolver-test-ts\\">e2e/__tests__/customResolver.test.ts</a> ✔️
+## <a id="user-content-ts-284-e2e-tests-customResolver-test-ts" href="#ts-284-e2e-tests-customResolver-test-ts">e2e/__tests__/customResolver.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | use the custom resolver | 749ms |
 
-## <a id=\\"user-content-ts-285-e2e-tests-circularInequality-test-ts\\" href=\\"#ts-285-e2e-tests-circularInequality-test-ts\\">e2e/__tests__/circularInequality.test.ts</a> ✔️
+## <a id="user-content-ts-285-e2e-tests-circularInequality-test-ts" href="#ts-285-e2e-tests-circularInequality-test-ts">e2e/__tests__/circularInequality.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | handles circular inequality properly | 1407ms |
 
-## <a id=\\"user-content-ts-286-e2e-tests-injectGlobals-test-ts\\" href=\\"#ts-286-e2e-tests-injectGlobals-test-ts\\">e2e/__tests__/injectGlobals.test.ts</a> ✔️
+## <a id="user-content-ts-286-e2e-tests-injectGlobals-test-ts" href="#ts-286-e2e-tests-injectGlobals-test-ts">e2e/__tests__/injectGlobals.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | globals are undefined if passed \`false\` from CLI | 876ms |
-| ✔️ | globals are undefined if passed \`false\` from config | 918ms |
+| ✔️ | globals are undefined if passed `false` from CLI | 876ms |
+| ✔️ | globals are undefined if passed `false` from config | 918ms |
 
-## <a id=\\"user-content-ts-287-e2e-tests-skipBeforeAfterAll-test-ts\\" href=\\"#ts-287-e2e-tests-skipBeforeAfterAll-test-ts\\">e2e/__tests__/skipBeforeAfterAll.test.ts</a> ✔️
+## <a id="user-content-ts-287-e2e-tests-skipBeforeAfterAll-test-ts" href="#ts-287-e2e-tests-skipBeforeAfterAll-test-ts">e2e/__tests__/skipBeforeAfterAll.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | correctly skip \`beforeAll\`s in skipped tests | 998ms |
+| ✔️ | correctly skip `beforeAll`s in skipped tests | 998ms |
 
-## <a id=\\"user-content-ts-288-e2e-tests-customInlineSnapshotMatchers-test-ts\\" href=\\"#ts-288-e2e-tests-customInlineSnapshotMatchers-test-ts\\">e2e/__tests__/customInlineSnapshotMatchers.test.ts</a> ✔️
+## <a id="user-content-ts-288-e2e-tests-customInlineSnapshotMatchers-test-ts" href="#ts-288-e2e-tests-customInlineSnapshotMatchers-test-ts">e2e/__tests__/customInlineSnapshotMatchers.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | works with custom inline snapshot matchers | 2145ms |
 
-## <a id=\\"user-content-ts-289-e2e-tests-regexCharInPath-test-ts\\" href=\\"#ts-289-e2e-tests-regexCharInPath-test-ts\\">e2e/__tests__/regexCharInPath.test.ts</a> ✔️
+## <a id="user-content-ts-289-e2e-tests-regexCharInPath-test-ts" href="#ts-289-e2e-tests-regexCharInPath-test-ts">e2e/__tests__/regexCharInPath.test.ts</a> ✔️
 
 ### Regex Char In Path
 
@@ -8480,7 +8314,7 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | parses paths containing regex chars correctly | 873ms |
 
-## <a id=\\"user-content-ts-290-e2e-tests-noTestFound-test-ts\\" href=\\"#ts-290-e2e-tests-noTestFound-test-ts\\">e2e/__tests__/noTestFound.test.ts</a> ✔️
+## <a id="user-content-ts-290-e2e-tests-noTestFound-test-ts" href="#ts-290-e2e-tests-noTestFound-test-ts">e2e/__tests__/noTestFound.test.ts</a> ✔️
 
 ### Coverage Report
 
@@ -8494,7 +8328,7 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | outputs coverage report | 463ms |
 
-## <a id=\\"user-content-ts-291-e2e-tests-nativeEsm-test-ts\\" href=\\"#ts-291-e2e-tests-nativeEsm-test-ts\\">e2e/__tests__/nativeEsm.test.ts</a> ✔️
+## <a id="user-content-ts-291-e2e-tests-nativeEsm-test-ts" href="#ts-291-e2e-tests-nativeEsm-test-ts">e2e/__tests__/nativeEsm.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -8512,57 +8346,57 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✖️ | supports top-level await | 0ms |
 
-## <a id=\\"user-content-ts-292-e2e-tests-supportsDashedArgs-ts\\" href=\\"#ts-292-e2e-tests-supportsDashedArgs-ts\\">e2e/__tests__/supportsDashedArgs.ts</a> ✔️
+## <a id="user-content-ts-292-e2e-tests-supportsDashedArgs-ts" href="#ts-292-e2e-tests-supportsDashedArgs-ts">e2e/__tests__/supportsDashedArgs.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | works with passing tests | 777ms |
 | ✔️ | throws error for unknown dashed & camelcase args | 119ms |
 
-## <a id=\\"user-content-ts-293-e2e-tests-transformLinkedModules-test-ts\\" href=\\"#ts-293-e2e-tests-transformLinkedModules-test-ts\\">e2e/__tests__/transformLinkedModules.test.ts</a> ✔️
+## <a id="user-content-ts-293-e2e-tests-transformLinkedModules-test-ts" href="#ts-293-e2e-tests-transformLinkedModules-test-ts">e2e/__tests__/transformLinkedModules.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | should transform linked modules | 734ms |
 
-## <a id=\\"user-content-ts-294-e2e-tests-testNamePattern-test-ts\\" href=\\"#ts-294-e2e-tests-testNamePattern-test-ts\\">e2e/__tests__/testNamePattern.test.ts</a> ✔️
+## <a id="user-content-ts-294-e2e-tests-testNamePattern-test-ts" href="#ts-294-e2e-tests-testNamePattern-test-ts">e2e/__tests__/testNamePattern.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | testNamePattern | 788ms |
 
-## <a id=\\"user-content-ts-295-e2e-tests-nativeAsyncMock-test-ts\\" href=\\"#ts-295-e2e-tests-nativeAsyncMock-test-ts\\">e2e/__tests__/nativeAsyncMock.test.ts</a> ✔️
+## <a id="user-content-ts-295-e2e-tests-nativeAsyncMock-test-ts" href="#ts-295-e2e-tests-nativeAsyncMock-test-ts">e2e/__tests__/nativeAsyncMock.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | mocks async functions | 0ms |
 
-## <a id=\\"user-content-ts-296-e2e-tests-hasteMapSize-test-ts\\" href=\\"#ts-296-e2e-tests-hasteMapSize-test-ts\\">e2e/__tests__/hasteMapSize.test.ts</a> ✔️
+## <a id="user-content-ts-296-e2e-tests-hasteMapSize-test-ts" href="#ts-296-e2e-tests-hasteMapSize-test-ts">e2e/__tests__/hasteMapSize.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | reports the correct file size | 83ms |
 | ✔️ | updates the file size when a file changes | 217ms |
 
-## <a id=\\"user-content-ts-297-e2e-tests-circusDeclarationErrors-test-ts\\" href=\\"#ts-297-e2e-tests-circusDeclarationErrors-test-ts\\">e2e/__tests__/circusDeclarationErrors.test.ts</a> ✔️
+## <a id="user-content-ts-297-e2e-tests-circusDeclarationErrors-test-ts" href="#ts-297-e2e-tests-circusDeclarationErrors-test-ts">e2e/__tests__/circusDeclarationErrors.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | defining tests and hooks asynchronously throws | 832ms |
 
-## <a id=\\"user-content-ts-298-e2e-tests-testEnvironmentCircus-test-ts\\" href=\\"#ts-298-e2e-tests-testEnvironmentCircus-test-ts\\">e2e/__tests__/testEnvironmentCircus.test.ts</a> ✔️
+## <a id="user-content-ts-298-e2e-tests-testEnvironmentCircus-test-ts" href="#ts-298-e2e-tests-testEnvironmentCircus-test-ts">e2e/__tests__/testEnvironmentCircus.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | calls testEnvironment handleTestEvent | 1456ms |
 
-## <a id=\\"user-content-ts-299-e2e-tests-callDoneTwice-test-ts\\" href=\\"#ts-299-e2e-tests-callDoneTwice-test-ts\\">e2e/__tests__/callDoneTwice.test.ts</a> ✔️
+## <a id="user-content-ts-299-e2e-tests-callDoneTwice-test-ts" href="#ts-299-e2e-tests-callDoneTwice-test-ts">e2e/__tests__/callDoneTwice.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | \`done()\` should not be called more than once | 820ms |
+| ✔️ | `done()` should not be called more than once | 820ms |
 
-## <a id=\\"user-content-ts-300-e2e-tests-emptyDescribeWithHooks-test-ts\\" href=\\"#ts-300-e2e-tests-emptyDescribeWithHooks-test-ts\\">e2e/__tests__/emptyDescribeWithHooks.test.ts</a> ✔️
+## <a id="user-content-ts-300-e2e-tests-emptyDescribeWithHooks-test-ts" href="#ts-300-e2e-tests-emptyDescribeWithHooks-test-ts">e2e/__tests__/emptyDescribeWithHooks.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -8571,7 +8405,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | hook in empty nested describe | 680ms |
 | ✔️ | multiple hooks in empty describe | 726ms |
 
-## <a id=\\"user-content-ts-301-e2e-tests-errorOnDeprecated-test-ts\\" href=\\"#ts-301-e2e-tests-errorOnDeprecated-test-ts\\">e2e/__tests__/errorOnDeprecated.test.ts</a> ✔️
+## <a id="user-content-ts-301-e2e-tests-errorOnDeprecated-test-ts" href="#ts-301-e2e-tests-errorOnDeprecated-test-ts">e2e/__tests__/errorOnDeprecated.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -8601,7 +8435,7 @@ Is good for you.\\") | 1ms |
 | ✖️ | spyOnProperty.test.js errors when not in errorOnDeprecated mode | 0ms |
 | ✖️ | defaultTimeoutInterval.test.js passes when not in errorOnDeprecated mode | 0ms |
 
-## <a id=\\"user-content-ts-302-e2e-tests-testRetries-test-ts\\" href=\\"#ts-302-e2e-tests-testRetries-test-ts\\">e2e/__tests__/testRetries.test.ts</a> ✔️
+## <a id="user-content-ts-302-e2e-tests-testRetries-test-ts" href="#ts-302-e2e-tests-testRetries-test-ts">e2e/__tests__/testRetries.test.ts</a> ✔️
 
 ### Test Retries
 
@@ -8612,7 +8446,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | reporter shows 1 invocation if tests are not retried | 811ms |
 | ✔️ | tests are not retried if beforeAll hook failure occurs | 706ms |
 
-## <a id=\\"user-content-ts-303-e2e-tests-jest-config-ts-test-ts\\" href=\\"#ts-303-e2e-tests-jest-config-ts-test-ts\\">e2e/__tests__/jest.config.ts.test.ts</a> ✔️
+## <a id="user-content-ts-303-e2e-tests-jest-config-ts-test-ts" href="#ts-303-e2e-tests-jest-config-ts-test-ts">e2e/__tests__/jest.config.ts.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -8622,7 +8456,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | it does type check the config | 2278ms |
 | ✔️ | invalid JS in jest.config.ts | 2200ms |
 
-## <a id=\\"user-content-ts-304-e2e-tests-coverageReport-test-ts\\" href=\\"#ts-304-e2e-tests-coverageReport-test-ts\\">e2e/__tests__/coverageReport.test.ts</a> ✔️
+## <a id="user-content-ts-304-e2e-tests-coverageReport-test-ts" href="#ts-304-e2e-tests-coverageReport-test-ts">e2e/__tests__/coverageReport.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -8639,7 +8473,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | collects coverage from duplicate files avoiding shared cache | 2245ms |
 | ✔️ | generates coverage when using the testRegex config param | 2300ms |
 
-## <a id=\\"user-content-ts-305-e2e-tests-toMatchInlineSnapshot-test-ts\\" href=\\"#ts-305-e2e-tests-toMatchInlineSnapshot-test-ts\\">e2e/__tests__/toMatchInlineSnapshot.test.ts</a> ✔️
+## <a id="user-content-ts-305-e2e-tests-toMatchInlineSnapshot-test-ts" href="#ts-305-e2e-tests-toMatchInlineSnapshot-test-ts">e2e/__tests__/toMatchInlineSnapshot.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -8656,7 +8490,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | multiple custom matchers and native matchers | 1385ms |
 | ✔️ | indentation is correct in the presences of existing snapshots | 932ms |
 
-## <a id=\\"user-content-ts-306-examples-react-native-tests-intro-test-js\\" href=\\"#ts-306-examples-react-native-tests-intro-test-js\\">examples/react-native/__tests__/intro.test.js</a> ✔️
+## <a id="user-content-ts-306-examples-react-native-tests-intro-test-js" href="#ts-306-examples-react-native-tests-intro-test-js">examples/react-native/__tests__/intro.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -8665,7 +8499,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | renders the TextInput component | 2887ms |
 | ✔️ | renders the FlatList component | 791ms |
 
-## <a id=\\"user-content-ts-307-e2e-tests-toMatchInlineSnapshotWithRetries-test-ts\\" href=\\"#ts-307-e2e-tests-toMatchInlineSnapshotWithRetries-test-ts\\">e2e/__tests__/toMatchInlineSnapshotWithRetries.test.ts</a> ✔️
+## <a id="user-content-ts-307-e2e-tests-toMatchInlineSnapshotWithRetries-test-ts" href="#ts-307-e2e-tests-toMatchInlineSnapshotWithRetries-test-ts">e2e/__tests__/toMatchInlineSnapshotWithRetries.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -8673,7 +8507,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | works when a different assertion is failing | 600ms |
 | ✔️ | works when multiple tests have snapshots but only one of them failed multiple times | 1640ms |
 
-## <a id=\\"user-content-ts-308-e2e-tests-timeouts-test-ts\\" href=\\"#ts-308-e2e-tests-timeouts-test-ts\\">e2e/__tests__/timeouts.test.ts</a> ✔️
+## <a id="user-content-ts-308-e2e-tests-timeouts-test-ts" href="#ts-308-e2e-tests-timeouts-test-ts">e2e/__tests__/timeouts.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -8682,7 +8516,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | exceeds the command line testTimeout | 1529ms |
 | ✔️ | does not exceed the command line testTimeout | 856ms |
 
-## <a id=\\"user-content-ts-309-e2e-tests-toMatchSnapshotWithStringSerializer-test-ts\\" href=\\"#ts-309-e2e-tests-toMatchSnapshotWithStringSerializer-test-ts\\">e2e/__tests__/toMatchSnapshotWithStringSerializer.test.ts</a> ✔️
+## <a id="user-content-ts-309-e2e-tests-toMatchSnapshotWithStringSerializer-test-ts" href="#ts-309-e2e-tests-toMatchSnapshotWithStringSerializer-test-ts">e2e/__tests__/toMatchSnapshotWithStringSerializer.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -8690,7 +8524,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | empty internal ci false | 1213ms |
 | ✔️ | undefined internal ci true | 598ms |
 
-## <a id=\\"user-content-ts-310-e2e-tests-jasmineAsync-test-ts\\" href=\\"#ts-310-e2e-tests-jasmineAsync-test-ts\\">e2e/__tests__/jasmineAsync.test.ts</a> ✔️
+## <a id="user-content-ts-310-e2e-tests-jasmineAsync-test-ts" href="#ts-310-e2e-tests-jasmineAsync-test-ts">e2e/__tests__/jasmineAsync.test.ts</a> ✔️
 
 ### async jasmine
 
@@ -8712,7 +8546,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | async test fails | 6223ms |
 | ✔️ | generator test | 688ms |
 
-## <a id=\\"user-content-ts-311-e2e-tests-config-test-ts\\" href=\\"#ts-311-e2e-tests-config-test-ts\\">e2e/__tests__/config.test.ts</a> ✔️
+## <a id="user-content-ts-311-e2e-tests-config-test-ts" href="#ts-311-e2e-tests-config-test-ts">e2e/__tests__/config.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -8723,27 +8557,27 @@ Is good for you.\\") | 1ms |
 | ✔️ | works with jsdom testEnvironmentOptions config JSON | 1558ms |
 | ✔️ | negated flags override previous flags | 156ms |
 
-## <a id=\\"user-content-ts-312-e2e-tests-fatalWorkerError-test-ts\\" href=\\"#ts-312-e2e-tests-fatalWorkerError-test-ts\\">e2e/__tests__/fatalWorkerError.test.ts</a> ✔️
+## <a id="user-content-ts-312-e2e-tests-fatalWorkerError-test-ts" href="#ts-312-e2e-tests-fatalWorkerError-test-ts">e2e/__tests__/fatalWorkerError.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | fails a test that terminates the worker with a fatal error | 3117ms |
 
-## <a id=\\"user-content-ts-313-e2e-tests-toMatchSnapshotWithRetries-test-ts\\" href=\\"#ts-313-e2e-tests-toMatchSnapshotWithRetries-test-ts\\">e2e/__tests__/toMatchSnapshotWithRetries.test.ts</a> ✔️
+## <a id="user-content-ts-313-e2e-tests-toMatchSnapshotWithRetries-test-ts" href="#ts-313-e2e-tests-toMatchSnapshotWithRetries-test-ts">e2e/__tests__/toMatchSnapshotWithRetries.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | works with a single snapshot | 2153ms |
 | ✔️ | works when multiple tests have snapshots but only one of them failed multiple times | 2208ms |
 
-## <a id=\\"user-content-ts-314-e2e-tests-watchModePatterns-test-ts\\" href=\\"#ts-314-e2e-tests-watchModePatterns-test-ts\\">e2e/__tests__/watchModePatterns.test.ts</a> ✔️
+## <a id="user-content-ts-314-e2e-tests-watchModePatterns-test-ts" href="#ts-314-e2e-tests-watchModePatterns-test-ts">e2e/__tests__/watchModePatterns.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | can press \\"p\\" to filter by file name | 1471ms |
-| ✔️ | can press \\"t\\" to filter by test name | 1775ms |
+| ✔️ | can press "p" to filter by file name | 1471ms |
+| ✔️ | can press "t" to filter by test name | 1775ms |
 
-## <a id=\\"user-content-ts-315-e2e-tests-unexpectedToken-test-ts\\" href=\\"#ts-315-e2e-tests-unexpectedToken-test-ts\\">e2e/__tests__/unexpectedToken.test.ts</a> ✔️
+## <a id="user-content-ts-315-e2e-tests-unexpectedToken-test-ts" href="#ts-315-e2e-tests-unexpectedToken-test-ts">e2e/__tests__/unexpectedToken.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -8751,19 +8585,19 @@ Is good for you.\\") | 1ms |
 | ✔️ | triggers unexpected token error message for untranspiled node_modules | 794ms |
 | ✔️ | does not trigger unexpected token error message for regular syntax errors | 1539ms |
 
-## <a id=\\"user-content-ts-316-e2e-tests-jestRequireMock-test-ts\\" href=\\"#ts-316-e2e-tests-jestRequireMock-test-ts\\">e2e/__tests__/jestRequireMock.test.ts</a> ✔️
+## <a id="user-content-ts-316-e2e-tests-jestRequireMock-test-ts" href="#ts-316-e2e-tests-jestRequireMock-test-ts">e2e/__tests__/jestRequireMock.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | understands dependencies using jest.requireMock | 1909ms |
 
-## <a id=\\"user-content-ts-317-e2e-tests-typescriptCoverage-test-ts\\" href=\\"#ts-317-e2e-tests-typescriptCoverage-test-ts\\">e2e/__tests__/typescriptCoverage.test.ts</a> ✔️
+## <a id="user-content-ts-317-e2e-tests-typescriptCoverage-test-ts" href="#ts-317-e2e-tests-typescriptCoverage-test-ts">e2e/__tests__/typescriptCoverage.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | instruments and collects coverage for typescript files | 2830ms |
 
-## <a id=\\"user-content-ts-318-e2e-tests-jest-config-js-test-ts\\" href=\\"#ts-318-e2e-tests-jest-config-js-test-ts\\">e2e/__tests__/jest.config.js.test.ts</a> ✔️
+## <a id="user-content-ts-318-e2e-tests-jest-config-js-test-ts" href="#ts-318-e2e-tests-jest-config-js-test-ts">e2e/__tests__/jest.config.js.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -8771,14 +8605,14 @@ Is good for you.\\") | 1ms |
 | ✔️ | traverses directory tree up until it finds jest.config | 882ms |
 | ✔️ | invalid JS in jest.config.js | 135ms |
 
-## <a id=\\"user-content-ts-319-e2e-tests-requireMainResetModules-test-ts\\" href=\\"#ts-319-e2e-tests-requireMainResetModules-test-ts\\">e2e/__tests__/requireMainResetModules.test.ts</a> ✔️
+## <a id="user-content-ts-319-e2e-tests-requireMainResetModules-test-ts" href="#ts-319-e2e-tests-requireMainResetModules-test-ts">e2e/__tests__/requireMainResetModules.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | \`require.main\` on using \`--resetModules='true'\` should not be undefined | 970ms |
-| ✔️ | \`require.main\` on using \`jest.resetModules()\` should not be undefined | 915ms |
+| ✔️ | `require.main` on using `--resetModules='true'` should not be undefined | 970ms |
+| ✔️ | `require.main` on using `jest.resetModules()` should not be undefined | 915ms |
 
-## <a id=\\"user-content-ts-320-e2e-tests-modernFakeTimers-test-ts\\" href=\\"#ts-320-e2e-tests-modernFakeTimers-test-ts\\">e2e/__tests__/modernFakeTimers.test.ts</a> ✔️
+## <a id="user-content-ts-320-e2e-tests-modernFakeTimers-test-ts" href="#ts-320-e2e-tests-modernFakeTimers-test-ts">e2e/__tests__/modernFakeTimers.test.ts</a> ✔️
 
 ### modern implementation of fake timers
 
@@ -8787,33 +8621,33 @@ Is good for you.\\") | 1ms |
 | ✔️ | should be possible to use modern implementation from config | 792ms |
 | ✔️ | should be possible to use modern implementation from jest-object | 831ms |
 
-## <a id=\\"user-content-ts-321-e2e-tests-runTestsByPath-test-ts\\" href=\\"#ts-321-e2e-tests-runTestsByPath-test-ts\\">e2e/__tests__/runTestsByPath.test.ts</a> ✔️
+## <a id="user-content-ts-321-e2e-tests-runTestsByPath-test-ts" href="#ts-321-e2e-tests-runTestsByPath-test-ts">e2e/__tests__/runTestsByPath.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | runs tests by exact path | 1938ms |
 
-## <a id=\\"user-content-ts-322-e2e-tests-testEnvironment-test-ts\\" href=\\"#ts-322-e2e-tests-testEnvironment-test-ts\\">e2e/__tests__/testEnvironment.test.ts</a> ✔️
+## <a id="user-content-ts-322-e2e-tests-testEnvironment-test-ts" href="#ts-322-e2e-tests-testEnvironment-test-ts">e2e/__tests__/testEnvironment.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | respects testEnvironment docblock | 1513ms |
 
-## <a id=\\"user-content-ts-323-e2e-tests-circusConcurrentEach-test-ts\\" href=\\"#ts-323-e2e-tests-circusConcurrentEach-test-ts\\">e2e/__tests__/circusConcurrentEach.test.ts</a> ✔️
+## <a id="user-content-ts-323-e2e-tests-circusConcurrentEach-test-ts" href="#ts-323-e2e-tests-circusConcurrentEach-test-ts">e2e/__tests__/circusConcurrentEach.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | works with concurrent.each | 817ms |
 | ✔️ | works with concurrent.only.each | 695ms |
 
-## <a id=\\"user-content-ts-324-e2e-tests-autoRestoreMocks-test-ts\\" href=\\"#ts-324-e2e-tests-autoRestoreMocks-test-ts\\">e2e/__tests__/autoRestoreMocks.test.ts</a> ✔️
+## <a id="user-content-ts-324-e2e-tests-autoRestoreMocks-test-ts" href="#ts-324-e2e-tests-autoRestoreMocks-test-ts">e2e/__tests__/autoRestoreMocks.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | suite with auto-restore | 822ms |
 | ✔️ | suite without auto-restore | 845ms |
 
-## <a id=\\"user-content-ts-325-e2e-tests-jsonReporter-test-ts\\" href=\\"#ts-325-e2e-tests-jsonReporter-test-ts\\">e2e/__tests__/jsonReporter.test.ts</a> ✔️
+## <a id="user-content-ts-325-e2e-tests-jsonReporter-test-ts" href="#ts-325-e2e-tests-jsonReporter-test-ts">e2e/__tests__/jsonReporter.test.ts</a> ✔️
 
 ### JSON Reporter
 
@@ -8822,26 +8656,26 @@ Is good for you.\\") | 1ms |
 | ✔️ | writes test result to sum.result.json | 721ms |
 | ✔️ | outputs coverage report | 698ms |
 
-## <a id=\\"user-content-ts-326-e2e-tests-autoResetMocks-test-ts\\" href=\\"#ts-326-e2e-tests-autoResetMocks-test-ts\\">e2e/__tests__/autoResetMocks.test.ts</a> ✔️
+## <a id="user-content-ts-326-e2e-tests-autoResetMocks-test-ts" href="#ts-326-e2e-tests-autoResetMocks-test-ts">e2e/__tests__/autoResetMocks.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | suite with auto-reset | 801ms |
 | ✔️ | suite without auto-reset | 827ms |
 
-## <a id=\\"user-content-ts-327-e2e-tests-focusedTests-test-ts\\" href=\\"#ts-327-e2e-tests-focusedTests-test-ts\\">e2e/__tests__/focusedTests.test.ts</a> ✔️
+## <a id="user-content-ts-327-e2e-tests-focusedTests-test-ts" href="#ts-327-e2e-tests-focusedTests-test-ts">e2e/__tests__/focusedTests.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | runs only \\"it.only\\" tests | 834ms |
+| ✔️ | runs only "it.only" tests | 834ms |
 
-## <a id=\\"user-content-ts-328-e2e-tests-watchModeOnlyFailed-test-ts\\" href=\\"#ts-328-e2e-tests-watchModeOnlyFailed-test-ts\\">e2e/__tests__/watchModeOnlyFailed.test.ts</a> ✔️
+## <a id="user-content-ts-328-e2e-tests-watchModeOnlyFailed-test-ts" href="#ts-328-e2e-tests-watchModeOnlyFailed-test-ts">e2e/__tests__/watchModeOnlyFailed.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | can press \\"f\\" to run only failed tests | 1341ms |
+| ✔️ | can press "f" to run only failed tests | 1341ms |
 
-## <a id=\\"user-content-ts-329-e2e-tests-beforeEachQueue-ts\\" href=\\"#ts-329-e2e-tests-beforeEachQueue-ts\\">e2e/__tests__/beforeEachQueue.ts</a> ✔️
+## <a id="user-content-ts-329-e2e-tests-beforeEachQueue-ts" href="#ts-329-e2e-tests-beforeEachQueue-ts">e2e/__tests__/beforeEachQueue.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -8853,13 +8687,13 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✖️ | ensures the correct order for beforeEach | 0ms |
 
-## <a id=\\"user-content-ts-330-e2e-tests-extraGlobals-test-ts\\" href=\\"#ts-330-e2e-tests-extraGlobals-test-ts\\">e2e/__tests__/extraGlobals.test.ts</a> ✔️
+## <a id="user-content-ts-330-e2e-tests-extraGlobals-test-ts" href="#ts-330-e2e-tests-extraGlobals-test-ts">e2e/__tests__/extraGlobals.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | works with injected globals | 962ms |
 
-## <a id=\\"user-content-ts-331-e2e-tests-snapshotSerializers-test-ts\\" href=\\"#ts-331-e2e-tests-snapshotSerializers-test-ts\\">e2e/__tests__/snapshotSerializers.test.ts</a> ✔️
+## <a id="user-content-ts-331-e2e-tests-snapshotSerializers-test-ts" href="#ts-331-e2e-tests-snapshotSerializers-test-ts">e2e/__tests__/snapshotSerializers.test.ts</a> ✔️
 
 ### Snapshot serializers
 
@@ -8868,102 +8702,102 @@ Is good for you.\\") | 1ms |
 | ✔️ | renders snapshot | 607ms |
 | ✔️ | compares snapshots correctly | 1365ms |
 
-## <a id=\\"user-content-ts-332-e2e-tests-locationInResults-test-ts\\" href=\\"#ts-332-e2e-tests-locationInResults-test-ts\\">e2e/__tests__/locationInResults.test.ts</a> ✔️
+## <a id="user-content-ts-332-e2e-tests-locationInResults-test-ts" href="#ts-332-e2e-tests-locationInResults-test-ts">e2e/__tests__/locationInResults.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | defaults to null for location | 836ms |
 | ✔️ | adds correct location info when provided with flag | 859ms |
 
-## <a id=\\"user-content-ts-333-e2e-tests-consoleLogOutputWhenRunInBand-test-ts\\" href=\\"#ts-333-e2e-tests-consoleLogOutputWhenRunInBand-test-ts\\">e2e/__tests__/consoleLogOutputWhenRunInBand.test.ts</a> ✔️
+## <a id="user-content-ts-333-e2e-tests-consoleLogOutputWhenRunInBand-test-ts" href="#ts-333-e2e-tests-consoleLogOutputWhenRunInBand-test-ts">e2e/__tests__/consoleLogOutputWhenRunInBand.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | prints console.logs when run with forceExit | 726ms |
 
-## <a id=\\"user-content-ts-334-e2e-tests-dependencyClash-test-ts\\" href=\\"#ts-334-e2e-tests-dependencyClash-test-ts\\">e2e/__tests__/dependencyClash.test.ts</a> ✔️
+## <a id="user-content-ts-334-e2e-tests-dependencyClash-test-ts" href="#ts-334-e2e-tests-dependencyClash-test-ts">e2e/__tests__/dependencyClash.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | does not require project modules from inside node_modules | 723ms |
 
-## <a id=\\"user-content-ts-335-e2e-tests-coverageWithoutTransform-test-ts\\" href=\\"#ts-335-e2e-tests-coverageWithoutTransform-test-ts\\">e2e/__tests__/coverageWithoutTransform.test.ts</a> ✔️
+## <a id="user-content-ts-335-e2e-tests-coverageWithoutTransform-test-ts" href="#ts-335-e2e-tests-coverageWithoutTransform-test-ts">e2e/__tests__/coverageWithoutTransform.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | produces code coverage for uncovered files without transformer | 1020.9999999999999ms |
 
-## <a id=\\"user-content-ts-336-e2e-tests-cliHandlesExactFilenames-test-ts\\" href=\\"#ts-336-e2e-tests-cliHandlesExactFilenames-test-ts\\">e2e/__tests__/cliHandlesExactFilenames.test.ts</a> ✔️
+## <a id="user-content-ts-336-e2e-tests-cliHandlesExactFilenames-test-ts" href="#ts-336-e2e-tests-cliHandlesExactFilenames-test-ts">e2e/__tests__/cliHandlesExactFilenames.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | CLI accepts exact file names if matchers matched | 741ms |
 | ✔️ | CLI skips exact file names if no matchers matched | 389ms |
 
-## <a id=\\"user-content-ts-337-e2e-tests-requireMainAfterCreateRequire-test-ts\\" href=\\"#ts-337-e2e-tests-requireMainAfterCreateRequire-test-ts\\">e2e/__tests__/requireMainAfterCreateRequire.test.ts</a> ✔️
+## <a id="user-content-ts-337-e2e-tests-requireMainAfterCreateRequire-test-ts" href="#ts-337-e2e-tests-requireMainAfterCreateRequire-test-ts">e2e/__tests__/requireMainAfterCreateRequire.test.ts</a> ✔️
 
 ### on node >=12.2.0
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | \`require.main\` not undefined after createRequire | 891ms |
+| ✔️ | `require.main` not undefined after createRequire | 891ms |
 
-## <a id=\\"user-content-ts-338-e2e-tests-resetModules-test-ts\\" href=\\"#ts-338-e2e-tests-resetModules-test-ts\\">e2e/__tests__/resetModules.test.ts</a> ✔️
+## <a id="user-content-ts-338-e2e-tests-resetModules-test-ts" href="#ts-338-e2e-tests-resetModules-test-ts">e2e/__tests__/resetModules.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | jest.resetModules should not error when _isMockFunction is defined but not boolean | 883ms |
 
-## <a id=\\"user-content-ts-339-e2e-tests-watchModeUpdateSnapshot-test-ts\\" href=\\"#ts-339-e2e-tests-watchModeUpdateSnapshot-test-ts\\">e2e/__tests__/watchModeUpdateSnapshot.test.ts</a> ✔️
+## <a id="user-content-ts-339-e2e-tests-watchModeUpdateSnapshot-test-ts" href="#ts-339-e2e-tests-watchModeUpdateSnapshot-test-ts">e2e/__tests__/watchModeUpdateSnapshot.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | can press \\"u\\" to update snapshots | 993ms |
+| ✔️ | can press "u" to update snapshots | 993ms |
 
-## <a id=\\"user-content-ts-340-e2e-tests-generatorMock-test-ts\\" href=\\"#ts-340-e2e-tests-generatorMock-test-ts\\">e2e/__tests__/generatorMock.test.ts</a> ✔️
+## <a id="user-content-ts-340-e2e-tests-generatorMock-test-ts" href="#ts-340-e2e-tests-generatorMock-test-ts">e2e/__tests__/generatorMock.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | mock works with generator | 974ms |
 
-## <a id=\\"user-content-ts-341-e2e-tests-resolveGetPaths-test-ts\\" href=\\"#ts-341-e2e-tests-resolveGetPaths-test-ts\\">e2e/__tests__/resolveGetPaths.test.ts</a> ✔️
+## <a id="user-content-ts-341-e2e-tests-resolveGetPaths-test-ts" href="#ts-341-e2e-tests-resolveGetPaths-test-ts">e2e/__tests__/resolveGetPaths.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | require.resolve.paths | 1119ms |
 
-## <a id=\\"user-content-ts-342-e2e-tests-v8Coverage-test-ts\\" href=\\"#ts-342-e2e-tests-v8Coverage-test-ts\\">e2e/__tests__/v8Coverage.test.ts</a> ✔️
+## <a id="user-content-ts-342-e2e-tests-v8Coverage-test-ts" href="#ts-342-e2e-tests-v8Coverage-test-ts">e2e/__tests__/v8Coverage.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | prints coverage with missing sourcemaps | 1002.9999999999999ms |
 | ✔️ | prints coverage with empty sourcemaps | 1338ms |
 
-## <a id=\\"user-content-ts-343-e2e-tests-resolveWithPaths-test-ts\\" href=\\"#ts-343-e2e-tests-resolveWithPaths-test-ts\\">e2e/__tests__/resolveWithPaths.test.ts</a> ✔️
+## <a id="user-content-ts-343-e2e-tests-resolveWithPaths-test-ts" href="#ts-343-e2e-tests-resolveWithPaths-test-ts">e2e/__tests__/resolveWithPaths.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | require.resolve with paths | 1117ms |
 
-## <a id=\\"user-content-ts-344-e2e-tests-logHeapUsage-test-ts\\" href=\\"#ts-344-e2e-tests-logHeapUsage-test-ts\\">e2e/__tests__/logHeapUsage.test.ts</a> ✔️
+## <a id="user-content-ts-344-e2e-tests-logHeapUsage-test-ts" href="#ts-344-e2e-tests-logHeapUsage-test-ts">e2e/__tests__/logHeapUsage.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | logs memory usage | 830ms |
 
-## <a id=\\"user-content-ts-345-e2e-tests-requireMain-test-ts\\" href=\\"#ts-345-e2e-tests-requireMain-test-ts\\">e2e/__tests__/requireMain.test.ts</a> ✔️
+## <a id="user-content-ts-345-e2e-tests-requireMain-test-ts" href="#ts-345-e2e-tests-requireMain-test-ts">e2e/__tests__/requireMain.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ✔️ | provides \`require.main\` set to test suite module | 1008.9999999999999ms |
+| ✔️ | provides `require.main` set to test suite module | 1008.9999999999999ms |
 
-## <a id=\\"user-content-ts-346-e2e-tests-snapshotMockFs-test-ts\\" href=\\"#ts-346-e2e-tests-snapshotMockFs-test-ts\\">e2e/__tests__/snapshotMockFs.test.ts</a> ✔️
+## <a id="user-content-ts-346-e2e-tests-snapshotMockFs-test-ts" href="#ts-346-e2e-tests-snapshotMockFs-test-ts">e2e/__tests__/snapshotMockFs.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | store snapshot even if fs is mocked | 800ms |
 
-## <a id=\\"user-content-ts-347-e2e-tests-snapshot-unknown-test-ts\\" href=\\"#ts-347-e2e-tests-snapshot-unknown-test-ts\\">e2e/__tests__/snapshot-unknown.test.ts</a> ✔️
+## <a id="user-content-ts-347-e2e-tests-snapshot-unknown-test-ts" href="#ts-347-e2e-tests-snapshot-unknown-test-ts">e2e/__tests__/snapshot-unknown.test.ts</a> ✔️
 
 ### Snapshot serializers
 
@@ -8971,7 +8805,7 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | renders snapshot | 798ms |
 
-## <a id=\\"user-content-ts-348-examples-angular-app-component-spec-ts\\" href=\\"#ts-348-examples-angular-app-component-spec-ts\\">examples/angular/app.component.spec.ts</a> ✔️
+## <a id="user-content-ts-348-examples-angular-app-component-spec-ts" href="#ts-348-examples-angular-app-component-spec-ts">examples/angular/app.component.spec.ts</a> ✔️
 
 ### AppComponent
 
@@ -8981,25 +8815,25 @@ Is good for you.\\") | 1ms |
 | ✔️ | should have as title 'angular' | 28ms |
 | ✔️ | should render title in a h1 tag | 115ms |
 
-## <a id=\\"user-content-ts-349-e2e-tests-stackTraceNoCaptureStackTrace-test-ts\\" href=\\"#ts-349-e2e-tests-stackTraceNoCaptureStackTrace-test-ts\\">e2e/__tests__/stackTraceNoCaptureStackTrace.test.ts</a> ✔️
+## <a id="user-content-ts-349-e2e-tests-stackTraceNoCaptureStackTrace-test-ts" href="#ts-349-e2e-tests-stackTraceNoCaptureStackTrace-test-ts">e2e/__tests__/stackTraceNoCaptureStackTrace.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | prints a usable stack trace even if no Error.captureStackTrace | 848ms |
 
-## <a id=\\"user-content-ts-350-e2e-tests-testNamePatternSkipped-test-ts\\" href=\\"#ts-350-e2e-tests-testNamePatternSkipped-test-ts\\">e2e/__tests__/testNamePatternSkipped.test.ts</a> ✔️
+## <a id="user-content-ts-350-e2e-tests-testNamePatternSkipped-test-ts" href="#ts-350-e2e-tests-testNamePatternSkipped-test-ts">e2e/__tests__/testNamePatternSkipped.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | testNamePattern skipped | 924ms |
 
-## <a id=\\"user-content-ts-351-e2e-tests-failureDetailsProperty-test-ts\\" href=\\"#ts-351-e2e-tests-failureDetailsProperty-test-ts\\">e2e/__tests__/failureDetailsProperty.test.ts</a> ✔️
+## <a id="user-content-ts-351-e2e-tests-failureDetailsProperty-test-ts" href="#ts-351-e2e-tests-failureDetailsProperty-test-ts">e2e/__tests__/failureDetailsProperty.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | that the failureDetails property is set | 856ms |
 
-## <a id=\\"user-content-ts-352-e2e-tests-snapshotResolver-test-ts\\" href=\\"#ts-352-e2e-tests-snapshotResolver-test-ts\\">e2e/__tests__/snapshotResolver.test.ts</a> ✔️
+## <a id="user-content-ts-352-e2e-tests-snapshotResolver-test-ts" href="#ts-352-e2e-tests-snapshotResolver-test-ts">e2e/__tests__/snapshotResolver.test.ts</a> ✔️
 
 ### Custom snapshot resolver
 
@@ -9007,25 +8841,25 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | Resolves snapshot files using custom resolver | 735ms |
 
-## <a id=\\"user-content-ts-353-e2e-tests-processExit-test-ts\\" href=\\"#ts-353-e2e-tests-processExit-test-ts\\">e2e/__tests__/processExit.test.ts</a> ✔️
+## <a id="user-content-ts-353-e2e-tests-processExit-test-ts" href="#ts-353-e2e-tests-processExit-test-ts">e2e/__tests__/processExit.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | prints stack trace pointing to process.exit call | 1012.9999999999999ms |
 
-## <a id=\\"user-content-ts-354-e2e-tests-nodePath-test-ts\\" href=\\"#ts-354-e2e-tests-nodePath-test-ts\\">e2e/__tests__/nodePath.test.ts</a> ✔️
+## <a id="user-content-ts-354-e2e-tests-nodePath-test-ts" href="#ts-354-e2e-tests-nodePath-test-ts">e2e/__tests__/nodePath.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | supports NODE_PATH | 833ms |
 
-## <a id=\\"user-content-ts-355-e2e-tests-verbose-test-ts\\" href=\\"#ts-355-e2e-tests-verbose-test-ts\\">e2e/__tests__/verbose.test.ts</a> ✔️
+## <a id="user-content-ts-355-e2e-tests-verbose-test-ts" href="#ts-355-e2e-tests-verbose-test-ts">e2e/__tests__/verbose.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | Verbose Reporter | 631ms |
 
-## <a id=\\"user-content-ts-356-e2e-tests-listTests-test-ts\\" href=\\"#ts-356-e2e-tests-listTests-test-ts\\">e2e/__tests__/listTests.test.ts</a> ✔️
+## <a id="user-content-ts-356-e2e-tests-listTests-test-ts" href="#ts-356-e2e-tests-listTests-test-ts">e2e/__tests__/listTests.test.ts</a> ✔️
 
 ### --listTests flag
 
@@ -9034,19 +8868,19 @@ Is good for you.\\") | 1ms |
 | ✔️ | causes tests to be printed in different lines | 478ms |
 | ✔️ | causes tests to be printed out as JSON when using the --json flag | 404ms |
 
-## <a id=\\"user-content-ts-357-e2e-tests-createProcessObject-test-ts\\" href=\\"#ts-357-e2e-tests-createProcessObject-test-ts\\">e2e/__tests__/createProcessObject.test.ts</a> ✔️
+## <a id="user-content-ts-357-e2e-tests-createProcessObject-test-ts" href="#ts-357-e2e-tests-createProcessObject-test-ts">e2e/__tests__/createProcessObject.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | allows retrieving the current domain | 867ms |
 
-## <a id=\\"user-content-ts-358-examples-react-testing-library-tests-CheckboxWithLabel-test-js\\" href=\\"#ts-358-examples-react-testing-library-tests-CheckboxWithLabel-test-js\\">examples/react-testing-library/__tests__/CheckboxWithLabel-test.js</a> ✔️
+## <a id="user-content-ts-358-examples-react-testing-library-tests-CheckboxWithLabel-test-js" href="#ts-358-examples-react-testing-library-tests-CheckboxWithLabel-test-js">examples/react-testing-library/__tests__/CheckboxWithLabel-test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | CheckboxWithLabel changes the text after click | 33ms |
 
-## <a id=\\"user-content-ts-359-examples-angular-shared-data-service-spec-ts\\" href=\\"#ts-359-examples-angular-shared-data-service-spec-ts\\">examples/angular/shared/data.service.spec.ts</a> ✔️
+## <a id="user-content-ts-359-examples-angular-shared-data-service-spec-ts" href="#ts-359-examples-angular-shared-data-service-spec-ts">examples/angular/shared/data.service.spec.ts</a> ✔️
 
 ### Service: DataService
 
@@ -9055,13 +8889,13 @@ Is good for you.\\") | 1ms |
 | ✔️ | should create service | 20ms |
 | ✔️ | should return the right title | 8ms |
 
-## <a id=\\"user-content-ts-360-e2e-tests-environmentAfterTeardown-test-ts\\" href=\\"#ts-360-e2e-tests-environmentAfterTeardown-test-ts\\">e2e/__tests__/environmentAfterTeardown.test.ts</a> ✔️
+## <a id="user-content-ts-360-e2e-tests-environmentAfterTeardown-test-ts" href="#ts-360-e2e-tests-environmentAfterTeardown-test-ts">e2e/__tests__/environmentAfterTeardown.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | prints useful error for environment methods after test is done | 846ms |
 
-## <a id=\\"user-content-ts-361-e2e-tests-esmConfigFile-test-ts\\" href=\\"#ts-361-e2e-tests-esmConfigFile-test-ts\\">e2e/__tests__/esmConfigFile.test.ts</a> ✔️
+## <a id="user-content-ts-361-e2e-tests-esmConfigFile-test-ts" href="#ts-361-e2e-tests-esmConfigFile-test-ts">e2e/__tests__/esmConfigFile.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -9074,13 +8908,13 @@ Is good for you.\\") | 1ms |
 | ✔️ | reads config from mjs file | 202ms |
 | ✔️ | reads config from js file when package.json#type=module | 115ms |
 
-## <a id=\\"user-content-ts-362-examples-enzyme-tests-CheckboxWithLabel-test-js\\" href=\\"#ts-362-examples-enzyme-tests-CheckboxWithLabel-test-js\\">examples/enzyme/__tests__/CheckboxWithLabel-test.js</a> ✔️
+## <a id="user-content-ts-362-examples-enzyme-tests-CheckboxWithLabel-test-js" href="#ts-362-examples-enzyme-tests-CheckboxWithLabel-test-js">examples/enzyme/__tests__/CheckboxWithLabel-test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | CheckboxWithLabel changes the text after click | 6ms |
 
-## <a id=\\"user-content-ts-363-examples-module-mock-tests-mockpertest-js\\" href=\\"#ts-363-examples-module-mock-tests-mockpertest-js\\">examples/module-mock/__tests__/mock_per_test.js</a> ✔️
+## <a id="user-content-ts-363-examples-module-mock-tests-mockpertest-js" href="#ts-363-examples-module-mock-tests-mockpertest-js">examples/module-mock/__tests__/mock_per_test.js</a> ✔️
 
 ### define mock per test
 
@@ -9089,13 +8923,13 @@ Is good for you.\\") | 1ms |
 | ✔️ | uses mocked module | 2ms |
 | ✔️ | uses actual module | 10ms |
 
-## <a id=\\"user-content-ts-364-examples-mongodb-test-db-test-js\\" href=\\"#ts-364-examples-mongodb-test-db-test-js\\">examples/mongodb/__test__/db.test.js</a> ✔️
+## <a id="user-content-ts-364-examples-mongodb-test-db-test-js" href="#ts-364-examples-mongodb-test-db-test-js">examples/mongodb/__test__/db.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | should aggregate docs from collection | 10ms |
 
-## <a id=\\"user-content-ts-365-examples-snapshot-tests-link-react-test-js\\" href=\\"#ts-365-examples-snapshot-tests-link-react-test-js\\">examples/snapshot/__tests__/link.react.test.js</a> ✔️
+## <a id="user-content-ts-365-examples-snapshot-tests-link-react-test-js" href="#ts-365-examples-snapshot-tests-link-react-test-js">examples/snapshot/__tests__/link.react.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -9104,50 +8938,50 @@ Is good for you.\\") | 1ms |
 | ✔️ | properly escapes quotes | 1ms |
 | ✔️ | changes the class when hovered | 2ms |
 
-## <a id=\\"user-content-ts-366-examples-typescript-tests-CheckboxWithLabel-test-tsx\\" href=\\"#ts-366-examples-typescript-tests-CheckboxWithLabel-test-tsx\\">examples/typescript/__tests__/CheckboxWithLabel-test.tsx</a> ✔️
+## <a id="user-content-ts-366-examples-typescript-tests-CheckboxWithLabel-test-tsx" href="#ts-366-examples-typescript-tests-CheckboxWithLabel-test-tsx">examples/typescript/__tests__/CheckboxWithLabel-test.tsx</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | CheckboxWithLabel changes the text after click | 16ms |
 
-## <a id=\\"user-content-ts-367-examples-react-tests-CheckboxWithLabel-test-js\\" href=\\"#ts-367-examples-react-tests-CheckboxWithLabel-test-js\\">examples/react/__tests__/CheckboxWithLabel-test.js</a> ✔️
+## <a id="user-content-ts-367-examples-react-tests-CheckboxWithLabel-test-js" href="#ts-367-examples-react-tests-CheckboxWithLabel-test-js">examples/react/__tests__/CheckboxWithLabel-test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | CheckboxWithLabel changes the text after click | 17ms |
 
-## <a id=\\"user-content-ts-368-e2e-tests-showConfig-test-ts\\" href=\\"#ts-368-e2e-tests-showConfig-test-ts\\">e2e/__tests__/showConfig.test.ts</a> ✔️
+## <a id="user-content-ts-368-e2e-tests-showConfig-test-ts" href="#ts-368-e2e-tests-showConfig-test-ts">e2e/__tests__/showConfig.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | --showConfig outputs config info and exits | 144ms |
 
-## <a id=\\"user-content-ts-369-examples-snapshot-tests-clock-react-test-js\\" href=\\"#ts-369-examples-snapshot-tests-clock-react-test-js\\">examples/snapshot/__tests__/clock.react.test.js</a> ✔️
+## <a id="user-content-ts-369-examples-snapshot-tests-clock-react-test-js" href="#ts-369-examples-snapshot-tests-clock-react-test-js">examples/snapshot/__tests__/clock.react.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | renders correctly | 2ms |
 
-## <a id=\\"user-content-ts-370-examples-timer-tests-infinitetimergame-test-js\\" href=\\"#ts-370-examples-timer-tests-infinitetimergame-test-js\\">examples/timer/__tests__/infinite_timer_game.test.js</a> ✔️
+## <a id="user-content-ts-370-examples-timer-tests-infinitetimergame-test-js" href="#ts-370-examples-timer-tests-infinitetimergame-test-js">examples/timer/__tests__/infinite_timer_game.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | schedules a 10-second timer after 1 second | 26ms |
 
-## <a id=\\"user-content-ts-371-examples-jquery-tests-fetchcurrentuser-test-js\\" href=\\"#ts-371-examples-jquery-tests-fetchcurrentuser-test-js\\">examples/jquery/__tests__/fetch_current_user.test.js</a> ✔️
+## <a id="user-content-ts-371-examples-jquery-tests-fetchcurrentuser-test-js" href="#ts-371-examples-jquery-tests-fetchcurrentuser-test-js">examples/jquery/__tests__/fetch_current_user.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | calls into $.ajax with the correct params | 73ms |
 | ✔️ | calls the callback when $.ajax requests are finished | 10ms |
 
-## <a id=\\"user-content-ts-372-examples-jquery-tests-displayuser-test-js\\" href=\\"#ts-372-examples-jquery-tests-displayuser-test-js\\">examples/jquery/__tests__/display_user.test.js</a> ✔️
+## <a id="user-content-ts-372-examples-jquery-tests-displayuser-test-js" href="#ts-372-examples-jquery-tests-displayuser-test-js">examples/jquery/__tests__/display_user.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | displays a user after a click | 71ms |
 
-## <a id=\\"user-content-ts-373-examples-timer-tests-timergame-test-js\\" href=\\"#ts-373-examples-timer-tests-timergame-test-js\\">examples/timer/__tests__/timer_game.test.js</a> ✔️
+## <a id="user-content-ts-373-examples-timer-tests-timergame-test-js" href="#ts-373-examples-timer-tests-timergame-test-js">examples/timer/__tests__/timer_game.test.js</a> ✔️
 
 ### timerGame
 
@@ -9157,7 +8991,7 @@ Is good for you.\\") | 1ms |
 | ✔️ | calls the callback after 1 second via runAllTimers | 2ms |
 | ✔️ | calls the callback after 1 second via advanceTimersByTime | 1ms |
 
-## <a id=\\"user-content-ts-374-examples-async-tests-user-test-js\\" href=\\"#ts-374-examples-async-tests-user-test-js\\">examples/async/__tests__/user.test.js</a> ✔️
+## <a id="user-content-ts-374-examples-async-tests-user-test-js" href="#ts-374-examples-async-tests-user-test-js">examples/async/__tests__/user.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
@@ -9170,14 +9004,14 @@ Is good for you.\\") | 1ms |
 | ✔️ | tests error with async/await | 1ms |
 | ✔️ | tests error with async/await and rejects | 0ms |
 
-## <a id=\\"user-content-ts-375-examples-automatic-mocks-tests-createMockFromModule-test-js\\" href=\\"#ts-375-examples-automatic-mocks-tests-createMockFromModule-test-js\\">examples/automatic-mocks/__tests__/createMockFromModule.test.js</a> ✔️
+## <a id="user-content-ts-375-examples-automatic-mocks-tests-createMockFromModule-test-js" href="#ts-375-examples-automatic-mocks-tests-createMockFromModule-test-js">examples/automatic-mocks/__tests__/createMockFromModule.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | implementation created by automock | 1ms |
 | ✔️ | implementation created by jest.createMockFromModule | 0ms |
 
-## <a id=\\"user-content-ts-376-examples-manual-mocks-tests-filesummarizer-test-js\\" href=\\"#ts-376-examples-manual-mocks-tests-filesummarizer-test-js\\">examples/manual-mocks/__tests__/file_summarizer.test.js</a> ✔️
+## <a id="user-content-ts-376-examples-manual-mocks-tests-filesummarizer-test-js" href="#ts-376-examples-manual-mocks-tests-filesummarizer-test-js">examples/manual-mocks/__tests__/file_summarizer.test.js</a> ✔️
 
 ### listFilesInDirectorySync
 
@@ -9185,7 +9019,7 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | includes all files in the directory in the summary | 21ms |
 
-## <a id=\\"user-content-ts-377-examples-typescript-tests-calc-test-ts\\" href=\\"#ts-377-examples-typescript-tests-calc-test-ts\\">examples/typescript/__tests__/calc.test.ts</a> ✔️
+## <a id="user-content-ts-377-examples-typescript-tests-calc-test-ts" href="#ts-377-examples-typescript-tests-calc-test-ts">examples/typescript/__tests__/calc.test.ts</a> ✔️
 
 ### calc - mocks
 
@@ -9198,13 +9032,13 @@ Is good for you.\\") | 1ms |
 | ✔️ | clears the memory | 1ms |
 | ✔️ | throws an error when invalid Op is passed | 8ms |
 
-## <a id=\\"user-content-ts-378-examples-getting-started-sum-test-js\\" href=\\"#ts-378-examples-getting-started-sum-test-js\\">examples/getting-started/sum.test.js</a> ✔️
+## <a id="user-content-ts-378-examples-getting-started-sum-test-js" href="#ts-378-examples-getting-started-sum-test-js">examples/getting-started/sum.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | adds 1 + 2 to equal 3 | 0ms |
 
-## <a id=\\"user-content-ts-379-examples-angular-shared-sub-service-spec-ts\\" href=\\"#ts-379-examples-angular-shared-sub-service-spec-ts\\">examples/angular/shared/sub.service.spec.ts</a> ✔️
+## <a id="user-content-ts-379-examples-angular-shared-sub-service-spec-ts" href="#ts-379-examples-angular-shared-sub-service-spec-ts">examples/angular/shared/sub.service.spec.ts</a> ✔️
 
 ### Service: SubService
 
@@ -9212,76 +9046,76 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | should create service | 12ms |
 
-## <a id=\\"user-content-ts-380-examples-manual-mocks-tests-user-test-js\\" href=\\"#ts-380-examples-manual-mocks-tests-user-test-js\\">examples/manual-mocks/__tests__/user.test.js</a> ✔️
+## <a id="user-content-ts-380-examples-manual-mocks-tests-user-test-js" href="#ts-380-examples-manual-mocks-tests-user-test-js">examples/manual-mocks/__tests__/user.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | if orginal user model | 1ms |
 
-## <a id=\\"user-content-ts-381-examples-typescript-tests-sum-test-ts\\" href=\\"#ts-381-examples-typescript-tests-sum-test-ts\\">examples/typescript/__tests__/sum-test.ts</a> ✔️
+## <a id="user-content-ts-381-examples-typescript-tests-sum-test-ts" href="#ts-381-examples-typescript-tests-sum-test-ts">examples/typescript/__tests__/sum-test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | adds 1 + 2 to equal 3 in TScript | 8ms |
 | ✔️ | adds 1 + 2 to equal 3 in JavaScript | 9ms |
 
-## <a id=\\"user-content-ts-382-examples-automatic-mocks-tests-automock-test-js\\" href=\\"#ts-382-examples-automatic-mocks-tests-automock-test-js\\">examples/automatic-mocks/__tests__/automock.test.js</a> ✔️
+## <a id="user-content-ts-382-examples-automatic-mocks-tests-automock-test-js" href="#ts-382-examples-automatic-mocks-tests-automock-test-js">examples/automatic-mocks/__tests__/automock.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | if utils are mocked | 0ms |
 | ✔️ | mocked implementation | 1ms |
 
-## <a id=\\"user-content-ts-383-examples-manual-mocks-tests-lodashMocking-test-js\\" href=\\"#ts-383-examples-manual-mocks-tests-lodashMocking-test-js\\">examples/manual-mocks/__tests__/lodashMocking.test.js</a> ✔️
+## <a id="user-content-ts-383-examples-manual-mocks-tests-lodashMocking-test-js" href="#ts-383-examples-manual-mocks-tests-lodashMocking-test-js">examples/manual-mocks/__tests__/lodashMocking.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | if lodash head is mocked | 1ms |
 
-## <a id=\\"user-content-ts-384-examples-manual-mocks-tests-userMocked-test-js\\" href=\\"#ts-384-examples-manual-mocks-tests-userMocked-test-js\\">examples/manual-mocks/__tests__/userMocked.test.js</a> ✔️
+## <a id="user-content-ts-384-examples-manual-mocks-tests-userMocked-test-js" href="#ts-384-examples-manual-mocks-tests-userMocked-test-js">examples/manual-mocks/__tests__/userMocked.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | if user model is mocked | 1ms |
 
-## <a id=\\"user-content-ts-385-examples-typescript-tests-sum-test-js\\" href=\\"#ts-385-examples-typescript-tests-sum-test-js\\">examples/typescript/__tests__/sum.test.js</a> ✔️
+## <a id="user-content-ts-385-examples-typescript-tests-sum-test-js" href="#ts-385-examples-typescript-tests-sum-test-js">examples/typescript/__tests__/sum.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | adds 1 + 2 to equal 3 in Typescript | 2ms |
 | ✔️ | adds 1 + 2 to equal 3 in JavaScript | 1ms |
 
-## <a id=\\"user-content-ts-386-e2e-custom-test-sequencer-b-test-js\\" href=\\"#ts-386-e2e-custom-test-sequencer-b-test-js\\">e2e/custom-test-sequencer/b.test.js</a> ✔️
+## <a id="user-content-ts-386-e2e-custom-test-sequencer-b-test-js" href="#ts-386-e2e-custom-test-sequencer-b-test-js">e2e/custom-test-sequencer/b.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | b | 0ms |
 
-## <a id=\\"user-content-ts-387-examples-typescript-tests-sub-test-ts\\" href=\\"#ts-387-examples-typescript-tests-sub-test-ts\\">examples/typescript/__tests__/sub-test.ts</a> ✔️
+## <a id="user-content-ts-387-examples-typescript-tests-sub-test-ts" href="#ts-387-examples-typescript-tests-sub-test-ts">examples/typescript/__tests__/sub-test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | subtracts 5 - 1 to equal 4 in TypeScript | 1ms |
 
-## <a id=\\"user-content-ts-388-examples-module-mock-tests-fullmock-js\\" href=\\"#ts-388-examples-module-mock-tests-fullmock-js\\">examples/module-mock/__tests__/full_mock.js</a> ✔️
+## <a id="user-content-ts-388-examples-module-mock-tests-fullmock-js" href="#ts-388-examples-module-mock-tests-fullmock-js">examples/module-mock/__tests__/full_mock.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | does a full mock | 0ms |
 
-## <a id=\\"user-content-ts-389-e2e-tests-global-test-ts\\" href=\\"#ts-389-e2e-tests-global-test-ts\\">e2e/__tests__/global.test.ts</a> ✔️
+## <a id="user-content-ts-389-e2e-tests-global-test-ts" href="#ts-389-e2e-tests-global-test-ts">e2e/__tests__/global.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | globals are properly defined | 0ms |
 
-## <a id=\\"user-content-ts-390-examples-automatic-mocks-tests-disableAutomocking-test-js\\" href=\\"#ts-390-examples-automatic-mocks-tests-disableAutomocking-test-js\\">examples/automatic-mocks/__tests__/disableAutomocking.test.js</a> ✔️
+## <a id="user-content-ts-390-examples-automatic-mocks-tests-disableAutomocking-test-js" href="#ts-390-examples-automatic-mocks-tests-disableAutomocking-test-js">examples/automatic-mocks/__tests__/disableAutomocking.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | original implementation | 0ms |
 
-## <a id=\\"user-content-ts-391-e2e-timer-reset-mocks-after-reset-all-mocks-timerAndMock-test-js\\" href=\\"#ts-391-e2e-timer-reset-mocks-after-reset-all-mocks-timerAndMock-test-js\\">e2e/timer-reset-mocks/after-reset-all-mocks/timerAndMock.test.js</a> ✔️
+## <a id="user-content-ts-391-e2e-timer-reset-mocks-after-reset-all-mocks-timerAndMock-test-js" href="#ts-391-e2e-timer-reset-mocks-after-reset-all-mocks-timerAndMock-test-js">e2e/timer-reset-mocks/after-reset-all-mocks/timerAndMock.test.js</a> ✔️
 
 ### timers
 
@@ -9290,13 +9124,13 @@ Is good for you.\\") | 1ms |
 | ✔️ | should work before calling resetAllMocks | 1ms |
 | ✔️ | should not break after calling resetAllMocks | 1ms |
 
-## <a id=\\"user-content-ts-392-e2e-tests-requireV8Module-test-ts\\" href=\\"#ts-392-e2e-tests-requireV8Module-test-ts\\">e2e/__tests__/requireV8Module.test.ts</a> ✔️
+## <a id="user-content-ts-392-e2e-tests-requireV8Module-test-ts" href="#ts-392-e2e-tests-requireV8Module-test-ts">e2e/__tests__/requireV8Module.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | v8 module | 1ms |
 
-## <a id=\\"user-content-ts-393-e2e-timer-reset-mocks-with-reset-mocks-timerWithMock-test-js\\" href=\\"#ts-393-e2e-timer-reset-mocks-with-reset-mocks-timerWithMock-test-js\\">e2e/timer-reset-mocks/with-reset-mocks/timerWithMock.test.js</a> ✔️
+## <a id="user-content-ts-393-e2e-timer-reset-mocks-with-reset-mocks-timerWithMock-test-js" href="#ts-393-e2e-timer-reset-mocks-with-reset-mocks-timerWithMock-test-js">e2e/timer-reset-mocks/with-reset-mocks/timerWithMock.test.js</a> ✔️
 
 ### timers
 
@@ -9304,42 +9138,38 @@ Is good for you.\\") | 1ms |
 | :---: | :--- | ---: |
 | ✔️ | should work before calling resetAllMocks | 0ms |
 
-## <a id=\\"user-content-ts-394-examples-module-mock-tests-partialmock-js\\" href=\\"#ts-394-examples-module-mock-tests-partialmock-js\\">examples/module-mock/__tests__/partial_mock.js</a> ✔️
+## <a id="user-content-ts-394-examples-module-mock-tests-partialmock-js" href="#ts-394-examples-module-mock-tests-partialmock-js">examples/module-mock/__tests__/partial_mock.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | does a partial mock | 1ms |
 
-## <a id=\\"user-content-ts-395-e2e-custom-test-sequencer-d-test-js\\" href=\\"#ts-395-e2e-custom-test-sequencer-d-test-js\\">e2e/custom-test-sequencer/d.test.js</a> ✔️
+## <a id="user-content-ts-395-e2e-custom-test-sequencer-d-test-js" href="#ts-395-e2e-custom-test-sequencer-d-test-js">e2e/custom-test-sequencer/d.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | d | 0ms |
 
-## <a id=\\"user-content-ts-396-e2e-custom-test-sequencer-a-test-js\\" href=\\"#ts-396-e2e-custom-test-sequencer-a-test-js\\">e2e/custom-test-sequencer/a.test.js</a> ✔️
+## <a id="user-content-ts-396-e2e-custom-test-sequencer-a-test-js" href="#ts-396-e2e-custom-test-sequencer-a-test-js">e2e/custom-test-sequencer/a.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | a | 0ms |
 
-## <a id=\\"user-content-ts-397-e2e-custom-test-sequencer-e-test-js\\" href=\\"#ts-397-e2e-custom-test-sequencer-e-test-js\\">e2e/custom-test-sequencer/e.test.js</a> ✔️
+## <a id="user-content-ts-397-e2e-custom-test-sequencer-e-test-js" href="#ts-397-e2e-custom-test-sequencer-e-test-js">e2e/custom-test-sequencer/e.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | e | 0ms |
 
-## <a id=\\"user-content-ts-398-e2e-custom-test-sequencer-c-test-js\\" href=\\"#ts-398-e2e-custom-test-sequencer-c-test-js\\">e2e/custom-test-sequencer/c.test.js</a> ✔️
+## <a id="user-content-ts-398-e2e-custom-test-sequencer-c-test-js" href="#ts-398-e2e-custom-test-sequencer-c-test-js">e2e/custom-test-sequencer/c.test.js</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | c | 0ms |
 
-## <a id=\\"user-content-ts-399-e2e-tests-asyncAndCallback-test-ts\\" href=\\"#ts-399-e2e-tests-asyncAndCallback-test-ts\\">e2e/__tests__/asyncAndCallback.test.ts</a> ✔️
+## <a id="user-content-ts-399-e2e-tests-asyncAndCallback-test-ts" href="#ts-399-e2e-tests-asyncAndCallback-test-ts">e2e/__tests__/asyncAndCallback.test.ts</a> ✔️
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
 | ✔️ | errors when a test both returns a promise and takes a callback | 704ms |
-",
-  "title": "jest tests ❌",
-}
-`;
