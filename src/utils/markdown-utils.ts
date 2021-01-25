@@ -34,3 +34,11 @@ export function tableEscape(content: ToString): string {
 export function fixEol(text?: string): string {
   return text?.replace(/\r/g, '') ?? ''
 }
+
+export function ellipsis(text: string, maxLength: number): string {
+  if (text.length <= maxLength) {
+    return text
+  }
+
+  return text.substr(0, maxLength - 3) + '...'
+}

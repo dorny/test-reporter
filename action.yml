@@ -4,14 +4,16 @@ description: |
   Supports .NET (xUnit, NUnit, MSTest), Dart, Flutter and JavaScript (JEST).
 author: Michal Dorner <dorner.michal@gmail.com>
 inputs:
-  annotations:
-    description: Enables code annotations with error message and stack trace captured during test execution
-    required: true
-    default: 'true'
   fail-on-error:
     description: Set this action as failed if test report contain any failed test
     required: true
     default: 'true'
+  max-annotations:
+    description: |
+      Limits number of created annotations with error message and stack trace captured during test execution.
+      Must be less or equal to 50.
+    required: true
+    default: '10'
   name:
     description: Name of the check run
     required: true
@@ -19,7 +21,7 @@ inputs:
     description: |
       Coma separated list of paths to test reports
       Supports wildcards via [fast-glob](https://github.com/mrmlnc/fast-glob)
-      All matched files must be of same format
+      All matched result files must be of same format
     required: true
   reporter:
     description: |

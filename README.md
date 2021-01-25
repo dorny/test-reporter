@@ -61,8 +61,9 @@ jobs:
     #   jest-junit
     reporter: ''
 
-    # Enables code annotations with error message and stack trace captured during test execution
-    annotations: 'true'
+    # Limits number of created annotations with error message and stack trace captured during test execution.
+    # Must be less or equal to 50.
+    max-annotations: '10'
 
     # Set action as failed if test report contain any failed test
     fail-on-error: 'true'

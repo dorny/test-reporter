@@ -8,7 +8,7 @@ import {parseJestJunit} from './parsers/jest-junit/jest-junit-parser'
 import {FileContent, ParseOptions, ParseTestResult} from './parsers/parser-types'
 import {normalizeDirPath} from './utils/file-utils'
 import {listFiles} from './utils/git'
-import {getCheckRunSha} from './utils/github-utils'
+import {enforceCheckRunLimits, getCheckRunSha} from './utils/github-utils'
 
 async function run(): Promise<void> {
   try {
@@ -19,13 +19,18 @@ async function run(): Promise<void> {
 }
 
 async function main(): Promise<void> {
-  const annotations = core.getInput('annotations', {required: true}) === 'true'
+  const maxAnnotations = parseInt(core.getInput('max-annotations', {required: true}))
   const failOnError = core.getInput('fail-on-error', {required: true}) === 'true'
   const name = core.getInput('name', {required: true})
   const path = core.getInput('path', {required: true})
   const reporter = core.getInput('reporter', {required: true})
   const token = core.getInput('token', {required: true})
   const workDirInput = core.getInput('working-directory', {required: false})
+
+  if (isNaN(maxAnnotations) || maxAnnotations < 0 || maxAnnotations > 50) {
+    core.setFailed(`Input parameter 'max-annotations' has invalid value`)
+    return
+  }
 
   if (workDirInput) {
     core.info(`Changing directory to ${workDirInput}`)
@@ -37,13 +42,14 @@ async function main(): Promise<void> {
   const sha = getCheckRunSha()
 
   // We won't need tracked files if we are not going to create annotations
+  const annotations = maxAnnotations > 0
   const trackedFiles = annotations ? await listFiles() : []
 
   const opts: ParseOptions = {
     name,
-    annotations,
     trackedFiles,
-    workDir
+    workDir,
+    annotations
   }
 
   const parser = getParser(reporter)
@@ -57,6 +63,8 @@ async function main(): Promise<void> {
   core.info(`Using test report parser '${reporter}'`)
   const result = await parser(files, opts)
   const conclusion = result.success ? 'success' : 'failure'
+
+  enforceCheckRunLimits(result, maxAnnotations)
 
   core.info(`Creating check run '${name}' with conclusion '${conclusion}'`)
   await octokit.checks.create({
