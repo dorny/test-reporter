@@ -4,16 +4,6 @@ description: |
   Supports .NET (xUnit, NUnit, MSTest), Dart, Flutter and JavaScript (JEST).
 author: Michal Dorner <dorner.michal@gmail.com>
 inputs:
-  fail-on-error:
-    description: Set this action as failed if test report contain any failed test
-    required: true
-    default: 'true'
-  max-annotations:
-    description: |
-      Limits number of created annotations with error message and stack trace captured during test execution.
-      Must be less or equal to 50.
-    required: true
-    default: '10'
   name:
     description: Name of the check run
     required: true
@@ -31,13 +21,38 @@ inputs:
         - flutter-machine
         - jest-junit
     required: true
+  list-suites:
+    description: |
+      Limits which test suites are listed. Supported options:
+        - all
+        - only-failed
+    required: true
+    default: 'all'
+  list-tests:
+    description: |
+      Limits which test cases are listed. Supported options:
+        - all
+        - only-failed
+        - none
+    required: true
+    default: 'all'
+  max-annotations:
+    description: |
+      Limits number of created annotations with error message and stack trace captured during test execution.
+      Must be less or equal to 50.
+    required: true
+    default: '10'
+  fail-on-error:
+    description: Set this action as failed if test report contain any failed test
+    required: true
+    default: 'true'
+  working-directory:
+    description: Relative path under $GITHUB_WORKSPACE where the repository was checked out
+    required: false
   token:
     description: GitHub Access Token
     required: false
     default: ${{ github.token }}
-  working-directory:
-    description: Relative path under $GITHUB_WORKSPACE where the repository was checked out
-    required: false
 outputs:
   conclusion:
     description: |

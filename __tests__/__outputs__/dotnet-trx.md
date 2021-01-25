@@ -6,11 +6,11 @@
 
 | Result | Suite | Tests | Time | Passed ✔️ | Skipped ✖️ | Failed ❌ |
 | :---: | :--- | ---: | ---: | ---: | ---: | ---: |
-| ❌ | [DotnetTests.XUnitTests.CalculatorTests](#ts-0-DotnetTests-XUnitTests-CalculatorTests) | 7 | 109.5761ms | 3 | 1 | 3 |
+| ❌ | [DotnetTests.XUnitTests.CalculatorTests](#r0s0-DotnetTests-XUnitTests-CalculatorTests) | 7 | 109.5761ms | 3 | 1 | 3 |
 
 # Test Suites
 
-## <a id="user-content-ts-0-DotnetTests-XUnitTests-CalculatorTests" href="#ts-0-DotnetTests-XUnitTests-CalculatorTests">DotnetTests.XUnitTests.CalculatorTests</a> ❌
+## <a id="user-content-r0s0-DotnetTests-XUnitTests-CalculatorTests" href="#r0s0-DotnetTests-XUnitTests-CalculatorTests">DotnetTests.XUnitTests.CalculatorTests</a> ❌
 
 | Result | Test | Time |
 | :---: | :--- | ---: |

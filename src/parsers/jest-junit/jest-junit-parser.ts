@@ -3,7 +3,7 @@ import {Annotation, FileContent, ParseOptions, TestResult} from '../parser-types
 import {parseStringPromise} from 'xml2js'
 
 import {JunitReport, TestCase, TestSuite} from './jest-junit-types'
-import {fixEol, Icon} from '../../utils/markdown-utils'
+import {fixEol} from '../../utils/markdown-utils'
 import {normalizeFilePath} from '../../utils/file-utils'
 
 import {
@@ -13,7 +13,6 @@ import {
   TestGroupResult,
   TestCaseResult
 } from '../../report/test-results'
-import getReport from '../../report/get-report'
 
 export async function parseJestJunit(files: FileContent[], options: ParseOptions): Promise<TestResult> {
   const junit: JunitReport[] = []
@@ -26,16 +25,9 @@ export async function parseJestJunit(files: FileContent[], options: ParseOptions
     testRuns.push(tr)
   }
 
-  const success = testRuns.every(tr => tr.result === 'success')
-  const icon = success ? Icon.success : Icon.fail
-
   return {
-    success,
-    output: {
-      title: `${options.name.trim()} ${icon}`,
-      summary: getReport(testRuns),
-      annotations: options.annotations ? getAnnotations(junit, options.workDir, options.trackedFiles) : undefined
-    }
+    testRuns,
+    annotations: options.annotations ? getAnnotations(junit, options.workDir, options.trackedFiles) : []
   }
 }
 

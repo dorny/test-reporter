@@ -14,16 +14,11 @@ export function getCheckRunSha(): string {
 }
 
 export function enforceCheckRunLimits(result: TestResult, maxAnnotations: number): void {
-  const output = result.output
-  if (!output) {
-    return
-  }
-
   // Limit number of created annotations
-  output.annotations?.splice(maxAnnotations + 1)
+  result.annotations.splice(maxAnnotations + 1)
 
   // Limit number of characters in annotation fields
-  for (const err of output.annotations ?? []) {
+  for (const err of result.annotations) {
     err.title = ellipsis(err.title || '', 255)
     err.message = ellipsis(err.message, 65535)
   }

@@ -3,6 +3,7 @@ import * as path from 'path'
 
 import {parseDartJson} from '../src/parsers/dart-json/dart-json-parser'
 import {ParseOptions} from '../src/parsers/parser-types'
+import {getReport} from '../src/report/get-report'
 import {normalizeFilePath} from '../src/utils/file-utils'
 
 const fixturePath = path.join(__dirname, 'fixtures', 'dart-json.json')
@@ -15,17 +16,16 @@ const xmlFixture = {
 describe('dart-json tests', () => {
   it('matches report snapshot', async () => {
     const opts: ParseOptions = {
-      name: 'Dart tests',
       annotations: true,
       trackedFiles: ['lib/main.dart', 'test/main_test.dart', 'test/second_test.dart'],
       workDir: 'C:/Users/Michal/Workspace/dorny/test-check/reports/dart/'
     }
 
     const result = await parseDartJson([xmlFixture], opts)
-    fs.mkdirSync(path.dirname(outputPath), {recursive: true})
-    fs.writeFileSync(outputPath, result?.output?.summary ?? '')
+    expect(result).toMatchSnapshot()
 
-    expect(result.success).toBeFalsy()
-    expect(result?.output).toMatchSnapshot()
+    const report = getReport(result.testRuns)
+    fs.mkdirSync(path.dirname(outputPath), {recursive: true})
+    fs.writeFileSync(outputPath, report)
   })
 })

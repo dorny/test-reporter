@@ -5,7 +5,7 @@ import {Annotation, FileContent, ParseOptions, TestResult} from '../parser-types
 import {parseStringPromise} from 'xml2js'
 
 import {normalizeFilePath} from '../../utils/file-utils'
-import {Icon, fixEol} from '../../utils/markdown-utils'
+import {fixEol} from '../../utils/markdown-utils'
 import {parseIsoDate, parseNetDuration} from '../../utils/parse-utils'
 
 import {
@@ -15,7 +15,6 @@ import {
   TestGroupResult,
   TestCaseResult
 } from '../../report/test-results'
-import getReport from '../../report/get-report'
 
 class TestClass {
   constructor(readonly name: string) {}
@@ -54,16 +53,9 @@ export async function parseDotnetTrx(files: FileContent[], options: ParseOptions
     testClasses.push(...tc)
   }
 
-  const success = testRuns.every(tr => tr.result === 'success')
-  const icon = success ? Icon.success : Icon.fail
-
   return {
-    success,
-    output: {
-      title: `${options.name.trim()} ${icon}`,
-      summary: getReport(testRuns),
-      annotations: options.annotations ? getAnnotations(testClasses, options.workDir, options.trackedFiles) : undefined
-    }
+    testRuns,
+    annotations: options.annotations ? getAnnotations(testClasses, options.workDir, options.trackedFiles) : []
   }
 }
 

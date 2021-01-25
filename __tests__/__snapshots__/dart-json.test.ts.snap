@@ -52,47 +52,75 @@ dart:isolate  _RawReceivePortImpl._handleMessage
       "title": "[test\\\\second_test.dart] Timeout test",
     },
   ],
-  "summary": "![Tests failed](https://img.shields.io/badge/tests-1%20passed%2C%201%20skipped%2C%204%20failed-critical)
-
-### fixtures/dart-json.json
-
-**6** tests were completed in **3.760s** with **1** passed, **1** skipped and **4** failed.
-
-| Result | Suite | Tests | Time | Passed ✔️ | Skipped ✖️ | Failed ❌ |
-| :---: | :--- | ---: | ---: | ---: | ---: | ---: |
-| ❌ | [test\\\\main_test.dart](#ts-0-test-maintest-dart) | 4 | 74ms | 1 | 0 | 3 |
-| ❌ | [test\\\\second_test.dart](#ts-1-test-secondtest-dart) | 2 | 51ms | 0 | 1 | 1 |
-
-# Test Suites
-
-## <a id=\\"user-content-ts-0-test-maintest-dart\\" href=\\"#ts-0-test-maintest-dart\\">test\\\\main_test.dart</a> ❌
-
-### Test 1
-
-| Result | Test | Time |
-| :---: | :--- | ---: |
-| ✔️ | Test 1 Passing test | 36ms |
-
-### Test 1 Test 1.1
-
-| Result | Test | Time |
-| :---: | :--- | ---: |
-| ❌ | Test 1 Test 1.1 Failing test | 20ms |
-| ❌ | Test 1 Test 1.1 Exception in target unit | 6ms |
-
-### Test 2
-
-| Result | Test | Time |
-| :---: | :--- | ---: |
-| ❌ | Test 2 Exception in test | 12ms |
-
-## <a id=\\"user-content-ts-1-test-secondtest-dart\\" href=\\"#ts-1-test-secondtest-dart\\">test\\\\second_test.dart</a> ❌
-
-| Result | Test | Time |
-| :---: | :--- | ---: |
-| ❌ | Timeout test | 37ms |
-| ✖️ | Skipped test | 14ms |
-",
-  "title": "Dart tests ❌",
+  "testRuns": Array [
+    TestRunResult {
+      "path": "fixtures/dart-json.json",
+      "suites": Array [
+        TestSuiteResult {
+          "groups": Array [
+            TestGroupResult {
+              "name": "Test 1",
+              "tests": Array [
+                TestCaseResult {
+                  "name": "Test 1 Passing test",
+                  "result": "success",
+                  "time": 36,
+                },
+              ],
+            },
+            TestGroupResult {
+              "name": "Test 1 Test 1.1",
+              "tests": Array [
+                TestCaseResult {
+                  "name": "Test 1 Test 1.1 Failing test",
+                  "result": "failed",
+                  "time": 20,
+                },
+                TestCaseResult {
+                  "name": "Test 1 Test 1.1 Exception in target unit",
+                  "result": "failed",
+                  "time": 6,
+                },
+              ],
+            },
+            TestGroupResult {
+              "name": "Test 2",
+              "tests": Array [
+                TestCaseResult {
+                  "name": "Test 2 Exception in test",
+                  "result": "failed",
+                  "time": 12,
+                },
+              ],
+            },
+          ],
+          "name": "test\\\\main_test.dart",
+          "totalTime": undefined,
+        },
+        TestSuiteResult {
+          "groups": Array [
+            TestGroupResult {
+              "name": null,
+              "tests": Array [
+                TestCaseResult {
+                  "name": "Timeout test",
+                  "result": "failed",
+                  "time": 37,
+                },
+                TestCaseResult {
+                  "name": "Skipped test",
+                  "result": "skipped",
+                  "time": 14,
+                },
+              ],
+            },
+          ],
+          "name": "test\\\\second_test.dart",
+          "totalTime": undefined,
+        },
+      ],
+      "totalTime": 3760,
+    },
+  ],
 }
 `;

@@ -3,10 +3,10 @@ import * as path from 'path'
 
 import {parseJestJunit} from '../src/parsers/jest-junit/jest-junit-parser'
 import {ParseOptions} from '../src/parsers/parser-types'
+import {getReport} from '../src/report/get-report'
 import {normalizeFilePath} from '../src/utils/file-utils'
 
 describe('jest-junit tests', () => {
-
   it('report from ./reports/jest test results matches snapshot', async () => {
     const fixturePath = path.join(__dirname, 'fixtures', 'jest-junit.xml')
     const outputPath = path.join(__dirname, '__outputs__', 'jest-junit.md')
@@ -16,18 +16,17 @@ describe('jest-junit tests', () => {
     }
 
     const opts: ParseOptions = {
-      name: 'jest tests',
       annotations: true,
       trackedFiles: ['__tests__/main.test.js', '__tests__/second.test.js', 'lib/main.js'],
       workDir: 'C:/Users/Michal/Workspace/dorny/test-check/reports/jest/'
     }
 
     const result = await parseJestJunit([xmlFixture], opts)
-    fs.mkdirSync(path.dirname(outputPath), {recursive: true})
-    fs.writeFileSync(outputPath, result?.output?.summary ?? '')
+    expect(result).toMatchSnapshot()
 
-    expect(result.success).toBeFalsy()
-    expect(result?.output).toMatchSnapshot()
+    const report = getReport(result.testRuns)
+    fs.mkdirSync(path.dirname(outputPath), {recursive: true})
+    fs.writeFileSync(outputPath, report)
   })
 
   it('report from facebook/jest test results matches snapshot', async () => {
@@ -42,16 +41,15 @@ describe('jest-junit tests', () => {
     const trackedFiles = fs.readFileSync(filesPath, {encoding: 'utf8'}).split(/\n\r?/g)
     const opts: ParseOptions = {
       trackedFiles,
-      name: 'jest tests',
       annotations: true,
       workDir: '/home/dorny/dorny/jest/'
     }
 
     const result = await parseJestJunit([xmlFixture], opts)
-    fs.mkdirSync(path.dirname(outputPath), {recursive: true})
-    fs.writeFileSync(outputPath, result?.output?.summary ?? '')
+    expect(result).toMatchSnapshot()
 
-    expect(result.success).toBeFalsy()
-    expect(result?.output).toMatchSnapshot()
+    const report = getReport(result.testRuns, {listTests: 'only-failed'})
+    fs.mkdirSync(path.dirname(outputPath), {recursive: true})
+    fs.writeFileSync(outputPath, report)
   })
 })

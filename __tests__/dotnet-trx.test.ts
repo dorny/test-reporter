@@ -3,6 +3,7 @@ import * as path from 'path'
 
 import {parseDotnetTrx} from '../src/parsers/dotnet-trx/dotnet-trx-parser'
 import {ParseOptions} from '../src/parsers/parser-types'
+import {getReport} from '../src/report/get-report'
 import {normalizeFilePath} from '../src/utils/file-utils'
 
 const fixturePath = path.join(__dirname, 'fixtures', 'dotnet-trx.trx')
@@ -15,17 +16,16 @@ const xmlFixture = {
 describe('dotnet-trx tests', () => {
   it('matches report snapshot', async () => {
     const opts: ParseOptions = {
-      name: 'Dotnet TRX tests',
       annotations: true,
       trackedFiles: ['DotnetTests.Unit/Calculator.cs', 'DotnetTests.XUnitTests/CalculatorTests.cs'],
       workDir: 'C:/Users/Michal/Workspace/dorny/test-check/reports/dotnet/'
     }
 
     const result = await parseDotnetTrx([xmlFixture], opts)
-    fs.mkdirSync(path.dirname(outputPath), {recursive: true})
-    fs.writeFileSync(outputPath, result?.output?.summary ?? '')
+    expect(result).toMatchSnapshot()
 
-    expect(result.success).toBeFalsy()
-    expect(result?.output).toMatchSnapshot()
+    const report = getReport(result.testRuns)
+    fs.mkdirSync(path.dirname(outputPath), {recursive: true})
+    fs.writeFileSync(outputPath, report)
   })
 })

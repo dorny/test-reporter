@@ -1,6 +1,5 @@
-import {Endpoints} from '@octokit/types'
+import {TestRunResult} from '../report/test-results'
 
-export type OutputParameters = Endpoints['POST /repos/{owner}/{repo}/check-runs']['parameters']['output']
 export type Annotation = {
   path: string
   start_line: number
@@ -18,13 +17,12 @@ export type ParseTestResult = (files: FileContent[], options: ParseOptions) => P
 export type FileContent = {path: string; content: string}
 
 export interface ParseOptions {
-  name: string
   annotations: boolean
   workDir: string
   trackedFiles: string[]
 }
 
 export interface TestResult {
-  success: boolean
-  output: OutputParameters
+  testRuns: TestRunResult[]
+  annotations: Annotation[]
 }

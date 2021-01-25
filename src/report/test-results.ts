@@ -22,6 +22,10 @@ export class TestRunResult {
   get result(): TestExecutionResult {
     return this.suites.some(t => t.result === 'failed') ? 'failed' : 'success'
   }
+
+  get failedSuites(): TestSuiteResult[] {
+    return this.suites.filter(s => s.result === 'failed')
+  }
 }
 
 export class TestSuiteResult {
@@ -47,6 +51,10 @@ export class TestSuiteResult {
   get result(): TestExecutionResult {
     return this.groups.some(t => t.result === 'failed') ? 'failed' : 'success'
   }
+
+  get failedGroups(): TestGroupResult[] {
+    return this.groups.filter(grp => grp.result === 'failed')
+  }
 }
 
 export class TestGroupResult {
@@ -67,6 +75,10 @@ export class TestGroupResult {
 
   get result(): TestExecutionResult {
     return this.tests.some(t => t.result === 'failed') ? 'failed' : 'success'
+  }
+
+  get failedTests(): TestCaseResult[] {
+    return this.tests.filter(tc => tc.result === 'failed')
   }
 }
 

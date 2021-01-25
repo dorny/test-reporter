@@ -1,9 +1,8 @@
 import * as core from '@actions/core'
 import {Annotation, FileContent, ParseOptions, TestResult} from '../parser-types'
 
-import getReport from '../../report/get-report'
 import {normalizeFilePath} from '../../utils/file-utils'
-import {Icon, fixEol} from '../../utils/markdown-utils'
+import {fixEol} from '../../utils/markdown-utils'
 
 import {
   ReportEvent,
@@ -72,16 +71,10 @@ class TestCase {
 export async function parseDartJson(files: FileContent[], options: ParseOptions): Promise<TestResult> {
   const testRuns = files.map(f => getTestRun(f.path, f.content))
   const testRunsResults = testRuns.map(getTestRunResult)
-  const success = testRuns.every(tr => tr.success)
-  const icon = success ? Icon.success : Icon.fail
 
   return {
-    success,
-    output: {
-      title: `${options.name.trim()} ${icon}`,
-      summary: getReport(testRunsResults),
-      annotations: options.annotations ? getAnnotations(testRuns, options.workDir, options.trackedFiles) : undefined
-    }
+    testRuns: testRunsResults,
+    annotations: options.annotations ? getAnnotations(testRuns, options.workDir, options.trackedFiles) : []
   }
 }
 
