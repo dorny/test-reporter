@@ -57,8 +57,8 @@ function getBadge(results: TestRunResult[]): string {
   const failed = results.reduce((sum, tr) => sum + tr.failed, 0)
 
   const passedText = passed > 0 ? `${passed} passed` : null
-  const skippedText = skipped > 0 ? `${skipped} skipped` : null
   const failedText = failed > 0 ? `${failed} failed` : null
+  const skippedText = skipped > 0 ? `${skipped} skipped` : null
   const message = [passedText, skippedText, failedText].filter(s => s != null).join(', ') || 'none'
   let color = 'success'
   if (failed > 0) {
@@ -76,24 +76,28 @@ function getRunSummary(tr: TestRunResult, runIndex: number, options: ReportOptio
   core.info('Generating check run summary')
   const time = `${(tr.time / 1000).toFixed(3)}s`
   const headingLine1 = `### ${tr.path}`
-  const headingLine2 = `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.skipped}** skipped and **${tr.failed}** failed.`
+  const headingLine2 = `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`
 
   const suites = options.listSuites === 'only-failed' ? tr.failedSuites : tr.suites
   const suitesSummary = suites.map((s, suiteIndex) => {
     const icon = getResultIcon(s.result)
     const tsTime = `${Math.round(s.time)}ms`
     const tsName = s.name
+    const skipLink = options.listTests === 'none' || (options.listTests === 'only-failed' && s.result !== 'failed')
     const tsAddr = makeSuiteSlug(runIndex, suiteIndex, tsName).link
-    const tsNameLink = link(tsName, tsAddr)
-    return [icon, tsNameLink, s.tests, tsTime, s.passed, s.skipped, s.failed]
+    const tsNameLink = skipLink ? tsName : link(tsName, tsAddr)
+    const passed = s.passed > 0 ? `${s.passed}${Icon.success}` : ''
+    const failed = s.failed > 0 ? `${s.failed}${Icon.fail}` : ''
+    const skipped = s.skipped > 0 ? `${s.skipped}${Icon.skip}` : ''
+    return [icon, tsNameLink, passed, failed, skipped, tsTime]
   })
 
   const summary =
     suites.length === 0
       ? ''
       : table(
-          ['Result', 'Suite', 'Tests', 'Time', `Passed ${Icon.success}`, `Skipped ${Icon.skip}`, `Failed ${Icon.fail}`],
-          [Align.Center, Align.Left, Align.Right, Align.Right, Align.Right, Align.Right, Align.Right],
+          ['Result', 'Suite', 'Passed', 'Failed', 'Skipped', 'Time'],
+          [Align.Center, Align.Left, Align.Right, Align.Right, Align.Right, Align.Right],
           ...suitesSummary
         )
 

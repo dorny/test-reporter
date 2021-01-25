@@ -781,8 +781,8 @@ function getBadge(results) {
     const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
     const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
     const passedText = passed > 0 ? `${passed} passed` : null;
-    const skippedText = skipped > 0 ? `${skipped} skipped` : null;
     const failedText = failed > 0 ? `${failed} failed` : null;
+    const skippedText = skipped > 0 ? `${skipped} skipped` : null;
     const message = [passedText, skippedText, failedText].filter(s => s != null).join(', ') || 'none';
     let color = 'success';
     if (failed > 0) {
@@ -799,19 +799,23 @@ function getRunSummary(tr, runIndex, options) {
     core.info('Generating check run summary');
     const time = `${(tr.time / 1000).toFixed(3)}s`;
     const headingLine1 = `### ${tr.path}`;
-    const headingLine2 = `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.skipped}** skipped and **${tr.failed}** failed.`;
+    const headingLine2 = `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`;
     const suites = options.listSuites === 'only-failed' ? tr.failedSuites : tr.suites;
     const suitesSummary = suites.map((s, suiteIndex) => {
         const icon = getResultIcon(s.result);
         const tsTime = `${Math.round(s.time)}ms`;
         const tsName = s.name;
+        const skipLink = options.listTests === 'none' || (options.listTests === 'only-failed' && s.result !== 'failed');
         const tsAddr = makeSuiteSlug(runIndex, suiteIndex, tsName).link;
-        const tsNameLink = markdown_utils_1.link(tsName, tsAddr);
-        return [icon, tsNameLink, s.tests, tsTime, s.passed, s.skipped, s.failed];
+        const tsNameLink = skipLink ? tsName : markdown_utils_1.link(tsName, tsAddr);
+        const passed = s.passed > 0 ? `${s.passed}${markdown_utils_1.Icon.success}` : '';
+        const failed = s.failed > 0 ? `${s.failed}${markdown_utils_1.Icon.fail}` : '';
+        const skipped = s.skipped > 0 ? `${s.skipped}${markdown_utils_1.Icon.skip}` : '';
+        return [icon, tsNameLink, passed, failed, skipped, tsTime];
     });
     const summary = suites.length === 0
         ? ''
-        : markdown_utils_1.table(['Result', 'Suite', 'Tests', 'Time', `Passed ${markdown_utils_1.Icon.success}`, `Skipped ${markdown_utils_1.Icon.skip}`, `Failed ${markdown_utils_1.Icon.fail}`], [markdown_utils_1.Align.Center, markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...suitesSummary);
+        : markdown_utils_1.table(['Result', 'Suite', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Center, markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...suitesSummary);
     return [headingLine1, headingLine2, summary].join('\n\n');
 }
 function getSuiteSummary(ts, runIndex, suiteIndex, options) {
@@ -1129,7 +1133,7 @@ exports.enforceCheckRunLimits = enforceCheckRunLimits;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ellipsis = exports.fixEol = exports.tableEscape = exports.table = exports.link = exports.details = exports.Icon = exports.Align = void 0;
+exports.ellipsis = exports.fixEol = exports.tableEscape = exports.table = exports.link = exports.Icon = exports.Align = void 0;
 var Align;
 (function (Align) {
     Align["Left"] = ":---";
@@ -1142,18 +1146,14 @@ exports.Icon = {
     success: '✔️',
     fail: '❌' // ':x:'
 };
-function details(summary, content) {
-    return `<details><summary>${summary}</summary>${content}</details>`;
-}
-exports.details = details;
 function link(title, address) {
     return `[${title}](${address})`;
 }
 exports.link = link;
 function table(headers, align, ...rows) {
-    const headerRow = `| ${headers.map(tableEscape).join(' | ')} |`;
-    const alignRow = `| ${align.join(' | ')} |`;
-    const contentRows = rows.map(row => `| ${row.map(tableEscape).join(' | ')} |`).join('\n');
+    const headerRow = `|${headers.map(tableEscape).join('|')}|`;
+    const alignRow = `|${align.join('|')}|`;
+    const contentRows = rows.map(row => `|${row.map(tableEscape).join('|')}|`).join('\n');
     return [headerRow, alignRow, contentRows].join('\n');
 }
 exports.table = table;
