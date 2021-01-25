@@ -6,7 +6,7 @@
 
 | Result | Suite | Tests | Time | Passed ✔️ | Skipped ✖️ | Failed ❌ |
 | :---: | :--- | ---: | ---: | ---: | ---: | ---: |
-| ❌ | [DotnetTests.XUnitTests.CalculatorTests](#r0s0-DotnetTests-XUnitTests-CalculatorTests) | 7 | 109.5761ms | 3 | 1 | 3 |
+| ❌ | [DotnetTests.XUnitTests.CalculatorTests](#r0s0-DotnetTests-XUnitTests-CalculatorTests) | 7 | 110ms | 3 | 1 | 3 |
 
 # Test Suites
 
@@ -14,10 +14,10 @@
 
 | Result | Test | Time |
 | :---: | :--- | ---: |
-| ❌ | Exception_In_TargetTest | 0.4975ms |
-| ❌ | Exception_In_Test | 2.2728ms |
-| ❌ | Failing_Test | 3.2953ms |
-| ✔️ | Passing_Test | 0.1254ms |
-| ✔️ | Passing_Test_With_Name | 0.103ms |
+| ❌ | Exception_In_TargetTest | 0ms |
+| ❌ | Exception_In_Test | 2ms |
+| ❌ | Failing_Test | 3ms |
+| ✔️ | Passing_Test | 0ms |
+| ✔️ | Passing_Test_With_Name | 0ms |
 | ✖️ | Skipped_Test | 1ms |
-| ✔️ | Timeout_Test | 102.2821ms |
+| ✔️ | Timeout_Test | 102ms |

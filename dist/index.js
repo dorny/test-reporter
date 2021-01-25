@@ -757,8 +757,10 @@ function getReport(results, options = {}) {
         })
             .flat()
             .join('\n');
-        const suitesSection = `# Test Suites\n\n${suitesSummary}`;
-        sections.push(suitesSection);
+        if (suitesSummary !== '') {
+            const suitesSection = `# Test Suites\n\n${suitesSummary}`;
+            sections.push(suitesSection);
+        }
     }
     const report = sections.join('\n\n');
     if (report.length > maxReportLength) {
@@ -801,7 +803,7 @@ function getRunSummary(tr, runIndex, options) {
     const suites = options.listSuites === 'only-failed' ? tr.failedSuites : tr.suites;
     const suitesSummary = suites.map((s, suiteIndex) => {
         const icon = getResultIcon(s.result);
-        const tsTime = `${s.time}ms`;
+        const tsTime = `${Math.round(s.time)}ms`;
         const tsName = s.name;
         const tsAddr = makeSuiteSlug(runIndex, suiteIndex, tsName).link;
         const tsNameLink = markdown_utils_1.link(tsName, tsAddr);
@@ -827,7 +829,7 @@ function getSuiteSummary(ts, runIndex, suiteIndex, options) {
         const header = grp.name ? `### ${grp.name}\n\n` : '';
         const testsTable = markdown_utils_1.table(['Result', 'Test', 'Time'], [markdown_utils_1.Align.Center, markdown_utils_1.Align.Left, markdown_utils_1.Align.Right], ...grp.tests.map(tc => {
             const name = tc.name;
-            const time = `${tc.time}ms`;
+            const time = `${Math.round(tc.time)}ms`;
             const result = getResultIcon(tc.result);
             return [result, name, time];
         }));

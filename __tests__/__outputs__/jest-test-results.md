@@ -29,7 +29,7 @@
 | ✔️ | [packages/jest-reporters/src/__tests__/VerboseReporter.test.js](#r0s20-packages-jest-reporters-src-tests-VerboseReporter-test-js) | 11 | 425ms | 11 | 0 | 0 |
 | ✔️ | [packages/jest-snapshot/src/__tests__/utils.test.ts](#r0s21-packages-jest-snapshot-src-tests-utils-test-ts) | 26 | 214ms | 26 | 0 | 0 |
 | ✔️ | [packages/jest-reporters/src/__tests__/NotifyReporter.test.ts](#r0s22-packages-jest-reporters-src-tests-NotifyReporter-test-ts) | 18 | 166ms | 18 | 0 | 0 |
-| ✔️ | [packages/jest-repl/src/__tests__/runtime_cli.test.js](#r0s23-packages-jest-repl-src-tests-runtimecli-test-js) | 4 | 4094.0000000000005ms | 4 | 0 | 0 |
+| ✔️ | [packages/jest-repl/src/__tests__/runtime_cli.test.js](#r0s23-packages-jest-repl-src-tests-runtimecli-test-js) | 4 | 4094ms | 4 | 0 | 0 |
 | ✔️ | [packages/expect/src/__tests__/extend.test.ts](#r0s24-packages-expect-src-tests-extend-test-ts) | 10 | 99ms | 10 | 0 | 0 |
 | ✔️ | [packages/jest-source-map/src/__tests__/getCallsite.test.ts](#r0s25-packages-jest-source-map-src-tests-getCallsite-test-ts) | 3 | 86ms | 3 | 0 | 0 |
 | ✔️ | [packages/jest-config/src/__tests__/setFromArgv.test.ts](#r0s26-packages-jest-config-src-tests-setFromArgv-test-ts) | 4 | 53ms | 4 | 0 | 0 |
@@ -212,7 +212,7 @@
 | ✔️ | [e2e/__tests__/toMatchSnapshot.test.ts](#r0s203-e2e-tests-toMatchSnapshot-test-ts) | 9 | 17025ms | 9 | 0 | 0 |
 | ✔️ | [e2e/__tests__/detectOpenHandles.ts](#r0s204-e2e-tests-detectOpenHandles-ts) | 8 | 7528ms | 8 | 0 | 0 |
 | ✔️ | [e2e/__tests__/failures.test.ts](#r0s205-e2e-tests-failures-test-ts) | 7 | 10353ms | 7 | 0 | 0 |
-| ✔️ | [e2e/__tests__/console.test.ts](#r0s206-e2e-tests-console-test-ts) | 7 | 8071.999999999999ms | 7 | 0 | 0 |
+| ✔️ | [e2e/__tests__/console.test.ts](#r0s206-e2e-tests-console-test-ts) | 7 | 8072ms | 7 | 0 | 0 |
 | ✔️ | [e2e/__tests__/globals.test.ts](#r0s207-e2e-tests-globals-test-ts) | 10 | 7505ms | 10 | 0 | 0 |
 | ✔️ | [e2e/__tests__/coverageThreshold.test.ts](#r0s208-e2e-tests-coverageThreshold-test-ts) | 5 | 4868ms | 5 | 0 | 0 |
 | ✔️ | [e2e/__tests__/testPathPatternReporterMessage.test.ts](#r0s209-e2e-tests-testPathPatternReporterMessage-test-ts) | 1 | 3076ms | 1 | 0 | 0 |
@@ -241,7 +241,7 @@
 | ✔️ | [e2e/__tests__/useStderr.test.ts](#r0s232-e2e-tests-useStderr-test-ts) | 1 | 1352ms | 1 | 0 | 0 |
 | ✔️ | [e2e/__tests__/domDiffing.test.ts](#r0s233-e2e-tests-domDiffing-test-ts) | 1 | 1361ms | 1 | 0 | 0 |
 | ✔️ | [e2e/__tests__/consoleAfterTeardown.test.ts](#r0s234-e2e-tests-consoleAfterTeardown-test-ts) | 1 | 1341ms | 1 | 0 | 0 |
-| ✔️ | [e2e/__tests__/testInRoot.test.ts](#r0s235-e2e-tests-testInRoot-test-ts) | 1 | 1008.9999999999999ms | 1 | 0 | 0 |
+| ✔️ | [e2e/__tests__/testInRoot.test.ts](#r0s235-e2e-tests-testInRoot-test-ts) | 1 | 1009ms | 1 | 0 | 0 |
 | ✔️ | [e2e/__tests__/requireMainIsolateModules.test.ts](#r0s236-e2e-tests-requireMainIsolateModules-test-ts) | 1 | 976ms | 1 | 0 | 0 |
 | ✔️ | [e2e/__tests__/clearCache.test.ts](#r0s237-e2e-tests-clearCache-test-ts) | 2 | 1004ms | 2 | 0 | 0 |
 | ✔️ | [e2e/__tests__/runtimeInternalModuleRegistry.test.ts](#r0s238-e2e-tests-runtimeInternalModuleRegistry-test-ts) | 1 | 1202ms | 1 | 0 | 0 |
@@ -280,7 +280,7 @@
 | ✔️ | [e2e/__tests__/fakePromises.test.ts](#r0s271-e2e-tests-fakePromises-test-ts) | 2 | 1716ms | 2 | 0 | 0 |
 | ✔️ | [e2e/__tests__/stackTraceSourceMaps.test.ts](#r0s272-e2e-tests-stackTraceSourceMaps-test-ts) | 1 | 2185ms | 1 | 0 | 0 |
 | ✔️ | [e2e/__tests__/dynamicRequireDependencies.ts](#r0s273-e2e-tests-dynamicRequireDependencies-ts) | 1 | 847ms | 1 | 0 | 0 |
-| ✔️ | [e2e/__tests__/overrideGlobals.test.ts](#r0s274-e2e-tests-overrideGlobals-test-ts) | 2 | 2045.9999999999998ms | 2 | 0 | 0 |
+| ✔️ | [e2e/__tests__/overrideGlobals.test.ts](#r0s274-e2e-tests-overrideGlobals-test-ts) | 2 | 2046ms | 2 | 0 | 0 |
 | ✔️ | [e2e/__tests__/executeTestsOnceInMpr.ts](#r0s275-e2e-tests-executeTestsOnceInMpr-ts) | 1 | 976ms | 1 | 0 | 0 |
 | ✔️ | [e2e/__tests__/moduleParentNullInTest.ts](#r0s276-e2e-tests-moduleParentNullInTest-ts) | 1 | 886ms | 1 | 0 | 0 |
 | ✔️ | [e2e/__tests__/requireAfterTeardown.test.ts](#r0s277-e2e-tests-requireAfterTeardown-test-ts) | 1 | 921ms | 1 | 0 | 0 |
@@ -336,7 +336,7 @@
 | ✔️ | [e2e/__tests__/focusedTests.test.ts](#r0s327-e2e-tests-focusedTests-test-ts) | 1 | 888ms | 1 | 0 | 0 |
 | ✔️ | [e2e/__tests__/watchModeOnlyFailed.test.ts](#r0s328-e2e-tests-watchModeOnlyFailed-test-ts) | 1 | 1394ms | 1 | 0 | 0 |
 | ✔️ | [e2e/__tests__/beforeEachQueue.ts](#r0s329-e2e-tests-beforeEachQueue-ts) | 2 | 55ms | 1 | 1 | 0 |
-| ✔️ | [e2e/__tests__/extraGlobals.test.ts](#r0s330-e2e-tests-extraGlobals-test-ts) | 1 | 1010.9999999999999ms | 1 | 0 | 0 |
+| ✔️ | [e2e/__tests__/extraGlobals.test.ts](#r0s330-e2e-tests-extraGlobals-test-ts) | 1 | 1011ms | 1 | 0 | 0 |
 | ✔️ | [e2e/__tests__/snapshotSerializers.test.ts](#r0s331-e2e-tests-snapshotSerializers-test-ts) | 2 | 2065ms | 2 | 0 | 0 |
 | ✔️ | [e2e/__tests__/locationInResults.test.ts](#r0s332-e2e-tests-locationInResults-test-ts) | 2 | 1764ms | 2 | 0 | 0 |
 | ✔️ | [e2e/__tests__/consoleLogOutputWhenRunInBand.test.ts](#r0s333-e2e-tests-consoleLogOutputWhenRunInBand-test-ts) | 1 | 793ms | 1 | 0 | 0 |
