@@ -1,16 +1,11 @@
-![Tests failed](https://img.shields.io/badge/tests-3%20passed%2C%201%20skipped%2C%203%20failed-critical)
-
-### fixtures/dotnet-trx.trx
-
+![Tests failed](https://img.shields.io/badge/tests-3%20passed%2C%203%20failed%2C%201%20skipped-critical)
+## <a id="user-content-r0" href="#r0">fixtures/dotnet-trx.trx</a> ❌
 **7** tests were completed in **1.061s** with **3** passed, **3** failed and **1** skipped.
-
-|Suite|Passed|Failed|Skipped|Time|
+|Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
-|[DotnetTests.XUnitTests.CalculatorTests](#r0s0-DotnetTests-XUnitTests-CalculatorTests)|3✔️|3❌|1✖️|110ms|
-
-# Test Suites
-
-## <a id="user-content-r0s0-DotnetTests-XUnitTests-CalculatorTests" href="#r0s0-DotnetTests-XUnitTests-CalculatorTests">DotnetTests.XUnitTests.CalculatorTests</a> ❌
+|[DotnetTests.XUnitTests.CalculatorTests](#r0s0)|3✔️|3❌|1✖️|110ms|
+### <a id="user-content-r0s0" href="#r0s0">DotnetTests.XUnitTests.CalculatorTests</a> ❌
+**7** tests were completed in **109.5761ms** with **3** passed, **3** failed and **1** skipped.
 
 |Result|Test|Time|
 |:---:|:---|---:|

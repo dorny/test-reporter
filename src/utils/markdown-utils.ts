@@ -38,3 +38,11 @@ export function ellipsis(text: string, maxLength: number): string {
 
   return text.substr(0, maxLength - 3) + '...'
 }
+
+export function formatTime(ms: number) {
+  if (ms > 1000) {
+    return `${(ms / 1000).toFixed(3)}s`
+  }
+
+  return `${Math.round(ms)}ms`
+}

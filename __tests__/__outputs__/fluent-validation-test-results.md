@@ -1,10 +1,7 @@
 ![Tests passed successfully](https://img.shields.io/badge/tests-803%20passed%2C%201%20skipped-success)
-
-### fixtures/external/FluentValidation.Tests.trx
-
+## <a id="user-content-r0" href="#r0">fixtures/external/FluentValidation.Tests.trx</a> ✔️
 **804** tests were completed in **4.480s** with **803** passed, **0** failed and **1** skipped.
-
-|Suite|Passed|Failed|Skipped|Time|
+|Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
 |FluentValidation.Tests.AbstractValidatorTester|35✔️|||12ms|
 |FluentValidation.Tests.AccessorCacheTests|4✔️||1✖️|4ms|
@@ -53,7 +50,7 @@
 |FluentValidation.Tests.PropertyChainTests|7✔️|||1ms|
 |FluentValidation.Tests.RegularExpressionValidatorTests|15✔️|||6ms|
 |FluentValidation.Tests.RuleBuilderTests|29✔️|||96ms|
-|FluentValidation.Tests.RuleDependencyTests|14✔️|||2511ms|
+|FluentValidation.Tests.RuleDependencyTests|14✔️|||2.511s|
 |FluentValidation.Tests.RulesetTests|21✔️|||14ms|
 |FluentValidation.Tests.ScalePrecisionValidatorTests|6✔️|||4ms|
 |FluentValidation.Tests.SharedConditionTests|42✔️|||42ms|

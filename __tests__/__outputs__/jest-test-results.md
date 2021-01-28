@@ -1,185 +1,182 @@
-![Tests failed](https://img.shields.io/badge/tests-4207%20passed%2C%2030%20skipped%2C%202%20failed-critical)
-
-### fixtures/external/jest/jest-test-results.xml
-
+![Tests failed](https://img.shields.io/badge/tests-4207%20passed%2C%202%20failed%2C%2030%20skipped-critical)
+## <a id="user-content-r0" href="#r0">fixtures/external/jest/jest-test-results.xml</a> ❌
 **4239** tests were completed in **165.872s** with **4207** passed, **2** failed and **30** skipped.
-
-|Suite|Passed|Failed|Skipped|Time|
+|Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
 |e2e/__tests__/asyncAndCallback.test.ts|1✔️|||746ms|
-|e2e/__tests__/asyncRegenerator.test.ts|1✔️|||4127ms|
-|e2e/__tests__/autoClearMocks.test.ts|2✔️|||1681ms|
-|e2e/__tests__/autoResetMocks.test.ts|2✔️|||1666ms|
-|e2e/__tests__/autoRestoreMocks.test.ts|2✔️|||1797ms|
-|e2e/__tests__/babelPluginJestHoist.test.ts|1✔️|||6249ms|
+|e2e/__tests__/asyncRegenerator.test.ts|1✔️|||4.127s|
+|e2e/__tests__/autoClearMocks.test.ts|2✔️|||1.681s|
+|e2e/__tests__/autoResetMocks.test.ts|2✔️|||1.666s|
+|e2e/__tests__/autoRestoreMocks.test.ts|2✔️|||1.797s|
+|e2e/__tests__/babelPluginJestHoist.test.ts|1✔️|||6.249s|
 |e2e/__tests__/badSourceMap.test.ts|1✔️|||858ms|
 |e2e/__tests__/beforeAllFiltered.ts|1✔️|||958ms|
 |e2e/__tests__/beforeEachQueue.ts|1✔️||1✖️|55ms|
 |e2e/__tests__/callDoneTwice.test.ts|1✔️|||882ms|
-|e2e/__tests__/chaiAssertionLibrary.ts|1✔️|||1902ms|
-|e2e/__tests__/circularInequality.test.ts|1✔️|||1451ms|
-|e2e/__tests__/circusConcurrentEach.test.ts|2✔️|||1591ms|
+|e2e/__tests__/chaiAssertionLibrary.ts|1✔️|||1.902s|
+|e2e/__tests__/circularInequality.test.ts|1✔️|||1.451s|
+|e2e/__tests__/circusConcurrentEach.test.ts|2✔️|||1.591s|
 |e2e/__tests__/circusDeclarationErrors.test.ts|1✔️|||869ms|
-|e2e/__tests__/clearCache.test.ts|2✔️|||1004ms|
-|e2e/__tests__/cliHandlesExactFilenames.test.ts|2✔️|||1230ms|
-|e2e/__tests__/compareDomNodes.test.ts|1✔️|||1407ms|
-|e2e/__tests__/config.test.ts|6✔️|||3945ms|
-|e2e/__tests__/console.test.ts|7✔️|||8072ms|
-|e2e/__tests__/consoleAfterTeardown.test.ts|1✔️|||1341ms|
+|e2e/__tests__/clearCache.test.ts|2✔️|||1.004s|
+|e2e/__tests__/cliHandlesExactFilenames.test.ts|2✔️|||1.230s|
+|e2e/__tests__/compareDomNodes.test.ts|1✔️|||1.407s|
+|e2e/__tests__/config.test.ts|6✔️|||3.945s|
+|e2e/__tests__/console.test.ts|7✔️|||8.072s|
+|e2e/__tests__/consoleAfterTeardown.test.ts|1✔️|||1.341s|
 |e2e/__tests__/consoleLogOutputWhenRunInBand.test.ts|1✔️|||793ms|
-|e2e/__tests__/coverageHandlebars.test.ts|1✔️|||1873ms|
-|e2e/__tests__/coverageRemapping.test.ts|1✔️|||12701ms|
-|e2e/__tests__/coverageReport.test.ts|12✔️|||22264ms|
-|e2e/__tests__/coverageThreshold.test.ts|5✔️|||4868ms|
-|e2e/__tests__/coverageTransformInstrumented.test.ts|1✔️|||5029ms|
-|e2e/__tests__/coverageWithoutTransform.test.ts|1✔️|||1075ms|
+|e2e/__tests__/coverageHandlebars.test.ts|1✔️|||1.873s|
+|e2e/__tests__/coverageRemapping.test.ts|1✔️|||12.701s|
+|e2e/__tests__/coverageReport.test.ts|12✔️|||22.264s|
+|e2e/__tests__/coverageThreshold.test.ts|5✔️|||4.868s|
+|e2e/__tests__/coverageTransformInstrumented.test.ts|1✔️|||5.029s|
+|e2e/__tests__/coverageWithoutTransform.test.ts|1✔️|||1.075s|
 |e2e/__tests__/createProcessObject.test.ts|1✔️|||908ms|
-|e2e/__tests__/customInlineSnapshotMatchers.test.ts|1✔️|||2206ms|
-|e2e/__tests__/customMatcherStackTrace.test.ts|2✔️|||1539ms|
-|e2e/__tests__/customReporters.test.ts|9✔️|||6553ms|
+|e2e/__tests__/customInlineSnapshotMatchers.test.ts|1✔️|||2.206s|
+|e2e/__tests__/customMatcherStackTrace.test.ts|2✔️|||1.539s|
+|e2e/__tests__/customReporters.test.ts|9✔️|||6.553s|
 |e2e/__tests__/customResolver.test.ts|1✔️|||826ms|
-|e2e/__tests__/customTestSequencers.test.ts|3✔️|||2757ms|
+|e2e/__tests__/customTestSequencers.test.ts|3✔️|||2.757s|
 |e2e/__tests__/debug.test.ts|1✔️|||899ms|
-|e2e/__tests__/declarationErrors.test.ts|3✔️|||2389ms|
+|e2e/__tests__/declarationErrors.test.ts|3✔️|||2.389s|
 |e2e/__tests__/dependencyClash.test.ts|1✔️|||833ms|
-|e2e/__tests__/detectOpenHandles.ts|8✔️|||7528ms|
-|e2e/__tests__/domDiffing.test.ts|1✔️|||1361ms|
+|e2e/__tests__/detectOpenHandles.ts|8✔️|||7.528s|
+|e2e/__tests__/domDiffing.test.ts|1✔️|||1.361s|
 |e2e/__tests__/doneInHooks.test.ts|1✔️|||855ms|
 |e2e/__tests__/dynamicRequireDependencies.ts|1✔️|||847ms|
-|e2e/__tests__/each.test.ts|7✔️|||4721ms|
-|e2e/__tests__/emptyDescribeWithHooks.test.ts|4✔️|||2886ms|
+|e2e/__tests__/each.test.ts|7✔️|||4.721s|
+|e2e/__tests__/emptyDescribeWithHooks.test.ts|4✔️|||2.886s|
 |e2e/__tests__/emptySuiteError.test.ts|1✔️|||885ms|
-|e2e/__tests__/env.test.ts|6✔️|||5221ms|
+|e2e/__tests__/env.test.ts|6✔️|||5.221s|
 |e2e/__tests__/environmentAfterTeardown.test.ts|1✔️|||892ms|
 |e2e/__tests__/errorOnDeprecated.test.ts|1✔️||24✖️|56ms|
 |e2e/__tests__/esmConfigFile.test.ts|3✔️|||526ms|
 |e2e/__tests__/executeTestsOnceInMpr.ts|1✔️|||976ms|
 |e2e/__tests__/existentRoots.test.ts|4✔️|||627ms|
-|e2e/__tests__/expectAsyncMatcher.test.ts|2✔️|||2732ms|
-|e2e/__tests__/expectInVm.test.ts|1✔️|||1527ms|
-|e2e/__tests__/extraGlobals.test.ts|1✔️|||1011ms|
+|e2e/__tests__/expectAsyncMatcher.test.ts|2✔️|||2.732s|
+|e2e/__tests__/expectInVm.test.ts|1✔️|||1.527s|
+|e2e/__tests__/extraGlobals.test.ts|1✔️|||1.011s|
 |e2e/__tests__/failureDetailsProperty.test.ts|1✔️|||907ms|
-|e2e/__tests__/failures.test.ts|7✔️|||10353ms|
-|e2e/__tests__/fakePromises.test.ts|2✔️|||1716ms|
-|e2e/__tests__/fatalWorkerError.test.ts|1✔️|||3167ms|
-|e2e/__tests__/filter.test.ts|7✔️|||5422ms|
-|e2e/__tests__/findRelatedFiles.test.ts|5✔️|||6230ms|
+|e2e/__tests__/failures.test.ts|7✔️|||10.353s|
+|e2e/__tests__/fakePromises.test.ts|2✔️|||1.716s|
+|e2e/__tests__/fatalWorkerError.test.ts|1✔️|||3.167s|
+|e2e/__tests__/filter.test.ts|7✔️|||5.422s|
+|e2e/__tests__/findRelatedFiles.test.ts|5✔️|||6.230s|
 |e2e/__tests__/focusedTests.test.ts|1✔️|||888ms|
-|e2e/__tests__/forceExit.test.ts|1✔️|||2208ms|
-|e2e/__tests__/generatorMock.test.ts|1✔️|||1027ms|
+|e2e/__tests__/forceExit.test.ts|1✔️|||2.208s|
+|e2e/__tests__/generatorMock.test.ts|1✔️|||1.027s|
 |e2e/__tests__/global-mutation.test.ts|1✔️|||40ms|
 |e2e/__tests__/global.test.ts|1✔️|||31ms|
-|e2e/__tests__/globals.test.ts|10✔️|||7505ms|
-|e2e/__tests__/globalSetup.test.ts|10✔️|||13926ms|
-|e2e/__tests__/globalTeardown.test.ts|7✔️|||11886ms|
+|e2e/__tests__/globals.test.ts|10✔️|||7.505s|
+|e2e/__tests__/globalSetup.test.ts|10✔️|||13.926s|
+|e2e/__tests__/globalTeardown.test.ts|7✔️|||11.886s|
 |e2e/__tests__/hasteMapMockChanged.test.ts|1✔️|||379ms|
 |e2e/__tests__/hasteMapSha1.test.ts|1✔️|||298ms|
 |e2e/__tests__/hasteMapSize.test.ts|2✔️|||397ms|
-|e2e/__tests__/importedGlobals.test.ts|1✔️|||1043ms|
-|e2e/__tests__/injectGlobals.test.ts|2✔️|||1860ms|
-|e2e/__tests__/jasmineAsync.test.ts|15✔️|||28291ms|
+|e2e/__tests__/importedGlobals.test.ts|1✔️|||1.043s|
+|e2e/__tests__/injectGlobals.test.ts|2✔️|||1.860s|
+|e2e/__tests__/jasmineAsync.test.ts|15✔️|||28.291s|
 |e2e/__tests__/jasmineAsyncWithPendingDuringTest.ts|1✔️||1✖️|72ms|
-|e2e/__tests__/jest.config.js.test.ts|3✔️|||2134ms|
-|e2e/__tests__/jest.config.ts.test.ts|5✔️|||14322ms|
-|[e2e/__tests__/jestChangedFiles.test.ts](#r0s75-e2e-tests-jestChangedFiles-test-ts)|9✔️|1❌||9045ms|
-|e2e/__tests__/jestEnvironmentJsdom.test.ts|1✔️|||1744ms|
-|e2e/__tests__/jestRequireActual.test.ts|1✔️|||1665ms|
-|e2e/__tests__/jestRequireMock.test.ts|1✔️|||2119ms|
+|e2e/__tests__/jest.config.js.test.ts|3✔️|||2.134s|
+|e2e/__tests__/jest.config.ts.test.ts|5✔️|||14.322s|
+|[e2e/__tests__/jestChangedFiles.test.ts](#r0s75)|9✔️|1❌||9.045s|
+|e2e/__tests__/jestEnvironmentJsdom.test.ts|1✔️|||1.744s|
+|e2e/__tests__/jestRequireActual.test.ts|1✔️|||1.665s|
+|e2e/__tests__/jestRequireMock.test.ts|1✔️|||2.119s|
 |e2e/__tests__/json.test.ts|2✔️|||29ms|
-|e2e/__tests__/jsonReporter.test.ts|2✔️|||1514ms|
+|e2e/__tests__/jsonReporter.test.ts|2✔️|||1.514s|
 |e2e/__tests__/lifecycles.ts|1✔️|||861ms|
 |e2e/__tests__/listTests.test.ts|2✔️|||945ms|
-|e2e/__tests__/locationInResults.test.ts|2✔️|||1764ms|
+|e2e/__tests__/locationInResults.test.ts|2✔️|||1.764s|
 |e2e/__tests__/logHeapUsage.test.ts|1✔️|||884ms|
-|e2e/__tests__/mockNames.test.ts|8✔️|||6771ms|
-|e2e/__tests__/modernFakeTimers.test.ts|2✔️|||1680ms|
-|e2e/__tests__/moduleNameMapper.test.ts|5✔️|||5395ms|
+|e2e/__tests__/mockNames.test.ts|8✔️|||6.771s|
+|e2e/__tests__/modernFakeTimers.test.ts|2✔️|||1.680s|
+|e2e/__tests__/moduleNameMapper.test.ts|5✔️|||5.395s|
 |e2e/__tests__/moduleParentNullInTest.ts|1✔️|||886ms|
-|e2e/__tests__/multiProjectRunner.test.ts|14✔️|||16360ms|
+|e2e/__tests__/multiProjectRunner.test.ts|14✔️|||16.360s|
 |e2e/__tests__/nativeAsyncMock.test.ts|1✔️|||55ms|
 |e2e/__tests__/nativeEsm.test.ts|2✔️||1✖️|905ms|
 |e2e/__tests__/nativeEsmTypescript.test.ts|1✔️|||956ms|
-|e2e/__tests__/nestedEventLoop.test.ts|1✔️|||1422ms|
-|e2e/__tests__/nestedTestDefinitions.test.ts|4✔️|||4641ms|
+|e2e/__tests__/nestedEventLoop.test.ts|1✔️|||1.422s|
+|e2e/__tests__/nestedTestDefinitions.test.ts|4✔️|||4.641s|
 |e2e/__tests__/nodePath.test.ts|1✔️|||866ms|
-|e2e/__tests__/noTestFound.test.ts|2✔️|||1063ms|
-|e2e/__tests__/noTestsFound.test.ts|5✔️|||2739ms|
-|[e2e/__tests__/onlyChanged.test.ts](#r0s98-e2e-tests-onlyChanged-test-ts)|8✔️|1❌||22281ms|
-|e2e/__tests__/onlyFailuresNonWatch.test.ts|1✔️|||2893ms|
-|e2e/__tests__/overrideGlobals.test.ts|2✔️|||2046ms|
-|e2e/__tests__/pnp.test.ts|1✔️|||2715ms|
-|e2e/__tests__/presets.test.ts|2✔️|||1966ms|
-|e2e/__tests__/processExit.test.ts|1✔️|||1070ms|
+|e2e/__tests__/noTestFound.test.ts|2✔️|||1.063s|
+|e2e/__tests__/noTestsFound.test.ts|5✔️|||2.739s|
+|[e2e/__tests__/onlyChanged.test.ts](#r0s98)|8✔️|1❌||22.281s|
+|e2e/__tests__/onlyFailuresNonWatch.test.ts|1✔️|||2.893s|
+|e2e/__tests__/overrideGlobals.test.ts|2✔️|||2.046s|
+|e2e/__tests__/pnp.test.ts|1✔️|||2.715s|
+|e2e/__tests__/presets.test.ts|2✔️|||1.966s|
+|e2e/__tests__/processExit.test.ts|1✔️|||1.070s|
 |e2e/__tests__/promiseReject.test.ts|1✔️|||967ms|
 |e2e/__tests__/regexCharInPath.test.ts|1✔️|||962ms|
 |e2e/__tests__/requireAfterTeardown.test.ts|1✔️|||921ms|
-|e2e/__tests__/requireMain.test.ts|1✔️|||1137ms|
+|e2e/__tests__/requireMain.test.ts|1✔️|||1.137s|
 |e2e/__tests__/requireMainAfterCreateRequire.test.ts|1✔️|||966ms|
 |e2e/__tests__/requireMainIsolateModules.test.ts|1✔️|||976ms|
-|e2e/__tests__/requireMainResetModules.test.ts|2✔️|||1961ms|
+|e2e/__tests__/requireMainResetModules.test.ts|2✔️|||1.961s|
 |e2e/__tests__/requireV8Module.test.ts|1✔️|||30ms|
 |e2e/__tests__/resetModules.test.ts|1✔️|||926ms|
-|e2e/__tests__/resolve.test.ts|1✔️|||1863ms|
-|e2e/__tests__/resolveGetPaths.test.ts|1✔️|||1155ms|
+|e2e/__tests__/resolve.test.ts|1✔️|||1.863s|
+|e2e/__tests__/resolveGetPaths.test.ts|1✔️|||1.155s|
 |e2e/__tests__/resolveNodeModule.test.ts|1✔️|||943ms|
-|e2e/__tests__/resolveNoFileExtensions.test.ts|2✔️|||1263ms|
-|e2e/__tests__/resolveWithPaths.test.ts|1✔️|||1170ms|
+|e2e/__tests__/resolveNoFileExtensions.test.ts|2✔️|||1.263s|
+|e2e/__tests__/resolveWithPaths.test.ts|1✔️|||1.170s|
 |e2e/__tests__/runProgrammatically.test.ts|2✔️|||575ms|
-|e2e/__tests__/runTestsByPath.test.ts|1✔️|||1999ms|
-|e2e/__tests__/runtimeInternalModuleRegistry.test.ts|1✔️|||1202ms|
-|e2e/__tests__/selectProjects.test.ts|18✔️|||5236ms|
+|e2e/__tests__/runTestsByPath.test.ts|1✔️|||1.999s|
+|e2e/__tests__/runtimeInternalModuleRegistry.test.ts|1✔️|||1.202s|
+|e2e/__tests__/selectProjects.test.ts|18✔️|||5.236s|
 |e2e/__tests__/setImmediate.test.ts|1✔️|||904ms|
-|e2e/__tests__/setupFilesAfterEnvConfig.test.ts|2✔️|||1967ms|
+|e2e/__tests__/setupFilesAfterEnvConfig.test.ts|2✔️|||1.967s|
 |e2e/__tests__/showConfig.test.ts|1✔️|||195ms|
-|e2e/__tests__/skipBeforeAfterAll.test.ts|1✔️|||1061ms|
+|e2e/__tests__/skipBeforeAfterAll.test.ts|1✔️|||1.061s|
 |e2e/__tests__/snapshot-unknown.test.ts|1✔️|||838ms|
-|e2e/__tests__/snapshot.test.ts|9✔️|||13899ms|
+|e2e/__tests__/snapshot.test.ts|9✔️|||13.899s|
 |e2e/__tests__/snapshotMockFs.test.ts|1✔️|||883ms|
 |e2e/__tests__/snapshotResolver.test.ts|1✔️|||823ms|
-|e2e/__tests__/snapshotSerializers.test.ts|2✔️|||2065ms|
-|e2e/__tests__/stackTrace.test.ts|7✔️|||4725ms|
+|e2e/__tests__/snapshotSerializers.test.ts|2✔️|||2.065s|
+|e2e/__tests__/stackTrace.test.ts|7✔️|||4.725s|
 |e2e/__tests__/stackTraceNoCaptureStackTrace.test.ts|1✔️|||899ms|
-|e2e/__tests__/stackTraceSourceMaps.test.ts|1✔️|||2185ms|
-|e2e/__tests__/stackTraceSourceMapsWithCoverage.test.ts|1✔️|||2444ms|
+|e2e/__tests__/stackTraceSourceMaps.test.ts|1✔️|||2.185s|
+|e2e/__tests__/stackTraceSourceMapsWithCoverage.test.ts|1✔️|||2.444s|
 |e2e/__tests__/supportsDashedArgs.ts|2✔️|||968ms|
 |e2e/__tests__/symbol.test.ts|1✔️|||49ms|
-|e2e/__tests__/testEnvironment.test.ts|1✔️|||1628ms|
-|e2e/__tests__/testEnvironmentAsync.test.ts|1✔️|||1493ms|
-|e2e/__tests__/testEnvironmentCircus.test.ts|1✔️|||1501ms|
-|e2e/__tests__/testEnvironmentCircusAsync.test.ts|1✔️|||1507ms|
-|e2e/__tests__/testFailureExitCode.test.ts|2✔️|||4476ms|
-|e2e/__tests__/testInRoot.test.ts|1✔️|||1009ms|
+|e2e/__tests__/testEnvironment.test.ts|1✔️|||1.628s|
+|e2e/__tests__/testEnvironmentAsync.test.ts|1✔️|||1.493s|
+|e2e/__tests__/testEnvironmentCircus.test.ts|1✔️|||1.501s|
+|e2e/__tests__/testEnvironmentCircusAsync.test.ts|1✔️|||1.507s|
+|e2e/__tests__/testFailureExitCode.test.ts|2✔️|||4.476s|
+|e2e/__tests__/testInRoot.test.ts|1✔️|||1.009s|
 |e2e/__tests__/testNamePattern.test.ts|1✔️|||859ms|
 |e2e/__tests__/testNamePatternSkipped.test.ts|1✔️|||991ms|
-|e2e/__tests__/testPathPatternReporterMessage.test.ts|1✔️|||3076ms|
+|e2e/__tests__/testPathPatternReporterMessage.test.ts|1✔️|||3.076s|
 |e2e/__tests__/testResultsProcessor.test.ts|1✔️|||910ms|
-|e2e/__tests__/testRetries.test.ts|4✔️|||3277ms|
-|e2e/__tests__/testTodo.test.ts|5✔️|||3573ms|
-|e2e/__tests__/timeouts.test.ts|4✔️|||4029ms|
+|e2e/__tests__/testRetries.test.ts|4✔️|||3.277s|
+|e2e/__tests__/testTodo.test.ts|5✔️|||3.573s|
+|e2e/__tests__/timeouts.test.ts|4✔️|||4.029s|
 |e2e/__tests__/timeoutsLegacy.test.ts|1✔️||3✖️|71ms|
-|e2e/__tests__/timerResetMocks.test.ts|2✔️|||1878ms|
-|e2e/__tests__/timerUseRealTimers.test.ts|1✔️|||1018ms|
-|e2e/__tests__/toMatchInlineSnapshot.test.ts|12✔️|||23917ms|
-|e2e/__tests__/toMatchInlineSnapshotWithRetries.test.ts|3✔️|||4670ms|
-|e2e/__tests__/toMatchSnapshot.test.ts|9✔️|||17025ms|
-|e2e/__tests__/toMatchSnapshotWithRetries.test.ts|2✔️|||4435ms|
-|e2e/__tests__/toMatchSnapshotWithStringSerializer.test.ts|3✔️|||3544ms|
-|e2e/__tests__/toThrowErrorMatchingInlineSnapshot.test.ts|4✔️|||3562ms|
-|e2e/__tests__/toThrowErrorMatchingSnapshot.test.ts|5✔️|||3524ms|
-|e2e/__tests__/transform.test.ts|16✔️|||26740ms|
+|e2e/__tests__/timerResetMocks.test.ts|2✔️|||1.878s|
+|e2e/__tests__/timerUseRealTimers.test.ts|1✔️|||1.018s|
+|e2e/__tests__/toMatchInlineSnapshot.test.ts|12✔️|||23.917s|
+|e2e/__tests__/toMatchInlineSnapshotWithRetries.test.ts|3✔️|||4.670s|
+|e2e/__tests__/toMatchSnapshot.test.ts|9✔️|||17.025s|
+|e2e/__tests__/toMatchSnapshotWithRetries.test.ts|2✔️|||4.435s|
+|e2e/__tests__/toMatchSnapshotWithStringSerializer.test.ts|3✔️|||3.544s|
+|e2e/__tests__/toThrowErrorMatchingInlineSnapshot.test.ts|4✔️|||3.562s|
+|e2e/__tests__/toThrowErrorMatchingSnapshot.test.ts|5✔️|||3.524s|
+|e2e/__tests__/transform.test.ts|16✔️|||26.740s|
 |e2e/__tests__/transformLinkedModules.test.ts|1✔️|||783ms|
-|e2e/__tests__/typescriptCoverage.test.ts|1✔️|||2893ms|
-|e2e/__tests__/unexpectedToken.test.ts|3✔️|||3411ms|
-|e2e/__tests__/useStderr.test.ts|1✔️|||1352ms|
-|e2e/__tests__/v8Coverage.test.ts|2✔️|||2412ms|
+|e2e/__tests__/typescriptCoverage.test.ts|1✔️|||2.893s|
+|e2e/__tests__/unexpectedToken.test.ts|3✔️|||3.411s|
+|e2e/__tests__/useStderr.test.ts|1✔️|||1.352s|
+|e2e/__tests__/v8Coverage.test.ts|2✔️|||2.412s|
 |e2e/__tests__/verbose.test.ts|1✔️|||683ms|
 |e2e/__tests__/version.test.ts|1✔️|||138ms|
-|e2e/__tests__/watchModeNoAccess.test.ts|1✔️|||4370ms|
-|e2e/__tests__/watchModeOnlyFailed.test.ts|1✔️|||1394ms|
-|e2e/__tests__/watchModePatterns.test.ts|2✔️|||3503ms|
-|e2e/__tests__/watchModeUpdateSnapshot.test.ts|1✔️|||1075ms|
-|e2e/__tests__/workerForceExit.test.ts|2✔️|||4751ms|
-|e2e/__tests__/wrongEnv.test.ts|5✔️|||3877ms|
+|e2e/__tests__/watchModeNoAccess.test.ts|1✔️|||4.370s|
+|e2e/__tests__/watchModeOnlyFailed.test.ts|1✔️|||1.394s|
+|e2e/__tests__/watchModePatterns.test.ts|2✔️|||3.503s|
+|e2e/__tests__/watchModeUpdateSnapshot.test.ts|1✔️|||1.075s|
+|e2e/__tests__/workerForceExit.test.ts|2✔️|||4.751s|
+|e2e/__tests__/wrongEnv.test.ts|5✔️|||3.877s|
 |e2e/custom-test-sequencer/a.test.js|1✔️|||29ms|
 |e2e/custom-test-sequencer/b.test.js|1✔️|||21ms|
 |e2e/custom-test-sequencer/c.test.js|1✔️|||42ms|
@@ -209,7 +206,7 @@
 |examples/module-mock/__tests__/mock_per_test.js|2✔️|||116ms|
 |examples/module-mock/__tests__/partial_mock.js|1✔️|||215ms|
 |examples/mongodb/__test__/db.test.js|1✔️|||236ms|
-|examples/react-native/__tests__/intro.test.js|4✔️|||8559ms|
+|examples/react-native/__tests__/intro.test.js|4✔️|||8.559s|
 |examples/react-testing-library/__tests__/CheckboxWithLabel-test.js|1✔️|||469ms|
 |examples/react/__tests__/CheckboxWithLabel-test.js|1✔️|||256ms|
 |examples/snapshot/__tests__/clock.react.test.js|1✔️|||62ms|
@@ -231,7 +228,7 @@
 |packages/expect/src/__tests__/isError.test.ts|4✔️|||43ms|
 |packages/expect/src/__tests__/matchers-toContain.property.test.ts|2✔️|||236ms|
 |packages/expect/src/__tests__/matchers-toContainEqual.property.test.ts|2✔️|||287ms|
-|packages/expect/src/__tests__/matchers-toEqual.property.test.ts|2✔️|||1062ms|
+|packages/expect/src/__tests__/matchers-toEqual.property.test.ts|2✔️|||1.062s|
 |packages/expect/src/__tests__/matchers-toStrictEqual.property.test.ts|3✔️|||394ms|
 |packages/expect/src/__tests__/matchers.test.js|592✔️|||862ms|
 |packages/expect/src/__tests__/spyMatchers.test.ts|248✔️|||395ms|
@@ -240,11 +237,11 @@
 |packages/expect/src/__tests__/toEqual-dom.test.ts|12✔️|||99ms|
 |packages/expect/src/__tests__/toThrowMatchers.test.ts|98✔️|||257ms|
 |packages/expect/src/__tests__/utils.test.ts|41✔️|||147ms|
-|packages/jest-circus/src/__tests__/afterAll.test.ts|6✔️|||5755ms|
-|packages/jest-circus/src/__tests__/baseTest.test.ts|2✔️|||2902ms|
+|packages/jest-circus/src/__tests__/afterAll.test.ts|6✔️|||5.755s|
+|packages/jest-circus/src/__tests__/baseTest.test.ts|2✔️|||2.902s|
 |packages/jest-circus/src/__tests__/circusItTestError.test.ts|8✔️|||300ms|
 |packages/jest-circus/src/__tests__/circusItTodoTestError.test.ts|3✔️|||81ms|
-|packages/jest-circus/src/__tests__/hooks.test.ts|3✔️|||3762ms|
+|packages/jest-circus/src/__tests__/hooks.test.ts|3✔️|||3.762s|
 |packages/jest-circus/src/__tests__/hooksError.test.ts|32✔️|||127ms|
 |packages/jest-cli/src/__tests__/cli/args.test.ts|17✔️|||345ms|
 |packages/jest-cli/src/init/__tests__/init.test.js|24✔️|||119ms|
@@ -264,12 +261,12 @@
 |packages/jest-core/src/__tests__/getNoTestsFoundMessage.test.js|5✔️|||61ms|
 |packages/jest-core/src/__tests__/globals.test.ts|1✔️|||22ms|
 |packages/jest-core/src/__tests__/runJest.test.js|2✔️|||261ms|
-|packages/jest-core/src/__tests__/SearchSource.test.ts|27✔️|||2596ms|
+|packages/jest-core/src/__tests__/SearchSource.test.ts|27✔️|||2.596s|
 |packages/jest-core/src/__tests__/SnapshotInteractiveMode.test.js|13✔️|||89ms|
 |packages/jest-core/src/__tests__/TestScheduler.test.js|8✔️|||520ms|
 |packages/jest-core/src/__tests__/testSchedulerHelper.test.js|12✔️|||48ms|
-|packages/jest-core/src/__tests__/watch.test.js|80✔️|||6755ms|
-|packages/jest-core/src/__tests__/watchFileChanges.test.ts|1✔️|||1514ms|
+|packages/jest-core/src/__tests__/watch.test.js|80✔️|||6.755s|
+|packages/jest-core/src/__tests__/watchFileChanges.test.ts|1✔️|||1.514s|
 |packages/jest-core/src/__tests__/watchFilenamePatternMode.test.js|2✔️|||165ms|
 |packages/jest-core/src/__tests__/watchTestNamePatternMode.test.js|1✔️|||246ms|
 |packages/jest-core/src/lib/__tests__/isValidPath.test.ts|3✔️|||166ms|
@@ -292,7 +289,7 @@
 |packages/jest-globals/src/__tests__/index.ts|1✔️|||533ms|
 |packages/jest-haste-map/src/__tests__/get_mock_name.test.js|1✔️|||22ms|
 |packages/jest-haste-map/src/__tests__/includes_dotfiles.test.ts|1✔️|||337ms|
-|packages/jest-haste-map/src/__tests__/index.test.js|44✔️|||1145ms|
+|packages/jest-haste-map/src/__tests__/index.test.js|44✔️|||1.145s|
 |packages/jest-haste-map/src/__tests__/worker.test.js|7✔️|||100ms|
 |packages/jest-haste-map/src/crawlers/__tests__/node.test.js|10✔️|||170ms|
 |packages/jest-haste-map/src/crawlers/__tests__/watchman.test.js|8✔️|||153ms|
@@ -321,12 +318,12 @@
 |packages/jest-message-util/src/__tests__/messages.test.ts|11✔️|||205ms|
 |packages/jest-mock/src/__tests__/index.test.ts|84✔️|||509ms|
 |packages/jest-regex-util/src/__tests__/index.test.ts|8✔️|||56ms|
-|packages/jest-repl/src/__tests__/jest_repl.test.js|1✔️|||1172ms|
-|packages/jest-repl/src/__tests__/runtime_cli.test.js|4✔️|||4094ms|
+|packages/jest-repl/src/__tests__/jest_repl.test.js|1✔️|||1.172s|
+|packages/jest-repl/src/__tests__/runtime_cli.test.js|4✔️|||4.094s|
 |packages/jest-reporters/src/__tests__/CoverageReporter.test.js|12✔️|||397ms|
 |packages/jest-reporters/src/__tests__/CoverageWorker.test.js|2✔️|||199ms|
 |packages/jest-reporters/src/__tests__/DefaultReporter.test.js|2✔️|||148ms|
-|packages/jest-reporters/src/__tests__/generateEmptyCoverage.test.js|3✔️|||1129ms|
+|packages/jest-reporters/src/__tests__/generateEmptyCoverage.test.js|3✔️|||1.129s|
 |packages/jest-reporters/src/__tests__/getResultHeader.test.js|4✔️|||30ms|
 |packages/jest-reporters/src/__tests__/getSnapshotStatus.test.js|3✔️|||28ms|
 |packages/jest-reporters/src/__tests__/getSnapshotSummary.test.js|4✔️|||49ms|
@@ -337,7 +334,7 @@
 |packages/jest-reporters/src/__tests__/VerboseReporter.test.js|11✔️|||425ms|
 |packages/jest-resolve-dependencies/src/__tests__/dependency_resolver.test.ts|11✔️|||666ms|
 |packages/jest-resolve/src/__tests__/isBuiltinModule.test.ts|4✔️|||36ms|
-|packages/jest-resolve/src/__tests__/resolve.test.ts|16✔️|||1308ms|
+|packages/jest-resolve/src/__tests__/resolve.test.ts|16✔️|||1.308s|
 |packages/jest-runner/src/__tests__/testRunner.test.ts|2✔️|||905ms|
 |packages/jest-runtime/src/__tests__/instrumentation.test.ts|1✔️|||275ms|
 |packages/jest-runtime/src/__tests__/runtime_create_mock_from_module.test.js|3✔️|||606ms|
@@ -347,31 +344,31 @@
 |packages/jest-runtime/src/__tests__/runtime_jest_spy_on.test.js|2✔️|||521ms|
 |packages/jest-runtime/src/__tests__/runtime_mock.test.js|4✔️|||743ms|
 |packages/jest-runtime/src/__tests__/runtime_module_directories.test.js|4✔️|||525ms|
-|packages/jest-runtime/src/__tests__/runtime_node_path.test.js|4✔️|||1088ms|
+|packages/jest-runtime/src/__tests__/runtime_node_path.test.js|4✔️|||1.088s|
 |packages/jest-runtime/src/__tests__/runtime_require_actual.test.js|2✔️|||478ms|
 |packages/jest-runtime/src/__tests__/runtime_require_cache.test.js|2✔️|||454ms|
 |packages/jest-runtime/src/__tests__/runtime_require_mock.test.js|13✔️|||962ms|
 |packages/jest-runtime/src/__tests__/runtime_require_module_no_ext.test.js|1✔️|||261ms|
-|packages/jest-runtime/src/__tests__/runtime_require_module_or_mock_transitive_deps.test.js|6✔️|||2366ms|
-|packages/jest-runtime/src/__tests__/runtime_require_module_or_mock.test.js|17✔️|||1223ms|
-|packages/jest-runtime/src/__tests__/runtime_require_module.test.js|27✔️|||2439ms|
+|packages/jest-runtime/src/__tests__/runtime_require_module_or_mock_transitive_deps.test.js|6✔️|||2.366s|
+|packages/jest-runtime/src/__tests__/runtime_require_module_or_mock.test.js|17✔️|||1.223s|
+|packages/jest-runtime/src/__tests__/runtime_require_module.test.js|27✔️|||2.439s|
 |packages/jest-runtime/src/__tests__/runtime_require_resolve.test.ts|5✔️|||707ms|
 |packages/jest-runtime/src/__tests__/runtime_wrap.js|2✔️|||263ms|
 |packages/jest-runtime/src/__tests__/Runtime-sourceMaps.test.js|1✔️|||584ms|
 |packages/jest-runtime/src/__tests__/Runtime-statics.test.js|2✔️|||162ms|
 |packages/jest-serializer/src/__tests__/index.test.ts|17✔️|||158ms|
 |packages/jest-snapshot/src/__tests__/dedentLines.test.ts|17✔️|||94ms|
-|packages/jest-snapshot/src/__tests__/InlineSnapshots.test.ts|22✔️|||1149ms|
+|packages/jest-snapshot/src/__tests__/InlineSnapshots.test.ts|22✔️|||1.149s|
 |packages/jest-snapshot/src/__tests__/matcher.test.ts|1✔️|||131ms|
 |packages/jest-snapshot/src/__tests__/mockSerializer.test.ts|10✔️|||45ms|
-|packages/jest-snapshot/src/__tests__/printSnapshot.test.ts|71✔️|||1188ms|
+|packages/jest-snapshot/src/__tests__/printSnapshot.test.ts|71✔️|||1.188s|
 |packages/jest-snapshot/src/__tests__/SnapshotResolver.test.ts|10✔️|||98ms|
 |packages/jest-snapshot/src/__tests__/throwMatcher.test.ts|3✔️|||481ms|
 |packages/jest-snapshot/src/__tests__/utils.test.ts|26✔️|||214ms|
 |packages/jest-source-map/src/__tests__/getCallsite.test.ts|3✔️|||86ms|
 |packages/jest-test-result/src/__tests__/formatTestResults.test.ts|1✔️|||53ms|
 |packages/jest-test-sequencer/src/__tests__/test_sequencer.test.js|8✔️|||251ms|
-|packages/jest-transform/src/__tests__/ScriptTransformer.test.ts|22✔️|||1660ms|
+|packages/jest-transform/src/__tests__/ScriptTransformer.test.ts|22✔️|||1.660s|
 |packages/jest-transform/src/__tests__/shouldInstrument.test.ts|25✔️|||155ms|
 |packages/jest-util/src/__tests__/createProcessObject.test.ts|4✔️|||81ms|
 |packages/jest-util/src/__tests__/deepCyclicCopy.test.ts|12✔️|||86ms|
@@ -406,34 +403,32 @@
 |packages/pretty-format/src/__tests__/prettyFormat.test.ts|86✔️|||219ms|
 |packages/pretty-format/src/__tests__/react.test.tsx|55✔️|||325ms|
 |packages/pretty-format/src/__tests__/ReactElement.test.ts|3✔️|||64ms|
-
-# Test Suites
-
-## <a id="user-content-r0s75-e2e-tests-jestChangedFiles-test-ts" href="#r0s75-e2e-tests-jestChangedFiles-test-ts">e2e/__tests__/jestChangedFiles.test.ts</a> ❌
+### <a id="user-content-r0s75" href="#r0s75">e2e/__tests__/jestChangedFiles.test.ts</a> ❌
+**10** tests were completed in **9045ms** with **9** passed, **1** failed and **0** skipped.
 
 |Result|Test|Time|
 |:---:|:---|---:|
 |✔️|gets hg SCM roots and dedupes them|559ms|
 |✔️|gets git SCM roots and dedupes them|416ms|
 |✔️|gets mixed git and hg SCM roots and dedupes them|467ms|
-|✔️|gets changed files for git|2298ms|
+|✔️|gets changed files for git|2.298s|
 |✔️|monitors only root paths for git|151ms|
 |✔️|does not find changes in files with no diff, for git|628ms|
 |✔️|handles a bad revision for "changedSince", for git|878ms|
-|❌|gets changed files for hg|2219ms|
+|❌|gets changed files for hg|2.219s|
 |✔️|monitors only root paths for hg|281ms|
 |✔️|handles a bad revision for "changedSince", for hg|949ms|
-
-## <a id="user-content-r0s98-e2e-tests-onlyChanged-test-ts" href="#r0s98-e2e-tests-onlyChanged-test-ts">e2e/__tests__/onlyChanged.test.ts</a> ❌
+### <a id="user-content-r0s98" href="#r0s98">e2e/__tests__/onlyChanged.test.ts</a> ❌
+**9** tests were completed in **22281ms** with **8** passed, **1** failed and **0** skipped.
 
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|run for "onlyChanged" and "changedSince"|1464ms|
-|✔️|run only changed files|5196ms|
-|✔️|report test coverage for only changed files|1889ms|
+|✔️|run for "onlyChanged" and "changedSince"|1.464s|
+|✔️|run only changed files|5.196s|
+|✔️|report test coverage for only changed files|1.889s|
 |✔️|report test coverage of source on test file change under only changed files|822ms|
 |✔️|do not pickup non-tested files when reporting coverage on only changed files|861ms|
-|✔️|collect test coverage when using onlyChanged|1058ms|
-|✔️|onlyChanged in config is overwritten by --all or testPathPattern|7023ms|
-|❌|gets changed files for hg|3765ms|
+|✔️|collect test coverage when using onlyChanged|1.058s|
+|✔️|onlyChanged in config is overwritten by --all or testPathPattern|7.023s|
+|❌|gets changed files for hg|3.765s|
 |✔️|path on Windows is case-insensitive|0ms|
