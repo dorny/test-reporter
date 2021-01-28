@@ -48,7 +48,7 @@ describe('jest-junit tests', () => {
     const result = await parseJestJunit([xmlFixture], opts)
     expect(result).toMatchSnapshot()
 
-    const report = getReport(result.testRuns, {listTests: 'only-failed'})
+    const report = getReport(result.testRuns, {listTests: 'failed'})
     fs.mkdirSync(path.dirname(outputPath), {recursive: true})
     fs.writeFileSync(outputPath, report)
   })

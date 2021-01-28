@@ -63,7 +63,7 @@ jobs:
 
     # Limits which test suites are listed:
     #   all
-    #   only-failed
+    #   failed
     list-suites: 'all'
 
     # Limits which test cases are listed:

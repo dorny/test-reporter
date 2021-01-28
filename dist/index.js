@@ -61,11 +61,11 @@ async function main() {
     const failOnError = core.getInput('fail-on-error', { required: true }) === 'true';
     const workDirInput = core.getInput('working-directory', { required: false });
     const token = core.getInput('token', { required: true });
-    if (listSuites !== 'all' && listSuites !== 'only-failed') {
+    if (listSuites !== 'all' && listSuites !== 'failed') {
         core.setFailed(`Input parameter 'list-suites' has invalid value`);
         return;
     }
-    if (listTests !== 'all' && listTests !== 'only-failed' && listTests !== 'none') {
+    if (listTests !== 'all' && listTests !== 'failed' && listTests !== 'none') {
         core.setFailed(`Input parameter 'list-tests' has invalid value`);
         return;
     }
@@ -743,6 +743,7 @@ const slugger_1 = __nccwpck_require__(3328);
 function getReport(results, options = {}) {
     const maxReportLength = 65535;
     const sections = [];
+    applySort(results);
     const badge = getBadge(results);
     sections.push(badge);
     const runsSummary = results.map((tr, i) => getRunSummary(tr, i, options)).join('\n\n');
@@ -750,7 +751,7 @@ function getReport(results, options = {}) {
     if (options.listTests !== 'none') {
         const suitesSummary = results
             .map((tr, runIndex) => {
-            const suites = options.listSuites === 'only-failed' ? tr.failedSuites : tr.suites;
+            const suites = options.listSuites === 'failed' ? tr.failedSuites : tr.suites;
             return suites
                 .map((ts, suiteIndex) => getSuiteSummary(ts, runIndex, suiteIndex, options))
                 .filter(str => str !== '');
@@ -776,6 +777,12 @@ function getReport(results, options = {}) {
     return report;
 }
 exports.getReport = getReport;
+function applySort(results) {
+    results.sort((a, b) => a.path.localeCompare(b.path));
+    for (const res of results) {
+        res.suites.sort((a, b) => a.name.localeCompare(b.name));
+    }
+}
 function getBadge(results) {
     const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
     const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
@@ -800,11 +807,11 @@ function getRunSummary(tr, runIndex, options) {
     const time = `${(tr.time / 1000).toFixed(3)}s`;
     const headingLine1 = `### ${tr.path}`;
     const headingLine2 = `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`;
-    const suites = options.listSuites === 'only-failed' ? tr.failedSuites : tr.suites;
+    const suites = options.listSuites === 'failed' ? tr.failedSuites : tr.suites;
     const suitesSummary = suites.map((s, suiteIndex) => {
         const tsTime = `${Math.round(s.time)}ms`;
         const tsName = s.name;
-        const skipLink = options.listTests === 'none' || (options.listTests === 'only-failed' && s.result !== 'failed');
+        const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed');
         const tsAddr = makeSuiteSlug(runIndex, suiteIndex, tsName).link;
         const tsNameLink = skipLink ? tsName : markdown_utils_1.link(tsName, tsAddr);
         const passed = s.passed > 0 ? `${s.passed}${markdown_utils_1.Icon.success}` : '';
@@ -818,14 +825,14 @@ function getRunSummary(tr, runIndex, options) {
     return [headingLine1, headingLine2, summary].join('\n\n');
 }
 function getSuiteSummary(ts, runIndex, suiteIndex, options) {
-    const groups = options.listTests === 'only-failed' ? ts.failedGroups : ts.groups;
+    const groups = options.listTests === 'failed' ? ts.failedGroups : ts.groups;
     if (groups.length === 0) {
         return '';
     }
     const icon = getResultIcon(ts.result);
     const content = groups
         .map(grp => {
-        const tests = options.listTests === 'only-failed' ? grp.failedTests : grp.tests;
+        const tests = options.listTests === 'failed' ? grp.failedTests : grp.tests;
         if (tests.length === 0) {
             return '';
         }

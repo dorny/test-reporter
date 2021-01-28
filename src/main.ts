@@ -31,12 +31,12 @@ async function main(): Promise<void> {
   const workDirInput = core.getInput('working-directory', {required: false})
   const token = core.getInput('token', {required: true})
 
-  if (listSuites !== 'all' && listSuites !== 'only-failed') {
+  if (listSuites !== 'all' && listSuites !== 'failed') {
     core.setFailed(`Input parameter 'list-suites' has invalid value`)
     return
   }
 
-  if (listTests !== 'all' && listTests !== 'only-failed' && listTests !== 'none') {
+  if (listTests !== 'all' && listTests !== 'failed' && listTests !== 'none') {
     core.setFailed(`Input parameter 'list-tests' has invalid value`)
     return
   }

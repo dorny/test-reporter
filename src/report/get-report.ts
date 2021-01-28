@@ -4,8 +4,8 @@ import {Align, Icon, link, table} from '../utils/markdown-utils'
 import {slug} from '../utils/slugger'
 
 export interface ReportOptions {
-  listSuites?: 'all' | 'only-failed'
-  listTests?: 'all' | 'only-failed' | 'none'
+  listSuites?: 'all' | 'failed'
+  listTests?: 'all' | 'failed' | 'none'
 }
 
 export function getReport(results: TestRunResult[], options: ReportOptions = {}): string {
@@ -23,7 +23,7 @@ export function getReport(results: TestRunResult[], options: ReportOptions = {})
   if (options.listTests !== 'none') {
     const suitesSummary = results
       .map((tr, runIndex) => {
-        const suites = options.listSuites === 'only-failed' ? tr.failedSuites : tr.suites
+        const suites = options.listSuites === 'failed' ? tr.failedSuites : tr.suites
         return suites
           .map((ts, suiteIndex) => getSuiteSummary(ts, runIndex, suiteIndex, options))
           .filter(str => str !== '')
@@ -54,9 +54,9 @@ export function getReport(results: TestRunResult[], options: ReportOptions = {})
 }
 
 function applySort(results: TestRunResult[]): void {
-  results.sort((a,b) => a.path.localeCompare(b.path))
+  results.sort((a, b) => a.path.localeCompare(b.path))
   for (const res of results) {
-    res.suites.sort((a,b)=> a.name.localeCompare(b.name))
+    res.suites.sort((a, b) => a.name.localeCompare(b.name))
   }
 }
 
@@ -87,11 +87,11 @@ function getRunSummary(tr: TestRunResult, runIndex: number, options: ReportOptio
   const headingLine1 = `### ${tr.path}`
   const headingLine2 = `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`
 
-  const suites = options.listSuites === 'only-failed' ? tr.failedSuites : tr.suites
+  const suites = options.listSuites === 'failed' ? tr.failedSuites : tr.suites
   const suitesSummary = suites.map((s, suiteIndex) => {
     const tsTime = `${Math.round(s.time)}ms`
     const tsName = s.name
-    const skipLink = options.listTests === 'none' || (options.listTests === 'only-failed' && s.result !== 'failed')
+    const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed')
     const tsAddr = makeSuiteSlug(runIndex, suiteIndex, tsName).link
     const tsNameLink = skipLink ? tsName : link(tsName, tsAddr)
     const passed = s.passed > 0 ? `${s.passed}${Icon.success}` : ''
@@ -113,7 +113,7 @@ function getRunSummary(tr: TestRunResult, runIndex: number, options: ReportOptio
 }
 
 function getSuiteSummary(ts: TestSuiteResult, runIndex: number, suiteIndex: number, options: ReportOptions): string {
-  const groups = options.listTests === 'only-failed' ? ts.failedGroups : ts.groups
+  const groups = options.listTests === 'failed' ? ts.failedGroups : ts.groups
   if (groups.length === 0) {
     return ''
   }
@@ -121,7 +121,7 @@ function getSuiteSummary(ts: TestSuiteResult, runIndex: number, suiteIndex: numb
   const icon = getResultIcon(ts.result)
   const content = groups
     .map(grp => {
-      const tests = options.listTests === 'only-failed' ? grp.failedTests : grp.tests
+      const tests = options.listTests === 'failed' ? grp.failedTests : grp.tests
       if (tests.length === 0) {
         return ''
       }
