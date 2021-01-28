@@ -4,10 +4,10 @@
 
 **6** tests were completed in **1.360s** with **1** passed, **4** failed and **1** skipped.
 
-|Result|Suite|Passed|Failed|Skipped|Time|
-|:---:|:---|---:|---:|---:|---:|
-|❌|[__tests__\main.test.js](#r0s0-tests-main-test-js)|1✔️|3❌||486ms|
-|❌|[__tests__\second.test.js](#r0s1-tests-second-test-js)||1❌|1✖️|82ms|
+|Suite|Passed|Failed|Skipped|Time|
+|:---|---:|---:|---:|---:|
+|[__tests__\main.test.js](#r0s0-tests-main-test-js)|1✔️|3❌||486ms|
+|[__tests__\second.test.js](#r0s1-tests-second-test-js)||1❌|1✖️|82ms|
 
 # Test Suites
 

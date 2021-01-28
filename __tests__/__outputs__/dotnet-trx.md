@@ -4,9 +4,9 @@
 
 **7** tests were completed in **1.061s** with **3** passed, **3** failed and **1** skipped.
 
-|Result|Suite|Passed|Failed|Skipped|Time|
-|:---:|:---|---:|---:|---:|---:|
-|❌|[DotnetTests.XUnitTests.CalculatorTests](#r0s0-DotnetTests-XUnitTests-CalculatorTests)|3✔️|3❌|1✖️|110ms|
+|Suite|Passed|Failed|Skipped|Time|
+|:---|---:|---:|---:|---:|
+|[DotnetTests.XUnitTests.CalculatorTests](#r0s0-DotnetTests-XUnitTests-CalculatorTests)|3✔️|3❌|1✖️|110ms|
 
 # Test Suites
 

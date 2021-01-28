@@ -121,7 +121,7 @@ Or you can configure TRX test output in `*.csproj` or `Directory.Build.props`:
 ```xml
 <PropertyGroup>
   <VSTestLogger>trx%3bLogFileName=$(MSBuildProjectName).trx</VSTestLogger>
-  <VSTestResultsDirectory>$(MSBuildThisFileDirectory)/reports</VSTestResultsDirectory>
+  <VSTestResultsDirectory>$(MSBuildThisFileDirectory)/TestResults/$(TargetFramework)</VSTestResultsDirectory>
 </PropertyGroup>
 ```
 

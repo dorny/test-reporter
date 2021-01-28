@@ -4,10 +4,10 @@
 
 **6** tests were completed in **3.760s** with **1** passed, **4** failed and **1** skipped.
 
-|Result|Suite|Passed|Failed|Skipped|Time|
-|:---:|:---|---:|---:|---:|---:|
-|❌|[test\main_test.dart](#r0s0-test-maintest-dart)|1✔️|3❌||74ms|
-|❌|[test\second_test.dart](#r0s1-test-secondtest-dart)||1❌|1✖️|51ms|
+|Suite|Passed|Failed|Skipped|Time|
+|:---|---:|---:|---:|---:|
+|[test\main_test.dart](#r0s0-test-maintest-dart)|1✔️|3❌||74ms|
+|[test\second_test.dart](#r0s1-test-secondtest-dart)||1❌|1✖️|51ms|
 
 # Test Suites
 

@@ -12,6 +12,8 @@ export function getReport(results: TestRunResult[], options: ReportOptions = {})
   const maxReportLength = 65535
   const sections: string[] = []
 
+  applySort(results)
+
   const badge = getBadge(results)
   sections.push(badge)
 
@@ -51,6 +53,13 @@ export function getReport(results: TestRunResult[], options: ReportOptions = {})
   return report
 }
 
+function applySort(results: TestRunResult[]): void {
+  results.sort((a,b) => a.path.localeCompare(b.path))
+  for (const res of results) {
+    res.suites.sort((a,b)=> a.name.localeCompare(b.name))
+  }
+}
+
 function getBadge(results: TestRunResult[]): string {
   const passed = results.reduce((sum, tr) => sum + tr.passed, 0)
   const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0)
@@ -80,7 +89,6 @@ function getRunSummary(tr: TestRunResult, runIndex: number, options: ReportOptio
 
   const suites = options.listSuites === 'only-failed' ? tr.failedSuites : tr.suites
   const suitesSummary = suites.map((s, suiteIndex) => {
-    const icon = getResultIcon(s.result)
     const tsTime = `${Math.round(s.time)}ms`
     const tsName = s.name
     const skipLink = options.listTests === 'none' || (options.listTests === 'only-failed' && s.result !== 'failed')
@@ -89,15 +97,15 @@ function getRunSummary(tr: TestRunResult, runIndex: number, options: ReportOptio
     const passed = s.passed > 0 ? `${s.passed}${Icon.success}` : ''
     const failed = s.failed > 0 ? `${s.failed}${Icon.fail}` : ''
     const skipped = s.skipped > 0 ? `${s.skipped}${Icon.skip}` : ''
-    return [icon, tsNameLink, passed, failed, skipped, tsTime]
+    return [tsNameLink, passed, failed, skipped, tsTime]
   })
 
   const summary =
     suites.length === 0
       ? ''
       : table(
-          ['Result', 'Suite', 'Passed', 'Failed', 'Skipped', 'Time'],
-          [Align.Center, Align.Left, Align.Right, Align.Right, Align.Right, Align.Right],
+          ['Suite', 'Passed', 'Failed', 'Skipped', 'Time'],
+          [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right],
           ...suitesSummary
         )
 

@@ -802,7 +802,6 @@ function getRunSummary(tr, runIndex, options) {
     const headingLine2 = `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`;
     const suites = options.listSuites === 'only-failed' ? tr.failedSuites : tr.suites;
     const suitesSummary = suites.map((s, suiteIndex) => {
-        const icon = getResultIcon(s.result);
         const tsTime = `${Math.round(s.time)}ms`;
         const tsName = s.name;
         const skipLink = options.listTests === 'none' || (options.listTests === 'only-failed' && s.result !== 'failed');
@@ -811,11 +810,11 @@ function getRunSummary(tr, runIndex, options) {
         const passed = s.passed > 0 ? `${s.passed}${markdown_utils_1.Icon.success}` : '';
         const failed = s.failed > 0 ? `${s.failed}${markdown_utils_1.Icon.fail}` : '';
         const skipped = s.skipped > 0 ? `${s.skipped}${markdown_utils_1.Icon.skip}` : '';
-        return [icon, tsNameLink, passed, failed, skipped, tsTime];
+        return [tsNameLink, passed, failed, skipped, tsTime];
     });
     const summary = suites.length === 0
         ? ''
-        : markdown_utils_1.table(['Result', 'Suite', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Center, markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...suitesSummary);
+        : markdown_utils_1.table(['Suite', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...suitesSummary);
     return [headingLine1, headingLine2, summary].join('\n\n');
 }
 function getSuiteSummary(ts, runIndex, suiteIndex, options) {
