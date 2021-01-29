@@ -54,10 +54,16 @@ function getReportBadge(results: TestRunResult[]): string {
 
 function getBadge(passed: number, failed: number, skipped: number): string {
   const text = []
-  if (passed > 0) { text.push(`${passed} passed`) }
-  if (failed > 0) { text.push(`${failed} failed`) }
-  if (skipped > 0) { text.push(`${skipped} skipped`) }
-  let message = text.length > 0 ? text.join(', ') : 'none'
+  if (passed > 0) {
+    text.push(`${passed} passed`)
+  }
+  if (failed > 0) {
+    text.push(`${failed} failed`)
+  }
+  if (skipped > 0) {
+    text.push(`${skipped} skipped`)
+  }
+  const message = text.length > 0 ? text.join(', ') : 'none'
 
   let color = 'success'
   if (failed > 0) {
@@ -101,13 +107,12 @@ function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): s
 function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOptions): string[] {
   const sections: string[] = []
 
-  const time = `${(tr.time / 1000).toFixed(3)}s`
-
-  const slug = makeRunSlug(runIndex)
-  const nameLink = `<a id="${slug.id}" href="${slug.link}">${tr.path}</a>`
+  const trSlug = makeRunSlug(runIndex)
+  const nameLink = `<a id="${trSlug.id}" href="${trSlug.link}">${tr.path}</a>`
   const icon = getResultIcon(tr.result)
   sections.push(`## ${nameLink} ${icon}`)
 
+  const time = `${(tr.time / 1000).toFixed(3)}s`
   const headingLine2 = `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`
   sections.push(headingLine2)
 
@@ -132,9 +137,7 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
   }
 
   if (options.listTests !== 'none') {
-    const tests = suites
-      .map((ts, suiteIndex) => getTestsReport(ts, runIndex, suiteIndex, options))
-      .flat()
+    const tests = suites.map((ts, suiteIndex) => getTestsReport(ts, runIndex, suiteIndex, options)).flat()
 
     if (tests.length > 1) {
       sections.push(...tests)

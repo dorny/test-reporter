@@ -741,29 +741,15 @@ const core = __importStar(__nccwpck_require__(2186));
 const markdown_utils_1 = __nccwpck_require__(6482);
 const slugger_1 = __nccwpck_require__(3328);
 function getReport(results, options = {}) {
+    core.info('Generating check run summary');
     const maxReportLength = 65535;
     const sections = [];
     applySort(results);
-    const badge = getBadge(results);
+    const badge = getReportBadge(results);
     sections.push(badge);
-    const runsSummary = results.map((tr, i) => getRunSummary(tr, i, options)).join('\n\n');
-    sections.push(runsSummary);
-    if (options.listTests !== 'none') {
-        const suitesSummary = results
-            .map((tr, runIndex) => {
-            const suites = options.listSuites === 'failed' ? tr.failedSuites : tr.suites;
-            return suites
-                .map((ts, suiteIndex) => getSuiteSummary(ts, runIndex, suiteIndex, options))
-                .filter(str => str !== '');
-        })
-            .flat()
-            .join('\n');
-        if (suitesSummary !== '') {
-            const suitesSection = `# Test Suites\n\n${suitesSummary}`;
-            sections.push(suitesSection);
-        }
-    }
-    const report = sections.join('\n\n');
+    const runs = getTestRunsReport(results, options);
+    sections.push(...runs);
+    const report = sections.join('\n');
     if (report.length > maxReportLength) {
         let msg = `**Check Run summary limit of ${maxReportLength} chars was exceed**`;
         if (options.listTests !== 'all') {
@@ -772,7 +758,7 @@ function getReport(results, options = {}) {
         if (options.listSuites !== 'all') {
             msg += '\n- Consider setting `list-suites` option to `only-failed`';
         }
-        return `${badge}\n\n${msg}`;
+        return `${badge}\n${msg}`;
     }
     return report;
 }
@@ -783,14 +769,24 @@ function applySort(results) {
         res.suites.sort((a, b) => a.name.localeCompare(b.name));
     }
 }
-function getBadge(results) {
+function getReportBadge(results) {
     const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
     const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
     const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
-    const passedText = passed > 0 ? `${passed} passed` : null;
-    const failedText = failed > 0 ? `${failed} failed` : null;
-    const skippedText = skipped > 0 ? `${skipped} skipped` : null;
-    const message = [passedText, skippedText, failedText].filter(s => s != null).join(', ') || 'none';
+    return getBadge(passed, failed, skipped);
+}
+function getBadge(passed, failed, skipped) {
+    const text = [];
+    if (passed > 0) {
+        text.push(`${passed} passed`);
+    }
+    if (failed > 0) {
+        text.push(`${failed} failed`);
+    }
+    if (skipped > 0) {
+        text.push(`${skipped} skipped`);
+    }
+    const message = text.length > 0 ? text.join(', ') : 'none';
     let color = 'success';
     if (failed > 0) {
         color = 'critical';
@@ -798,62 +794,98 @@ function getBadge(results) {
     else if (passed === 0 && failed === 0) {
         color = 'yellow';
     }
+    const hint = failed > 0 ? 'Tests failed' : 'Tests passed successfully';
     const uri = encodeURIComponent(`tests-${message}-${color}`);
-    const text = failed > 0 ? 'Tests failed' : 'Tests passed successfully';
-    return `![${text}](https://img.shields.io/badge/${uri})`;
+    return `![${hint}](https://img.shields.io/badge/${uri})`;
 }
-function getRunSummary(tr, runIndex, options) {
-    core.info('Generating check run summary');
+function getTestRunsReport(testRuns, options) {
+    const sections = [];
+    if (testRuns.length > 1) {
+        const tableData = testRuns.map((tr, runIndex) => {
+            const time = markdown_utils_1.formatTime(tr.time);
+            const name = tr.path;
+            const addr = makeRunSlug(runIndex).link;
+            const nameLink = markdown_utils_1.link(name, addr);
+            const passed = tr.passed > 0 ? `${tr.passed}${markdown_utils_1.Icon.success}` : '';
+            const failed = tr.failed > 0 ? `${tr.failed}${markdown_utils_1.Icon.fail}` : '';
+            const skipped = tr.skipped > 0 ? `${tr.skipped}${markdown_utils_1.Icon.skip}` : '';
+            return [nameLink, passed, failed, skipped, time];
+        });
+        const resultsTable = markdown_utils_1.table(['Report', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...tableData);
+        sections.push(resultsTable);
+    }
+    const suitesReports = testRuns.map((tr, i) => getSuitesReport(tr, i, options)).flat();
+    sections.push(...suitesReports);
+    return sections;
+}
+function getSuitesReport(tr, runIndex, options) {
+    const sections = [];
+    const trSlug = makeRunSlug(runIndex);
+    const nameLink = `<a id="${trSlug.id}" href="${trSlug.link}">${tr.path}</a>`;
+    const icon = getResultIcon(tr.result);
+    sections.push(`## ${nameLink} ${icon}`);
     const time = `${(tr.time / 1000).toFixed(3)}s`;
-    const headingLine1 = `### ${tr.path}`;
     const headingLine2 = `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`;
+    sections.push(headingLine2);
     const suites = options.listSuites === 'failed' ? tr.failedSuites : tr.suites;
-    const suitesSummary = suites.map((s, suiteIndex) => {
-        const tsTime = `${Math.round(s.time)}ms`;
-        const tsName = s.name;
-        const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed');
-        const tsAddr = makeSuiteSlug(runIndex, suiteIndex, tsName).link;
-        const tsNameLink = skipLink ? tsName : markdown_utils_1.link(tsName, tsAddr);
-        const passed = s.passed > 0 ? `${s.passed}${markdown_utils_1.Icon.success}` : '';
-        const failed = s.failed > 0 ? `${s.failed}${markdown_utils_1.Icon.fail}` : '';
-        const skipped = s.skipped > 0 ? `${s.skipped}${markdown_utils_1.Icon.skip}` : '';
-        return [tsNameLink, passed, failed, skipped, tsTime];
-    });
-    const summary = suites.length === 0
-        ? ''
-        : markdown_utils_1.table(['Suite', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...suitesSummary);
-    return [headingLine1, headingLine2, summary].join('\n\n');
+    if (suites.length > 0) {
+        const suitesTable = markdown_utils_1.table(['Test suite', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...suites.map((s, suiteIndex) => {
+            const tsTime = markdown_utils_1.formatTime(s.time);
+            const tsName = s.name;
+            const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed');
+            const tsAddr = makeSuiteSlug(runIndex, suiteIndex).link;
+            const tsNameLink = skipLink ? tsName : markdown_utils_1.link(tsName, tsAddr);
+            const passed = s.passed > 0 ? `${s.passed}${markdown_utils_1.Icon.success}` : '';
+            const failed = s.failed > 0 ? `${s.failed}${markdown_utils_1.Icon.fail}` : '';
+            const skipped = s.skipped > 0 ? `${s.skipped}${markdown_utils_1.Icon.skip}` : '';
+            return [tsNameLink, passed, failed, skipped, tsTime];
+        }));
+        sections.push(suitesTable);
+    }
+    if (options.listTests !== 'none') {
+        const tests = suites.map((ts, suiteIndex) => getTestsReport(ts, runIndex, suiteIndex, options)).flat();
+        if (tests.length > 1) {
+            sections.push(...tests);
+        }
+    }
+    return sections;
 }
-function getSuiteSummary(ts, runIndex, suiteIndex, options) {
+function getTestsReport(ts, runIndex, suiteIndex, options) {
     const groups = options.listTests === 'failed' ? ts.failedGroups : ts.groups;
     if (groups.length === 0) {
-        return '';
+        return [];
     }
+    const sections = [];
+    const tsName = ts.name;
+    const tsSlug = makeSuiteSlug(runIndex, suiteIndex);
+    const tsNameLink = `<a id="${tsSlug.id}" href="${tsSlug.link}">${tsName}</a>`;
     const icon = getResultIcon(ts.result);
-    const content = groups
-        .map(grp => {
+    sections.push(`### ${tsNameLink} ${icon}`);
+    const headingLine2 = `**${ts.tests}** tests were completed in **${ts.time}ms** with **${ts.passed}** passed, **${ts.failed}** failed and **${ts.skipped}** skipped.`;
+    sections.push(headingLine2);
+    for (const grp of groups) {
         const tests = options.listTests === 'failed' ? grp.failedTests : grp.tests;
         if (tests.length === 0) {
-            return '';
+            continue;
         }
-        const header = grp.name ? `### ${grp.name}\n\n` : '';
+        const grpHeader = grp.name ? `\n**${grp.name}**` : '';
         const testsTable = markdown_utils_1.table(['Result', 'Test', 'Time'], [markdown_utils_1.Align.Center, markdown_utils_1.Align.Left, markdown_utils_1.Align.Right], ...grp.tests.map(tc => {
             const name = tc.name;
-            const time = `${Math.round(tc.time)}ms`;
+            const time = markdown_utils_1.formatTime(tc.time);
             const result = getResultIcon(tc.result);
             return [result, name, time];
         }));
-        return `${header}${testsTable}\n`;
-    })
-        .join('\n');
-    const tsName = ts.name;
-    const tsSlug = makeSuiteSlug(runIndex, suiteIndex, tsName);
-    const tsNameLink = `<a id="${tsSlug.id}" href="${tsSlug.link}">${tsName}</a>`;
-    return `## ${tsNameLink} ${icon}\n\n${content}`;
+        sections.push(grpHeader, testsTable);
+    }
+    return sections;
 }
-function makeSuiteSlug(runIndex, suiteIndex, name) {
+function makeRunSlug(runIndex) {
     // use prefix to avoid slug conflicts after escaping the paths
-    return slugger_1.slug(`r${runIndex}s${suiteIndex}-${name}`);
+    return slugger_1.slug(`r${runIndex}`);
+}
+function makeSuiteSlug(runIndex, suiteIndex) {
+    // use prefix to avoid slug conflicts after escaping the paths
+    return slugger_1.slug(`r${runIndex}s${suiteIndex}`);
 }
 function getResultIcon(result) {
     switch (result) {
@@ -1139,7 +1171,7 @@ exports.enforceCheckRunLimits = enforceCheckRunLimits;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ellipsis = exports.fixEol = exports.tableEscape = exports.table = exports.link = exports.Icon = exports.Align = void 0;
+exports.formatTime = exports.ellipsis = exports.fixEol = exports.tableEscape = exports.table = exports.link = exports.Icon = exports.Align = void 0;
 var Align;
 (function (Align) {
     Align["Left"] = ":---";
@@ -1179,6 +1211,13 @@ function ellipsis(text, maxLength) {
     return text.substr(0, maxLength - 3) + '...';
 }
 exports.ellipsis = ellipsis;
+function formatTime(ms) {
+    if (ms > 1000) {
+        return `${(ms / 1000).toFixed(3)}s`;
+    }
+    return `${Math.round(ms)}ms`;
+}
+exports.formatTime = formatTime;
 
 
 /***/ }),
