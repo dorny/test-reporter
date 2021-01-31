@@ -35,10 +35,11 @@ const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const fs = __importStar(__nccwpck_require__(5747));
 const fast_glob_1 = __importDefault(__nccwpck_require__(3664));
+const get_annotations_1 = __nccwpck_require__(5867);
+const get_report_1 = __nccwpck_require__(3737);
 const dart_json_parser_1 = __nccwpck_require__(4528);
 const dotnet_trx_parser_1 = __nccwpck_require__(2664);
 const jest_junit_parser_1 = __nccwpck_require__(1113);
-const get_report_1 = __nccwpck_require__(3737);
 const file_utils_1 = __nccwpck_require__(2711);
 const git_1 = __nccwpck_require__(9844);
 const github_utils_1 = __nccwpck_require__(3522);
@@ -81,23 +82,32 @@ async function main() {
     const octokit = github.getOctokit(token);
     const sha = github_utils_1.getCheckRunSha();
     // We won't need tracked files if we are not going to create annotations
-    const annotations = maxAnnotations > 0;
-    const trackedFiles = annotations ? await git_1.listFiles() : [];
-    const opts = {
+    const parseErrors = maxAnnotations > 0;
+    const trackedFiles = parseErrors ? await git_1.listFiles() : [];
+    const options = {
         trackedFiles,
         workDir,
-        annotations
+        parseErrors
     };
-    const parser = getParser(reporter);
+    core.info(`Using test report parser '${reporter}'`);
+    const parser = getParser(reporter, options);
     const files = await getFiles(path);
     if (files.length === 0) {
         core.setFailed(`No file matches path '${path}'`);
         return;
     }
-    core.info(`Using test report parser '${reporter}'`);
-    const result = await parser(files, opts);
-    github_utils_1.enforceCheckRunLimits(result, maxAnnotations);
-    const isFailed = result.testRuns.some(tr => tr.result === 'failed');
+    const results = [];
+    for (const file of files) {
+        core.info(`Processing test report ${file}`);
+        const content = await fs.promises.readFile(file, { encoding: 'utf8' });
+        const tr = await parser.parse(file, content);
+        results.push(tr);
+    }
+    core.info('Creating report summary');
+    const summary = get_report_1.getReport(results, { listSuites, listTests });
+    core.info('Creating annotations');
+    const annotations = get_annotations_1.getAnnotations(results, maxAnnotations);
+    const isFailed = results.some(tr => tr.result === 'failed');
     const conclusion = isFailed ? 'failure' : 'success';
     const icon = isFailed ? markdown_utils_1.Icon.fail : markdown_utils_1.Icon.success;
     core.info(`Creating check run '${name}' with conclusion '${conclusion}'`);
@@ -108,38 +118,42 @@ async function main() {
         status: 'completed',
         output: {
             title: `${name} ${icon}`,
-            summary: get_report_1.getReport(result.testRuns, { listSuites, listTests }),
-            annotations: result.annotations
+            summary,
+            annotations
         },
         ...github.context.repo
     });
+    const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
+    const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
+    const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
+    const time = results.reduce((sum, tr) => sum + tr.time, 0);
     core.setOutput('conclusion', conclusion);
+    core.setOutput('passed', passed);
+    core.setOutput('failed', failed);
+    core.setOutput('skipped', skipped);
+    core.setOutput('time', time);
     if (failOnError && isFailed) {
         core.setFailed(`Failed test has been found and 'fail-on-error' option is set to ${failOnError}`);
     }
 }
-function getParser(reporter) {
+function getParser(reporter, options) {
     switch (reporter) {
         case 'dart-json':
-            return dart_json_parser_1.parseDartJson;
+            return new dart_json_parser_1.DartJsonParser(options);
         case 'dotnet-trx':
-            return dotnet_trx_parser_1.parseDotnetTrx;
+            return new dotnet_trx_parser_1.DotnetTrxParser(options);
         case 'flutter-machine':
-            return dart_json_parser_1.parseDartJson;
+            return new dart_json_parser_1.DartJsonParser(options);
         case 'jest-junit':
-            return jest_junit_parser_1.parseJestJunit;
+            return new jest_junit_parser_1.JestJunitParser(options);
         default:
             throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`);
     }
 }
 async function getFiles(pattern) {
-    const paths = (await Promise.all(pattern.split(',').map(async (pat) => fast_glob_1.default(pat, { dot: true })))).flat();
-    const files = Promise.all(paths.map(async (path) => {
-        core.info(`Reading test report '${path}'`);
-        const content = await fs.promises.readFile(path, { encoding: 'utf8' });
-        return { path, content };
-    }));
-    return files;
+    const tasks = pattern.split(',').map(async (pat) => fast_glob_1.default(pat, { dot: true }));
+    const paths = await Promise.all(tasks);
+    return paths.flat();
 }
 exports.getFiles = getFiles;
 run();
@@ -172,12 +186,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.parseDartJson = void 0;
+exports.DartJsonParser = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const file_utils_1 = __nccwpck_require__(2711);
-const markdown_utils_1 = __nccwpck_require__(6482);
 const dart_json_types_1 = __nccwpck_require__(7887);
-const test_results_1 = __nccwpck_require__(8407);
+const test_results_1 = __nccwpck_require__(2768);
 class TestRun {
     constructor(path, suites, success, time) {
         this.path = path;
@@ -220,148 +233,141 @@ class TestCase {
         return this.testDone !== undefined ? this.testDone.time - this.testStart.time : 0;
     }
 }
-async function parseDartJson(files, options) {
-    const testRuns = files.map(f => getTestRun(f.path, f.content));
-    const testRunsResults = testRuns.map(getTestRunResult);
-    return {
-        testRuns: testRunsResults,
-        annotations: options.annotations ? getAnnotations(testRuns, options.workDir, options.trackedFiles) : []
-    };
-}
-exports.parseDartJson = parseDartJson;
-function getTestRun(path, content) {
-    core.info(`Parsing content of '${path}'`);
-    const lines = content.split(/\n\r?/g);
-    const events = lines
-        .map((str, i) => {
-        if (str.trim() === '') {
-            return null;
-        }
-        try {
-            return JSON.parse(str);
-        }
-        catch (e) {
-            const col = e.columnNumber !== undefined ? `:${e.columnNumber}` : '';
-            new Error(`Invalid JSON at ${path}:${i + 1}${col}\n\n${e}`);
-        }
-    })
-        .filter(evt => evt != null);
-    let success = false;
-    let totalTime = 0;
-    const suites = {};
-    const tests = {};
-    for (const evt of events) {
-        if (dart_json_types_1.isSuiteEvent(evt)) {
-            suites[evt.suite.id] = new TestSuite(evt.suite);
-        }
-        else if (dart_json_types_1.isGroupEvent(evt)) {
-            suites[evt.group.suiteID].groups[evt.group.id] = new TestGroup(evt.group);
-        }
-        else if (dart_json_types_1.isTestStartEvent(evt) && evt.test.url !== null) {
-            const test = new TestCase(evt);
-            const suite = suites[evt.test.suiteID];
-            const group = suite.groups[evt.test.groupIDs[evt.test.groupIDs.length - 1]];
-            group.tests.push(test);
-            tests[evt.test.id] = test;
-        }
-        else if (dart_json_types_1.isTestDoneEvent(evt) && !evt.hidden) {
-            tests[evt.testID].testDone = evt;
-        }
-        else if (dart_json_types_1.isErrorEvent(evt)) {
-            tests[evt.testID].error = evt;
-        }
-        else if (dart_json_types_1.isDoneEvent(evt)) {
-            success = evt.success;
-            totalTime = evt.time;
-        }
+class DartJsonParser {
+    constructor(options) {
+        this.options = options;
     }
-    return new TestRun(path, Object.values(suites), success, totalTime);
-}
-function getTestRunResult(tr) {
-    const suites = tr.suites.map(s => {
-        return new test_results_1.TestSuiteResult(s.suite.path, getGroups(s));
-    });
-    return new test_results_1.TestRunResult(tr.path, suites, tr.time);
-}
-function getGroups(suite) {
-    const groups = Object.values(suite.groups).filter(grp => grp.tests.length > 0);
-    groups.sort((a, b) => { var _a, _b; return ((_a = a.group.line) !== null && _a !== void 0 ? _a : 0) - ((_b = b.group.line) !== null && _b !== void 0 ? _b : 0); });
-    return groups.map(group => {
-        group.tests.sort((a, b) => { var _a, _b; return ((_a = a.testStart.test.line) !== null && _a !== void 0 ? _a : 0) - ((_b = b.testStart.test.line) !== null && _b !== void 0 ? _b : 0); });
-        const tests = group.tests.map(t => new test_results_1.TestCaseResult(t.testStart.test.name, t.result, t.time));
-        return new test_results_1.TestGroupResult(group.group.name, tests);
-    });
-}
-function getAnnotations(testRuns, workDir, trackedFiles) {
-    const annotations = [];
-    for (const tr of testRuns) {
-        for (const suite of tr.suites) {
-            for (const group of Object.values(suite.groups)) {
-                for (const test of group.tests) {
-                    if (test.error) {
-                        const err = getAnnotation(test, suite, workDir, trackedFiles);
-                        if (err !== null) {
-                            annotations.push(err);
-                        }
-                    }
+    async parse(path, content) {
+        const tr = this.getTestRun(path, content);
+        const result = this.getTestRunResult(tr);
+        return Promise.resolve(result);
+    }
+    getTestRun(path, content) {
+        core.info(`Parsing content of '${path}'`);
+        const lines = content.split(/\n\r?/g);
+        const events = lines
+            .map((str, i) => {
+            if (str.trim() === '') {
+                return null;
+            }
+            try {
+                return JSON.parse(str);
+            }
+            catch (e) {
+                const col = e.columnNumber !== undefined ? `:${e.columnNumber}` : '';
+                new Error(`Invalid JSON at ${path}:${i + 1}${col}\n\n${e}`);
+            }
+        })
+            .filter(evt => evt != null);
+        let success = false;
+        let totalTime = 0;
+        const suites = {};
+        const tests = {};
+        for (const evt of events) {
+            if (dart_json_types_1.isSuiteEvent(evt)) {
+                suites[evt.suite.id] = new TestSuite(evt.suite);
+            }
+            else if (dart_json_types_1.isGroupEvent(evt)) {
+                suites[evt.group.suiteID].groups[evt.group.id] = new TestGroup(evt.group);
+            }
+            else if (dart_json_types_1.isTestStartEvent(evt) && evt.test.url !== null) {
+                const test = new TestCase(evt);
+                const suite = suites[evt.test.suiteID];
+                const group = suite.groups[evt.test.groupIDs[evt.test.groupIDs.length - 1]];
+                group.tests.push(test);
+                tests[evt.test.id] = test;
+            }
+            else if (dart_json_types_1.isTestDoneEvent(evt) && !evt.hidden) {
+                tests[evt.testID].testDone = evt;
+            }
+            else if (dart_json_types_1.isErrorEvent(evt)) {
+                tests[evt.testID].error = evt;
+            }
+            else if (dart_json_types_1.isDoneEvent(evt)) {
+                success = evt.success;
+                totalTime = evt.time;
+            }
+        }
+        return new TestRun(path, Object.values(suites), success, totalTime);
+    }
+    getTestRunResult(tr) {
+        const suites = tr.suites.map(s => {
+            return new test_results_1.TestSuiteResult(s.suite.path, this.getGroups(s));
+        });
+        return new test_results_1.TestRunResult(tr.path, suites, tr.time);
+    }
+    getGroups(suite) {
+        const groups = Object.values(suite.groups).filter(grp => grp.tests.length > 0);
+        groups.sort((a, b) => { var _a, _b; return ((_a = a.group.line) !== null && _a !== void 0 ? _a : 0) - ((_b = b.group.line) !== null && _b !== void 0 ? _b : 0); });
+        return groups.map(group => {
+            group.tests.sort((a, b) => { var _a, _b; return ((_a = a.testStart.test.line) !== null && _a !== void 0 ? _a : 0) - ((_b = b.testStart.test.line) !== null && _b !== void 0 ? _b : 0); });
+            const tests = group.tests.map(t => this.getTest(t));
+            return new test_results_1.TestGroupResult(group.group.name, tests);
+        });
+    }
+    getTest(tc) {
+        const error = this.getError(tc);
+        return new test_results_1.TestCaseResult(tc.testStart.test.name, tc.result, tc.time, error);
+    }
+    getError(test) {
+        var _a, _b, _c, _d, _e, _f;
+        if (!this.options.parseErrors || !test.error) {
+            return undefined;
+        }
+        const { workDir, trackedFiles } = this.options;
+        const message = (_b = (_a = test.error) === null || _a === void 0 ? void 0 : _a.error) !== null && _b !== void 0 ? _b : '';
+        const stackTrace = (_d = (_c = test.error) === null || _c === void 0 ? void 0 : _c.stackTrace) !== null && _d !== void 0 ? _d : '';
+        const src = this.exceptionThrowSource(stackTrace, trackedFiles);
+        let path;
+        let line;
+        if (src !== undefined) {
+            ;
+            (path = src.path), (line = src.line);
+        }
+        else {
+            const testStartPath = this.getRelativePathFromUrl((_e = test.testStart.test.url) !== null && _e !== void 0 ? _e : '', workDir);
+            if (trackedFiles.includes(testStartPath)) {
+                path = testStartPath;
+            }
+            line = (_f = test.testStart.test.line) !== null && _f !== void 0 ? _f : undefined;
+        }
+        return {
+            path,
+            line,
+            message,
+            stackTrace
+        };
+    }
+    exceptionThrowSource(ex, trackedFiles) {
+        // imports from package which is tested are listed in stack traces as 'package:xyz/' which maps to relative path 'lib/'
+        const packageRe = /^package:[a-zA-z0-9_$]+\//;
+        const lines = ex.split(/\r?\n/).map(str => str.replace(packageRe, 'lib/'));
+        // regexp to extract file path and line number from stack trace
+        const re = /^(.*)\s+(\d+):\d+\s+/;
+        for (const str of lines) {
+            const match = str.match(re);
+            if (match !== null) {
+                const [_, pathStr, lineStr] = match;
+                const path = file_utils_1.normalizeFilePath(pathStr);
+                if (trackedFiles.includes(path)) {
+                    const line = parseInt(lineStr);
+                    return { path, line };
                 }
             }
         }
     }
-    return annotations;
-}
-function getAnnotation(test, testSuite, workDir, trackedFiles) {
-    var _a, _b, _c, _d, _e, _f;
-    const stack = (_b = (_a = test.error) === null || _a === void 0 ? void 0 : _a.stackTrace) !== null && _b !== void 0 ? _b : '';
-    let src = exceptionThrowSource(stack, trackedFiles);
-    if (src === null) {
-        const file = getRelativePathFromUrl((_c = test.testStart.test.url) !== null && _c !== void 0 ? _c : '', workDir);
-        if (!trackedFiles.includes(file)) {
-            return null;
+    getRelativePathFromUrl(file, workDir) {
+        const prefix = 'file:///';
+        if (file.startsWith(prefix)) {
+            file = file.substr(prefix.length);
         }
-        src = {
-            file,
-            line: (_d = test.testStart.test.line) !== null && _d !== void 0 ? _d : 0
-        };
-    }
-    return {
-        annotation_level: 'failure',
-        start_line: src.line,
-        end_line: src.line,
-        path: src.file,
-        message: `${markdown_utils_1.fixEol((_e = test.error) === null || _e === void 0 ? void 0 : _e.error)}\n\n${markdown_utils_1.fixEol((_f = test.error) === null || _f === void 0 ? void 0 : _f.stackTrace)}`,
-        title: `[${testSuite.suite.path}] ${test.testStart.test.name}`
-    };
-}
-function exceptionThrowSource(ex, trackedFiles) {
-    // imports from package which is tested are listed in stack traces as 'package:xyz/' which maps to relative path 'lib/'
-    const packageRe = /^package:[a-zA-z0-9_$]+\//;
-    const lines = ex.split(/\r?\n/).map(str => str.replace(packageRe, 'lib/'));
-    // regexp to extract file path and line number from stack trace
-    const re = /^(.*)\s+(\d+):\d+\s+/;
-    for (const str of lines) {
-        const match = str.match(re);
-        if (match !== null) {
-            const [_, fileStr, lineStr] = match;
-            const file = file_utils_1.normalizeFilePath(fileStr);
-            if (trackedFiles.includes(file)) {
-                const line = parseInt(lineStr);
-                return { file, line };
-            }
+        if (file.startsWith(workDir)) {
+            file = file.substr(workDir.length);
         }
+        return file;
     }
-    return null;
 }
-function getRelativePathFromUrl(file, workdir) {
-    const prefix = 'file:///';
-    if (file.startsWith(prefix)) {
-        file = file.substr(prefix.length);
-    }
-    if (file.startsWith(workdir)) {
-        file = file.substr(workdir.length);
-    }
-    return file;
-}
+exports.DartJsonParser = DartJsonParser;
 
 
 /***/ }),
@@ -427,13 +433,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.exceptionThrowSource = exports.parseDotnetTrx = void 0;
+exports.DotnetTrxParser = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const xml2js_1 = __nccwpck_require__(6189);
 const file_utils_1 = __nccwpck_require__(2711);
-const markdown_utils_1 = __nccwpck_require__(6482);
 const parse_utils_1 = __nccwpck_require__(7811);
-const test_results_1 = __nccwpck_require__(8407);
+const test_results_1 = __nccwpck_require__(2768);
 class TestClass {
     constructor(name) {
         this.name = name;
@@ -458,113 +463,109 @@ class Test {
         }
     }
 }
-async function parseDotnetTrx(files, options) {
-    const testRuns = [];
-    const testClasses = [];
-    for (const file of files) {
-        const trx = await getTrxReport(file);
-        const tc = getTestClasses(trx);
-        const tr = getTestRunResult(file.path, trx, tc);
-        testRuns.push(tr);
-        testClasses.push(...tc);
+class DotnetTrxParser {
+    constructor(options) {
+        this.options = options;
     }
-    return {
-        testRuns,
-        annotations: options.annotations ? getAnnotations(testClasses, options.workDir, options.trackedFiles) : []
-    };
-}
-exports.parseDotnetTrx = parseDotnetTrx;
-async function getTrxReport(file) {
-    core.info(`Parsing content of '${file.path}'`);
-    try {
-        return (await xml2js_1.parseStringPromise(file.content));
+    async parse(path, content) {
+        const trx = await this.getTrxReport(path, content);
+        const tc = this.getTestClasses(trx);
+        const tr = this.getTestRunResult(path, trx, tc);
+        return tr;
     }
-    catch (e) {
-        throw new Error(`Invalid XML at ${file.path}\n\n${e}`);
-    }
-}
-function getTestRunResult(path, trx, testClasses) {
-    const times = trx.TestRun.Times[0].$;
-    const totalTime = parse_utils_1.parseIsoDate(times.finish).getTime() - parse_utils_1.parseIsoDate(times.start).getTime();
-    const suites = testClasses.map(tc => {
-        const tests = tc.tests.map(t => new test_results_1.TestCaseResult(t.name, t.result, t.duration));
-        const group = new test_results_1.TestGroupResult(null, tests);
-        return new test_results_1.TestSuiteResult(tc.name, [group]);
-    });
-    return new test_results_1.TestRunResult(path, suites, totalTime);
-}
-function getTestClasses(trx) {
-    var _a;
-    const unitTests = {};
-    for (const td of trx.TestRun.TestDefinitions) {
-        for (const ut of td.UnitTest) {
-            unitTests[ut.$.id] = ut.TestMethod[0];
+    async getTrxReport(path, content) {
+        core.info(`Parsing content of '${path}'`);
+        try {
+            return (await xml2js_1.parseStringPromise(content));
+        }
+        catch (e) {
+            throw new Error(`Invalid XML at ${path}\n\n${e}`);
         }
     }
-    const unitTestsResults = trx.TestRun.Results.flatMap(r => r.UnitTestResult).flatMap(unitTestResult => ({
-        unitTestResult,
-        testMethod: unitTests[unitTestResult.$.testId]
-    }));
-    const testClasses = {};
-    for (const r of unitTestsResults) {
-        let tc = testClasses[r.testMethod.$.className];
-        if (tc === undefined) {
-            tc = new TestClass(r.testMethod.$.className);
-            testClasses[tc.name] = tc;
+    getTestClasses(trx) {
+        var _a;
+        const unitTests = {};
+        for (const td of trx.TestRun.TestDefinitions) {
+            for (const ut of td.UnitTest) {
+                unitTests[ut.$.id] = ut.TestMethod[0];
+            }
         }
-        const output = r.unitTestResult.Output;
-        const error = (output === null || output === void 0 ? void 0 : output.length) > 0 && ((_a = output[0].ErrorInfo) === null || _a === void 0 ? void 0 : _a.length) > 0 ? output[0].ErrorInfo[0] : undefined;
-        const duration = parse_utils_1.parseNetDuration(r.unitTestResult.$.duration);
-        const test = new Test(r.testMethod.$.name, r.unitTestResult.$.outcome, duration, error);
-        tc.tests.push(test);
+        const unitTestsResults = trx.TestRun.Results.flatMap(r => r.UnitTestResult).flatMap(unitTestResult => ({
+            unitTestResult,
+            testMethod: unitTests[unitTestResult.$.testId]
+        }));
+        const testClasses = {};
+        for (const r of unitTestsResults) {
+            let tc = testClasses[r.testMethod.$.className];
+            if (tc === undefined) {
+                tc = new TestClass(r.testMethod.$.className);
+                testClasses[tc.name] = tc;
+            }
+            const output = r.unitTestResult.Output;
+            const error = (output === null || output === void 0 ? void 0 : output.length) > 0 && ((_a = output[0].ErrorInfo) === null || _a === void 0 ? void 0 : _a.length) > 0 ? output[0].ErrorInfo[0] : undefined;
+            const duration = parse_utils_1.parseNetDuration(r.unitTestResult.$.duration);
+            const test = new Test(r.testMethod.$.name, r.unitTestResult.$.outcome, duration, error);
+            tc.tests.push(test);
+        }
+        const result = Object.values(testClasses);
+        result.sort((a, b) => a.name.localeCompare(b.name));
+        for (const tc of result) {
+            tc.tests.sort((a, b) => a.name.localeCompare(b.name));
+        }
+        return result;
     }
-    const result = Object.values(testClasses);
-    result.sort((a, b) => a.name.localeCompare(b.name));
-    for (const tc of result) {
-        tc.tests.sort((a, b) => a.name.localeCompare(b.name));
+    getTestRunResult(path, trx, testClasses) {
+        const times = trx.TestRun.Times[0].$;
+        const totalTime = parse_utils_1.parseIsoDate(times.finish).getTime() - parse_utils_1.parseIsoDate(times.start).getTime();
+        const suites = testClasses.map(testClass => {
+            const tests = testClass.tests.map(test => {
+                const error = this.getError(test);
+                return new test_results_1.TestCaseResult(test.name, test.result, test.duration, error);
+            });
+            const group = new test_results_1.TestGroupResult(null, tests);
+            return new test_results_1.TestSuiteResult(testClass.name, [group]);
+        });
+        return new test_results_1.TestRunResult(path, suites, totalTime);
     }
-    return result;
-}
-function getAnnotations(testClasses, workDir, trackedFiles) {
-    const annotations = [];
-    for (const tc of testClasses) {
-        for (const t of tc.tests) {
-            if (t.error) {
-                const src = exceptionThrowSource(t.error.StackTrace[0], workDir, trackedFiles);
-                if (src === null) {
-                    continue;
+    getError(test) {
+        if (!this.options.parseErrors || !test.error) {
+            return undefined;
+        }
+        const message = test.error.Message[0];
+        const stackTrace = test.error.StackTrace[0];
+        let path;
+        let line;
+        const src = this.exceptionThrowSource(stackTrace);
+        if (src) {
+            path = src.path;
+            line = src.line;
+        }
+        return {
+            path,
+            line,
+            message,
+            stackTrace: `${message}\n${stackTrace}`
+        };
+    }
+    exceptionThrowSource(stackTrace) {
+        const lines = stackTrace.split(/\r*\n/);
+        const re = / in (.+):line (\d+)$/;
+        const { workDir, trackedFiles } = this.options;
+        for (const str of lines) {
+            const match = str.match(re);
+            if (match !== null) {
+                const [_, fileStr, lineStr] = match;
+                const filePath = file_utils_1.normalizeFilePath(fileStr);
+                const file = filePath.startsWith(workDir) ? filePath.substr(workDir.length) : filePath;
+                if (trackedFiles.includes(file)) {
+                    const line = parseInt(lineStr);
+                    return { path: file, line };
                 }
-                annotations.push({
-                    annotation_level: 'failure',
-                    start_line: src.line,
-                    end_line: src.line,
-                    path: src.file,
-                    message: markdown_utils_1.fixEol(t.error.Message[0]),
-                    title: `[${tc.name}] ${t.name}`
-                });
             }
         }
     }
-    return annotations;
 }
-function exceptionThrowSource(ex, workDir, trackedFiles) {
-    const lines = ex.split(/\r*\n/);
-    const re = / in (.+):line (\d+)$/;
-    for (const str of lines) {
-        const match = str.match(re);
-        if (match !== null) {
-            const [_, fileStr, lineStr] = match;
-            const filePath = file_utils_1.normalizeFilePath(fileStr);
-            const file = filePath.startsWith(workDir) ? filePath.substr(workDir.length) : filePath;
-            if (trackedFiles.includes(file)) {
-                const line = parseInt(lineStr);
-                return { file, line };
-            }
-        }
-    }
-    return null;
-}
-exports.exceptionThrowSource = exceptionThrowSource;
+exports.DotnetTrxParser = DotnetTrxParser;
 
 
 /***/ }),
@@ -594,119 +595,194 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.exceptionThrowSource = exports.parseJestJunit = void 0;
+exports.JestJunitParser = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const xml2js_1 = __nccwpck_require__(6189);
-const markdown_utils_1 = __nccwpck_require__(6482);
 const file_utils_1 = __nccwpck_require__(2711);
-const test_results_1 = __nccwpck_require__(8407);
-async function parseJestJunit(files, options) {
-    const junit = [];
-    const testRuns = [];
-    for (const file of files) {
-        const ju = await getJunitReport(file);
-        const tr = getTestRunResult(file.path, ju);
-        junit.push(ju);
-        testRuns.push(tr);
+const test_results_1 = __nccwpck_require__(2768);
+class JestJunitParser {
+    constructor(options) {
+        this.options = options;
     }
-    return {
-        testRuns,
-        annotations: options.annotations ? getAnnotations(junit, options.workDir, options.trackedFiles) : []
-    };
-}
-exports.parseJestJunit = parseJestJunit;
-async function getJunitReport(file) {
-    core.info(`Parsing content of '${file.path}'`);
-    try {
-        return (await xml2js_1.parseStringPromise(file.content));
+    async parse(path, content) {
+        const ju = await this.getJunitReport(path, content);
+        return this.getTestRunResult(path, ju);
     }
-    catch (e) {
-        throw new Error(`Invalid XML at ${file.path}\n\n${e}`);
-    }
-}
-function getTestRunResult(path, junit) {
-    const suites = junit.testsuites.testsuite.map(ts => {
-        const name = ts.$.name.trim();
-        const time = parseFloat(ts.$.time) * 1000;
-        const sr = new test_results_1.TestSuiteResult(name, getGroups(ts), time);
-        return sr;
-    });
-    const time = parseFloat(junit.testsuites.$.time) * 1000;
-    return new test_results_1.TestRunResult(path, suites, time);
-}
-function getGroups(suite) {
-    const groups = [];
-    for (const tc of suite.testcase) {
-        let grp = groups.find(g => g.describe === tc.$.classname);
-        if (grp === undefined) {
-            grp = { describe: tc.$.classname, tests: [] };
-            groups.push(grp);
+    async getJunitReport(path, content) {
+        core.info(`Parsing content of '${path}'`);
+        try {
+            return (await xml2js_1.parseStringPromise(content));
         }
-        grp.tests.push(tc);
+        catch (e) {
+            throw new Error(`Invalid XML at ${path}\n\n${e}`);
+        }
     }
-    return groups.map(grp => {
-        const tests = grp.tests.map(tc => {
-            const name = tc.$.name.trim();
-            const result = getTestCaseResult(tc);
-            const time = parseFloat(tc.$.time) * 1000;
-            return new test_results_1.TestCaseResult(name, result, time);
+    getTestRunResult(path, junit) {
+        const suites = junit.testsuites.testsuite.map(ts => {
+            const name = ts.$.name.trim();
+            const time = parseFloat(ts.$.time) * 1000;
+            const sr = new test_results_1.TestSuiteResult(name, this.getGroups(ts), time);
+            return sr;
         });
-        return new test_results_1.TestGroupResult(grp.describe, tests);
-    });
-}
-function getTestCaseResult(test) {
-    if (test.failure)
-        return 'failed';
-    if (test.skipped)
-        return 'skipped';
-    return 'success';
-}
-function getAnnotations(junitReports, workDir, trackedFiles) {
-    const annotations = [];
-    for (const junit of junitReports) {
-        for (const suite of junit.testsuites.testsuite) {
-            for (const tc of suite.testcase) {
-                if (!tc.failure) {
-                    continue;
+        const time = parseFloat(junit.testsuites.$.time) * 1000;
+        return new test_results_1.TestRunResult(path, suites, time);
+    }
+    getGroups(suite) {
+        const groups = [];
+        for (const tc of suite.testcase) {
+            let grp = groups.find(g => g.describe === tc.$.classname);
+            if (grp === undefined) {
+                grp = { describe: tc.$.classname, tests: [] };
+                groups.push(grp);
+            }
+            grp.tests.push(tc);
+        }
+        return groups.map(grp => {
+            const tests = grp.tests.map(tc => {
+                const name = tc.$.name.trim();
+                const result = this.getTestCaseResult(tc);
+                const time = parseFloat(tc.$.time) * 1000;
+                const error = this.getTestCaseError(tc);
+                return new test_results_1.TestCaseResult(name, result, time, error);
+            });
+            return new test_results_1.TestGroupResult(grp.describe, tests);
+        });
+    }
+    getTestCaseResult(test) {
+        if (test.failure)
+            return 'failed';
+        if (test.skipped)
+            return 'skipped';
+        return 'success';
+    }
+    getTestCaseError(tc) {
+        if (!this.options.parseErrors || !tc.failure) {
+            return undefined;
+        }
+        const stackTrace = tc.failure[0];
+        let path;
+        let line;
+        const src = this.exceptionThrowSource(stackTrace);
+        if (src) {
+            path = src.path;
+            line = src.line;
+        }
+        return {
+            path,
+            line,
+            stackTrace
+        };
+    }
+    exceptionThrowSource(stackTrace) {
+        const lines = stackTrace.split(/\r?\n/);
+        const re = /\((.*):(\d+):\d+\)$/;
+        const { workDir, trackedFiles } = this.options;
+        for (const str of lines) {
+            const match = str.match(re);
+            if (match !== null) {
+                const [_, fileStr, lineStr] = match;
+                const filePath = file_utils_1.normalizeFilePath(fileStr);
+                const path = filePath.startsWith(workDir) ? filePath.substr(workDir.length) : filePath;
+                if (trackedFiles.includes(path)) {
+                    const line = parseInt(lineStr);
+                    return { path, line };
                 }
-                for (const ex of tc.failure) {
-                    const src = exceptionThrowSource(ex, workDir, trackedFiles);
-                    if (src === null) {
+            }
+        }
+    }
+}
+exports.JestJunitParser = JestJunitParser;
+
+
+/***/ }),
+
+/***/ 5867:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getAnnotations = void 0;
+const markdown_utils_1 = __nccwpck_require__(6482);
+function getAnnotations(results, maxCount) {
+    var _a, _b, _c, _d;
+    if (maxCount === 0) {
+        return [];
+    }
+    // Collect errors from TestRunResults
+    // Merge duplicates if there are more test results files processed
+    const errors = [];
+    const mergeDup = results.length > 1;
+    for (const tr of results) {
+        for (const ts of tr.suites) {
+            for (const tg of ts.groups) {
+                for (const tc of tg.tests) {
+                    const err = tc.error;
+                    if (err === undefined) {
                         continue;
                     }
-                    annotations.push({
-                        annotation_level: 'failure',
-                        start_line: src.line,
-                        end_line: src.line,
-                        path: src.file,
-                        message: markdown_utils_1.fixEol(ex),
-                        title: `[${suite.$.name}] ${tc.$.name.trim()}`
+                    const path = (_a = err.path) !== null && _a !== void 0 ? _a : tr.path;
+                    const line = (_b = err.line) !== null && _b !== void 0 ? _b : 0;
+                    if (mergeDup) {
+                        const dup = errors.find(e => path === e.path && line === e.line && err.stackTrace === e.stackTrace);
+                        if (dup !== undefined) {
+                            dup.testRunPaths.push(tr.path);
+                            continue;
+                        }
+                    }
+                    errors.push({
+                        testRunPaths: [tr.path],
+                        suiteName: ts.name,
+                        testName: tc.name,
+                        stackTrace: err.stackTrace,
+                        message: (_d = (_c = err.message) !== null && _c !== void 0 ? _c : getFirstNonEmptyLine(err.stackTrace)) !== null && _d !== void 0 ? _d : 'Test failed',
+                        path,
+                        line
                     });
                 }
             }
         }
     }
+    // Limit number of created annotations
+    errors.splice(maxCount + 1);
+    const annotations = errors.map(e => {
+        const message = [
+            'Failed test found in:',
+            e.testRunPaths.map(p => `  ${p}`).join('\n'),
+            'Error:',
+            ident(markdown_utils_1.fixEol(e.message), '  ')
+        ].join('\n');
+        return enforceCheckRunLimits({
+            path: e.path,
+            start_line: e.line,
+            end_line: e.line,
+            annotation_level: 'failure',
+            title: `${e.suiteName} ► ${e.testName}`,
+            raw_details: markdown_utils_1.fixEol(e.stackTrace),
+            message
+        });
+    });
     return annotations;
 }
-function exceptionThrowSource(ex, workDir, trackedFiles) {
-    const lines = ex.split(/\r?\n/);
-    const re = /\((.*):(\d+):(\d+)\)$/;
-    for (const str of lines) {
-        const match = str.match(re);
-        if (match !== null) {
-            const [_, fileStr, lineStr, colStr] = match;
-            const filePath = file_utils_1.normalizeFilePath(fileStr);
-            const file = filePath.startsWith(workDir) ? filePath.substr(workDir.length) : filePath;
-            if (trackedFiles.includes(file)) {
-                const line = parseInt(lineStr);
-                const column = parseInt(colStr);
-                return { file, line, column };
-            }
-        }
+exports.getAnnotations = getAnnotations;
+function enforceCheckRunLimits(err) {
+    err.title = markdown_utils_1.ellipsis(err.title || '', 255);
+    err.message = markdown_utils_1.ellipsis(err.message, 65535);
+    if (err.raw_details) {
+        err.raw_details = markdown_utils_1.ellipsis(err.raw_details, 65535);
     }
-    return null;
+    return err;
 }
-exports.exceptionThrowSource = exceptionThrowSource;
+function getFirstNonEmptyLine(stackTrace) {
+    const lines = stackTrace.split(/\r?\n/g);
+    return lines.find(str => !/^\s*$/.test(str));
+}
+function ident(text, prefix) {
+    return text
+        .split(/\n/g)
+        .map(line => prefix + line)
+        .join('\n');
+}
 
 
 /***/ }),
@@ -824,7 +900,7 @@ function getSuitesReport(tr, runIndex, options) {
     const nameLink = `<a id="${trSlug.id}" href="${trSlug.link}">${tr.path}</a>`;
     const icon = getResultIcon(tr.result);
     sections.push(`## ${nameLink} ${icon}`);
-    const time = `${(tr.time / 1000).toFixed(3)}s`;
+    const time = markdown_utils_1.formatTime(tr.time);
     const headingLine2 = `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`;
     sections.push(headingLine2);
     const suites = options.listSuites === 'failed' ? tr.failedSuites : tr.suites;
@@ -861,7 +937,8 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
     const tsNameLink = `<a id="${tsSlug.id}" href="${tsSlug.link}">${tsName}</a>`;
     const icon = getResultIcon(ts.result);
     sections.push(`### ${tsNameLink} ${icon}`);
-    const headingLine2 = `**${ts.tests}** tests were completed in **${ts.time}ms** with **${ts.passed}** passed, **${ts.failed}** failed and **${ts.skipped}** skipped.`;
+    const tsTime = markdown_utils_1.formatTime(ts.time);
+    const headingLine2 = `**${ts.tests}** tests were completed in **${tsTime}** with **${ts.passed}** passed, **${ts.failed}** failed and **${ts.skipped}** skipped.`;
     sections.push(headingLine2);
     for (const grp of groups) {
         const tests = options.listTests === 'failed' ? grp.failedTests : grp.tests;
@@ -903,7 +980,7 @@ function getResultIcon(result) {
 
 /***/ }),
 
-/***/ 8407:
+/***/ 2768:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -996,10 +1073,11 @@ class TestGroupResult {
 }
 exports.TestGroupResult = TestGroupResult;
 class TestCaseResult {
-    constructor(name, result, time) {
+    constructor(name, result, time, error) {
         this.name = name;
         this.result = result;
         this.time = time;
+        this.error = error;
     }
 }
 exports.TestCaseResult = TestCaseResult;
@@ -1140,9 +1218,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.enforceCheckRunLimits = exports.getCheckRunSha = void 0;
+exports.getCheckRunSha = void 0;
 const github = __importStar(__nccwpck_require__(5438));
-const markdown_utils_1 = __nccwpck_require__(6482);
 function getCheckRunSha() {
     if (github.context.payload.pull_request) {
         const pr = github.context.payload.pull_request;
@@ -1151,16 +1228,6 @@ function getCheckRunSha() {
     return github.context.sha;
 }
 exports.getCheckRunSha = getCheckRunSha;
-function enforceCheckRunLimits(result, maxAnnotations) {
-    // Limit number of created annotations
-    result.annotations.splice(maxAnnotations + 1);
-    // Limit number of characters in annotation fields
-    for (const err of result.annotations) {
-        err.title = markdown_utils_1.ellipsis(err.title || '', 255);
-        err.message = markdown_utils_1.ellipsis(err.message, 65535);
-    }
-}
-exports.enforceCheckRunLimits = enforceCheckRunLimits;
 
 
 /***/ }),

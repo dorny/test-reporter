@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import {TestExecutionResult, TestRunResult, TestSuiteResult} from './test-results'
+import {TestExecutionResult, TestRunResult, TestSuiteResult} from '../test-results'
 import {Align, formatTime, Icon, link, table} from '../utils/markdown-utils'
 import {slug} from '../utils/slugger'
 
@@ -112,7 +112,7 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
   const icon = getResultIcon(tr.result)
   sections.push(`## ${nameLink} ${icon}`)
 
-  const time = `${(tr.time / 1000).toFixed(3)}s`
+  const time = formatTime(tr.time)
   const headingLine2 = `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`
   sections.push(headingLine2)
 
@@ -161,7 +161,8 @@ function getTestsReport(ts: TestSuiteResult, runIndex: number, suiteIndex: numbe
   const icon = getResultIcon(ts.result)
   sections.push(`### ${tsNameLink} ${icon}`)
 
-  const headingLine2 = `**${ts.tests}** tests were completed in **${ts.time}ms** with **${ts.passed}** passed, **${ts.failed}** failed and **${ts.skipped}** skipped.`
+  const tsTime = formatTime(ts.time)
+  const headingLine2 = `**${ts.tests}** tests were completed in **${tsTime}** with **${ts.passed}** passed, **${ts.failed}** failed and **${ts.skipped}** skipped.`
   sections.push(headingLine2)
 
   for (const grp of groups) {

@@ -2,14 +2,19 @@ import * as core from '@actions/core'
 import * as github from '@actions/github'
 import * as fs from 'fs'
 import glob from 'fast-glob'
-import {parseDartJson} from './parsers/dart-json/dart-json-parser'
-import {parseDotnetTrx} from './parsers/dotnet-trx/dotnet-trx-parser'
-import {parseJestJunit} from './parsers/jest-junit/jest-junit-parser'
+
+import {ParseOptions, TestParser} from './test-parser'
+import {TestRunResult} from './test-results'
+import {getAnnotations} from './report/get-annotations'
 import {getReport} from './report/get-report'
-import {FileContent, ParseOptions, ParseTestResult} from './parsers/parser-types'
+
+import {DartJsonParser} from './parsers/dart-json/dart-json-parser'
+import {DotnetTrxParser} from './parsers/dotnet-trx/dotnet-trx-parser'
+import {JestJunitParser} from './parsers/jest-junit/jest-junit-parser'
+
 import {normalizeDirPath} from './utils/file-utils'
 import {listFiles} from './utils/git'
-import {enforceCheckRunLimits, getCheckRunSha} from './utils/github-utils'
+import {getCheckRunSha} from './utils/github-utils'
 import {Icon} from './utils/markdown-utils'
 
 async function run(): Promise<void> {
@@ -56,28 +61,39 @@ async function main(): Promise<void> {
   const sha = getCheckRunSha()
 
   // We won't need tracked files if we are not going to create annotations
-  const annotations = maxAnnotations > 0
-  const trackedFiles = annotations ? await listFiles() : []
+  const parseErrors = maxAnnotations > 0
+  const trackedFiles = parseErrors ? await listFiles() : []
 
-  const opts: ParseOptions = {
+  const options: ParseOptions = {
     trackedFiles,
     workDir,
-    annotations
+    parseErrors
   }
 
-  const parser = getParser(reporter)
-  const files = await getFiles(path)
+  core.info(`Using test report parser '${reporter}'`)
+  const parser = getParser(reporter, options)
 
+  const files = await getFiles(path)
   if (files.length === 0) {
     core.setFailed(`No file matches path '${path}'`)
     return
   }
 
-  core.info(`Using test report parser '${reporter}'`)
-  const result = await parser(files, opts)
+  const results: TestRunResult[] = []
+  for (const file of files) {
+    core.info(`Processing test report ${file}`)
+    const content = await fs.promises.readFile(file, {encoding: 'utf8'})
+    const tr = await parser.parse(file, content)
+    results.push(tr)
+  }
 
-  enforceCheckRunLimits(result, maxAnnotations)
-  const isFailed = result.testRuns.some(tr => tr.result === 'failed')
+  core.info('Creating report summary')
+  const summary = getReport(results, {listSuites, listTests})
+
+  core.info('Creating annotations')
+  const annotations = getAnnotations(results, maxAnnotations)
+
+  const isFailed = results.some(tr => tr.result === 'failed')
   const conclusion = isFailed ? 'failure' : 'success'
   const icon = isFailed ? Icon.fail : Icon.success
 
@@ -89,45 +105,47 @@ async function main(): Promise<void> {
     status: 'completed',
     output: {
       title: `${name} ${icon}`,
-      summary: getReport(result.testRuns, {listSuites, listTests}),
-      annotations: result.annotations
+      summary,
+      annotations
     },
     ...github.context.repo
   })
 
+  const passed = results.reduce((sum, tr) => sum + tr.passed, 0)
+  const failed = results.reduce((sum, tr) => sum + tr.failed, 0)
+  const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0)
+  const time = results.reduce((sum, tr) => sum + tr.time, 0)
+
   core.setOutput('conclusion', conclusion)
+  core.setOutput('passed', passed)
+  core.setOutput('failed', failed)
+  core.setOutput('skipped', skipped)
+  core.setOutput('time', time)
+
   if (failOnError && isFailed) {
     core.setFailed(`Failed test has been found and 'fail-on-error' option is set to ${failOnError}`)
   }
 }
 
-function getParser(reporter: string): ParseTestResult {
+function getParser(reporter: string, options: ParseOptions): TestParser {
   switch (reporter) {
     case 'dart-json':
-      return parseDartJson
+      return new DartJsonParser(options)
     case 'dotnet-trx':
-      return parseDotnetTrx
+      return new DotnetTrxParser(options)
     case 'flutter-machine':
-      return parseDartJson
+      return new DartJsonParser(options)
     case 'jest-junit':
-      return parseJestJunit
+      return new JestJunitParser(options)
     default:
       throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`)
   }
 }
 
-export async function getFiles(pattern: string): Promise<FileContent[]> {
-  const paths = (await Promise.all(pattern.split(',').map(async pat => glob(pat, {dot: true})))).flat()
-
-  const files = Promise.all(
-    paths.map(async path => {
-      core.info(`Reading test report '${path}'`)
-      const content = await fs.promises.readFile(path, {encoding: 'utf8'})
-      return {path, content}
-    })
-  )
-
-  return files
+export async function getFiles(pattern: string): Promise<string[]> {
+  const tasks = pattern.split(',').map(async pat => glob(pat, {dot: true}))
+  const paths = await Promise.all(tasks)
+  return paths.flat()
 }
 
 run()

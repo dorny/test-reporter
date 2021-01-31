@@ -1,9 +1,8 @@
 import * as core from '@actions/core'
-import {Annotation, FileContent, ParseOptions, TestResult} from '../parser-types'
+import {ParseOptions, TestParser} from '../../test-parser'
 import {parseStringPromise} from 'xml2js'
 
 import {JunitReport, TestCase, TestSuite} from './jest-junit-types'
-import {fixEol} from '../../utils/markdown-utils'
 import {normalizeFilePath} from '../../utils/file-utils'
 
 import {
@@ -11,124 +10,107 @@ import {
   TestRunResult,
   TestSuiteResult,
   TestGroupResult,
-  TestCaseResult
-} from '../../report/test-results'
+  TestCaseResult,
+  TestCaseError
+} from '../../test-results'
 
-export async function parseJestJunit(files: FileContent[], options: ParseOptions): Promise<TestResult> {
-  const junit: JunitReport[] = []
-  const testRuns: TestRunResult[] = []
+export class JestJunitParser implements TestParser {
+  constructor(readonly options: ParseOptions) {}
 
-  for (const file of files) {
-    const ju = await getJunitReport(file)
-    const tr = getTestRunResult(file.path, ju)
-    junit.push(ju)
-    testRuns.push(tr)
+  async parse(path: string, content: string): Promise<TestRunResult> {
+    const ju = await this.getJunitReport(path, content)
+    return this.getTestRunResult(path, ju)
   }
 
-  return {
-    testRuns,
-    annotations: options.annotations ? getAnnotations(junit, options.workDir, options.trackedFiles) : []
-  }
-}
-
-async function getJunitReport(file: FileContent): Promise<JunitReport> {
-  core.info(`Parsing content of '${file.path}'`)
-  try {
-    return (await parseStringPromise(file.content)) as JunitReport
-  } catch (e) {
-    throw new Error(`Invalid XML at ${file.path}\n\n${e}`)
-  }
-}
-
-function getTestRunResult(path: string, junit: JunitReport): TestRunResult {
-  const suites = junit.testsuites.testsuite.map(ts => {
-    const name = ts.$.name.trim()
-    const time = parseFloat(ts.$.time) * 1000
-    const sr = new TestSuiteResult(name, getGroups(ts), time)
-    return sr
-  })
-
-  const time = parseFloat(junit.testsuites.$.time) * 1000
-  return new TestRunResult(path, suites, time)
-}
-
-function getGroups(suite: TestSuite): TestGroupResult[] {
-  const groups: {describe: string; tests: TestCase[]}[] = []
-  for (const tc of suite.testcase) {
-    let grp = groups.find(g => g.describe === tc.$.classname)
-    if (grp === undefined) {
-      grp = {describe: tc.$.classname, tests: []}
-      groups.push(grp)
+  private async getJunitReport(path: string, content: string): Promise<JunitReport> {
+    core.info(`Parsing content of '${path}'`)
+    try {
+      return (await parseStringPromise(content)) as JunitReport
+    } catch (e) {
+      throw new Error(`Invalid XML at ${path}\n\n${e}`)
     }
-    grp.tests.push(tc)
   }
 
-  return groups.map(grp => {
-    const tests = grp.tests.map(tc => {
-      const name = tc.$.name.trim()
-      const result = getTestCaseResult(tc)
-      const time = parseFloat(tc.$.time) * 1000
-      return new TestCaseResult(name, result, time)
+  private getTestRunResult(path: string, junit: JunitReport): TestRunResult {
+    const suites = junit.testsuites.testsuite.map(ts => {
+      const name = ts.$.name.trim()
+      const time = parseFloat(ts.$.time) * 1000
+      const sr = new TestSuiteResult(name, this.getGroups(ts), time)
+      return sr
     })
-    return new TestGroupResult(grp.describe, tests)
-  })
-}
 
-function getTestCaseResult(test: TestCase): TestExecutionResult {
-  if (test.failure) return 'failed'
-  if (test.skipped) return 'skipped'
-  return 'success'
-}
+    const time = parseFloat(junit.testsuites.$.time) * 1000
+    return new TestRunResult(path, suites, time)
+  }
 
-function getAnnotations(junitReports: JunitReport[], workDir: string, trackedFiles: string[]): Annotation[] {
-  const annotations: Annotation[] = []
-  for (const junit of junitReports) {
-    for (const suite of junit.testsuites.testsuite) {
-      for (const tc of suite.testcase) {
-        if (!tc.failure) {
-          continue
-        }
-        for (const ex of tc.failure) {
-          const src = exceptionThrowSource(ex, workDir, trackedFiles)
-          if (src === null) {
-            continue
-          }
-          annotations.push({
-            annotation_level: 'failure',
-            start_line: src.line,
-            end_line: src.line,
-            path: src.file,
-            message: fixEol(ex),
-            title: `[${suite.$.name}] ${tc.$.name.trim()}`
-          })
+  private getGroups(suite: TestSuite): TestGroupResult[] {
+    const groups: {describe: string; tests: TestCase[]}[] = []
+    for (const tc of suite.testcase) {
+      let grp = groups.find(g => g.describe === tc.$.classname)
+      if (grp === undefined) {
+        grp = {describe: tc.$.classname, tests: []}
+        groups.push(grp)
+      }
+      grp.tests.push(tc)
+    }
+
+    return groups.map(grp => {
+      const tests = grp.tests.map(tc => {
+        const name = tc.$.name.trim()
+        const result = this.getTestCaseResult(tc)
+        const time = parseFloat(tc.$.time) * 1000
+        const error = this.getTestCaseError(tc)
+        return new TestCaseResult(name, result, time, error)
+      })
+      return new TestGroupResult(grp.describe, tests)
+    })
+  }
+
+  private getTestCaseResult(test: TestCase): TestExecutionResult {
+    if (test.failure) return 'failed'
+    if (test.skipped) return 'skipped'
+    return 'success'
+  }
+
+  private getTestCaseError(tc: TestCase): TestCaseError | undefined {
+    if (!this.options.parseErrors || !tc.failure) {
+      return undefined
+    }
+
+    const stackTrace = tc.failure[0]
+    let path
+    let line
+
+    const src = this.exceptionThrowSource(stackTrace)
+    if (src) {
+      path = src.path
+      line = src.line
+    }
+
+    return {
+      path,
+      line,
+      stackTrace
+    }
+  }
+
+  private exceptionThrowSource(stackTrace: string): {path: string; line: number} | undefined {
+    const lines = stackTrace.split(/\r?\n/)
+    const re = /\((.*):(\d+):\d+\)$/
+
+    const {workDir, trackedFiles} = this.options
+    for (const str of lines) {
+      const match = str.match(re)
+      if (match !== null) {
+        const [_, fileStr, lineStr] = match
+        const filePath = normalizeFilePath(fileStr)
+        const path = filePath.startsWith(workDir) ? filePath.substr(workDir.length) : filePath
+        if (trackedFiles.includes(path)) {
+          const line = parseInt(lineStr)
+
+          return {path, line}
         }
       }
     }
   }
-  return annotations
-}
-
-export function exceptionThrowSource(
-  ex: string,
-  workDir: string,
-  trackedFiles: string[]
-): {file: string; line: number; column: number} | null {
-  const lines = ex.split(/\r?\n/)
-  const re = /\((.*):(\d+):(\d+)\)$/
-
-  for (const str of lines) {
-    const match = str.match(re)
-    if (match !== null) {
-      const [_, fileStr, lineStr, colStr] = match
-      const filePath = normalizeFilePath(fileStr)
-      const file = filePath.startsWith(workDir) ? filePath.substr(workDir.length) : filePath
-      if (trackedFiles.includes(file)) {
-        const line = parseInt(lineStr)
-        const column = parseInt(colStr)
-        return {file, line, column}
-      }
-    }
-  }
-
-  return null
 }

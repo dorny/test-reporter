@@ -404,7 +404,7 @@
 |packages/pretty-format/src/__tests__/react.test.tsx|55✔️|||325ms|
 |packages/pretty-format/src/__tests__/ReactElement.test.ts|3✔️|||64ms|
 ### <a id="user-content-r0s75" href="#r0s75">e2e/__tests__/jestChangedFiles.test.ts</a> ❌
-**10** tests were completed in **9045ms** with **9** passed, **1** failed and **0** skipped.
+**10** tests were completed in **9.045s** with **9** passed, **1** failed and **0** skipped.
 
 |Result|Test|Time|
 |:---:|:---|---:|
@@ -419,7 +419,7 @@
 |✔️|monitors only root paths for hg|281ms|
 |✔️|handles a bad revision for "changedSince", for hg|949ms|
 ### <a id="user-content-r0s98" href="#r0s98">e2e/__tests__/onlyChanged.test.ts</a> ❌
-**9** tests were completed in **22281ms** with **8** passed, **1** failed and **0** skipped.
+**9** tests were completed in **22.281s** with **8** passed, **1** failed and **0** skipped.
 
 |Result|Test|Time|
 |:---:|:---|---:|

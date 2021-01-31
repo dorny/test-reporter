@@ -83,7 +83,19 @@ export class TestGroupResult {
 }
 
 export class TestCaseResult {
-  constructor(readonly name: string, readonly result: TestExecutionResult, readonly time: number) {}
+  constructor(
+    readonly name: string,
+    readonly result: TestExecutionResult,
+    readonly time: number,
+    readonly error?: TestCaseError
+  ) {}
 }
 
 export type TestExecutionResult = 'success' | 'skipped' | 'failed' | undefined
+
+export interface TestCaseError {
+  path?: string
+  line?: number
+  message?: string
+  stackTrace: string
+}

@@ -1,8 +1,7 @@
 import * as core from '@actions/core'
-import {Annotation, FileContent, ParseOptions, TestResult} from '../parser-types'
+import {ParseOptions, TestParser} from '../../test-parser'
 
 import {normalizeFilePath} from '../../utils/file-utils'
-import {fixEol} from '../../utils/markdown-utils'
 
 import {
   ReportEvent,
@@ -24,8 +23,9 @@ import {
   TestRunResult,
   TestSuiteResult,
   TestGroupResult,
-  TestCaseResult
-} from '../../report/test-results'
+  TestCaseResult,
+  TestCaseError
+} from '../../test-results'
 
 class TestRun {
   constructor(readonly path: string, readonly suites: TestSuite[], readonly success: boolean, readonly time: number) {}
@@ -68,159 +68,143 @@ class TestCase {
   }
 }
 
-export async function parseDartJson(files: FileContent[], options: ParseOptions): Promise<TestResult> {
-  const testRuns = files.map(f => getTestRun(f.path, f.content))
-  const testRunsResults = testRuns.map(getTestRunResult)
+export class DartJsonParser implements TestParser {
+  constructor(readonly options: ParseOptions) {}
 
-  return {
-    testRuns: testRunsResults,
-    annotations: options.annotations ? getAnnotations(testRuns, options.workDir, options.trackedFiles) : []
+  async parse(path: string, content: string): Promise<TestRunResult> {
+    const tr = this.getTestRun(path, content)
+    const result = this.getTestRunResult(tr)
+    return Promise.resolve(result)
   }
-}
 
-function getTestRun(path: string, content: string): TestRun {
-  core.info(`Parsing content of '${path}'`)
-  const lines = content.split(/\n\r?/g)
-  const events = lines
-    .map((str, i) => {
-      if (str.trim() === '') {
-        return null
+  private getTestRun(path: string, content: string): TestRun {
+    core.info(`Parsing content of '${path}'`)
+    const lines = content.split(/\n\r?/g)
+    const events = lines
+      .map((str, i) => {
+        if (str.trim() === '') {
+          return null
+        }
+        try {
+          return JSON.parse(str)
+        } catch (e) {
+          const col = e.columnNumber !== undefined ? `:${e.columnNumber}` : ''
+          new Error(`Invalid JSON at ${path}:${i + 1}${col}\n\n${e}`)
+        }
+      })
+      .filter(evt => evt != null) as ReportEvent[]
+
+    let success = false
+    let totalTime = 0
+    const suites: {[id: number]: TestSuite} = {}
+    const tests: {[id: number]: TestCase} = {}
+
+    for (const evt of events) {
+      if (isSuiteEvent(evt)) {
+        suites[evt.suite.id] = new TestSuite(evt.suite)
+      } else if (isGroupEvent(evt)) {
+        suites[evt.group.suiteID].groups[evt.group.id] = new TestGroup(evt.group)
+      } else if (isTestStartEvent(evt) && evt.test.url !== null) {
+        const test: TestCase = new TestCase(evt)
+        const suite = suites[evt.test.suiteID]
+        const group = suite.groups[evt.test.groupIDs[evt.test.groupIDs.length - 1]]
+        group.tests.push(test)
+        tests[evt.test.id] = test
+      } else if (isTestDoneEvent(evt) && !evt.hidden) {
+        tests[evt.testID].testDone = evt
+      } else if (isErrorEvent(evt)) {
+        tests[evt.testID].error = evt
+      } else if (isDoneEvent(evt)) {
+        success = evt.success
+        totalTime = evt.time
       }
-      try {
-        return JSON.parse(str)
-      } catch (e) {
-        const col = e.columnNumber !== undefined ? `:${e.columnNumber}` : ''
-        new Error(`Invalid JSON at ${path}:${i + 1}${col}\n\n${e}`)
-      }
+    }
+
+    return new TestRun(path, Object.values(suites), success, totalTime)
+  }
+
+  private getTestRunResult(tr: TestRun): TestRunResult {
+    const suites = tr.suites.map(s => {
+      return new TestSuiteResult(s.suite.path, this.getGroups(s))
     })
-    .filter(evt => evt != null) as ReportEvent[]
 
-  let success = false
-  let totalTime = 0
-  const suites: {[id: number]: TestSuite} = {}
-  const tests: {[id: number]: TestCase} = {}
+    return new TestRunResult(tr.path, suites, tr.time)
+  }
 
-  for (const evt of events) {
-    if (isSuiteEvent(evt)) {
-      suites[evt.suite.id] = new TestSuite(evt.suite)
-    } else if (isGroupEvent(evt)) {
-      suites[evt.group.suiteID].groups[evt.group.id] = new TestGroup(evt.group)
-    } else if (isTestStartEvent(evt) && evt.test.url !== null) {
-      const test: TestCase = new TestCase(evt)
-      const suite = suites[evt.test.suiteID]
-      const group = suite.groups[evt.test.groupIDs[evt.test.groupIDs.length - 1]]
-      group.tests.push(test)
-      tests[evt.test.id] = test
-    } else if (isTestDoneEvent(evt) && !evt.hidden) {
-      tests[evt.testID].testDone = evt
-    } else if (isErrorEvent(evt)) {
-      tests[evt.testID].error = evt
-    } else if (isDoneEvent(evt)) {
-      success = evt.success
-      totalTime = evt.time
+  private getGroups(suite: TestSuite): TestGroupResult[] {
+    const groups = Object.values(suite.groups).filter(grp => grp.tests.length > 0)
+    groups.sort((a, b) => (a.group.line ?? 0) - (b.group.line ?? 0))
+
+    return groups.map(group => {
+      group.tests.sort((a, b) => (a.testStart.test.line ?? 0) - (b.testStart.test.line ?? 0))
+      const tests = group.tests.map(t => this.getTest(t))
+      return new TestGroupResult(group.group.name, tests)
+    })
+  }
+
+  private getTest(tc: TestCase): TestCaseResult {
+    const error = this.getError(tc)
+    return new TestCaseResult(tc.testStart.test.name, tc.result, tc.time, error)
+  }
+
+  private getError(test: TestCase): TestCaseError | undefined {
+    if (!this.options.parseErrors || !test.error) {
+      return undefined
+    }
+
+    const {workDir, trackedFiles} = this.options
+    const message = test.error?.error ?? ''
+    const stackTrace = test.error?.stackTrace ?? ''
+    const src = this.exceptionThrowSource(stackTrace, trackedFiles)
+    let path
+    let line
+
+    if (src !== undefined) {
+      ;(path = src.path), (line = src.line)
+    } else {
+      const testStartPath = this.getRelativePathFromUrl(test.testStart.test.url ?? '', workDir)
+      if (trackedFiles.includes(testStartPath)) {
+        path = testStartPath
+      }
+      line = test.testStart.test.line ?? undefined
+    }
+
+    return {
+      path,
+      line,
+      message,
+      stackTrace
     }
   }
 
-  return new TestRun(path, Object.values(suites), success, totalTime)
-}
+  private exceptionThrowSource(ex: string, trackedFiles: string[]): {path: string; line: number} | undefined {
+    // imports from package which is tested are listed in stack traces as 'package:xyz/' which maps to relative path 'lib/'
+    const packageRe = /^package:[a-zA-z0-9_$]+\//
+    const lines = ex.split(/\r?\n/).map(str => str.replace(packageRe, 'lib/'))
 
-function getTestRunResult(tr: TestRun): TestRunResult {
-  const suites = tr.suites.map(s => {
-    return new TestSuiteResult(s.suite.path, getGroups(s))
-  })
-
-  return new TestRunResult(tr.path, suites, tr.time)
-}
-
-function getGroups(suite: TestSuite): TestGroupResult[] {
-  const groups = Object.values(suite.groups).filter(grp => grp.tests.length > 0)
-  groups.sort((a, b) => (a.group.line ?? 0) - (b.group.line ?? 0))
-
-  return groups.map(group => {
-    group.tests.sort((a, b) => (a.testStart.test.line ?? 0) - (b.testStart.test.line ?? 0))
-    const tests = group.tests.map(t => new TestCaseResult(t.testStart.test.name, t.result, t.time))
-    return new TestGroupResult(group.group.name, tests)
-  })
-}
-
-function getAnnotations(testRuns: TestRun[], workDir: string, trackedFiles: string[]): Annotation[] {
-  const annotations: Annotation[] = []
-  for (const tr of testRuns) {
-    for (const suite of tr.suites) {
-      for (const group of Object.values(suite.groups)) {
-        for (const test of group.tests) {
-          if (test.error) {
-            const err = getAnnotation(test, suite, workDir, trackedFiles)
-            if (err !== null) {
-              annotations.push(err)
-            }
-          }
+    // regexp to extract file path and line number from stack trace
+    const re = /^(.*)\s+(\d+):\d+\s+/
+    for (const str of lines) {
+      const match = str.match(re)
+      if (match !== null) {
+        const [_, pathStr, lineStr] = match
+        const path = normalizeFilePath(pathStr)
+        if (trackedFiles.includes(path)) {
+          const line = parseInt(lineStr)
+          return {path, line}
         }
       }
     }
   }
 
-  return annotations
-}
-
-function getAnnotation(
-  test: TestCase,
-  testSuite: TestSuite,
-  workDir: string,
-  trackedFiles: string[]
-): Annotation | null {
-  const stack = test.error?.stackTrace ?? ''
-  let src = exceptionThrowSource(stack, trackedFiles)
-  if (src === null) {
-    const file = getRelativePathFromUrl(test.testStart.test.url ?? '', workDir)
-    if (!trackedFiles.includes(file)) {
-      return null
+  private getRelativePathFromUrl(file: string, workDir: string): string {
+    const prefix = 'file:///'
+    if (file.startsWith(prefix)) {
+      file = file.substr(prefix.length)
     }
-    src = {
-      file,
-      line: test.testStart.test.line ?? 0
+    if (file.startsWith(workDir)) {
+      file = file.substr(workDir.length)
     }
+    return file
   }
-
-  return {
-    annotation_level: 'failure',
-    start_line: src.line,
-    end_line: src.line,
-    path: src.file,
-    message: `${fixEol(test.error?.error)}\n\n${fixEol(test.error?.stackTrace)}`,
-    title: `[${testSuite.suite.path}] ${test.testStart.test.name}`
-  }
-}
-
-function exceptionThrowSource(ex: string, trackedFiles: string[]): {file: string; line: number} | null {
-  // imports from package which is tested are listed in stack traces as 'package:xyz/' which maps to relative path 'lib/'
-  const packageRe = /^package:[a-zA-z0-9_$]+\//
-  const lines = ex.split(/\r?\n/).map(str => str.replace(packageRe, 'lib/'))
-
-  // regexp to extract file path and line number from stack trace
-  const re = /^(.*)\s+(\d+):\d+\s+/
-  for (const str of lines) {
-    const match = str.match(re)
-    if (match !== null) {
-      const [_, fileStr, lineStr] = match
-      const file = normalizeFilePath(fileStr)
-      if (trackedFiles.includes(file)) {
-        const line = parseInt(lineStr)
-        return {file, line}
-      }
-    }
-  }
-
-  return null
-}
-
-function getRelativePathFromUrl(file: string, workdir: string): string {
-  const prefix = 'file:///'
-  if (file.startsWith(prefix)) {
-    file = file.substr(prefix.length)
-  }
-  if (file.startsWith(workdir)) {
-    file = file.substr(workdir.length)
-  }
-  return file
 }

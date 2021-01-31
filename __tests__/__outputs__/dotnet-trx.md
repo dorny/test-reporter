@@ -5,7 +5,7 @@
 |:---|---:|---:|---:|---:|
 |[DotnetTests.XUnitTests.CalculatorTests](#r0s0)|3✔️|3❌|1✖️|110ms|
 ### <a id="user-content-r0s0" href="#r0s0">DotnetTests.XUnitTests.CalculatorTests</a> ❌
-**7** tests were completed in **109.5761ms** with **3** passed, **3** failed and **1** skipped.
+**7** tests were completed in **110ms** with **3** passed, **3** failed and **1** skipped.
 
 |Result|Test|Time|
 |:---:|:---|---:|
