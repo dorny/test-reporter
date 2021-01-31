@@ -18,7 +18,7 @@ inputs:
       Format of test report. Supported options:
         - dart-json
         - dotnet-trx
-        - flutter-machine
+        - flutter-json
         - jest-junit
     required: true
   list-suites:

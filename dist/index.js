@@ -142,7 +142,7 @@ function getParser(reporter, options) {
             return new dart_json_parser_1.DartJsonParser(options);
         case 'dotnet-trx':
             return new dotnet_trx_parser_1.DotnetTrxParser(options);
-        case 'flutter-machine':
+        case 'flutter-json':
             return new dart_json_parser_1.DartJsonParser(options);
         case 'jest-junit':
             return new jest_junit_parser_1.JestJunitParser(options);

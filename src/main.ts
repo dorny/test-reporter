@@ -133,7 +133,7 @@ function getParser(reporter: string, options: ParseOptions): TestParser {
       return new DartJsonParser(options)
     case 'dotnet-trx':
       return new DotnetTrxParser(options)
-    case 'flutter-machine':
+    case 'flutter-json':
       return new DartJsonParser(options)
     case 'jest-junit':
       return new JestJunitParser(options)

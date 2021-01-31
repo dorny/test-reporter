@@ -57,7 +57,7 @@ jobs:
     # Format of test report. Supported options:
     #   dart-json
     #   dotnet-trx
-    #   flutter-machine
+    #   flutter-json
     #   jest-junit
     reporter: ''
 
@@ -134,7 +134,7 @@ For more information see [dotnet test](https://docs.microsoft.com/en-us/dotnet/c
 </details>
 
 <details>
-  <summary>flutter-machine</summary>
+  <summary>flutter-json</summary>
 
 Test run must be configured to use [JSON](https://github.com/dart-lang/test/blob/master/pkgs/test/doc/configuration.md#reporter) reporter.
 You can configure it in `dart_test.yaml`:
