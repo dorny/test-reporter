@@ -5,10 +5,10 @@ export interface JunitReport {
 export interface TestSuites {
   $: {
     name: string
-    tests: number
-    failures: number // assertion failed
-    errors: number // unhandled exception during test execution
-    time: number
+    tests: string
+    failures: string // assertion failed
+    errors: string // unhandled exception during test execution
+    time: string
   }
   testsuite: TestSuite[]
 }
@@ -16,11 +16,11 @@ export interface TestSuites {
 export interface TestSuite {
   $: {
     name: string
-    tests: number
-    errors: number
-    failures: number
-    skipped: number
-    time: number
+    tests: string
+    errors: string
+    failures: string
+    skipped: string
+    time: string
     timestamp?: Date
   }
   testcase: TestCase[]
@@ -31,7 +31,7 @@ export interface TestCase {
     classname: string
     file?: string
     name: string
-    time: number
+    time: string
   }
   failure?: string[]
   skipped?: string[]

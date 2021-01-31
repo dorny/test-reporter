@@ -10,10 +10,10 @@ export interface TestRun {
 
 export interface Times {
   $: {
-    creation: Date
-    queuing: Date
-    start: Date
-    finish: Date
+    creation: string
+    queuing: string
+    start: string
+    finish: string
   }
 }
 
@@ -43,7 +43,7 @@ export interface UnitTestResult {
   $: {
     testId: string
     testName: string
-    duration: number
+    duration: string
     outcome: Outcome
   }
   Output: Output[]

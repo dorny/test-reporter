@@ -49,9 +49,9 @@ jobs:
     # Name of the Check Run which will be created
     name: ''
 
-    # Path to test report
+    # Coma separated list of paths to test reports
     # Supports wildcards via [fast-glob](https://github.com/mrmlnc/fast-glob)
-    # Path may match multiple result files of same format
+    # All matched result files must be of same format
     path: ''
 
     # Format of test report. Supported options:
@@ -61,8 +61,20 @@ jobs:
     #   jest-junit
     reporter: ''
 
-    # Enables code annotations with error message and stack trace captured during test execution
-    annotations: 'true'
+    # Limits which test suites are listed:
+    #   all
+    #   failed
+    list-suites: 'all'
+
+    # Limits which test cases are listed:
+    #   all
+    #   failed
+    #   none
+    list-tests: 'all'
+
+    # Limits number of created annotations with error message and stack trace captured during test execution.
+    # Must be less or equal to 50.
+    max-annotations: '10'
 
     # Set action as failed if test report contain any failed test
     fail-on-error: 'true'
@@ -109,7 +121,7 @@ Or you can configure TRX test output in `*.csproj` or `Directory.Build.props`:
 ```xml
 <PropertyGroup>
   <VSTestLogger>trx%3bLogFileName=$(MSBuildProjectName).trx</VSTestLogger>
-  <VSTestResultsDirectory>$(MSBuildThisFileDirectory)/reports</VSTestResultsDirectory>
+  <VSTestResultsDirectory>$(MSBuildThisFileDirectory)/TestResults/$(TargetFramework)</VSTestResultsDirectory>
 </PropertyGroup>
 ```
 

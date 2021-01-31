@@ -11,19 +11,15 @@ export const Icon = {
   fail: '❌' // ':x:'
 }
 
-export function details(summary: string, content: string): string {
-  return `<details><summary>${summary}</summary>${content}</details>`
-}
-
 export function link(title: string, address: string): string {
   return `[${title}](${address})`
 }
 
 type ToString = string | number | boolean | Date
 export function table(headers: ToString[], align: ToString[], ...rows: ToString[][]): string {
-  const headerRow = `| ${headers.map(tableEscape).join(' | ')} |`
-  const alignRow = `| ${align.join(' | ')} |`
-  const contentRows = rows.map(row => `| ${row.map(tableEscape).join(' | ')} |`).join('\n')
+  const headerRow = `|${headers.map(tableEscape).join('|')}|`
+  const alignRow = `|${align.join('|')}|`
+  const contentRows = rows.map(row => `|${row.map(tableEscape).join('|')}|`).join('\n')
   return [headerRow, alignRow, contentRows].join('\n')
 }
 
@@ -33,4 +29,20 @@ export function tableEscape(content: ToString): string {
 
 export function fixEol(text?: string): string {
   return text?.replace(/\r/g, '') ?? ''
+}
+
+export function ellipsis(text: string, maxLength: number): string {
+  if (text.length <= maxLength) {
+    return text
+  }
+
+  return text.substr(0, maxLength - 3) + '...'
+}
+
+export function formatTime(ms: number): string {
+  if (ms > 1000) {
+    return `${(ms / 1000).toFixed(3)}s`
+  }
+
+  return `${Math.round(ms)}ms`
 }
