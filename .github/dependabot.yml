@@ -7,3 +7,5 @@ updates:
     # Check the npm registry for updates every day (weekdays)
     schedule:
       interval: 'monthly'
+    ignore:
+      - dependency-name: '@types/node'
