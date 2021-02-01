@@ -118,8 +118,7 @@ export class DartJsonParser implements TestParser {
         tests[evt.testID].error = evt
       } else if (isMessageEvent(evt)) {
         tests[evt.testID].print.push(evt)
-      }
-       else if (isDoneEvent(evt)) {
+      } else if (isDoneEvent(evt)) {
         success = evt.success
         totalTime = evt.time
       }
@@ -158,7 +157,10 @@ export class DartJsonParser implements TestParser {
     const {trackedFiles} = this.options
     const message = test.error?.error ?? ''
     const stackTrace = test.error?.stackTrace ?? ''
-    const print = test.print.filter(p => p.messageType === 'print').map(p => p.message).join('\n')
+    const print = test.print
+      .filter(p => p.messageType === 'print')
+      .map(p => p.message)
+      .join('\n')
     const details = [print, stackTrace].filter(str => str !== '').join('\n')
     const src = this.exceptionThrowSource(stackTrace, trackedFiles)
     let path

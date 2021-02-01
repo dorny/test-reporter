@@ -195,6 +195,7 @@ class TestGroup {
 class TestCase {
     constructor(testStart) {
         this.testStart = testStart;
+        this.print = [];
         this.groupId = testStart.test.groupIDs[testStart.test.groupIDs.length - 1];
     }
     get result() {
@@ -263,6 +264,9 @@ class DartJsonParser {
             else if (dart_json_types_1.isErrorEvent(evt)) {
                 tests[evt.testID].error = evt;
             }
+            else if (dart_json_types_1.isMessageEvent(evt)) {
+                tests[evt.testID].print.push(evt);
+            }
             else if (dart_json_types_1.isDoneEvent(evt)) {
                 success = evt.success;
                 totalTime = evt.time;
@@ -296,6 +300,8 @@ class DartJsonParser {
         const { trackedFiles } = this.options;
         const message = (_b = (_a = test.error) === null || _a === void 0 ? void 0 : _a.error) !== null && _b !== void 0 ? _b : '';
         const stackTrace = (_d = (_c = test.error) === null || _c === void 0 ? void 0 : _c.stackTrace) !== null && _d !== void 0 ? _d : '';
+        const print = test.print.filter(p => p.messageType === 'print').map(p => p.message).join('\n');
+        const details = [print, stackTrace].filter(str => str !== '').join('\n');
         const src = this.exceptionThrowSource(stackTrace, trackedFiles);
         let path;
         let line;
@@ -314,7 +320,7 @@ class DartJsonParser {
             path,
             line,
             message,
-            stackTrace
+            details
         };
     }
     exceptionThrowSource(ex, trackedFiles) {
@@ -355,7 +361,7 @@ exports.DartJsonParser = DartJsonParser;
 
 /// reflects documentation at https://github.com/dart-lang/test/blob/master/pkgs/test/doc/json_reporter.md
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isDoneEvent = exports.isErrorEvent = exports.isTestDoneEvent = exports.isTestStartEvent = exports.isGroupEvent = exports.isSuiteEvent = void 0;
+exports.isMessageEvent = exports.isDoneEvent = exports.isErrorEvent = exports.isTestDoneEvent = exports.isTestStartEvent = exports.isGroupEvent = exports.isSuiteEvent = void 0;
 function isSuiteEvent(event) {
     return event.type === 'suite';
 }
@@ -380,6 +386,10 @@ function isDoneEvent(event) {
     return event.type === 'done';
 }
 exports.isDoneEvent = isDoneEvent;
+function isMessageEvent(event) {
+    return event.type === 'print';
+}
+exports.isMessageEvent = isMessageEvent;
 
 
 /***/ }),
@@ -499,7 +509,7 @@ class DotnetTrxParser {
             path,
             line,
             message,
-            stackTrace: `${message}\n${stackTrace}`
+            details: `${message}\n${stackTrace}`
         };
     }
     exceptionThrowSource(stackTrace) {
@@ -593,10 +603,10 @@ class JestJunitParser {
         if (!this.options.parseErrors || !tc.failure) {
             return undefined;
         }
-        const stackTrace = tc.failure[0];
+        const details = tc.failure[0];
         let path;
         let line;
-        const src = this.exceptionThrowSource(stackTrace);
+        const src = this.exceptionThrowSource(details);
         if (src) {
             path = src.path;
             line = src.line;
@@ -604,7 +614,7 @@ class JestJunitParser {
         return {
             path,
             line,
-            stackTrace
+            details
         };
     }
     exceptionThrowSource(stackTrace) {
@@ -658,7 +668,7 @@ function getAnnotations(results, maxCount) {
                     const path = (_a = err.path) !== null && _a !== void 0 ? _a : tr.path;
                     const line = (_b = err.line) !== null && _b !== void 0 ? _b : 0;
                     if (mergeDup) {
-                        const dup = errors.find(e => path === e.path && line === e.line && err.stackTrace === e.stackTrace);
+                        const dup = errors.find(e => path === e.path && line === e.line && err.details === e.details);
                         if (dup !== undefined) {
                             dup.testRunPaths.push(tr.path);
                             continue;
@@ -668,8 +678,8 @@ function getAnnotations(results, maxCount) {
                         testRunPaths: [tr.path],
                         suiteName: ts.name,
                         testName: tc.name,
-                        stackTrace: err.stackTrace,
-                        message: (_d = (_c = err.message) !== null && _c !== void 0 ? _c : getFirstNonEmptyLine(err.stackTrace)) !== null && _d !== void 0 ? _d : 'Test failed',
+                        details: err.details,
+                        message: (_d = (_c = err.message) !== null && _c !== void 0 ? _c : getFirstNonEmptyLine(err.details)) !== null && _d !== void 0 ? _d : 'Test failed',
                         path,
                         line
                     });
@@ -692,7 +702,7 @@ function getAnnotations(results, maxCount) {
             end_line: e.line,
             annotation_level: 'failure',
             title: `${e.suiteName} ► ${e.testName}`,
-            raw_details: markdown_utils_1.fixEol(e.stackTrace),
+            raw_details: markdown_utils_1.fixEol(e.details),
             message
         });
     });
