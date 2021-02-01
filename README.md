@@ -149,7 +149,8 @@ Or with (undocumented) CLI argument:
 
 
 According to documentation `dart_test.yaml` should be at the root of the package, next to the package's pubspec.
-It works in dart projects but the file is ignored by flutter. With flutter it works when `dart_test.yaml` is placed inside your `test` folder.
+On current `stable` and `beta` channels it doesn't work and you have to put `dart_test.yaml` inside your `test` folder.
+On `dev` channel it's already fixed.
 
 For more information see:
 - [test package](https://pub.dev/packages/test)

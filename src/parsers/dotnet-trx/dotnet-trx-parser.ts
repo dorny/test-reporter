@@ -1,4 +1,3 @@
-import * as core from '@actions/core'
 import {parseStringPromise} from 'xml2js'
 
 import {ErrorInfo, Outcome, TestMethod, TrxReport} from './dotnet-trx-types'
@@ -52,7 +51,6 @@ export class DotnetTrxParser implements TestParser {
   }
 
   private async getTrxReport(path: string, content: string): Promise<TrxReport> {
-    core.info(`Parsing content of '${path}'`)
     try {
       return (await parseStringPromise(content)) as TrxReport
     } catch (e) {

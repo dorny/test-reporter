@@ -52,11 +52,12 @@ async function main(): Promise<void> {
   }
 
   if (workDirInput) {
-    core.info(`Changing directory to ${workDirInput}`)
+    core.info(`Changing directory to '${workDirInput}'`)
     process.chdir(workDirInput)
   }
 
   const workDir = normalizeDirPath(process.cwd(), true)
+  core.info(`Using working-directory '${workDir}'`)
   const octokit = github.getOctokit(token)
   const sha = getCheckRunSha()
 
@@ -81,7 +82,7 @@ async function main(): Promise<void> {
 
   const results: TestRunResult[] = []
   for (const file of files) {
-    core.info(`Processing test report ${file}`)
+    core.info(`Processing test report '${file}'`)
     const content = await fs.promises.readFile(file, {encoding: 'utf8'})
     const tr = await parser.parse(file, content)
     results.push(tr)

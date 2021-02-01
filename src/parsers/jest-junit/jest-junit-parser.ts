@@ -1,4 +1,3 @@
-import * as core from '@actions/core'
 import {ParseOptions, TestParser} from '../../test-parser'
 import {parseStringPromise} from 'xml2js'
 
@@ -23,7 +22,6 @@ export class JestJunitParser implements TestParser {
   }
 
   private async getJunitReport(path: string, content: string): Promise<JunitReport> {
-    core.info(`Parsing content of '${path}'`)
     try {
       return (await parseStringPromise(content)) as JunitReport
     } catch (e) {

@@ -75,10 +75,11 @@ async function main() {
         return;
     }
     if (workDirInput) {
-        core.info(`Changing directory to ${workDirInput}`);
+        core.info(`Changing directory to '${workDirInput}'`);
         process.chdir(workDirInput);
     }
     const workDir = file_utils_1.normalizeDirPath(process.cwd(), true);
+    core.info(`Using working-directory '${workDir}'`);
     const octokit = github.getOctokit(token);
     const sha = github_utils_1.getCheckRunSha();
     // We won't need tracked files if we are not going to create annotations
@@ -98,7 +99,7 @@ async function main() {
     }
     const results = [];
     for (const file of files) {
-        core.info(`Processing test report ${file}`);
+        core.info(`Processing test report '${file}'`);
         const content = await fs.promises.readFile(file, { encoding: 'utf8' });
         const tr = await parser.parse(file, content);
         results.push(tr);
@@ -162,32 +163,12 @@ run();
 /***/ }),
 
 /***/ 4528:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.DartJsonParser = void 0;
-const core = __importStar(__nccwpck_require__(2186));
 const file_utils_1 = __nccwpck_require__(2711);
 const dart_json_types_1 = __nccwpck_require__(7887);
 const test_results_1 = __nccwpck_require__(2768);
@@ -243,7 +224,6 @@ class DartJsonParser {
         return Promise.resolve(result);
     }
     getTestRun(path, content) {
-        core.info(`Parsing content of '${path}'`);
         const lines = content.split(/\n\r?/g);
         const events = lines
             .map((str, i) => {
@@ -409,32 +389,12 @@ exports.isDoneEvent = isDoneEvent;
 /***/ }),
 
 /***/ 2664:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.DotnetTrxParser = void 0;
-const core = __importStar(__nccwpck_require__(2186));
 const xml2js_1 = __nccwpck_require__(6189);
 const file_utils_1 = __nccwpck_require__(2711);
 const parse_utils_1 = __nccwpck_require__(7811);
@@ -474,7 +434,6 @@ class DotnetTrxParser {
         return tr;
     }
     async getTrxReport(path, content) {
-        core.info(`Parsing content of '${path}'`);
         try {
             return (await xml2js_1.parseStringPromise(content));
         }
@@ -571,32 +530,12 @@ exports.DotnetTrxParser = DotnetTrxParser;
 /***/ }),
 
 /***/ 1113:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.JestJunitParser = void 0;
-const core = __importStar(__nccwpck_require__(2186));
 const xml2js_1 = __nccwpck_require__(6189);
 const file_utils_1 = __nccwpck_require__(2711);
 const test_results_1 = __nccwpck_require__(2768);
@@ -609,7 +548,6 @@ class JestJunitParser {
         return this.getTestRunResult(path, ju);
     }
     async getJunitReport(path, content) {
-        core.info(`Parsing content of '${path}'`);
         try {
             return (await xml2js_1.parseStringPromise(content));
         }

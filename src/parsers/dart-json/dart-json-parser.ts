@@ -1,4 +1,3 @@
-import * as core from '@actions/core'
 import {ParseOptions, TestParser} from '../../test-parser'
 
 import {normalizeFilePath} from '../../utils/file-utils'
@@ -78,7 +77,6 @@ export class DartJsonParser implements TestParser {
   }
 
   private getTestRun(path: string, content: string): TestRun {
-    core.info(`Parsing content of '${path}'`)
     const lines = content.split(/\n\r?/g)
     const events = lines
       .map((str, i) => {
