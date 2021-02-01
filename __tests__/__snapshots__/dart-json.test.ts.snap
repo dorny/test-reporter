@@ -40,9 +40,9 @@ test\\\\main_test.dart 13:9  main.<fn>.<fn>.<fn>
                 "details": "package:darttest/main.dart 2:3  throwError
 test\\\\main_test.dart 17:9        main.<fn>.<fn>.<fn>
 ",
-                "line": 2,
+                "line": 17,
                 "message": "Exception: Some error",
-                "path": "lib/main.dart",
+                "path": "test/main_test.dart",
               },
               "name": "Test 1 Test 1.1 Exception in target unit",
               "result": "failed",
@@ -159,7 +159,7 @@ When the exception was thrown, this was the stack:
 The test description was:
   pass updateShouldNotify
 ════════════════════════════════════════════════════════════════════════════════════════════════════",
-                "line": 94,
+                "line": 112,
                 "message": "Test failed. See exception logs above.
 The test description was: pass updateShouldNotify",
                 "path": "test/value_listenable_provider_test.dart",

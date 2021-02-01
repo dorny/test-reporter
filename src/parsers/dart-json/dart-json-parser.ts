@@ -72,7 +72,7 @@ class TestCase {
 }
 
 export class DartJsonParser implements TestParser {
-  constructor(readonly options: ParseOptions) {}
+  constructor(readonly options: ParseOptions, readonly sdk: 'dart' | 'flutter') {}
 
   async parse(path: string, content: string): Promise<TestRunResult> {
     const tr = this.getTestRun(path, content)
@@ -162,7 +162,7 @@ export class DartJsonParser implements TestParser {
       .map(p => p.message)
       .join('\n')
     const details = [print, stackTrace].filter(str => str !== '').join('\n')
-    const src = this.exceptionThrowSource(stackTrace, trackedFiles)
+    const src = this.exceptionThrowSource(details, trackedFiles)
     let path
     let line
 
@@ -186,17 +186,18 @@ export class DartJsonParser implements TestParser {
   }
 
   private exceptionThrowSource(ex: string, trackedFiles: string[]): {path: string; line: number} | undefined {
-    // imports from package which is tested are listed in stack traces as 'package:xyz/' which maps to relative path 'lib/'
-    const packageRe = /^package:[a-zA-z0-9_$]+\//
-    const lines = ex.split(/\r?\n/).map(str => str.replace(packageRe, 'lib/'))
+    const lines = ex.split(/\r?\n/g)
 
     // regexp to extract file path and line number from stack trace
-    const re = /^(.*)\s+(\d+):\d+\s+/
+    const dartRe = /^(?!package:)(.*)\s+(\d+):\d+\s+/
+    const flutterRe = /^#\d+\s+.*\((?!package:)(.*):(\d+):\d+\)$/
+    const re = this.sdk === 'dart' ? dartRe : flutterRe
+
     for (const str of lines) {
       const match = str.match(re)
       if (match !== null) {
         const [_, pathStr, lineStr] = match
-        const path = normalizeFilePath(pathStr)
+        const path = normalizeFilePath(this.getRelativePath(pathStr))
         if (trackedFiles.includes(path)) {
           const line = parseInt(lineStr)
           return {path, line}
@@ -207,6 +208,10 @@ export class DartJsonParser implements TestParser {
 
   private getRelativePath(path: string): string {
     const {workDir} = this.options
+    const prefix = 'file://'
+    if (path.startsWith(prefix)) {
+      path = path.substr(prefix.length)
+    }
     if (path.startsWith(workDir)) {
       path = path.substr(workDir.length)
     }

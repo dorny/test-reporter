@@ -19,7 +19,7 @@ describe('dart-json tests', () => {
     const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
     const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
 
-    const parser = new DartJsonParser(opts)
+    const parser = new DartJsonParser(opts, 'dart')
     const result = await parser.parse(filePath, fileContent)
     expect(result).toMatchSnapshot()
 
@@ -42,7 +42,7 @@ describe('dart-json tests', () => {
       workDir: '/__w/provider/provider/'
     }
 
-    const parser = new DartJsonParser(opts)
+    const parser = new DartJsonParser(opts, 'flutter')
     const result = await parser.parse(filePath, fileContent)
     expect(result).toMatchSnapshot()
 

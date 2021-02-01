@@ -131,11 +131,11 @@ async function main(): Promise<void> {
 function getParser(reporter: string, options: ParseOptions): TestParser {
   switch (reporter) {
     case 'dart-json':
-      return new DartJsonParser(options)
+      return new DartJsonParser(options, 'dart')
     case 'dotnet-trx':
       return new DotnetTrxParser(options)
     case 'flutter-json':
-      return new DartJsonParser(options)
+      return new DartJsonParser(options, 'flutter')
     case 'jest-junit':
       return new JestJunitParser(options)
     default:

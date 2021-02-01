@@ -140,11 +140,11 @@ async function main() {
 function getParser(reporter, options) {
     switch (reporter) {
         case 'dart-json':
-            return new dart_json_parser_1.DartJsonParser(options);
+            return new dart_json_parser_1.DartJsonParser(options, 'dart');
         case 'dotnet-trx':
             return new dotnet_trx_parser_1.DotnetTrxParser(options);
         case 'flutter-json':
-            return new dart_json_parser_1.DartJsonParser(options);
+            return new dart_json_parser_1.DartJsonParser(options, 'flutter');
         case 'jest-junit':
             return new jest_junit_parser_1.JestJunitParser(options);
         default:
@@ -216,8 +216,9 @@ class TestCase {
     }
 }
 class DartJsonParser {
-    constructor(options) {
+    constructor(options, sdk) {
         this.options = options;
+        this.sdk = sdk;
     }
     async parse(path, content) {
         const tr = this.getTestRun(path, content);
@@ -300,9 +301,12 @@ class DartJsonParser {
         const { trackedFiles } = this.options;
         const message = (_b = (_a = test.error) === null || _a === void 0 ? void 0 : _a.error) !== null && _b !== void 0 ? _b : '';
         const stackTrace = (_d = (_c = test.error) === null || _c === void 0 ? void 0 : _c.stackTrace) !== null && _d !== void 0 ? _d : '';
-        const print = test.print.filter(p => p.messageType === 'print').map(p => p.message).join('\n');
+        const print = test.print
+            .filter(p => p.messageType === 'print')
+            .map(p => p.message)
+            .join('\n');
         const details = [print, stackTrace].filter(str => str !== '').join('\n');
-        const src = this.exceptionThrowSource(stackTrace, trackedFiles);
+        const src = this.exceptionThrowSource(details, trackedFiles);
         let path;
         let line;
         if (src !== undefined) {
@@ -324,16 +328,16 @@ class DartJsonParser {
         };
     }
     exceptionThrowSource(ex, trackedFiles) {
-        // imports from package which is tested are listed in stack traces as 'package:xyz/' which maps to relative path 'lib/'
-        const packageRe = /^package:[a-zA-z0-9_$]+\//;
-        const lines = ex.split(/\r?\n/).map(str => str.replace(packageRe, 'lib/'));
+        const lines = ex.split(/\r?\n/g);
         // regexp to extract file path and line number from stack trace
-        const re = /^(.*)\s+(\d+):\d+\s+/;
+        const dartRe = /^(?!package:)(.*)\s+(\d+):\d+\s+/;
+        const flutterRe = /^#\d+\s+.*\((?!package:)(.*):(\d+):\d+\)$/;
+        const re = this.sdk === 'dart' ? dartRe : flutterRe;
         for (const str of lines) {
             const match = str.match(re);
             if (match !== null) {
                 const [_, pathStr, lineStr] = match;
-                const path = file_utils_1.normalizeFilePath(pathStr);
+                const path = file_utils_1.normalizeFilePath(this.getRelativePath(pathStr));
                 if (trackedFiles.includes(path)) {
                     const line = parseInt(lineStr);
                     return { path, line };
@@ -343,6 +347,10 @@ class DartJsonParser {
     }
     getRelativePath(path) {
         const { workDir } = this.options;
+        const prefix = 'file://';
+        if (path.startsWith(prefix)) {
+            path = path.substr(prefix.length);
+        }
         if (path.startsWith(workDir)) {
             path = path.substr(workDir.length);
         }
