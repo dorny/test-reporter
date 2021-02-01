@@ -59,6 +59,14 @@ outputs:
       Final conclusion of the created check run:
         - 'success' if no failed tests was found
         - 'failure' if any failed test was found
+  passed:
+    description: Count of passed tests
+  failed:
+    description: Count of failed tests
+  skipped:
+    description: Count of skipped tests
+  time:
+    description: Test execution time [ms]
 runs:
   using: 'node12'
   main: 'dist/index.js'

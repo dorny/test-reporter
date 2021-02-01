@@ -96,13 +96,13 @@ jobs:
 ```
 
 ## Output parameters
-| Name       | Description            |
-| :--        | :--                    |
-| conclusion | `success` or `failure` |
-| passed     | Count of passed tests  |
-| failed     | Count of failed tests  |
-| skipped    | Count of skipped tests |
-| time       | Execution time [ms]    |
+| Name       | Description              |
+| :--        | :--                      |
+| conclusion | `success` or `failure`   |
+| passed     | Count of passed tests    |
+| failed     | Count of failed tests    |
+| skipped    | Count of skipped tests   |
+| time       | Test execution time [ms] |
 
 ## Supported formats
 
