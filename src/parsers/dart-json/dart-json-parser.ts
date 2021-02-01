@@ -87,7 +87,7 @@ export class DartJsonParser implements TestParser {
           return JSON.parse(str)
         } catch (e) {
           const col = e.columnNumber !== undefined ? `:${e.columnNumber}` : ''
-          new Error(`Invalid JSON at ${path}:${i + 1}${col}\n\n${e}`)
+          throw new Error(`Invalid JSON at ${path}:${i + 1}${col}\n\n${e}`)
         }
       })
       .filter(evt => evt != null) as ReportEvent[]
@@ -123,7 +123,7 @@ export class DartJsonParser implements TestParser {
 
   private getTestRunResult(tr: TestRun): TestRunResult {
     const suites = tr.suites.map(s => {
-      return new TestSuiteResult(s.suite.path, this.getGroups(s))
+      return new TestSuiteResult(this.getRelativePath(s.suite.path), this.getGroups(s))
     })
 
     return new TestRunResult(tr.path, suites, tr.time)
@@ -135,22 +135,20 @@ export class DartJsonParser implements TestParser {
 
     return groups.map(group => {
       group.tests.sort((a, b) => (a.testStart.test.line ?? 0) - (b.testStart.test.line ?? 0))
-      const tests = group.tests.map(t => this.getTest(t))
+      const tests = group.tests.map(tc => {
+        const error = this.getError(suite, tc)
+        return new TestCaseResult(tc.testStart.test.name, tc.result, tc.time, error)
+      })
       return new TestGroupResult(group.group.name, tests)
     })
   }
 
-  private getTest(tc: TestCase): TestCaseResult {
-    const error = this.getError(tc)
-    return new TestCaseResult(tc.testStart.test.name, tc.result, tc.time, error)
-  }
-
-  private getError(test: TestCase): TestCaseError | undefined {
+  private getError(testSuite: TestSuite, test: TestCase): TestCaseError | undefined {
     if (!this.options.parseErrors || !test.error) {
       return undefined
     }
 
-    const {workDir, trackedFiles} = this.options
+    const {trackedFiles} = this.options
     const message = test.error?.error ?? ''
     const stackTrace = test.error?.stackTrace ?? ''
     const src = this.exceptionThrowSource(stackTrace, trackedFiles)
@@ -158,13 +156,14 @@ export class DartJsonParser implements TestParser {
     let line
 
     if (src !== undefined) {
-      ;(path = src.path), (line = src.line)
+      path = src.path
+      line = src.line
     } else {
-      const testStartPath = this.getRelativePathFromUrl(test.testStart.test.url ?? '', workDir)
+      const testStartPath = this.getRelativePath(testSuite.suite.path)
       if (trackedFiles.includes(testStartPath)) {
         path = testStartPath
+        line = test.testStart.test.root_line ?? test.testStart.test.line ?? undefined
       }
-      line = test.testStart.test.line ?? undefined
     }
 
     return {
@@ -195,14 +194,11 @@ export class DartJsonParser implements TestParser {
     }
   }
 
-  private getRelativePathFromUrl(file: string, workDir: string): string {
-    const prefix = 'file:///'
-    if (file.startsWith(prefix)) {
-      file = file.substr(prefix.length)
+  private getRelativePath(path: string): string {
+    const {workDir} = this.options
+    if (path.startsWith(workDir)) {
+      path = path.substr(workDir.length)
     }
-    if (file.startsWith(workDir)) {
-      file = file.substr(workDir.length)
-    }
-    return file
+    return normalizeFilePath(path)
   }
 }

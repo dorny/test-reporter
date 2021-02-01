@@ -235,7 +235,7 @@ class DartJsonParser {
             }
             catch (e) {
                 const col = e.columnNumber !== undefined ? `:${e.columnNumber}` : '';
-                new Error(`Invalid JSON at ${path}:${i + 1}${col}\n\n${e}`);
+                throw new Error(`Invalid JSON at ${path}:${i + 1}${col}\n\n${e}`);
             }
         })
             .filter(evt => evt != null);
@@ -272,7 +272,7 @@ class DartJsonParser {
     }
     getTestRunResult(tr) {
         const suites = tr.suites.map(s => {
-            return new test_results_1.TestSuiteResult(s.suite.path, this.getGroups(s));
+            return new test_results_1.TestSuiteResult(this.getRelativePath(s.suite.path), this.getGroups(s));
         });
         return new test_results_1.TestRunResult(tr.path, suites, tr.time);
     }
@@ -281,35 +281,34 @@ class DartJsonParser {
         groups.sort((a, b) => { var _a, _b; return ((_a = a.group.line) !== null && _a !== void 0 ? _a : 0) - ((_b = b.group.line) !== null && _b !== void 0 ? _b : 0); });
         return groups.map(group => {
             group.tests.sort((a, b) => { var _a, _b; return ((_a = a.testStart.test.line) !== null && _a !== void 0 ? _a : 0) - ((_b = b.testStart.test.line) !== null && _b !== void 0 ? _b : 0); });
-            const tests = group.tests.map(t => this.getTest(t));
+            const tests = group.tests.map(tc => {
+                const error = this.getError(suite, tc);
+                return new test_results_1.TestCaseResult(tc.testStart.test.name, tc.result, tc.time, error);
+            });
             return new test_results_1.TestGroupResult(group.group.name, tests);
         });
     }
-    getTest(tc) {
-        const error = this.getError(tc);
-        return new test_results_1.TestCaseResult(tc.testStart.test.name, tc.result, tc.time, error);
-    }
-    getError(test) {
+    getError(testSuite, test) {
         var _a, _b, _c, _d, _e, _f;
         if (!this.options.parseErrors || !test.error) {
             return undefined;
         }
-        const { workDir, trackedFiles } = this.options;
+        const { trackedFiles } = this.options;
         const message = (_b = (_a = test.error) === null || _a === void 0 ? void 0 : _a.error) !== null && _b !== void 0 ? _b : '';
         const stackTrace = (_d = (_c = test.error) === null || _c === void 0 ? void 0 : _c.stackTrace) !== null && _d !== void 0 ? _d : '';
         const src = this.exceptionThrowSource(stackTrace, trackedFiles);
         let path;
         let line;
         if (src !== undefined) {
-            ;
-            (path = src.path), (line = src.line);
+            path = src.path;
+            line = src.line;
         }
         else {
-            const testStartPath = this.getRelativePathFromUrl((_e = test.testStart.test.url) !== null && _e !== void 0 ? _e : '', workDir);
+            const testStartPath = this.getRelativePath(testSuite.suite.path);
             if (trackedFiles.includes(testStartPath)) {
                 path = testStartPath;
+                line = (_f = (_e = test.testStart.test.root_line) !== null && _e !== void 0 ? _e : test.testStart.test.line) !== null && _f !== void 0 ? _f : undefined;
             }
-            line = (_f = test.testStart.test.line) !== null && _f !== void 0 ? _f : undefined;
         }
         return {
             path,
@@ -336,15 +335,12 @@ class DartJsonParser {
             }
         }
     }
-    getRelativePathFromUrl(file, workDir) {
-        const prefix = 'file:///';
-        if (file.startsWith(prefix)) {
-            file = file.substr(prefix.length);
+    getRelativePath(path) {
+        const { workDir } = this.options;
+        if (path.startsWith(workDir)) {
+            path = path.substr(workDir.length);
         }
-        if (file.startsWith(workDir)) {
-            file = file.substr(workDir.length);
-        }
-        return file;
+        return file_utils_1.normalizeFilePath(path);
     }
 }
 exports.DartJsonParser = DartJsonParser;

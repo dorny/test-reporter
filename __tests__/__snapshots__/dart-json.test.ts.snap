@@ -68,7 +68,7 @@ test\\\\main_test.dart 17:9        main.<fn>.<fn>.<fn>
           ],
         },
       ],
-      "name": "test\\\\main_test.dart",
+      "name": "test/main_test.dart",
       "totalTime": undefined,
     },
     TestSuiteResult {
@@ -97,7 +97,7 @@ test\\\\main_test.dart 17:9        main.<fn>.<fn>.<fn>
           ],
         },
       ],
-      "name": "test\\\\second_test.dart",
+      "name": "test/second_test.dart",
       "totalTime": undefined,
     },
   ],
