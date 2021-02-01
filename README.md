@@ -1,9 +1,13 @@
 # Test Reporter
 
 This [Github Action](https://github.com/features/actions) displays test results from popular testing frameworks directly in GitHub.
-- [x] Parses test results in XML or JSON format and creates nice report (Github Check Run)
-- [x] Annotates code where it failed based on message and stack trace captured during test execution
-- [x] Sets output variable conclusion to `success` if all tests passed or `failure` if any test failed
+
+✔️ Parses test results in XML or JSON format and creates nice report as Github Check Run
+
+✔️ Annotates code where it failed based on message and stack trace captured during test execution
+
+✔️ Provides final `conclusion` and counts of `passed`, `failed` and `skipped` tests as output parameters
+
 
 **How it looks:**
 |![](assets/fluent-validation-report.png)|![](assets/provider-error-summary.png)|![](assets/provider-error-details.png)|![](assets/provider-groups.png)|
@@ -90,6 +94,15 @@ jobs:
     # Default: ${{ github.token }}
     token: ''
 ```
+
+## Output parameters
+| Name       | Description            |
+| :--        | :--                    |
+| conclusion | `success` or `failure` |
+| passed     | Count of passed tests  |
+| failed     | Count of failed tests  |
+| skipped    | Count of skipped tests |
+| time       | Execution time [ms]    |
 
 ## Supported formats
 
