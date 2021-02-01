@@ -33,7 +33,7 @@ jobs:
 
       - name: 'Test Report'
         uses: dorny/test-reporter@v1
-        if: always()                  # run this step even if previous step failed
+        if: success() || failure()    # run this step even if previous step failed, but skip it when job is cancelled
         with:
           name: 'JEST Tests'          # Name of the check run which will be created
           path: 'reports/jest-*.xml'  # Path to test report
