@@ -28,20 +28,20 @@ Please create [Issue](https://github.com/dorny/test-reporter/issues/new) or cont
 ```yaml
 jobs:
   build-test:
-    name: 'Build & Test'
+    name: Build & Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2     # checkout the repo
       - run: npm ci                   # install packages
       - run: npm test                 # run tests (configured to use jest-junit reporter)
 
-      - name: 'Test Report'
+      - name: Test Report
         uses: dorny/test-reporter@v1
         if: success() || failure()    # run this step even if previous step failed
         with:
-          name: 'JEST Tests'          # Name of the check run which will be created
-          path: 'reports/jest-*.xml'  # Path to test report
-          reporter: 'jest-junit'      # Format of test report
+          name: JEST Tests            # Name of the check run which will be created
+          path: reports/jest-*.xml    # Path to test report
+          reporter: jest-junit        # Format of test report
 ```
 
 ## Usage

@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-test:
-    name: 'Build & Test'
+    name: Build & Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -19,10 +19,10 @@ jobs:
       - run: npm run format-check
       - run: npm run lint
       - run: npm test
-      - name: 'Evaluate test results'
-        if: always()
+      - name: Create test report
+        if: success() || failure()
         uses: ./
         with:
-          name: 'JEST Tests'
-          path: '__tests__/__results__/*.xml'
-          reporter: 'jest-junit'
+          name: JEST Tests
+          path: __tests__/__results__/*.xml
+          reporter: jest-junit
