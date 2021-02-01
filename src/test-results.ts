@@ -97,5 +97,5 @@ export interface TestCaseError {
   path?: string
   line?: number
   message?: string
-  stackTrace: string
+  details: string
 }

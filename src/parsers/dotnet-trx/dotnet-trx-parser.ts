@@ -130,7 +130,7 @@ export class DotnetTrxParser implements TestParser {
       path,
       line,
       message,
-      stackTrace: `${message}\n${stackTrace}`
+      details: `${message}\n${stackTrace}`
     }
   }
 

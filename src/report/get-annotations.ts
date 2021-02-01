@@ -19,8 +19,8 @@ interface TestError {
   testName: string
   path: string
   line: number
-  stackTrace: string
   message: string
+  details: string
 }
 
 export function getAnnotations(results: TestRunResult[], maxCount: number): Annotation[] {
@@ -43,7 +43,7 @@ export function getAnnotations(results: TestRunResult[], maxCount: number): Anno
           const path = err.path ?? tr.path
           const line = err.line ?? 0
           if (mergeDup) {
-            const dup = errors.find(e => path === e.path && line === e.line && err.stackTrace === e.stackTrace)
+            const dup = errors.find(e => path === e.path && line === e.line && err.details === e.details)
             if (dup !== undefined) {
               dup.testRunPaths.push(tr.path)
               continue
@@ -54,8 +54,8 @@ export function getAnnotations(results: TestRunResult[], maxCount: number): Anno
             testRunPaths: [tr.path],
             suiteName: ts.name,
             testName: tc.name,
-            stackTrace: err.stackTrace,
-            message: err.message ?? getFirstNonEmptyLine(err.stackTrace) ?? 'Test failed',
+            details: err.details,
+            message: err.message ?? getFirstNonEmptyLine(err.details) ?? 'Test failed',
             path,
             line
           })
@@ -81,7 +81,7 @@ export function getAnnotations(results: TestRunResult[], maxCount: number): Anno
       end_line: e.line,
       annotation_level: 'failure',
       title: `${e.suiteName} ► ${e.testName}`,
-      raw_details: fixEol(e.stackTrace),
+      raw_details: fixEol(e.details),
       message
     })
   })

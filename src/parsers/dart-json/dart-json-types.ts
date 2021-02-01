@@ -75,7 +75,7 @@ export interface DebugEvent extends Event {
 export interface MessageEvent extends Event {
   type: 'print'
   testID: number
-  messageType: string
+  messageType: 'print' | 'skip'
   message: string
 }
 
@@ -126,4 +126,7 @@ export function isErrorEvent(event: Event): event is ErrorEvent {
 }
 export function isDoneEvent(event: Event): event is DoneEvent {
   return event.type === 'done'
+}
+export function isMessageEvent(event: Event): event is MessageEvent {
+  return event.type === 'print'
 }

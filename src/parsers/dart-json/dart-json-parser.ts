@@ -14,7 +14,9 @@ import {
   isTestStartEvent,
   isTestDoneEvent,
   isErrorEvent,
-  isDoneEvent
+  isDoneEvent,
+  isMessageEvent,
+  MessageEvent
 } from './dart-json-types'
 
 import {
@@ -45,8 +47,10 @@ class TestCase {
     this.groupId = testStart.test.groupIDs[testStart.test.groupIDs.length - 1]
   }
   readonly groupId: number
+  readonly print: MessageEvent[] = []
   testDone?: TestDoneEvent
   error?: ErrorEvent
+
   get result(): TestExecutionResult {
     if (this.testDone?.skipped) {
       return 'skipped'
@@ -112,7 +116,10 @@ export class DartJsonParser implements TestParser {
         tests[evt.testID].testDone = evt
       } else if (isErrorEvent(evt)) {
         tests[evt.testID].error = evt
-      } else if (isDoneEvent(evt)) {
+      } else if (isMessageEvent(evt)) {
+        tests[evt.testID].print.push(evt)
+      }
+       else if (isDoneEvent(evt)) {
         success = evt.success
         totalTime = evt.time
       }
@@ -151,6 +158,8 @@ export class DartJsonParser implements TestParser {
     const {trackedFiles} = this.options
     const message = test.error?.error ?? ''
     const stackTrace = test.error?.stackTrace ?? ''
+    const print = test.print.filter(p => p.messageType === 'print').map(p => p.message).join('\n')
+    const details = [print, stackTrace].filter(str => str !== '').join('\n')
     const src = this.exceptionThrowSource(stackTrace, trackedFiles)
     let path
     let line
@@ -170,7 +179,7 @@ export class DartJsonParser implements TestParser {
       path,
       line,
       message,
-      stackTrace
+      details
     }
   }
 

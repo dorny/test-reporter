@@ -75,11 +75,11 @@ export class JestJunitParser implements TestParser {
       return undefined
     }
 
-    const stackTrace = tc.failure[0]
+    const details = tc.failure[0]
     let path
     let line
 
-    const src = this.exceptionThrowSource(stackTrace)
+    const src = this.exceptionThrowSource(details)
     if (src) {
       path = src.path
       line = src.line
@@ -88,7 +88,7 @@ export class JestJunitParser implements TestParser {
     return {
       path,
       line,
-      stackTrace
+      details
     }
   }
 
