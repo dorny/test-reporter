@@ -5,6 +5,10 @@ This [Github Action](https://github.com/features/actions) displays test results 
 - [x] Annotates code where it failed based on message and stack trace captured during test execution
 - [x] Sets output variable conclusion to `success` if all tests passed or `failure` if any test failed
 
+**How it looks:**
+|![](assets/fluent-validation-report.png)|![](assets/provider-error-summary.png)|![](assets/provider-error-details.png)|![](assets/provider-groups.png)|
+|:--:|:--:|:--:|:--:|
+
 **Supported languages / frameworks:**
 - .NET / [xUnit](https://xunit.net/) / [NUnit](https://nunit.org/) / [MSTest](https://github.com/Microsoft/testfx-docs)
 - Dart / [test](https://pub.dev/packages/test)
