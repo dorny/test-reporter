@@ -1,7 +1,6 @@
 name: Test Reporter
 description: |
-  Displays test results from popular testing frameworks directly in GitHub.
-  Supports .NET (xUnit, NUnit, MSTest), Dart, Flutter and JavaScript (JEST).
+  Displays test results directly in GitHub. Supports .NET (xUnit, NUnit, MSTest), Dart, Flutter and JavaScript (JEST).
 author: Michal Dorner <dorner.michal@gmail.com>
 inputs:
   name:
