@@ -37,13 +37,14 @@ const adm_zip_1 = __importDefault(__nccwpck_require__(6761));
 const picomatch_1 = __importDefault(__nccwpck_require__(8569));
 const github_utils_1 = __nccwpck_require__(3522);
 class ArtifactProvider {
-    constructor(octokit, artifact, name, pattern, sha, runId) {
+    constructor(octokit, artifact, name, pattern, sha, runId, token) {
         this.octokit = octokit;
         this.artifact = artifact;
         this.name = name;
         this.pattern = pattern;
         this.sha = sha;
         this.runId = runId;
+        this.token = token;
         if (this.artifact.startsWith('/')) {
             const endIndex = this.artifact.lastIndexOf('/');
             const rePattern = this.artifact.substring(1, endIndex);
@@ -84,7 +85,7 @@ class ArtifactProvider {
             return {};
         }
         for (const art of artifacts) {
-            await github_utils_1.downloadArtifact(this.octokit, art.id, art.name);
+            await github_utils_1.downloadArtifact(this.octokit, art.id, art.name, this.token);
             const reportName = this.getReportName(art.name);
             const files = [];
             const zip = new adm_zip_1.default(art.name);
@@ -250,7 +251,7 @@ class TestReporter {
         }
         const pattern = this.path.split(',');
         const inputProvider = this.artifact
-            ? new artifact_provider_1.ArtifactProvider(this.octokit, this.artifact, this.name, pattern, this.context.sha, this.context.runId)
+            ? new artifact_provider_1.ArtifactProvider(this.octokit, this.artifact, this.name, pattern, this.context.sha, this.context.runId, this.token)
             : new local_file_provider_1.LocalFileProvider(this.name, pattern);
         const parseErrors = this.maxAnnotations > 0;
         const trackedFiles = await inputProvider.listTrackedFiles();
@@ -1369,7 +1370,7 @@ function getCheckRunContext() {
     return { sha: github.context.sha, runId };
 }
 exports.getCheckRunContext = getCheckRunContext;
-async function downloadArtifact(octokit, artifactId, fileName) {
+async function downloadArtifact(octokit, artifactId, fileName, token) {
     core.startGroup(`Downloading artifact ${fileName}`);
     try {
         core.info(`Artifact ID: ${artifactId}`);
@@ -1378,9 +1379,11 @@ async function downloadArtifact(octokit, artifactId, fileName) {
             artifact_id: artifactId,
             archive_format: 'zip'
         });
-        const resp = await got_1.default({
-            url: req.url,
-            headers: req.headers,
+        const headers = {
+            Authorization: `Bearer ${token}`
+        };
+        const resp = await got_1.default(req.url, {
+            headers,
             followRedirect: false
         });
         core.info(`Fetch artifact URL: ${resp.statusCode} ${resp.statusMessage}`);
@@ -1389,14 +1392,14 @@ async function downloadArtifact(octokit, artifactId, fileName) {
         }
         const url = resp.headers.location;
         if (url === undefined) {
-            const headers = Object.keys(resp.headers);
-            core.info(`Received headers: ${headers.join(', ')}`);
+            const receivedHeaders = Object.keys(resp.headers);
+            core.info(`Received headers: ${receivedHeaders.join(', ')}`);
             throw new Error('Location header was not found in API response');
         }
         if (typeof url !== 'string') {
             throw new Error(`Location header has unexpected value: ${url}`);
         }
-        const downloadStream = got_1.default.stream(url);
+        const downloadStream = got_1.default.stream(url, { headers });
         const fileWriterStream = fs_1.createWriteStream(fileName);
         core.info(`Downloading ${url}`);
         downloadStream.on('downloadProgress', ({ transferred, total, percent }) => {

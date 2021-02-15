@@ -19,7 +19,8 @@ export class ArtifactProvider implements InputProvider {
     readonly name: string,
     readonly pattern: string[],
     readonly sha: string,
-    readonly runId: number
+    readonly runId: number,
+    readonly token: string
   ) {
     if (this.artifact.startsWith('/')) {
       const endIndex = this.artifact.lastIndexOf('/')
@@ -66,7 +67,7 @@ export class ArtifactProvider implements InputProvider {
     }
 
     for (const art of artifacts) {
-      await downloadArtifact(this.octokit, art.id, art.name)
+      await downloadArtifact(this.octokit, art.id, art.name, this.token)
       const reportName = this.getReportName(art.name)
       const files: FileContent[] = []
       const zip = new Zip(art.name)

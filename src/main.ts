@@ -69,7 +69,15 @@ class TestReporter {
     const pattern = this.path.split(',')
 
     const inputProvider = this.artifact
-      ? new ArtifactProvider(this.octokit, this.artifact, this.name, pattern, this.context.sha, this.context.runId)
+      ? new ArtifactProvider(
+          this.octokit,
+          this.artifact,
+          this.name,
+          pattern,
+          this.context.sha,
+          this.context.runId,
+          this.token
+        )
       : new LocalFileProvider(this.name, pattern)
 
     const parseErrors = this.maxAnnotations > 0
