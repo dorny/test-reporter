@@ -38,14 +38,24 @@ export async function downloadArtifact(
   try {
     core.info(`Artifact ID: ${artifactId}`)
 
-    const resp = await octokit.actions.downloadArtifact({
+    const req = octokit.actions.downloadArtifact.endpoint({
       ...github.context.repo,
       artifact_id: artifactId,
       archive_format: 'zip'
     })
 
-    core.info(`Fetch artifact URL: ${resp.status}`)
-    const url = resp.headers.Location
+    const resp = await got({
+      url: req.url,
+      headers: req.headers as {[header: string]: string},
+      followRedirect: false
+    })
+
+    core.info(`Fetch artifact URL: ${resp.statusCode} ${resp.statusMessage}`)
+    if (resp.statusCode !== 302) {
+      throw new Error('Fetch artifact URL failed: received unexpected status code')
+    }
+
+    const url = resp.headers.location
     if (url === undefined) {
       const headers = Object.keys(resp.headers)
       core.info(`Received headers: ${headers.join(', ')}`)
