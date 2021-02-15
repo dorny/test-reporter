@@ -74,7 +74,7 @@ export async function downloadArtifact(
 
     core.info(`Downloading ${url}`)
     downloadStream.on('downloadProgress', ({transferred}) => {
-      const percentage = Math.round(transferred / size * 100)
+      const percentage = Math.round((transferred / size) * 100)
       core.info(`Progress: ${transferred}/${size} (${percentage}%)`)
     })
     await asyncStream(downloadStream, fileWriterStream)

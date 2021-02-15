@@ -67,20 +67,35 @@ export class ArtifactProvider implements InputProvider {
     }
 
     for (const art of artifacts) {
-      await downloadArtifact(this.octokit, art.id, art.name, art.size_in_bytes, this.token)
-      const reportName = this.getReportName(art.name)
-      const files: FileContent[] = []
-      const zip = new Zip(art.name)
-      for (const entry of zip.getEntries()) {
-        const file = entry.name
-        if (entry.isDirectory || !this.fileNameMatch(file)) continue
-        const content = zip.readAsText(entry)
-        files.push({file, content})
-      }
-      if (result[reportName]) {
-        result[reportName].push(...files)
-      } else {
-        result[reportName] = files
+      const fileName = `${art.name}.zip`
+      await downloadArtifact(this.octokit, art.id, fileName, art.size_in_bytes, this.token)
+      core.startGroup(`Reading archive ${fileName}`)
+      try {
+        const reportName = this.getReportName(art.name)
+        core.info(`Report name: ${reportName}`)
+        const files: FileContent[] = []
+        const zip = new Zip(fileName)
+        for (const entry of zip.getEntries()) {
+          const file = entry.name
+          if (entry.isDirectory) {
+            core.info(`Skipping ${file}: entry is a directory`)
+            continue
+          }
+          if (!this.fileNameMatch(file)) {
+            core.info(`Skipping ${file}: filename does not match pattern`)
+            continue
+          }
+          const content = zip.readAsText(entry)
+          files.push({file, content})
+          core.info(`Read ${file}: ${content.length} chars`)
+        }
+        if (result[reportName]) {
+          result[reportName].push(...files)
+        } else {
+          result[reportName] = files
+        }
+      } finally {
+        core.endGroup()
       }
     }
 

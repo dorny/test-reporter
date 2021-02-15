@@ -85,22 +85,37 @@ class ArtifactProvider {
             return {};
         }
         for (const art of artifacts) {
-            await github_utils_1.downloadArtifact(this.octokit, art.id, art.name, this.token);
-            const reportName = this.getReportName(art.name);
-            const files = [];
-            const zip = new adm_zip_1.default(art.name);
-            for (const entry of zip.getEntries()) {
-                const file = entry.name;
-                if (entry.isDirectory || !this.fileNameMatch(file))
-                    continue;
-                const content = zip.readAsText(entry);
-                files.push({ file, content });
+            const fileName = `${art.name}.zip`;
+            await github_utils_1.downloadArtifact(this.octokit, art.id, fileName, art.size_in_bytes, this.token);
+            core.startGroup(`Reading archive ${fileName}`);
+            try {
+                const reportName = this.getReportName(art.name);
+                core.info(`Report name: ${reportName}`);
+                const files = [];
+                const zip = new adm_zip_1.default(fileName);
+                for (const entry of zip.getEntries()) {
+                    const file = entry.name;
+                    if (entry.isDirectory) {
+                        core.info(`Skipping ${file}: entry is a directory`);
+                        continue;
+                    }
+                    if (!this.fileNameMatch(file)) {
+                        core.info(`Skipping ${file}: filename does not match pattern`);
+                        continue;
+                    }
+                    const content = zip.readAsText(entry);
+                    files.push({ file, content });
+                    core.info(`Read ${file}: ${content.length} chars`);
+                }
+                if (result[reportName]) {
+                    result[reportName].push(...files);
+                }
+                else {
+                    result[reportName] = files;
+                }
             }
-            if (result[reportName]) {
-                result[reportName].push(...files);
-            }
-            else {
-                result[reportName] = files;
+            finally {
+                core.endGroup();
             }
         }
         return result;
@@ -1370,7 +1385,7 @@ function getCheckRunContext() {
     return { sha: github.context.sha, runId };
 }
 exports.getCheckRunContext = getCheckRunContext;
-async function downloadArtifact(octokit, artifactId, fileName, token) {
+async function downloadArtifact(octokit, artifactId, fileName, size, token) {
     core.startGroup(`Downloading artifact ${fileName}`);
     try {
         core.info(`Artifact ID: ${artifactId}`);
@@ -1402,9 +1417,9 @@ async function downloadArtifact(octokit, artifactId, fileName, token) {
         const downloadStream = got_1.default.stream(url, { headers });
         const fileWriterStream = fs_1.createWriteStream(fileName);
         core.info(`Downloading ${url}`);
-        downloadStream.on('downloadProgress', ({ transferred, total, percent }) => {
-            const percentage = Math.round(percent * 100);
-            core.info(`Progress: ${transferred}/${total} (${percentage}%)`);
+        downloadStream.on('downloadProgress', ({ transferred }) => {
+            const percentage = Math.round(transferred / size * 100);
+            core.info(`Progress: ${transferred}/${size} (${percentage}%)`);
         });
         await asyncStream(downloadStream, fileWriterStream);
     }
