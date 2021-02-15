@@ -58,7 +58,7 @@ class ArtifactProvider {
                 }
                 let reportName = this.name;
                 for (let i = 1; i < match.length; i++) {
-                    reportName = reportName.replace(new RegExp(`$${i}`, 'g'), match[i]);
+                    reportName = reportName.replace(new RegExp(`\\$${i}`, 'g'), match[i]);
                 }
                 return reportName;
             };
@@ -86,7 +86,7 @@ class ArtifactProvider {
         }
         for (const art of artifacts) {
             const fileName = `${art.name}.zip`;
-            await github_utils_1.downloadArtifact(this.octokit, art.id, fileName, art.size_in_bytes, this.token);
+            await github_utils_1.downloadArtifact(this.octokit, art.id, fileName, this.token);
             core.startGroup(`Reading archive ${fileName}`);
             try {
                 const reportName = this.getReportName(art.name);
@@ -94,7 +94,7 @@ class ArtifactProvider {
                 const files = [];
                 const zip = new adm_zip_1.default(fileName);
                 for (const entry of zip.getEntries()) {
-                    const file = entry.name;
+                    const file = entry.entryName;
                     if (entry.isDirectory) {
                         core.info(`Skipping ${file}: entry is a directory`);
                         continue;
@@ -1385,7 +1385,7 @@ function getCheckRunContext() {
     return { sha: github.context.sha, runId };
 }
 exports.getCheckRunContext = getCheckRunContext;
-async function downloadArtifact(octokit, artifactId, fileName, size, token) {
+async function downloadArtifact(octokit, artifactId, fileName, token) {
     core.startGroup(`Downloading artifact ${fileName}`);
     try {
         core.info(`Artifact ID: ${artifactId}`);
@@ -1418,8 +1418,7 @@ async function downloadArtifact(octokit, artifactId, fileName, size, token) {
         const fileWriterStream = fs_1.createWriteStream(fileName);
         core.info(`Downloading ${url}`);
         downloadStream.on('downloadProgress', ({ transferred }) => {
-            const percentage = Math.round(transferred / size * 100);
-            core.info(`Progress: ${transferred}/${size} (${percentage}%)`);
+            core.info(`Progress: ${transferred} B`);
         });
         await asyncStream(downloadStream, fileWriterStream);
     }

@@ -35,7 +35,7 @@ export class ArtifactProvider implements InputProvider {
         }
         let reportName = this.name
         for (let i = 1; i < match.length; i++) {
-          reportName = reportName.replace(new RegExp(`$${i}`, 'g'), match[i])
+          reportName = reportName.replace(new RegExp(`\\$${i}`, 'g'), match[i])
         }
         return reportName
       }
@@ -76,7 +76,7 @@ export class ArtifactProvider implements InputProvider {
         const files: FileContent[] = []
         const zip = new Zip(fileName)
         for (const entry of zip.getEntries()) {
-          const file = entry.name
+          const file = entry.entryName
           if (entry.isDirectory) {
             core.info(`Skipping ${file}: entry is a directory`)
             continue
