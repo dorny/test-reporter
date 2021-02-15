@@ -1,3 +1,4 @@
+import * as core from '@actions/core'
 import * as github from '@actions/github'
 import {GitHub} from '@actions/github/lib/utils'
 
@@ -50,7 +51,17 @@ export class ArtifactProvider implements InputProvider {
       run_id: this.runId
     })
 
+    if (resp.data.artifacts.length === 0) {
+      core.warning(`No artifacts found in run ${this.runId}`)
+      return {}
+    }
+
     const artifacts = resp.data.artifacts.filter(a => this.artifactNameMatch(a.name))
+    if (artifacts.length === 0) {
+      core.warning(`No artifact matches ${this.artifact}`)
+      return {}
+    }
+
     for (const art of artifacts) {
       await downloadArtifact(this.octokit, art.id, art.name)
       const reportName = this.getReportName(art.name)

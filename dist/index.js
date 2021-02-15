@@ -31,6 +31,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ArtifactProvider = void 0;
+const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const adm_zip_1 = __importDefault(__nccwpck_require__(6761));
 const picomatch_1 = __importDefault(__nccwpck_require__(8569));
@@ -70,7 +71,15 @@ class ArtifactProvider {
             ...github.context.repo,
             run_id: this.runId
         });
+        if (resp.data.artifacts.length === 0) {
+            core.warning(`No artifacts found in run ${this.runId}`);
+            return {};
+        }
         const artifacts = resp.data.artifacts.filter(a => this.artifactNameMatch(a.name));
+        if (artifacts.length === 0) {
+            core.warning(`No artifact matches ${this.artifact}`);
+            return {};
+        }
         for (const art of artifacts) {
             await github_utils_1.downloadArtifact(this.octokit, art.id, art.name);
             const reportName = this.getReportName(art.name);
@@ -1388,7 +1397,9 @@ async function listFiles(octokit, sha) {
         commit_sha: sha,
         ...github.context.repo
     });
-    return await listGitTree(octokit, commit.data.tree.sha, '');
+    const files = await listGitTree(octokit, commit.data.tree.sha, '');
+    core.info(`Found ${files.length} files tracked by GitHub in commit ${sha}`);
+    return files;
 }
 exports.listFiles = listFiles;
 async function listGitTree(octokit, sha, path) {

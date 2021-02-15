@@ -68,7 +68,9 @@ export async function listFiles(octokit: InstanceType<typeof GitHub>, sha: strin
     commit_sha: sha,
     ...github.context.repo
   })
-  return await listGitTree(octokit, commit.data.tree.sha, '')
+  const files = await listGitTree(octokit, commit.data.tree.sha, '')
+  core.info(`Found ${files.length} files tracked by GitHub in commit ${sha}`)
+  return files
 }
 
 async function listGitTree(octokit: InstanceType<typeof GitHub>, sha: string, path: string): Promise<string[]> {
