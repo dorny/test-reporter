@@ -4,7 +4,7 @@ import * as path from 'path'
 import {DotnetTrxParser} from '../src/parsers/dotnet-trx/dotnet-trx-parser'
 import {ParseOptions} from '../src/test-parser'
 import {getReport} from '../src/report/get-report'
-import {normalizeFilePath} from '../src/utils/file-utils'
+import {normalizeFilePath} from '../src/utils/path-utils'
 
 describe('dotnet-trx tests', () => {
   it('matches report snapshot', async () => {
@@ -15,8 +15,8 @@ describe('dotnet-trx tests', () => {
 
     const opts: ParseOptions = {
       parseErrors: true,
-      trackedFiles: ['DotnetTests.Unit/Calculator.cs', 'DotnetTests.XUnitTests/CalculatorTests.cs'],
-      workDir: 'C:/Users/Michal/Workspace/dorny/test-check/reports/dotnet/'
+      trackedFiles: ['DotnetTests.Unit/Calculator.cs', 'DotnetTests.XUnitTests/CalculatorTests.cs']
+      //workDir: 'C:/Users/Michal/Workspace/dorny/test-check/reports/dotnet/'
     }
 
     const parser = new DotnetTrxParser(opts)
@@ -36,8 +36,7 @@ describe('dotnet-trx tests', () => {
 
     const opts: ParseOptions = {
       trackedFiles: [],
-      parseErrors: true,
-      workDir: ''
+      parseErrors: true
     }
 
     const parser = new DotnetTrxParser(opts)

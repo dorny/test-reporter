@@ -4,7 +4,7 @@ import * as path from 'path'
 import {JestJunitParser} from '../src/parsers/jest-junit/jest-junit-parser'
 import {ParseOptions} from '../src/test-parser'
 import {getReport} from '../src/report/get-report'
-import {normalizeFilePath} from '../src/utils/file-utils'
+import {normalizeFilePath} from '../src/utils/path-utils'
 
 describe('jest-junit tests', () => {
   it('report from ./reports/jest test results matches snapshot', async () => {
@@ -15,8 +15,8 @@ describe('jest-junit tests', () => {
 
     const opts: ParseOptions = {
       parseErrors: true,
-      trackedFiles: ['__tests__/main.test.js', '__tests__/second.test.js', 'lib/main.js'],
-      workDir: 'C:/Users/Michal/Workspace/dorny/test-check/reports/jest/'
+      trackedFiles: ['__tests__/main.test.js', '__tests__/second.test.js', 'lib/main.js']
+      //workDir: 'C:/Users/Michal/Workspace/dorny/test-check/reports/jest/'
     }
 
     const parser = new JestJunitParser(opts)
@@ -38,8 +38,8 @@ describe('jest-junit tests', () => {
     const trackedFiles = fs.readFileSync(trackedFilesPath, {encoding: 'utf8'}).split(/\n\r?/g)
     const opts: ParseOptions = {
       parseErrors: true,
-      trackedFiles,
-      workDir: '/home/dorny/dorny/jest/'
+      trackedFiles
+      //workDir: '/home/dorny/dorny/jest/'
     }
 
     const parser = new JestJunitParser(opts)
