@@ -67,7 +67,7 @@ export class ArtifactProvider implements InputProvider {
     }
 
     for (const art of artifacts) {
-      await downloadArtifact(this.octokit, art.id, art.name, this.token)
+      await downloadArtifact(this.octokit, art.id, art.name, art.size_in_bytes, this.token)
       const reportName = this.getReportName(art.name)
       const files: FileContent[] = []
       const zip = new Zip(art.name)
