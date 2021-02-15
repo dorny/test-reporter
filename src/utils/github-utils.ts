@@ -34,28 +34,35 @@ export async function downloadArtifact(
   artifactId: number,
   fileName: string
 ): Promise<void> {
-  const resp = await octokit.actions.downloadArtifact({
-    ...github.context.repo,
-    artifact_id: artifactId,
-    archive_format: 'zip'
-  })
-
-  const url = resp.headers.location
-
-  if (url === undefined) {
-    throw new Error('Location header was not found in API response')
-  }
-
-  const downloadStream = got.stream(url)
-  const fileWriterStream = createWriteStream(fileName)
-
-  downloadStream.on('downloadProgress', ({transferred, total, percent}) => {
-    const percentage = Math.round(percent * 100)
-    core.info(`progress: ${transferred}/${total} (${percentage}%)`)
-  })
-
-  core.startGroup(`Downloading ${fileName} from ${url}`)
+  core.startGroup(`Downloading artifact ${fileName}`)
   try {
+    core.info(`Artifact ID: ${artifactId}`)
+
+    const resp = await octokit.actions.downloadArtifact({
+      ...github.context.repo,
+      artifact_id: artifactId,
+      archive_format: 'zip'
+    })
+
+    core.info(`Fetch artifact URL: ${resp.status}`)
+    const url = resp.headers.Location
+    if (url === undefined) {
+      const headers = Object.keys(resp.headers)
+      core.info(`Received headers: ${headers.join(', ')}`)
+      throw new Error('Location header was not found in API response')
+    }
+    if (typeof url !== 'string') {
+      throw new Error(`Location header has unexpected value: ${url}`)
+    }
+
+    const downloadStream = got.stream(url)
+    const fileWriterStream = createWriteStream(fileName)
+
+    core.info(`Downloading ${url}`)
+    downloadStream.on('downloadProgress', ({transferred, total, percent}) => {
+      const percentage = Math.round(percent * 100)
+      core.info(`Progress: ${transferred}/${total} (${percentage}%)`)
+    })
     await asyncStream(downloadStream, fileWriterStream)
   } finally {
     core.endGroup()
