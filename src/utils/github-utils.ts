@@ -33,7 +33,6 @@ export async function downloadArtifact(
   octokit: InstanceType<typeof GitHub>,
   artifactId: number,
   fileName: string,
-  size: number,
   token: string
 ): Promise<void> {
   core.startGroup(`Downloading artifact ${fileName}`)
@@ -74,8 +73,7 @@ export async function downloadArtifact(
 
     core.info(`Downloading ${url}`)
     downloadStream.on('downloadProgress', ({transferred}) => {
-      const percentage = Math.round((transferred / size) * 100)
-      core.info(`Progress: ${transferred}/${size} (${percentage}%)`)
+      core.info(`Progress: ${transferred} B`)
     })
     await asyncStream(downloadStream, fileWriterStream)
   } finally {
