@@ -45,7 +45,10 @@ class ArtifactProvider {
         this.sha = sha;
         this.runId = runId;
         if (this.artifact.startsWith('/')) {
-            const re = new RegExp(this.artifact);
+            const endIndex = this.artifact.lastIndexOf('/');
+            const rePattern = this.artifact.substring(1, endIndex);
+            const reOpts = this.artifact.substring(endIndex + 1);
+            const re = new RegExp(rePattern, reOpts);
             this.artifactNameMatch = (str) => re.test(str);
             this.getReportName = (str) => {
                 const match = str.match(re);

@@ -22,7 +22,10 @@ export class ArtifactProvider implements InputProvider {
     readonly runId: number
   ) {
     if (this.artifact.startsWith('/')) {
-      const re = new RegExp(this.artifact)
+      const endIndex = this.artifact.lastIndexOf('/')
+      const rePattern = this.artifact.substring(1, endIndex)
+      const reOpts = this.artifact.substring(endIndex + 1)
+      const re = new RegExp(rePattern, reOpts)
       this.artifactNameMatch = (str: string) => re.test(str)
       this.getReportName = (str: string) => {
         const match = str.match(re)
