@@ -96,8 +96,13 @@ class TestReporter {
     const results: TestRunResult[] = []
     const input = await inputProvider.load()
     for (const [reportName, files] of Object.entries(input)) {
-      const tr = await this.createReport(parser, reportName, files)
-      results.push(...tr)
+      try {
+        core.startGroup(`Creating test report ${reportName}`)
+        const tr = await this.createReport(parser, reportName, files)
+        results.push(...tr)
+      } finally {
+        core.endGroup()
+      }
     }
 
     const isFailed = results.some(tr => tr.result === 'failed')
@@ -120,13 +125,13 @@ class TestReporter {
 
   async createReport(parser: TestParser, name: string, files: FileContent[]): Promise<TestRunResult[]> {
     if (files.length === 0) {
-      core.error(`${name}: No file matches path ${this.path}`)
+      core.warning(`No file matches path ${this.path}`)
       return []
     }
 
     const results: TestRunResult[] = []
     for (const {file, content} of files) {
-      core.info(`Processing test report '${file}'`)
+      core.info(`Processing test results from ${file}`)
       const tr = await parser.parse(file, content)
       results.push(tr)
     }
@@ -142,8 +147,8 @@ class TestReporter {
     const conclusion = isFailed ? 'failure' : 'success'
     const icon = isFailed ? Icon.fail : Icon.success
 
-    core.info(`Creating check run '${name}' with conclusion '${conclusion}'`)
-    await this.octokit.checks.create({
+    core.info(`Creating check run with conclusion ${conclusion}`)
+    const resp = await this.octokit.checks.create({
       head_sha: this.context.sha,
       name,
       conclusion,
@@ -155,6 +160,7 @@ class TestReporter {
       },
       ...github.context.repo
     })
+    core.info(`Check run create response: ${resp.status} - ${resp.url}`)
 
     return results
   }
