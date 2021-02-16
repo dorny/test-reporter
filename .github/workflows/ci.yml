@@ -1,4 +1,4 @@
-name: 'build-test'
+name: 'CI'
 on:
   pull_request:
     paths-ignore: [ 'README.md' ]
@@ -19,10 +19,31 @@ jobs:
       - run: npm run format-check
       - run: npm run lint
       - run: npm test
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results
+          path: __tests__/__results__/*.xml
+
       - name: Create test report
-        if: success() || failure()
         uses: ./
+        if: success() || failure()
+        continue-on-error: true
         with:
           name: JEST Tests
           path: __tests__/__results__/*.xml
           reporter: jest-junit
+
+  artifact-test:
+    name: Artifact test
+    runs-on: ubuntu-latest
+    needs: build-test
+    steps:
+    - uses: ./
+      continue-on-error: true
+      with:
+        artifact: test-results
+        name: Artifact Report
+        path: '*.xml'
+        reporter: jest-junit
