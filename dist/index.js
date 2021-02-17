@@ -1378,6 +1378,7 @@ const got_1 = __importDefault(__nccwpck_require__(3061));
 const asyncStream = util_1.promisify(stream.pipeline);
 function getCheckRunContext() {
     if (github.context.eventName === 'workflow_run') {
+        core.info('Action was triggered by workflow_run: using SHA and RUN_ID from triggering workflow');
         const event = github.context.payload;
         if (!event.workflow_run) {
             throw new Error("Event of type 'workflow_run' is missing 'workflow_run' field");
@@ -1388,7 +1389,8 @@ function getCheckRunContext() {
         };
     }
     const runId = github.context.runId;
-    if (github.context.eventName === 'pullrequest' && github.context.payload.pull_request) {
+    if (github.context.payload.pull_request) {
+        core.info(`Action was triggered by ${github.context}: using SHA from head of source branch`);
         const pr = github.context.payload.pull_request;
         return { sha: pr.head.sha, runId };
     }
