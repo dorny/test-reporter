@@ -23,7 +23,7 @@ export function getCheckRunContext(): {sha: string; runId: number} {
 
   const runId = github.context.runId
   if (github.context.payload.pull_request) {
-    core.info(`Action was triggered by ${github.context}: using SHA from head of source branch`)
+    core.info(`Action was triggered by ${github.context.eventName}: using SHA from head of source branch`)
     const pr = github.context.payload.pull_request as EventPayloads.WebhookPayloadPullRequestPullRequest
     return {sha: pr.head.sha, runId}
   }
@@ -90,7 +90,6 @@ export async function listFiles(octokit: InstanceType<typeof GitHub>, sha: strin
     ...github.context.repo
   })
   const files = await listGitTree(octokit, commit.data.tree.sha, '')
-  core.info(`Found ${files.length} files tracked by GitHub in commit ${sha}`)
   return files
 }
 

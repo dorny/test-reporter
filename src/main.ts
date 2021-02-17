@@ -85,6 +85,8 @@ class TestReporter {
     const trackedFiles = await inputProvider.listTrackedFiles()
     const workDir = this.artifact ? undefined : normalizeDirPath(process.cwd(), true)
 
+    core.info(`Found ${trackedFiles.length} files tracked by GitHub`)
+
     const options: ParseOptions = {
       workDir,
       trackedFiles,

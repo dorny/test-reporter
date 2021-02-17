@@ -272,6 +272,7 @@ class TestReporter {
         const parseErrors = this.maxAnnotations > 0;
         const trackedFiles = await inputProvider.listTrackedFiles();
         const workDir = this.artifact ? undefined : path_utils_1.normalizeDirPath(process.cwd(), true);
+        core.info(`Found ${trackedFiles.length} files tracked by GitHub`);
         const options = {
             workDir,
             trackedFiles,
@@ -1390,7 +1391,7 @@ function getCheckRunContext() {
     }
     const runId = github.context.runId;
     if (github.context.payload.pull_request) {
-        core.info(`Action was triggered by ${github.context}: using SHA from head of source branch`);
+        core.info(`Action was triggered by ${github.context.eventName}: using SHA from head of source branch`);
         const pr = github.context.payload.pull_request;
         return { sha: pr.head.sha, runId };
     }
@@ -1446,7 +1447,6 @@ async function listFiles(octokit, sha) {
         ...github.context.repo
     });
     const files = await listGitTree(octokit, commit.data.tree.sha, '');
-    core.info(`Found ${files.length} files tracked by GitHub in commit ${sha}`);
     return files;
 }
 exports.listFiles = listFiles;
