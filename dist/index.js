@@ -264,6 +264,7 @@ class TestReporter {
             core.info(`Changing directory to '${this.workDirInput}'`);
             process.chdir(this.workDirInput);
         }
+        core.info(`Check runs will be created with SHA=${this.context.sha}`);
         const pattern = this.path.split(',');
         const inputProvider = this.artifact
             ? new artifact_provider_1.ArtifactProvider(this.octokit, this.artifact, this.name, pattern, this.context.sha, this.context.runId, this.token)
@@ -337,7 +338,9 @@ class TestReporter {
             },
             ...github.context.repo
         });
-        core.info(`Check run create response: ${resp.status} - ${resp.url}`);
+        core.info(`Check run create response: ${resp.status}`);
+        core.info(`Check run URL: ${resp.data.url}`);
+        core.info(`Check run HTML: ${resp.data.html_url}`);
         return results;
     }
     getParser(reporter, options) {
