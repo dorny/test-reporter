@@ -11,13 +11,13 @@ inputs:
     required: true
   path:
     description: |
-      Coma separated list of paths to test reports
+      Coma separated list of paths to test results
       Supports wildcards via [fast-glob](https://github.com/mrmlnc/fast-glob)
       All matched result files must be of same format
     required: true
   reporter:
     description: |
-      Format of test report. Supported options:
+      Format of test results. Supported options:
         - dart-json
         - dotnet-trx
         - flutter-json
