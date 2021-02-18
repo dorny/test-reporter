@@ -40,7 +40,6 @@ jobs:
     needs: build-test
     steps:
     - uses: actions/checkout@v2
-    - run: sleep 60
     - uses: ./
       with:
         artifact: test-results

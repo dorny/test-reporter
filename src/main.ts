@@ -123,6 +123,12 @@ class TestReporter {
 
     if (this.failOnError && isFailed) {
       core.setFailed(`Failed test has been found and 'fail-on-error' option is set to ${this.failOnError}`)
+      return
+    }
+
+    if (results.length === 0) {
+      core.setFailed(`No test results file has been processed`)
+      return
     }
   }
 
