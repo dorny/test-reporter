@@ -33,16 +33,3 @@ jobs:
           name: JEST Tests
           path: __tests__/__results__/*.xml
           reporter: jest-junit
-
-  artifact-test:
-    name: Artifact test
-    runs-on: ubuntu-latest
-    needs: build-test
-    steps:
-    - uses: actions/checkout@v2
-    - uses: ./
-      with:
-        artifact: test-results
-        name: Artifact Report
-        path: '*.xml'
-        reporter: jest-junit
