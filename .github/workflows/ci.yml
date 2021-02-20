@@ -1,9 +1,9 @@
 name: 'CI'
 on:
   pull_request:
-    paths-ignore: [ 'README.md' ]
+    paths-ignore: [ '*.md' ]
   push:
-    paths-ignore: [ 'README.md' ]
+    paths-ignore: [ '*.md' ]
     branches:
       - main
   workflow_dispatch:
