@@ -54,8 +54,8 @@ jobs:
 
 Workflows triggered by pull requests from forked repositories are executed with read-only token and therefore can't create check runs.
 To workaround this security restriction it's required to use two separate workflows:
-- `CI` runs in the context of PR head branch with read-only token. It executes the tests and uploads test results as build artifact
-- `Test Report` runs in the context of repository main branch with read/write token. It will download test results and create reports
+1. `CI` runs in the context of PR head branch with read-only token. It executes the tests and uploads test results as build artifact
+2. `Test Report` runs in the context of repository main branch with read/write token. It will download test results and create reports
 
 **PR head branch:**  *.github/workflows/ci.yml*
 ```yaml
@@ -70,6 +70,7 @@ jobs:
       - run: npm ci                       # install packages
       - run: npm test                     # run tests (configured to use jest-junit reporter)
       - uses: actions/upload-artifact@v2  # upload test results
+        if: success() || failure()        # run this step even if previous step failed
         with:
           name: test-results
           path: jest-junit.xml
