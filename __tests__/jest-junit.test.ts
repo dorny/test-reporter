@@ -46,7 +46,7 @@ describe('jest-junit tests', () => {
     const result = await parser.parse(filePath, fileContent)
     expect(result).toMatchSnapshot()
 
-    const report = getReport([result], {listTests: 'failed'})
+    const report = getReport([result])
     fs.mkdirSync(path.dirname(outputPath), {recursive: true})
     fs.writeFileSync(outputPath, report)
   })
