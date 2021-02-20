@@ -4,38 +4,58 @@ import {Align, formatTime, Icon, link, table} from '../utils/markdown-utils'
 import {slug} from '../utils/slugger'
 
 export interface ReportOptions {
-  listSuites?: 'all' | 'failed'
-  listTests?: 'all' | 'failed' | 'none'
+  listSuites: 'all' | 'failed'
+  listTests: 'all' | 'failed' | 'none'
 }
 
-export function getReport(results: TestRunResult[], options: ReportOptions = {}): string {
+const defaultOptions: ReportOptions = {
+  listSuites: 'all',
+  listTests: 'all'
+}
+
+export function getReport(results: TestRunResult[], options: ReportOptions = defaultOptions): string {
   core.info('Generating check run summary')
 
   const maxReportLength = 65535
-  const sections: string[] = []
-
   applySort(results)
 
-  const badge = getReportBadge(results)
-  sections.push(badge)
-
-  const runs = getTestRunsReport(results, options)
-  sections.push(...runs)
-
-  const report = sections.join('\n')
-  if (report.length > maxReportLength) {
-    let msg = `**Check Run summary limit of ${maxReportLength} chars was exceed**`
-    if (options.listTests !== 'all') {
-      msg += '\n- Consider setting `list-tests` option to `only-failed` or `none`'
-    }
-    if (options.listSuites !== 'all') {
-      msg += '\n- Consider setting `list-suites` option to `only-failed`'
-    }
-
-    return `${badge}\n${msg}`
+  const opts = {...options}
+  let report = renderReport(results, opts)
+  if (getByteLength(report) <= maxReportLength) {
+    return report
   }
 
-  return report
+  if (opts.listTests === 'all') {
+    core.info("Test report summary is too big - setting 'listTests' to 'failed'")
+    opts.listTests = 'failed'
+    report = renderReport(results, opts)
+    if (getByteLength(report) <= maxReportLength) {
+      return report
+    }
+  }
+
+  if (opts.listSuites === 'all') {
+    core.info("Test report summary is too big - setting 'listSuites' to 'failed'")
+    opts.listSuites = 'failed'
+    report = renderReport(results, opts)
+    if (getByteLength(report) <= maxReportLength) {
+      return report
+    }
+  }
+
+  if (opts.listTests !== 'none') {
+    core.info("Test report summary is too big - setting 'listTests' to 'none'")
+    opts.listTests = 'none'
+    report = renderReport(results, opts)
+    if (getByteLength(report) <= maxReportLength) {
+      return report
+    }
+  }
+
+  core.warning(`Test report summary exceeded limit of ${maxReportLength} bytes`)
+  const badge = getReportBadge(results)
+  const msg = `**Test report summary exceeded limit of ${maxReportLength} bytes and was removed**`
+  return `${badge}\n${msg}`
 }
 
 function applySort(results: TestRunResult[]): void {
@@ -43,6 +63,21 @@ function applySort(results: TestRunResult[]): void {
   for (const res of results) {
     res.suites.sort((a, b) => a.name.localeCompare(b.name))
   }
+}
+
+function getByteLength(text: string): number {
+  return Buffer.byteLength(text, 'utf8')
+}
+
+function renderReport(results: TestRunResult[], options: ReportOptions): string {
+  const sections: string[] = []
+  const badge = getReportBadge(results)
+  sections.push(badge)
+
+  const runs = getTestRunsReport(results, options)
+  sections.push(...runs)
+
+  return sections.join('\n')
 }
 
 function getReportBadge(results: TestRunResult[]): string {

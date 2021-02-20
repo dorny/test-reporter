@@ -998,27 +998,47 @@ exports.getReport = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const markdown_utils_1 = __nccwpck_require__(6482);
 const slugger_1 = __nccwpck_require__(3328);
-function getReport(results, options = {}) {
+const defaultOptions = {
+    listSuites: 'all',
+    listTests: 'all'
+};
+function getReport(results, options = defaultOptions) {
     core.info('Generating check run summary');
     const maxReportLength = 65535;
-    const sections = [];
     applySort(results);
-    const badge = getReportBadge(results);
-    sections.push(badge);
-    const runs = getTestRunsReport(results, options);
-    sections.push(...runs);
-    const report = sections.join('\n');
-    if (report.length > maxReportLength) {
-        let msg = `**Check Run summary limit of ${maxReportLength} chars was exceed**`;
-        if (options.listTests !== 'all') {
-            msg += '\n- Consider setting `list-tests` option to `only-failed` or `none`';
-        }
-        if (options.listSuites !== 'all') {
-            msg += '\n- Consider setting `list-suites` option to `only-failed`';
-        }
-        return `${badge}\n${msg}`;
+    const opts = { ...options };
+    let report = renderReport(results, opts);
+    if (getByteLength(report) <= maxReportLength) {
+        return report;
     }
-    return report;
+    if (opts.listTests === 'all') {
+        core.info("Test report summary is too big - setting 'listTests' to 'failed'");
+        opts.listTests = 'failed';
+        report = renderReport(results, opts);
+        if (getByteLength(report) <= maxReportLength) {
+            return report;
+        }
+    }
+    if (opts.listSuites === 'all') {
+        core.info("Test report summary is too big - setting 'listSuites' to 'failed'");
+        opts.listSuites = 'failed';
+        report = renderReport(results, opts);
+        if (getByteLength(report) <= maxReportLength) {
+            return report;
+        }
+    }
+    if (opts.listTests !== 'none') {
+        core.info("Test report summary is too big - setting 'listTests' to 'none'");
+        opts.listTests = 'none';
+        report = renderReport(results, opts);
+        if (getByteLength(report) <= maxReportLength) {
+            return report;
+        }
+    }
+    core.warning(`Test report summary exceeded limit of ${maxReportLength} bytes`);
+    const badge = getReportBadge(results);
+    const msg = `**Test report summary exceeded limit of ${maxReportLength} bytes and was removed**`;
+    return `${badge}\n${msg}`;
 }
 exports.getReport = getReport;
 function applySort(results) {
@@ -1026,6 +1046,17 @@ function applySort(results) {
     for (const res of results) {
         res.suites.sort((a, b) => a.name.localeCompare(b.name));
     }
+}
+function getByteLength(text) {
+    return Buffer.byteLength(text, 'utf8');
+}
+function renderReport(results, options) {
+    const sections = [];
+    const badge = getReportBadge(results);
+    sections.push(badge);
+    const runs = getTestRunsReport(results, options);
+    sections.push(...runs);
+    return sections.join('\n');
 }
 function getReportBadge(results) {
     const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
