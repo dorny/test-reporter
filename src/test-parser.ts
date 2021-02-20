@@ -2,7 +2,7 @@ import {TestRunResult} from './test-results'
 
 export interface ParseOptions {
   parseErrors: boolean
-  workDir: string
+  workDir?: string
   trackedFiles: string[]
 }
 

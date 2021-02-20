@@ -8,7 +8,6 @@ This [Github Action](https://github.com/features/actions) displays test results 
 
 ✔️ Provides final `conclusion` and counts of `passed`, `failed` and `skipped` tests as output parameters
 
-
 **How it looks:**
 |![](assets/fluent-validation-report.png)|![](assets/provider-error-summary.png)|![](assets/provider-error-details.png)|![](assets/provider-groups.png)|
 |:--:|:--:|:--:|:--:|
@@ -21,15 +20,18 @@ This [Github Action](https://github.com/features/actions) displays test results 
 
 For more information see [Supported formats](#supported-formats) section.
 
-**Support is planned for:**
-- Java / [JUnit 5](https://junit.org/junit5/)
-
 Do you miss support for your favorite language or framework?
 Please create [Issue](https://github.com/dorny/test-reporter/issues/new) or contribute with PR.
 
 ## Example
 
+Following setup does not work in workflows triggered by pull request from forked repository.
+If that's fine for you, using this action is as simple as:
+
 ```yaml
+on:
+  pull_request:
+  push:
 jobs:
   build-test:
     name: Build & Test
@@ -44,8 +46,53 @@ jobs:
         if: success() || failure()    # run this step even if previous step failed
         with:
           name: JEST Tests            # Name of the check run which will be created
-          path: reports/jest-*.xml    # Path to test report
-          reporter: jest-junit        # Format of test report
+          path: reports/jest-*.xml    # Path to test results
+          reporter: jest-junit        # Format of test results
+```
+
+## Recommended setup for public repositories
+
+Workflows triggered by pull requests from forked repositories are executed with read-only token and therefore can't create check runs.
+To workaround this security restriction it's required to use two separate workflows:
+1. `CI` runs in the context of PR head branch with read-only token. It executes the tests and uploads test results as build artifact
+2. `Test Report` runs in the context of repository main branch with read/write token. It will download test results and create reports
+
+**PR head branch:**  *.github/workflows/ci.yml*
+```yaml
+name: 'CI'
+on:
+  pull_request:
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2         # checkout the repo
+      - run: npm ci                       # install packages
+      - run: npm test                     # run tests (configured to use jest-junit reporter)
+      - uses: actions/upload-artifact@v2  # upload test results
+        if: success() || failure()        # run this step even if previous step failed
+        with:
+          name: test-results
+          path: jest-junit.xml
+```
+**default branch:**  *.github/workflows/test-report.yml*
+```yaml
+name: 'Test Report'
+on:
+  workflow_run:
+    workflows: ['CI']                     # runs after CI workflow
+    types:
+      - completed
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: dorny/test-reporter@v1
+      with:
+        artifact: test-results            # artifact name
+        name: JEST Tests                  # Name of the check run which will be created
+        path: '*.xml'                     # Path to test results (inside artifact .zip)
+        reporter: jest-junit              # Format of test results
 ```
 
 ## Usage
@@ -54,15 +101,24 @@ jobs:
 - uses: dorny/test-reporter@v1
   with:
 
+    # Name or regex of artifact containing test results
+    # Regular expression must be enclosed in '/'.
+    # Values from captured groups will replace occurrences of $N in report name.
+    # Example:
+    #   artifact: /test-results-(.*)/
+    #   name: 'Test report $1'
+    #   -> Artifact 'test-result-ubuntu' would create report 'Test report ubuntu'
+    artifact: ''
+
     # Name of the Check Run which will be created
     name: ''
 
-    # Coma separated list of paths to test reports
+    # Coma separated list of paths to test results
     # Supports wildcards via [fast-glob](https://github.com/mrmlnc/fast-glob)
     # All matched result files must be of same format
     path: ''
 
-    # Format of test report. Supported options:
+    # Format of test results. Supported options:
     #   dart-json
     #   dotnet-trx
     #   flutter-json

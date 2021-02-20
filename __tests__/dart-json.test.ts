@@ -4,14 +4,14 @@ import * as path from 'path'
 import {DartJsonParser} from '../src/parsers/dart-json/dart-json-parser'
 import {ParseOptions} from '../src/test-parser'
 import {getReport} from '../src/report/get-report'
-import {normalizeFilePath} from '../src/utils/file-utils'
+import {normalizeFilePath} from '../src/utils/path-utils'
 
 describe('dart-json tests', () => {
   it('matches report snapshot', async () => {
     const opts: ParseOptions = {
       parseErrors: true,
-      trackedFiles: ['lib/main.dart', 'test/main_test.dart', 'test/second_test.dart'],
-      workDir: 'C:/Users/Michal/Workspace/dorny/test-check/reports/dart/'
+      trackedFiles: ['lib/main.dart', 'test/main_test.dart', 'test/second_test.dart']
+      //workDir: 'C:/Users/Michal/Workspace/dorny/test-check/reports/dart/'
     }
 
     const fixturePath = path.join(__dirname, 'fixtures', 'dart-json.json')
@@ -38,8 +38,8 @@ describe('dart-json tests', () => {
     const trackedFiles = fs.readFileSync(trackedFilesPath, {encoding: 'utf8'}).split(/\n\r?/g)
     const opts: ParseOptions = {
       trackedFiles,
-      parseErrors: true,
-      workDir: '/__w/provider/provider/'
+      parseErrors: true
+      //workDir: '/__w/provider/provider/'
     }
 
     const parser = new DartJsonParser(opts, 'flutter')

@@ -1,6 +1,6 @@
 import {ParseOptions, TestParser} from '../../test-parser'
 
-import {normalizeFilePath} from '../../utils/file-utils'
+import {getBasePath, normalizeFilePath} from '../../utils/path-utils'
 
 import {
   ReportEvent,
@@ -72,6 +72,8 @@ class TestCase {
 }
 
 export class DartJsonParser implements TestParser {
+  assumedWorkDir: string | undefined
+
   constructor(readonly options: ParseOptions, readonly sdk: 'dart' | 'flutter') {}
 
   async parse(path: string, content: string): Promise<TestRunResult> {
@@ -207,14 +209,24 @@ export class DartJsonParser implements TestParser {
   }
 
   private getRelativePath(path: string): string {
-    const {workDir} = this.options
     const prefix = 'file://'
     if (path.startsWith(prefix)) {
       path = path.substr(prefix.length)
     }
-    if (path.startsWith(workDir)) {
+
+    path = normalizeFilePath(path)
+    const workDir = this.getWorkDir(path)
+    if (workDir !== undefined && path.startsWith(workDir)) {
       path = path.substr(workDir.length)
     }
-    return normalizeFilePath(path)
+    return path
+  }
+
+  private getWorkDir(path: string): string | undefined {
+    return (
+      this.options.workDir ??
+      this.assumedWorkDir ??
+      (this.assumedWorkDir = getBasePath(path, this.options.trackedFiles))
+    )
   }
 }

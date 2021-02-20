@@ -3,18 +3,21 @@ description: |
   Displays test results directly in GitHub. Supports .NET (xUnit, NUnit, MSTest), Dart, Flutter and JavaScript (JEST).
 author: Michal Dorner <dorner.michal@gmail.com>
 inputs:
+  artifact:
+    description: Name or regex of artifact containing test results
+    required: false
   name:
     description: Name of the check run
     required: true
   path:
     description: |
-      Coma separated list of paths to test reports
+      Coma separated list of paths to test results
       Supports wildcards via [fast-glob](https://github.com/mrmlnc/fast-glob)
       All matched result files must be of same format
     required: true
   reporter:
     description: |
-      Format of test report. Supported options:
+      Format of test results. Supported options:
         - dart-json
         - dotnet-trx
         - flutter-json
