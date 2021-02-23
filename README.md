@@ -123,6 +123,7 @@ jobs:
     #   dotnet-trx
     #   flutter-json
     #   jest-junit
+    #   mocha-json
     reporter: ''
 
     # Limits which test suites are listed:

@@ -26,6 +26,15 @@ export class TestRunResult {
   get failedSuites(): TestSuiteResult[] {
     return this.suites.filter(s => s.result === 'failed')
   }
+
+  sort(deep: boolean): void {
+    this.suites.sort((a, b) => a.name.localeCompare(b.name))
+    if (deep) {
+      for (const suite of this.suites) {
+        suite.sort(deep)
+      }
+    }
+  }
 }
 
 export class TestSuiteResult {
@@ -55,6 +64,15 @@ export class TestSuiteResult {
   get failedGroups(): TestGroupResult[] {
     return this.groups.filter(grp => grp.result === 'failed')
   }
+
+  sort(deep: boolean): void {
+    this.groups.sort((a, b) => (a.name ?? '').localeCompare(b.name ?? ''))
+    if (deep) {
+      for (const grp of this.groups) {
+        grp.sort()
+      }
+    }
+  }
 }
 
 export class TestGroupResult {
@@ -79,6 +97,10 @@ export class TestGroupResult {
 
   get failedTests(): TestCaseResult[] {
     return this.tests.filter(tc => tc.result === 'failed')
+  }
+
+  sort(): void {
+    this.tests.sort((a, b) => a.name.localeCompare(b.name))
   }
 }
 

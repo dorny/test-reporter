@@ -1,0 +1,137 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mocha-json tests report from ./reports/mocha-json test results matches snapshot 1`] = `
+TestRunResult {
+  "path": "fixtures/mocha-json.json",
+  "suites": Array [
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": "Test 1",
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "Passing test",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+        TestGroupResult {
+          "name": "Test 1 Test 1.1",
+          "tests": Array [
+            TestCaseResult {
+              "error": Object {
+                "details": "Error: Some error
+    at Object.throwError (lib\\\\main.js:2:9)
+    at Context.<anonymous> (test\\\\main.test.js:15:11)
+    at processImmediate (internal/timers.js:461:21)",
+                "line": 2,
+                "message": "Some error",
+                "path": "lib/main.js",
+              },
+              "name": "Exception in target unit",
+              "result": "failed",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": Object {
+                "details": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+false !== true
+
+    at Context.<anonymous> (test\\\\main.test.js:11:14)
+    at processImmediate (internal/timers.js:461:21)",
+                "line": 11,
+                "message": "Expected values to be strictly equal:
+
+false !== true
+",
+                "path": "test/main.test.js",
+              },
+              "name": "Failing test",
+              "result": "failed",
+              "time": 1,
+            },
+          ],
+        },
+        TestGroupResult {
+          "name": "Test 2",
+          "tests": Array [
+            TestCaseResult {
+              "error": Object {
+                "details": "Error: Some error
+    at Context.<anonymous> (test\\\\main.test.js:22:11)
+    at processImmediate (internal/timers.js:461:21)",
+                "line": 22,
+                "message": "Some error",
+                "path": "test/main.test.js",
+              },
+              "name": "Exception in test",
+              "result": "failed",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "test/main.test.js",
+      "totalTime": undefined,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": null,
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "Skipped test",
+              "result": "skipped",
+              "time": undefined,
+            },
+            TestCaseResult {
+              "error": Object {
+                "details": "Error: Timeout of 1ms exceeded. For async tests and hooks, ensure \\"done()\\" is called; if returning a Promise, ensure it resolves. (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-reporter\\\\reports\\\\mocha\\\\test\\\\second.test.js)
+    at listOnTimeout (internal/timers.js:554:17)
+    at processTimers (internal/timers.js:497:7)",
+                "line": undefined,
+                "message": "Timeout of 1ms exceeded. For async tests and hooks, ensure \\"done()\\" is called; if returning a Promise, ensure it resolves. (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-reporter\\\\reports\\\\mocha\\\\test\\\\second.test.js)",
+                "path": undefined,
+              },
+              "name": "Timeout test",
+              "result": "failed",
+              "time": 10,
+            },
+          ],
+        },
+      ],
+      "name": "test/second.test.js",
+      "totalTime": undefined,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": "Array #indexOf()",
+          "tests": Array [
+            TestCaseResult {
+              "error": Object {
+                "details": "AssertionError [ERR_ASSERTION]: 2 == -1
+    at Context.<anonymous> (test\\\\test.js:5:14)
+    at processImmediate (internal/timers.js:461:21)",
+                "line": undefined,
+                "message": "2 == -1",
+                "path": undefined,
+              },
+              "name": "should return -1 when the value is not present",
+              "result": "failed",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "test/test.js",
+      "totalTime": undefined,
+    },
+  ],
+  "totalTime": 14,
+}
+`;

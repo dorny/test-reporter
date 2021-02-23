@@ -2,6 +2,7 @@ import {ParseOptions, TestParser} from '../../test-parser'
 import {parseStringPromise} from 'xml2js'
 
 import {JunitReport, TestCase, TestSuite} from './jest-junit-types'
+import {getExceptionSource} from '../../utils/node-utils'
 import {getBasePath, normalizeFilePath} from '../../utils/path-utils'
 
 import {
@@ -81,7 +82,7 @@ export class JestJunitParser implements TestParser {
     let path
     let line
 
-    const src = this.exceptionThrowSource(details)
+    const src = getExceptionSource(details, this.options.trackedFiles, file => this.getRelativePath(file))
     if (src) {
       path = src.path
       line = src.line
@@ -94,31 +95,13 @@ export class JestJunitParser implements TestParser {
     }
   }
 
-  private exceptionThrowSource(stackTrace: string): {path: string; line: number} | undefined {
-    const lines = stackTrace.split(/\r?\n/)
-    const re = /\((.*):(\d+):\d+\)$/
-
-    const {trackedFiles} = this.options
-    for (const str of lines) {
-      const match = str.match(re)
-      if (match !== null) {
-        const [_, fileStr, lineStr] = match
-        const filePath = normalizeFilePath(fileStr)
-        if (filePath.startsWith('internal/') || filePath.includes('/node_modules/')) {
-          continue
-        }
-        const workDir = this.getWorkDir(filePath)
-        if (!workDir) {
-          continue
-        }
-        const path = filePath.substr(workDir.length)
-        if (trackedFiles.includes(path)) {
-          const line = parseInt(lineStr)
-
-          return {path, line}
-        }
-      }
+  private getRelativePath(path: string): string {
+    path = normalizeFilePath(path)
+    const workDir = this.getWorkDir(path)
+    if (workDir !== undefined && path.startsWith(workDir)) {
+      path = path.substr(workDir.length)
     }
+    return path
   }
 
   private getWorkDir(path: string): string | undefined {

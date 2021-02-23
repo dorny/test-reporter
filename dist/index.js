@@ -220,6 +220,7 @@ const get_report_1 = __nccwpck_require__(3737);
 const dart_json_parser_1 = __nccwpck_require__(4528);
 const dotnet_trx_parser_1 = __nccwpck_require__(2664);
 const jest_junit_parser_1 = __nccwpck_require__(1113);
+const mocha_json_parser_1 = __nccwpck_require__(6043);
 const path_utils_1 = __nccwpck_require__(4070);
 const github_utils_1 = __nccwpck_require__(3522);
 const markdown_utils_1 = __nccwpck_require__(6482);
@@ -359,6 +360,8 @@ class TestReporter {
                 return new dart_json_parser_1.DartJsonParser(options, 'flutter');
             case 'jest-junit':
                 return new jest_junit_parser_1.JestJunitParser(options);
+            case 'mocha-json':
+                return new mocha_json_parser_1.MochaJsonParser(options);
             default:
                 throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`);
         }
@@ -657,6 +660,7 @@ class DotnetTrxParser {
         const trx = await this.getTrxReport(path, content);
         const tc = this.getTestClasses(trx);
         const tr = this.getTestRunResult(path, trx, tc);
+        tr.sort(true);
         return tr;
     }
     async getTrxReport(path, content) {
@@ -693,10 +697,6 @@ class DotnetTrxParser {
             tc.tests.push(test);
         }
         const result = Object.values(testClasses);
-        result.sort((a, b) => a.name.localeCompare(b.name));
-        for (const tc of result) {
-            tc.tests.sort((a, b) => a.name.localeCompare(b.name));
-        }
         return result;
     }
     getTestRunResult(path, trx, testClasses) {
@@ -770,6 +770,7 @@ exports.DotnetTrxParser = DotnetTrxParser;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.JestJunitParser = void 0;
 const xml2js_1 = __nccwpck_require__(6189);
+const node_utils_1 = __nccwpck_require__(5824);
 const path_utils_1 = __nccwpck_require__(4070);
 const test_results_1 = __nccwpck_require__(2768);
 class JestJunitParser {
@@ -833,7 +834,7 @@ class JestJunitParser {
         const details = tc.failure[0];
         let path;
         let line;
-        const src = this.exceptionThrowSource(details);
+        const src = node_utils_1.getExceptionSource(details, this.options.trackedFiles, file => this.getRelativePath(file));
         if (src) {
             path = src.path;
             line = src.line;
@@ -844,29 +845,13 @@ class JestJunitParser {
             details
         };
     }
-    exceptionThrowSource(stackTrace) {
-        const lines = stackTrace.split(/\r?\n/);
-        const re = /\((.*):(\d+):\d+\)$/;
-        const { trackedFiles } = this.options;
-        for (const str of lines) {
-            const match = str.match(re);
-            if (match !== null) {
-                const [_, fileStr, lineStr] = match;
-                const filePath = path_utils_1.normalizeFilePath(fileStr);
-                if (filePath.startsWith('internal/') || filePath.includes('/node_modules/')) {
-                    continue;
-                }
-                const workDir = this.getWorkDir(filePath);
-                if (!workDir) {
-                    continue;
-                }
-                const path = filePath.substr(workDir.length);
-                if (trackedFiles.includes(path)) {
-                    const line = parseInt(lineStr);
-                    return { path, line };
-                }
-            }
+    getRelativePath(path) {
+        path = path_utils_1.normalizeFilePath(path);
+        const workDir = this.getWorkDir(path);
+        if (workDir !== undefined && path.startsWith(workDir)) {
+            path = path.substr(workDir.length);
         }
+        return path;
     }
     getWorkDir(path) {
         var _a, _b;
@@ -874,6 +859,107 @@ class JestJunitParser {
     }
 }
 exports.JestJunitParser = JestJunitParser;
+
+
+/***/ }),
+
+/***/ 6043:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.MochaJsonParser = void 0;
+const test_results_1 = __nccwpck_require__(2768);
+const node_utils_1 = __nccwpck_require__(5824);
+const path_utils_1 = __nccwpck_require__(4070);
+class MochaJsonParser {
+    constructor(options) {
+        this.options = options;
+    }
+    async parse(path, content) {
+        const mocha = this.getMochaJson(path, content);
+        const result = this.getTestRunResult(path, mocha);
+        result.sort(true);
+        return Promise.resolve(result);
+    }
+    getMochaJson(path, content) {
+        try {
+            return JSON.parse(content);
+        }
+        catch (e) {
+            throw new Error(`Invalid JSON at ${path}\n\n${e}`);
+        }
+    }
+    getTestRunResult(resultsPath, mocha) {
+        const suitesMap = {};
+        const getSuite = (test) => {
+            var _a;
+            const path = this.getRelativePath(test.file);
+            return (_a = suitesMap[path]) !== null && _a !== void 0 ? _a : (suitesMap[path] = new test_results_1.TestSuiteResult(path, []));
+        };
+        for (const test of mocha.passes) {
+            const suite = getSuite(test);
+            this.processTest(suite, test, 'success');
+        }
+        for (const test of mocha.failures) {
+            const suite = getSuite(test);
+            this.processTest(suite, test, 'failed');
+        }
+        for (const test of mocha.pending) {
+            const suite = getSuite(test);
+            this.processTest(suite, test, 'skipped');
+        }
+        const suites = Object.values(suitesMap);
+        return new test_results_1.TestRunResult(resultsPath, suites, mocha.stats.duration);
+    }
+    processTest(suite, test, result) {
+        const groupName = test.fullTitle !== test.title
+            ? test.fullTitle.substr(0, test.fullTitle.length - test.title.length).trimEnd()
+            : null;
+        let group = suite.groups.find(grp => grp.name === groupName);
+        if (group === undefined) {
+            group = new test_results_1.TestGroupResult(groupName, []);
+            suite.groups.push(group);
+        }
+        const error = this.getTestCaseError(test);
+        const testCase = new test_results_1.TestCaseResult(test.title, result, test.duration, error);
+        group.tests.push(testCase);
+    }
+    getTestCaseError(test) {
+        const details = test.err.stack;
+        const message = test.err.message;
+        if (details === undefined) {
+            return undefined;
+        }
+        let path;
+        let line;
+        const src = node_utils_1.getExceptionSource(details, this.options.trackedFiles, file => this.getRelativePath(file));
+        if (src) {
+            path = src.path;
+            line = src.line;
+        }
+        return {
+            path,
+            line,
+            message,
+            details
+        };
+    }
+    getRelativePath(path) {
+        path = path_utils_1.normalizeFilePath(path);
+        const workDir = this.getWorkDir(path);
+        if (workDir !== undefined && path.startsWith(workDir)) {
+            path = path.substr(workDir.length);
+        }
+        return path;
+    }
+    getWorkDir(path) {
+        var _a, _b;
+        return ((_b = (_a = this.options.workDir) !== null && _a !== void 0 ? _a : this.assumedWorkDir) !== null && _b !== void 0 ? _b : (this.assumedWorkDir = path_utils_1.getBasePath(path, this.options.trackedFiles)));
+    }
+}
+exports.MochaJsonParser = MochaJsonParser;
 
 
 /***/ }),
@@ -1228,6 +1314,14 @@ class TestRunResult {
     get failedSuites() {
         return this.suites.filter(s => s.result === 'failed');
     }
+    sort(deep) {
+        this.suites.sort((a, b) => a.name.localeCompare(b.name));
+        if (deep) {
+            for (const suite of this.suites) {
+                suite.sort(deep);
+            }
+        }
+    }
 }
 exports.TestRunResult = TestRunResult;
 class TestSuiteResult {
@@ -1258,6 +1352,14 @@ class TestSuiteResult {
     get failedGroups() {
         return this.groups.filter(grp => grp.result === 'failed');
     }
+    sort(deep) {
+        this.groups.sort((a, b) => { var _a, _b; return ((_a = a.name) !== null && _a !== void 0 ? _a : '').localeCompare((_b = b.name) !== null && _b !== void 0 ? _b : ''); });
+        if (deep) {
+            for (const grp of this.groups) {
+                grp.sort();
+            }
+        }
+    }
 }
 exports.TestSuiteResult = TestSuiteResult;
 class TestGroupResult {
@@ -1282,6 +1384,9 @@ class TestGroupResult {
     }
     get failedTests() {
         return this.tests.filter(tc => tc.result === 'failed');
+    }
+    sort() {
+        this.tests.sort((a, b) => a.name.localeCompare(b.name));
     }
 }
 exports.TestGroupResult = TestGroupResult;
@@ -1564,6 +1669,41 @@ function formatTime(ms) {
     return `${Math.round(ms)}ms`;
 }
 exports.formatTime = formatTime;
+
+
+/***/ }),
+
+/***/ 5824:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getExceptionSource = void 0;
+const path_utils_1 = __nccwpck_require__(4070);
+function getExceptionSource(stackTrace, trackedFiles, getRelativePath) {
+    const lines = stackTrace.split(/\r?\n/);
+    const re = /\((.*):(\d+):\d+\)$/;
+    for (const str of lines) {
+        const match = str.match(re);
+        if (match !== null) {
+            const [_, fileStr, lineStr] = match;
+            const filePath = path_utils_1.normalizeFilePath(fileStr);
+            if (filePath.startsWith('internal/') || filePath.includes('/node_modules/')) {
+                continue;
+            }
+            const path = getRelativePath(filePath);
+            if (!path) {
+                continue;
+            }
+            if (trackedFiles.includes(path)) {
+                const line = parseInt(lineStr);
+                return { path, line };
+            }
+        }
+    }
+}
+exports.getExceptionSource = getExceptionSource;
 
 
 /***/ }),
