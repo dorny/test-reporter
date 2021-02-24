@@ -914,6 +914,7 @@ class MochaJsonParser {
         return new test_results_1.TestRunResult(resultsPath, suites, mocha.stats.duration);
     }
     processTest(suite, test, result) {
+        var _a;
         const groupName = test.fullTitle !== test.title
             ? test.fullTitle.substr(0, test.fullTitle.length - test.title.length).trimEnd()
             : null;
@@ -923,7 +924,7 @@ class MochaJsonParser {
             suite.groups.push(group);
         }
         const error = this.getTestCaseError(test);
-        const testCase = new test_results_1.TestCaseResult(test.title, result, test.duration, error);
+        const testCase = new test_results_1.TestCaseResult(test.title, result, (_a = test.duration) !== null && _a !== void 0 ? _a : 0, error);
         group.tests.push(testCase);
     }
     getTestCaseError(test) {
@@ -1001,7 +1002,7 @@ function getAnnotations(results, maxCount) {
                     errors.push({
                         testRunPaths: [tr.path],
                         suiteName: ts.name,
-                        testName: tc.name,
+                        testName: tg.name ? `${tg.name} ► ${tc.name}` : tc.name,
                         details: err.details,
                         message: (_d = (_c = err.message) !== null && _c !== void 0 ? _c : getFirstNonEmptyLine(err.details)) !== null && _d !== void 0 ? _d : 'Test failed',
                         path,
