@@ -21,6 +21,7 @@ jobs:
       - run: npm test
 
       - name: Upload test results
+        if: success() || failure()
         uses: actions/upload-artifact@v2
         with:
           name: test-results
