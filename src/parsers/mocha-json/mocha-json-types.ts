@@ -13,7 +13,7 @@ export interface MochaJsonTest {
   title: string
   fullTitle: string
   file: string
-  duration: number
+  duration?: number
   err: MochaJsonTestError
 }
 

@@ -71,7 +71,7 @@ export class MochaJsonParser implements TestParser {
     }
 
     const error = this.getTestCaseError(test)
-    const testCase = new TestCaseResult(test.title, result, test.duration, error)
+    const testCase = new TestCaseResult(test.title, result, test.duration ?? 0, error)
     group.tests.push(testCase)
   }
 

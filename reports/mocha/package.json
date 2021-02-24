@@ -4,8 +4,7 @@
   "private": true,
   "description": "Generates test fixtures for test-reporter action",
   "scripts": {
-    "test-json": "mocha --reporter json > ../../__tests__/fixtures/mocha-json.json",
-    "test": "mocha"
+    "test": "mocha --reporter json > ../../__tests__/fixtures/mocha-json.json"
   },
   "author": "Michal Dorner <dorner.michal@gmail.com>",
   "license": "MIT",

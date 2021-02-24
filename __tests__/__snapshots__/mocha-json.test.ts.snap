@@ -86,7 +86,7 @@ false !== true
               "error": undefined,
               "name": "Skipped test",
               "result": "skipped",
-              "time": undefined,
+              "time": 0,
             },
             TestCaseResult {
               "error": Object {
@@ -99,7 +99,7 @@ false !== true
               },
               "name": "Timeout test",
               "result": "failed",
-              "time": 10,
+              "time": 8,
             },
           ],
         },
@@ -107,31 +107,7 @@ false !== true
       "name": "test/second.test.js",
       "totalTime": undefined,
     },
-    TestSuiteResult {
-      "groups": Array [
-        TestGroupResult {
-          "name": "Array #indexOf()",
-          "tests": Array [
-            TestCaseResult {
-              "error": Object {
-                "details": "AssertionError [ERR_ASSERTION]: 2 == -1
-    at Context.<anonymous> (test\\\\test.js:5:14)
-    at processImmediate (internal/timers.js:461:21)",
-                "line": undefined,
-                "message": "2 == -1",
-                "path": undefined,
-              },
-              "name": "should return -1 when the value is not present",
-              "result": "failed",
-              "time": 0,
-            },
-          ],
-        },
-      ],
-      "name": "test/test.js",
-      "totalTime": undefined,
-    },
   ],
-  "totalTime": 14,
+  "totalTime": 12,
 }
 `;
