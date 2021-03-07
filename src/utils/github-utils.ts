@@ -97,19 +97,29 @@ export async function listFiles(octokit: InstanceType<typeof GitHub>, sha: strin
 }
 
 async function listGitTree(octokit: InstanceType<typeof GitHub>, sha: string, path: string): Promise<string[]> {
-  const tree = await octokit.git.getTree({
+  let truncated = false
+  let tree = await octokit.git.getTree({
+    recursive: 'true',
     tree_sha: sha,
     ...github.context.repo
   })
 
+  if (tree.data.truncated) {
+    truncated = true
+    tree = await octokit.git.getTree({
+      tree_sha: sha,
+      ...github.context.repo
+    })
+  }
+
   const result: string[] = []
   for (const tr of tree.data.tree) {
     const file = `${path}${tr.path}`
-    if (tr.type === 'tree') {
+    if (tr.type === 'blob') {
+      result.push(file)
+    } else if (tr.type === 'tree' && truncated) {
       const files = await listGitTree(octokit, tr.sha, `${file}/`)
       result.push(...files)
-    } else {
-      result.push(file)
     }
   }
 
