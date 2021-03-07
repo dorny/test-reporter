@@ -2,6 +2,10 @@ export interface JunitReport {
   testsuites: TestSuites
 }
 
+export interface SingleSuiteReport {
+  testsuite: TestSuite
+}
+
 export interface TestSuites {
   $: {
     time: string
@@ -29,6 +33,12 @@ export interface TestCase {
     name: string
     time: string
   }
-  failure?: string[]
+  failure?: Failure[]
   skipped?: string[]
+}
+
+export interface Failure {
+  _: string
+  type: string
+  message: string
 }

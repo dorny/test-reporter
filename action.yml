@@ -21,6 +21,7 @@ inputs:
         - dart-json
         - dotnet-trx
         - flutter-json
+        - java-junit
         - jest-junit
     required: true
   list-suites:

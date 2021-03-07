@@ -17,6 +17,7 @@ This [Github Action](https://github.com/features/actions) displays test results 
 - Dart / [test](https://pub.dev/packages/test)
 - Flutter / [test](https://pub.dev/packages/test)
 - JavaScript / [JEST](https://jestjs.io/)
+- Java / [jUnit](https://junit.org/)
 
 For more information see [Supported formats](#supported-formats) section.
 
@@ -122,6 +123,7 @@ jobs:
     #   dart-json
     #   dotnet-trx
     #   flutter-json
+    #   java-junit
     #   jest-junit
     reporter: ''
 
@@ -231,6 +233,15 @@ For more information see:
 - [flutter-cli](https://flutter.dev/docs/reference/flutter-cli)
 - [unit testing introduction](https://flutter.dev/docs/cookbook/testing/unit/introduction)
 
+</details>
+
+<details>
+  <summary>java-junit (Experimental)</summary>
+
+Support for [jUnit](https://junit.org/) XML is experimental - should work but it was not extensively tested.
+To have code annotations working properly it's required your directory structure matches package name.
+This is due to the fact Java stacktraces doesn't contains full path to the source file.
+Some heuristic was necessary to figure out mapping between line in stack trace and actual source file.
 </details>
 
 <details>
