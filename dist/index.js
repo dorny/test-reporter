@@ -1480,16 +1480,23 @@ async function downloadArtifact(octokit, artifactId, fileName, token) {
 }
 exports.downloadArtifact = downloadArtifact;
 async function listFiles(octokit, sha) {
-    core.info('Fetching list of tracked files from GitHub');
-    const commit = await octokit.git.getCommit({
-        commit_sha: sha,
-        ...github.context.repo
-    });
-    const files = await listGitTree(octokit, commit.data.tree.sha, '');
-    return files;
+    core.startGroup('Fetching list of tracked files from GitHub');
+    try {
+        const commit = await octokit.git.getCommit({
+            commit_sha: sha,
+            ...github.context.repo
+        });
+        const files = await listGitTree(octokit, commit.data.tree.sha, '');
+        return files;
+    }
+    finally {
+        core.endGroup();
+    }
 }
 exports.listFiles = listFiles;
 async function listGitTree(octokit, sha, path) {
+    const pathLog = path ? ` at ${path}` : '';
+    core.info(`Fetching tree ${sha}${pathLog}`);
     let truncated = false;
     let tree = await octokit.git.getTree({
         recursive: 'true',
