@@ -4,8 +4,8 @@ export interface TrxReport {
 
 export interface TestRun {
   Times: Times[]
-  Results: Results[]
-  TestDefinitions: TestDefinitions[]
+  Results?: Results[]
+  TestDefinitions?: TestDefinitions[]
 }
 
 export interface Times {

@@ -7,6 +7,22 @@ import {getReport} from '../src/report/get-report'
 import {normalizeFilePath} from '../src/utils/path-utils'
 
 describe('dart-json tests', () => {
+  it('produces empty test run result when there are no test cases', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'empty', 'dart-json.json')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: []
+    }
+
+    const parser = new DartJsonParser(opts, 'dart')
+    const result = await parser.parse(filePath, fileContent)
+    expect(result.tests).toBe(0)
+    expect(result.result).toBe('success')
+  })
+
   it('matches report snapshot', async () => {
     const opts: ParseOptions = {
       parseErrors: true,
