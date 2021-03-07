@@ -1420,9 +1420,6 @@ function getCheckRunContext() {
         if (!event.workflow_run) {
             throw new Error("Event of type 'workflow_run' is missing 'workflow_run' field");
         }
-        if (event.workflow_run.conclusion === 'cancelled') {
-            throw new Error(`Workflow run ${event.workflow_run.id} has been cancelled`);
-        }
         return {
             sha: event.workflow_run.head_commit.id,
             runId: event.workflow_run.id
@@ -1480,29 +1477,45 @@ async function downloadArtifact(octokit, artifactId, fileName, token) {
 }
 exports.downloadArtifact = downloadArtifact;
 async function listFiles(octokit, sha) {
-    core.info('Fetching list of tracked files from GitHub');
-    const commit = await octokit.git.getCommit({
-        commit_sha: sha,
-        ...github.context.repo
-    });
-    const files = await listGitTree(octokit, commit.data.tree.sha, '');
-    return files;
+    core.startGroup('Fetching list of tracked files from GitHub');
+    try {
+        const commit = await octokit.git.getCommit({
+            commit_sha: sha,
+            ...github.context.repo
+        });
+        const files = await listGitTree(octokit, commit.data.tree.sha, '');
+        return files;
+    }
+    finally {
+        core.endGroup();
+    }
 }
 exports.listFiles = listFiles;
 async function listGitTree(octokit, sha, path) {
-    const tree = await octokit.git.getTree({
+    const pathLog = path ? ` at ${path}` : '';
+    core.info(`Fetching tree ${sha}${pathLog}`);
+    let truncated = false;
+    let tree = await octokit.git.getTree({
+        recursive: 'true',
         tree_sha: sha,
         ...github.context.repo
     });
+    if (tree.data.truncated) {
+        truncated = true;
+        tree = await octokit.git.getTree({
+            tree_sha: sha,
+            ...github.context.repo
+        });
+    }
     const result = [];
     for (const tr of tree.data.tree) {
         const file = `${path}${tr.path}`;
-        if (tr.type === 'tree') {
+        if (tr.type === 'blob') {
+            result.push(file);
+        }
+        else if (tr.type === 'tree' && truncated) {
             const files = await listGitTree(octokit, tr.sha, `${file}/`);
             result.push(...files);
-        }
-        else {
-            result.push(file);
         }
     }
     return result;
