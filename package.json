@@ -32,7 +32,7 @@
     "@actions/core": "^1.2.6",
     "@actions/exec": "^1.0.4",
     "@actions/github": "^4.0.0",
-    "adm-zip": "^0.5.2",
+    "adm-zip": "^0.5.3",
     "fast-glob": "^3.2.5",
     "got": "^11.8.1",
     "picomatch": "^2.2.2",
