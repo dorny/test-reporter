@@ -17,6 +17,7 @@ This [Github Action](https://github.com/features/actions) displays test results 
 - Dart / [test](https://pub.dev/packages/test)
 - Flutter / [test](https://pub.dev/packages/test)
 - JavaScript / [JEST](https://jestjs.io/)
+- Java / [JUnit](https://junit.org/)
 
 For more information see [Supported formats](#supported-formats) section.
 
@@ -122,6 +123,7 @@ jobs:
     #   dart-json
     #   dotnet-trx
     #   flutter-json
+    #   java-junit
     #   jest-junit
     reporter: ''
 
@@ -234,14 +236,23 @@ For more information see:
 </details>
 
 <details>
-  <summary>jest-junit</summary>
+  <summary>java-junit (Experimental)</summary>
 
-[JEST](https://jestjs.io/) testing framework support requires usage of [jest-junit](https://github.com/jest-community/jest-junit) reporter.
-It will create test results in junit XML format which can be then processed by this action.
+Support for [JUnit](https://Junit.org/) XML is experimental - should work but it was not extensively tested.
+To have code annotations working properly it's required your directory structure matches package name.
+This is due to the fact Java stacktraces doesn't contains full path to the source file.
+Some heuristic was necessary to figure out mapping between line in stack trace and actual source file.
+</details>
+
+<details>
+  <summary>jest-Junit</summary>
+
+[JEST](https://jestjs.io/) testing framework support requires usage of [jest-Junit](https://github.com/jest-community/jest-Junit) reporter.
+It will create test results in Junit XML format which can be then processed by this action.
 You can use following example configuration in `package.json`:
 ```json
 "scripts": {
-  "test": "jest --ci --reporters=default --reporters=jest-junit"
+  "test": "jest --ci --reporters=default --reporters=jest-Junit"
 },
 "devDependencies": {
   "jest": "^26.5.3",

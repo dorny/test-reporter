@@ -219,6 +219,7 @@ const get_annotations_1 = __nccwpck_require__(5867);
 const get_report_1 = __nccwpck_require__(3737);
 const dart_json_parser_1 = __nccwpck_require__(4528);
 const dotnet_trx_parser_1 = __nccwpck_require__(2664);
+const java_junit_parser_1 = __nccwpck_require__(676);
 const jest_junit_parser_1 = __nccwpck_require__(1113);
 const path_utils_1 = __nccwpck_require__(4070);
 const github_utils_1 = __nccwpck_require__(3522);
@@ -357,6 +358,8 @@ class TestReporter {
                 return new dotnet_trx_parser_1.DotnetTrxParser(options);
             case 'flutter-json':
                 return new dart_json_parser_1.DartJsonParser(options, 'flutter');
+            case 'java-junit':
+                return new java_junit_parser_1.JavaJunitParser(options);
             case 'jest-junit':
                 return new jest_junit_parser_1.JestJunitParser(options);
             default:
@@ -761,6 +764,206 @@ class DotnetTrxParser {
     }
 }
 exports.DotnetTrxParser = DotnetTrxParser;
+
+
+/***/ }),
+
+/***/ 676:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.JavaJunitParser = void 0;
+const path = __importStar(__nccwpck_require__(5622));
+const xml2js_1 = __nccwpck_require__(6189);
+const path_utils_1 = __nccwpck_require__(4070);
+const test_results_1 = __nccwpck_require__(2768);
+class JavaJunitParser {
+    constructor(options) {
+        var _a;
+        this.options = options;
+        // Map to efficient lookup of all paths with given file name
+        this.trackedFiles = {};
+        for (const filePath of options.trackedFiles) {
+            const fileName = path.basename(filePath);
+            const files = (_a = this.trackedFiles[fileName]) !== null && _a !== void 0 ? _a : (this.trackedFiles[fileName] = []);
+            files.push(path_utils_1.normalizeFilePath(filePath));
+        }
+    }
+    async parse(filePath, content) {
+        const reportOrSuite = await this.getJunitReport(filePath, content);
+        const isReport = reportOrSuite.testsuites !== undefined;
+        // XML might contain:
+        // - multiple suites under <testsuites> root node
+        // - single <testsuite> as root node
+        let ju;
+        if (isReport) {
+            ju = reportOrSuite;
+        }
+        else {
+            // Make it behave the same way as if suite was inside <testsuites> root node
+            const suite = reportOrSuite.testsuite;
+            ju = {
+                testsuites: {
+                    $: { time: suite.$.time },
+                    testsuite: [suite]
+                }
+            };
+        }
+        return this.getTestRunResult(filePath, ju);
+    }
+    async getJunitReport(filePath, content) {
+        try {
+            return await xml2js_1.parseStringPromise(content);
+        }
+        catch (e) {
+            throw new Error(`Invalid XML at ${filePath}\n\n${e}`);
+        }
+    }
+    getTestRunResult(filePath, junit) {
+        const suites = junit.testsuites.testsuite === undefined
+            ? []
+            : junit.testsuites.testsuite.map(ts => {
+                const name = ts.$.name.trim();
+                const time = parseFloat(ts.$.time) * 1000;
+                const sr = new test_results_1.TestSuiteResult(name, this.getGroups(ts), time);
+                return sr;
+            });
+        const time = parseFloat(junit.testsuites.$.time) * 1000;
+        return new test_results_1.TestRunResult(filePath, suites, time);
+    }
+    getGroups(suite) {
+        if (suite.testcase === undefined) {
+            return [];
+        }
+        const groups = [];
+        for (const tc of suite.testcase) {
+            // Normally classname is same as suite name - both refer to same Java class
+            // Therefore it doesn't make sense to process it as a group
+            // and tests will be added to default group with empty name
+            const className = tc.$.classname === suite.$.name ? '' : tc.$.classname;
+            let grp = groups.find(g => g.name === className);
+            if (grp === undefined) {
+                grp = { name: className, tests: [] };
+                groups.push(grp);
+            }
+            grp.tests.push(tc);
+        }
+        return groups.map(grp => {
+            const tests = grp.tests.map(tc => {
+                const name = tc.$.name.trim();
+                const result = this.getTestCaseResult(tc);
+                const time = parseFloat(tc.$.time) * 1000;
+                const error = this.getTestCaseError(tc);
+                return new test_results_1.TestCaseResult(name, result, time, error);
+            });
+            return new test_results_1.TestGroupResult(grp.name, tests);
+        });
+    }
+    getTestCaseResult(test) {
+        if (test.failure)
+            return 'failed';
+        if (test.skipped)
+            return 'skipped';
+        return 'success';
+    }
+    getTestCaseError(tc) {
+        if (!this.options.parseErrors || !tc.failure) {
+            return undefined;
+        }
+        const failure = tc.failure[0];
+        const details = failure._;
+        let filePath;
+        let line;
+        const src = this.exceptionThrowSource(details);
+        if (src) {
+            filePath = src.filePath;
+            line = src.line;
+        }
+        return {
+            path: filePath,
+            line,
+            details,
+            message: failure.message
+        };
+    }
+    exceptionThrowSource(stackTrace) {
+        const lines = stackTrace.split(/\r?\n/);
+        const re = /^at (.*)\((.*):(\d+)\)$/;
+        for (const str of lines) {
+            const match = str.match(re);
+            if (match !== null) {
+                const [_, tracePath, fileName, lineStr] = match;
+                const filePath = this.getFilePath(tracePath, fileName);
+                if (filePath !== undefined) {
+                    const line = parseInt(lineStr);
+                    return { filePath, line };
+                }
+            }
+        }
+    }
+    // Stacktrace in Java doesn't contain full paths to source file.
+    // There are only package, file name and line.
+    // Assuming folder structure matches package name (as it should in Java),
+    // we can try to match tracked file.
+    getFilePath(tracePath, fileName) {
+        // Check if there is any tracked file with given name
+        const files = this.trackedFiles[fileName];
+        if (files === undefined) {
+            return undefined;
+        }
+        // Remove class name and method name from trace.
+        // Take parts until first item with capital letter - package names are lowercase while class name is CamelCase.
+        const packageParts = tracePath.split(/\./g);
+        const packageIndex = packageParts.findIndex(part => part[0] <= 'Z');
+        if (packageIndex !== -1) {
+            packageParts.splice(packageIndex, packageParts.length - packageIndex);
+        }
+        if (packageParts.length === 0) {
+            return undefined;
+        }
+        // Get right file
+        // - file name matches
+        // - parent folders structure must reflect the package name
+        for (const filePath of files) {
+            const dirs = path.dirname(filePath).split(/\//g);
+            if (packageParts.length > dirs.length) {
+                continue;
+            }
+            // get only N parent folders, where N = length of package name parts
+            if (dirs.length > packageParts.length) {
+                dirs.splice(0, dirs.length - packageParts.length);
+            }
+            // check if parent folder structure matches package name
+            const isMatch = packageParts.every((part, i) => part === dirs[i]);
+            if (isMatch) {
+                return filePath;
+            }
+        }
+        return undefined;
+    }
+}
+exports.JavaJunitParser = JavaJunitParser;
 
 
 /***/ }),
