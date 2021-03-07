@@ -7,6 +7,22 @@ import {getReport} from '../src/report/get-report'
 import {normalizeFilePath} from '../src/utils/path-utils'
 
 describe('dotnet-trx tests', () => {
+  it('produces empty test run result when there are no test cases', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'empty', 'dotnet-trx.trx')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: []
+    }
+
+    const parser = new DotnetTrxParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+    expect(result.tests).toBe(0)
+    expect(result.result).toBe('success')
+  })
+
   it('matches report snapshot', async () => {
     const fixturePath = path.join(__dirname, 'fixtures', 'dotnet-trx.trx')
     const outputPath = path.join(__dirname, '__outputs__', 'dotnet-trx.md')

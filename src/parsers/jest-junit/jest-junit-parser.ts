@@ -32,12 +32,15 @@ export class JestJunitParser implements TestParser {
   }
 
   private getTestRunResult(path: string, junit: JunitReport): TestRunResult {
-    const suites = junit.testsuites.testsuite.map(ts => {
-      const name = ts.$.name.trim()
-      const time = parseFloat(ts.$.time) * 1000
-      const sr = new TestSuiteResult(name, this.getGroups(ts), time)
-      return sr
-    })
+    const suites =
+      junit.testsuites.testsuite === undefined
+        ? []
+        : junit.testsuites.testsuite.map(ts => {
+            const name = ts.$.name.trim()
+            const time = parseFloat(ts.$.time) * 1000
+            const sr = new TestSuiteResult(name, this.getGroups(ts), time)
+            return sr
+          })
 
     const time = parseFloat(junit.testsuites.$.time) * 1000
     return new TestRunResult(path, suites, time)

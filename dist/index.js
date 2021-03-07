@@ -669,6 +669,9 @@ class DotnetTrxParser {
     }
     getTestClasses(trx) {
         var _a;
+        if (trx.TestRun.TestDefinitions === undefined || trx.TestRun.Results === undefined) {
+            return [];
+        }
         const unitTests = {};
         for (const td of trx.TestRun.TestDefinitions) {
             for (const ut of td.UnitTest) {
@@ -789,12 +792,14 @@ class JestJunitParser {
         }
     }
     getTestRunResult(path, junit) {
-        const suites = junit.testsuites.testsuite.map(ts => {
-            const name = ts.$.name.trim();
-            const time = parseFloat(ts.$.time) * 1000;
-            const sr = new test_results_1.TestSuiteResult(name, this.getGroups(ts), time);
-            return sr;
-        });
+        const suites = junit.testsuites.testsuite === undefined
+            ? []
+            : junit.testsuites.testsuite.map(ts => {
+                const name = ts.$.name.trim();
+                const time = parseFloat(ts.$.time) * 1000;
+                const sr = new test_results_1.TestSuiteResult(name, this.getGroups(ts), time);
+                return sr;
+            });
         const time = parseFloat(junit.testsuites.$.time) * 1000;
         return new test_results_1.TestRunResult(path, suites, time);
     }
@@ -1114,7 +1119,9 @@ function getSuitesReport(tr, runIndex, options) {
     const icon = getResultIcon(tr.result);
     sections.push(`## ${nameLink} ${icon}`);
     const time = markdown_utils_1.formatTime(tr.time);
-    const headingLine2 = `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`;
+    const headingLine2 = tr.tests > 0
+        ? `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`
+        : 'No tests found';
     sections.push(headingLine2);
     const suites = options.listSuites === 'failed' ? tr.failedSuites : tr.suites;
     if (suites.length > 0) {

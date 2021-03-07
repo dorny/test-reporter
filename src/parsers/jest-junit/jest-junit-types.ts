@@ -10,7 +10,7 @@ export interface TestSuites {
     errors: string // unhandled exception during test execution
     time: string
   }
-  testsuite: TestSuite[]
+  testsuite?: TestSuite[]
 }
 
 export interface TestSuite {

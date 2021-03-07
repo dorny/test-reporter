@@ -148,7 +148,10 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
   sections.push(`## ${nameLink} ${icon}`)
 
   const time = formatTime(tr.time)
-  const headingLine2 = `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`
+  const headingLine2 =
+    tr.tests > 0
+      ? `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`
+      : 'No tests found'
   sections.push(headingLine2)
 
   const suites = options.listSuites === 'failed' ? tr.failedSuites : tr.suites

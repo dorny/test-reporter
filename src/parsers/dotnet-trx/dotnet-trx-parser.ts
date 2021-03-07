@@ -61,6 +61,10 @@ export class DotnetTrxParser implements TestParser {
   }
 
   private getTestClasses(trx: TrxReport): TestClass[] {
+    if (trx.TestRun.TestDefinitions === undefined || trx.TestRun.Results === undefined) {
+      return []
+    }
+
     const unitTests: {[id: string]: TestMethod} = {}
     for (const td of trx.TestRun.TestDefinitions) {
       for (const ut of td.UnitTest) {
