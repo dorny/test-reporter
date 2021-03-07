@@ -15,9 +15,6 @@ export function getCheckRunContext(): {sha: string; runId: number} {
     if (!event.workflow_run) {
       throw new Error("Event of type 'workflow_run' is missing 'workflow_run' field")
     }
-    if (event.workflow_run.conclusion === 'cancelled') {
-      throw new Error(`Workflow run ${event.workflow_run.id} has been cancelled`)
-    }
     return {
       sha: event.workflow_run.head_commit.id,
       runId: event.workflow_run.id
