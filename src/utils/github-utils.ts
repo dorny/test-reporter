@@ -15,9 +15,6 @@ export function getCheckRunContext(): {sha: string; runId: number} {
     if (!event.workflow_run) {
       throw new Error("Event of type 'workflow_run' is missing 'workflow_run' field")
     }
-    if (event.workflow_run.conclusion === 'cancelled') {
-      throw new Error(`Workflow run ${event.workflow_run.id} has been cancelled`)
-    }
     return {
       sha: event.workflow_run.head_commit.id,
       runId: event.workflow_run.id
@@ -87,29 +84,45 @@ export async function downloadArtifact(
 }
 
 export async function listFiles(octokit: InstanceType<typeof GitHub>, sha: string): Promise<string[]> {
-  core.info('Fetching list of tracked files from GitHub')
-  const commit = await octokit.git.getCommit({
-    commit_sha: sha,
-    ...github.context.repo
-  })
-  const files = await listGitTree(octokit, commit.data.tree.sha, '')
-  return files
+  core.startGroup('Fetching list of tracked files from GitHub')
+  try {
+    const commit = await octokit.git.getCommit({
+      commit_sha: sha,
+      ...github.context.repo
+    })
+    const files = await listGitTree(octokit, commit.data.tree.sha, '')
+    return files
+  } finally {
+    core.endGroup()
+  }
 }
 
 async function listGitTree(octokit: InstanceType<typeof GitHub>, sha: string, path: string): Promise<string[]> {
-  const tree = await octokit.git.getTree({
+  const pathLog = path ? ` at ${path}` : ''
+  core.info(`Fetching tree ${sha}${pathLog}`)
+  let truncated = false
+  let tree = await octokit.git.getTree({
+    recursive: 'true',
     tree_sha: sha,
     ...github.context.repo
   })
 
+  if (tree.data.truncated) {
+    truncated = true
+    tree = await octokit.git.getTree({
+      tree_sha: sha,
+      ...github.context.repo
+    })
+  }
+
   const result: string[] = []
   for (const tr of tree.data.tree) {
     const file = `${path}${tr.path}`
-    if (tr.type === 'tree') {
+    if (tr.type === 'blob') {
+      result.push(file)
+    } else if (tr.type === 'tree' && truncated) {
       const files = await listGitTree(octokit, tr.sha, `${file}/`)
       result.push(...files)
-    } else {
-      result.push(file)
     }
   }
 

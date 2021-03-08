@@ -1,14 +1,14 @@
 import * as fs from 'fs'
 import * as path from 'path'
 
-import {JestJunitParser} from '../src/parsers/jest-junit/jest-junit-parser'
+import {JavaJunitParser} from '../src/parsers/java-junit/java-junit-parser'
 import {ParseOptions} from '../src/test-parser'
 import {getReport} from '../src/report/get-report'
 import {normalizeFilePath} from '../src/utils/path-utils'
 
-describe('jest-junit tests', () => {
+describe('java-junit tests', () => {
   it('produces empty test run result when there are no test cases', async () => {
-    const fixturePath = path.join(__dirname, 'fixtures', 'empty', 'jest-junit.xml')
+    const fixturePath = path.join(__dirname, 'fixtures', 'empty', 'java-junit.xml')
     const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
     const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
 
@@ -17,25 +17,32 @@ describe('jest-junit tests', () => {
       trackedFiles: []
     }
 
-    const parser = new JestJunitParser(opts)
+    const parser = new JavaJunitParser(opts)
     const result = await parser.parse(filePath, fileContent)
     expect(result.tests).toBe(0)
     expect(result.result).toBe('success')
   })
 
-  it('report from ./reports/jest test results matches snapshot', async () => {
-    const fixturePath = path.join(__dirname, 'fixtures', 'jest-junit.xml')
-    const outputPath = path.join(__dirname, '__outputs__', 'jest-junit.md')
+  it('report from apache/pulsar single suite test results matches snapshot', async () => {
+    const fixturePath = path.join(
+      __dirname,
+      'fixtures',
+      'external',
+      'java',
+      'TEST-org.apache.pulsar.AddMissingPatchVersionTest.xml'
+    )
+    const trackedFilesPath = path.join(__dirname, 'fixtures', 'external', 'java', 'files.txt')
+    const outputPath = path.join(__dirname, '__outputs__', 'pulsar-test-results-no-merge.md')
     const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
     const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
 
+    const trackedFiles = fs.readFileSync(trackedFilesPath, {encoding: 'utf8'}).split(/\n\r?/g)
     const opts: ParseOptions = {
       parseErrors: true,
-      trackedFiles: ['__tests__/main.test.js', '__tests__/second.test.js', 'lib/main.js']
-      //workDir: 'C:/Users/Michal/Workspace/dorny/test-check/reports/jest/'
+      trackedFiles
     }
 
-    const parser = new JestJunitParser(opts)
+    const parser = new JavaJunitParser(opts)
     const result = await parser.parse(filePath, fileContent)
     expect(result).toMatchSnapshot()
 
@@ -44,10 +51,10 @@ describe('jest-junit tests', () => {
     fs.writeFileSync(outputPath, report)
   })
 
-  it('report from facebook/jest test results matches snapshot', async () => {
-    const fixturePath = path.join(__dirname, 'fixtures', 'external', 'jest', 'jest-test-results.xml')
-    const trackedFilesPath = path.join(__dirname, 'fixtures', 'external', 'jest', 'files.txt')
-    const outputPath = path.join(__dirname, '__outputs__', 'jest-test-results.md')
+  it('report from apache/pulsar test results matches snapshot', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'external', 'java', 'pulsar-test-report.xml')
+    const trackedFilesPath = path.join(__dirname, 'fixtures', 'external', 'java', 'files.txt')
+    const outputPath = path.join(__dirname, '__outputs__', 'pulsar-test-results.md')
     const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
     const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
 
@@ -55,10 +62,9 @@ describe('jest-junit tests', () => {
     const opts: ParseOptions = {
       parseErrors: true,
       trackedFiles
-      //workDir: '/home/dorny/dorny/jest/'
     }
 
-    const parser = new JestJunitParser(opts)
+    const parser = new JavaJunitParser(opts)
     const result = await parser.parse(filePath, fileContent)
     expect(result).toMatchSnapshot()
 

@@ -17,6 +17,7 @@ This [Github Action](https://github.com/features/actions) displays test results 
 - Dart / [test](https://pub.dev/packages/test)
 - Flutter / [test](https://pub.dev/packages/test)
 - JavaScript / [JEST](https://jestjs.io/)
+- Java / [JUnit](https://junit.org/)
 
 For more information see [Supported formats](#supported-formats) section.
 
@@ -122,6 +123,7 @@ jobs:
     #   dart-json
     #   dotnet-trx
     #   flutter-json
+    #   java-junit
     #   jest-junit
     #   mocha-json
     reporter: ''
@@ -235,14 +237,23 @@ For more information see:
 </details>
 
 <details>
-  <summary>jest-junit</summary>
+  <summary>java-junit (Experimental)</summary>
 
-[JEST](https://jestjs.io/) testing framework support requires usage of [jest-junit](https://github.com/jest-community/jest-junit) reporter.
-It will create test results in junit XML format which can be then processed by this action.
+Support for [JUnit](https://Junit.org/) XML is experimental - should work but it was not extensively tested.
+To have code annotations working properly it's required your directory structure matches package name.
+This is due to the fact Java stacktraces doesn't contains full path to the source file.
+Some heuristic was necessary to figure out mapping between line in stack trace and actual source file.
+</details>
+
+<details>
+  <summary>jest-Junit</summary>
+
+[JEST](https://jestjs.io/) testing framework support requires usage of [jest-Junit](https://github.com/jest-community/jest-Junit) reporter.
+It will create test results in Junit XML format which can be then processed by this action.
 You can use following example configuration in `package.json`:
 ```json
 "scripts": {
-  "test": "jest --ci --reporters=default --reporters=jest-junit"
+  "test": "jest --ci --reporters=default --reporters=jest-Junit"
 },
 "devDependencies": {
   "jest": "^26.5.3",
@@ -261,6 +272,17 @@ You can use following example configuration in `package.json`:
 
 Configuration of `uniqueOutputName`, `suiteNameTemplate`, `classNameTemplate`, `titleTemplate` is important for proper visualization of test results.
 </details>
+
+## GitHub limitations
+
+Unfortunately there are some known issues and limitations caused by GitHub API:
+
+- Test report (i.e. Check Run summary) is markdown text. No custom styling or HTML is possible.
+- Maximum report size is 65535 bytes. Input parameters `list-suites` and `list-tests` will be automatically adjusted if max size is exceeded.
+- Test report can't reference any additional files (e.g. screenshots). You can use `actions/upload-artifact@v2` to upload them and inspect manually.
+- Check Runs are created for specific commit SHA. it's not possible to specify under which workflow test report should belong if there are more
+  workflows running for same SHA. Thanks to this GitHub "feature" it's possible your test report will appear in unexpected place in GitHub UI.
+  For more information see [#67](https://github.com/dorny/test-reporter/issues/67).
 
 ## See also
 - [paths-filter](https://github.com/dorny/paths-filter) - Conditionally run actions based on files modified by PR, feature branch or pushed commits
