@@ -16,8 +16,8 @@ This [Github Action](https://github.com/features/actions) displays test results 
 - .NET / [xUnit](https://xunit.net/) / [NUnit](https://nunit.org/) / [MSTest](https://github.com/Microsoft/testfx-docs)
 - Dart / [test](https://pub.dev/packages/test)
 - Flutter / [test](https://pub.dev/packages/test)
-- JavaScript / [JEST](https://jestjs.io/)
 - Java / [JUnit](https://junit.org/)
+- JavaScript / [JEST](https://jestjs.io/) / [Mocha](https://mochajs.org/)
 
 For more information see [Supported formats](#supported-formats) section.
 
@@ -271,6 +271,21 @@ You can use following example configuration in `package.json`:
 ```
 
 Configuration of `uniqueOutputName`, `suiteNameTemplate`, `classNameTemplate`, `titleTemplate` is important for proper visualization of test results.
+</details>
+
+<details>
+  <summary>mocha-json</summary>
+
+[Mocha](https://mochajs.org/) testing framework support requires:
+- Mocha version [v7.2.0](https://github.com/mochajs/mocha/releases/tag/v7.2.0) or higher
+- Usage of [json](https://mochajs.org/#json) reporter.
+
+You can use following example configuration in `package.json`:
+```json
+"scripts": {
+  "test": "mocha --reporter json > test-results.json"
+}
+```
 </details>
 
 ## GitHub limitations
