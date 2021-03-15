@@ -145,7 +145,11 @@ export class DartJsonParser implements TestParser {
       group.tests.sort((a, b) => (a.testStart.test.line ?? 0) - (b.testStart.test.line ?? 0))
       const tests = group.tests.map(tc => {
         const error = this.getError(suite, tc)
-        return new TestCaseResult(tc.testStart.test.name, tc.result, tc.time, error)
+        const testName =
+          group.group.name !== undefined && tc.testStart.test.name.startsWith(group.group.name)
+            ? tc.testStart.test.name.slice(group.group.name.length).trim()
+            : tc.testStart.test.name.trim()
+        return new TestCaseResult(testName, tc.result, tc.time, error)
       })
       return new TestGroupResult(group.group.name, tests)
     })

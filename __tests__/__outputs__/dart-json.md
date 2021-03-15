@@ -11,18 +11,18 @@
 **Test 1**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|Test 1 Passing test|36ms|
+|✔️|Passing test|36ms|
 
 **Test 1 Test 1.1**
 |Result|Test|Time|
 |:---:|:---|---:|
-|❌|Test 1 Test 1.1 Failing test|20ms|
-|❌|Test 1 Test 1.1 Exception in target unit|6ms|
+|❌|Failing test|20ms|
+|❌|Exception in target unit|6ms|
 
 **Test 2**
 |Result|Test|Time|
 |:---:|:---|---:|
-|❌|Test 2 Exception in test|12ms|
+|❌|Exception in test|12ms|
 ### <a id="user-content-r0s1" href="#r0s1">test/second_test.dart</a> ❌
 **2** tests were completed in **51ms** with **0** passed, **1** failed and **1** skipped.
 

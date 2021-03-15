@@ -498,7 +498,10 @@ class DartJsonParser {
             group.tests.sort((a, b) => { var _a, _b; return ((_a = a.testStart.test.line) !== null && _a !== void 0 ? _a : 0) - ((_b = b.testStart.test.line) !== null && _b !== void 0 ? _b : 0); });
             const tests = group.tests.map(tc => {
                 const error = this.getError(suite, tc);
-                return new test_results_1.TestCaseResult(tc.testStart.test.name, tc.result, tc.time, error);
+                const testName = group.group.name !== undefined && tc.testStart.test.name.startsWith(group.group.name)
+                    ? tc.testStart.test.name.slice(group.group.name.length).trim()
+                    : tc.testStart.test.name.trim();
+                return new test_results_1.TestCaseResult(testName, tc.result, tc.time, error);
             });
             return new test_results_1.TestGroupResult(group.group.name, tests);
         });
