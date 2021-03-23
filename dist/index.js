@@ -1799,8 +1799,7 @@ exports.formatTime = formatTime;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.parseIsoDate = exports.parseNetDuration = void 0;
 function parseNetDuration(str) {
-    // matches dotnet duration: 00:00:00.0010000
-    const durationRe = /^(\d\d):(\d\d):(\d\d\.\d+)$/;
+    const durationRe = /^(\d\d):(\d\d):(\d\d(?:\.\d+)?)$/;
     const durationMatch = str.match(durationRe);
     if (durationMatch === null) {
         throw new Error(`Invalid format: "${str}" is not NET duration`);
