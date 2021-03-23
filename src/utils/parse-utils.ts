@@ -1,6 +1,5 @@
 export function parseNetDuration(str: string): number {
-  // matches dotnet duration: 00:00:00.0010000
-  const durationRe = /^(\d\d):(\d\d):(\d\d($|\.\d+$))/
+  const durationRe = /^(\d\d):(\d\d):(\d\d(?:\.\d+)?)$/
   const durationMatch = str.match(durationRe)
   if (durationMatch === null) {
     throw new Error(`Invalid format: "${str}" is not NET duration`)
