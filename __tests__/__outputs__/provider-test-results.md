@@ -25,46 +25,46 @@
 **ChangeNotifierProvider**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|ChangeNotifierProvider default|189ms|
-|✔️|ChangeNotifierProvider .value|10ms|
+|✔️|default|189ms|
+|✔️|.value|10ms|
 
 **ListenableProvider**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|ListenableProvider default|9ms|
-|✔️|ListenableProvider .value|16ms|
+|✔️|default|9ms|
+|✔️|.value|16ms|
 
 **Provider**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|Provider default|11ms|
-|✔️|Provider .value|8ms|
+|✔️|default|11ms|
+|✔️|.value|8ms|
 
 **ProxyProvider**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|ProxyProvider 0|11ms|
-|✔️|ProxyProvider 1|10ms|
-|✔️|ProxyProvider 2|8ms|
-|✔️|ProxyProvider 3|10ms|
-|✔️|ProxyProvider 4|9ms|
-|✔️|ProxyProvider 5|9ms|
-|✔️|ProxyProvider 6|9ms|
+|✔️|0|11ms|
+|✔️|1|10ms|
+|✔️|2|8ms|
+|✔️|3|10ms|
+|✔️|4|9ms|
+|✔️|5|9ms|
+|✔️|6|9ms|
 
 **MultiProvider**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|MultiProvider with 1 ChangeNotifierProvider default|9ms|
-|✔️|MultiProvider with 2 ChangeNotifierProvider default|9ms|
-|✔️|MultiProvider with ListenableProvider default|12ms|
-|✔️|MultiProvider with Provider default|8ms|
-|✔️|MultiProvider with ProxyProvider0|7ms|
-|✔️|MultiProvider with ProxyProvider1|9ms|
-|✔️|MultiProvider with ProxyProvider2|7ms|
-|✔️|MultiProvider with ProxyProvider3|9ms|
-|✔️|MultiProvider with ProxyProvider4|9ms|
-|✔️|MultiProvider with ProxyProvider5|7ms|
-|✔️|MultiProvider with ProxyProvider6|7ms|
+|✔️|with 1 ChangeNotifierProvider default|9ms|
+|✔️|with 2 ChangeNotifierProvider default|9ms|
+|✔️|with ListenableProvider default|12ms|
+|✔️|with Provider default|8ms|
+|✔️|with ProxyProvider0|7ms|
+|✔️|with ProxyProvider1|9ms|
+|✔️|with ProxyProvider2|7ms|
+|✔️|with ProxyProvider3|9ms|
+|✔️|with ProxyProvider4|9ms|
+|✔️|with ProxyProvider5|7ms|
+|✔️|with ProxyProvider6|7ms|
 ### <a id="user-content-r0s1" href="#r0s1">test/change_notifier_provider_test.dart</a> ✔️
 **10** tests were completed in **306ms** with **10** passed, **0** failed and **0** skipped.
 
@@ -75,59 +75,59 @@
 **ChangeNotifierProvider**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|ChangeNotifierProvider value|185ms|
-|✔️|ChangeNotifierProvider builder|18ms|
-|✔️|ChangeNotifierProvider builder1|12ms|
-|✔️|ChangeNotifierProvider builder2|12ms|
-|✔️|ChangeNotifierProvider builder3|19ms|
-|✔️|ChangeNotifierProvider builder4|14ms|
-|✔️|ChangeNotifierProvider builder5|15ms|
-|✔️|ChangeNotifierProvider builder6|11ms|
-|✔️|ChangeNotifierProvider builder0|10ms|
+|✔️|value|185ms|
+|✔️|builder|18ms|
+|✔️|builder1|12ms|
+|✔️|builder2|12ms|
+|✔️|builder3|19ms|
+|✔️|builder4|14ms|
+|✔️|builder5|15ms|
+|✔️|builder6|11ms|
+|✔️|builder0|10ms|
 ### <a id="user-content-r0s2" href="#r0s2">test/consumer_test.dart</a> ✔️
 **18** tests were completed in **340ms** with **18** passed, **0** failed and **0** skipped.
 
 **consumer**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|consumer obtains value from Provider<T>|181ms|
-|✔️|consumer crashed with no builder|11ms|
-|✔️|consumer can be used inside MultiProvider|16ms|
+|✔️|obtains value from Provider<T>|181ms|
+|✔️|crashed with no builder|11ms|
+|✔️|can be used inside MultiProvider|16ms|
 
 **consumer2**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|consumer2 obtains value from Provider<T>|22ms|
-|✔️|consumer2 crashed with no builder|8ms|
-|✔️|consumer2 can be used inside MultiProvider|9ms|
+|✔️|obtains value from Provider<T>|22ms|
+|✔️|crashed with no builder|8ms|
+|✔️|can be used inside MultiProvider|9ms|
 
 **consumer3**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|consumer3 obtains value from Provider<T>|9ms|
-|✔️|consumer3 crashed with no builder|7ms|
-|✔️|consumer3 can be used inside MultiProvider|8ms|
+|✔️|obtains value from Provider<T>|9ms|
+|✔️|crashed with no builder|7ms|
+|✔️|can be used inside MultiProvider|8ms|
 
 **consumer4**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|consumer4 obtains value from Provider<T>|8ms|
-|✔️|consumer4 crashed with no builder|6ms|
-|✔️|consumer4 can be used inside MultiProvider|8ms|
+|✔️|obtains value from Provider<T>|8ms|
+|✔️|crashed with no builder|6ms|
+|✔️|can be used inside MultiProvider|8ms|
 
 **consumer5**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|consumer5 obtains value from Provider<T>|8ms|
-|✔️|consumer5 crashed with no builder|6ms|
-|✔️|consumer5 can be used inside MultiProvider|9ms|
+|✔️|obtains value from Provider<T>|8ms|
+|✔️|crashed with no builder|6ms|
+|✔️|can be used inside MultiProvider|9ms|
 
 **consumer6**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|consumer6 obtains value from Provider<T>|8ms|
-|✔️|consumer6 crashed with no builder|8ms|
-|✔️|consumer6 can be used inside MultiProvider|8ms|
+|✔️|obtains value from Provider<T>|8ms|
+|✔️|crashed with no builder|8ms|
+|✔️|can be used inside MultiProvider|8ms|
 ### <a id="user-content-r0s3" href="#r0s3">test/context_test.dart</a> ✔️
 **31** tests were completed in **698ms** with **31** passed, **0** failed and **0** skipped.
 
@@ -143,31 +143,31 @@
 **BuildContext**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|BuildContext internal selected value is updated|32ms|
-|✔️|BuildContext create can use read without being lazy|11ms|
-|✔️|BuildContext watch can be used inside InheritedProvider.update|10ms|
-|✔️|BuildContext select doesn't fail if it loads a provider that depends on other providers|9ms|
-|✔️|BuildContext don't call old selectors if the child rebuilds individually|21ms|
-|✔️|BuildContext selects throws inside click handlers|40ms|
-|✔️|BuildContext select throws if try to read dynamic|9ms|
-|✔️|BuildContext select throws ProviderNotFoundException|9ms|
-|✔️|BuildContext select throws if watch called inside the callback from build|6ms|
-|✔️|BuildContext select throws if read called inside the callback from build|9ms|
-|✔️|BuildContext select throws if select called inside the callback from build|8ms|
-|✔️|BuildContext select throws if read called inside the callback on dependency change|10ms|
-|✔️|BuildContext select throws if watch called inside the callback on dependency change|17ms|
-|✔️|BuildContext select throws if select called inside the callback on dependency change|9ms|
-|✔️|BuildContext can call read inside didChangeDependencies|9ms|
-|✔️|BuildContext select cannot be called inside didChangeDependencies|6ms|
-|✔️|BuildContext select in initState throws|6ms|
-|✔️|BuildContext watch in initState throws|10ms|
-|✔️|BuildContext read in initState works|6ms|
-|✔️|BuildContext consumer can be removed and selector stops to be called|7ms|
-|✔️|BuildContext context.select deeply compares maps|15ms|
-|✔️|BuildContext context.select deeply compares lists|8ms|
-|✔️|BuildContext context.select deeply compares iterables|8ms|
-|✔️|BuildContext context.select deeply compares sets|11ms|
-|✔️|BuildContext context.watch listens to value changes|10ms|
+|✔️|internal selected value is updated|32ms|
+|✔️|create can use read without being lazy|11ms|
+|✔️|watch can be used inside InheritedProvider.update|10ms|
+|✔️|select doesn't fail if it loads a provider that depends on other providers|9ms|
+|✔️|don't call old selectors if the child rebuilds individually|21ms|
+|✔️|selects throws inside click handlers|40ms|
+|✔️|select throws if try to read dynamic|9ms|
+|✔️|select throws ProviderNotFoundException|9ms|
+|✔️|select throws if watch called inside the callback from build|6ms|
+|✔️|select throws if read called inside the callback from build|9ms|
+|✔️|select throws if select called inside the callback from build|8ms|
+|✔️|select throws if read called inside the callback on dependency change|10ms|
+|✔️|select throws if watch called inside the callback on dependency change|17ms|
+|✔️|select throws if select called inside the callback on dependency change|9ms|
+|✔️|can call read inside didChangeDependencies|9ms|
+|✔️|select cannot be called inside didChangeDependencies|6ms|
+|✔️|select in initState throws|6ms|
+|✔️|watch in initState throws|10ms|
+|✔️|read in initState works|6ms|
+|✔️|consumer can be removed and selector stops to be called|7ms|
+|✔️|context.select deeply compares maps|15ms|
+|✔️|context.select deeply compares lists|8ms|
+|✔️|context.select deeply compares iterables|8ms|
+|✔️|context.select deeply compares sets|11ms|
+|✔️|context.watch listens to value changes|10ms|
 ### <a id="user-content-r0s4" href="#r0s4">test/future_provider_test.dart</a> ✔️
 **10** tests were completed in **305ms** with **10** passed, **0** failed and **0** skipped.
 
@@ -186,7 +186,7 @@
 **FutureProvider()**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|FutureProvider() crashes if builder is null|3ms|
+|✔️|crashes if builder is null|3ms|
 ### <a id="user-content-r0s5" href="#r0s5">test/inherited_provider_test.dart</a> ✔️
 **81** tests were completed in **1.117s** with **81** passed, **0** failed and **0** skipped.
 
@@ -227,133 +227,133 @@
 **diagnostics**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|diagnostics InheritedProvider.value|11ms|
-|✔️|diagnostics InheritedProvider doesn't break lazy loading|7ms|
-|✔️|diagnostics InheritedProvider show if listening|7ms|
-|✔️|diagnostics DeferredInheritedProvider.value|6ms|
-|✔️|diagnostics DeferredInheritedProvider|16ms|
+|✔️|InheritedProvider.value|11ms|
+|✔️|InheritedProvider doesn't break lazy loading|7ms|
+|✔️|InheritedProvider show if listening|7ms|
+|✔️|DeferredInheritedProvider.value|6ms|
+|✔️|DeferredInheritedProvider|16ms|
 
 **InheritedProvider.value()**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|InheritedProvider.value() markNeedsNotifyDependents during startListening is noop|8ms|
-|✔️|InheritedProvider.value() startListening called again when create returns new value|27ms|
-|✔️|InheritedProvider.value() startListening|19ms|
-|✔️|InheritedProvider.value() stopListening not called twice if rebuild doesn't have listeners|16ms|
-|✔️|InheritedProvider.value() removeListener cannot be null|22ms|
-|✔️|InheritedProvider.value() pass down current value|17ms|
-|✔️|InheritedProvider.value() default updateShouldNotify|8ms|
-|✔️|InheritedProvider.value() custom updateShouldNotify|32ms|
+|✔️|markNeedsNotifyDependents during startListening is noop|8ms|
+|✔️|startListening called again when create returns new value|27ms|
+|✔️|startListening|19ms|
+|✔️|stopListening not called twice if rebuild doesn't have listeners|16ms|
+|✔️|removeListener cannot be null|22ms|
+|✔️|pass down current value|17ms|
+|✔️|default updateShouldNotify|8ms|
+|✔️|custom updateShouldNotify|32ms|
 
 **InheritedProvider()**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|InheritedProvider() hasValue|16ms|
-|✔️|InheritedProvider() provider calls update if rebuilding only due to didChangeDependencies|9ms|
-|✔️|InheritedProvider() provider notifying dependents doesn't call update|11ms|
-|✔️|InheritedProvider() update can call Provider.of with listen:true|7ms|
-|✔️|InheritedProvider() update lazy loaded can call Provider.of with listen:true|10ms|
-|✔️|InheritedProvider() markNeedsNotifyDependents during startListening is noop|22ms|
-|✔️|InheritedProvider() update can obtain parent of the same type than self|15ms|
-|✔️|InheritedProvider() _debugCheckInvalidValueType|22ms|
-|✔️|InheritedProvider() startListening|18ms|
-|✔️|InheritedProvider() startListening called again when create returns new value|20ms|
-|✔️|InheritedProvider() stopListening not called twice if rebuild doesn't have listeners|18ms|
-|✔️|InheritedProvider() removeListener cannot be null|16ms|
-|✔️|InheritedProvider() fails if initialValueBuilder calls inheritFromElement/inheritFromWiggetOfExactType|17ms|
-|✔️|InheritedProvider() builder is called on every rebuild and after a dependency change|11ms|
-|✔️|InheritedProvider() builder with no updateShouldNotify use ==|8ms|
-|✔️|InheritedProvider() builder calls updateShouldNotify callback|8ms|
-|✔️|InheritedProvider() initialValue is transmitted to valueBuilder|8ms|
-|✔️|InheritedProvider() calls builder again if dependencies change|22ms|
-|✔️|InheritedProvider() exposes initialValue if valueBuilder is null|20ms|
-|✔️|InheritedProvider() call dispose on unmount|22ms|
-|✔️|InheritedProvider() builder unmount, dispose not called if value never read|11ms|
-|✔️|InheritedProvider() call dispose after new value|9ms|
-|✔️|InheritedProvider() valueBuilder works without initialBuilder|11ms|
-|✔️|InheritedProvider() calls initialValueBuilder lazily once|7ms|
-|✔️|InheritedProvider() throws if both builder and initialBuilder are missing|5ms|
+|✔️|hasValue|16ms|
+|✔️|provider calls update if rebuilding only due to didChangeDependencies|9ms|
+|✔️|provider notifying dependents doesn't call update|11ms|
+|✔️|update can call Provider.of with listen:true|7ms|
+|✔️|update lazy loaded can call Provider.of with listen:true|10ms|
+|✔️|markNeedsNotifyDependents during startListening is noop|22ms|
+|✔️|update can obtain parent of the same type than self|15ms|
+|✔️|_debugCheckInvalidValueType|22ms|
+|✔️|startListening|18ms|
+|✔️|startListening called again when create returns new value|20ms|
+|✔️|stopListening not called twice if rebuild doesn't have listeners|18ms|
+|✔️|removeListener cannot be null|16ms|
+|✔️|fails if initialValueBuilder calls inheritFromElement/inheritFromWiggetOfExactType|17ms|
+|✔️|builder is called on every rebuild and after a dependency change|11ms|
+|✔️|builder with no updateShouldNotify use ==|8ms|
+|✔️|builder calls updateShouldNotify callback|8ms|
+|✔️|initialValue is transmitted to valueBuilder|8ms|
+|✔️|calls builder again if dependencies change|22ms|
+|✔️|exposes initialValue if valueBuilder is null|20ms|
+|✔️|call dispose on unmount|22ms|
+|✔️|builder unmount, dispose not called if value never read|11ms|
+|✔️|call dispose after new value|9ms|
+|✔️|valueBuilder works without initialBuilder|11ms|
+|✔️|calls initialValueBuilder lazily once|7ms|
+|✔️|throws if both builder and initialBuilder are missing|5ms|
 
 **DeferredInheritedProvider.value()**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|DeferredInheritedProvider.value() hasValue|6ms|
-|✔️|DeferredInheritedProvider.value() startListening|9ms|
-|✔️|DeferredInheritedProvider.value() stopListening cannot be null|9ms|
-|✔️|DeferredInheritedProvider.value() startListening doesn't need setState if already initialized|8ms|
-|✔️|DeferredInheritedProvider.value() setState without updateShouldNotify|8ms|
-|✔️|DeferredInheritedProvider.value() setState with updateShouldNotify|9ms|
-|✔️|DeferredInheritedProvider.value() startListening never leave the widget uninitialized|8ms|
-|✔️|DeferredInheritedProvider.value() startListening called again on controller change|10ms|
+|✔️|hasValue|6ms|
+|✔️|startListening|9ms|
+|✔️|stopListening cannot be null|9ms|
+|✔️|startListening doesn't need setState if already initialized|8ms|
+|✔️|setState without updateShouldNotify|8ms|
+|✔️|setState with updateShouldNotify|9ms|
+|✔️|startListening never leave the widget uninitialized|8ms|
+|✔️|startListening called again on controller change|10ms|
 
 **DeferredInheritedProvider()**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|DeferredInheritedProvider() create can't call inherited widgets|7ms|
-|✔️|DeferredInheritedProvider() creates the value lazily|7ms|
-|✔️|DeferredInheritedProvider() dispose|7ms|
-|✔️|DeferredInheritedProvider() dispose no-op if never built|7ms|
+|✔️|create can't call inherited widgets|7ms|
+|✔️|creates the value lazily|7ms|
+|✔️|dispose|7ms|
+|✔️|dispose no-op if never built|7ms|
 ### <a id="user-content-r0s6" href="#r0s6">test/listenable_provider_test.dart</a> ✔️
 **16** tests were completed in **353ms** with **16** passed, **0** failed and **0** skipped.
 
 **ListenableProvider**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|ListenableProvider works with MultiProvider|173ms|
-|✔️|ListenableProvider asserts that the created notifier can have listeners|12ms|
-|✔️|ListenableProvider don't listen again if listenable instance doesn't change|12ms|
-|✔️|ListenableProvider works with null (default)|7ms|
-|✔️|ListenableProvider works with null (create)|7ms|
-|✔️|ListenableProvider stateful create called once|11ms|
-|✔️|ListenableProvider dispose called on unmount|13ms|
-|✔️|ListenableProvider dispose can be null|8ms|
-|✔️|ListenableProvider changing listenable rebuilds descendants|12ms|
-|✔️|ListenableProvider rebuilding with the same provider don't rebuilds descendants|11ms|
-|✔️|ListenableProvider notifylistener rebuilds descendants|9ms|
+|✔️|works with MultiProvider|173ms|
+|✔️|asserts that the created notifier can have listeners|12ms|
+|✔️|don't listen again if listenable instance doesn't change|12ms|
+|✔️|works with null (default)|7ms|
+|✔️|works with null (create)|7ms|
+|✔️|stateful create called once|11ms|
+|✔️|dispose called on unmount|13ms|
+|✔️|dispose can be null|8ms|
+|✔️|changing listenable rebuilds descendants|12ms|
+|✔️|rebuilding with the same provider don't rebuilds descendants|11ms|
+|✔️|notifylistener rebuilds descendants|9ms|
 
 **ListenableProvider value constructor**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|ListenableProvider value constructor pass down key|17ms|
-|✔️|ListenableProvider value constructor changing the Listenable instance rebuilds dependents|29ms|
+|✔️|pass down key|17ms|
+|✔️|changing the Listenable instance rebuilds dependents|29ms|
 
 **ListenableProvider stateful constructor**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|ListenableProvider stateful constructor called with context|8ms|
-|✔️|ListenableProvider stateful constructor pass down key|20ms|
-|✔️|ListenableProvider stateful constructor throws if create is null|4ms|
+|✔️|called with context|8ms|
+|✔️|pass down key|20ms|
+|✔️|throws if create is null|4ms|
 ### <a id="user-content-r0s7" href="#r0s7">test/listenable_proxy_provider_test.dart</a> ✔️
 **12** tests were completed in **373ms** with **12** passed, **0** failed and **0** skipped.
 
 **ListenableProxyProvider**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|ListenableProxyProvider throws if update is missing|43ms|
-|✔️|ListenableProxyProvider asserts that the created notifier has no listener|177ms|
-|✔️|ListenableProxyProvider asserts that the created notifier has no listener after rebuild|18ms|
-|✔️|ListenableProxyProvider rebuilds dependendents when listeners are called|20ms|
-|✔️|ListenableProxyProvider update returning a new Listenable disposes the previously created value and update dependents|25ms|
-|✔️|ListenableProxyProvider disposes of created value|13ms|
+|✔️|throws if update is missing|43ms|
+|✔️|asserts that the created notifier has no listener|177ms|
+|✔️|asserts that the created notifier has no listener after rebuild|18ms|
+|✔️|rebuilds dependendents when listeners are called|20ms|
+|✔️|update returning a new Listenable disposes the previously created value and update dependents|25ms|
+|✔️|disposes of created value|13ms|
 
 **ListenableProxyProvider variants**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|ListenableProxyProvider variants ListenableProxyProvider|13ms|
-|✔️|ListenableProxyProvider variants ListenableProxyProvider2|9ms|
-|✔️|ListenableProxyProvider variants ListenableProxyProvider3|9ms|
-|✔️|ListenableProxyProvider variants ListenableProxyProvider4|17ms|
-|✔️|ListenableProxyProvider variants ListenableProxyProvider5|12ms|
-|✔️|ListenableProxyProvider variants ListenableProxyProvider6|17ms|
+|✔️|ListenableProxyProvider|13ms|
+|✔️|ListenableProxyProvider2|9ms|
+|✔️|ListenableProxyProvider3|9ms|
+|✔️|ListenableProxyProvider4|17ms|
+|✔️|ListenableProxyProvider5|12ms|
+|✔️|ListenableProxyProvider6|17ms|
 ### <a id="user-content-r0s8" href="#r0s8">test/multi_provider_test.dart</a> ✔️
 **3** tests were completed in **198ms** with **3** passed, **0** failed and **0** skipped.
 
 **MultiProvider**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|MultiProvider throw if providers is null|30ms|
-|✔️|MultiProvider MultiProvider children can only access parent providers|160ms|
-|✔️|MultiProvider MultiProvider.providers with ignored child|8ms|
+|✔️|throw if providers is null|30ms|
+|✔️|MultiProvider children can only access parent providers|160ms|
+|✔️|MultiProvider.providers with ignored child|8ms|
 ### <a id="user-content-r0s9" href="#r0s9">test/provider_test.dart</a> ✔️
 **11** tests were completed in **306ms** with **11** passed, **0** failed and **0** skipped.
 
@@ -364,46 +364,46 @@
 **Provider.of**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|Provider.of throws if T is dynamic|26ms|
-|✔️|Provider.of listen defaults to true when building widgets|13ms|
-|✔️|Provider.of listen defaults to false outside of the widget tree|9ms|
-|✔️|Provider.of listen:false doesn't trigger rebuild|10ms|
-|✔️|Provider.of listen:true outside of the widget tree throws|11ms|
+|✔️|throws if T is dynamic|26ms|
+|✔️|listen defaults to true when building widgets|13ms|
+|✔️|listen defaults to false outside of the widget tree|9ms|
+|✔️|listen:false doesn't trigger rebuild|10ms|
+|✔️|listen:true outside of the widget tree throws|11ms|
 
 **Provider**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|Provider throws if the provided value is a Listenable/Stream|28ms|
-|✔️|Provider debugCheckInvalidValueType can be disabled|9ms|
-|✔️|Provider simple usage|9ms|
-|✔️|Provider throws an error if no provider found|11ms|
-|✔️|Provider update should notify|8ms|
+|✔️|throws if the provided value is a Listenable/Stream|28ms|
+|✔️|debugCheckInvalidValueType can be disabled|9ms|
+|✔️|simple usage|9ms|
+|✔️|throws an error if no provider found|11ms|
+|✔️|update should notify|8ms|
 ### <a id="user-content-r0s10" href="#r0s10">test/proxy_provider_test.dart</a> ✔️
 **16** tests were completed in **438ms** with **16** passed, **0** failed and **0** skipped.
 
 **ProxyProvider**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|ProxyProvider throws if the provided value is a Listenable/Stream|209ms|
-|✔️|ProxyProvider debugCheckInvalidValueType can be disabled|13ms|
-|✔️|ProxyProvider create creates initial value|23ms|
-|✔️|ProxyProvider consume another providers|18ms|
-|✔️|ProxyProvider rebuild descendants if value change|13ms|
-|✔️|ProxyProvider call dispose when unmounted with the latest result|11ms|
-|✔️|ProxyProvider don't rebuild descendants if value doesn't change|12ms|
-|✔️|ProxyProvider pass down updateShouldNotify|19ms|
-|✔️|ProxyProvider works with MultiProvider|16ms|
-|✔️|ProxyProvider update callback can trigger descendants setState synchronously|24ms|
-|✔️|ProxyProvider throws if update is null|7ms|
+|✔️|throws if the provided value is a Listenable/Stream|209ms|
+|✔️|debugCheckInvalidValueType can be disabled|13ms|
+|✔️|create creates initial value|23ms|
+|✔️|consume another providers|18ms|
+|✔️|rebuild descendants if value change|13ms|
+|✔️|call dispose when unmounted with the latest result|11ms|
+|✔️|don't rebuild descendants if value doesn't change|12ms|
+|✔️|pass down updateShouldNotify|19ms|
+|✔️|works with MultiProvider|16ms|
+|✔️|update callback can trigger descendants setState synchronously|24ms|
+|✔️|throws if update is null|7ms|
 
 **ProxyProvider variants**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|ProxyProvider variants ProxyProvider2|18ms|
-|✔️|ProxyProvider variants ProxyProvider3|16ms|
-|✔️|ProxyProvider variants ProxyProvider4|9ms|
-|✔️|ProxyProvider variants ProxyProvider5|20ms|
-|✔️|ProxyProvider variants ProxyProvider6|10ms|
+|✔️|ProxyProvider2|18ms|
+|✔️|ProxyProvider3|16ms|
+|✔️|ProxyProvider4|9ms|
+|✔️|ProxyProvider5|20ms|
+|✔️|ProxyProvider6|10ms|
 ### <a id="user-content-r0s11" href="#r0s11">test/reassemble_test.dart</a> ✔️
 **3** tests were completed in **221ms** with **3** passed, **0** failed and **0** skipped.
 
@@ -458,16 +458,16 @@
 **StreamProvider()**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|StreamProvider() create and dispose stream with builder|11ms|
-|✔️|StreamProvider() crashes if builder is null|4ms|
+|✔️|create and dispose stream with builder|11ms|
+|✔️|crashes if builder is null|4ms|
 ### <a id="user-content-r0s15" href="#r0s15">test/value_listenable_provider_test.dart</a> ❌
 **5** tests were completed in **327ms** with **4** passed, **1** failed and **0** skipped.
 
 **valueListenableProvider**
 |Result|Test|Time|
 |:---:|:---|---:|
-|✔️|valueListenableProvider rebuilds when value change|200ms|
-|✔️|valueListenableProvider don't rebuild dependents by default|26ms|
-|✔️|valueListenableProvider pass keys|10ms|
-|✔️|valueListenableProvider don't listen again if stream instance doesn't change|22ms|
-|❌|valueListenableProvider pass updateShouldNotify|69ms|
+|✔️|rebuilds when value change|200ms|
+|✔️|don't rebuild dependents by default|26ms|
+|✔️|pass keys|10ms|
+|✔️|don't listen again if stream instance doesn't change|22ms|
+|❌|pass updateShouldNotify|69ms|
