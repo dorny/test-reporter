@@ -9,7 +9,7 @@ This [Github Action](https://github.com/features/actions) displays test results 
 ✔️ Provides final `conclusion` and counts of `passed`, `failed` and `skipped` tests as output parameters
 
 **How it looks:**
-|![](../assets/fluent-validation-report.png)|![](../assets/provider-error-summary.png)|![](../assets/provider-error-details.png)|![](../assets/provider-groups.png)|
+|![](assets/fluent-validation-report.png)|![](assets/provider-error-summary.png)|![](assets/provider-error-details.png)|![](assets/provider-groups.png)|
 |:--:|:--:|:--:|:--:|
 
 **Supported languages / frameworks:**
@@ -288,4 +288,4 @@ Unfortunately there are some known issues and limitations caused by GitHub API:
 
 ## License
 
-The scripts and documentation in this project are released under the [MIT License](https://github.com/dorny/test-reporter/blob/main/docs/LICENSE)
+The scripts and documentation in this project are released under the [MIT License](https://github.com/dorny/test-reporter/blob/main/LICENSE)
