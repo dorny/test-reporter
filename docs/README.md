@@ -9,7 +9,7 @@ This [Github Action](https://github.com/features/actions) displays test results 
 ✔️ Provides final `conclusion` and counts of `passed`, `failed` and `skipped` tests as output parameters
 
 **How it looks:**
-|![](assets/fluent-validation-report.png)|![](assets/provider-error-summary.png)|![](assets/provider-error-details.png)|![](assets/provider-groups.png)|
+|![](../assets/fluent-validation-report.png)|![](../assets/provider-error-summary.png)|![](../assets/provider-error-details.png)|![](../assets/provider-groups.png)|
 |:--:|:--:|:--:|:--:|
 
 **Supported languages / frameworks:**
