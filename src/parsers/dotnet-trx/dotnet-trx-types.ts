@@ -43,7 +43,7 @@ export interface UnitTestResult {
   $: {
     testId: string
     testName: string
-    duration: string
+    duration?: string
     outcome: Outcome
   }
   Output: Output[]
