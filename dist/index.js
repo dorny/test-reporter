@@ -697,7 +697,8 @@ class DotnetTrxParser {
             }
             const output = r.unitTestResult.Output;
             const error = (output === null || output === void 0 ? void 0 : output.length) > 0 && ((_a = output[0].ErrorInfo) === null || _a === void 0 ? void 0 : _a.length) > 0 ? output[0].ErrorInfo[0] : undefined;
-            const duration = parse_utils_1.parseNetDuration(r.unitTestResult.$.duration);
+            const durationAttr = r.unitTestResult.$.duration;
+            const duration = durationAttr ? parse_utils_1.parseNetDuration(durationAttr) : 0;
             const test = new Test(r.testMethod.$.name, r.unitTestResult.$.outcome, duration, error);
             tc.tests.push(test);
         }
