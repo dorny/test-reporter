@@ -147,9 +147,22 @@ class TestReporter {
       results.push(tr)
     }
 
+    core.info(`Creating check run ${name}`)
+    const createResp = await this.octokit.checks.create({
+      head_sha: this.context.sha,
+      name,
+      status: 'in_progress',
+      output: {
+        title: name,
+        summary: ''
+      },
+      ...github.context.repo
+    })
+
     core.info('Creating report summary')
     const {listSuites, listTests} = this
-    const summary = getReport(results, {listSuites, listTests})
+    const baseUrl = createResp.data.html_url
+    const summary = getReport(results, {listSuites, listTests, baseUrl})
 
     core.info('Creating annotations')
     const annotations = getAnnotations(results, this.maxAnnotations)
@@ -158,10 +171,9 @@ class TestReporter {
     const conclusion = isFailed ? 'failure' : 'success'
     const icon = isFailed ? Icon.fail : Icon.success
 
-    core.info(`Creating check run with conclusion ${conclusion}`)
-    const resp = await this.octokit.checks.create({
-      head_sha: this.context.sha,
-      name,
+    core.info(`Updating check run conclusion (${conclusion}) and output`)
+    const resp = await this.octokit.checks.update({
+      check_run_id: createResp.data.id,
       conclusion,
       status: 'completed',
       output: {

@@ -7,7 +7,6 @@ import {getReport} from '../src/report/get-report'
 import {normalizeFilePath} from '../src/utils/path-utils'
 
 describe('mocha-json tests', () => {
-
   it('produces empty test run result when there are no test cases', async () => {
     const fixturePath = path.join(__dirname, 'fixtures', 'empty', 'mocha-json.json')
     const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))

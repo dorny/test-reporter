@@ -87,7 +87,9 @@ export class DotnetTrxParser implements TestParser {
       }
       const output = r.unitTestResult.Output
       const error = output?.length > 0 && output[0].ErrorInfo?.length > 0 ? output[0].ErrorInfo[0] : undefined
-      const duration = parseNetDuration(r.unitTestResult.$.duration)
+      const durationAttr = r.unitTestResult.$.duration
+      const duration = durationAttr ? parseNetDuration(durationAttr) : 0
+
       const test = new Test(r.testMethod.$.name, r.unitTestResult.$.outcome, duration, error)
       tc.tests.push(test)
     }

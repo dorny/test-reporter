@@ -1,61 +1,79 @@
 import * as core from '@actions/core'
 import {TestExecutionResult, TestRunResult, TestSuiteResult} from '../test-results'
 import {Align, formatTime, Icon, link, table} from '../utils/markdown-utils'
+import {getFirstNonEmptyLine} from '../utils/parse-utils'
 import {slug} from '../utils/slugger'
+
+const MAX_REPORT_LENGTH = 65535
 
 export interface ReportOptions {
   listSuites: 'all' | 'failed'
   listTests: 'all' | 'failed' | 'none'
+  baseUrl: string
 }
 
 const defaultOptions: ReportOptions = {
   listSuites: 'all',
-  listTests: 'all'
+  listTests: 'all',
+  baseUrl: ''
 }
 
 export function getReport(results: TestRunResult[], options: ReportOptions = defaultOptions): string {
   core.info('Generating check run summary')
 
-  const maxReportLength = 65535
   applySort(results)
 
   const opts = {...options}
-  let report = renderReport(results, opts)
-  if (getByteLength(report) <= maxReportLength) {
+  let lines = renderReport(results, opts)
+  let report = lines.join('\n')
+
+  if (getByteLength(report) <= MAX_REPORT_LENGTH) {
     return report
   }
 
   if (opts.listTests === 'all') {
     core.info("Test report summary is too big - setting 'listTests' to 'failed'")
     opts.listTests = 'failed'
-    report = renderReport(results, opts)
-    if (getByteLength(report) <= maxReportLength) {
+    lines = renderReport(results, opts)
+    report = lines.join('\n')
+    if (getByteLength(report) <= MAX_REPORT_LENGTH) {
       return report
     }
   }
 
-  if (opts.listSuites === 'all') {
-    core.info("Test report summary is too big - setting 'listSuites' to 'failed'")
-    opts.listSuites = 'failed'
-    report = renderReport(results, opts)
-    if (getByteLength(report) <= maxReportLength) {
-      return report
+  core.warning(`Test report summary exceeded limit of ${MAX_REPORT_LENGTH} bytes and will be trimmed`)
+  return trimReport(lines)
+}
+
+function trimReport(lines: string[]): string {
+  const closingBlock = '```'
+  const errorMsg = `**Report exceeded GitHub limit of ${MAX_REPORT_LENGTH} bytes and has been trimmed**`
+  const maxErrorMsgLength = closingBlock.length + errorMsg.length + 2
+  const maxReportLength = MAX_REPORT_LENGTH - maxErrorMsgLength
+
+  let reportLength = 0
+  let codeBlock = false
+  let endLineIndex = 0
+  for (endLineIndex = 0; endLineIndex < lines.length; endLineIndex++) {
+    const line = lines[endLineIndex]
+    const lineLength = getByteLength(line)
+
+    reportLength += lineLength + 1
+    if (reportLength > maxReportLength) {
+      break
+    }
+
+    if (line === '```') {
+      codeBlock = !codeBlock
     }
   }
 
-  if (opts.listTests !== 'none') {
-    core.info("Test report summary is too big - setting 'listTests' to 'none'")
-    opts.listTests = 'none'
-    report = renderReport(results, opts)
-    if (getByteLength(report) <= maxReportLength) {
-      return report
-    }
+  const reportLines = lines.slice(0, endLineIndex)
+  if (codeBlock) {
+    reportLines.push('```')
   }
-
-  core.warning(`Test report summary exceeded limit of ${maxReportLength} bytes`)
-  const badge = getReportBadge(results)
-  const msg = `**Test report summary exceeded limit of ${maxReportLength} bytes and was removed**`
-  return `${badge}\n${msg}`
+  reportLines.push(errorMsg)
+  return reportLines.join('\n')
 }
 
 function applySort(results: TestRunResult[]): void {
@@ -69,7 +87,7 @@ function getByteLength(text: string): number {
   return Buffer.byteLength(text, 'utf8')
 }
 
-function renderReport(results: TestRunResult[], options: ReportOptions): string {
+function renderReport(results: TestRunResult[], options: ReportOptions): string[] {
   const sections: string[] = []
   const badge = getReportBadge(results)
   sections.push(badge)
@@ -77,7 +95,7 @@ function renderReport(results: TestRunResult[], options: ReportOptions): string 
   const runs = getTestRunsReport(results, options)
   sections.push(...runs)
 
-  return sections.join('\n')
+  return sections
 }
 
 function getReportBadge(results: TestRunResult[]): string {
@@ -118,7 +136,7 @@ function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): s
     const tableData = testRuns.map((tr, runIndex) => {
       const time = formatTime(tr.time)
       const name = tr.path
-      const addr = makeRunSlug(runIndex).link
+      const addr = options.baseUrl + makeRunSlug(runIndex).link
       const nameLink = link(name, addr)
       const passed = tr.passed > 0 ? `${tr.passed}${Icon.success}` : ''
       const failed = tr.failed > 0 ? `${tr.failed}${Icon.fail}` : ''
@@ -143,9 +161,9 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
   const sections: string[] = []
 
   const trSlug = makeRunSlug(runIndex)
-  const nameLink = `<a id="${trSlug.id}" href="${trSlug.link}">${tr.path}</a>`
+  const nameLink = `<a id="${trSlug.id}" href="${options.baseUrl + trSlug.link}">${tr.path}</a>`
   const icon = getResultIcon(tr.result)
-  sections.push(`## ${nameLink} ${icon}`)
+  sections.push(`## ${icon}\xa0${nameLink}`)
 
   const time = formatTime(tr.time)
   const headingLine2 =
@@ -163,7 +181,7 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
         const tsTime = formatTime(s.time)
         const tsName = s.name
         const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed')
-        const tsAddr = makeSuiteSlug(runIndex, suiteIndex).link
+        const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex).link
         const tsNameLink = skipLink ? tsName : link(tsName, tsAddr)
         const passed = s.passed > 0 ? `${s.passed}${Icon.success}` : ''
         const failed = s.failed > 0 ? `${s.failed}${Icon.fail}` : ''
@@ -186,7 +204,10 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
 }
 
 function getTestsReport(ts: TestSuiteResult, runIndex: number, suiteIndex: number, options: ReportOptions): string[] {
-  const groups = options.listTests === 'failed' ? ts.failedGroups : ts.groups
+  if (options.listTests === 'failed' && ts.result !== 'failed') {
+    return []
+  }
+  const groups = ts.groups
   if (groups.length === 0) {
     return []
   }
@@ -195,33 +216,30 @@ function getTestsReport(ts: TestSuiteResult, runIndex: number, suiteIndex: numbe
 
   const tsName = ts.name
   const tsSlug = makeSuiteSlug(runIndex, suiteIndex)
-  const tsNameLink = `<a id="${tsSlug.id}" href="${tsSlug.link}">${tsName}</a>`
+  const tsNameLink = `<a id="${tsSlug.id}" href="${options.baseUrl + tsSlug.link}">${tsName}</a>`
   const icon = getResultIcon(ts.result)
-  sections.push(`### ${tsNameLink} ${icon}`)
+  sections.push(`### ${icon}\xa0${tsNameLink}`)
 
-  const tsTime = formatTime(ts.time)
-  const headingLine2 = `**${ts.tests}** tests were completed in **${tsTime}** with **${ts.passed}** passed, **${ts.failed}** failed and **${ts.skipped}** skipped.`
-  sections.push(headingLine2)
-
+  sections.push('```')
   for (const grp of groups) {
-    const tests = options.listTests === 'failed' ? grp.failedTests : grp.tests
-    if (tests.length === 0) {
-      continue
+    if (grp.name) {
+      sections.push(grp.name)
     }
-    const grpHeader = grp.name ? `\n**${grp.name}**` : ''
-    const testsTable = table(
-      ['Result', 'Test', 'Time'],
-      [Align.Center, Align.Left, Align.Right],
-      ...grp.tests.map(tc => {
-        const name = tc.name
-        const time = formatTime(tc.time)
-        const result = getResultIcon(tc.result)
-        return [result, name, time]
-      })
-    )
-
-    sections.push(grpHeader, testsTable)
+    const space = grp.name ? '  ' : ''
+    for (const tc of grp.tests) {
+      const result = getResultIcon(tc.result)
+      sections.push(`${space}${result} ${tc.name}`)
+      if (tc.error) {
+        const lines = (tc.error.message ?? getFirstNonEmptyLine(tc.error.details)?.trim())
+          ?.split(/\r?\n/g)
+          .map(l => '\t' + l)
+        if (lines) {
+          sections.push(...lines)
+        }
+      }
+    }
   }
+  sections.push('```')
 
   return sections
 }

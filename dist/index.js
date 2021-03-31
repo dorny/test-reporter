@@ -325,18 +325,29 @@ class TestReporter {
             const tr = await parser.parse(file, content);
             results.push(tr);
         }
+        core.info(`Creating check run ${name}`);
+        const createResp = await this.octokit.checks.create({
+            head_sha: this.context.sha,
+            name,
+            status: 'in_progress',
+            output: {
+                title: name,
+                summary: ''
+            },
+            ...github.context.repo
+        });
         core.info('Creating report summary');
         const { listSuites, listTests } = this;
-        const summary = get_report_1.getReport(results, { listSuites, listTests });
+        const baseUrl = createResp.data.html_url;
+        const summary = get_report_1.getReport(results, { listSuites, listTests, baseUrl });
         core.info('Creating annotations');
         const annotations = get_annotations_1.getAnnotations(results, this.maxAnnotations);
         const isFailed = results.some(tr => tr.result === 'failed');
         const conclusion = isFailed ? 'failure' : 'success';
         const icon = isFailed ? markdown_utils_1.Icon.fail : markdown_utils_1.Icon.success;
-        core.info(`Creating check run with conclusion ${conclusion}`);
-        const resp = await this.octokit.checks.create({
-            head_sha: this.context.sha,
-            name,
+        core.info(`Updating check run conclusion (${conclusion}) and output`);
+        const resp = await this.octokit.checks.update({
+            check_run_id: createResp.data.id,
             conclusion,
             status: 'completed',
             output: {
@@ -501,7 +512,10 @@ class DartJsonParser {
             group.tests.sort((a, b) => { var _a, _b; return ((_a = a.testStart.test.line) !== null && _a !== void 0 ? _a : 0) - ((_b = b.testStart.test.line) !== null && _b !== void 0 ? _b : 0); });
             const tests = group.tests.map(tc => {
                 const error = this.getError(suite, tc);
-                return new test_results_1.TestCaseResult(tc.testStart.test.name, tc.result, tc.time, error);
+                const testName = group.group.name !== undefined && tc.testStart.test.name.startsWith(group.group.name)
+                    ? tc.testStart.test.name.slice(group.group.name.length).trim()
+                    : tc.testStart.test.name.trim();
+                return new test_results_1.TestCaseResult(testName, tc.result, tc.time, error);
             });
             return new test_results_1.TestGroupResult(group.group.name, tests);
         });
@@ -512,14 +526,14 @@ class DartJsonParser {
             return undefined;
         }
         const { trackedFiles } = this.options;
-        const message = (_b = (_a = test.error) === null || _a === void 0 ? void 0 : _a.error) !== null && _b !== void 0 ? _b : '';
-        const stackTrace = (_d = (_c = test.error) === null || _c === void 0 ? void 0 : _c.stackTrace) !== null && _d !== void 0 ? _d : '';
+        const stackTrace = (_b = (_a = test.error) === null || _a === void 0 ? void 0 : _a.stackTrace) !== null && _b !== void 0 ? _b : '';
         const print = test.print
             .filter(p => p.messageType === 'print')
             .map(p => p.message)
             .join('\n');
         const details = [print, stackTrace].filter(str => str !== '').join('\n');
         const src = this.exceptionThrowSource(details, trackedFiles);
+        const message = this.getErrorMessage((_d = (_c = test.error) === null || _c === void 0 ? void 0 : _c.error) !== null && _d !== void 0 ? _d : '', print);
         let path;
         let line;
         if (src !== undefined) {
@@ -539,6 +553,19 @@ class DartJsonParser {
             message,
             details
         };
+    }
+    getErrorMessage(message, print) {
+        if (this.sdk === 'flutter') {
+            const uselessMessageRe = /^Test failed\. See exception logs above\.\nThe test description was:/m;
+            const flutterPrintRe = /^══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═+\s+(.*)\s+When the exception was thrown, this was the stack:/ms;
+            if (uselessMessageRe.test(message)) {
+                const match = print.match(flutterPrintRe);
+                if (match !== null) {
+                    return match[1];
+                }
+            }
+        }
+        return message || print;
     }
     exceptionThrowSource(ex, trackedFiles) {
         const lines = ex.split(/\r?\n/g);
@@ -698,7 +725,8 @@ class DotnetTrxParser {
             }
             const output = r.unitTestResult.Output;
             const error = (output === null || output === void 0 ? void 0 : output.length) > 0 && ((_a = output[0].ErrorInfo) === null || _a === void 0 ? void 0 : _a.length) > 0 ? output[0].ErrorInfo[0] : undefined;
-            const duration = parse_utils_1.parseNetDuration(r.unitTestResult.$.duration);
+            const durationAttr = r.unitTestResult.$.duration;
+            const duration = durationAttr ? parse_utils_1.parseNetDuration(durationAttr) : 0;
             const test = new Test(r.testMethod.$.name, r.unitTestResult.$.outcome, duration, error);
             tc.tests.push(test);
         }
@@ -1181,6 +1209,7 @@ exports.MochaJsonParser = MochaJsonParser;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getAnnotations = void 0;
 const markdown_utils_1 = __nccwpck_require__(6482);
+const parse_utils_1 = __nccwpck_require__(7811);
 function getAnnotations(results, maxCount) {
     var _a, _b, _c, _d;
     if (maxCount === 0) {
@@ -1212,7 +1241,7 @@ function getAnnotations(results, maxCount) {
                         suiteName: ts.name,
                         testName: tg.name ? `${tg.name} ► ${tc.name}` : tc.name,
                         details: err.details,
-                        message: (_d = (_c = err.message) !== null && _c !== void 0 ? _c : getFirstNonEmptyLine(err.details)) !== null && _d !== void 0 ? _d : 'Test failed',
+                        message: (_d = (_c = err.message) !== null && _c !== void 0 ? _c : parse_utils_1.getFirstNonEmptyLine(err.details)) !== null && _d !== void 0 ? _d : 'Test failed',
                         path,
                         line
                     });
@@ -1249,10 +1278,6 @@ function enforceCheckRunLimits(err) {
         err.raw_details = markdown_utils_1.ellipsis(err.raw_details, 65535);
     }
     return err;
-}
-function getFirstNonEmptyLine(stackTrace) {
-    const lines = stackTrace.split(/\r?\n/g);
-    return lines.find(str => !/^\s*$/.test(str));
 }
 function ident(text, prefix) {
     return text
@@ -1292,50 +1317,62 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getReport = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const markdown_utils_1 = __nccwpck_require__(6482);
+const parse_utils_1 = __nccwpck_require__(7811);
 const slugger_1 = __nccwpck_require__(3328);
+const MAX_REPORT_LENGTH = 65535;
 const defaultOptions = {
     listSuites: 'all',
-    listTests: 'all'
+    listTests: 'all',
+    baseUrl: ''
 };
 function getReport(results, options = defaultOptions) {
     core.info('Generating check run summary');
-    const maxReportLength = 65535;
     applySort(results);
     const opts = { ...options };
-    let report = renderReport(results, opts);
-    if (getByteLength(report) <= maxReportLength) {
+    let lines = renderReport(results, opts);
+    let report = lines.join('\n');
+    if (getByteLength(report) <= MAX_REPORT_LENGTH) {
         return report;
     }
     if (opts.listTests === 'all') {
         core.info("Test report summary is too big - setting 'listTests' to 'failed'");
         opts.listTests = 'failed';
-        report = renderReport(results, opts);
-        if (getByteLength(report) <= maxReportLength) {
+        lines = renderReport(results, opts);
+        report = lines.join('\n');
+        if (getByteLength(report) <= MAX_REPORT_LENGTH) {
             return report;
         }
     }
-    if (opts.listSuites === 'all') {
-        core.info("Test report summary is too big - setting 'listSuites' to 'failed'");
-        opts.listSuites = 'failed';
-        report = renderReport(results, opts);
-        if (getByteLength(report) <= maxReportLength) {
-            return report;
-        }
-    }
-    if (opts.listTests !== 'none') {
-        core.info("Test report summary is too big - setting 'listTests' to 'none'");
-        opts.listTests = 'none';
-        report = renderReport(results, opts);
-        if (getByteLength(report) <= maxReportLength) {
-            return report;
-        }
-    }
-    core.warning(`Test report summary exceeded limit of ${maxReportLength} bytes`);
-    const badge = getReportBadge(results);
-    const msg = `**Test report summary exceeded limit of ${maxReportLength} bytes and was removed**`;
-    return `${badge}\n${msg}`;
+    core.warning(`Test report summary exceeded limit of ${MAX_REPORT_LENGTH} bytes and will be trimmed`);
+    return trimReport(lines);
 }
 exports.getReport = getReport;
+function trimReport(lines) {
+    const closingBlock = '```';
+    const errorMsg = `**Report exceeded GitHub limit of ${MAX_REPORT_LENGTH} bytes and has been trimmed**`;
+    const maxErrorMsgLength = closingBlock.length + errorMsg.length + 2;
+    const maxReportLength = MAX_REPORT_LENGTH - maxErrorMsgLength;
+    let reportLength = 0;
+    let codeBlock = false;
+    let endLineIndex = 0;
+    for (endLineIndex = 0; endLineIndex < lines.length; endLineIndex++) {
+        const line = lines[endLineIndex];
+        const lineLength = getByteLength(line);
+        reportLength += lineLength + 1;
+        if (reportLength > maxReportLength) {
+            break;
+        }
+        if (line === '```') {
+            codeBlock = !codeBlock;
+        }
+    }
+    const reportLines = lines.slice(0, endLineIndex);
+    if (codeBlock) {
+        reportLines.push('```');
+    }
+    reportLines.push(errorMsg);
+    return reportLines.join('\n');
+}
 function applySort(results) {
     results.sort((a, b) => a.path.localeCompare(b.path));
     for (const res of results) {
@@ -1351,7 +1388,7 @@ function renderReport(results, options) {
     sections.push(badge);
     const runs = getTestRunsReport(results, options);
     sections.push(...runs);
-    return sections.join('\n');
+    return sections;
 }
 function getReportBadge(results) {
     const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
@@ -1388,7 +1425,7 @@ function getTestRunsReport(testRuns, options) {
         const tableData = testRuns.map((tr, runIndex) => {
             const time = markdown_utils_1.formatTime(tr.time);
             const name = tr.path;
-            const addr = makeRunSlug(runIndex).link;
+            const addr = options.baseUrl + makeRunSlug(runIndex).link;
             const nameLink = markdown_utils_1.link(name, addr);
             const passed = tr.passed > 0 ? `${tr.passed}${markdown_utils_1.Icon.success}` : '';
             const failed = tr.failed > 0 ? `${tr.failed}${markdown_utils_1.Icon.fail}` : '';
@@ -1405,9 +1442,9 @@ function getTestRunsReport(testRuns, options) {
 function getSuitesReport(tr, runIndex, options) {
     const sections = [];
     const trSlug = makeRunSlug(runIndex);
-    const nameLink = `<a id="${trSlug.id}" href="${trSlug.link}">${tr.path}</a>`;
+    const nameLink = `<a id="${trSlug.id}" href="${options.baseUrl + trSlug.link}">${tr.path}</a>`;
     const icon = getResultIcon(tr.result);
-    sections.push(`## ${nameLink} ${icon}`);
+    sections.push(`## ${icon}\xa0${nameLink}`);
     const time = markdown_utils_1.formatTime(tr.time);
     const headingLine2 = tr.tests > 0
         ? `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`
@@ -1419,7 +1456,7 @@ function getSuitesReport(tr, runIndex, options) {
             const tsTime = markdown_utils_1.formatTime(s.time);
             const tsName = s.name;
             const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed');
-            const tsAddr = makeSuiteSlug(runIndex, suiteIndex).link;
+            const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex).link;
             const tsNameLink = skipLink ? tsName : markdown_utils_1.link(tsName, tsAddr);
             const passed = s.passed > 0 ? `${s.passed}${markdown_utils_1.Icon.success}` : '';
             const failed = s.failed > 0 ? `${s.failed}${markdown_utils_1.Icon.fail}` : '';
@@ -1437,33 +1474,38 @@ function getSuitesReport(tr, runIndex, options) {
     return sections;
 }
 function getTestsReport(ts, runIndex, suiteIndex, options) {
-    const groups = options.listTests === 'failed' ? ts.failedGroups : ts.groups;
+    var _a, _b, _c;
+    if (options.listTests === 'failed' && ts.result !== 'failed') {
+        return [];
+    }
+    const groups = ts.groups;
     if (groups.length === 0) {
         return [];
     }
     const sections = [];
     const tsName = ts.name;
     const tsSlug = makeSuiteSlug(runIndex, suiteIndex);
-    const tsNameLink = `<a id="${tsSlug.id}" href="${tsSlug.link}">${tsName}</a>`;
+    const tsNameLink = `<a id="${tsSlug.id}" href="${options.baseUrl + tsSlug.link}">${tsName}</a>`;
     const icon = getResultIcon(ts.result);
-    sections.push(`### ${tsNameLink} ${icon}`);
-    const tsTime = markdown_utils_1.formatTime(ts.time);
-    const headingLine2 = `**${ts.tests}** tests were completed in **${tsTime}** with **${ts.passed}** passed, **${ts.failed}** failed and **${ts.skipped}** skipped.`;
-    sections.push(headingLine2);
+    sections.push(`### ${icon}\xa0${tsNameLink}`);
+    sections.push('```');
     for (const grp of groups) {
-        const tests = options.listTests === 'failed' ? grp.failedTests : grp.tests;
-        if (tests.length === 0) {
-            continue;
+        if (grp.name) {
+            sections.push(grp.name);
         }
-        const grpHeader = grp.name ? `\n**${grp.name}**` : '';
-        const testsTable = markdown_utils_1.table(['Result', 'Test', 'Time'], [markdown_utils_1.Align.Center, markdown_utils_1.Align.Left, markdown_utils_1.Align.Right], ...grp.tests.map(tc => {
-            const name = tc.name;
-            const time = markdown_utils_1.formatTime(tc.time);
+        const space = grp.name ? '  ' : '';
+        for (const tc of grp.tests) {
             const result = getResultIcon(tc.result);
-            return [result, name, time];
-        }));
-        sections.push(grpHeader, testsTable);
+            sections.push(`${space}${result} ${tc.name}`);
+            if (tc.error) {
+                const lines = (_c = ((_a = tc.error.message) !== null && _a !== void 0 ? _a : (_b = parse_utils_1.getFirstNonEmptyLine(tc.error.details)) === null || _b === void 0 ? void 0 : _b.trim())) === null || _c === void 0 ? void 0 : _c.split(/\r?\n/g).map(l => '\t' + l);
+                if (lines) {
+                    sections.push(...lines);
+                }
+            }
+        }
     }
+    sections.push('```');
     return sections;
 }
 function makeRunSlug(runIndex) {
@@ -1888,7 +1930,7 @@ function ellipsis(text, maxLength) {
 exports.ellipsis = ellipsis;
 function formatTime(ms) {
     if (ms > 1000) {
-        return `${(ms / 1000).toFixed(3)}s`;
+        return `${Math.round(ms / 1000)}s`;
     }
     return `${Math.round(ms)}ms`;
 }
@@ -1938,10 +1980,9 @@ exports.getExceptionSource = getExceptionSource;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.parseIsoDate = exports.parseNetDuration = void 0;
+exports.getFirstNonEmptyLine = exports.parseIsoDate = exports.parseNetDuration = void 0;
 function parseNetDuration(str) {
-    // matches dotnet duration: 00:00:00.0010000
-    const durationRe = /^(\d\d):(\d\d):(\d\d\.\d+)$/;
+    const durationRe = /^(\d\d):(\d\d):(\d\d(?:\.\d+)?)$/;
     const durationMatch = str.match(durationRe);
     if (durationMatch === null) {
         throw new Error(`Invalid format: "${str}" is not NET duration`);
@@ -1958,6 +1999,11 @@ function parseIsoDate(str) {
     return new Date(str);
 }
 exports.parseIsoDate = parseIsoDate;
+function getFirstNonEmptyLine(stackTrace) {
+    const lines = stackTrace.split(/\r?\n/g);
+    return lines.find(str => !/^\s*$/.test(str));
+}
+exports.getFirstNonEmptyLine = getFirstNonEmptyLine;
 
 
 /***/ }),

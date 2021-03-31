@@ -41,7 +41,7 @@ export function ellipsis(text: string, maxLength: number): string {
 
 export function formatTime(ms: number): string {
   if (ms > 1000) {
-    return `${(ms / 1000).toFixed(3)}s`
+    return `${Math.round(ms / 1000)}s`
   }
 
   return `${Math.round(ms)}ms`
