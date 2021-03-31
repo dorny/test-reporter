@@ -161,7 +161,6 @@ export class DartJsonParser implements TestParser {
     }
 
     const {trackedFiles} = this.options
-    const message = test.error?.error ?? ''
     const stackTrace = test.error?.stackTrace ?? ''
     const print = test.print
       .filter(p => p.messageType === 'print')
@@ -169,6 +168,7 @@ export class DartJsonParser implements TestParser {
       .join('\n')
     const details = [print, stackTrace].filter(str => str !== '').join('\n')
     const src = this.exceptionThrowSource(details, trackedFiles)
+    const message = this.getErrorMessage(test.error?.error ?? '', print)
     let path
     let line
 
@@ -189,6 +189,21 @@ export class DartJsonParser implements TestParser {
       message,
       details
     }
+  }
+
+  private getErrorMessage(message: string, print: string): string {
+    if (this.sdk === 'flutter') {
+      const uselessMessageRe = /^Test failed\. See exception logs above\.\nThe test description was:/m
+      const flutterPrintRe = /^══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═+\s+(.*)\s+When the exception was thrown, this was the stack:/ms
+      if (uselessMessageRe.test(message)) {
+        const match = print.match(flutterPrintRe)
+        if (match !== null) {
+          return match[1]
+        }
+      }
+    }
+
+    return message || print
   }
 
   private exceptionThrowSource(ex: string, trackedFiles: string[]): {path: string; line: number} | undefined {
