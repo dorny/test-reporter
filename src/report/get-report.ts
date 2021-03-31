@@ -9,11 +9,13 @@ const MAX_REPORT_LENGTH = 65535
 export interface ReportOptions {
   listSuites: 'all' | 'failed'
   listTests: 'all' | 'failed' | 'none'
+  baseUrl: string
 }
 
 const defaultOptions: ReportOptions = {
   listSuites: 'all',
-  listTests: 'all'
+  listTests: 'all',
+  baseUrl: ''
 }
 
 export function getReport(results: TestRunResult[], options: ReportOptions = defaultOptions): string {
@@ -134,7 +136,7 @@ function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): s
     const tableData = testRuns.map((tr, runIndex) => {
       const time = formatTime(tr.time)
       const name = tr.path
-      const addr = makeRunSlug(runIndex).link
+      const addr = options.baseUrl + makeRunSlug(runIndex).link
       const nameLink = link(name, addr)
       const passed = tr.passed > 0 ? `${tr.passed}${Icon.success}` : ''
       const failed = tr.failed > 0 ? `${tr.failed}${Icon.fail}` : ''
@@ -159,7 +161,7 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
   const sections: string[] = []
 
   const trSlug = makeRunSlug(runIndex)
-  const nameLink = `<a id="${trSlug.id}" href="${trSlug.link}">${tr.path}</a>`
+  const nameLink = `<a id="${trSlug.id}" href="${options.baseUrl + trSlug.link}">${tr.path}</a>`
   const icon = getResultIcon(tr.result)
   sections.push(`## ${icon}\xa0${nameLink}`)
 
@@ -214,7 +216,7 @@ function getTestsReport(ts: TestSuiteResult, runIndex: number, suiteIndex: numbe
 
   const tsName = ts.name
   const tsSlug = makeSuiteSlug(runIndex, suiteIndex)
-  const tsNameLink = `<a id="${tsSlug.id}" href="${tsSlug.link}">${tsName}</a>`
+  const tsNameLink = `<a id="${tsSlug.id}" href="${options.baseUrl + tsSlug.link}">${tsName}</a>`
   const icon = getResultIcon(ts.result)
   sections.push(`### ${icon}\xa0${tsNameLink}`)
 

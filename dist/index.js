@@ -324,18 +324,29 @@ class TestReporter {
             const tr = await parser.parse(file, content);
             results.push(tr);
         }
+        core.info(`Creating check run ${name}`);
+        const createResp = await this.octokit.checks.create({
+            head_sha: this.context.sha,
+            name,
+            status: 'in_progress',
+            output: {
+                title: name,
+                summary: ''
+            },
+            ...github.context.repo
+        });
         core.info('Creating report summary');
         const { listSuites, listTests } = this;
-        const summary = get_report_1.getReport(results, { listSuites, listTests });
+        const baseUrl = createResp.data.html_url;
+        const summary = get_report_1.getReport(results, { listSuites, listTests, baseUrl });
         core.info('Creating annotations');
         const annotations = get_annotations_1.getAnnotations(results, this.maxAnnotations);
         const isFailed = results.some(tr => tr.result === 'failed');
         const conclusion = isFailed ? 'failure' : 'success';
         const icon = isFailed ? markdown_utils_1.Icon.fail : markdown_utils_1.Icon.success;
-        core.info(`Creating check run with conclusion ${conclusion}`);
-        const resp = await this.octokit.checks.create({
-            head_sha: this.context.sha,
-            name,
+        core.info(`Updating check run conclusion (${conclusion}) and output`);
+        const resp = await this.octokit.checks.update({
+            check_run_id: createResp.data.id,
             conclusion,
             status: 'completed',
             output: {
@@ -1224,7 +1235,8 @@ const slugger_1 = __nccwpck_require__(3328);
 const MAX_REPORT_LENGTH = 65535;
 const defaultOptions = {
     listSuites: 'all',
-    listTests: 'all'
+    listTests: 'all',
+    baseUrl: ''
 };
 function getReport(results, options = defaultOptions) {
     core.info('Generating check run summary');
@@ -1326,7 +1338,7 @@ function getTestRunsReport(testRuns, options) {
         const tableData = testRuns.map((tr, runIndex) => {
             const time = markdown_utils_1.formatTime(tr.time);
             const name = tr.path;
-            const addr = makeRunSlug(runIndex).link;
+            const addr = options.baseUrl + makeRunSlug(runIndex).link;
             const nameLink = markdown_utils_1.link(name, addr);
             const passed = tr.passed > 0 ? `${tr.passed}${markdown_utils_1.Icon.success}` : '';
             const failed = tr.failed > 0 ? `${tr.failed}${markdown_utils_1.Icon.fail}` : '';
@@ -1343,7 +1355,7 @@ function getTestRunsReport(testRuns, options) {
 function getSuitesReport(tr, runIndex, options) {
     const sections = [];
     const trSlug = makeRunSlug(runIndex);
-    const nameLink = `<a id="${trSlug.id}" href="${trSlug.link}">${tr.path}</a>`;
+    const nameLink = `<a id="${trSlug.id}" href="${options.baseUrl + trSlug.link}">${tr.path}</a>`;
     const icon = getResultIcon(tr.result);
     sections.push(`## ${icon}\xa0${nameLink}`);
     const time = markdown_utils_1.formatTime(tr.time);
@@ -1386,7 +1398,7 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
     const sections = [];
     const tsName = ts.name;
     const tsSlug = makeSuiteSlug(runIndex, suiteIndex);
-    const tsNameLink = `<a id="${tsSlug.id}" href="${tsSlug.link}">${tsName}</a>`;
+    const tsNameLink = `<a id="${tsSlug.id}" href="${options.baseUrl + tsSlug.link}">${tsName}</a>`;
     const icon = getResultIcon(ts.result);
     sections.push(`### ${icon}\xa0${tsNameLink}`);
     sections.push('```');
