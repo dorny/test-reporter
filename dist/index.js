@@ -512,14 +512,14 @@ class DartJsonParser {
             return undefined;
         }
         const { trackedFiles } = this.options;
-        const message = (_b = (_a = test.error) === null || _a === void 0 ? void 0 : _a.error) !== null && _b !== void 0 ? _b : '';
-        const stackTrace = (_d = (_c = test.error) === null || _c === void 0 ? void 0 : _c.stackTrace) !== null && _d !== void 0 ? _d : '';
+        const stackTrace = (_b = (_a = test.error) === null || _a === void 0 ? void 0 : _a.stackTrace) !== null && _b !== void 0 ? _b : '';
         const print = test.print
             .filter(p => p.messageType === 'print')
             .map(p => p.message)
             .join('\n');
         const details = [print, stackTrace].filter(str => str !== '').join('\n');
         const src = this.exceptionThrowSource(details, trackedFiles);
+        const message = this.getErrorMessage((_d = (_c = test.error) === null || _c === void 0 ? void 0 : _c.error) !== null && _d !== void 0 ? _d : '', print);
         let path;
         let line;
         if (src !== undefined) {
@@ -539,6 +539,19 @@ class DartJsonParser {
             message,
             details
         };
+    }
+    getErrorMessage(message, print) {
+        if (this.sdk === 'flutter') {
+            const uselessMessageRe = /^Test failed\. See exception logs above\.\nThe test description was:/m;
+            const flutterPrintRe = /^══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═+\s+(.*)\s+When the exception was thrown, this was the stack:/ms;
+            if (uselessMessageRe.test(message)) {
+                const match = print.match(flutterPrintRe);
+                if (match !== null) {
+                    return match[1];
+                }
+            }
+        }
+        return message || print;
     }
     exceptionThrowSource(ex, trackedFiles) {
         const lines = ex.split(/\r?\n/g);
