@@ -1345,7 +1345,7 @@ function getSuitesReport(tr, runIndex, options) {
     const trSlug = makeRunSlug(runIndex);
     const nameLink = `<a id="${trSlug.id}" href="${trSlug.link}">${tr.path}</a>`;
     const icon = getResultIcon(tr.result);
-    sections.push(`## ${icon} ${nameLink}`);
+    sections.push(`## ${icon}\xa0${nameLink}`);
     const time = markdown_utils_1.formatTime(tr.time);
     const headingLine2 = tr.tests > 0
         ? `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`
@@ -1388,7 +1388,7 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
     const tsSlug = makeSuiteSlug(runIndex, suiteIndex);
     const tsNameLink = `<a id="${tsSlug.id}" href="${tsSlug.link}">${tsName}</a>`;
     const icon = getResultIcon(ts.result);
-    sections.push(`### ${icon} ${tsNameLink}`);
+    sections.push(`### ${icon}\xa0${tsNameLink}`);
     sections.push('```');
     for (const grp of groups) {
         if (grp.name) {

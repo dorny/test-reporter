@@ -1,5 +1,5 @@
 ![Tests failed](https://img.shields.io/badge/tests-4207%20passed%2C%202%20failed%2C%2030%20skipped-critical)
-## ❌ <a id="user-content-r0" href="#r0">fixtures/external/jest/jest-test-results.xml</a>
+## ❌ <a id="user-content-r0" href="#r0">fixtures/external/jest/jest-test-results.xml</a>
 **4239** tests were completed in **166s** with **4207** passed, **2** failed and **30** skipped.
 |Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
@@ -403,7 +403,7 @@
 |packages/pretty-format/src/__tests__/prettyFormat.test.ts|86✔️|||219ms|
 |packages/pretty-format/src/__tests__/react.test.tsx|55✔️|||325ms|
 |packages/pretty-format/src/__tests__/ReactElement.test.ts|3✔️|||64ms|
-### ❌ <a id="user-content-r0s75" href="#r0s75">e2e/__tests__/jestChangedFiles.test.ts</a>
+### ❌ <a id="user-content-r0s75" href="#r0s75">e2e/__tests__/jestChangedFiles.test.ts</a>
 ```
 ✔️ gets hg SCM roots and dedupes them
 ✔️ gets git SCM roots and dedupes them
@@ -417,7 +417,7 @@
 ✔️ monitors only root paths for hg
 ✔️ handles a bad revision for "changedSince", for hg
 ```
-### ❌ <a id="user-content-r0s98" href="#r0s98">e2e/__tests__/onlyChanged.test.ts</a>
+### ❌ <a id="user-content-r0s98" href="#r0s98">e2e/__tests__/onlyChanged.test.ts</a>
 ```
 ✔️ run for "onlyChanged" and "changedSince"
 ✔️ run only changed files

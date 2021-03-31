@@ -161,7 +161,7 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
   const trSlug = makeRunSlug(runIndex)
   const nameLink = `<a id="${trSlug.id}" href="${trSlug.link}">${tr.path}</a>`
   const icon = getResultIcon(tr.result)
-  sections.push(`## ${icon} ${nameLink}`)
+  sections.push(`## ${icon}\xa0${nameLink}`)
 
   const time = formatTime(tr.time)
   const headingLine2 =
@@ -216,7 +216,7 @@ function getTestsReport(ts: TestSuiteResult, runIndex: number, suiteIndex: numbe
   const tsSlug = makeSuiteSlug(runIndex, suiteIndex)
   const tsNameLink = `<a id="${tsSlug.id}" href="${tsSlug.link}">${tsName}</a>`
   const icon = getResultIcon(ts.result)
-  sections.push(`### ${icon} ${tsNameLink}`)
+  sections.push(`### ${icon}\xa0${tsNameLink}`)
 
   sections.push('```')
   for (const grp of groups) {
