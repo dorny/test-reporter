@@ -1,5 +1,6 @@
 import {ellipsis, fixEol} from '../utils/markdown-utils'
 import {TestRunResult} from '../test-results'
+import {getFirstNonEmptyLine} from '../utils/parse-utils'
 
 type Annotation = {
   path: string
@@ -96,11 +97,6 @@ function enforceCheckRunLimits(err: Annotation): Annotation {
     err.raw_details = ellipsis(err.raw_details, 65535)
   }
   return err
-}
-
-function getFirstNonEmptyLine(stackTrace: string): string | undefined {
-  const lines = stackTrace.split(/\r?\n/g)
-  return lines.find(str => !/^\s*$/.test(str))
 }
 
 function ident(text: string, prefix: string): string {

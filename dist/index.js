@@ -1111,6 +1111,7 @@ exports.JestJunitParser = JestJunitParser;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getAnnotations = void 0;
 const markdown_utils_1 = __nccwpck_require__(6482);
+const parse_utils_1 = __nccwpck_require__(7811);
 function getAnnotations(results, maxCount) {
     var _a, _b, _c, _d;
     if (maxCount === 0) {
@@ -1142,7 +1143,7 @@ function getAnnotations(results, maxCount) {
                         suiteName: ts.name,
                         testName: tc.name,
                         details: err.details,
-                        message: (_d = (_c = err.message) !== null && _c !== void 0 ? _c : getFirstNonEmptyLine(err.details)) !== null && _d !== void 0 ? _d : 'Test failed',
+                        message: (_d = (_c = err.message) !== null && _c !== void 0 ? _c : parse_utils_1.getFirstNonEmptyLine(err.details)) !== null && _d !== void 0 ? _d : 'Test failed',
                         path,
                         line
                     });
@@ -1179,10 +1180,6 @@ function enforceCheckRunLimits(err) {
         err.raw_details = markdown_utils_1.ellipsis(err.raw_details, 65535);
     }
     return err;
-}
-function getFirstNonEmptyLine(stackTrace) {
-    const lines = stackTrace.split(/\r?\n/g);
-    return lines.find(str => !/^\s*$/.test(str));
 }
 function ident(text, prefix) {
     return text
@@ -1222,50 +1219,61 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getReport = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const markdown_utils_1 = __nccwpck_require__(6482);
+const parse_utils_1 = __nccwpck_require__(7811);
 const slugger_1 = __nccwpck_require__(3328);
+const MAX_REPORT_LENGTH = 65535;
 const defaultOptions = {
     listSuites: 'all',
     listTests: 'all'
 };
 function getReport(results, options = defaultOptions) {
     core.info('Generating check run summary');
-    const maxReportLength = 65535;
     applySort(results);
     const opts = { ...options };
-    let report = renderReport(results, opts);
-    if (getByteLength(report) <= maxReportLength) {
+    let lines = renderReport(results, opts);
+    let report = lines.join('\n');
+    if (getByteLength(report) <= MAX_REPORT_LENGTH) {
         return report;
     }
     if (opts.listTests === 'all') {
         core.info("Test report summary is too big - setting 'listTests' to 'failed'");
         opts.listTests = 'failed';
-        report = renderReport(results, opts);
-        if (getByteLength(report) <= maxReportLength) {
+        lines = renderReport(results, opts);
+        report = lines.join('\n');
+        if (getByteLength(report) <= MAX_REPORT_LENGTH) {
             return report;
         }
     }
-    if (opts.listSuites === 'all') {
-        core.info("Test report summary is too big - setting 'listSuites' to 'failed'");
-        opts.listSuites = 'failed';
-        report = renderReport(results, opts);
-        if (getByteLength(report) <= maxReportLength) {
-            return report;
-        }
-    }
-    if (opts.listTests !== 'none') {
-        core.info("Test report summary is too big - setting 'listTests' to 'none'");
-        opts.listTests = 'none';
-        report = renderReport(results, opts);
-        if (getByteLength(report) <= maxReportLength) {
-            return report;
-        }
-    }
-    core.warning(`Test report summary exceeded limit of ${maxReportLength} bytes`);
-    const badge = getReportBadge(results);
-    const msg = `**Test report summary exceeded limit of ${maxReportLength} bytes and was removed**`;
-    return `${badge}\n${msg}`;
+    core.warning(`Test report summary exceeded limit of ${MAX_REPORT_LENGTH} bytes and will be trimmed`);
+    return trimReport(lines);
 }
 exports.getReport = getReport;
+function trimReport(lines) {
+    const closingBlock = '```';
+    const errorMsg = `**Report exceeded GitHub limit of ${MAX_REPORT_LENGTH} bytes and has been trimmed**`;
+    const maxErrorMsgLength = closingBlock.length + errorMsg.length + 2;
+    const maxReportLength = MAX_REPORT_LENGTH - maxErrorMsgLength;
+    let reportLength = 0;
+    let codeBlock = false;
+    let endLineIndex = 0;
+    for (endLineIndex = 0; endLineIndex < lines.length; endLineIndex++) {
+        const line = lines[endLineIndex];
+        const lineLength = getByteLength(line);
+        reportLength += lineLength + 1;
+        if (reportLength > maxReportLength) {
+            break;
+        }
+        if (line === '```') {
+            codeBlock = !codeBlock;
+        }
+    }
+    const reportLines = lines.slice(0, endLineIndex);
+    if (codeBlock) {
+        reportLines.push('```');
+    }
+    reportLines.push(errorMsg);
+    return reportLines.join('\n');
+}
 function applySort(results) {
     results.sort((a, b) => a.path.localeCompare(b.path));
     for (const res of results) {
@@ -1281,7 +1289,7 @@ function renderReport(results, options) {
     sections.push(badge);
     const runs = getTestRunsReport(results, options);
     sections.push(...runs);
-    return sections.join('\n');
+    return sections;
 }
 function getReportBadge(results) {
     const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
@@ -1337,7 +1345,7 @@ function getSuitesReport(tr, runIndex, options) {
     const trSlug = makeRunSlug(runIndex);
     const nameLink = `<a id="${trSlug.id}" href="${trSlug.link}">${tr.path}</a>`;
     const icon = getResultIcon(tr.result);
-    sections.push(`## ${nameLink} ${icon}`);
+    sections.push(`## ${icon} ${nameLink}`);
     const time = markdown_utils_1.formatTime(tr.time);
     const headingLine2 = tr.tests > 0
         ? `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`
@@ -1367,7 +1375,11 @@ function getSuitesReport(tr, runIndex, options) {
     return sections;
 }
 function getTestsReport(ts, runIndex, suiteIndex, options) {
-    const groups = options.listTests === 'failed' ? ts.failedGroups : ts.groups;
+    var _a, _b, _c;
+    if (options.listTests === 'failed' && ts.result !== 'failed') {
+        return [];
+    }
+    const groups = ts.groups;
     if (groups.length === 0) {
         return [];
     }
@@ -1376,24 +1388,25 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
     const tsSlug = makeSuiteSlug(runIndex, suiteIndex);
     const tsNameLink = `<a id="${tsSlug.id}" href="${tsSlug.link}">${tsName}</a>`;
     const icon = getResultIcon(ts.result);
-    sections.push(`### ${tsNameLink} ${icon}`);
-    const tsTime = markdown_utils_1.formatTime(ts.time);
-    const headingLine2 = `**${ts.tests}** tests were completed in **${tsTime}** with **${ts.passed}** passed, **${ts.failed}** failed and **${ts.skipped}** skipped.`;
-    sections.push(headingLine2);
+    sections.push(`### ${icon} ${tsNameLink}`);
+    sections.push('```');
     for (const grp of groups) {
-        const tests = options.listTests === 'failed' ? grp.failedTests : grp.tests;
-        if (tests.length === 0) {
-            continue;
+        if (grp.name) {
+            sections.push(grp.name);
         }
-        const grpHeader = grp.name ? `\n**${grp.name}**` : '';
-        const testsTable = markdown_utils_1.table(['Result', 'Test', 'Time'], [markdown_utils_1.Align.Center, markdown_utils_1.Align.Left, markdown_utils_1.Align.Right], ...grp.tests.map(tc => {
-            const name = tc.name;
-            const time = markdown_utils_1.formatTime(tc.time);
+        const space = grp.name ? '  ' : '';
+        for (const tc of grp.tests) {
             const result = getResultIcon(tc.result);
-            return [result, name, time];
-        }));
-        sections.push(grpHeader, testsTable);
+            sections.push(`${space}${result} ${tc.name}`);
+            if (tc.error) {
+                const lines = (_c = ((_a = tc.error.message) !== null && _a !== void 0 ? _a : (_b = parse_utils_1.getFirstNonEmptyLine(tc.error.details)) === null || _b === void 0 ? void 0 : _b.trim())) === null || _c === void 0 ? void 0 : _c.split(/\r?\n/g).map(l => '\t' + l);
+                if (lines) {
+                    sections.push(...lines);
+                }
+            }
+        }
     }
+    sections.push('```');
     return sections;
 }
 function makeRunSlug(runIndex) {
@@ -1799,7 +1812,7 @@ function ellipsis(text, maxLength) {
 exports.ellipsis = ellipsis;
 function formatTime(ms) {
     if (ms > 1000) {
-        return `${(ms / 1000).toFixed(3)}s`;
+        return `${Math.round(ms / 1000)}s`;
     }
     return `${Math.round(ms)}ms`;
 }
@@ -1814,7 +1827,7 @@ exports.formatTime = formatTime;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.parseIsoDate = exports.parseNetDuration = void 0;
+exports.getFirstNonEmptyLine = exports.parseIsoDate = exports.parseNetDuration = void 0;
 function parseNetDuration(str) {
     const durationRe = /^(\d\d):(\d\d):(\d\d(?:\.\d+)?)$/;
     const durationMatch = str.match(durationRe);
@@ -1833,6 +1846,11 @@ function parseIsoDate(str) {
     return new Date(str);
 }
 exports.parseIsoDate = parseIsoDate;
+function getFirstNonEmptyLine(stackTrace) {
+    const lines = stackTrace.split(/\r?\n/g);
+    return lines.find(str => !/^\s*$/.test(str));
+}
+exports.getFirstNonEmptyLine = getFirstNonEmptyLine;
 
 
 /***/ }),
