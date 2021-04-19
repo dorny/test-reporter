@@ -16,8 +16,8 @@ This [Github Action](https://github.com/features/actions) displays test results 
 - .NET / [xUnit](https://xunit.net/) / [NUnit](https://nunit.org/) / [MSTest](https://github.com/Microsoft/testfx-docs)
 - Dart / [test](https://pub.dev/packages/test)
 - Flutter / [test](https://pub.dev/packages/test)
-- JavaScript / [JEST](https://jestjs.io/)
 - Java / [JUnit](https://junit.org/)
+- JavaScript / [JEST](https://jestjs.io/) / [Mocha](https://mochajs.org/)
 
 For more information see [Supported formats](#supported-formats) section.
 
@@ -54,9 +54,9 @@ jobs:
 ## Recommended setup for public repositories
 
 Workflows triggered by pull requests from forked repositories are executed with read-only token and therefore can't create check runs.
-To workaround this security restriction it's required to use two separate workflows:
-1. `CI` runs in the context of PR head branch with read-only token. It executes the tests and uploads test results as build artifact
-2. `Test Report` runs in the context of repository main branch with read/write token. It will download test results and create reports
+To workaround this security restriction, it's required to use two separate workflows:
+1. `CI` runs in the context of the PR head branch with the read-only token. It executes the tests and uploads test results as a build artifact
+2. `Test Report` runs in the context of the repository main branch with read/write token. It will download test results and create reports
 
 **PR head branch:**  *.github/workflows/ci.yml*
 ```yaml
@@ -116,7 +116,7 @@ jobs:
 
     # Coma separated list of paths to test results
     # Supports wildcards via [fast-glob](https://github.com/mrmlnc/fast-glob)
-    # All matched result files must be of same format
+    # All matched result files must be of the same format
     path: ''
 
     # Format of test results. Supported options:
@@ -125,6 +125,7 @@ jobs:
     #   flutter-json
     #   java-junit
     #   jest-junit
+    #   mocha-json
     reporter: ''
 
     # Limits which test suites are listed:
@@ -142,7 +143,7 @@ jobs:
     # Must be less or equal to 50.
     max-annotations: '10'
 
-    # Set action as failed if test report contain any failed test
+    # Set action as failed if test report contains any failed test
     fail-on-error: 'true'
 
     # Relative path under $GITHUB_WORKSPACE where the repository was checked out.
@@ -224,8 +225,8 @@ Or with (undocumented) CLI argument:
 
 
 According to documentation `dart_test.yaml` should be at the root of the package, next to the package's pubspec.
-On current `stable` and `beta` channels it doesn't work and you have to put `dart_test.yaml` inside your `test` folder.
-On `dev` channel it's already fixed.
+On current `stable` and `beta` channels it doesn't work, and you have to put `dart_test.yaml` inside your `test` folder.
+On `dev` channel, it's already fixed.
 
 For more information see:
 - [test package](https://pub.dev/packages/test)
@@ -239,17 +240,17 @@ For more information see:
   <summary>java-junit (Experimental)</summary>
 
 Support for [JUnit](https://Junit.org/) XML is experimental - should work but it was not extensively tested.
-To have code annotations working properly it's required your directory structure matches package name.
-This is due to the fact Java stacktraces doesn't contains full path to the source file.
-Some heuristic was necessary to figure out mapping between line in stack trace and actual source file.
+To have code annotations working properly, it's required your directory structure matches the package name.
+This is due to the fact Java stack traces don't contain a full path to the source file.
+Some heuristic was necessary to figure out the mapping between the line in the stack trace and an actual source file.
 </details>
 
 <details>
   <summary>jest-Junit</summary>
 
-[JEST](https://jestjs.io/) testing framework support requires usage of [jest-Junit](https://github.com/jest-community/jest-Junit) reporter.
+[JEST](https://jestjs.io/) testing framework support requires the usage of [jest-Junit](https://github.com/jest-community/jest-Junit) reporter.
 It will create test results in Junit XML format which can be then processed by this action.
-You can use following example configuration in `package.json`:
+You can use the following example configuration in `package.json`:
 ```json
 "scripts": {
   "test": "jest --ci --reporters=default --reporters=jest-Junit"
@@ -272,19 +273,38 @@ You can use following example configuration in `package.json`:
 Configuration of `uniqueOutputName`, `suiteNameTemplate`, `classNameTemplate`, `titleTemplate` is important for proper visualization of test results.
 </details>
 
+<details>
+  <summary>mocha-json</summary>
+
+[Mocha](https://mochajs.org/) testing framework support requires:
+- Mocha version [v7.2.0](https://github.com/mochajs/mocha/releases/tag/v7.2.0) or higher
+- Usage of [json](https://mochajs.org/#json) reporter.
+
+You can use the following example configuration in `package.json`:
+```json
+"scripts": {
+  "test": "mocha --reporter json > test-results.json"
+}
+```
+
+Test processing might fail if any of your tests write anything on standard output.
+Mocha, unfortunately, doesn't have the option to store `json` output directly to the file, and we have to rely on redirecting its standard output.
+There is a work in progress to fix it: [mocha#4607](https://github.com/mochajs/mocha/pull/4607)
+</details>
+
 ## GitHub limitations
 
-Unfortunately there are some known issues and limitations caused by GitHub API:
+Unfortunately, there are some known issues and limitations caused by GitHub API:
 
 - Test report (i.e. Check Run summary) is markdown text. No custom styling or HTML is possible.
 - Maximum report size is 65535 bytes. Input parameters `list-suites` and `list-tests` will be automatically adjusted if max size is exceeded.
-- Test report can't reference any additional files (e.g. screenshots). You can use `actions/upload-artifact@v2` to upload them and inspect manually.
-- Check Runs are created for specific commit SHA. it's not possible to specify under which workflow test report should belong if there are more
-  workflows running for same SHA. Thanks to this GitHub "feature" it's possible your test report will appear in unexpected place in GitHub UI.
-  For more information see [#67](https://github.com/dorny/test-reporter/issues/67).
+- Test report can't reference any additional files (e.g. screenshots). You can use `actions/upload-artifact@v2` to upload them and inspect them manually.
+- Check Runs are created for specific commit SHA. It's not possible to specify under which workflow test report should belong if more
+  workflows are running for the same SHA. Thanks to this GitHub "feature" it's possible your test report will appear in an unexpected place in GitHub UI.
+  For more information, see [#67](https://github.com/dorny/test-reporter/issues/67).
 
 ## See also
-- [paths-filter](https://github.com/dorny/paths-filter) - Conditionally run actions based on files modified by PR, feature branch or pushed commits
+- [paths-filter](https://github.com/dorny/paths-filter) - Conditionally run actions based on files modified by PR, feature branch, or pushed commits
 
 ## License
 

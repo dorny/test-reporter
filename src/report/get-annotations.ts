@@ -54,7 +54,7 @@ export function getAnnotations(results: TestRunResult[], maxCount: number): Anno
           errors.push({
             testRunPaths: [tr.path],
             suiteName: ts.name,
-            testName: tc.name,
+            testName: tg.name ? `${tg.name} ► ${tc.name}` : tc.name,
             details: err.details,
             message: err.message ?? getFirstNonEmptyLine(err.details) ?? 'Test failed',
             path,

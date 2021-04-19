@@ -14,6 +14,7 @@ import {DartJsonParser} from './parsers/dart-json/dart-json-parser'
 import {DotnetTrxParser} from './parsers/dotnet-trx/dotnet-trx-parser'
 import {JavaJunitParser} from './parsers/java-junit/java-junit-parser'
 import {JestJunitParser} from './parsers/jest-junit/jest-junit-parser'
+import {MochaJsonParser} from './parsers/mocha-json/mocha-json-parser'
 
 import {normalizeDirPath} from './utils/path-utils'
 import {getCheckRunContext} from './utils/github-utils'
@@ -201,6 +202,8 @@ class TestReporter {
         return new JavaJunitParser(options)
       case 'jest-junit':
         return new JestJunitParser(options)
+      case 'mocha-json':
+        return new MochaJsonParser(options)
       default:
         throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`)
     }
