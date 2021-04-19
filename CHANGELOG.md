@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.4.0
+- [Add support for mocha-json](https://github.com/dorny/test-reporter/pull/90)
+- [Use full URL to fix navigation from summary to suite details](https://github.com/dorny/test-reporter/pull/89)
+- [New report rendering with code blocks instead of tables](https://github.com/dorny/test-reporter/pull/88)
+- [Improve test error messages from flutter](https://github.com/dorny/test-reporter/pull/87)
+
 ## v1.3.1
 - [Fix: parsing of .NET duration string without milliseconds](https://github.com/dorny/test-reporter/pull/84)
 - [Fix: dart-json - remove group name from test case names](https://github.com/dorny/test-reporter/pull/85)
