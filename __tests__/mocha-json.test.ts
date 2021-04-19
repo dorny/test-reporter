@@ -42,4 +42,26 @@ describe('mocha-json tests', () => {
     fs.mkdirSync(path.dirname(outputPath), {recursive: true})
     fs.writeFileSync(outputPath, report)
   })
+
+  it('report from mochajs/mocha test results matches snapshot', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'external', 'mocha', 'mocha-test-results.json')
+    const trackedFilesPath = path.join(__dirname, 'fixtures', 'external', 'mocha', 'files.txt')
+    const outputPath = path.join(__dirname, '__outputs__', 'mocha-test-results.md')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const trackedFiles = fs.readFileSync(trackedFilesPath, {encoding: 'utf8'}).split(/\n\r?/g)
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles
+    }
+
+    const parser = new MochaJsonParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+    expect(result).toMatchSnapshot()
+
+    const report = getReport([result])
+    fs.mkdirSync(path.dirname(outputPath), {recursive: true})
+    fs.writeFileSync(outputPath, report)
+  })
 })
