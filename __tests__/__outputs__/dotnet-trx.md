@@ -1,18 +1,21 @@
 ![Tests failed](https://img.shields.io/badge/tests-3%20passed%2C%203%20failed%2C%201%20skipped-critical)
-## <a id="user-content-r0" href="#r0">fixtures/dotnet-trx.trx</a> ❌
-**7** tests were completed in **1.061s** with **3** passed, **3** failed and **1** skipped.
+## ❌ <a id="user-content-r0" href="#r0">fixtures/dotnet-trx.trx</a>
+**7** tests were completed in **1s** with **3** passed, **3** failed and **1** skipped.
 |Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
 |[DotnetTests.XUnitTests.CalculatorTests](#r0s0)|3✔️|3❌|1✖️|110ms|
-### <a id="user-content-r0s0" href="#r0s0">DotnetTests.XUnitTests.CalculatorTests</a> ❌
-**7** tests were completed in **110ms** with **3** passed, **3** failed and **1** skipped.
-
-|Result|Test|Time|
-|:---:|:---|---:|
-|❌|Exception_In_TargetTest|0ms|
-|❌|Exception_In_Test|2ms|
-|❌|Failing_Test|3ms|
-|✔️|Passing_Test|0ms|
-|✔️|Passing_Test_With_Name|0ms|
-|✖️|Skipped_Test|1ms|
-|✔️|Timeout_Test|102ms|
+### ❌ <a id="user-content-r0s0" href="#r0s0">DotnetTests.XUnitTests.CalculatorTests</a>
+```
+❌ Exception_In_TargetTest
+	System.DivideByZeroException : Attempted to divide by zero.
+❌ Exception_In_Test
+	System.Exception : Test
+❌ Failing_Test
+	Assert.Equal() Failure
+	Expected: 3
+	Actual:   2
+✔️ Passing_Test
+✔️ Passing_Test_With_Name
+✖️ Skipped_Test
+✔️ Timeout_Test
+```

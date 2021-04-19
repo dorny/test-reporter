@@ -221,6 +221,7 @@ const dart_json_parser_1 = __nccwpck_require__(4528);
 const dotnet_trx_parser_1 = __nccwpck_require__(2664);
 const java_junit_parser_1 = __nccwpck_require__(676);
 const jest_junit_parser_1 = __nccwpck_require__(1113);
+const mocha_json_parser_1 = __nccwpck_require__(6043);
 const path_utils_1 = __nccwpck_require__(4070);
 const github_utils_1 = __nccwpck_require__(3522);
 const markdown_utils_1 = __nccwpck_require__(6482);
@@ -324,18 +325,29 @@ class TestReporter {
             const tr = await parser.parse(file, content);
             results.push(tr);
         }
+        core.info(`Creating check run ${name}`);
+        const createResp = await this.octokit.checks.create({
+            head_sha: this.context.sha,
+            name,
+            status: 'in_progress',
+            output: {
+                title: name,
+                summary: ''
+            },
+            ...github.context.repo
+        });
         core.info('Creating report summary');
         const { listSuites, listTests } = this;
-        const summary = get_report_1.getReport(results, { listSuites, listTests });
+        const baseUrl = createResp.data.html_url;
+        const summary = get_report_1.getReport(results, { listSuites, listTests, baseUrl });
         core.info('Creating annotations');
         const annotations = get_annotations_1.getAnnotations(results, this.maxAnnotations);
         const isFailed = results.some(tr => tr.result === 'failed');
         const conclusion = isFailed ? 'failure' : 'success';
         const icon = isFailed ? markdown_utils_1.Icon.fail : markdown_utils_1.Icon.success;
-        core.info(`Creating check run with conclusion ${conclusion}`);
-        const resp = await this.octokit.checks.create({
-            head_sha: this.context.sha,
-            name,
+        core.info(`Updating check run conclusion (${conclusion}) and output`);
+        const resp = await this.octokit.checks.update({
+            check_run_id: createResp.data.id,
             conclusion,
             status: 'completed',
             output: {
@@ -362,6 +374,8 @@ class TestReporter {
                 return new java_junit_parser_1.JavaJunitParser(options);
             case 'jest-junit':
                 return new jest_junit_parser_1.JestJunitParser(options);
+            case 'mocha-json':
+                return new mocha_json_parser_1.MochaJsonParser(options);
             default:
                 throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`);
         }
@@ -512,14 +526,14 @@ class DartJsonParser {
             return undefined;
         }
         const { trackedFiles } = this.options;
-        const message = (_b = (_a = test.error) === null || _a === void 0 ? void 0 : _a.error) !== null && _b !== void 0 ? _b : '';
-        const stackTrace = (_d = (_c = test.error) === null || _c === void 0 ? void 0 : _c.stackTrace) !== null && _d !== void 0 ? _d : '';
+        const stackTrace = (_b = (_a = test.error) === null || _a === void 0 ? void 0 : _a.stackTrace) !== null && _b !== void 0 ? _b : '';
         const print = test.print
             .filter(p => p.messageType === 'print')
             .map(p => p.message)
             .join('\n');
         const details = [print, stackTrace].filter(str => str !== '').join('\n');
         const src = this.exceptionThrowSource(details, trackedFiles);
+        const message = this.getErrorMessage((_d = (_c = test.error) === null || _c === void 0 ? void 0 : _c.error) !== null && _d !== void 0 ? _d : '', print);
         let path;
         let line;
         if (src !== undefined) {
@@ -539,6 +553,19 @@ class DartJsonParser {
             message,
             details
         };
+    }
+    getErrorMessage(message, print) {
+        if (this.sdk === 'flutter') {
+            const uselessMessageRe = /^Test failed\. See exception logs above\.\nThe test description was:/m;
+            const flutterPrintRe = /^══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═+\s+(.*)\s+When the exception was thrown, this was the stack:/ms;
+            if (uselessMessageRe.test(message)) {
+                const match = print.match(flutterPrintRe);
+                if (match !== null) {
+                    return match[1];
+                }
+            }
+        }
+        return message || print;
     }
     exceptionThrowSource(ex, trackedFiles) {
         const lines = ex.split(/\r?\n/g);
@@ -663,6 +690,7 @@ class DotnetTrxParser {
         const trx = await this.getTrxReport(path, content);
         const tc = this.getTestClasses(trx);
         const tr = this.getTestRunResult(path, trx, tc);
+        tr.sort(true);
         return tr;
     }
     async getTrxReport(path, content) {
@@ -703,10 +731,6 @@ class DotnetTrxParser {
             tc.tests.push(test);
         }
         const result = Object.values(testClasses);
-        result.sort((a, b) => a.name.localeCompare(b.name));
-        for (const tc of result) {
-            tc.tests.sort((a, b) => a.name.localeCompare(b.name));
-        }
         return result;
     }
     getTestRunResult(path, trx, testClasses) {
@@ -980,6 +1004,7 @@ exports.JavaJunitParser = JavaJunitParser;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.JestJunitParser = void 0;
 const xml2js_1 = __nccwpck_require__(6189);
+const node_utils_1 = __nccwpck_require__(5824);
 const path_utils_1 = __nccwpck_require__(4070);
 const test_results_1 = __nccwpck_require__(2768);
 class JestJunitParser {
@@ -1045,7 +1070,7 @@ class JestJunitParser {
         const details = tc.failure[0];
         let path;
         let line;
-        const src = this.exceptionThrowSource(details);
+        const src = node_utils_1.getExceptionSource(details, this.options.trackedFiles, file => this.getRelativePath(file));
         if (src) {
             path = src.path;
             line = src.line;
@@ -1056,29 +1081,13 @@ class JestJunitParser {
             details
         };
     }
-    exceptionThrowSource(stackTrace) {
-        const lines = stackTrace.split(/\r?\n/);
-        const re = /\((.*):(\d+):\d+\)$/;
-        const { trackedFiles } = this.options;
-        for (const str of lines) {
-            const match = str.match(re);
-            if (match !== null) {
-                const [_, fileStr, lineStr] = match;
-                const filePath = path_utils_1.normalizeFilePath(fileStr);
-                if (filePath.startsWith('internal/') || filePath.includes('/node_modules/')) {
-                    continue;
-                }
-                const workDir = this.getWorkDir(filePath);
-                if (!workDir) {
-                    continue;
-                }
-                const path = filePath.substr(workDir.length);
-                if (trackedFiles.includes(path)) {
-                    const line = parseInt(lineStr);
-                    return { path, line };
-                }
-            }
+    getRelativePath(path) {
+        path = path_utils_1.normalizeFilePath(path);
+        const workDir = this.getWorkDir(path);
+        if (workDir !== undefined && path.startsWith(workDir)) {
+            path = path.substr(workDir.length);
         }
+        return path;
     }
     getWorkDir(path) {
         var _a, _b;
@@ -1086,6 +1095,108 @@ class JestJunitParser {
     }
 }
 exports.JestJunitParser = JestJunitParser;
+
+
+/***/ }),
+
+/***/ 6043:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.MochaJsonParser = void 0;
+const test_results_1 = __nccwpck_require__(2768);
+const node_utils_1 = __nccwpck_require__(5824);
+const path_utils_1 = __nccwpck_require__(4070);
+class MochaJsonParser {
+    constructor(options) {
+        this.options = options;
+    }
+    async parse(path, content) {
+        const mocha = this.getMochaJson(path, content);
+        const result = this.getTestRunResult(path, mocha);
+        result.sort(true);
+        return Promise.resolve(result);
+    }
+    getMochaJson(path, content) {
+        try {
+            return JSON.parse(content);
+        }
+        catch (e) {
+            throw new Error(`Invalid JSON at ${path}\n\n${e}`);
+        }
+    }
+    getTestRunResult(resultsPath, mocha) {
+        const suitesMap = {};
+        const getSuite = (test) => {
+            var _a;
+            const path = this.getRelativePath(test.file);
+            return (_a = suitesMap[path]) !== null && _a !== void 0 ? _a : (suitesMap[path] = new test_results_1.TestSuiteResult(path, []));
+        };
+        for (const test of mocha.passes) {
+            const suite = getSuite(test);
+            this.processTest(suite, test, 'success');
+        }
+        for (const test of mocha.failures) {
+            const suite = getSuite(test);
+            this.processTest(suite, test, 'failed');
+        }
+        for (const test of mocha.pending) {
+            const suite = getSuite(test);
+            this.processTest(suite, test, 'skipped');
+        }
+        const suites = Object.values(suitesMap);
+        return new test_results_1.TestRunResult(resultsPath, suites, mocha.stats.duration);
+    }
+    processTest(suite, test, result) {
+        var _a;
+        const groupName = test.fullTitle !== test.title
+            ? test.fullTitle.substr(0, test.fullTitle.length - test.title.length).trimEnd()
+            : null;
+        let group = suite.groups.find(grp => grp.name === groupName);
+        if (group === undefined) {
+            group = new test_results_1.TestGroupResult(groupName, []);
+            suite.groups.push(group);
+        }
+        const error = this.getTestCaseError(test);
+        const testCase = new test_results_1.TestCaseResult(test.title, result, (_a = test.duration) !== null && _a !== void 0 ? _a : 0, error);
+        group.tests.push(testCase);
+    }
+    getTestCaseError(test) {
+        const details = test.err.stack;
+        const message = test.err.message;
+        if (details === undefined) {
+            return undefined;
+        }
+        let path;
+        let line;
+        const src = node_utils_1.getExceptionSource(details, this.options.trackedFiles, file => this.getRelativePath(file));
+        if (src) {
+            path = src.path;
+            line = src.line;
+        }
+        return {
+            path,
+            line,
+            message,
+            details
+        };
+    }
+    getRelativePath(path) {
+        path = path_utils_1.normalizeFilePath(path);
+        const workDir = this.getWorkDir(path);
+        if (workDir !== undefined && path.startsWith(workDir)) {
+            path = path.substr(workDir.length);
+        }
+        return path;
+    }
+    getWorkDir(path) {
+        var _a, _b;
+        return ((_b = (_a = this.options.workDir) !== null && _a !== void 0 ? _a : this.assumedWorkDir) !== null && _b !== void 0 ? _b : (this.assumedWorkDir = path_utils_1.getBasePath(path, this.options.trackedFiles)));
+    }
+}
+exports.MochaJsonParser = MochaJsonParser;
 
 
 /***/ }),
@@ -1098,6 +1209,7 @@ exports.JestJunitParser = JestJunitParser;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getAnnotations = void 0;
 const markdown_utils_1 = __nccwpck_require__(6482);
+const parse_utils_1 = __nccwpck_require__(7811);
 function getAnnotations(results, maxCount) {
     var _a, _b, _c, _d;
     if (maxCount === 0) {
@@ -1127,9 +1239,9 @@ function getAnnotations(results, maxCount) {
                     errors.push({
                         testRunPaths: [tr.path],
                         suiteName: ts.name,
-                        testName: tc.name,
+                        testName: tg.name ? `${tg.name} ► ${tc.name}` : tc.name,
                         details: err.details,
-                        message: (_d = (_c = err.message) !== null && _c !== void 0 ? _c : getFirstNonEmptyLine(err.details)) !== null && _d !== void 0 ? _d : 'Test failed',
+                        message: (_d = (_c = err.message) !== null && _c !== void 0 ? _c : parse_utils_1.getFirstNonEmptyLine(err.details)) !== null && _d !== void 0 ? _d : 'Test failed',
                         path,
                         line
                     });
@@ -1166,10 +1278,6 @@ function enforceCheckRunLimits(err) {
         err.raw_details = markdown_utils_1.ellipsis(err.raw_details, 65535);
     }
     return err;
-}
-function getFirstNonEmptyLine(stackTrace) {
-    const lines = stackTrace.split(/\r?\n/g);
-    return lines.find(str => !/^\s*$/.test(str));
 }
 function ident(text, prefix) {
     return text
@@ -1209,50 +1317,62 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getReport = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const markdown_utils_1 = __nccwpck_require__(6482);
+const parse_utils_1 = __nccwpck_require__(7811);
 const slugger_1 = __nccwpck_require__(3328);
+const MAX_REPORT_LENGTH = 65535;
 const defaultOptions = {
     listSuites: 'all',
-    listTests: 'all'
+    listTests: 'all',
+    baseUrl: ''
 };
 function getReport(results, options = defaultOptions) {
     core.info('Generating check run summary');
-    const maxReportLength = 65535;
     applySort(results);
     const opts = { ...options };
-    let report = renderReport(results, opts);
-    if (getByteLength(report) <= maxReportLength) {
+    let lines = renderReport(results, opts);
+    let report = lines.join('\n');
+    if (getByteLength(report) <= MAX_REPORT_LENGTH) {
         return report;
     }
     if (opts.listTests === 'all') {
         core.info("Test report summary is too big - setting 'listTests' to 'failed'");
         opts.listTests = 'failed';
-        report = renderReport(results, opts);
-        if (getByteLength(report) <= maxReportLength) {
+        lines = renderReport(results, opts);
+        report = lines.join('\n');
+        if (getByteLength(report) <= MAX_REPORT_LENGTH) {
             return report;
         }
     }
-    if (opts.listSuites === 'all') {
-        core.info("Test report summary is too big - setting 'listSuites' to 'failed'");
-        opts.listSuites = 'failed';
-        report = renderReport(results, opts);
-        if (getByteLength(report) <= maxReportLength) {
-            return report;
-        }
-    }
-    if (opts.listTests !== 'none') {
-        core.info("Test report summary is too big - setting 'listTests' to 'none'");
-        opts.listTests = 'none';
-        report = renderReport(results, opts);
-        if (getByteLength(report) <= maxReportLength) {
-            return report;
-        }
-    }
-    core.warning(`Test report summary exceeded limit of ${maxReportLength} bytes`);
-    const badge = getReportBadge(results);
-    const msg = `**Test report summary exceeded limit of ${maxReportLength} bytes and was removed**`;
-    return `${badge}\n${msg}`;
+    core.warning(`Test report summary exceeded limit of ${MAX_REPORT_LENGTH} bytes and will be trimmed`);
+    return trimReport(lines);
 }
 exports.getReport = getReport;
+function trimReport(lines) {
+    const closingBlock = '```';
+    const errorMsg = `**Report exceeded GitHub limit of ${MAX_REPORT_LENGTH} bytes and has been trimmed**`;
+    const maxErrorMsgLength = closingBlock.length + errorMsg.length + 2;
+    const maxReportLength = MAX_REPORT_LENGTH - maxErrorMsgLength;
+    let reportLength = 0;
+    let codeBlock = false;
+    let endLineIndex = 0;
+    for (endLineIndex = 0; endLineIndex < lines.length; endLineIndex++) {
+        const line = lines[endLineIndex];
+        const lineLength = getByteLength(line);
+        reportLength += lineLength + 1;
+        if (reportLength > maxReportLength) {
+            break;
+        }
+        if (line === '```') {
+            codeBlock = !codeBlock;
+        }
+    }
+    const reportLines = lines.slice(0, endLineIndex);
+    if (codeBlock) {
+        reportLines.push('```');
+    }
+    reportLines.push(errorMsg);
+    return reportLines.join('\n');
+}
 function applySort(results) {
     results.sort((a, b) => a.path.localeCompare(b.path));
     for (const res of results) {
@@ -1268,7 +1388,7 @@ function renderReport(results, options) {
     sections.push(badge);
     const runs = getTestRunsReport(results, options);
     sections.push(...runs);
-    return sections.join('\n');
+    return sections;
 }
 function getReportBadge(results) {
     const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
@@ -1305,7 +1425,7 @@ function getTestRunsReport(testRuns, options) {
         const tableData = testRuns.map((tr, runIndex) => {
             const time = markdown_utils_1.formatTime(tr.time);
             const name = tr.path;
-            const addr = makeRunSlug(runIndex).link;
+            const addr = options.baseUrl + makeRunSlug(runIndex).link;
             const nameLink = markdown_utils_1.link(name, addr);
             const passed = tr.passed > 0 ? `${tr.passed}${markdown_utils_1.Icon.success}` : '';
             const failed = tr.failed > 0 ? `${tr.failed}${markdown_utils_1.Icon.fail}` : '';
@@ -1322,9 +1442,9 @@ function getTestRunsReport(testRuns, options) {
 function getSuitesReport(tr, runIndex, options) {
     const sections = [];
     const trSlug = makeRunSlug(runIndex);
-    const nameLink = `<a id="${trSlug.id}" href="${trSlug.link}">${tr.path}</a>`;
+    const nameLink = `<a id="${trSlug.id}" href="${options.baseUrl + trSlug.link}">${tr.path}</a>`;
     const icon = getResultIcon(tr.result);
-    sections.push(`## ${nameLink} ${icon}`);
+    sections.push(`## ${icon}\xa0${nameLink}`);
     const time = markdown_utils_1.formatTime(tr.time);
     const headingLine2 = tr.tests > 0
         ? `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`
@@ -1336,7 +1456,7 @@ function getSuitesReport(tr, runIndex, options) {
             const tsTime = markdown_utils_1.formatTime(s.time);
             const tsName = s.name;
             const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed');
-            const tsAddr = makeSuiteSlug(runIndex, suiteIndex).link;
+            const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex).link;
             const tsNameLink = skipLink ? tsName : markdown_utils_1.link(tsName, tsAddr);
             const passed = s.passed > 0 ? `${s.passed}${markdown_utils_1.Icon.success}` : '';
             const failed = s.failed > 0 ? `${s.failed}${markdown_utils_1.Icon.fail}` : '';
@@ -1354,33 +1474,38 @@ function getSuitesReport(tr, runIndex, options) {
     return sections;
 }
 function getTestsReport(ts, runIndex, suiteIndex, options) {
-    const groups = options.listTests === 'failed' ? ts.failedGroups : ts.groups;
+    var _a, _b, _c;
+    if (options.listTests === 'failed' && ts.result !== 'failed') {
+        return [];
+    }
+    const groups = ts.groups;
     if (groups.length === 0) {
         return [];
     }
     const sections = [];
     const tsName = ts.name;
     const tsSlug = makeSuiteSlug(runIndex, suiteIndex);
-    const tsNameLink = `<a id="${tsSlug.id}" href="${tsSlug.link}">${tsName}</a>`;
+    const tsNameLink = `<a id="${tsSlug.id}" href="${options.baseUrl + tsSlug.link}">${tsName}</a>`;
     const icon = getResultIcon(ts.result);
-    sections.push(`### ${tsNameLink} ${icon}`);
-    const tsTime = markdown_utils_1.formatTime(ts.time);
-    const headingLine2 = `**${ts.tests}** tests were completed in **${tsTime}** with **${ts.passed}** passed, **${ts.failed}** failed and **${ts.skipped}** skipped.`;
-    sections.push(headingLine2);
+    sections.push(`### ${icon}\xa0${tsNameLink}`);
+    sections.push('```');
     for (const grp of groups) {
-        const tests = options.listTests === 'failed' ? grp.failedTests : grp.tests;
-        if (tests.length === 0) {
-            continue;
+        if (grp.name) {
+            sections.push(grp.name);
         }
-        const grpHeader = grp.name ? `\n**${grp.name}**` : '';
-        const testsTable = markdown_utils_1.table(['Result', 'Test', 'Time'], [markdown_utils_1.Align.Center, markdown_utils_1.Align.Left, markdown_utils_1.Align.Right], ...grp.tests.map(tc => {
-            const name = tc.name;
-            const time = markdown_utils_1.formatTime(tc.time);
+        const space = grp.name ? '  ' : '';
+        for (const tc of grp.tests) {
             const result = getResultIcon(tc.result);
-            return [result, name, time];
-        }));
-        sections.push(grpHeader, testsTable);
+            sections.push(`${space}${result} ${tc.name}`);
+            if (tc.error) {
+                const lines = (_c = ((_a = tc.error.message) !== null && _a !== void 0 ? _a : (_b = parse_utils_1.getFirstNonEmptyLine(tc.error.details)) === null || _b === void 0 ? void 0 : _b.trim())) === null || _c === void 0 ? void 0 : _c.split(/\r?\n/g).map(l => '\t' + l);
+                if (lines) {
+                    sections.push(...lines);
+                }
+            }
+        }
     }
+    sections.push('```');
     return sections;
 }
 function makeRunSlug(runIndex) {
@@ -1442,6 +1567,14 @@ class TestRunResult {
     get failedSuites() {
         return this.suites.filter(s => s.result === 'failed');
     }
+    sort(deep) {
+        this.suites.sort((a, b) => a.name.localeCompare(b.name));
+        if (deep) {
+            for (const suite of this.suites) {
+                suite.sort(deep);
+            }
+        }
+    }
 }
 exports.TestRunResult = TestRunResult;
 class TestSuiteResult {
@@ -1472,6 +1605,14 @@ class TestSuiteResult {
     get failedGroups() {
         return this.groups.filter(grp => grp.result === 'failed');
     }
+    sort(deep) {
+        this.groups.sort((a, b) => { var _a, _b; return ((_a = a.name) !== null && _a !== void 0 ? _a : '').localeCompare((_b = b.name) !== null && _b !== void 0 ? _b : ''); });
+        if (deep) {
+            for (const grp of this.groups) {
+                grp.sort();
+            }
+        }
+    }
 }
 exports.TestSuiteResult = TestSuiteResult;
 class TestGroupResult {
@@ -1496,6 +1637,9 @@ class TestGroupResult {
     }
     get failedTests() {
         return this.tests.filter(tc => tc.result === 'failed');
+    }
+    sort() {
+        this.tests.sort((a, b) => a.name.localeCompare(b.name));
     }
 }
 exports.TestGroupResult = TestGroupResult;
@@ -1786,11 +1930,46 @@ function ellipsis(text, maxLength) {
 exports.ellipsis = ellipsis;
 function formatTime(ms) {
     if (ms > 1000) {
-        return `${(ms / 1000).toFixed(3)}s`;
+        return `${Math.round(ms / 1000)}s`;
     }
     return `${Math.round(ms)}ms`;
 }
 exports.formatTime = formatTime;
+
+
+/***/ }),
+
+/***/ 5824:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getExceptionSource = void 0;
+const path_utils_1 = __nccwpck_require__(4070);
+function getExceptionSource(stackTrace, trackedFiles, getRelativePath) {
+    const lines = stackTrace.split(/\r?\n/);
+    const re = /\((.*):(\d+):\d+\)$/;
+    for (const str of lines) {
+        const match = str.match(re);
+        if (match !== null) {
+            const [_, fileStr, lineStr] = match;
+            const filePath = path_utils_1.normalizeFilePath(fileStr);
+            if (filePath.startsWith('internal/') || filePath.includes('/node_modules/')) {
+                continue;
+            }
+            const path = getRelativePath(filePath);
+            if (!path) {
+                continue;
+            }
+            if (trackedFiles.includes(path)) {
+                const line = parseInt(lineStr);
+                return { path, line };
+            }
+        }
+    }
+}
+exports.getExceptionSource = getExceptionSource;
 
 
 /***/ }),
@@ -1801,7 +1980,7 @@ exports.formatTime = formatTime;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.parseIsoDate = exports.parseNetDuration = void 0;
+exports.getFirstNonEmptyLine = exports.parseIsoDate = exports.parseNetDuration = void 0;
 function parseNetDuration(str) {
     const durationRe = /^(\d\d):(\d\d):(\d\d(?:\.\d+)?)$/;
     const durationMatch = str.match(durationRe);
@@ -1820,6 +1999,11 @@ function parseIsoDate(str) {
     return new Date(str);
 }
 exports.parseIsoDate = parseIsoDate;
+function getFirstNonEmptyLine(stackTrace) {
+    const lines = stackTrace.split(/\r?\n/g);
+    return lines.find(str => !/^\s*$/.test(str));
+}
+exports.getFirstNonEmptyLine = getFirstNonEmptyLine;
 
 
 /***/ }),

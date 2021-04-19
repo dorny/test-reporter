@@ -160,8 +160,11 @@ The test description was:
   pass updateShouldNotify
 ════════════════════════════════════════════════════════════════════════════════════════════════════",
                 "line": 112,
-                "message": "Test failed. See exception logs above.
-The test description was: pass updateShouldNotify",
+                "message": "The following TestFailure object was thrown running a test:
+  Expected: <2>
+  Actual: <1>
+Unexpected number of calls
+",
                 "path": "test/value_listenable_provider_test.dart",
               },
               "name": "pass updateShouldNotify",

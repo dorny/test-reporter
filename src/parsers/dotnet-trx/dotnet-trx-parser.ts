@@ -49,6 +49,7 @@ export class DotnetTrxParser implements TestParser {
     const trx = await this.getTrxReport(path, content)
     const tc = this.getTestClasses(trx)
     const tr = this.getTestRunResult(path, trx, tc)
+    tr.sort(true)
     return tr
   }
 
@@ -94,11 +95,6 @@ export class DotnetTrxParser implements TestParser {
     }
 
     const result = Object.values(testClasses)
-    result.sort((a, b) => a.name.localeCompare(b.name))
-    for (const tc of result) {
-      tc.tests.sort((a, b) => a.name.localeCompare(b.name))
-    }
-
     return result
   }
 

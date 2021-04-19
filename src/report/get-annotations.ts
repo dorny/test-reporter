@@ -1,5 +1,6 @@
 import {ellipsis, fixEol} from '../utils/markdown-utils'
 import {TestRunResult} from '../test-results'
+import {getFirstNonEmptyLine} from '../utils/parse-utils'
 
 type Annotation = {
   path: string
@@ -53,7 +54,7 @@ export function getAnnotations(results: TestRunResult[], maxCount: number): Anno
           errors.push({
             testRunPaths: [tr.path],
             suiteName: ts.name,
-            testName: tc.name,
+            testName: tg.name ? `${tg.name} ► ${tc.name}` : tc.name,
             details: err.details,
             message: err.message ?? getFirstNonEmptyLine(err.details) ?? 'Test failed',
             path,
@@ -96,11 +97,6 @@ function enforceCheckRunLimits(err: Annotation): Annotation {
     err.raw_details = ellipsis(err.raw_details, 65535)
   }
   return err
-}
-
-function getFirstNonEmptyLine(stackTrace: string): string | undefined {
-  const lines = stackTrace.split(/\r?\n/g)
-  return lines.find(str => !/^\s*$/.test(str))
 }
 
 function ident(text: string, prefix: string): string {
