@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.4.2
+- [Fix dotnet-trx parsing of passed tests with non-empty error info](https://github.com/dorny/test-reporter/commit/43d89d5ee509bcef7bd0287aacc0c4a4fb9c1657)
+
 ## v1.4.1
 - [Fix dotnet-trx parsing of tests with custom display names](https://github.com/dorny/test-reporter/pull/105)
 
