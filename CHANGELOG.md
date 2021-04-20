@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.4.1
+- [Fix dotnet-trx parsing of tests with custom display names](https://github.com/dorny/test-reporter/pull/105)
+
 ## v1.4.0
 - [Add support for mocha-json](https://github.com/dorny/test-reporter/pull/90)
 - [Use full URL to fix navigation from summary to suite details](https://github.com/dorny/test-reporter/pull/89)
