@@ -709,25 +709,30 @@ class DotnetTrxParser {
         const unitTests = {};
         for (const td of trx.TestRun.TestDefinitions) {
             for (const ut of td.UnitTest) {
-                unitTests[ut.$.id] = ut.TestMethod[0];
+                unitTests[ut.$.id] = ut;
             }
         }
-        const unitTestsResults = trx.TestRun.Results.flatMap(r => r.UnitTestResult).flatMap(unitTestResult => ({
-            unitTestResult,
-            testMethod: unitTests[unitTestResult.$.testId]
+        const unitTestsResults = trx.TestRun.Results.flatMap(r => r.UnitTestResult).flatMap(result => ({
+            result,
+            test: unitTests[result.$.testId]
         }));
         const testClasses = {};
         for (const r of unitTestsResults) {
-            let tc = testClasses[r.testMethod.$.className];
+            const className = r.test.TestMethod[0].$.className;
+            let tc = testClasses[className];
             if (tc === undefined) {
-                tc = new TestClass(r.testMethod.$.className);
+                tc = new TestClass(className);
                 testClasses[tc.name] = tc;
             }
-            const output = r.unitTestResult.Output;
+            const output = r.result.Output;
             const error = (output === null || output === void 0 ? void 0 : output.length) > 0 && ((_a = output[0].ErrorInfo) === null || _a === void 0 ? void 0 : _a.length) > 0 ? output[0].ErrorInfo[0] : undefined;
-            const durationAttr = r.unitTestResult.$.duration;
+            const durationAttr = r.result.$.duration;
             const duration = durationAttr ? parse_utils_1.parseNetDuration(durationAttr) : 0;
-            const test = new Test(r.testMethod.$.name, r.unitTestResult.$.outcome, duration, error);
+            const resultTestName = r.result.$.testName;
+            const testName = resultTestName.startsWith(className) && resultTestName[className.length] === '.'
+                ? resultTestName.substr(className.length + 1)
+                : resultTestName;
+            const test = new Test(testName, r.result.$.outcome, duration, error);
             tc.tests.push(test);
         }
         const result = Object.values(testClasses);

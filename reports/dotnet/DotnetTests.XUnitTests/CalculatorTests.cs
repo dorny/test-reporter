@@ -7,7 +7,7 @@ namespace DotnetTests.XUnitTests
 {
     public class CalculatorTests
     {
-        private readonly Calculator _calculator = new Calculator();
+        private readonly Calculator _calculator = new Calculator();                
 
         [Fact]
         public void Passing_Test()
@@ -49,6 +49,22 @@ namespace DotnetTests.XUnitTests
         public void Skipped_Test()
         {
             throw new Exception("Test");
+        }
+
+        [Theory]        
+        [InlineData(2)]
+        [InlineData(3)]
+        public void Is_Even_Number(int i)
+        {
+            Assert.True(i % 2 == 0);
+        }
+
+        [Theory(DisplayName = "Should be even number")]
+        [InlineData(2)]
+        [InlineData(3)]
+        public void Theory_With_Custom_Name(int i)
+        {
+            Assert.True(i % 2 == 0);
         }
     }
 }

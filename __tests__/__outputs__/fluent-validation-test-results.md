@@ -91,10 +91,10 @@
 ✔️ When_the_validators_fail_then_the_errors_Should_be_accessible_via_the_errors_property
 ✔️ When_the_validators_fail_then_validatorrunner_should_return_false
 ✔️ When_the_Validators_pass_then_the_validatorRunner_should_return_true
-✔️ WhenPreValidationReturnsFalse_ResultReturnToUserImmediatly_Validate
-✔️ WhenPreValidationReturnsFalse_ResultReturnToUserImmediatly_Validate
-✔️ WhenPreValidationReturnsFalse_ResultReturnToUserImmediatly_ValidateAsync
-✔️ WhenPreValidationReturnsFalse_ResultReturnToUserImmediatly_ValidateAsync
+✔️ WhenPreValidationReturnsFalse_ResultReturnToUserImmediatly_Validate(preValidationResult: )
+✔️ WhenPreValidationReturnsFalse_ResultReturnToUserImmediatly_Validate(preValidationResult: AnotherInt Test Message)
+✔️ WhenPreValidationReturnsFalse_ResultReturnToUserImmediatly_ValidateAsync(preValidationResult: )
+✔️ WhenPreValidationReturnsFalse_ResultReturnToUserImmediatly_ValidateAsync(preValidationResult: AnotherInt Test Message)
 ✔️ WhenPreValidationReturnsTrue_ValidatorsGetHit_Validate
 ✔️ WhenPreValidationReturnsTrue_ValidatorsGetHit_ValidateAsync
 ✔️ WithErrorCode_should_override_error_code
@@ -312,42 +312,42 @@
 ```
 ### ✔️ <a id="user-content-r0s15" href="#r0s15">FluentValidation.Tests.EmailValidatorTests</a>
 ```
-✔️ Fails_email_validation_aspnetcore_compatible
-✔️ Fails_email_validation_aspnetcore_compatible
-✔️ Fails_email_validation_aspnetcore_compatible
-✔️ Fails_email_validation_aspnetcore_compatible
-✔️ Fails_email_validation_aspnetcore_compatible
-✔️ Fails_email_validation_aspnetcore_compatible
-✔️ Fails_email_validation_aspnetcore_compatible
-✔️ Fails_email_validation_aspnetcore_compatible
-✔️ Invalid_email_addressex_regex
-✔️ Invalid_email_addressex_regex
-✔️ Invalid_email_addressex_regex
-✔️ Invalid_email_addressex_regex
-✔️ Valid_email_addresses_aspnetcore_compatible
-✔️ Valid_email_addresses_aspnetcore_compatible
-✔️ Valid_email_addresses_aspnetcore_compatible
-✔️ Valid_email_addresses_aspnetcore_compatible
-✔️ Valid_email_addresses_aspnetcore_compatible
-✔️ Valid_email_addresses_aspnetcore_compatible
-✔️ Valid_email_addresses_aspnetcore_compatible
-✔️ Valid_email_addresses_aspnetcore_compatible
-✔️ Valid_email_addresses_aspnetcore_compatible
-✔️ Valid_email_addresses_aspnetcore_compatible
-✔️ Valid_email_addresses_aspnetcore_compatible
-✔️ Valid_email_addresses_regex
-✔️ Valid_email_addresses_regex
-✔️ Valid_email_addresses_regex
-✔️ Valid_email_addresses_regex
-✔️ Valid_email_addresses_regex
-✔️ Valid_email_addresses_regex
-✔️ Valid_email_addresses_regex
-✔️ Valid_email_addresses_regex
-✔️ Valid_email_addresses_regex
-✔️ Valid_email_addresses_regex
-✔️ Valid_email_addresses_regex
-✔️ Valid_email_addresses_regex
-✔️ Valid_email_addresses_regex
+✔️ Fails_email_validation_aspnetcore_compatible(email: " \r \t \n")
+✔️ Fails_email_validation_aspnetcore_compatible(email: "")
+✔️ Fails_email_validation_aspnetcore_compatible(email: "@someDomain.com")
+✔️ Fails_email_validation_aspnetcore_compatible(email: "@someDomain@abc.com")
+✔️ Fails_email_validation_aspnetcore_compatible(email: "0")
+✔️ Fails_email_validation_aspnetcore_compatible(email: "someName")
+✔️ Fails_email_validation_aspnetcore_compatible(email: "someName@")
+✔️ Fails_email_validation_aspnetcore_compatible(email: "someName@a@b.com")
+✔️ Invalid_email_addressex_regex(email: "")
+✔️ Invalid_email_addressex_regex(email: "first.last@test..co.uk")
+✔️ Invalid_email_addressex_regex(email: "testperso")
+✔️ Invalid_email_addressex_regex(email: "thisisaverylongstringcodeplex.com")
+✔️ Valid_email_addresses_aspnetcore_compatible(email: " @someDomain.com")
+✔️ Valid_email_addresses_aspnetcore_compatible(email: "!#$%&'*+-/=?^_`|~@someDomain.com")
+✔️ Valid_email_addresses_aspnetcore_compatible(email: "\"firstName.lastName\"@someDomain.com")
+✔️ Valid_email_addresses_aspnetcore_compatible(email: "1234@someDomain.com")
+✔️ Valid_email_addresses_aspnetcore_compatible(email: "firstName.lastName@someDomain.com")
+✔️ Valid_email_addresses_aspnetcore_compatible(email: "someName@1234.com")
+✔️ Valid_email_addresses_aspnetcore_compatible(email: "someName@some_domain.com")
+✔️ Valid_email_addresses_aspnetcore_compatible(email: "someName@some~domain.com")
+✔️ Valid_email_addresses_aspnetcore_compatible(email: "someName@someDomain.com")
+✔️ Valid_email_addresses_aspnetcore_compatible(email: "someName@someDomain￯.com")
+✔️ Valid_email_addresses_aspnetcore_compatible(email: null)
+✔️ Valid_email_addresses_regex(email: "__somename@example.com")
+✔️ Valid_email_addresses_regex(email: "!def!xyz%abc@example.com")
+✔️ Valid_email_addresses_regex(email: "\"Abc@def\"@example.com")
+✔️ Valid_email_addresses_regex(email: "\"Abc\\@def\"@example.com")
+✔️ Valid_email_addresses_regex(email: "\"Fred Bloggs\"@example.com")
+✔️ Valid_email_addresses_regex(email: "\"Joe\\Blow\"@example.com")
+✔️ Valid_email_addresses_regex(email: "$A12345@example.com")
+✔️ Valid_email_addresses_regex(email: "customer/department=shipping@example.com")
+✔️ Valid_email_addresses_regex(email: "first.last@test.co.uk")
+✔️ Valid_email_addresses_regex(email: "testperson@gmail.com")
+✔️ Valid_email_addresses_regex(email: "TestPerson@gmail.com")
+✔️ Valid_email_addresses_regex(email: "testperson+label@gmail.com")
+✔️ Valid_email_addresses_regex(email: null)
 ```
 ### ✔️ <a id="user-content-r0s16" href="#r0s16">FluentValidation.Tests.EmptyTester</a>
 ```
@@ -549,14 +549,14 @@
 ✔️ Falls_back_to_english_when_culture_not_registered
 ✔️ Falls_back_to_english_when_translation_missing
 ✔️ Falls_back_to_parent_culture
-✔️ Gets_translation_for_bosnian_latin_culture
-✔️ Gets_translation_for_bosnian_latin_culture
-✔️ Gets_translation_for_bosnian_latin_culture
+✔️ Gets_translation_for_bosnian_latin_culture(cultureName: "bs-Latn-BA")
+✔️ Gets_translation_for_bosnian_latin_culture(cultureName: "bs-Latn")
+✔️ Gets_translation_for_bosnian_latin_culture(cultureName: "bs")
 ✔️ Gets_translation_for_croatian_culture
 ✔️ Gets_translation_for_culture
-✔️ Gets_translation_for_serbian_culture
-✔️ Gets_translation_for_serbian_culture
-✔️ Gets_translation_for_serbian_culture
+✔️ Gets_translation_for_serbian_culture(cultureName: "sr-Latn-RS")
+✔️ Gets_translation_for_serbian_culture(cultureName: "sr-Latn")
+✔️ Gets_translation_for_serbian_culture(cultureName: "sr")
 ✔️ Gets_translation_for_specific_culture
 ✔️ Uses_error_code_as_localization_key
 ```
@@ -1007,16 +1007,16 @@
 ✔️ ShouldHaveValidationError_preconstructed_object_does_not_throw_for_unwritable_property
 ✔️ ShouldHaveValidationError_should_not_throw_when_there_are_errors_with_preconstructed_object
 ✔️ ShouldHaveValidationError_should_not_throw_when_there_are_validation_errors
-✔️ ShouldHaveValidationError_should_not_throw_when_there_are_validation_errors__WhenAsyn_is_used
-✔️ ShouldHaveValidationError_should_not_throw_when_there_are_validation_errors__WhenAsyn_is_used
+✔️ ShouldHaveValidationError_should_not_throw_when_there_are_validation_errors__WhenAsyn_is_used(age: 42, cardNumber: "")
+✔️ ShouldHaveValidationError_should_not_throw_when_there_are_validation_errors__WhenAsyn_is_used(age: 42, cardNumber: null)
 ✔️ ShouldHaveValidationError_should_not_throw_when_there_are_validation_errors_ruleforeach
 ✔️ ShouldHaveValidationError_Should_support_nested_properties
 ✔️ ShouldHaveValidationError_Should_throw_when_there_are_no_validation_errors
 ✔️ ShouldHaveValidationError_should_throw_when_there_are_no_validation_errors_with_preconstructed_object
-✔️ ShouldHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_Is_Used
-✔️ ShouldHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_Is_Used
-✔️ ShouldHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_Is_Used
-✔️ ShouldHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_Is_Used
+✔️ ShouldHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_Is_Used(age: 17, cardNumber: "")
+✔️ ShouldHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_Is_Used(age: 17, cardNumber: "cardNumber")
+✔️ ShouldHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_Is_Used(age: 17, cardNumber: null)
+✔️ ShouldHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_Is_Used(age: 42, cardNumber: "cardNumber")
 ✔️ ShouldHaveValidationError_should_throw_when_there_are_not_validation_errors_ruleforeach
 ✔️ ShouldHaveValidationError_with_an_unmatched_rule_and_a_single_error_should_throw_an_exception
 ✔️ ShouldHaveValidationError_with_an_unmatched_rule_and_multiple_errors_should_throw_an_exception
@@ -1035,12 +1035,12 @@
 ✔️ ShouldNotHaveValidationError_Should_support_nested_properties
 ✔️ ShouldNotHaveValidationError_should_throw_when_there_are_errors
 ✔️ ShouldNotHaveValidationError_should_throw_when_there_are_errors_with_preconstructed_object
-✔️ ShouldNotHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_is_used
-✔️ ShouldNotHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_is_used
-✔️ ShouldNotHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_is_used
-✔️ ShouldNotHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_is_used
-✔️ ShouldNotHaveValidationError_should_throw_when_there_are_validation_errors__WhenAsyn_is_used
-✔️ ShouldNotHaveValidationError_should_throw_when_there_are_validation_errors__WhenAsyn_is_used
+✔️ ShouldNotHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_is_used(age: 17, cardNumber: "")
+✔️ ShouldNotHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_is_used(age: 17, cardNumber: "cardNumber")
+✔️ ShouldNotHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_is_used(age: 17, cardNumber: null)
+✔️ ShouldNotHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_is_used(age: 42, cardNumber: "cardNumber")
+✔️ ShouldNotHaveValidationError_should_throw_when_there_are_validation_errors__WhenAsyn_is_used(age: 42, cardNumber: "")
+✔️ ShouldNotHaveValidationError_should_throw_when_there_are_validation_errors__WhenAsyn_is_used(age: 42, cardNumber: null)
 ✔️ ShouldNotHaveValidationError_should_throw_when_there_are_validation_errors_ruleforeach
 ✔️ Tests_nested_property
 ✔️ Tests_nested_property_reverse
@@ -1048,10 +1048,10 @@
 ✔️ TestValidate_runs_async
 ✔️ TestValidate_runs_async_throws
 ✔️ Unexpected_error_code_check
-✔️ Unexpected_message_check
-✔️ Unexpected_message_check
-✔️ Unexpected_message_check
-✔️ Unexpected_message_check
+✔️ Unexpected_message_check(withoutErrMsg: "bar", errMessages: ["bar"])
+✔️ Unexpected_message_check(withoutErrMsg: "bar", errMessages: ["foo", "bar"])
+✔️ Unexpected_message_check(withoutErrMsg: "bar", errMessages: ["foo"])
+✔️ Unexpected_message_check(withoutErrMsg: "bar", errMessages: [])
 ✔️ Unexpected_severity_check
 ✔️ Unexpected_state_check
 ```
