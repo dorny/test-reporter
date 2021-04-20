@@ -1,6 +1,6 @@
 import {parseStringPromise} from 'xml2js'
 
-import {ErrorInfo, Outcome, TestMethod, TrxReport} from './dotnet-trx-types'
+import {ErrorInfo, Outcome, TrxReport, UnitTest} from './dotnet-trx-types'
 import {ParseOptions, TestParser} from '../../test-parser'
 
 import {getBasePath, normalizeFilePath} from '../../utils/path-utils'
@@ -66,31 +66,38 @@ export class DotnetTrxParser implements TestParser {
       return []
     }
 
-    const unitTests: {[id: string]: TestMethod} = {}
+    const unitTests: {[id: string]: UnitTest} = {}
     for (const td of trx.TestRun.TestDefinitions) {
       for (const ut of td.UnitTest) {
-        unitTests[ut.$.id] = ut.TestMethod[0]
+        unitTests[ut.$.id] = ut
       }
     }
 
-    const unitTestsResults = trx.TestRun.Results.flatMap(r => r.UnitTestResult).flatMap(unitTestResult => ({
-      unitTestResult,
-      testMethod: unitTests[unitTestResult.$.testId]
+    const unitTestsResults = trx.TestRun.Results.flatMap(r => r.UnitTestResult).flatMap(result => ({
+      result,
+      test: unitTests[result.$.testId]
     }))
 
     const testClasses: {[name: string]: TestClass} = {}
     for (const r of unitTestsResults) {
-      let tc = testClasses[r.testMethod.$.className]
+      const className = r.test.TestMethod[0].$.className
+      let tc = testClasses[className]
       if (tc === undefined) {
-        tc = new TestClass(r.testMethod.$.className)
+        tc = new TestClass(className)
         testClasses[tc.name] = tc
       }
-      const output = r.unitTestResult.Output
+      const output = r.result.Output
       const error = output?.length > 0 && output[0].ErrorInfo?.length > 0 ? output[0].ErrorInfo[0] : undefined
-      const durationAttr = r.unitTestResult.$.duration
+      const durationAttr = r.result.$.duration
       const duration = durationAttr ? parseNetDuration(durationAttr) : 0
 
-      const test = new Test(r.testMethod.$.name, r.unitTestResult.$.outcome, duration, error)
+      const resultTestName = r.result.$.testName
+      const testName =
+        resultTestName.startsWith(className) && resultTestName[className.length] === '.'
+          ? resultTestName.substr(className.length + 1)
+          : resultTestName
+
+      const test = new Test(testName, r.result.$.outcome, duration, error)
       tc.tests.push(test)
     }
 
