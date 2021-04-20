@@ -1,6 +1,6 @@
 import {parseStringPromise} from 'xml2js'
 
-import {ErrorInfo, Outcome, TrxReport, UnitTest} from './dotnet-trx-types'
+import {ErrorInfo, Outcome, TrxReport, UnitTest, UnitTestResult} from './dotnet-trx-types'
 import {ParseOptions, TestParser} from '../../test-parser'
 
 import {getBasePath, normalizeFilePath} from '../../utils/path-utils'
@@ -86,8 +86,7 @@ export class DotnetTrxParser implements TestParser {
         tc = new TestClass(className)
         testClasses[tc.name] = tc
       }
-      const output = r.result.Output
-      const error = output?.length > 0 && output[0].ErrorInfo?.length > 0 ? output[0].ErrorInfo[0] : undefined
+      const error = this.getErrorInfo(r.result)
       const durationAttr = r.result.$.duration
       const duration = durationAttr ? parseNetDuration(durationAttr) : 0
 
@@ -121,8 +120,28 @@ export class DotnetTrxParser implements TestParser {
     return new TestRunResult(path, suites, totalTime)
   }
 
+  private getErrorInfo(testResult: UnitTestResult): ErrorInfo | undefined {
+    if (testResult.$.outcome !== 'Failed') {
+      return undefined
+    }
+
+    const output = testResult.Output
+    const error = output?.length > 0 && output[0].ErrorInfo?.length > 0 ? output[0].ErrorInfo[0] : undefined
+    return error
+  }
+
   private getError(test: Test): TestCaseError | undefined {
     if (!this.options.parseErrors || !test.error) {
+      return undefined
+    }
+
+    const error = test.error
+    if (
+      !Array.isArray(error.Message) ||
+      error.Message.length === 0 ||
+      !Array.isArray(error.StackTrace) ||
+      error.StackTrace.length === 0
+    ) {
       return undefined
     }
 

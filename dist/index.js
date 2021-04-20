@@ -702,7 +702,6 @@ class DotnetTrxParser {
         }
     }
     getTestClasses(trx) {
-        var _a;
         if (trx.TestRun.TestDefinitions === undefined || trx.TestRun.Results === undefined) {
             return [];
         }
@@ -724,8 +723,7 @@ class DotnetTrxParser {
                 tc = new TestClass(className);
                 testClasses[tc.name] = tc;
             }
-            const output = r.result.Output;
-            const error = (output === null || output === void 0 ? void 0 : output.length) > 0 && ((_a = output[0].ErrorInfo) === null || _a === void 0 ? void 0 : _a.length) > 0 ? output[0].ErrorInfo[0] : undefined;
+            const error = this.getErrorInfo(r.result);
             const durationAttr = r.result.$.duration;
             const duration = durationAttr ? parse_utils_1.parseNetDuration(durationAttr) : 0;
             const resultTestName = r.result.$.testName;
@@ -751,8 +749,24 @@ class DotnetTrxParser {
         });
         return new test_results_1.TestRunResult(path, suites, totalTime);
     }
+    getErrorInfo(testResult) {
+        var _a;
+        if (testResult.$.outcome !== 'Failed') {
+            return undefined;
+        }
+        const output = testResult.Output;
+        const error = (output === null || output === void 0 ? void 0 : output.length) > 0 && ((_a = output[0].ErrorInfo) === null || _a === void 0 ? void 0 : _a.length) > 0 ? output[0].ErrorInfo[0] : undefined;
+        return error;
+    }
     getError(test) {
         if (!this.options.parseErrors || !test.error) {
+            return undefined;
+        }
+        const error = test.error;
+        if (!Array.isArray(error.Message)
+            || error.Message.length === 0
+            || !Array.isArray(error.StackTrace)
+            || error.StackTrace.length === 0) {
             return undefined;
         }
         const message = test.error.Message[0];

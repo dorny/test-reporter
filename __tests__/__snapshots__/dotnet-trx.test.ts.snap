@@ -5643,3 +5643,629 @@ TestRunResult {
   "totalTime": 4480,
 }
 `;
+
+exports[`dotnet-trx tests report from SilentNotes test results matches snapshot 1`] = `
+TestRunResult {
+  "path": "fixtures/external/SilentNotes.trx",
+  "suites": Array [
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": null,
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "AreEqualWorksWithDifferentPassword",
+              "result": "success",
+              "time": 7,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "AreEqualWorksWithSameContent",
+              "result": "success",
+              "time": 1,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "CorrectlyConvertsSecureStringToString",
+              "result": "success",
+              "time": 7,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "CorrectlyConvertsStringToSecureString",
+              "result": "success",
+              "time": 6,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ValidateAcceptsValidCredentials",
+              "result": "success",
+              "time": 3,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ValidateRejectsInvalidCredentials",
+              "result": "success",
+              "time": 6,
+            },
+          ],
+        },
+      ],
+      "name": "VanillaCloudStorageClientTest.CloudStorageCredentialsTest",
+      "totalTime": undefined,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": null,
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "FileLifecycleWorks",
+              "result": "success",
+              "time": 95,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ReallyDoFetchToken",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ReallyDoOpenAuthorizationPageInBrowser",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ReallyDoRefreshToken",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ThrowsAccessDeniedExceptionWithInvalidToken",
+              "result": "success",
+              "time": 6,
+            },
+          ],
+        },
+      ],
+      "name": "VanillaCloudStorageClientTest.CloudStorageProviders.DropboxCloudStorageClientTest",
+      "totalTime": undefined,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": null,
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "FileLifecycleWorks",
+              "result": "success",
+              "time": 161,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "SanitizeCredentials_ChangesInvalidPrefix",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "SecureSslConnectionWorks",
+              "result": "success",
+              "time": 1,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ThrowsWithHttpInsteadOfFtp",
+              "result": "success",
+              "time": 4,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ThrowsWithInvalidPassword",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ThrowsWithInvalidUrl",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ThrowsWithInvalidUsername",
+              "result": "skipped",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "VanillaCloudStorageClientTest.CloudStorageProviders.FtpCloudStorageClientTest",
+      "totalTime": undefined,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": null,
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "ChoosesCorrectUrlForGmxComEmail",
+              "result": "success",
+              "time": 6,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ChoosesCorrectUrlForGmxNetEmail",
+              "result": "success",
+              "time": 1,
+            },
+          ],
+        },
+      ],
+      "name": "VanillaCloudStorageClientTest.CloudStorageProviders.GmxCloudStorageClientTest",
+      "totalTime": undefined,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": null,
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "FileLifecycleWorks",
+              "result": "success",
+              "time": 40,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ReallyDoFetchToken",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ReallyDoOpenAuthorizationPageInBrowser",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ReallyDoRefreshToken",
+              "result": "skipped",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "VanillaCloudStorageClientTest.CloudStorageProviders.GoogleCloudStorageClientTest",
+      "totalTime": undefined,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": null,
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "FileLifecycleWorks",
+              "result": "success",
+              "time": 15,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ReallyDoFetchToken",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ReallyDoOpenAuthorizationPageInBrowser",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ReallyDoRefreshToken",
+              "result": "skipped",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "VanillaCloudStorageClientTest.CloudStorageProviders.OnedriveCloudStorageClientTest",
+      "totalTime": undefined,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": null,
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "FileLifecycleWorks",
+              "result": "success",
+              "time": 14,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ParseGmxWebdavResponseCorrectly",
+              "result": "success",
+              "time": 1,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ParseStratoWebdavResponseCorrectly",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ThrowsWithInvalidPath",
+              "result": "success",
+              "time": 1,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ThrowsWithInvalidUsername",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+          ],
+        },
+      ],
+      "name": "VanillaCloudStorageClientTest.CloudStorageProviders.WebdavCloudStorageClientTest",
+      "totalTime": undefined,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": null,
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "AreEqualWorksWithNullDate",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "AreEqualWorksWithSameContent",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "NeedsRefreshReturnsFalseForTokenFlow",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "NeedsRefreshReturnsFalseIfNotExpired",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "NeedsRefreshReturnsTrueIfExpired",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "NeedsRefreshReturnsTrueIfNoExpirationDate",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "SetExpiryDateBySecondsWorks",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "SetExpiryDateBySecondsWorksWithNull",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "SetExpiryDateBySecondsWorksWithVeryShortPeriod",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+          ],
+        },
+      ],
+      "name": "VanillaCloudStorageClientTest.CloudStorageTokenTest",
+      "totalTime": undefined,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": null,
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "ParsesAllErrorCodesCorrectly",
+              "result": "success",
+              "time": 3,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ParsesNullErrorCodeCorrectly",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ParsesUnknownErrorCodeCorrectly",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+          ],
+        },
+      ],
+      "name": "VanillaCloudStorageClientTest.OAuth2.AuthorizationResponseErrorTest",
+      "totalTime": undefined,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": null,
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "BuildAuthorizationRequestUrlEscapesParameters",
+              "result": "success",
+              "time": 2,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "BuildAuthorizationRequestUrlLeavesOutOptionalParameters",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "BuildAuthorizationRequestUrlThrowsWithMissingRedirectUrlForTokenFlow",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "BuildAuthorizationRequestUrlUsesAllParameters",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "BuildAuthorizationRequestUrlUsesCodeVerifier",
+              "result": "success",
+              "time": 1,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ParseRealWorldDropboxRejectResponse",
+              "result": "success",
+              "time": 9,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ParseRealWorldDropboxSuccessResponse",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ParseRealWorldGoogleRejectResponse",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ParseRealWorldGoogleSuccessResponse",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+          ],
+        },
+      ],
+      "name": "VanillaCloudStorageClientTest.OAuth2.OAuth2UtilsTest",
+      "totalTime": undefined,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": null,
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "BuildOAuth2AuthorizationRequestUrlWorks",
+              "result": "success",
+              "time": 1,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "FetchTokenCanInterpretGoogleResponse",
+              "result": "success",
+              "time": 7,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "FetchTokenReturnsNullForDeniedAccess",
+              "result": "success",
+              "time": 1,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "FetchTokenThrowsWithWrongState",
+              "result": "success",
+              "time": 1,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "RefreshTokenCanInterpretGoogleResponse",
+              "result": "success",
+              "time": 3,
+            },
+          ],
+        },
+      ],
+      "name": "VanillaCloudStorageClientTest.OAuth2CloudStorageClientTest",
+      "totalTime": undefined,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": null,
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "AreEqualsWorksCorrectly",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "CorrectlyConvertsSecureStringToString",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "CorrectlyConvertsSecureStringToUnicodeBytes",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "CorrectlyConvertsSecureStringToUtf8Bytes",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "CorrectlyConvertsStringToSecureString",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "CorrectlyConvertsUnicodeBytesToSecureString",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "CorrectlyConvertsUtf8BytesToSecureString",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+          ],
+        },
+      ],
+      "name": "VanillaCloudStorageClientTest.SecureStringExtensionsTest",
+      "totalTime": undefined,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": null,
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "DecryptAfterDesrializationCanReadAllPropertiesBack",
+              "result": "success",
+              "time": 2,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "DecryptAfterDesrializationRespectsNullProperties",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "EncryptBeforeSerializationProtectsAllNecessaryProperties",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "EncryptBeforeSerializationRespectsNullProperties",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "SerializedDatacontractCanBeReadBack",
+              "result": "success",
+              "time": 16,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "SerializedDatacontractDoesNotContainNullProperties",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "SerializedDatacontractDoesNotContainPlaintextData",
+              "result": "success",
+              "time": 2,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "SerializedJsonCanBeReadBack",
+              "result": "success",
+              "time": 7,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "SerializedJsonDoesNotContainNullProperties",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "SerializedJsonDoesNotContainPlaintextData",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "SerializedXmlCanBeReadBack",
+              "result": "success",
+              "time": 16,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "SerializedXmlDoesNotContainNullProperties",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "SerializedXmlDoesNotContainPlaintextData",
+              "result": "success",
+              "time": 0.00009999999999999999,
+            },
+          ],
+        },
+      ],
+      "name": "VanillaCloudStorageClientTest.SerializeableCloudStorageCredentialsTest",
+      "totalTime": undefined,
+    },
+  ],
+  "totalTime": 1257,
+}
+`;
