@@ -483,13 +483,13 @@ class DartJsonParser {
                 group.tests.push(test);
                 tests[evt.test.id] = test;
             }
-            else if (dart_json_types_1.isTestDoneEvent(evt) && !evt.hidden) {
+            else if (dart_json_types_1.isTestDoneEvent(evt) && !evt.hidden && tests[evt.testID]) {
                 tests[evt.testID].testDone = evt;
             }
-            else if (dart_json_types_1.isErrorEvent(evt)) {
+            else if (dart_json_types_1.isErrorEvent(evt) && tests[evt.testID]) {
                 tests[evt.testID].error = evt;
             }
-            else if (dart_json_types_1.isMessageEvent(evt)) {
+            else if (dart_json_types_1.isMessageEvent(evt) && tests[evt.testID]) {
                 tests[evt.testID].print.push(evt);
             }
             else if (dart_json_types_1.isDoneEvent(evt)) {
@@ -763,10 +763,10 @@ class DotnetTrxParser {
             return undefined;
         }
         const error = test.error;
-        if (!Array.isArray(error.Message)
-            || error.Message.length === 0
-            || !Array.isArray(error.StackTrace)
-            || error.StackTrace.length === 0) {
+        if (!Array.isArray(error.Message) ||
+            error.Message.length === 0 ||
+            !Array.isArray(error.StackTrace) ||
+            error.StackTrace.length === 0) {
             return undefined;
         }
         const message = test.error.Message[0];
