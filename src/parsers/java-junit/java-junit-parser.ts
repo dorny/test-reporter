@@ -70,7 +70,8 @@ export class JavaJunitParser implements TestParser {
             return sr
           })
 
-    const time = parseFloat(junit.testsuites.$.time) * 1000
+    const seconds = parseFloat(junit.testsuites.$?.time)
+    const time = isNaN(seconds) ? undefined : seconds * 1000
     return new TestRunResult(filePath, suites, time)
   }
 

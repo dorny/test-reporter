@@ -888,6 +888,7 @@ class JavaJunitParser {
         }
     }
     getTestRunResult(filePath, junit) {
+        var _a;
         const suites = junit.testsuites.testsuite === undefined
             ? []
             : junit.testsuites.testsuite.map(ts => {
@@ -896,7 +897,8 @@ class JavaJunitParser {
                 const sr = new test_results_1.TestSuiteResult(name, this.getGroups(ts), time);
                 return sr;
             });
-        const time = parseFloat(junit.testsuites.$.time) * 1000;
+        const seconds = parseFloat((_a = junit.testsuites.$) === null || _a === void 0 ? void 0 : _a.time);
+        const time = isNaN(seconds) ? undefined : seconds * 1000;
         return new test_results_1.TestRunResult(filePath, suites, time);
     }
     getGroups(suite) {
