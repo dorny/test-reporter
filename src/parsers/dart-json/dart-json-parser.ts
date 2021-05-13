@@ -114,11 +114,11 @@ export class DartJsonParser implements TestParser {
         const group = suite.groups[evt.test.groupIDs[evt.test.groupIDs.length - 1]]
         group.tests.push(test)
         tests[evt.test.id] = test
-      } else if (isTestDoneEvent(evt) && !evt.hidden) {
+      } else if (isTestDoneEvent(evt) && !evt.hidden && tests[evt.testID]) {
         tests[evt.testID].testDone = evt
-      } else if (isErrorEvent(evt)) {
+      } else if (isErrorEvent(evt) && tests[evt.testID]) {
         tests[evt.testID].error = evt
-      } else if (isMessageEvent(evt)) {
+      } else if (isMessageEvent(evt) && tests[evt.testID]) {
         tests[evt.testID].print.push(evt)
       } else if (isDoneEvent(evt)) {
         success = evt.success

@@ -24,4 +24,6 @@ void main() {
       throw Exception('Some error');
     });
   });
+
+  print('Hello from the test');
 }

@@ -4,6 +4,7 @@
 {"suite":{"id":2,"platform":"vm","path":"test\\second_test.dart"},"type":"suite","time":11}
 {"test":{"id":3,"name":"loading test\\second_test.dart","suiteID":2,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":11}
 {"count":2,"type":"allSuites","time":11}
+{"testID":1,"messageType":"print","message":"Hello from the test","type":"print","time":3828}
 {"testID":3,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":3649}
 {"group":{"id":4,"suiteID":2,"parentID":null,"name":null,"metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":3654}
 {"test":{"id":5,"name":"Timeout test","suiteID":2,"groupIDs":[4],"metadata":{"skip":false,"skipReason":null},"line":5,"column":3,"url":"file:///C:/Users/Michal/Workspace/dorny/test-check/reports/dart/test/second_test.dart"},"type":"testStart","time":3655}
