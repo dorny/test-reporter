@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.4.3
+- [Patch java-junit to handle missing time field](https://github.com/dorny/test-reporter/pull/115)
+- [Fix dart-json parsing broken by print message](https://github.com/dorny/test-reporter/pull/114)
+
 ## v1.4.2
 - [Fix dotnet-trx parsing of passed tests with non-empty error info](https://github.com/dorny/test-reporter/commit/43d89d5ee509bcef7bd0287aacc0c4a4fb9c1657)
 
