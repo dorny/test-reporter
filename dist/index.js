@@ -930,18 +930,24 @@ class JavaJunitParser {
         });
     }
     getTestCaseResult(test) {
-        if (test.failure)
+        if (test.failure || test.error)
             return 'failed';
         if (test.skipped)
             return 'skipped';
         return 'success';
     }
     getTestCaseError(tc) {
-        if (!this.options.parseErrors || !tc.failure) {
+        var _a;
+        if (!this.options.parseErrors) {
             return undefined;
         }
-        const failure = tc.failure[0];
-        const details = failure._;
+        // We process <error> and <failure> the same way
+        const failures = (_a = tc.failure) !== null && _a !== void 0 ? _a : tc.error;
+        if (!failures) {
+            return undefined;
+        }
+        const failure = failures[0];
+        const details = typeof (failure) === 'object' ? failure._ : failure;
         let filePath;
         let line;
         const src = this.exceptionThrowSource(details);
@@ -953,7 +959,7 @@ class JavaJunitParser {
             path: filePath,
             line,
             details,
-            message: failure.message
+            message: typeof (failure) === 'object' ? failure.message : undefined
         };
     }
     exceptionThrowSource(stackTrace) {

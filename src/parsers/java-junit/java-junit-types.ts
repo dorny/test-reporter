@@ -33,7 +33,8 @@ export interface TestCase {
     name: string
     time: string
   }
-  failure?: Failure[]
+  failure?: string | Failure[]
+  error?: string | Failure[]
   skipped?: string[]
 }
 
