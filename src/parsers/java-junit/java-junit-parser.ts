@@ -107,18 +107,24 @@ export class JavaJunitParser implements TestParser {
   }
 
   private getTestCaseResult(test: TestCase): TestExecutionResult {
-    if (test.failure) return 'failed'
+    if (test.failure || test.error) return 'failed'
     if (test.skipped) return 'skipped'
     return 'success'
   }
 
   private getTestCaseError(tc: TestCase): TestCaseError | undefined {
-    if (!this.options.parseErrors || !tc.failure) {
+    if (!this.options.parseErrors) {
       return undefined
     }
 
-    const failure = tc.failure[0]
-    const details = failure._
+    // We process <error> and <failure> the same way
+    const failures = tc.failure ?? tc.error
+    if (!failures) {
+      return undefined
+    }
+
+    const failure = failures[0]
+    const details = typeof failure === 'object' ? failure._ : failure
     let filePath
     let line
 
@@ -132,7 +138,7 @@ export class JavaJunitParser implements TestParser {
       path: filePath,
       line,
       details,
-      message: failure.message
+      message: typeof failure === 'object' ? failure.message : undefined
     }
   }
 
