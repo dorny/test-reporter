@@ -10,12 +10,14 @@ export interface ReportOptions {
   listSuites: 'all' | 'failed'
   listTests: 'all' | 'failed' | 'none'
   baseUrl: string
+  onlySummary: boolean
 }
 
 const defaultOptions: ReportOptions = {
   listSuites: 'all',
   listTests: 'all',
-  baseUrl: ''
+  baseUrl: '',
+  onlySummary: false
 }
 
 export function getReport(results: TestRunResult[], options: ReportOptions = defaultOptions): string {
@@ -152,8 +154,10 @@ function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): s
     sections.push(resultsTable)
   }
 
-  const suitesReports = testRuns.map((tr, i) => getSuitesReport(tr, i, options)).flat()
-  sections.push(...suitesReports)
+  if (options.onlySummary === false) {
+    const suitesReports = testRuns.map((tr, i) => getSuitesReport(tr, i, options)).flat()
+    sections.push(...suitesReports)
+  }
   return sections
 }
 

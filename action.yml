@@ -53,6 +53,10 @@ inputs:
   working-directory:
     description: Relative path under $GITHUB_WORKSPACE where the repository was checked out
     required: false
+  only-summary:
+    description: allows you to generate the summary only.
+    default: 'false'
+    required: false
   token:
     description: GitHub Access Token
     required: false

@@ -39,6 +39,7 @@ class TestReporter {
   readonly maxAnnotations = parseInt(core.getInput('max-annotations', {required: true}))
   readonly failOnError = core.getInput('fail-on-error', {required: true}) === 'true'
   readonly workDirInput = core.getInput('working-directory', {required: false})
+  readonly onlySummary = core.getInput('only-summary', {required: false}) === 'true'
   readonly token = core.getInput('token', {required: true})
   readonly octokit: InstanceType<typeof GitHub>
   readonly context = getCheckRunContext()
@@ -160,9 +161,9 @@ class TestReporter {
     })
 
     core.info('Creating report summary')
-    const {listSuites, listTests} = this
+    const {listSuites, listTests, onlySummary} = this
     const baseUrl = createResp.data.html_url
-    const summary = getReport(results, {listSuites, listTests, baseUrl})
+    const summary = getReport(results, {listSuites, listTests, baseUrl, onlySummary})
 
     core.info('Creating annotations')
     const annotations = getAnnotations(results, this.maxAnnotations)
