@@ -239,6 +239,7 @@ class TestReporter {
         this.artifact = core.getInput('artifact', { required: false });
         this.name = core.getInput('name', { required: true });
         this.path = core.getInput('path', { required: true });
+        this.pathReplaceBackslashes = core.getInput('path-replace-backslashes', { required: false }) === 'true';
         this.reporter = core.getInput('reporter', { required: true });
         this.listSuites = core.getInput('list-suites', { required: true });
         this.listTests = core.getInput('list-tests', { required: true });
@@ -268,7 +269,10 @@ class TestReporter {
             process.chdir(this.workDirInput);
         }
         core.info(`Check runs will be created with SHA=${this.context.sha}`);
-        const pattern = this.path.split(',');
+        // Split path pattern by ',' and optionally convert all backslashes to forward slashes
+        // fast-glob (micromatch) always interprets backslashes as escape characters instead of directory separators
+        const pathsList = this.path.split(',');
+        const pattern = this.pathReplaceBackslashes ? pathsList.map(path_utils_1.normalizeFilePath) : pathsList;
         const inputProvider = this.artifact
             ? new artifact_provider_1.ArtifactProvider(this.octokit, this.artifact, this.name, pattern, this.context.sha, this.context.runId, this.token)
             : new local_file_provider_1.LocalFileProvider(this.name, pattern);
