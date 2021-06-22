@@ -245,6 +245,7 @@ class TestReporter {
         this.maxAnnotations = parseInt(core.getInput('max-annotations', { required: true }));
         this.failOnError = core.getInput('fail-on-error', { required: true }) === 'true';
         this.workDirInput = core.getInput('working-directory', { required: false });
+        this.onlySummary = core.getInput('only-summary', { required: false }) === 'true';
         this.token = core.getInput('token', { required: true });
         this.context = github_utils_1.getCheckRunContext();
         this.octokit = github.getOctokit(this.token);
@@ -337,9 +338,9 @@ class TestReporter {
             ...github.context.repo
         });
         core.info('Creating report summary');
-        const { listSuites, listTests } = this;
+        const { listSuites, listTests, onlySummary } = this;
         const baseUrl = createResp.data.html_url;
-        const summary = get_report_1.getReport(results, { listSuites, listTests, baseUrl });
+        const summary = get_report_1.getReport(results, { listSuites, listTests, baseUrl, onlySummary });
         core.info('Creating annotations');
         const annotations = get_annotations_1.getAnnotations(results, this.maxAnnotations);
         const isFailed = results.some(tr => tr.result === 'failed');
@@ -947,7 +948,7 @@ class JavaJunitParser {
             return undefined;
         }
         const failure = failures[0];
-        const details = typeof (failure) === 'object' ? failure._ : failure;
+        const details = typeof failure === 'object' ? failure._ : failure;
         let filePath;
         let line;
         const src = this.exceptionThrowSource(details);
@@ -959,7 +960,7 @@ class JavaJunitParser {
             path: filePath,
             line,
             details,
-            message: typeof (failure) === 'object' ? failure.message : undefined
+            message: typeof failure === 'object' ? failure.message : undefined
         };
     }
     exceptionThrowSource(stackTrace) {
@@ -1350,7 +1351,8 @@ const MAX_REPORT_LENGTH = 65535;
 const defaultOptions = {
     listSuites: 'all',
     listTests: 'all',
-    baseUrl: ''
+    baseUrl: '',
+    onlySummary: false
 };
 function getReport(results, options = defaultOptions) {
     core.info('Generating check run summary');
@@ -1448,7 +1450,7 @@ function getBadge(passed, failed, skipped) {
 }
 function getTestRunsReport(testRuns, options) {
     const sections = [];
-    if (testRuns.length > 1) {
+    if (testRuns.length > 1 || options.onlySummary) {
         const tableData = testRuns.map((tr, runIndex) => {
             const time = markdown_utils_1.formatTime(tr.time);
             const name = tr.path;
@@ -1462,8 +1464,10 @@ function getTestRunsReport(testRuns, options) {
         const resultsTable = markdown_utils_1.table(['Report', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...tableData);
         sections.push(resultsTable);
     }
-    const suitesReports = testRuns.map((tr, i) => getSuitesReport(tr, i, options)).flat();
-    sections.push(...suitesReports);
+    if (options.onlySummary === false) {
+        const suitesReports = testRuns.map((tr, i) => getSuitesReport(tr, i, options)).flat();
+        sections.push(...suitesReports);
+    }
     return sections;
 }
 function getSuitesReport(tr, runIndex, options) {

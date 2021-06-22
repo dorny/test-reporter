@@ -10,12 +10,14 @@ export interface ReportOptions {
   listSuites: 'all' | 'failed'
   listTests: 'all' | 'failed' | 'none'
   baseUrl: string
+  onlySummary: boolean
 }
 
 const defaultOptions: ReportOptions = {
   listSuites: 'all',
   listTests: 'all',
-  baseUrl: ''
+  baseUrl: '',
+  onlySummary: false
 }
 
 export function getReport(results: TestRunResult[], options: ReportOptions = defaultOptions): string {
@@ -132,7 +134,7 @@ function getBadge(passed: number, failed: number, skipped: number): string {
 function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): string[] {
   const sections: string[] = []
 
-  if (testRuns.length > 1) {
+  if (testRuns.length > 1 || options.onlySummary) {
     const tableData = testRuns.map((tr, runIndex) => {
       const time = formatTime(tr.time)
       const name = tr.path
@@ -152,8 +154,10 @@ function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): s
     sections.push(resultsTable)
   }
 
-  const suitesReports = testRuns.map((tr, i) => getSuitesReport(tr, i, options)).flat()
-  sections.push(...suitesReports)
+  if (options.onlySummary === false) {
+    const suitesReports = testRuns.map((tr, i) => getSuitesReport(tr, i, options)).flat()
+    sections.push(...suitesReports)
+  }
   return sections
 }
 

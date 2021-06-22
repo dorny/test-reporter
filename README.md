@@ -128,6 +128,11 @@ jobs:
     #   mocha-json
     reporter: ''
 
+    # Allows you to generate only the summary.
+    # If enabled, the report will contain a table listing each test results file and the number of passed, failed, and skipped tests.
+    # Detailed listing of test suites and test cases will be skipped.
+    only-summary: 'false'
+
     # Limits which test suites are listed:
     #   all
     #   failed
