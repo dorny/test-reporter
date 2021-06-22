@@ -16,7 +16,7 @@ import {JavaJunitParser} from './parsers/java-junit/java-junit-parser'
 import {JestJunitParser} from './parsers/jest-junit/jest-junit-parser'
 import {MochaJsonParser} from './parsers/mocha-json/mocha-json-parser'
 
-import {normalizeDirPath} from './utils/path-utils'
+import {normalizeDirPath, normalizeFilePath} from './utils/path-utils'
 import {getCheckRunContext} from './utils/github-utils'
 import {Icon} from './utils/markdown-utils'
 
@@ -33,6 +33,7 @@ class TestReporter {
   readonly artifact = core.getInput('artifact', {required: false})
   readonly name = core.getInput('name', {required: true})
   readonly path = core.getInput('path', {required: true})
+  readonly pathReplaceBackslashes = core.getInput('path-replace-backslashes', {required: false}) === 'true'
   readonly reporter = core.getInput('reporter', {required: true})
   readonly listSuites = core.getInput('list-suites', {required: true}) as 'all' | 'failed'
   readonly listTests = core.getInput('list-tests', {required: true}) as 'all' | 'failed' | 'none'
@@ -71,7 +72,11 @@ class TestReporter {
 
     core.info(`Check runs will be created with SHA=${this.context.sha}`)
 
-    const pattern = this.path.split(',')
+    // Split path pattern by ',' and optionally convert all backslashes to forward slashes
+    // fast-glob (micromatch) always interprets backslashes as escape characters instead of directory separators
+    const pathsList = this.path.split(',')
+    const pattern = this.pathReplaceBackslashes ? pathsList.map(normalizeFilePath) : pathsList
+
     const inputProvider = this.artifact
       ? new ArtifactProvider(
           this.octokit,

@@ -119,6 +119,11 @@ jobs:
     # All matched result files must be of the same format
     path: ''
 
+    # The fast-glob library that is internally used interprets backslashes as escape characters.
+    # If enabled, all backslashes in provided path will be replaced to forward slashes and act as directory separators.
+    # It might be useful when path input variable is composed dynamically from existing directory paths on Windows.
+    path-replace-backslashes: 'false'
+
     # Format of test results. Supported options:
     #   dart-json
     #   dotnet-trx
