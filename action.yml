@@ -54,7 +54,10 @@ inputs:
     description: Relative path under $GITHUB_WORKSPACE where the repository was checked out
     required: false
   only-summary:
-    description: allows you to generate the summary only.
+    description: |
+      Allows you to generate only the summary.
+      If enabled, the report will contain a table listing each test results file and the number of passed, failed, and skipped tests.
+      Detailed listing of test suites and test cases will be skipped.
     default: 'false'
     required: false
   token:

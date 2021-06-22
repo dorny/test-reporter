@@ -134,7 +134,7 @@ function getBadge(passed: number, failed: number, skipped: number): string {
 function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): string[] {
   const sections: string[] = []
 
-  if (testRuns.length > 1) {
+  if (testRuns.length > 1 || options.onlySummary) {
     const tableData = testRuns.map((tr, runIndex) => {
       const time = formatTime(tr.time)
       const name = tr.path
