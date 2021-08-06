@@ -1,5 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`jest-junit tests parsing ESLint report without timing information works - PR #134 1`] = `
+TestRunResult {
+  "path": "fixtures/jest-junit-eslint.xml",
+  "suites": [
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "test",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "test.jsx",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "test.jsx",
+      "totalTime": 0,
+    },
+  ],
+  "totalTime": undefined,
+}
+`;
+
 exports[`jest-junit tests report from #235 testing react components named <ComponentName /> 1`] = `
 TestRunResult {
   "path": "fixtures/external/jest/jest-react-component-test-results.xml",
