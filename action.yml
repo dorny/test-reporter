@@ -79,7 +79,7 @@ inputs:
   slack-url:
     description: Slack webhook url
     required: false
-    default: ${{ slack.url }}
+    default: ''
 outputs:
   conclusion:
     description: |
