@@ -76,6 +76,10 @@ inputs:
     description: GitHub Access Token
     required: false
     default: ${{ github.token }}
+  slack-url:
+    description: Slack webhook url
+    required: false
+    default: ${{ slack.url }}
 outputs:
   conclusion:
     description: |

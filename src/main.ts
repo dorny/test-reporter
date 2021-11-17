@@ -19,6 +19,7 @@ import {SwiftXunitParser} from './parsers/swift-xunit/swift-xunit-parser'
 
 import {normalizeDirPath, normalizeFilePath} from './utils/path-utils'
 import {getCheckRunContext} from './utils/github-utils'
+import { IncomingWebhook } from '@slack/webhook'
 
 async function main(): Promise<void> {
   try {
@@ -44,6 +45,7 @@ class TestReporter {
   readonly workDirInput = core.getInput('working-directory', {required: false})
   readonly onlySummary = core.getInput('only-summary', {required: false}) === 'true'
   readonly token = core.getInput('token', {required: true})
+  readonly slackWebhook = core.getInput('slack-url', {required: false})
   readonly octokit: InstanceType<typeof GitHub>
   readonly context = getCheckRunContext()
 
@@ -206,6 +208,10 @@ class TestReporter {
     core.setOutput('url', resp.data.url)
     core.setOutput('url_html', resp.data.html_url)
 
+    if (isFailed && this.slackWebhook) {
+      const webhook = new IncomingWebhook(this.slackWebhook);
+      await webhook.send("Test run failed: " + resp.data.html_url);
+    }
     return results
   }
 
