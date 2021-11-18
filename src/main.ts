@@ -210,7 +210,10 @@ class TestReporter {
 
     if (isFailed && this.slackWebhook) {
       const webhook = new IncomingWebhook(this.slackWebhook)
-      await webhook.send('Test run failed: ' + resp.data.html_url)
+      const passed = results.reduce((sum, tr) => sum + tr.passed, 0)
+      const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0)
+      const failed = results.reduce((sum, tr) => sum + tr.failed, 0)
+      await webhook.send(`Tests: ${passed} passed, ${failed} failed, ${skipped} skipped. ` + resp.data.html_url)
     }
     return results
   }
