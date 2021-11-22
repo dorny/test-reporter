@@ -233,7 +233,7 @@ class TestReporter {
     core.setOutput('url', resp.data.url)
     core.setOutput('url_html', resp.data.html_url)
 
-    if (isFailed && this.slackWebhook) {
+    if (isFailed && this.slackWebhook && this.context.branch === 'master') {
       const webhook = new IncomingWebhook(this.slackWebhook)
       const passed = results.reduce((sum, tr) => sum + tr.passed, 0)
       const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0)
