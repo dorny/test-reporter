@@ -213,7 +213,51 @@ class TestReporter {
       const passed = results.reduce((sum, tr) => sum + tr.passed, 0)
       const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0)
       const failed = results.reduce((sum, tr) => sum + tr.failed, 0)
-      await webhook.send(`Tests: ${passed} passed, ${failed} failed, ${skipped} skipped. ` + resp.data.html_url)
+      await webhook.send({
+        blocks: [
+          {
+            type: 'header',
+            text: {
+              type: 'plain_text',
+              text: 'Test results',
+              emoji: true
+            }
+          },
+          {
+            type: 'section',
+            fields: [
+              {
+                type: 'mrkdwn',
+                text: `*Total:*\n${passed + skipped + failed}`
+              },
+              {
+                type: 'mrkdwn',
+                text: `*Passed:*\n:large_green_circle: ${passed}`
+              }
+            ]
+          },
+          {
+            type: 'section',
+            fields: [
+              {
+                type: 'mrkdwn',
+                text: `*Skipped:*\n:large_orange_circle: ${skipped}`
+              },
+              {
+                type: 'mrkdwn',
+                text: `*Failed:*\n:red_circle: ${failed}`
+              }
+            ]
+          },
+          {
+            type: 'section',
+            text: {
+              type: 'mrkdwn',
+              text: `<${resp.data.html_url}|View report>`
+            }
+          }
+        ]
+      })
     }
     return results
   }
