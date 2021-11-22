@@ -213,14 +213,14 @@ class TestReporter {
       const passed = results.reduce((sum, tr) => sum + tr.passed, 0)
       const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0)
       const failed = results.reduce((sum, tr) => sum + tr.failed, 0)
-      await webhook.send({
+
+      const req = {
         blocks: [
           {
             type: 'header',
             text: {
               type: 'plain_text',
-              text: 'Test results',
-              emoji: true
+              text: 'Test results'
             }
           },
           {
@@ -250,15 +250,46 @@ class TestReporter {
             ]
           },
           {
-            type: 'section',
-            text: {
-              type: 'mrkdwn',
-              text: `<${resp.data.html_url}|View report>`
-            }
+            type: 'divider'
           }
         ]
+      }
+
+      results.map((tr, runIndex) => {
+        if (tr.failed === 0) return
+        const runName = tr.path.slice(0, tr.path.indexOf('/TestResults/'))
+
+        req.blocks.push({
+          type: 'section',
+          fields: [
+            {
+              type: 'mrkdwn',
+              text: `<${resp.data.html_url}#r${runIndex}|*${runName}*>`
+            },
+            {
+              type: 'mrkdwn',
+              text: `:red_circle: ${tr.failed}`
+            }
+          ]
+        })
       })
+
+      req.blocks.push(
+        {
+          type: 'divider'
+        },
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `<${resp.data.html_url}|View full report>`
+          }
+        }
+      )
+
+      await webhook.send(req)
     }
+
     return results
   }
 
