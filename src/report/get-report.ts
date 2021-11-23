@@ -187,7 +187,7 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
       [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right],
       ...suites.map((s, suiteIndex) => {
         const tsTime = formatTime(s.time)
-        const tsName = s.name
+        const tsName = s.name.startsWith(name) ? s.name.slice(name.length) : s.name
         const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed')
         const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex).link
         const tsNameLink = skipLink ? tsName : link(tsName, tsAddr)
