@@ -201,7 +201,7 @@ class TestReporter {
 
     core.info('Creating report summary')
     const {listSuites, listTests, onlySummary} = this
-    const baseUrl = createResp.data.html_url as string
+    const baseUrl = createResp.data.html_url || ''
     const summary = getReport(results, {listSuites, listTests, baseUrl, onlySummary})
 
     core.info('Creating annotations')
@@ -232,6 +232,7 @@ class TestReporter {
     core.info(`Check run HTML: ${resp.data.html_url}`)
     core.setOutput('url', resp.data.url)
     core.setOutput('url_html', resp.data.html_url)
+    core.info(`Check run details: ${resp.data.details_url}`)
 
     if (isFailed && this.slackWebhook && this.context.branch === 'master') {
       const webhook = new IncomingWebhook(this.slackWebhook)
