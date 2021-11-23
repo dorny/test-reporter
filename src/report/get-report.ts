@@ -44,6 +44,16 @@ export function getReport(results: TestRunResult[], options: ReportOptions = def
     }
   }
 
+  if (opts.listSuites === 'all') {
+    core.info("Test report summary is too big - setting 'listSuites' to 'failed'")
+    opts.listSuites = 'failed'
+    lines = renderReport(results, opts)
+    report = lines.join('\n')
+    if (getByteLength(report) <= MAX_REPORT_LENGTH) {
+      return report
+    }
+  }
+
   core.warning(`Test report summary exceeded limit of ${MAX_REPORT_LENGTH} bytes and will be trimmed`)
   return trimReport(lines)
 }
@@ -187,7 +197,7 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
       [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right],
       ...suites.map((s, suiteIndex) => {
         const tsTime = formatTime(s.time)
-        const tsName = s.name.startsWith(name) ? s.name.slice(name.length) : s.name
+        const tsName = s.name.startsWith(name) ? s.name.slice(name.length + 1) : s.name
         const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed')
         const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex).link
         const tsNameLink = skipLink ? tsName : link(tsName, tsAddr)
