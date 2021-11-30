@@ -351,7 +351,7 @@ class TestReporter {
         const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
         const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
         const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
-        let shortSummary = `${passed} passed, ${failed} failed and ${skipped} skipped `;
+        const shortSummary = `${passed} passed, ${failed} failed and ${skipped} skipped `;
         core.info(`Updating check run conclusion (${conclusion}) and output`);
         const resp = await this.octokit.checks.update({
             check_run_id: createResp.data.id,
