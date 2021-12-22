@@ -71,17 +71,17 @@ export class JestJunitParser implements TestParser {
   }
 
   private getTestCaseResult(test: TestCase): TestExecutionResult {
-    if (test.failure) return 'failed'
+    if (test.failure || test.error) return 'failed'
     if (test.skipped) return 'skipped'
     return 'success'
   }
 
   private getTestCaseError(tc: TestCase): TestCaseError | undefined {
-    if (!this.options.parseErrors || !tc.failure) {
+    if (!this.options.parseErrors || !(tc.failure || tc.error)) {
       return undefined
     }
 
-    const details = tc.failure[0]
+    const details = tc.failure ? tc.failure[0] : tc.error ? tc.error[0] : 'unknown failure'
     let path
     let line
 
