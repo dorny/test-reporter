@@ -263,7 +263,7 @@ It will create test results in Junit XML format which can be then processed by t
 You can use the following example configuration in `package.json`:
 ```json
 "scripts": {
-  "test": "jest --ci --reporters=default --reporters=jest-Junit"
+  "test": "jest --ci --reporters=default --reporters=jest-junit"
 },
 "devDependencies": {
   "jest": "^26.5.3",
