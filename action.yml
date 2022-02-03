@@ -80,6 +80,14 @@ inputs:
     description: Slack webhook url
     required: false
     default: ''
+  test-results-endpoint:
+    description: Test results endpoint
+    required: true
+    default: ''
+  test-results-endpoint-secret:
+    description: Test results endpoint secret
+    required: true
+    default: ''
 outputs:
   conclusion:
     description: |
