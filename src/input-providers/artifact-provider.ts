@@ -48,7 +48,9 @@ export class ArtifactProvider implements InputProvider {
   }
 
   async load(): Promise<ReportInput> {
-    const result: ReportInput = {}
+    const result: ReportInput = {
+      artifactFilePaths: []
+    }
 
     const resp = await this.octokit.rest.actions.listWorkflowRunArtifacts({
       ...github.context.repo,
@@ -57,17 +59,18 @@ export class ArtifactProvider implements InputProvider {
 
     if (resp.data.artifacts.length === 0) {
       core.warning(`No artifacts found in run ${this.runId}`)
-      return {}
+      return result
     }
 
     const artifacts = resp.data.artifacts.filter(a => this.artifactNameMatch(a.name))
     if (artifacts.length === 0) {
       core.warning(`No artifact matches ${this.artifact}`)
-      return {}
+      return result
     }
 
     for (const art of artifacts) {
       const fileName = `${art.name}.zip`
+      result.artifactFilePaths.push(fileName)
       await downloadArtifact(this.octokit, art.id, fileName, this.token)
       core.startGroup(`Reading archive ${fileName}`)
       try {

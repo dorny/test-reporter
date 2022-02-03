@@ -1,5 +1,6 @@
 export interface ReportInput {
-  [reportName: string]: FileContent[]
+  artifactFilePaths: string[]
+  [reportName: string]: any[]
 }
 
 export interface FileContent {

@@ -20,6 +20,9 @@ import {SwiftXunitParser} from './parsers/swift-xunit/swift-xunit-parser'
 import {normalizeDirPath, normalizeFilePath} from './utils/path-utils'
 import {getCheckRunContext} from './utils/github-utils'
 import {IncomingWebhook} from '@slack/webhook'
+import fs from 'fs'
+//import fetch from 'node-fetch'
+import bent from 'bent'
 
 async function main(): Promise<void> {
   try {
@@ -46,6 +49,8 @@ class TestReporter {
   readonly onlySummary = core.getInput('only-summary', {required: false}) === 'true'
   readonly token = core.getInput('token', {required: true})
   readonly slackWebhook = core.getInput('slack-url', {required: false})
+  readonly resultsEndpoint = core.getInput('test-results-endpoint', {required: true})
+  readonly resultsEndpointSecret = core.getInput('test-results-endpoint-secret', {required: true})
   readonly octokit: InstanceType<typeof GitHub>
   readonly context = getCheckRunContext()
 
@@ -110,6 +115,21 @@ class TestReporter {
 
     const results: TestRunResult[] = []
     const input = await inputProvider.load()
+
+    for (const a of input.artifactFilePaths) {
+      const stats = fs.statSync(a)
+      const fileSizeInBytes = stats.size
+      const readStream = fs.createReadStream(a)
+
+      try {
+        const post = bent(this.resultsEndpoint, 'POST', null, 200);
+        await post(`TestResults?Secret=${this.resultsEndpointSecret}`, readStream);
+        core.info(`Uploaded TRX files: ${a}`)
+      } catch (ex){
+        core.warning(`Could not upload file ${a}: ${ex}`)
+      }
+    }
+
     for (const [reportName, files] of Object.entries(input)) {
       try {
         core.startGroup(`Creating test report ${reportName}`)

@@ -19,7 +19,7 @@ export class LocalFileProvider implements InputProvider {
       }
     }
 
-    return {[this.name]: result}
+    return {[this.name]: result, artifactFilePaths: []}
   }
 
   async listTrackedFiles(): Promise<string[]> {
