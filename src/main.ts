@@ -122,7 +122,7 @@ class TestReporter {
       const readStream = fs.createReadStream(a)
 
       try {
-        const post = bent(this.resultsEndpoint, 'POST', null, 200);
+        const post = bent(this.resultsEndpoint, 'POST', {}, 200);
         await post(`TestResults?Secret=${this.resultsEndpointSecret}`, readStream);
         core.info(`Uploaded TRX files: ${a}`)
       } catch (ex){
@@ -131,6 +131,11 @@ class TestReporter {
     }
 
     for (const [reportName, files] of Object.entries(input)) {
+
+      if(reportName === 'artifactFilePaths') {
+        continue;
+      }
+
       try {
         core.startGroup(`Creating test report ${reportName}`)
         const tr = await this.createReport(parser, reportName, files)
