@@ -116,25 +116,26 @@ class TestReporter {
     const results: TestRunResult[] = []
     const input = await inputProvider.load()
 
+    let version : string | null = null;
+
+    if(input.versionArtifactPath) {
+      version = fs.readFileSync(input.versionArtifactPath).toString();
+      core.info(`Using EVA version ${version}`)
+    }
+
     for (const a of input.artifactFilePaths) {
-      const stats = fs.statSync(a)
-      const fileSizeInBytes = stats.size
       const readStream = fs.createReadStream(a)
 
       try {
         const post = bent(this.resultsEndpoint, 'POST', {}, 200);
-        await post(`TestResults?Secret=${this.resultsEndpointSecret}`, readStream);
+        await post(`TestResults?Secret=${this.resultsEndpointSecret}${version ? "&EVAVersion=" + version : ''}`, readStream);
         core.info(`Uploaded TRX files: ${a}`)
       } catch (ex){
         core.warning(`Could not upload file ${a}: ${ex}`)
       }
     }
 
-    for (const [reportName, files] of Object.entries(input)) {
-
-      if(reportName === 'artifactFilePaths') {
-        continue;
-      }
+    for (const [reportName, files] of Object.entries(input.reports)) {
 
       try {
         core.startGroup(`Creating test report ${reportName}`)
