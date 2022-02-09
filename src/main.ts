@@ -23,6 +23,7 @@ import {IncomingWebhook} from '@slack/webhook'
 import fs from 'fs'
 //import fetch from 'node-fetch'
 import bent from 'bent'
+import { cwd } from 'process';
 
 async function main(): Promise<void> {
   try {
@@ -120,7 +121,7 @@ class TestReporter {
 
     if(input.versionArtifactPath) {
       version = fs.readFileSync(input.versionArtifactPath).toString();
-      core.info(`Using EVA version ${version}`)
+      core.info(`Using EVA version ${version}, current directory: ${cwd()}`)
     }
 
     for (const a of input.artifactFilePaths) {
