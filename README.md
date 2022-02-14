@@ -256,14 +256,14 @@ Some heuristic was necessary to figure out the mapping between the line in the s
 </details>
 
 <details>
-  <summary>jest-Junit</summary>
+  <summary>jest-junit</summary>
 
-[JEST](https://jestjs.io/) testing framework support requires the usage of [jest-Junit](https://github.com/jest-community/jest-Junit) reporter.
+[JEST](https://jestjs.io/) testing framework support requires the usage of [jest-junit](https://github.com/jest-community/jest-junit) reporter.
 It will create test results in Junit XML format which can be then processed by this action.
 You can use the following example configuration in `package.json`:
 ```json
 "scripts": {
-  "test": "jest --ci --reporters=default --reporters=jest-Junit"
+  "test": "jest --ci --reporters=default --reporters=jest-junit"
 },
 "devDependencies": {
   "jest": "^26.5.3",
