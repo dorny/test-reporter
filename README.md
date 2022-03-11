@@ -42,7 +42,7 @@ jobs:
       - run: npm ci                   # install packages
       - run: npm test                 # run tests (configured to use jest-junit reporter)
 
-      - name: Test Report
+      - name: Generate Test Report
         uses: dorny/test-reporter@v1
         if: success() || failure()    # run this step even if previous step failed
         with:
@@ -56,7 +56,7 @@ jobs:
 Workflows triggered by pull requests from forked repositories are executed with read-only token and therefore can't create check runs.
 To workaround this security restriction, it's required to use two separate workflows:
 1. `CI` runs in the context of the PR head branch with the read-only token. It executes the tests and uploads test results as a build artifact
-2. `Test Report` runs in the context of the repository main branch with read/write token. It will download test results and create reports
+2. `Generate Test Report` runs in the context of the repository main branch with read/write token. It will download test results and create reports
 
 **PR head branch:**  *.github/workflows/ci.yml*
 ```yaml
@@ -76,9 +76,9 @@ jobs:
           name: test-results
           path: jest-junit.xml
 ```
-**default branch:**  *.github/workflows/test-report.yml*
+**default branch:**  *.github/workflows/generate-test-report.yml*
 ```yaml
-name: 'Test Report'
+name: 'Generate Test Report'
 on:
   workflow_run:
     workflows: ['CI']                     # runs after CI workflow
