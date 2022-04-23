@@ -1,5 +1,6 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
+import * as fs from 'fs'
 import {GitHub} from '@actions/github/lib/utils'
 
 import {ArtifactProvider} from './input-providers/artifact-provider'
@@ -7,7 +8,6 @@ import {LocalFileProvider} from './input-providers/local-file-provider'
 import {FileContent} from './input-providers/input-provider'
 import {ParseOptions, TestParser} from './test-parser'
 import {TestRunResult} from './test-results'
-import {getAnnotations} from './report/get-annotations'
 import {getReport} from './report/get-report'
 
 import {DartJsonParser} from './parsers/dart-json/dart-json-parser'
@@ -18,7 +18,6 @@ import {MochaJsonParser} from './parsers/mocha-json/mocha-json-parser'
 
 import {normalizeDirPath, normalizeFilePath} from './utils/path-utils'
 import {getCheckRunContext} from './utils/github-utils'
-import {Icon} from './utils/markdown-utils'
 
 async function main(): Promise<void> {
   try {
@@ -154,45 +153,50 @@ class TestReporter {
       results.push(tr)
     }
 
-    core.info(`Creating check run ${name}`)
-    const createResp = await this.octokit.rest.checks.create({
-      head_sha: this.context.sha,
-      name,
-      status: 'in_progress',
-      output: {
-        title: name,
-        summary: ''
-      },
-      ...github.context.repo
-    })
+    // core.info(`Creating check run ${name}`)
+    // const createResp = await this.octokit.checks.create({
+    //   head_sha: this.context.sha,
+    //   name,
+    //   status: 'in_progress',
+    //   output: {
+    //     title: name,
+    //     summary: ''
+    //   },
+    //   ...github.context.repo
+    // })
 
     core.info('Creating report summary')
     const {listSuites, listTests, onlySummary} = this
-    const baseUrl = createResp.data.html_url as string
+    const baseUrl = ''
     const summary = getReport(results, {listSuites, listTests, baseUrl, onlySummary})
+    core.info('Summary content:')
+    core.info(summary)
+    await fs.promises.writeFile(this.path.replace('*.trx', 'test-summary.md'), summary)
+    core.info('File content:')
+    core.info(fs.readFileSync(this.path.replace('*.trx', 'test-summary.md'), 'utf8'))
 
-    core.info('Creating annotations')
-    const annotations = getAnnotations(results, this.maxAnnotations)
+    // core.info('Creating annotations')
+    // const annotations = getAnnotations(results, this.maxAnnotations)
 
-    const isFailed = results.some(tr => tr.result === 'failed')
-    const conclusion = isFailed ? 'failure' : 'success'
-    const icon = isFailed ? Icon.fail : Icon.success
+    // const isFailed = results.some(tr => tr.result === 'failed')
+    // const conclusion = isFailed ? 'failure' : 'success'
+    // const icon = isFailed ? Icon.fail : Icon.success
 
-    core.info(`Updating check run conclusion (${conclusion}) and output`)
-    const resp = await this.octokit.rest.checks.update({
-      check_run_id: createResp.data.id,
-      conclusion,
-      status: 'completed',
-      output: {
-        title: `${name} ${icon}`,
-        summary,
-        annotations
-      },
-      ...github.context.repo
-    })
-    core.info(`Check run create response: ${resp.status}`)
-    core.info(`Check run URL: ${resp.data.url}`)
-    core.info(`Check run HTML: ${resp.data.html_url}`)
+    // core.info(`Updating check run conclusion (${conclusion}) and output`)
+    // const resp = await this.octokit.checks.update({
+    //   check_run_id: createResp.data.id,
+    //   conclusion,
+    //   status: 'completed',
+    //   output: {
+    //     title: `${name} ${icon}`,
+    //     summary,
+    //     annotations
+    //   },
+    //   ...github.context.repo
+    // })
+    // core.info(`Check run create response: ${resp.status}`)
+    // core.info(`Check run URL: ${resp.data.url}`)
+    // core.info(`Check run HTML: ${resp.data.html_url}`)
 
     return results
   }

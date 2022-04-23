@@ -256,9 +256,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
+const fs = __importStar(__nccwpck_require__(7147));
 const artifact_provider_1 = __nccwpck_require__(7171);
 const local_file_provider_1 = __nccwpck_require__(9399);
-const get_annotations_1 = __nccwpck_require__(5867);
 const get_report_1 = __nccwpck_require__(3737);
 const dart_json_parser_1 = __nccwpck_require__(4528);
 const dotnet_trx_parser_1 = __nccwpck_require__(2664);
@@ -267,7 +267,6 @@ const jest_junit_parser_1 = __nccwpck_require__(1113);
 const mocha_json_parser_1 = __nccwpck_require__(6043);
 const path_utils_1 = __nccwpck_require__(4070);
 const github_utils_1 = __nccwpck_require__(3522);
-const markdown_utils_1 = __nccwpck_require__(6482);
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -381,29 +380,46 @@ class TestReporter {
                 const tr = yield parser.parse(file, content);
                 results.push(tr);
             }
-            core.info(`Creating check run ${name}`);
-            const createResp = yield this.octokit.rest.checks.create(Object.assign({ head_sha: this.context.sha, name, status: 'in_progress', output: {
-                    title: name,
-                    summary: ''
-                } }, github.context.repo));
+            // core.info(`Creating check run ${name}`)
+            // const createResp = await this.octokit.checks.create({
+            //   head_sha: this.context.sha,
+            //   name,
+            //   status: 'in_progress',
+            //   output: {
+            //     title: name,
+            //     summary: ''
+            //   },
+            //   ...github.context.repo
+            // })
             core.info('Creating report summary');
             const { listSuites, listTests, onlySummary } = this;
-            const baseUrl = createResp.data.html_url;
+            const baseUrl = '';
             const summary = (0, get_report_1.getReport)(results, { listSuites, listTests, baseUrl, onlySummary });
-            core.info('Creating annotations');
-            const annotations = (0, get_annotations_1.getAnnotations)(results, this.maxAnnotations);
-            const isFailed = results.some(tr => tr.result === 'failed');
-            const conclusion = isFailed ? 'failure' : 'success';
-            const icon = isFailed ? markdown_utils_1.Icon.fail : markdown_utils_1.Icon.success;
-            core.info(`Updating check run conclusion (${conclusion}) and output`);
-            const resp = yield this.octokit.rest.checks.update(Object.assign({ check_run_id: createResp.data.id, conclusion, status: 'completed', output: {
-                    title: `${name} ${icon}`,
-                    summary,
-                    annotations
-                } }, github.context.repo));
-            core.info(`Check run create response: ${resp.status}`);
-            core.info(`Check run URL: ${resp.data.url}`);
-            core.info(`Check run HTML: ${resp.data.html_url}`);
+            core.info('Summary content:');
+            core.info(summary);
+            yield fs.promises.writeFile(this.path.replace('*.trx', 'test-summary.md'), summary);
+            core.info('File content:');
+            core.info(fs.readFileSync(this.path.replace('*.trx', 'test-summary.md'), 'utf8'));
+            // core.info('Creating annotations')
+            // const annotations = getAnnotations(results, this.maxAnnotations)
+            // const isFailed = results.some(tr => tr.result === 'failed')
+            // const conclusion = isFailed ? 'failure' : 'success'
+            // const icon = isFailed ? Icon.fail : Icon.success
+            // core.info(`Updating check run conclusion (${conclusion}) and output`)
+            // const resp = await this.octokit.checks.update({
+            //   check_run_id: createResp.data.id,
+            //   conclusion,
+            //   status: 'completed',
+            //   output: {
+            //     title: `${name} ${icon}`,
+            //     summary,
+            //     annotations
+            //   },
+            //   ...github.context.repo
+            // })
+            // core.info(`Check run create response: ${resp.status}`)
+            // core.info(`Check run URL: ${resp.data.url}`)
+            // core.info(`Check run HTML: ${resp.data.html_url}`)
             return results;
         });
     }
@@ -725,8 +741,9 @@ const path_utils_1 = __nccwpck_require__(4070);
 const parse_utils_1 = __nccwpck_require__(7811);
 const test_results_1 = __nccwpck_require__(2768);
 class TestClass {
-    constructor(name) {
+    constructor(name, assemblyName) {
         this.name = name;
+        this.assemblyName = assemblyName;
         this.tests = [];
     }
 }
@@ -788,9 +805,12 @@ class DotnetTrxParser {
         const testClasses = {};
         for (const r of unitTestsResults) {
             const className = r.test.TestMethod[0].$.className;
+            const codeBase = r.test.TestMethod[0].$.codeBase;
+            const pathSegments = codeBase.replace(/\\/g, '/').split('/');
+            const assemblyName = pathSegments[pathSegments.length - 1].replace('.dll', '');
             let tc = testClasses[className];
             if (tc === undefined) {
-                tc = new TestClass(className);
+                tc = new TestClass(className, assemblyName);
                 testClasses[tc.name] = tc;
             }
             const error = this.getErrorInfo(r.result);
@@ -817,6 +837,9 @@ class DotnetTrxParser {
             const group = new test_results_1.TestGroupResult(null, tests);
             return new test_results_1.TestSuiteResult(testClass.name, [group]);
         });
+        if (testClasses.length > 0) {
+            return new test_results_1.TestRunResult(testClasses[0].assemblyName, suites, totalTime);
+        }
         return new test_results_1.TestRunResult(path, suites, totalTime);
     }
     getErrorInfo(testResult) {
@@ -1339,94 +1362,6 @@ exports.MochaJsonParser = MochaJsonParser;
 
 /***/ }),
 
-/***/ 5867:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getAnnotations = void 0;
-const markdown_utils_1 = __nccwpck_require__(6482);
-const parse_utils_1 = __nccwpck_require__(7811);
-function getAnnotations(results, maxCount) {
-    var _a, _b, _c, _d;
-    if (maxCount === 0) {
-        return [];
-    }
-    // Collect errors from TestRunResults
-    // Merge duplicates if there are more test results files processed
-    const errors = [];
-    const mergeDup = results.length > 1;
-    for (const tr of results) {
-        for (const ts of tr.suites) {
-            for (const tg of ts.groups) {
-                for (const tc of tg.tests) {
-                    const err = tc.error;
-                    if (err === undefined) {
-                        continue;
-                    }
-                    const path = (_a = err.path) !== null && _a !== void 0 ? _a : tr.path;
-                    const line = (_b = err.line) !== null && _b !== void 0 ? _b : 0;
-                    if (mergeDup) {
-                        const dup = errors.find(e => path === e.path && line === e.line && err.details === e.details);
-                        if (dup !== undefined) {
-                            dup.testRunPaths.push(tr.path);
-                            continue;
-                        }
-                    }
-                    errors.push({
-                        testRunPaths: [tr.path],
-                        suiteName: ts.name,
-                        testName: tg.name ? `${tg.name} ► ${tc.name}` : tc.name,
-                        details: err.details,
-                        message: (_d = (_c = err.message) !== null && _c !== void 0 ? _c : (0, parse_utils_1.getFirstNonEmptyLine)(err.details)) !== null && _d !== void 0 ? _d : 'Test failed',
-                        path,
-                        line
-                    });
-                }
-            }
-        }
-    }
-    // Limit number of created annotations
-    errors.splice(maxCount + 1);
-    const annotations = errors.map(e => {
-        const message = [
-            'Failed test found in:',
-            e.testRunPaths.map(p => `  ${p}`).join('\n'),
-            'Error:',
-            ident((0, markdown_utils_1.fixEol)(e.message), '  ')
-        ].join('\n');
-        return enforceCheckRunLimits({
-            path: e.path,
-            start_line: e.line,
-            end_line: e.line,
-            annotation_level: 'failure',
-            title: `${e.suiteName} ► ${e.testName}`,
-            raw_details: (0, markdown_utils_1.fixEol)(e.details),
-            message
-        });
-    });
-    return annotations;
-}
-exports.getAnnotations = getAnnotations;
-function enforceCheckRunLimits(err) {
-    err.title = (0, markdown_utils_1.ellipsis)(err.title || '', 255);
-    err.message = (0, markdown_utils_1.ellipsis)(err.message, 65535);
-    if (err.raw_details) {
-        err.raw_details = (0, markdown_utils_1.ellipsis)(err.raw_details, 65535);
-    }
-    return err;
-}
-function ident(text, prefix) {
-    return text
-        .split(/\n/g)
-        .map(line => prefix + line)
-        .join('\n');
-}
-
-
-/***/ }),
-
 /***/ 3737:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -1566,15 +1501,15 @@ function getBadge(passed, failed, skipped) {
 function getTestRunsReport(testRuns, options) {
     const sections = [];
     if (testRuns.length > 1 || options.onlySummary) {
-        const tableData = testRuns.map((tr, runIndex) => {
+        const tableData = testRuns
+            .filter(tr => tr.passed > 0 || tr.failed > 0 || tr.skipped > 0)
+            .map(tr => {
             const time = (0, markdown_utils_1.formatTime)(tr.time);
             const name = tr.path;
-            const addr = options.baseUrl + makeRunSlug(runIndex).link;
-            const nameLink = (0, markdown_utils_1.link)(name, addr);
             const passed = tr.passed > 0 ? `${tr.passed}${markdown_utils_1.Icon.success}` : '';
             const failed = tr.failed > 0 ? `${tr.failed}${markdown_utils_1.Icon.fail}` : '';
             const skipped = tr.skipped > 0 ? `${tr.skipped}${markdown_utils_1.Icon.skip}` : '';
-            return [nameLink, passed, failed, skipped, time];
+            return [name, passed, failed, skipped, time];
         });
         const resultsTable = (0, markdown_utils_1.table)(['Report', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...tableData);
         sections.push(resultsTable);
@@ -2036,9 +1971,9 @@ var Align;
     Align["None"] = "---";
 })(Align = exports.Align || (exports.Align = {}));
 exports.Icon = {
-    skip: '✖️',
-    success: '✔️',
-    fail: '❌' // ':x:'
+    skip: ':no_entry_sign:',
+    success: ':white_check_mark:',
+    fail: ':x:'
 };
 function link(title, address) {
     return `[${title}](${address})`;
