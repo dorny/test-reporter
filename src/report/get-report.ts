@@ -12,13 +12,15 @@ export interface ReportOptions {
   listTests: 'all' | 'failed' | 'none'
   baseUrl: string
   onlySummary: boolean
+  badgeTitle: string
 }
 
 const defaultOptions: ReportOptions = {
   listSuites: 'all',
   listTests: 'all',
   baseUrl: '',
-  onlySummary: false
+  onlySummary: false,
+  badgeTitle: 'tests'
 }
 
 export function getReport(results: TestRunResult[], options: ReportOptions = defaultOptions): string {
@@ -92,7 +94,7 @@ function getByteLength(text: string): number {
 
 function renderReport(results: TestRunResult[], options: ReportOptions): string[] {
   const sections: string[] = []
-  const badge = getReportBadge(results)
+  const badge = getReportBadge(results, options)
   sections.push(badge)
 
   const runs = getTestRunsReport(results, options)
@@ -101,14 +103,14 @@ function renderReport(results: TestRunResult[], options: ReportOptions): string[
   return sections
 }
 
-function getReportBadge(results: TestRunResult[]): string {
+function getReportBadge(results: TestRunResult[], options: ReportOptions): string {
   const passed = results.reduce((sum, tr) => sum + tr.passed, 0)
   const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0)
   const failed = results.reduce((sum, tr) => sum + tr.failed, 0)
-  return getBadge(passed, failed, skipped)
+  return getBadge(passed, failed, skipped, options)
 }
 
-function getBadge(passed: number, failed: number, skipped: number): string {
+function getBadge(passed: number, failed: number, skipped: number, options: ReportOptions): string {
   const text = []
   if (passed > 0) {
     text.push(`${passed} passed`)
@@ -128,7 +130,7 @@ function getBadge(passed: number, failed: number, skipped: number): string {
     color = 'yellow'
   }
   const hint = failed > 0 ? 'Tests failed' : 'Tests passed successfully'
-  const uri = encodeURIComponent(`tests-${message}-${color}`)
+  const uri = encodeURIComponent(`${options.badgeTitle}-${message}-${color}`)
   return `![${hint}](https://img.shields.io/badge/${uri})`
 }
 

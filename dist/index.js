@@ -294,6 +294,7 @@ class TestReporter {
         this.failOnError = core.getInput('fail-on-error', { required: true }) === 'true';
         this.workDirInput = core.getInput('working-directory', { required: false });
         this.onlySummary = core.getInput('only-summary', { required: false }) === 'true';
+        this.badgeTitle = core.getInput('badge-title', { required: false });
         this.token = core.getInput('token', { required: true });
         this.context = (0, github_utils_1.getCheckRunContext)();
         this.octokit = github.getOctokit(this.token);
@@ -392,9 +393,9 @@ class TestReporter {
             //   ...github.context.repo
             // })
             core.info('Creating report summary');
-            const { listSuites, listTests, onlySummary } = this;
+            const { listSuites, listTests, onlySummary, badgeTitle } = this;
             const baseUrl = '';
-            const summary = (0, get_report_1.getReport)(results, { listSuites, listTests, baseUrl, onlySummary });
+            const summary = (0, get_report_1.getReport)(results, { listSuites, listTests, baseUrl, onlySummary, badgeTitle });
             core.info('Summary content:');
             core.info(summary);
             yield fs.promises.writeFile(this.path.replace('*.trx', 'test-summary.md'), summary);
@@ -1402,7 +1403,8 @@ const defaultOptions = {
     listSuites: 'all',
     listTests: 'all',
     baseUrl: '',
-    onlySummary: false
+    onlySummary: false,
+    badgeTitle: 'tests'
 };
 function getReport(results, options = defaultOptions) {
     core.info('Generating check run summary');
@@ -1463,19 +1465,19 @@ function getByteLength(text) {
 }
 function renderReport(results, options) {
     const sections = [];
-    const badge = getReportBadge(results);
+    const badge = getReportBadge(results, options);
     sections.push(badge);
     const runs = getTestRunsReport(results, options);
     sections.push(...runs);
     return sections;
 }
-function getReportBadge(results) {
+function getReportBadge(results, options) {
     const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
     const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
     const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
-    return getBadge(passed, failed, skipped);
+    return getBadge(passed, failed, skipped, options);
 }
-function getBadge(passed, failed, skipped) {
+function getBadge(passed, failed, skipped, options) {
     const text = [];
     if (passed > 0) {
         text.push(`${passed} passed`);
@@ -1495,7 +1497,7 @@ function getBadge(passed, failed, skipped) {
         color = 'yellow';
     }
     const hint = failed > 0 ? 'Tests failed' : 'Tests passed successfully';
-    const uri = encodeURIComponent(`tests-${message}-${color}`);
+    const uri = encodeURIComponent(`${options.badgeTitle}-${message}-${color}`);
     return `![${hint}](https://img.shields.io/badge/${uri})`;
 }
 function getTestRunsReport(testRuns, options) {

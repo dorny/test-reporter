@@ -41,6 +41,7 @@ class TestReporter {
   readonly failOnError = core.getInput('fail-on-error', {required: true}) === 'true'
   readonly workDirInput = core.getInput('working-directory', {required: false})
   readonly onlySummary = core.getInput('only-summary', {required: false}) === 'true'
+  readonly badgeTitle = core.getInput('badge-title', {required: false})
   readonly token = core.getInput('token', {required: true})
   readonly octokit: InstanceType<typeof GitHub>
   readonly context = getCheckRunContext()
@@ -166,9 +167,9 @@ class TestReporter {
     // })
 
     core.info('Creating report summary')
-    const {listSuites, listTests, onlySummary} = this
+    const {listSuites, listTests, onlySummary, badgeTitle} = this
     const baseUrl = ''
-    const summary = getReport(results, {listSuites, listTests, baseUrl, onlySummary})
+    const summary = getReport(results, {listSuites, listTests, baseUrl, onlySummary, badgeTitle})
     core.info('Summary content:')
     core.info(summary)
     await fs.promises.writeFile(this.path.replace('*.trx', 'test-summary.md'), summary)
