@@ -35,7 +35,7 @@ class TestReporter {
   readonly path = core.getInput('path', {required: true})
   readonly pathReplaceBackslashes = core.getInput('path-replace-backslashes', {required: false}) === 'true'
   readonly reporter = core.getInput('reporter', {required: true})
-  readonly listSuites = core.getInput('list-suites', {required: true}) as 'all' | 'failed'
+  readonly listSuites = core.getInput('list-suites', {required: true}) as 'all' | 'failed' | 'none'
   readonly listTests = core.getInput('list-tests', {required: true}) as 'all' | 'failed' | 'none'
   readonly maxAnnotations = parseInt(core.getInput('max-annotations', {required: true}))
   readonly failOnError = core.getInput('fail-on-error', {required: true}) === 'true'
@@ -49,7 +49,7 @@ class TestReporter {
   constructor() {
     this.octokit = github.getOctokit(this.token)
 
-    if (this.listSuites !== 'all' && this.listSuites !== 'failed') {
+    if (this.listSuites !== 'all' && this.listSuites !== 'failed' && this.listSuites !== 'none') {
       core.setFailed(`Input parameter 'list-suites' has invalid value`)
       return
     }

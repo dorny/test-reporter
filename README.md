@@ -141,6 +141,7 @@ jobs:
     # Limits which test suites are listed:
     #   all
     #   failed
+    #   none
     list-suites: 'all'
 
     # Limits which test cases are listed:

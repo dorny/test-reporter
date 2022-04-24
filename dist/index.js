@@ -298,7 +298,7 @@ class TestReporter {
         this.token = core.getInput('token', { required: true });
         this.context = (0, github_utils_1.getCheckRunContext)();
         this.octokit = github.getOctokit(this.token);
-        if (this.listSuites !== 'all' && this.listSuites !== 'failed') {
+        if (this.listSuites !== 'all' && this.listSuites !== 'failed' && this.listSuites !== 'none') {
             core.setFailed(`Input parameter 'list-suites' has invalid value`);
             return;
         }
@@ -1524,29 +1524,31 @@ function getTestRunsReport(testRuns, options) {
 }
 function getSuitesReport(tr, runIndex, options) {
     const sections = [];
-    const trSlug = makeRunSlug(runIndex);
-    const nameLink = `<a id="${trSlug.id}" href="${options.baseUrl + trSlug.link}">${tr.path}</a>`;
-    const icon = getResultIcon(tr.result);
-    sections.push(`## ${icon}\xa0${nameLink}`);
-    const time = (0, markdown_utils_1.formatTime)(tr.time);
-    const headingLine2 = tr.tests > 0
-        ? `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`
-        : 'No tests found';
-    sections.push(headingLine2);
     const suites = options.listSuites === 'failed' ? tr.failedSuites : tr.suites;
-    if (suites.length > 0) {
-        const suitesTable = (0, markdown_utils_1.table)(['Test suite', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...suites.map((s, suiteIndex) => {
-            const tsTime = (0, markdown_utils_1.formatTime)(s.time);
-            const tsName = s.name;
-            const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed');
-            const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex).link;
-            const tsNameLink = skipLink ? tsName : (0, markdown_utils_1.link)(tsName, tsAddr);
-            const passed = s.passed > 0 ? `${s.passed}${markdown_utils_1.Icon.success}` : '';
-            const failed = s.failed > 0 ? `${s.failed}${markdown_utils_1.Icon.fail}` : '';
-            const skipped = s.skipped > 0 ? `${s.skipped}${markdown_utils_1.Icon.skip}` : '';
-            return [tsNameLink, passed, failed, skipped, tsTime];
-        }));
-        sections.push(suitesTable);
+    if (options.listSuites !== 'none') {
+        const trSlug = makeRunSlug(runIndex);
+        const nameLink = `<a id="${trSlug.id}" href="${options.baseUrl + trSlug.link}">${tr.path}</a>`;
+        const icon = getResultIcon(tr.result);
+        sections.push(`## ${icon}\xa0${nameLink}`);
+        const time = (0, markdown_utils_1.formatTime)(tr.time);
+        const headingLine2 = tr.tests > 0
+            ? `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`
+            : 'No tests found';
+        sections.push(headingLine2);
+        if (suites.length > 0) {
+            const suitesTable = (0, markdown_utils_1.table)(['Test suite', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...suites.map((s, suiteIndex) => {
+                const tsTime = (0, markdown_utils_1.formatTime)(s.time);
+                const tsName = s.name;
+                const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed');
+                const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex).link;
+                const tsNameLink = skipLink ? tsName : (0, markdown_utils_1.link)(tsName, tsAddr);
+                const passed = s.passed > 0 ? `${s.passed}${markdown_utils_1.Icon.success}` : '';
+                const failed = s.failed > 0 ? `${s.failed}${markdown_utils_1.Icon.fail}` : '';
+                const skipped = s.skipped > 0 ? `${s.skipped}${markdown_utils_1.Icon.skip}` : '';
+                return [tsNameLink, passed, failed, skipped, tsTime];
+            }));
+            sections.push(suitesTable);
+        }
     }
     if (options.listTests !== 'none') {
         const tests = suites.map((ts, suiteIndex) => getTestsReport(ts, runIndex, suiteIndex, options)).flat();

@@ -8,7 +8,7 @@ import {slug} from '../utils/slugger'
 const MAX_REPORT_LENGTH = 65535
 
 export interface ReportOptions {
-  listSuites: 'all' | 'failed'
+  listSuites: 'all' | 'failed' | 'none'
   listTests: 'all' | 'failed' | 'none'
   baseUrl: string
   onlySummary: boolean
@@ -166,37 +166,39 @@ function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): s
 
 function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOptions): string[] {
   const sections: string[] = []
-
-  const trSlug = makeRunSlug(runIndex)
-  const nameLink = `<a id="${trSlug.id}" href="${options.baseUrl + trSlug.link}">${tr.path}</a>`
-  const icon = getResultIcon(tr.result)
-  sections.push(`## ${icon}\xa0${nameLink}`)
-
-  const time = formatTime(tr.time)
-  const headingLine2 =
-    tr.tests > 0
-      ? `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`
-      : 'No tests found'
-  sections.push(headingLine2)
-
   const suites = options.listSuites === 'failed' ? tr.failedSuites : tr.suites
-  if (suites.length > 0) {
-    const suitesTable = table(
-      ['Test suite', 'Passed', 'Failed', 'Skipped', 'Time'],
-      [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right],
-      ...suites.map((s, suiteIndex) => {
-        const tsTime = formatTime(s.time)
-        const tsName = s.name
-        const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed')
-        const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex).link
-        const tsNameLink = skipLink ? tsName : link(tsName, tsAddr)
-        const passed = s.passed > 0 ? `${s.passed}${Icon.success}` : ''
-        const failed = s.failed > 0 ? `${s.failed}${Icon.fail}` : ''
-        const skipped = s.skipped > 0 ? `${s.skipped}${Icon.skip}` : ''
-        return [tsNameLink, passed, failed, skipped, tsTime]
-      })
-    )
-    sections.push(suitesTable)
+
+  if (options.listSuites !== 'none') {
+    const trSlug = makeRunSlug(runIndex)
+    const nameLink = `<a id="${trSlug.id}" href="${options.baseUrl + trSlug.link}">${tr.path}</a>`
+    const icon = getResultIcon(tr.result)
+    sections.push(`## ${icon}\xa0${nameLink}`)
+
+    const time = formatTime(tr.time)
+    const headingLine2 =
+      tr.tests > 0
+        ? `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`
+        : 'No tests found'
+    sections.push(headingLine2)
+
+    if (suites.length > 0) {
+      const suitesTable = table(
+        ['Test suite', 'Passed', 'Failed', 'Skipped', 'Time'],
+        [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right],
+        ...suites.map((s, suiteIndex) => {
+          const tsTime = formatTime(s.time)
+          const tsName = s.name
+          const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed')
+          const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex).link
+          const tsNameLink = skipLink ? tsName : link(tsName, tsAddr)
+          const passed = s.passed > 0 ? `${s.passed}${Icon.success}` : ''
+          const failed = s.failed > 0 ? `${s.failed}${Icon.fail}` : ''
+          const skipped = s.skipped > 0 ? `${s.skipped}${Icon.skip}` : ''
+          return [tsNameLink, passed, failed, skipped, tsTime]
+        })
+      )
+      sections.push(suitesTable)
+    }
   }
 
   if (options.listTests !== 'none') {

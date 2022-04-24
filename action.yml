@@ -37,6 +37,7 @@ inputs:
       Limits which test suites are listed. Supported options:
         - all
         - only-failed
+        - none
     required: true
     default: 'all'
   list-tests:
