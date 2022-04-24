@@ -3,7 +3,7 @@
 **11** tests were completed in **1s** with **5** passed, **5** failed and **1** skipped.
 |Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
-|[DotnetTests.XUnitTests.CalculatorTests](#r0s0)|5:white_check_mark:|5:x:|1:no_entry_sign:|118ms|
+|[DotnetTests.XUnitTests.CalculatorTests](#r0s0)|5:white_check_mark:|5:x:|1:warning:|118ms|
 ### :x: <a id="user-content-r0s0" href="#r0s0">DotnetTests.XUnitTests.CalculatorTests</a>
 ```
 :white_check_mark: Custom Name
@@ -26,6 +26,6 @@
 	Assert.True() Failure
 	Expected: True
 	Actual:   False
-:no_entry_sign: Skipped_Test
+:warning: Skipped_Test
 :white_check_mark: Timeout_Test
 ```

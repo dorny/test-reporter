@@ -6,7 +6,7 @@ export enum Align {
 }
 
 export const Icon = {
-  skip: ':no_entry_sign:',
+  skip: ':warning:',
   success: ':white_check_mark:',
   fail: ':x:'
 }

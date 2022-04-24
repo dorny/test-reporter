@@ -11,7 +11,7 @@
 |e2e/__tests__/babelPluginJestHoist.test.ts|1:white_check_mark:|||6s|
 |e2e/__tests__/badSourceMap.test.ts|1:white_check_mark:|||858ms|
 |e2e/__tests__/beforeAllFiltered.ts|1:white_check_mark:|||958ms|
-|e2e/__tests__/beforeEachQueue.ts|1:white_check_mark:||1:no_entry_sign:|55ms|
+|e2e/__tests__/beforeEachQueue.ts|1:white_check_mark:||1:warning:|55ms|
 |e2e/__tests__/callDoneTwice.test.ts|1:white_check_mark:|||882ms|
 |e2e/__tests__/chaiAssertionLibrary.ts|1:white_check_mark:|||2s|
 |e2e/__tests__/circularInequality.test.ts|1:white_check_mark:|||1s|
@@ -48,7 +48,7 @@
 |e2e/__tests__/emptySuiteError.test.ts|1:white_check_mark:|||885ms|
 |e2e/__tests__/env.test.ts|6:white_check_mark:|||5s|
 |e2e/__tests__/environmentAfterTeardown.test.ts|1:white_check_mark:|||892ms|
-|e2e/__tests__/errorOnDeprecated.test.ts|1:white_check_mark:||24:no_entry_sign:|56ms|
+|e2e/__tests__/errorOnDeprecated.test.ts|1:white_check_mark:||24:warning:|56ms|
 |e2e/__tests__/esmConfigFile.test.ts|3:white_check_mark:|||526ms|
 |e2e/__tests__/executeTestsOnceInMpr.ts|1:white_check_mark:|||976ms|
 |e2e/__tests__/existentRoots.test.ts|4:white_check_mark:|||627ms|
@@ -75,7 +75,7 @@
 |e2e/__tests__/importedGlobals.test.ts|1:white_check_mark:|||1s|
 |e2e/__tests__/injectGlobals.test.ts|2:white_check_mark:|||2s|
 |e2e/__tests__/jasmineAsync.test.ts|15:white_check_mark:|||28s|
-|e2e/__tests__/jasmineAsyncWithPendingDuringTest.ts|1:white_check_mark:||1:no_entry_sign:|72ms|
+|e2e/__tests__/jasmineAsyncWithPendingDuringTest.ts|1:white_check_mark:||1:warning:|72ms|
 |e2e/__tests__/jest.config.js.test.ts|3:white_check_mark:|||2s|
 |e2e/__tests__/jest.config.ts.test.ts|5:white_check_mark:|||14s|
 |[e2e/__tests__/jestChangedFiles.test.ts](#r0s75)|9:white_check_mark:|1:x:||9s|
@@ -94,7 +94,7 @@
 |e2e/__tests__/moduleParentNullInTest.ts|1:white_check_mark:|||886ms|
 |e2e/__tests__/multiProjectRunner.test.ts|14:white_check_mark:|||16s|
 |e2e/__tests__/nativeAsyncMock.test.ts|1:white_check_mark:|||55ms|
-|e2e/__tests__/nativeEsm.test.ts|2:white_check_mark:||1:no_entry_sign:|905ms|
+|e2e/__tests__/nativeEsm.test.ts|2:white_check_mark:||1:warning:|905ms|
 |e2e/__tests__/nativeEsmTypescript.test.ts|1:white_check_mark:|||956ms|
 |e2e/__tests__/nestedEventLoop.test.ts|1:white_check_mark:|||1s|
 |e2e/__tests__/nestedTestDefinitions.test.ts|4:white_check_mark:|||5s|
@@ -153,7 +153,7 @@
 |e2e/__tests__/testRetries.test.ts|4:white_check_mark:|||3s|
 |e2e/__tests__/testTodo.test.ts|5:white_check_mark:|||4s|
 |e2e/__tests__/timeouts.test.ts|4:white_check_mark:|||4s|
-|e2e/__tests__/timeoutsLegacy.test.ts|1:white_check_mark:||3:no_entry_sign:|71ms|
+|e2e/__tests__/timeoutsLegacy.test.ts|1:white_check_mark:||3:warning:|71ms|
 |e2e/__tests__/timerResetMocks.test.ts|2:white_check_mark:|||2s|
 |e2e/__tests__/timerUseRealTimers.test.ts|1:white_check_mark:|||1s|
 |e2e/__tests__/toMatchInlineSnapshot.test.ts|12:white_check_mark:|||24s|

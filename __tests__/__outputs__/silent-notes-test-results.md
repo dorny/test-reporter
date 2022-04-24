@@ -4,11 +4,11 @@
 |Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
 |[VanillaCloudStorageClientTest.CloudStorageCredentialsTest](#r0s0)|6:white_check_mark:|||30ms|
-|[VanillaCloudStorageClientTest.CloudStorageProviders.DropboxCloudStorageClientTest](#r0s1)|2:white_check_mark:||3:no_entry_sign:|101ms|
-|[VanillaCloudStorageClientTest.CloudStorageProviders.FtpCloudStorageClientTest](#r0s2)|4:white_check_mark:||3:no_entry_sign:|166ms|
+|[VanillaCloudStorageClientTest.CloudStorageProviders.DropboxCloudStorageClientTest](#r0s1)|2:white_check_mark:||3:warning:|101ms|
+|[VanillaCloudStorageClientTest.CloudStorageProviders.FtpCloudStorageClientTest](#r0s2)|4:white_check_mark:||3:warning:|166ms|
 |[VanillaCloudStorageClientTest.CloudStorageProviders.GmxCloudStorageClientTest](#r0s3)|2:white_check_mark:|||7ms|
-|[VanillaCloudStorageClientTest.CloudStorageProviders.GoogleCloudStorageClientTest](#r0s4)|1:white_check_mark:||3:no_entry_sign:|40ms|
-|[VanillaCloudStorageClientTest.CloudStorageProviders.OnedriveCloudStorageClientTest](#r0s5)|1:white_check_mark:||3:no_entry_sign:|15ms|
+|[VanillaCloudStorageClientTest.CloudStorageProviders.GoogleCloudStorageClientTest](#r0s4)|1:white_check_mark:||3:warning:|40ms|
+|[VanillaCloudStorageClientTest.CloudStorageProviders.OnedriveCloudStorageClientTest](#r0s5)|1:white_check_mark:||3:warning:|15ms|
 |[VanillaCloudStorageClientTest.CloudStorageProviders.WebdavCloudStorageClientTest](#r0s6)|5:white_check_mark:|||16ms|
 |[VanillaCloudStorageClientTest.CloudStorageTokenTest](#r0s7)|9:white_check_mark:|||0ms|
 |[VanillaCloudStorageClientTest.OAuth2.AuthorizationResponseErrorTest](#r0s8)|3:white_check_mark:|||3ms|
@@ -28,9 +28,9 @@
 ### :white_check_mark: <a id="user-content-r0s1" href="#r0s1">VanillaCloudStorageClientTest.CloudStorageProviders.DropboxCloudStorageClientTest</a>
 ```
 :white_check_mark: FileLifecycleWorks
-:no_entry_sign: ReallyDoFetchToken
-:no_entry_sign: ReallyDoOpenAuthorizationPageInBrowser
-:no_entry_sign: ReallyDoRefreshToken
+:warning: ReallyDoFetchToken
+:warning: ReallyDoOpenAuthorizationPageInBrowser
+:warning: ReallyDoRefreshToken
 :white_check_mark: ThrowsAccessDeniedExceptionWithInvalidToken
 ```
 ### :white_check_mark: <a id="user-content-r0s2" href="#r0s2">VanillaCloudStorageClientTest.CloudStorageProviders.FtpCloudStorageClientTest</a>
@@ -39,9 +39,9 @@
 :white_check_mark: SanitizeCredentials_ChangesInvalidPrefix
 :white_check_mark: SecureSslConnectionWorks
 :white_check_mark: ThrowsWithHttpInsteadOfFtp
-:no_entry_sign: ThrowsWithInvalidPassword
-:no_entry_sign: ThrowsWithInvalidUrl
-:no_entry_sign: ThrowsWithInvalidUsername
+:warning: ThrowsWithInvalidPassword
+:warning: ThrowsWithInvalidUrl
+:warning: ThrowsWithInvalidUsername
 ```
 ### :white_check_mark: <a id="user-content-r0s3" href="#r0s3">VanillaCloudStorageClientTest.CloudStorageProviders.GmxCloudStorageClientTest</a>
 ```
@@ -51,16 +51,16 @@
 ### :white_check_mark: <a id="user-content-r0s4" href="#r0s4">VanillaCloudStorageClientTest.CloudStorageProviders.GoogleCloudStorageClientTest</a>
 ```
 :white_check_mark: FileLifecycleWorks
-:no_entry_sign: ReallyDoFetchToken
-:no_entry_sign: ReallyDoOpenAuthorizationPageInBrowser
-:no_entry_sign: ReallyDoRefreshToken
+:warning: ReallyDoFetchToken
+:warning: ReallyDoOpenAuthorizationPageInBrowser
+:warning: ReallyDoRefreshToken
 ```
 ### :white_check_mark: <a id="user-content-r0s5" href="#r0s5">VanillaCloudStorageClientTest.CloudStorageProviders.OnedriveCloudStorageClientTest</a>
 ```
 :white_check_mark: FileLifecycleWorks
-:no_entry_sign: ReallyDoFetchToken
-:no_entry_sign: ReallyDoOpenAuthorizationPageInBrowser
-:no_entry_sign: ReallyDoRefreshToken
+:warning: ReallyDoFetchToken
+:warning: ReallyDoOpenAuthorizationPageInBrowser
+:warning: ReallyDoRefreshToken
 ```
 ### :white_check_mark: <a id="user-content-r0s6" href="#r0s6">VanillaCloudStorageClientTest.CloudStorageProviders.WebdavCloudStorageClientTest</a>
 ```

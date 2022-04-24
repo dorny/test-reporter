@@ -138,6 +138,10 @@ jobs:
     # Detailed listing of test suites and test cases will be skipped.
     only-summary: 'false'
 
+    # Allows you to generate reports for Actions Summary
+    # https://github.com/orgs/github/teams/engineering/discussions/871
+    use-actions-summary: 'true'
+
     # Limits which test suites are listed:
     #   all
     #   failed

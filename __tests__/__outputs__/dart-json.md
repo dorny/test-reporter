@@ -4,7 +4,7 @@
 |Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
 |[test/main_test.dart](#r0s0)|1:white_check_mark:|3:x:||74ms|
-|[test/second_test.dart](#r0s1)||1:x:|1:no_entry_sign:|51ms|
+|[test/second_test.dart](#r0s1)||1:x:|1:warning:|51ms|
 ### :x: <a id="user-content-r0s0" href="#r0s0">test/main_test.dart</a>
 ```
 Test 1
@@ -24,5 +24,5 @@ Test 2
 ```
 :x: Timeout test
 	TimeoutException after 0:00:00.000001: Test timed out after 0 seconds.
-:no_entry_sign: Skipped test
+:warning: Skipped test
 ```

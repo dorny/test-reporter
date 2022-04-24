@@ -4,7 +4,7 @@
 |Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
 |[test/main.test.js](#r0s0)|1:white_check_mark:|3:x:||1ms|
-|[test/second.test.js](#r0s1)||1:x:|1:no_entry_sign:|8ms|
+|[test/second.test.js](#r0s1)||1:x:|1:warning:|8ms|
 ### :x: <a id="user-content-r0s0" href="#r0s0">test/main.test.js</a>
 ```
 Test 1
@@ -23,7 +23,7 @@ Test 2
 ```
 ### :x: <a id="user-content-r0s1" href="#r0s1">test/second.test.js</a>
 ```
-:no_entry_sign: Skipped test
+:warning: Skipped test
 :x: Timeout test
 	Timeout of 1ms exceeded. For async tests and hooks, ensure "done()" is called; if returning a Promise, ensure it resolves. (C:\Users\Michal\Workspace\dorny\test-reporter\reports\mocha\test\second.test.js)
 ```
