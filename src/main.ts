@@ -241,7 +241,7 @@ class TestReporter {
     core.setOutput('url_html', resp.data.html_url)
     core.info(`Check run details: ${resp.data.details_url}`)
 
-    if (isFailed && this.slackWebhook && this.context.branch === 'master') {
+    if (this.slackWebhook && this.context.branch === 'master') {
       const webhook = new IncomingWebhook(this.slackWebhook)
       const passed = results.reduce((sum, tr) => sum + tr.passed, 0)
       const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0)
@@ -250,40 +250,11 @@ class TestReporter {
       const req = {
         blocks: [
           {
-            type: 'header',
+            type: 'section',
             text: {
-              type: 'plain_text',
-              text: 'Test results'
+              type: 'mrkdwn',
+              text: `<${resp.data.html_url}|Result>: :large_green_circle: ${passed} :large_orange_circle: ${skipped} :red_circle: ${failed}`
             }
-          },
-          {
-            type: 'section',
-            fields: [
-              {
-                type: 'mrkdwn',
-                text: `*Total:*\n${passed + skipped + failed}`
-              },
-              {
-                type: 'mrkdwn',
-                text: `*Passed:*\n:large_green_circle: ${passed}`
-              }
-            ]
-          },
-          {
-            type: 'section',
-            fields: [
-              {
-                type: 'mrkdwn',
-                text: `*Skipped:*\n:large_orange_circle: ${skipped}`
-              },
-              {
-                type: 'mrkdwn',
-                text: `*Failed:*\n:red_circle: ${failed}`
-              }
-            ]
-          },
-          {
-            type: 'divider'
           }
         ]
       }
@@ -294,31 +265,13 @@ class TestReporter {
 
         req.blocks.push({
           type: 'section',
-          fields: [
-            {
-              type: 'mrkdwn',
-              text: `<${resp.data.html_url}#r${runIndex}|*${runName}*>`
-            },
-            {
-              type: 'mrkdwn',
-              text: `:red_circle: ${tr.failed}`
-            }
-          ]
+          text:
+          {
+            type: 'mrkdwn',
+            text: `:red_circle: ${tr.failed} in <${resp.data.html_url}#r${runIndex}|*${runName}*>`
+          }
         })
       })
-
-      req.blocks.push(
-        {
-          type: 'divider'
-        },
-        {
-          type: 'section',
-          text: {
-            type: 'mrkdwn',
-            text: `<${resp.data.html_url}|View full report>`
-          }
-        }
-      )
 
       await webhook.send(req)
     }
