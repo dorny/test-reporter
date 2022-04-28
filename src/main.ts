@@ -255,7 +255,7 @@ class TestReporter {
             type: 'section',
             text: {
               type: 'mrkdwn',
-              text: `<${resp.data.html_url}|Result>: :large_green_circle: ${passed} :large_orange_circle: ${skipped} :red_circle: ${failed}`
+              text: `:large_green_circle: ${passed} :large_orange_circle: ${skipped} :red_circle: ${failed} <${resp.data.html_url}|(view)>`
             }
           }
         ]
