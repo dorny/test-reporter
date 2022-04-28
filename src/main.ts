@@ -90,14 +90,14 @@ class TestReporter {
 
     const inputProvider = this.artifact
       ? new ArtifactProvider(
-        this.octokit,
-        this.artifact,
-        this.name,
-        pattern,
-        this.context.sha,
-        this.context.runId,
-        this.token
-      )
+          this.octokit,
+          this.artifact,
+          this.name,
+          pattern,
+          this.context.sha,
+          this.context.runId,
+          this.token
+        )
       : new LocalFileProvider(this.name, pattern)
 
     const parseErrors = this.maxAnnotations > 0
@@ -118,14 +118,14 @@ class TestReporter {
     const results: TestRunResult[] = []
     const input = await inputProvider.load()
 
-    let version: string | null = null;
+    let version: string | null = null
 
     if (input.versionArtifactPath) {
       const zip = new Zip(input.versionArtifactPath)
 
       const entry = zip.getEntry('version.txt')
 
-      version = zip.readAsText(entry);
+      version = zip.readAsText(entry)
       core.info(`Using EVA version ${version}, current directory: ${cwd()}`)
     }
 
@@ -133,8 +133,11 @@ class TestReporter {
       const readStream = fs.createReadStream(a)
 
       try {
-        const post = bent(this.resultsEndpoint, 'POST', {}, 200);
-        const response = await post(`TestResults?Secret=${this.resultsEndpointSecret}${version ? "&EVAVersion=" + version : ''}`, readStream);
+        const post = bent(this.resultsEndpoint, 'POST', {}, 200)
+        await post(
+          `TestResults?Secret=${this.resultsEndpointSecret}${version ? '&EVAVersion=' + version : ''}`,
+          readStream
+        )
         core.info(`Uploaded TRX files: ${a}`)
       } catch (ex) {
         core.warning(`Could not upload file ${a}: ${ex}`)
@@ -142,7 +145,6 @@ class TestReporter {
     }
 
     for (const [reportName, files] of Object.entries(input.reports)) {
-
       try {
         core.startGroup(`Creating test report ${reportName}`)
         const tr = await this.createReport(parser, reportName, files)
@@ -207,9 +209,9 @@ class TestReporter {
     })
 
     core.info('Creating report summary')
-    const { listSuites, listTests, onlySummary } = this
+    const {listSuites, listTests, onlySummary} = this
     const baseUrl = createResp.data.html_url || ''
-    const summary = getReport(results, { listSuites, listTests, baseUrl, onlySummary })
+    const summary = getReport(results, {listSuites, listTests, baseUrl, onlySummary})
 
     core.info('Creating annotations')
     const annotations = getAnnotations(results, this.maxAnnotations)
@@ -265,8 +267,7 @@ class TestReporter {
 
         req.blocks.push({
           type: 'section',
-          text:
-          {
+          text: {
             type: 'mrkdwn',
             text: `:red_circle: ${tr.failed} in <${resp.data.html_url}#r${runIndex}|${runName}>`
           }

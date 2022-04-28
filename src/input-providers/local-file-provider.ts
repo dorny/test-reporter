@@ -19,9 +19,9 @@ export class LocalFileProvider implements InputProvider {
       }
     }
 
-    return { 
+    return {
       artifactFilePaths: [],
-      reports : {
+      reports: {
         [this.name]: result
       }
     }

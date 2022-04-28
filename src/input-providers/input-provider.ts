@@ -1,7 +1,7 @@
 export interface ReportInput {
-  artifactFilePaths: string[],
-  versionArtifactPath?: string,
-  reports : {
+  artifactFilePaths: string[]
+  versionArtifactPath?: string
+  reports: {
     [reportName: string]: FileContent[]
   }
 }

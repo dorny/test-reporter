@@ -50,7 +50,7 @@ export class ArtifactProvider implements InputProvider {
   async load(): Promise<ReportInput> {
     const result: ReportInput = {
       artifactFilePaths: [],
-      reports : {}
+      reports: {}
     }
 
     const resp = await this.octokit.rest.actions.listWorkflowRunArtifacts({
@@ -69,13 +69,15 @@ export class ArtifactProvider implements InputProvider {
       return result
     }
 
-    const versionArtifact = resp.data.artifacts.find(a => a.name == "version.txt");
+    const versionArtifact = resp.data.artifacts.find(a => a.name === 'version.txt')
 
-    if(versionArtifact) {
-      await downloadArtifact(this.octokit, versionArtifact.id, "version.txt", this.token);
-      result.versionArtifactPath = "version.txt";
+    if (versionArtifact) {
+      await downloadArtifact(this.octokit, versionArtifact.id, 'version.txt', this.token)
+      result.versionArtifactPath = 'version.txt'
     } else {
-      core.warning(`Could not find version.txt artifact among these artifacts: ${resp.data.artifacts.map(a => a.name).join(", ")}`);
+      core.warning(
+        `Could not find version.txt artifact among these artifacts: ${resp.data.artifacts.map(a => a.name).join(', ')}`
+      )
     }
 
     for (const art of artifacts) {
