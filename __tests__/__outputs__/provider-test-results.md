@@ -1,4 +1,7 @@
 ![Tests failed](https://img.shields.io/badge/tests-268%20passed%2C%201%20failed-critical)
+|Report|Passed|Failed|Skipped|Time|
+|:---|---:|---:|---:|---:|
+|fixtures/external/flutter/provider-test-results.json|268:white_check_mark:|1:x:||0ms|
 ## :x: <a id="user-content-r0" href="#r0">fixtures/external/flutter/provider-test-results.json</a>
 **269** tests were completed in **0ms** with **268** passed, **1** failed and **0** skipped.
 |Test suite|Passed|Failed|Skipped|Time|

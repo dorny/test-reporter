@@ -1,4 +1,9 @@
 ![Tests passed successfully](https://img.shields.io/badge/tests-833%20passed%2C%206%20skipped-success)
+<details><summary>Expand for details</summary>
+ 
+|Report|Passed|Failed|Skipped|Time|
+|:---|---:|---:|---:|---:|
+|fixtures/external/mocha/mocha-test-results.json|833:white_check_mark:||6:warning:|6s|
 ## :white_check_mark: <a id="user-content-r0" href="#r0">fixtures/external/mocha/mocha-test-results.json</a>
 **839** tests were completed in **6s** with **833** passed, **0** failed and **6** skipped.
 |Test suite|Passed|Failed|Skipped|Time|
@@ -1429,3 +1434,4 @@ lib/utils type() when toString on null or undefined stringifies window
 lib/utils uniqueID()
   :white_check_mark: should return a non-empty string
 ```
+</details>

@@ -1595,7 +1595,12 @@ function getBadge(passed, failed, skipped, options) {
 }
 function getTestRunsReport(testRuns, options) {
     const sections = [];
-    if (testRuns.length > 1 || options.onlySummary) {
+    const totalFailed = testRuns.reduce((sum, tr) => sum + tr.failed, 0);
+    if (totalFailed === 0) {
+        sections.push(`<details><summary>Expand for details</summary>`);
+        sections.push(` `);
+    }
+    if (testRuns.length > 0 || options.onlySummary) {
         const tableData = testRuns
             .filter(tr => tr.passed > 0 || tr.failed > 0 || tr.skipped > 0)
             .map(tr => {
@@ -1612,6 +1617,9 @@ function getTestRunsReport(testRuns, options) {
     if (options.onlySummary === false) {
         const suitesReports = testRuns.map((tr, i) => getSuitesReport(tr, i, options)).flat();
         sections.push(...suitesReports);
+    }
+    if (totalFailed === 0) {
+        sections.push(`</details>`);
     }
     return sections;
 }

@@ -1,4 +1,7 @@
 ![Tests failed](https://img.shields.io/badge/tests-5%20passed%2C%205%20failed%2C%201%20skipped-critical)
+|Report|Passed|Failed|Skipped|Time|
+|:---|---:|---:|---:|---:|
+|DotnetTests.XUnitTests|5:white_check_mark:|5:x:|1:warning:|1s|
 ## :x: <a id="user-content-r0" href="#r0">DotnetTests.XUnitTests</a>
 **11** tests were completed in **1s** with **5** passed, **5** failed and **1** skipped.
 |Test suite|Passed|Failed|Skipped|Time|

@@ -1,4 +1,9 @@
 ![Tests passed successfully](https://img.shields.io/badge/tests-67%20passed%2C%2012%20skipped-success)
+<details><summary>Expand for details</summary>
+ 
+|Report|Passed|Failed|Skipped|Time|
+|:---|---:|---:|---:|---:|
+|VanillaCloudStorageClientTest|67:white_check_mark:||12:warning:|1s|
 ## :white_check_mark: <a id="user-content-r0" href="#r0">VanillaCloudStorageClientTest</a>
 **79** tests were completed in **1s** with **67** passed, **0** failed and **12** skipped.
 |Test suite|Passed|Failed|Skipped|Time|
@@ -134,3 +139,4 @@
 :white_check_mark: SerializedXmlDoesNotContainNullProperties
 :white_check_mark: SerializedXmlDoesNotContainPlaintextData
 ```
+</details>
