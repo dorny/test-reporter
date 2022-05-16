@@ -7,6 +7,10 @@ on:
     branches:
       - main
   workflow_dispatch:
+  
+permissions:
+  statuses: write
+  checks: write
 
 jobs:
   build-test:

@@ -5,6 +5,10 @@ on:
     workflows: ['CI']
     types:
       - completed
+      
+permissions:
+  statuses: write
+  checks: write
 
 jobs:
   report:
