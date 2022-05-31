@@ -25,6 +25,7 @@ import fs from 'fs'
 import bent from 'bent'
 import { cwd } from 'process';
 import Zip from 'adm-zip'
+import path from 'path'
 
 async function main(): Promise<void> {
   try {
@@ -121,11 +122,27 @@ class TestReporter {
     let version: string | null = null
 
     if (input.versionArtifactPath) {
-      const zip = new Zip(input.versionArtifactPath)
+      try {
+        core.info(`exists 1: ${fs.existsSync('src/EVA.TestSuite.Core/bin/Release/version.txt')}`);
+        core.info(`exists 2: ${fs.existsSync('/src/EVA.TestSuite.Core/bin/Release/version.txt')}`);
+        try {
+          core.info(`current dir ${__dirname}`);
+        }
+        catch (error: any) {
+          core.info("couldnt get current dir");
+        }
+        core.info('src exists ' + fs.existsSync('src'));
 
-      const entry = zip.getEntry('version.txt')
+        fs.readdirSync('./').map(x => {
+          core.info('file: ' + x);
+        });
 
-      version = zip.readAsText(entry)
+      }
+      catch (error: any) {
+        core.warning("couldnt do debug stuff" + error);
+      }
+
+      const version = fs.readFileSync('src/EVA.TestSuite.Core/bin/Release/version.txt').toString();
       core.info(`Using EVA version ${version}, current directory: ${cwd()}`)
     }
 
