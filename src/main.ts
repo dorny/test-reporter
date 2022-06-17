@@ -148,7 +148,6 @@ class TestReporter {
 
     const results: TestRunResult[] = []
     for (const {file, content} of files) {
-      core.info(`Processing test results from ${file}`)
       const tr = await parser.parse(file, content)
       results.push(tr)
     }
