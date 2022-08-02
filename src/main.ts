@@ -119,46 +119,22 @@ class TestReporter {
     const results: TestRunResult[] = []
     const input = await inputProvider.load()
 
-    let version: string | null = null
 
-    if (input.versionArtifactPath) {
-      try {
-        core.info(`exists 1: ${fs.existsSync('src/EVA.TestSuite.Core/bin/Release/version.txt')}`);
-        core.info(`exists 2: ${fs.existsSync('/src/EVA.TestSuite.Core/bin/Release/version.txt')}`);
-        try {
-          core.info(`current dir ${__dirname}`);
-        }
-        catch (error: any) {
-          core.info("couldnt get current dir");
-        }
-        core.info('src exists ' + fs.existsSync('src'));
+    try {
+      const readStream = input.trxZip.toBuffer();
+      const version = fs.existsSync('src/EVA.TestSuite.Core/bin/Release/version.txt') ? fs.readFileSync('src/EVA.TestSuite.Core/bin/Release/version.txt').toString() : null;
+      const commitID = fs.existsSync('src/EVA.TestSuite.Core/bin/Release/commit.txt') ? fs.readFileSync('src/EVA.TestSuite.Core/bin/Release/commit.txt').toString() : null;
+      
+      core.info(`Using EVA version ${version}, commit ${commitID}, current directory: ${cwd()}`)
 
-        fs.readdirSync('./').map(x => {
-          core.info('file: ' + x);
-        });
-
-      }
-      catch (error: any) {
-        core.warning("couldnt do debug stuff" + error);
-      }
-
-      const version = fs.readFileSync('src/EVA.TestSuite.Core/bin/Release/version.txt').toString();
-      core.info(`Using EVA version ${version}, current directory: ${cwd()}`)
-    }
-
-    for (const a of input.artifactFilePaths) {
-      const readStream = fs.createReadStream(a)
-
-      try {
-        const post = bent(this.resultsEndpoint, 'POST', {}, 200)
-        await post(
-          `TestResults?Secret=${this.resultsEndpointSecret}${version ? '&EVAVersion=' + version : ''}`,
-          readStream
-        )
-        core.info(`Uploaded TRX files: ${a}`)
-      } catch (ex) {
-        core.warning(`Could not upload file ${a}: ${ex}`)
-      }
+      const post = bent(this.resultsEndpoint, 'POST', {}, 200)
+      await post(
+        `TestResults?Secret=${this.resultsEndpointSecret}${version ? '&EVAVersion=' + version : ''}${commitID ? '&EVACommitID=' + commitID : ''}`,
+        readStream
+      )
+      core.info(`Uploaded TRX files`)
+    } catch (ex) {
+      core.warning(`Could not upload TRX ZIP file: ${ex}`)
     }
 
     for (const [reportName, files] of Object.entries(input.reports)) {
