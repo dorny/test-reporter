@@ -25,7 +25,8 @@ async function main(): Promise<void> {
     const testReporter = new TestReporter()
     await testReporter.run()
   } catch (error) {
-    core.setFailed(error.message)
+    if (error instanceof Error) core.setFailed(error)
+    else core.setFailed(JSON.stringify(error))
   }
 }
 
