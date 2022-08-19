@@ -1,5 +1,7 @@
 import {normalizeFilePath} from './path-utils'
 
+export const DEFAULT_LOCALE = 'en-US';
+
 export function getExceptionSource(
   stackTrace: string,
   trackedFiles: string[],

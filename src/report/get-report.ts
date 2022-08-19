@@ -1,6 +1,7 @@
 import * as core from '@actions/core'
 import {TestExecutionResult, TestRunResult, TestSuiteResult} from '../test-results'
 import {Align, formatTime, Icon, link, table} from '../utils/markdown-utils'
+import { DEFAULT_LOCALE } from '../utils/node-utils'
 import {getFirstNonEmptyLine} from '../utils/parse-utils'
 import {slug} from '../utils/slugger'
 
@@ -79,9 +80,9 @@ function trimReport(lines: string[]): string {
 }
 
 function applySort(results: TestRunResult[]): void {
-  results.sort((a, b) => a.path.localeCompare(b.path))
+  results.sort((a, b) => a.path.localeCompare(b.path, DEFAULT_LOCALE))
   for (const res of results) {
-    res.suites.sort((a, b) => a.name.localeCompare(b.name))
+    res.suites.sort((a, b) => a.name.localeCompare(b.name, DEFAULT_LOCALE))
   }
 }
 

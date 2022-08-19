@@ -1,3 +1,5 @@
+import { DEFAULT_LOCALE } from "./utils/node-utils"
+
 export class TestRunResult {
   constructor(readonly path: string, readonly suites: TestSuiteResult[], private totalTime?: number) {}
 
@@ -28,7 +30,7 @@ export class TestRunResult {
   }
 
   sort(deep: boolean): void {
-    this.suites.sort((a, b) => a.name.localeCompare(b.name))
+    this.suites.sort((a, b) => a.name.localeCompare(b.name, DEFAULT_LOCALE))
     if (deep) {
       for (const suite of this.suites) {
         suite.sort(deep)
@@ -66,7 +68,7 @@ export class TestSuiteResult {
   }
 
   sort(deep: boolean): void {
-    this.groups.sort((a, b) => (a.name ?? '').localeCompare(b.name ?? ''))
+    this.groups.sort((a, b) => (a.name ?? '').localeCompare(b.name ?? '', DEFAULT_LOCALE))
     if (deep) {
       for (const grp of this.groups) {
         grp.sort()
@@ -100,7 +102,7 @@ export class TestGroupResult {
   }
 
   sort(): void {
-    this.tests.sort((a, b) => a.name.localeCompare(b.name))
+    this.tests.sort((a, b) => a.name.localeCompare(b.name, DEFAULT_LOCALE))
   }
 }
 
