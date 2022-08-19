@@ -1,4 +1,4 @@
-import { DEFAULT_LOCALE } from "./utils/node-utils"
+import {DEFAULT_LOCALE} from './utils/node-utils'
 
 export class TestRunResult {
   constructor(readonly path: string, readonly suites: TestSuiteResult[], private totalTime?: number) {}

@@ -1,7 +1,7 @@
 import * as core from '@actions/core'
 import {TestExecutionResult, TestRunResult, TestSuiteResult} from '../test-results'
 import {Align, formatTime, Icon, link, table} from '../utils/markdown-utils'
-import { DEFAULT_LOCALE } from '../utils/node-utils'
+import {DEFAULT_LOCALE} from '../utils/node-utils'
 import {getFirstNonEmptyLine} from '../utils/parse-utils'
 import {slug} from '../utils/slugger'
 
