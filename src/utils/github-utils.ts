@@ -2,16 +2,16 @@ import {createWriteStream} from 'fs'
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import {GitHub} from '@actions/github/lib/utils'
-import {PullRequest} from '@octokit/webhooks-types/schema.d'
+import type {PullRequest} from '@octokit/webhooks-types'
 import * as stream from 'stream'
 import {promisify} from 'util'
-import got from 'got'
+import {got} from 'got'
 const asyncStream = promisify(stream.pipeline)
 
 export function getCheckRunContext(): {sha: string; runId: number} {
   if (github.context.eventName === 'workflow_run') {
     core.info('Action was triggered by workflow_run: using SHA and RUN_ID from triggering workflow')
-    const event = github.context.payload //as EventPayloads.WebhookPayloadWorkflowRun
+    const event = github.context.payload
     if (!event.workflow_run) {
       throw new Error("Event of type 'workflow_run' is missing 'workflow_run' field")
     }
