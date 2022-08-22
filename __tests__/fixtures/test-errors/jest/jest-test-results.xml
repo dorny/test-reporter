@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="0" failures="0" errors="2" time="0.646">
+  <testsuite name="libs/foo.spec.ts" errors="1" failures="0" skipped="0" timestamp="1970-01-01T00:00:00" time="0" tests="0">
+    <testcase classname="Test suite failed to run" name="libs/foo.spec.ts" time="0">
+      <error>  ● Test suite failed to run
+
+    tsconfig.json:13:3 - error TS6258: &apos;typeRoots&apos; should be set inside the &apos;compilerOptions&apos; object of the config json file
+
+    13   &quot;typeRoots&quot;: [&quot;./src/lib/types&quot;, &quot;./node_modules/@types&quot;],
+         ~~~~~~~~~~~
+</error>
+    </testcase>
+  </testsuite>
+  <testsuite name="libs/bar.spec.ts" errors="1" failures="0" skipped="0" timestamp="1970-01-01T00:00:00" time="0" tests="0">
+    <testcase classname="Test suite failed to run" name="libs/bar.spec.ts" time="0">
+      <error>  ● Test suite failed to run
+
+    tsconfig.json:13:3 - error TS6258: &apos;typeRoots&apos; should be set inside the &apos;compilerOptions&apos; object of the config json file
+
+    13   &quot;typeRoots&quot;: [&quot;./src/lib/types&quot;, &quot;./node_modules/@types&quot;],
+         ~~~~~~~~~~~
+</error>
+    </testcase>
+  </testsuite>
+</testsuites>

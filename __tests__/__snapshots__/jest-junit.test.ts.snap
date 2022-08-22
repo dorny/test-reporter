@@ -1,5 +1,68 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`jest-junit tests jest testsuite errors example test results matches snapshot 1`] = `
+TestRunResult {
+  "path": "fixtures/test-errors/jest/jest-test-results.xml",
+  "suites": Array [
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": "Test suite failed to run",
+          "tests": Array [
+            TestCaseResult {
+              "error": Object {
+                "details": "  ● Test suite failed to run
+
+    tsconfig.json:13:3 - error TS6258: 'typeRoots' should be set inside the 'compilerOptions' object of the config json file
+
+    13   \\"typeRoots\\": [\\"./src/lib/types\\", \\"./node_modules/@types\\"],
+         ~~~~~~~~~~~
+",
+                "line": undefined,
+                "path": undefined,
+              },
+              "name": "libs/foo.spec.ts",
+              "result": "failed",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "libs/foo.spec.ts",
+      "totalTime": 0,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": "Test suite failed to run",
+          "tests": Array [
+            TestCaseResult {
+              "error": Object {
+                "details": "  ● Test suite failed to run
+
+    tsconfig.json:13:3 - error TS6258: 'typeRoots' should be set inside the 'compilerOptions' object of the config json file
+
+    13   \\"typeRoots\\": [\\"./src/lib/types\\", \\"./node_modules/@types\\"],
+         ~~~~~~~~~~~
+",
+                "line": undefined,
+                "path": undefined,
+              },
+              "name": "libs/bar.spec.ts",
+              "result": "failed",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "libs/bar.spec.ts",
+      "totalTime": 0,
+    },
+  ],
+  "totalTime": 646,
+}
+`;
+
 exports[`jest-junit tests report from ./reports/jest test results matches snapshot 1`] = `
 TestRunResult {
   "path": "fixtures/jest-junit.xml",
