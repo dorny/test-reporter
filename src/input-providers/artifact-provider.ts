@@ -52,7 +52,8 @@ export class ArtifactProvider implements InputProvider {
 
     const resp = await this.octokit.actions.listWorkflowRunArtifacts({
       ...github.context.repo,
-      run_id: this.runId
+      run_id: this.runId,
+      per_page: 100
     })
 
     if (resp.data.artifacts.length === 0) {
