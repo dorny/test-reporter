@@ -50,7 +50,7 @@ export class ArtifactProvider implements InputProvider {
   async load(): Promise<ReportInput> {
     const result: ReportInput = {}
 
-    const resp = await this.octokit.actions.listWorkflowRunArtifacts({
+    const resp = await this.octokit.rest.actions.listWorkflowRunArtifacts({
       ...github.context.repo,
       run_id: this.runId
     })

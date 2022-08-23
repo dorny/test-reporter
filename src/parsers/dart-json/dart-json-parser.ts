@@ -92,7 +92,8 @@ export class DartJsonParser implements TestParser {
         try {
           return JSON.parse(str)
         } catch (e) {
-          const col = e.columnNumber !== undefined ? `:${e.columnNumber}` : ''
+          const errWithCol = e as {columnNumber?: number}
+          const col = errWithCol.columnNumber !== undefined ? `:${errWithCol.columnNumber}` : ''
           throw new Error(`Invalid JSON at ${path}:${i + 1}${col}\n\n${e}`)
         }
       })
@@ -194,7 +195,8 @@ export class DartJsonParser implements TestParser {
   private getErrorMessage(message: string, print: string): string {
     if (this.sdk === 'flutter') {
       const uselessMessageRe = /^Test failed\. See exception logs above\.\nThe test description was:/m
-      const flutterPrintRe = /^══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═+\s+(.*)\s+When the exception was thrown, this was the stack:/ms
+      const flutterPrintRe =
+        /^══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═+\s+(.*)\s+When the exception was thrown, this was the stack:/ms
       if (uselessMessageRe.test(message)) {
         const match = print.match(flutterPrintRe)
         if (match !== null) {
