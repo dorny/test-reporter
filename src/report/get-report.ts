@@ -48,6 +48,20 @@ export function getReport(results: TestRunResult[], options: ReportOptions = def
   return trimReport(lines)
 }
 
+export function getCheckResultSummary(results: TestRunResult[]): string {
+  const runResultTotals = results.reduce(
+    (totals, currentResults) => {
+      totals.passed += currentResults.passed
+      totals.failed += currentResults.failed
+      totals.skipped += currentResults.skipped
+      return totals
+    },
+    {passed: 0, failed: 0, skipped: 0}
+  )
+
+  return `${runResultTotals.passed} passed, ${runResultTotals.failed} failed, ${runResultTotals.skipped} skipped`
+}
+
 function trimReport(lines: string[]): string {
   const closingBlock = '```'
   const errorMsg = `**Report exceeded GitHub limit of ${MAX_REPORT_LENGTH} bytes and has been trimmed**`

@@ -390,6 +390,7 @@ class TestReporter {
             const { listSuites, listTests, onlySummary } = this;
             const baseUrl = createResp.data.html_url;
             const summary = (0, get_report_1.getReport)(results, { listSuites, listTests, baseUrl, onlySummary });
+            const checkResultSummary = (0, get_report_1.getCheckResultSummary)(results);
             core.info('Creating annotations');
             const annotations = (0, get_annotations_1.getAnnotations)(results, this.maxAnnotations);
             const isFailed = results.some(tr => tr.result === 'failed');
@@ -397,7 +398,7 @@ class TestReporter {
             const icon = isFailed ? markdown_utils_1.Icon.fail : markdown_utils_1.Icon.success;
             core.info(`Updating check run conclusion (${conclusion}) and output`);
             const resp = yield this.octokit.rest.checks.update(Object.assign({ check_run_id: createResp.data.id, conclusion, status: 'completed', output: {
-                    title: `${name} ${icon}`,
+                    title: `${checkResultSummary} — ${name} ${icon}`,
                     summary,
                     annotations
                 } }, github.context.repo));
@@ -1456,7 +1457,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getReport = void 0;
+exports.getCheckResultSummary = exports.getReport = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const markdown_utils_1 = __nccwpck_require__(6482);
 const node_utils_1 = __nccwpck_require__(5824);
@@ -1491,6 +1492,16 @@ function getReport(results, options = defaultOptions) {
     return trimReport(lines);
 }
 exports.getReport = getReport;
+function getCheckResultSummary(results) {
+    const runResultTotals = results.reduce((totals, currentResults) => {
+        totals.passed += currentResults.passed;
+        totals.failed += currentResults.failed;
+        totals.skipped += currentResults.skipped;
+        return totals;
+    }, { passed: 0, failed: 0, skipped: 0 });
+    return `${runResultTotals.passed} passed, ${runResultTotals.failed} failed, ${runResultTotals.skipped} skipped`;
+}
+exports.getCheckResultSummary = getCheckResultSummary;
 function trimReport(lines) {
     const closingBlock = '```';
     const errorMsg = `**Report exceeded GitHub limit of ${MAX_REPORT_LENGTH} bytes and has been trimmed**`;

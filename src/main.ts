@@ -8,7 +8,7 @@ import {FileContent} from './input-providers/input-provider'
 import {ParseOptions, TestParser} from './test-parser'
 import {TestRunResult} from './test-results'
 import {getAnnotations} from './report/get-annotations'
-import {getReport} from './report/get-report'
+import {getCheckResultSummary, getReport} from './report/get-report'
 
 import {DartJsonParser} from './parsers/dart-json/dart-json-parser'
 import {DotnetTrxParser} from './parsers/dotnet-trx/dotnet-trx-parser'
@@ -171,6 +171,8 @@ class TestReporter {
     const baseUrl = createResp.data.html_url as string
     const summary = getReport(results, {listSuites, listTests, baseUrl, onlySummary})
 
+    const checkResultSummary = getCheckResultSummary(results)
+
     core.info('Creating annotations')
     const annotations = getAnnotations(results, this.maxAnnotations)
 
@@ -184,7 +186,7 @@ class TestReporter {
       conclusion,
       status: 'completed',
       output: {
-        title: `${name} ${icon}`,
+        title: `${checkResultSummary} — ${name} ${icon}`,
         summary,
         annotations
       },
