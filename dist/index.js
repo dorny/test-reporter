@@ -1151,21 +1151,30 @@ class JestJunitParser {
         });
     }
     getTestRunResult(path, junit) {
-        var _a;
+        var _a, _b, _c, _d;
+        const checkNonNull = (value) => {
+            return value != null;
+        };
         const suites = ((_a = junit.testsuites) === null || _a === void 0 ? void 0 : _a.testsuite) == null
             ? []
-            : junit.testsuites.testsuite.map(ts => {
+            : junit.testsuites.testsuite
+                .map(ts => {
+                if (ts == null)
+                    return null;
                 const name = ts.$.name.trim();
                 const time = parseFloat(ts.$.time) * 1000;
                 const sr = new test_results_1.TestSuiteResult(name, this.getGroups(ts), time);
                 return sr;
-            });
-        const time = parseFloat(junit.testsuites.$.time) * 1000;
+            })
+                .filter(checkNonNull);
+        const time = parseFloat((_d = (_c = (_b = junit.testsuites) === null || _b === void 0 ? void 0 : _b.$) === null || _c === void 0 ? void 0 : _c.time) !== null && _d !== void 0 ? _d : 0) * 1000;
         return new test_results_1.TestRunResult(path, suites, time);
     }
     getGroups(suite) {
         const groups = [];
         for (const tc of suite.testcase) {
+            if ((tc === null || tc === void 0 ? void 0 : tc.$) == null)
+                continue;
             let grp = groups.find(g => g.describe === tc.$.classname);
             if (grp === undefined) {
                 grp = { describe: tc.$.classname, tests: [] };
@@ -1173,14 +1182,21 @@ class JestJunitParser {
             }
             grp.tests.push(tc);
         }
+        const checkNonNull = (value) => {
+            return value != null;
+        };
         return groups.map(grp => {
-            const tests = grp.tests.map(tc => {
+            const tests = grp.tests
+                .map(tc => {
+                if ((tc === null || tc === void 0 ? void 0 : tc.$) == null)
+                    return null;
                 const name = tc.$.name.trim();
                 const result = this.getTestCaseResult(tc);
                 const time = parseFloat(tc.$.time) * 1000;
                 const error = this.getTestCaseError(tc);
                 return new test_results_1.TestCaseResult(name, result, time, error);
-            });
+            })
+                .filter(checkNonNull);
             return new test_results_1.TestGroupResult(grp.describe, tests);
         });
     }

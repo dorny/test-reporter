@@ -33,23 +33,31 @@ export class JestJunitParser implements TestParser {
   }
 
   private getTestRunResult(path: string, junit: JunitReport): TestRunResult {
+    const checkNonNull = (value: TestSuiteResult | undefined | null): value is TestSuiteResult => {
+      return value != null
+    }
+
     const suites =
       junit.testsuites?.testsuite == null
         ? []
-        : junit.testsuites.testsuite.map(ts => {
-            const name = ts.$.name.trim()
-            const time = parseFloat(ts.$.time) * 1000
-            const sr = new TestSuiteResult(name, this.getGroups(ts), time)
-            return sr
-          })
+        : junit.testsuites.testsuite
+            .map(ts => {
+              if (ts == null) return null
+              const name = ts.$.name.trim()
+              const time = parseFloat(ts.$.time) * 1000
+              const sr = new TestSuiteResult(name, this.getGroups(ts), time)
+              return sr
+            })
+            .filter(checkNonNull)
 
-    const time = parseFloat(junit.testsuites.$.time) * 1000
+    const time = parseFloat(junit.testsuites?.$?.time ?? 0) * 1000
     return new TestRunResult(path, suites, time)
   }
 
   private getGroups(suite: TestSuite): TestGroupResult[] {
     const groups: {describe: string; tests: TestCase[]}[] = []
     for (const tc of suite.testcase) {
+      if (tc?.$ == null) continue
       let grp = groups.find(g => g.describe === tc.$.classname)
       if (grp === undefined) {
         grp = {describe: tc.$.classname, tests: []}
@@ -58,14 +66,21 @@ export class JestJunitParser implements TestParser {
       grp.tests.push(tc)
     }
 
+    const checkNonNull = (value: TestCaseResult | undefined | null): value is TestCaseResult => {
+      return value != null
+    }
+
     return groups.map(grp => {
-      const tests = grp.tests.map(tc => {
-        const name = tc.$.name.trim()
-        const result = this.getTestCaseResult(tc)
-        const time = parseFloat(tc.$.time) * 1000
-        const error = this.getTestCaseError(tc)
-        return new TestCaseResult(name, result, time, error)
-      })
+      const tests = grp.tests
+        .map(tc => {
+          if (tc?.$ == null) return null
+          const name = tc.$.name.trim()
+          const result = this.getTestCaseResult(tc)
+          const time = parseFloat(tc.$.time) * 1000
+          const error = this.getTestCaseError(tc)
+          return new TestCaseResult(name, result, time, error)
+        })
+        .filter(checkNonNull)
       return new TestGroupResult(grp.describe, tests)
     })
   }
