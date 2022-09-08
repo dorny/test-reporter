@@ -1151,7 +1151,8 @@ class JestJunitParser {
         });
     }
     getTestRunResult(path, junit) {
-        const suites = junit.testsuites.testsuite === undefined
+        var _a;
+        const suites = ((_a = junit.testsuites) === null || _a === void 0 ? void 0 : _a.testsuite) == null
             ? []
             : junit.testsuites.testsuite.map(ts => {
                 const name = ts.$.name.trim();
