@@ -34,7 +34,7 @@ export class JestJunitParser implements TestParser {
 
   private getTestRunResult(path: string, junit: JunitReport): TestRunResult {
     const suites =
-      junit.testsuites.testsuite === undefined
+      junit.testsuites?.testsuite == null
         ? []
         : junit.testsuites.testsuite.map(ts => {
             const name = ts.$.name.trim()
