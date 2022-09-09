@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="0" failures="0" errors="0" time="11.299">
+	<testsuite name="__tests__\main.test.js" errors="0" failures="0" skipped="0" timestamp="2020-10-27T21:39:41" time="0.486" tests="0">
+  	</testsuite>
+</testsuites>
