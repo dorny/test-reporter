@@ -359,7 +359,6 @@ class TestReporter {
             core.setOutput('failed', failed);
             core.setOutput('skipped', skipped);
             core.setOutput('time', time);
-            core.setOutput('runid', this.context.runId);
             if (this.failOnError && isFailed) {
                 core.setFailed(`Failed test were found and 'fail-on-error' option is set to ${this.failOnError}`);
                 return;
@@ -405,6 +404,8 @@ class TestReporter {
             core.info(`Check run create response: ${resp.status}`);
             core.info(`Check run URL: ${resp.data.url}`);
             core.info(`Check run HTML: ${resp.data.html_url}`);
+            core.setOutput('url', resp.data.url);
+            core.setOutput('url_html', resp.data.html_url);
             return results;
         });
     }
