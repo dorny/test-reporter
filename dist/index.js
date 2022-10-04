@@ -359,6 +359,7 @@ class TestReporter {
             core.setOutput('failed', failed);
             core.setOutput('skipped', skipped);
             core.setOutput('time', time);
+            core.setOutput('runid', this.context.runId);
             if (this.failOnError && isFailed) {
                 core.setFailed(`Failed test were found and 'fail-on-error' option is set to ${this.failOnError}`);
                 return;
