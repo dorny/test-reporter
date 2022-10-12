@@ -265,6 +265,7 @@ const dotnet_trx_parser_1 = __nccwpck_require__(2664);
 const java_junit_parser_1 = __nccwpck_require__(676);
 const jest_junit_parser_1 = __nccwpck_require__(1113);
 const mocha_json_parser_1 = __nccwpck_require__(6043);
+const go_junit_parser_1 = __nccwpck_require__(4207);
 const path_utils_1 = __nccwpck_require__(4070);
 const github_utils_1 = __nccwpck_require__(3522);
 const markdown_utils_1 = __nccwpck_require__(6482);
@@ -423,6 +424,8 @@ class TestReporter {
                 return new jest_junit_parser_1.JestJunitParser(options);
             case 'mocha-json':
                 return new mocha_json_parser_1.MochaJsonParser(options);
+            case 'go-junit':
+                return new go_junit_parser_1.GoJunitParser(options);
             default:
                 throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`);
         }
@@ -883,6 +886,125 @@ class DotnetTrxParser {
     }
 }
 exports.DotnetTrxParser = DotnetTrxParser;
+
+
+/***/ }),
+
+/***/ 4207:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.GoJunitParser = void 0;
+const xml2js_1 = __nccwpck_require__(6189);
+const node_utils_1 = __nccwpck_require__(5824);
+const path_utils_1 = __nccwpck_require__(4070);
+const test_results_1 = __nccwpck_require__(2768);
+class GoJunitParser {
+    constructor(options) {
+        this.options = options;
+    }
+    parse(path, content) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const ju = yield this.getJunitReport(path, content);
+            return this.getTestRunResult(path, ju);
+        });
+    }
+    getJunitReport(path, content) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                return (yield (0, xml2js_1.parseStringPromise)(content));
+            }
+            catch (e) {
+                throw new Error(`Invalid XML at ${path}\n\n${e}`);
+            }
+        });
+    }
+    getTestRunResult(path, junit) {
+        const suites = junit.testsuites.testsuite === undefined
+            ? []
+            : junit.testsuites.testsuite.map(ts => {
+                const name = ts.$.name.trim();
+                const time = parseFloat(ts.$.time) * 1000;
+                const sr = new test_results_1.TestSuiteResult(name, this.getGroups(ts), time);
+                return sr;
+            });
+        const time = parseFloat(junit.testsuites.$.time) * 1000;
+        return new test_results_1.TestRunResult(path, suites, time);
+    }
+    getGroups(suite) {
+        const groups = [];
+        const returnEmpytGroups = [];
+        if (!suite.testcase)
+            return returnEmpytGroups;
+        for (const tc of suite.testcase) {
+            let grp = groups.find(g => g.describe === tc.$.classname);
+            if (grp === undefined) {
+                grp = { describe: tc.$.classname, tests: [] };
+                groups.push(grp);
+            }
+            grp.tests.push(tc);
+        }
+        return groups.map(grp => {
+            const tests = grp.tests.map(tc => {
+                const name = tc.$.name.trim();
+                const result = this.getTestCaseResult(tc);
+                const time = parseFloat(tc.$.time) * 1000;
+                const error = this.getTestCaseError(tc);
+                return new test_results_1.TestCaseResult(name, result, time, error);
+            });
+            return new test_results_1.TestGroupResult(grp.describe, tests);
+        });
+    }
+    getTestCaseResult(test) {
+        if (test.failure)
+            return 'failed';
+        if (test.skipped)
+            return 'skipped';
+        return 'success';
+    }
+    getTestCaseError(tc) {
+        if (!this.options.parseErrors || !tc.failure) {
+            return undefined;
+        }
+        const details = tc.failure[0];
+        let path;
+        let line;
+        const src = (0, node_utils_1.getExceptionSource)(details, this.options.trackedFiles, file => this.getRelativePath(file));
+        if (src) {
+            path = src.path;
+            line = src.line;
+        }
+        return {
+            path,
+            line,
+            details
+        };
+    }
+    getRelativePath(path) {
+        path = (0, path_utils_1.normalizeFilePath)(path);
+        const workDir = this.getWorkDir(path);
+        if (workDir !== undefined && path.startsWith(workDir)) {
+            path = path.substr(workDir.length);
+        }
+        return path;
+    }
+    getWorkDir(path) {
+        var _a, _b;
+        return ((_b = (_a = this.options.workDir) !== null && _a !== void 0 ? _a : this.assumedWorkDir) !== null && _b !== void 0 ? _b : (this.assumedWorkDir = (0, path_utils_1.getBasePath)(path, this.options.trackedFiles)));
+    }
+}
+exports.GoJunitParser = GoJunitParser;
 
 
 /***/ }),
