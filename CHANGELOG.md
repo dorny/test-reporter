@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.6.0
+- [Update to node16 + recent versions of core and exec packages](https://github.com/dorny/test-reporter/pull/203)
+- [Update all dependencies to latest versions](https://github.com/dorny/test-reporter/pull/186)
+- [Fix tests on non us-EN local env](https://github.com/dorny/test-reporter/pull/185)
+
 ## v1.5.0
 - [Add option to convert backslashes in path pattern to forward slashes](https://github.com/dorny/test-reporter/pull/128)
 - [Add option to generate only the summary from processed test results files](https://github.com/dorny/test-reporter/pull/123)
