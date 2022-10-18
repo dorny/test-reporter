@@ -50,7 +50,7 @@ export class GoJunitParser implements TestParser {
   private getGroups(suite: TestSuite): TestGroupResult[] {
     const groups: {describe: string; tests: TestCase[]}[] = []
     const returnEmpytGroups: TestGroupResult[] = [];
-    if (!suite.testcase) return returnEmpytGroups;
+    if (suite.testcase.length === 0) return returnEmpytGroups;
     for (const tc of suite.testcase) {
       let grp = groups.find(g => g.describe === tc.$.classname)
       if (grp === undefined) {

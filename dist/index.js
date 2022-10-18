@@ -945,7 +945,7 @@ class GoJunitParser {
     getGroups(suite) {
         const groups = [];
         const returnEmpytGroups = [];
-        if (!suite.testcase)
+        if (suite.testcase.length === 0)
             return returnEmpytGroups;
         for (const tc of suite.testcase) {
             let grp = groups.find(g => g.describe === tc.$.classname);
