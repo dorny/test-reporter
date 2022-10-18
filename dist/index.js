@@ -943,9 +943,10 @@ class GoJunitParser {
         return new test_results_1.TestRunResult(path, suites, time);
     }
     getGroups(suite) {
+        var _a;
         const groups = [];
         const returnEmpytGroups = [];
-        if (suite.testcase.length === 0)
+        if (!((_a = suite.testcase) === null || _a === void 0 ? void 0 : _a.length))
             return returnEmpytGroups;
         for (const tc of suite.testcase) {
             let grp = groups.find(g => g.describe === tc.$.classname);
@@ -974,10 +975,12 @@ class GoJunitParser {
         return 'success';
     }
     getTestCaseError(tc) {
+        var _a;
         if (!this.options.parseErrors || !tc.failure) {
             return undefined;
         }
-        const details = tc.failure[0];
+        const failure = (_a = tc.failure) === null || _a === void 0 ? void 0 : _a[0];
+        const details = (typeof failure === 'object' ? failure._ : failure) || "";
         let path;
         let line;
         const src = (0, node_utils_1.getExceptionSource)(details, this.options.trackedFiles, file => this.getRelativePath(file));
