@@ -6,7 +6,7 @@ import {ParseOptions} from '../src/test-parser'
 import {getReport} from '../src/report/get-report'
 import {normalizeFilePath} from '../src/utils/path-utils'
 
-describe('jest-junit tests', () => {
+describe('go-junit tests', () => {
   it('produces empty test run result when there are no test cases', async () => {
     const fixturePath = path.join(__dirname, 'fixtures', 'empty', 'jest-junit.xml')
     const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
@@ -23,9 +23,9 @@ describe('jest-junit tests', () => {
     expect(result.result).toBe('success')
   })
 
-  it('report from ./reports/jest test results matches snapshot', async () => {
-    const fixturePath = path.join(__dirname, 'fixtures', 'jest-junit.xml')
-    const outputPath = path.join(__dirname, '__outputs__', 'jest-junit.md')
+  it('report from ./external/go-junit-report test results matches snapshot', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'external', 'go', 'go-junit-report.xml')
+    const outputPath = path.join(__dirname, '__outputs__', 'go-junit-report-test-results.md')
     const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
     const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
 
@@ -44,18 +44,16 @@ describe('jest-junit tests', () => {
     fs.writeFileSync(outputPath, report)
   })
 
-  it('report from facebook/jest test results matches snapshot', async () => {
-    const fixturePath = path.join(__dirname, 'fixtures', 'external', 'jest', 'jest-test-results.xml')
-    const trackedFilesPath = path.join(__dirname, 'fixtures', 'external', 'jest', 'files.txt')
-    const outputPath = path.join(__dirname, '__outputs__', 'jest-test-results.md')
+  it('report from ./external/ginkgo test results matches snapshot', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'external', 'go', 'ginkgo-junit-report.xml')
+    const outputPath = path.join(__dirname, '__outputs__', 'ginkgo-junit-test-results.md')
     const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
     const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
 
-    const trackedFiles = fs.readFileSync(trackedFilesPath, {encoding: 'utf8'}).split(/\n\r?/g)
     const opts: ParseOptions = {
       parseErrors: true,
-      trackedFiles
-      //workDir: '/home/dorny/dorny/jest/'
+      trackedFiles: ['__tests__/main.test.js', '__tests__/second.test.js', 'lib/main.js']
+      //workDir: 'C:/Users/Michal/Workspace/dorny/test-check/reports/jest/'
     }
 
     const parser = new GoJunitParser(opts)

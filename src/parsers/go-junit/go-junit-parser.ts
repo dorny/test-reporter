@@ -50,7 +50,7 @@ export class GoJunitParser implements TestParser {
   private getGroups(suite: TestSuite): TestGroupResult[] {
     const groups: {describe: string; tests: TestCase[]}[] = []
     const returnEmpytGroups: TestGroupResult[] = [];
-    if (suite.testcase.length === 0) return returnEmpytGroups;
+    if (!suite.testcase?.length) return returnEmpytGroups;
     for (const tc of suite.testcase) {
       let grp = groups.find(g => g.describe === tc.$.classname)
       if (grp === undefined) {
@@ -83,7 +83,8 @@ export class GoJunitParser implements TestParser {
       return undefined
     }
 
-    const details = tc.failure[0]
+    const failure = tc.failure?.[0]
+    const details = (typeof failure === 'object' ? failure._ : failure) || ""
     let path
     let line
 

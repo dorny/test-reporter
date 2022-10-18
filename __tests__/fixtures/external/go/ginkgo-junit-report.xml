@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <testsuites tests="4" disabled="0" errors="0" failures="2" time="9.568500872999998">
+      <testsuite name="Suite1" package="/package1" tests="1" disabled="0" skipped="0" errors="0" failures="0" time="0.001759667" timestamp="2022-10-18T15:48:32">
+          <properties>
+              <property name="SuiteSucceeded" value="true"></property>
+              <property name="SuiteHasProgrammaticFocus" value="false"></property>
+              <property name="SpecialSuiteFailureReason" value=""></property>
+              <property name="SuiteLabels" value="[]"></property>
+              <property name="RandomSeed" value="1666126101"></property>
+              <property name="RandomizeAllSpecs" value="false"></property>
+              <property name="LabelFilter" value=""></property>
+              <property name="FocusStrings" value=""></property>
+              <property name="SkipStrings" value=""></property>
+              <property name="FocusFiles" value=""></property>
+              <property name="SkipFiles" value=""></property>
+              <property name="FailOnPending" value="false"></property>
+              <property name="FailFast" value="false"></property>
+              <property name="FlakeAttempts" value="0"></property>
+              <property name="EmitSpecProgress" value="false"></property>
+              <property name="DryRun" value="false"></property>
+              <property name="ParallelTotal" value="1"></property>
+              <property name="OutputInterceptorMode" value=""></property>
+          </properties>
+          <testcase name="[It] Should succeed" classname="Suite1" status="passed" time="0.000455833"></testcase>
+      </testsuite>
+      <testsuite name="Suite2" package="/package2" tests="3" disabled="0" skipped="0" errors="0" failures="2" time="0.135371083" timestamp="2022-10-18T15:48:32">
+          <properties>
+              <property name="SuiteSucceeded" value="true"></property>
+              <property name="SuiteHasProgrammaticFocus" value="false"></property>
+              <property name="SpecialSuiteFailureReason" value=""></property>
+              <property name="SuiteLabels" value="[]"></property>
+              <property name="RandomSeed" value="1666126101"></property>
+              <property name="RandomizeAllSpecs" value="false"></property>
+              <property name="LabelFilter" value=""></property>
+              <property name="FocusStrings" value=""></property>
+              <property name="SkipStrings" value=""></property>
+              <property name="FocusFiles" value=""></property>
+              <property name="SkipFiles" value=""></property>
+              <property name="FailOnPending" value="false"></property>
+              <property name="FailFast" value="false"></property>
+              <property name="FlakeAttempts" value="0"></property>
+              <property name="EmitSpecProgress" value="false"></property>
+              <property name="DryRun" value="false"></property>
+              <property name="ParallelTotal" value="1"></property>
+              <property name="OutputInterceptorMode" value=""></property>
+          </properties>
+          <testcase name="[It] Should succeed" classname="Suite2" status="passed" time="0.10459475"></testcase>
+          <testcase name="[It] Should succeed, but errors" classname="Suite2" status="failed" time="0.000523208">
+              <failure message="Expected success, but got an error:&#xA;    &lt;*errors.withStack | 0x1400000ec30&gt;: {&#xA;        error: &lt;*errors.withMessage | 0x1400007e7c0&gt;{&#xA;            cause: &lt;*errors.fundamental | 0x14000202c60&gt;{&#xA;                msg: &#34;[invalid label&#34;,&#xA;                stack: [0x1056103f5, 0x104bb628c, 0x104bb61c8, 0x104ba84d8, 0x104bda0b4],&#xA;            },&#xA;            msg: &#34;outlier&#34;,&#xA;        },&#xA;        stack: [0x10560628c, 0x10560545c, 0x10560f968, 0x1055e9c1c, 0x104bda0b4],&#xA;    }&#xA;    invalid label" type="failed">/package2/a_test.go:52</failure>
+          </testcase>
+      </testsuite>
+  </testsuites>
