@@ -931,6 +931,7 @@ class GoJunitParser {
         });
     }
     getTestRunResult(path, junit) {
+        var _a;
         const suites = junit.testsuites.testsuite === undefined
             ? []
             : junit.testsuites.testsuite.map(ts => {
@@ -939,7 +940,9 @@ class GoJunitParser {
                 const sr = new test_results_1.TestSuiteResult(name, this.getGroups(ts), time);
                 return sr;
             });
-        const time = parseFloat(junit.testsuites.$.time) * 1000;
+        const time = ((_a = junit.testsuites.$) === null || _a === void 0 ? void 0 : _a.time) === undefined
+            ? undefined
+            : parseFloat(junit.testsuites.$.time) * 1000;
         return new test_results_1.TestRunResult(path, suites, time);
     }
     getGroups(suite) {
