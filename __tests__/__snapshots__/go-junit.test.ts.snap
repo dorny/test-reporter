@@ -123,6 +123,6 @@ TestRunResult {
       "totalTime": 835,
     },
   ],
-  "totalTime": NaN,
+  "totalTime": undefined,
 }
 `;
