@@ -27,6 +27,7 @@ inputs:
       Format of test results. Supported options:
         - dart-json
         - dotnet-trx
+        - dotnet-nunit
         - flutter-json
         - java-junit
         - jest-junit

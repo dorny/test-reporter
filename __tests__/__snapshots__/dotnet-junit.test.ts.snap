@@ -1,0 +1,293 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`dotnet-nunit tests report from matches snapshot 1`] = `
+TestRunResult {
+  "path": "fixtures/external/dotnet/nunit-test-results.xml",
+  "suites": Array [
+    TestSuiteResult {
+      "groups": Array [],
+      "indentationDepth": 0,
+      "name": "mock-assembly.dll",
+      "totalTime": NaN,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": "FailingTest",
+          "tests": Array [
+            TestCaseResult {
+              "error": Object {
+                "details": "   at NUnit.Framework.Assert.Fail(String message, Object[] args) in D:\\\\Dev\\\\NUnit\\\\nunit-3.0\\\\work\\\\NUnitFramework\\\\src\\\\framework\\\\Assert.cs:line 142
+   at NUnit.Framework.Assert.Fail(String message) in D:\\\\Dev\\\\NUnit\\\\nunit-3.0\\\\work\\\\NUnitFramework\\\\src\\\\framework\\\\Assert.cs:line 152
+   at NUnit.Tests.Assemblies.MockTestFixture.FailingTest() in D:\\\\Dev\\\\NUnit\\\\nunit-3.0\\\\work\\\\NUnitFramework\\\\src\\\\mock-assembly\\\\MockAssembly.cs:line 121",
+                "line": undefined,
+                "message": "Intentional failure",
+                "path": undefined,
+              },
+              "name": "FailingTest",
+              "result": "failed",
+              "time": 23,
+            },
+          ],
+        },
+        TestGroupResult {
+          "name": "InconclusiveTest",
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "InconclusiveTest",
+              "result": "success",
+              "time": 1,
+            },
+          ],
+        },
+        TestGroupResult {
+          "name": "MockTest1",
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "MockTest1",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+        TestGroupResult {
+          "name": "MockTest2",
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "MockTest2",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+        TestGroupResult {
+          "name": "MockTest3",
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "MockTest3",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+        TestGroupResult {
+          "name": "MockTest4",
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "MockTest4",
+              "result": "skipped",
+              "time": 0,
+            },
+          ],
+        },
+        TestGroupResult {
+          "name": "MockTest5",
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "MockTest5",
+              "result": "skipped",
+              "time": 0,
+            },
+          ],
+        },
+        TestGroupResult {
+          "name": "NotRunnableTest",
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "NotRunnableTest",
+              "result": "skipped",
+              "time": 0,
+            },
+          ],
+        },
+        TestGroupResult {
+          "name": "TestWithException",
+          "tests": Array [
+            TestCaseResult {
+              "error": Object {
+                "details": "   at NUnit.Tests.Assemblies.MockTestFixture.MethodThrowsException() in D:\\\\Dev\\\\NUnit\\\\nunit-3.0\\\\work\\\\NUnitFramework\\\\src\\\\mock-assembly\\\\MockAssembly.cs:line 158
+   at NUnit.Tests.Assemblies.MockTestFixture.TestWithException() in D:\\\\Dev\\\\NUnit\\\\nunit-3.0\\\\work\\\\NUnitFramework\\\\src\\\\mock-assembly\\\\MockAssembly.cs:line 153",
+                "line": undefined,
+                "message": "System.ApplicationException : Intentional Exception",
+                "path": undefined,
+              },
+              "name": "TestWithException",
+              "result": "failed",
+              "time": 2,
+            },
+          ],
+        },
+        TestGroupResult {
+          "name": "TestWithManyProperties",
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "TestWithManyProperties",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "indentationDepth": 1,
+      "name": "MockTestFixture",
+      "totalTime": NaN,
+    },
+    TestSuiteResult {
+      "groups": Array [],
+      "indentationDepth": 1,
+      "name": "BadFixture",
+      "totalTime": NaN,
+    },
+    TestSuiteResult {
+      "groups": Array [],
+      "indentationDepth": 1,
+      "name": "FixtureWithTestCases",
+      "totalTime": NaN,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": "MethodWithParameters(2,2)",
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "MethodWithParameters(2,2)",
+              "result": "success",
+              "time": 6,
+            },
+          ],
+        },
+        TestGroupResult {
+          "name": "MethodWithParameters(9,11)",
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "MethodWithParameters(9,11)",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "indentationDepth": 2,
+      "name": "MethodWithParameters",
+      "totalTime": NaN,
+    },
+    TestSuiteResult {
+      "groups": Array [],
+      "indentationDepth": 1,
+      "name": "IgnoredFixture",
+      "totalTime": NaN,
+    },
+    TestSuiteResult {
+      "groups": Array [],
+      "indentationDepth": 1,
+      "name": "ParameterizedFixture",
+      "totalTime": NaN,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": "Test1",
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "Test1",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+        TestGroupResult {
+          "name": "Test2",
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "Test2",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "indentationDepth": 2,
+      "name": "ParameterizedFixture(42)",
+      "totalTime": NaN,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": "Test1",
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "Test1",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+        TestGroupResult {
+          "name": "Test2",
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "Test2",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "indentationDepth": 2,
+      "name": "ParameterizedFixture(5)",
+      "totalTime": NaN,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": "TestCase",
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "TestCase",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "indentationDepth": 1,
+      "name": "OneTestCase",
+      "totalTime": NaN,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": "MyTest",
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "MyTest",
+              "result": "success",
+              "time": 1,
+            },
+          ],
+        },
+      ],
+      "indentationDepth": 1,
+      "name": "MockTestFixture",
+      "totalTime": NaN,
+    },
+  ],
+  "totalTime": 154,
+}
+`;

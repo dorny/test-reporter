@@ -265,6 +265,7 @@ const dotnet_trx_parser_1 = __nccwpck_require__(2664);
 const java_junit_parser_1 = __nccwpck_require__(676);
 const jest_junit_parser_1 = __nccwpck_require__(1113);
 const mocha_json_parser_1 = __nccwpck_require__(6043);
+const dotnet_nunit_parser_1 = __nccwpck_require__(5706);
 const path_utils_1 = __nccwpck_require__(4070);
 const github_utils_1 = __nccwpck_require__(3522);
 const markdown_utils_1 = __nccwpck_require__(6482);
@@ -421,6 +422,8 @@ class TestReporter {
                 return new jest_junit_parser_1.JestJunitParser(options);
             case 'mocha-json':
                 return new mocha_json_parser_1.MochaJsonParser(options);
+            case 'dotnet-nunit':
+                return new dotnet_nunit_parser_1.DotnetNunitParser(options);
             default:
                 throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`);
         }
@@ -447,6 +450,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.DartJsonParser = void 0;
+const node_utils_1 = __nccwpck_require__(5824);
 const path_utils_1 = __nccwpck_require__(4070);
 const dart_json_types_1 = __nccwpck_require__(7887);
 const test_results_1 = __nccwpck_require__(2768);
@@ -560,6 +564,7 @@ class DartJsonParser {
         const suites = tr.suites.map(s => {
             return new test_results_1.TestSuiteResult(this.getRelativePath(s.suite.path), this.getGroups(s));
         });
+        suites.sort((a, b) => a.name.localeCompare(b.name, node_utils_1.DEFAULT_LOCALE));
         return new test_results_1.TestRunResult(tr.path, suites, tr.time);
     }
     getGroups(suite) {
@@ -700,6 +705,174 @@ function isMessageEvent(event) {
     return event.type === 'print';
 }
 exports.isMessageEvent = isMessageEvent;
+
+
+/***/ }),
+
+/***/ 5706:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.DotnetNunitParser = void 0;
+const path = __importStar(__nccwpck_require__(1017));
+const xml2js_1 = __nccwpck_require__(6189);
+const path_utils_1 = __nccwpck_require__(4070);
+const test_results_1 = __nccwpck_require__(2768);
+class DotnetNunitParser {
+    constructor(options) {
+        var _a;
+        this.options = options;
+        this.trackedFiles = {};
+        for (const filePath of options.trackedFiles) {
+            const fileName = path.basename(filePath);
+            const files = (_a = this.trackedFiles[fileName]) !== null && _a !== void 0 ? _a : (this.trackedFiles[fileName] = []);
+            files.push((0, path_utils_1.normalizeFilePath)(filePath));
+        }
+    }
+    parse(filePath, content) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const reportOrSuite = yield this.getNunitReport(filePath, content);
+            return this.getTestRunResult(filePath, reportOrSuite);
+        });
+    }
+    getNunitReport(filePath, content) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                return yield (0, xml2js_1.parseStringPromise)(content);
+            }
+            catch (e) {
+                throw new Error(`Invalid XML at ${filePath}\n\n${e}`);
+            }
+        });
+    }
+    getTestSuiteResultRecursive(testSuites, suiteResults, depth) {
+        if (testSuites !== undefined) {
+            testSuites.map(ts => {
+                const name = ts.$.name.trim();
+                const time = parseFloat(ts.$.duration) * 1000;
+                const groups = this.getGroups(ts);
+                const sr = new test_results_1.TestSuiteResult(name, groups, time, depth);
+                suiteResults.push(sr);
+                if (groups.length === 0) {
+                    const nestedTestSuites = ts['test-suite'];
+                    if (nestedTestSuites !== undefined) {
+                        this.getTestSuiteResultRecursive(nestedTestSuites, suiteResults, depth + 1);
+                    }
+                }
+            });
+        }
+    }
+    getTestRunResult(filePath, nunit) {
+        var _a;
+        const suites = [];
+        const testSuites = nunit['test-run']['test-suite'];
+        this.getTestSuiteResultRecursive(testSuites, suites, 0);
+        const seconds = parseFloat((_a = nunit['test-run'].$) === null || _a === void 0 ? void 0 : _a.time);
+        const time = isNaN(seconds) ? undefined : seconds * 1000;
+        return new test_results_1.TestRunResult(filePath, suites, time);
+    }
+    getGroups(suite) {
+        const groups = [];
+        if (suite['test-case'] === undefined) {
+            return [];
+        }
+        for (const tc of suite['test-case']) {
+            let grp = groups.find(g => g.describe === tc.$.name);
+            if (grp === undefined) {
+                grp = { describe: tc.$.name, tests: [] };
+                groups.push(grp);
+            }
+            grp.tests.push(tc);
+        }
+        return groups.map(grp => {
+            const tests = grp.tests.map(tc => {
+                const name = tc.$.name.trim();
+                const result = this.getTestCaseResult(tc);
+                const time = parseFloat(tc.$.time) * 1000;
+                const error = this.getTestCaseError(tc);
+                return new test_results_1.TestCaseResult(name, result, time, error);
+            });
+            return new test_results_1.TestGroupResult(grp.describe, tests);
+        });
+    }
+    getTestCaseResult(test) {
+        if (test.failure)
+            return 'failed';
+        if (test.$.result === 'Skipped')
+            return 'skipped';
+        return 'success';
+    }
+    getTestCaseError(tc) {
+        if (!this.options.parseErrors) {
+            return undefined;
+        }
+        const failure = tc.failure;
+        if (!failure) {
+            return undefined;
+        }
+        const details = failure[0]['stack-trace'] === undefined ? '' : failure[0]['stack-trace'][0];
+        let filePath;
+        let line;
+        const src = this.exceptionThrowSource(details);
+        if (src) {
+            filePath = src.filePath;
+            line = src.line;
+        }
+        return {
+            path: filePath,
+            line,
+            details,
+            message: failure[0].message === undefined ? '' : failure[0].message[0]
+        };
+    }
+    exceptionThrowSource(stackTrace) {
+        const lines = stackTrace.split(/\r?\n/);
+        const re = /^at (.*\) in .*):(.+)$/;
+        for (const str of lines) {
+            const match = str.match(re);
+            if (match !== null) {
+                const [, , filePath, lineStr] = match;
+                const line = parseInt(lineStr);
+                return { filePath, line };
+            }
+        }
+    }
+}
+exports.DotnetNunitParser = DotnetNunitParser;
 
 
 /***/ }),
@@ -926,6 +1099,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.JavaJunitParser = void 0;
 const path = __importStar(__nccwpck_require__(1017));
 const xml2js_1 = __nccwpck_require__(6189);
+const node_utils_1 = __nccwpck_require__(5824);
 const path_utils_1 = __nccwpck_require__(4070);
 const test_results_1 = __nccwpck_require__(2768);
 class JavaJunitParser {
@@ -984,6 +1158,7 @@ class JavaJunitParser {
                 const sr = new test_results_1.TestSuiteResult(name, this.getGroups(ts), time);
                 return sr;
             });
+        suites.sort((a, b) => a.name.localeCompare(b.name, node_utils_1.DEFAULT_LOCALE));
         const seconds = parseFloat((_a = junit.testsuites.$) === null || _a === void 0 ? void 0 : _a.time);
         const time = isNaN(seconds) ? undefined : seconds * 1000;
         return new test_results_1.TestRunResult(filePath, suites, time);
@@ -1519,9 +1694,6 @@ function trimReport(lines) {
 }
 function applySort(results) {
     results.sort((a, b) => a.path.localeCompare(b.path, node_utils_1.DEFAULT_LOCALE));
-    for (const res of results) {
-        res.suites.sort((a, b) => a.name.localeCompare(b.name, node_utils_1.DEFAULT_LOCALE));
-    }
 }
 function getByteLength(text) {
     return Buffer.byteLength(text, 'utf8');
@@ -1600,7 +1772,7 @@ function getSuitesReport(tr, runIndex, options) {
     if (suites.length > 0) {
         const suitesTable = (0, markdown_utils_1.table)(['Test suite', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...suites.map((s, suiteIndex) => {
             const tsTime = (0, markdown_utils_1.formatTime)(s.time);
-            const tsName = s.name;
+            const tsName = prependDepthIndentationToName(s.name.trim(), s.depth);
             const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed');
             const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex).link;
             const tsNameLink = skipLink ? tsName : (0, markdown_utils_1.link)(tsName, tsAddr);
@@ -1618,6 +1790,10 @@ function getSuitesReport(tr, runIndex, options) {
         }
     }
     return sections;
+}
+function prependDepthIndentationToName(name, depth) {
+    const depthPrefix = Array(depth).fill('&nbsp;&nbsp;&nbsp;&nbsp;').join('');
+    return depthPrefix + name;
 }
 function getTestsReport(ts, runIndex, suiteIndex, options) {
     var _a, _b, _c;
@@ -1725,10 +1901,11 @@ class TestRunResult {
 }
 exports.TestRunResult = TestRunResult;
 class TestSuiteResult {
-    constructor(name, groups, totalTime) {
+    constructor(name, groups, totalTime, indentationDepth = 0) {
         this.name = name;
         this.groups = groups;
         this.totalTime = totalTime;
+        this.indentationDepth = indentationDepth;
     }
     get tests() {
         return this.groups.reduce((sum, g) => sum + g.tests.length, 0);
@@ -1751,6 +1928,9 @@ class TestSuiteResult {
     }
     get failedGroups() {
         return this.groups.filter(grp => grp.result === 'failed');
+    }
+    get depth() {
+        return this.indentationDepth;
     }
     sort(deep) {
         this.groups.sort((a, b) => { var _a, _b; return ((_a = a.name) !== null && _a !== void 0 ? _a : '').localeCompare((_b = b.name) !== null && _b !== void 0 ? _b : '', node_utils_1.DEFAULT_LOCALE); });

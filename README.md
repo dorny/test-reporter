@@ -127,6 +127,7 @@ jobs:
     # Format of test results. Supported options:
     #   dart-json
     #   dotnet-trx
+    #   dotnet-nunit
     #   flutter-json
     #   java-junit
     #   jest-junit
@@ -217,6 +218,15 @@ Supported testing frameworks:
 - [MSTest](https://github.com/Microsoft/testfx-docs)
 
 For more information see [dotnet test](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-test#examples)
+</details>
+
+<details>
+  <summary>dotnet-nunit</summary>
+
+Supports [NUnit 3.0 XML format](https://docs.nunit.org/articles/nunit/technical-notes/usage/Test-Result-XML-Format.html), such as those produced from Unity Test Runner.
+
+Supported testing frameworks:
+- [NUnit](https://nunit.org/)
 </details>
 
 <details>

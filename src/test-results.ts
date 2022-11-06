@@ -40,7 +40,12 @@ export class TestRunResult {
 }
 
 export class TestSuiteResult {
-  constructor(readonly name: string, readonly groups: TestGroupResult[], private totalTime?: number) {}
+  constructor(
+    readonly name: string,
+    readonly groups: TestGroupResult[],
+    private totalTime?: number,
+    private indentationDepth: number = 0
+  ) {}
 
   get tests(): number {
     return this.groups.reduce((sum, g) => sum + g.tests.length, 0)
@@ -49,12 +54,15 @@ export class TestSuiteResult {
   get passed(): number {
     return this.groups.reduce((sum, g) => sum + g.passed, 0)
   }
+
   get failed(): number {
     return this.groups.reduce((sum, g) => sum + g.failed, 0)
   }
+
   get skipped(): number {
     return this.groups.reduce((sum, g) => sum + g.skipped, 0)
   }
+
   get time(): number {
     return this.totalTime ?? this.groups.reduce((sum, g) => sum + g.time, 0)
   }
@@ -65,6 +73,10 @@ export class TestSuiteResult {
 
   get failedGroups(): TestGroupResult[] {
     return this.groups.filter(grp => grp.result === 'failed')
+  }
+
+  get depth(): number {
+    return this.indentationDepth
   }
 
   sort(deep: boolean): void {

@@ -2,6 +2,7 @@ import * as path from 'path'
 import {ParseOptions, TestParser} from '../../test-parser'
 import {parseStringPromise} from 'xml2js'
 
+import {DEFAULT_LOCALE} from '../../utils/node-utils'
 import {JunitReport, SingleSuiteReport, TestCase, TestSuite} from './java-junit-types'
 import {normalizeFilePath} from '../../utils/path-utils'
 
@@ -69,6 +70,8 @@ export class JavaJunitParser implements TestParser {
             const sr = new TestSuiteResult(name, this.getGroups(ts), time)
             return sr
           })
+
+    suites.sort((a, b) => a.name.localeCompare(b.name, DEFAULT_LOCALE))
 
     const seconds = parseFloat(junit.testsuites.$?.time)
     const time = isNaN(seconds) ? undefined : seconds * 1000

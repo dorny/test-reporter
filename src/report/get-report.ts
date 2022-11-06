@@ -81,9 +81,6 @@ function trimReport(lines: string[]): string {
 
 function applySort(results: TestRunResult[]): void {
   results.sort((a, b) => a.path.localeCompare(b.path, DEFAULT_LOCALE))
-  for (const res of results) {
-    res.suites.sort((a, b) => a.name.localeCompare(b.name, DEFAULT_LOCALE))
-  }
 }
 
 function getByteLength(text: string): number {
@@ -184,7 +181,7 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
       [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right],
       ...suites.map((s, suiteIndex) => {
         const tsTime = formatTime(s.time)
-        const tsName = s.name
+        const tsName = prependDepthIndentationToName(s.name.trim(), s.depth)
         const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed')
         const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex).link
         const tsNameLink = skipLink ? tsName : link(tsName, tsAddr)
@@ -206,6 +203,11 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
   }
 
   return sections
+}
+
+function prependDepthIndentationToName(name: string, depth: number): string {
+  const depthPrefix = Array(depth).fill('&nbsp;&nbsp;&nbsp;&nbsp;').join('')
+  return depthPrefix + name
 }
 
 function getTestsReport(ts: TestSuiteResult, runIndex: number, suiteIndex: number, options: ReportOptions): string[] {

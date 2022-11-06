@@ -1,5 +1,5 @@
 import {ParseOptions, TestParser} from '../../test-parser'
-
+import {DEFAULT_LOCALE} from '../../utils/node-utils'
 import {getBasePath, normalizeFilePath} from '../../utils/path-utils'
 
 import {
@@ -134,6 +134,8 @@ export class DartJsonParser implements TestParser {
     const suites = tr.suites.map(s => {
       return new TestSuiteResult(this.getRelativePath(s.suite.path), this.getGroups(s))
     })
+
+    suites.sort((a, b) => a.name.localeCompare(b.name, DEFAULT_LOCALE))
 
     return new TestRunResult(tr.path, suites, tr.time)
   }
