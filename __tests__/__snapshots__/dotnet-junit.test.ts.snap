@@ -13,7 +13,7 @@ TestRunResult {
     TestSuiteResult {
       "groups": Array [
         TestGroupResult {
-          "name": "FailingTest",
+          "name": "MockTestFixture",
           "tests": Array [
             TestCaseResult {
               "error": Object {
@@ -28,88 +28,48 @@ TestRunResult {
               "result": "failed",
               "time": 23,
             },
-          ],
-        },
-        TestGroupResult {
-          "name": "InconclusiveTest",
-          "tests": Array [
             TestCaseResult {
               "error": undefined,
               "name": "InconclusiveTest",
               "result": "success",
               "time": 1,
             },
-          ],
-        },
-        TestGroupResult {
-          "name": "MockTest1",
-          "tests": Array [
             TestCaseResult {
               "error": undefined,
               "name": "MockTest1",
               "result": "success",
               "time": 0,
             },
-          ],
-        },
-        TestGroupResult {
-          "name": "MockTest2",
-          "tests": Array [
             TestCaseResult {
               "error": undefined,
               "name": "MockTest2",
               "result": "success",
               "time": 0,
             },
-          ],
-        },
-        TestGroupResult {
-          "name": "MockTest3",
-          "tests": Array [
             TestCaseResult {
               "error": undefined,
               "name": "MockTest3",
               "result": "success",
               "time": 0,
             },
-          ],
-        },
-        TestGroupResult {
-          "name": "MockTest4",
-          "tests": Array [
             TestCaseResult {
               "error": undefined,
               "name": "MockTest4",
               "result": "skipped",
               "time": 0,
             },
-          ],
-        },
-        TestGroupResult {
-          "name": "MockTest5",
-          "tests": Array [
             TestCaseResult {
               "error": undefined,
               "name": "MockTest5",
               "result": "skipped",
               "time": 0,
             },
-          ],
-        },
-        TestGroupResult {
-          "name": "NotRunnableTest",
-          "tests": Array [
             TestCaseResult {
               "error": undefined,
               "name": "NotRunnableTest",
               "result": "skipped",
               "time": 0,
             },
-          ],
-        },
-        TestGroupResult {
-          "name": "TestWithException",
-          "tests": Array [
             TestCaseResult {
               "error": Object {
                 "details": "   at NUnit.Tests.Assemblies.MockTestFixture.MethodThrowsException() in D:\\\\Dev\\\\NUnit\\\\nunit-3.0\\\\work\\\\NUnitFramework\\\\src\\\\mock-assembly\\\\MockAssembly.cs:line 158
@@ -122,11 +82,6 @@ TestRunResult {
               "result": "failed",
               "time": 2,
             },
-          ],
-        },
-        TestGroupResult {
-          "name": "TestWithManyProperties",
-          "tests": Array [
             TestCaseResult {
               "error": undefined,
               "name": "TestWithManyProperties",
@@ -155,7 +110,7 @@ TestRunResult {
     TestSuiteResult {
       "groups": Array [
         TestGroupResult {
-          "name": "MethodWithParameters(2,2)",
+          "name": "MethodWithParameters",
           "tests": Array [
             TestCaseResult {
               "error": undefined,
@@ -163,11 +118,6 @@ TestRunResult {
               "result": "success",
               "time": 6,
             },
-          ],
-        },
-        TestGroupResult {
-          "name": "MethodWithParameters(9,11)",
-          "tests": Array [
             TestCaseResult {
               "error": undefined,
               "name": "MethodWithParameters(9,11)",
@@ -196,7 +146,7 @@ TestRunResult {
     TestSuiteResult {
       "groups": Array [
         TestGroupResult {
-          "name": "Test1",
+          "name": "ParameterizedFixture(42)",
           "tests": Array [
             TestCaseResult {
               "error": undefined,
@@ -204,11 +154,6 @@ TestRunResult {
               "result": "success",
               "time": 0,
             },
-          ],
-        },
-        TestGroupResult {
-          "name": "Test2",
-          "tests": Array [
             TestCaseResult {
               "error": undefined,
               "name": "Test2",
@@ -225,7 +170,7 @@ TestRunResult {
     TestSuiteResult {
       "groups": Array [
         TestGroupResult {
-          "name": "Test1",
+          "name": "ParameterizedFixture(5)",
           "tests": Array [
             TestCaseResult {
               "error": undefined,
@@ -233,11 +178,6 @@ TestRunResult {
               "result": "success",
               "time": 0,
             },
-          ],
-        },
-        TestGroupResult {
-          "name": "Test2",
-          "tests": Array [
             TestCaseResult {
               "error": undefined,
               "name": "Test2",
@@ -254,7 +194,7 @@ TestRunResult {
     TestSuiteResult {
       "groups": Array [
         TestGroupResult {
-          "name": "TestCase",
+          "name": "OneTestCase",
           "tests": Array [
             TestCaseResult {
               "error": undefined,
@@ -272,7 +212,7 @@ TestRunResult {
     TestSuiteResult {
       "groups": Array [
         TestGroupResult {
-          "name": "MyTest",
+          "name": "MockTestFixture",
           "tests": Array [
             TestCaseResult {
               "error": undefined,

@@ -16,57 +16,45 @@
 |[&nbsp;&nbsp;&nbsp;&nbsp;MockTestFixture](#r0s10)|1✔️|||NaNms|
 ### ❌ <a id="user-content-r0s1" href="#r0s1">MockTestFixture</a>
 ```
-FailingTest
+MockTestFixture
   ❌ FailingTest
 	Intentional failure
-InconclusiveTest
   ✔️ InconclusiveTest
-MockTest1
   ✔️ MockTest1
-MockTest2
   ✔️ MockTest2
-MockTest3
   ✔️ MockTest3
-MockTest4
   ✖️ MockTest4
-MockTest5
   ✖️ MockTest5
-NotRunnableTest
   ✖️ NotRunnableTest
-TestWithException
   ❌ TestWithException
 	System.ApplicationException : Intentional Exception
-TestWithManyProperties
   ✔️ TestWithManyProperties
 ```
 ### ✔️ <a id="user-content-r0s4" href="#r0s4">MethodWithParameters</a>
 ```
-MethodWithParameters(2,2)
+MethodWithParameters
   ✔️ MethodWithParameters(2,2)
-MethodWithParameters(9,11)
   ✔️ MethodWithParameters(9,11)
 ```
 ### ✔️ <a id="user-content-r0s7" href="#r0s7">ParameterizedFixture(42)</a>
 ```
-Test1
+ParameterizedFixture(42)
   ✔️ Test1
-Test2
   ✔️ Test2
 ```
 ### ✔️ <a id="user-content-r0s8" href="#r0s8">ParameterizedFixture(5)</a>
 ```
-Test1
+ParameterizedFixture(5)
   ✔️ Test1
-Test2
   ✔️ Test2
 ```
 ### ✔️ <a id="user-content-r0s9" href="#r0s9">OneTestCase</a>
 ```
-TestCase
+OneTestCase
   ✔️ TestCase
 ```
 ### ✔️ <a id="user-content-r0s10" href="#r0s10">MockTestFixture</a>
 ```
-MyTest
+MockTestFixture
   ✔️ MyTest
 ```

@@ -784,10 +784,10 @@ class DotnetNunitParser {
             testSuites.map(ts => {
                 const name = ts.$.name.trim();
                 const time = parseFloat(ts.$.duration) * 1000;
-                const groups = this.getGroups(ts);
-                const sr = new test_results_1.TestSuiteResult(name, groups, time, depth);
+                const group = this.getGroup(ts);
+                const sr = new test_results_1.TestSuiteResult(name, group, time, depth);
                 suiteResults.push(sr);
-                if (groups.length === 0) {
+                if (group.length === 0) {
                     const nestedTestSuites = ts['test-suite'];
                     if (nestedTestSuites !== undefined) {
                         this.getTestSuiteResultRecursive(nestedTestSuites, suiteResults, depth + 1);
@@ -805,29 +805,18 @@ class DotnetNunitParser {
         const time = isNaN(seconds) ? undefined : seconds * 1000;
         return new test_results_1.TestRunResult(filePath, suites, time);
     }
-    getGroups(suite) {
-        const groups = [];
+    getGroup(suite) {
         if (suite['test-case'] === undefined) {
             return [];
         }
-        for (const tc of suite['test-case']) {
-            let grp = groups.find(g => g.describe === tc.$.name);
-            if (grp === undefined) {
-                grp = { describe: tc.$.name, tests: [] };
-                groups.push(grp);
-            }
-            grp.tests.push(tc);
-        }
-        return groups.map(grp => {
-            const tests = grp.tests.map(tc => {
-                const name = tc.$.name.trim();
-                const result = this.getTestCaseResult(tc);
-                const time = parseFloat(tc.$.time) * 1000;
-                const error = this.getTestCaseError(tc);
-                return new test_results_1.TestCaseResult(name, result, time, error);
-            });
-            return new test_results_1.TestGroupResult(grp.describe, tests);
+        const tests = suite['test-case'].map(tc => {
+            const name = tc.$.name.trim();
+            const result = this.getTestCaseResult(tc);
+            const time = parseFloat(tc.$.time) * 1000;
+            const error = this.getTestCaseError(tc);
+            return new test_results_1.TestCaseResult(name, result, time, error);
         });
+        return [new test_results_1.TestGroupResult(suite.$.name, tests)];
     }
     getTestCaseResult(test) {
         if (test.failure)
