@@ -1933,42 +1933,6 @@ exports.TestCaseResult = TestCaseResult;
 
 /***/ }),
 
-/***/ 6069:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const exec_1 = __nccwpck_require__(1514);
-// Wraps original exec() function
-// Returns exit code and whole stdout/stderr
-function exec(commandLine, args, options) {
-    return __awaiter(this, void 0, void 0, function* () {
-        options = options || {};
-        let stdout = '';
-        let stderr = '';
-        options.listeners = {
-            stdout: (data) => (stdout += data.toString()),
-            stderr: (data) => (stderr += data.toString())
-        };
-        const code = yield (0, exec_1.exec)(commandLine, args, options);
-        return { code, stdout, stderr };
-    });
-}
-exports["default"] = exec;
-
-
-/***/ }),
-
 /***/ 9844:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -2006,19 +1970,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.listFiles = void 0;
 const core = __importStar(__nccwpck_require__(2186));
-const exec_1 = __importDefault(__nccwpck_require__(6069));
+const exec_1 = __nccwpck_require__(1514);
 function listFiles() {
     return __awaiter(this, void 0, void 0, function* () {
         core.startGroup('Listing all files tracked by git');
         let output = '';
         try {
-            output = (yield (0, exec_1.default)('git', ['ls-files', '-z'])).stdout;
+            output = (yield (0, exec_1.getExecOutput)('git', ['ls-files', '-z'])).stdout;
         }
         finally {
             fixStdOutNullTermination();
@@ -2205,8 +2166,8 @@ var Align;
     Align["None"] = "---";
 })(Align = exports.Align || (exports.Align = {}));
 exports.Icon = {
-    skip: '✖️',
-    success: '✔️',
+    skip: '⚪',
+    success: '✅',
     fail: '❌' // ':x:'
 };
 function link(title, address) {
