@@ -86,7 +86,7 @@ outputs:
   time:
     description: Test execution time [ms]
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'
 branding:
   color: blue
