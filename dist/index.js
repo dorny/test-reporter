@@ -1163,6 +1163,9 @@ class JestJunitParser {
         return new test_results_1.TestRunResult(path, suites, time);
     }
     getGroups(suite) {
+        if (!suite.testcase) {
+            return [];
+        }
         const groups = [];
         for (const tc of suite.testcase) {
             let grp = groups.find(g => g.describe === tc.$.classname);
