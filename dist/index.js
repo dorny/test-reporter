@@ -2036,8 +2036,8 @@ var Align;
     Align["None"] = "---";
 })(Align = exports.Align || (exports.Align = {}));
 exports.Icon = {
-    skip: '✖️',
-    success: '✔️',
+    skip: '⚪',
+    success: '✅',
     fail: '❌' // ':x:'
 };
 function link(title, address) {
