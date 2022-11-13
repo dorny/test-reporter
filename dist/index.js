@@ -1,4 +1,4 @@
-require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
+/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 7171:
@@ -2036,8 +2036,8 @@ var Align;
     Align["None"] = "---";
 })(Align = exports.Align || (exports.Align = {}));
 exports.Icon = {
-    skip: '✖️',
-    success: '✔️',
+    skip: '⚪',
+    success: '✅',
     fail: '❌' // ':x:'
 };
 function link(title, address) {
@@ -37598,4 +37598,3 @@ module.exports = JSON.parse('[[[0,44],"disallowed_STD3_valid"],[[45,46],"valid"]
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=index.js.map
