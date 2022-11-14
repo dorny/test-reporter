@@ -1,4 +1,4 @@
-import {TestRunResult} from './test-results'
+import {TestRunResult} from './test-results.js'
 
 export interface ParseOptions {
   parseErrors: boolean

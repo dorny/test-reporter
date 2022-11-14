@@ -1,31 +1,28 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-import {GitHub} from '@actions/github/lib/utils'
+import {GitHub} from '@actions/github/lib/utils.js'
 
-import {ArtifactProvider} from './input-providers/artifact-provider'
-import {LocalFileProvider} from './input-providers/local-file-provider'
-import {FileContent} from './input-providers/input-provider'
-import {ParseOptions, TestParser} from './test-parser'
-import {TestRunResult} from './test-results'
-import {getAnnotations} from './report/get-annotations'
-import {getReport} from './report/get-report'
+import {ArtifactProvider} from './input-providers/artifact-provider.js'
+import {LocalFileProvider} from './input-providers/local-file-provider.js'
+import {FileContent} from './input-providers/input-provider.js'
+import {ParseOptions, TestParser} from './test-parser.js'
+import {TestRunResult} from './test-results.js'
+import {getAnnotations} from './report/get-annotations.js'
+import {getReport} from './report/get-report.js'
 
-import {DartJsonParser} from './parsers/dart-json/dart-json-parser'
-import {DotnetTrxParser} from './parsers/dotnet-trx/dotnet-trx-parser'
-import {JavaJunitParser} from './parsers/java-junit/java-junit-parser'
-import {JestJunitParser} from './parsers/jest-junit/jest-junit-parser'
-import {MochaJsonParser} from './parsers/mocha-json/mocha-json-parser'
-import {SwiftXunitParser} from './parsers/swift-xunit/swift-xunit-parser'
+import {DartJsonParser} from './parsers/dart-json/dart-json-parser.js'
+import {DotnetTrxParser} from './parsers/dotnet-trx/dotnet-trx-parser.js'
+import {JavaJunitParser} from './parsers/java-junit/java-junit-parser.js'
+import {JestJunitParser} from './parsers/jest-junit/jest-junit-parser.js'
+import {MochaJsonParser} from './parsers/mocha-json/mocha-json-parser.js'
+import {SwiftXunitParser} from './parsers/swift-xunit/swift-xunit-parser.js'
 
-import {normalizeDirPath, normalizeFilePath} from './utils/path-utils'
-import {getCheckRunContext} from './utils/github-utils'
+import {normalizeDirPath, normalizeFilePath} from './utils/path-utils.js'
+import {getCheckRunContext} from './utils/github-utils.js'
 import {IncomingWebhook} from '@slack/webhook'
 import fs from 'fs'
-//import fetch from 'node-fetch'
 import bent from 'bent'
 import { cwd } from 'process';
-import Zip from 'adm-zip'
-import path from 'path'
 
 async function main(): Promise<void> {
   try {
@@ -121,15 +118,21 @@ class TestReporter {
 
 
     try {
-      const readStream = input.trxZip.toBuffer();
-      const version = fs.existsSync('src/EVA.TestSuite.Core/bin/Release/version.txt') ? fs.readFileSync('src/EVA.TestSuite.Core/bin/Release/version.txt').toString() : null;
-      const commitID = fs.existsSync('src/EVA.TestSuite.Core/bin/Release/commit.txt') ? fs.readFileSync('src/EVA.TestSuite.Core/bin/Release/commit.txt').toString() : null;
-      
+      const readStream = input.trxZip.toBuffer()
+      const version = fs.existsSync('src/EVA.TestSuite.Core/bin/Release/version.txt')
+        ? fs.readFileSync('src/EVA.TestSuite.Core/bin/Release/version.txt').toString()
+        : null
+      const commitID = fs.existsSync('src/EVA.TestSuite.Core/bin/Release/commit.txt')
+        ? fs.readFileSync('src/EVA.TestSuite.Core/bin/Release/commit.txt').toString()
+        : null
+
       core.info(`Using EVA version ${version}, commit ${commitID}, current directory: ${cwd()}`)
 
       const post = bent(this.resultsEndpoint, 'POST', {}, 200)
       await post(
-        `TestResults?Secret=${this.resultsEndpointSecret}${version ? '&EVAVersion=' + version : ''}${commitID ? '&EVACommitID=' + commitID : ''}`,
+        `TestResults?Secret=${this.resultsEndpointSecret}${version ? '&EVAVersion=' + version : ''}${
+          commitID ? '&EVACommitID=' + commitID : ''
+        }`,
         readStream
       )
       core.info(`Uploaded TRX files`)

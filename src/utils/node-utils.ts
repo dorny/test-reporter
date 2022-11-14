@@ -1,4 +1,4 @@
-import {normalizeFilePath} from './path-utils'
+import {normalizeFilePath} from './path-utils.js'
 
 export const DEFAULT_LOCALE = 'en-US'
 
