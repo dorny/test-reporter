@@ -3,6 +3,7 @@ import {ParseOptions, TestParser} from '../../test-parser'
 import {parseStringPromise} from 'xml2js'
 
 import {JunitReport, SingleSuiteReport, TestCase, TestSuite} from './java-junit-types'
+import {parseStackTraceElement} from './java-stack-trace-element-parser'
 import {normalizeFilePath} from '../../utils/path-utils'
 
 import {
@@ -144,12 +145,11 @@ export class JavaJunitParser implements TestParser {
 
   private exceptionThrowSource(stackTrace: string): {filePath: string; line: number} | undefined {
     const lines = stackTrace.split(/\r?\n/)
-    const re = /^at (.*)\((.*):(\d+)\)$/
 
     for (const str of lines) {
-      const match = str.match(re)
-      if (match !== null) {
-        const [_, tracePath, fileName, lineStr] = match
+      const stackTraceElement = parseStackTraceElement(str)
+      if (stackTraceElement) {
+        const {tracePath, fileName, lineStr} = stackTraceElement
         const filePath = this.getFilePath(tracePath, fileName)
         if (filePath !== undefined) {
           const line = parseInt(lineStr)
