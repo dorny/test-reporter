@@ -6,7 +6,7 @@ export interface StackTraceElement {
 
 // simple format:
 // at <FULLY_QUALIFIED_METHOD_NAME>(<FILE_NAME>:<LINE_NUMBER>)
-const re = /^at (.*)\((.*):(\d+)\)$/
+const re = /^\s*at (.*)\((.*):(\d+)\)$/
 
 export function parseStackTraceElement(stackTraceLine: string): StackTraceElement | undefined {
   const match = stackTraceLine.match(re)

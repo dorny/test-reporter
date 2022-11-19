@@ -25,6 +25,15 @@ describe('parseStackTraceLine tests', () => {
         lineStr: '29'
       })
     })
+
+    it('starts with whitespaces', async () => {
+      const line = " \tat org.apache.pulsar.AddMissingPatchVersionTest.testVersionStrings(AddMissingPatchVersionTest.java:29)"
+      expect(parseStackTraceElement(line)).toEqual({
+        tracePath: "org.apache.pulsar.AddMissingPatchVersionTest.testVersionStrings",
+        fileName: "AddMissingPatchVersionTest.java",
+        lineStr: "29"
+      })
+    })
   })
 
   describe('Kotlin class', () => {
