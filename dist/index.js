@@ -926,6 +926,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.JavaJunitParser = void 0;
 const path = __importStar(__nccwpck_require__(1017));
 const xml2js_1 = __nccwpck_require__(6189);
+const java_stack_trace_element_parser_1 = __nccwpck_require__(5775);
 const path_utils_1 = __nccwpck_require__(4070);
 const test_results_1 = __nccwpck_require__(2768);
 class JavaJunitParser {
@@ -1051,11 +1052,10 @@ class JavaJunitParser {
     }
     exceptionThrowSource(stackTrace) {
         const lines = stackTrace.split(/\r?\n/);
-        const re = /^at (.*)\((.*):(\d+)\)$/;
         for (const str of lines) {
-            const match = str.match(re);
-            if (match !== null) {
-                const [_, tracePath, fileName, lineStr] = match;
+            const stackTraceElement = (0, java_stack_trace_element_parser_1.parseStackTraceElement)(str);
+            if (stackTraceElement) {
+                const { tracePath, fileName, lineStr } = stackTraceElement;
                 const filePath = this.getFilePath(tracePath, fileName);
                 if (filePath !== undefined) {
                     const line = parseInt(lineStr);
@@ -1106,6 +1106,49 @@ class JavaJunitParser {
     }
 }
 exports.JavaJunitParser = JavaJunitParser;
+
+
+/***/ }),
+
+/***/ 5775:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.parseStackTraceElement = void 0;
+// classloader and module name are optional:
+// at <CLASSLOADER>/<MODULE_NAME_AND_VERSION>/<FULLY_QUALIFIED_METHOD_NAME>(<FILE_NAME>:<LINE_NUMBER>)
+// https://github.com/eclipse-openj9/openj9/issues/11452#issuecomment-754946992
+const re = /^\s*at (\S+\/\S*\/)?(.*)\((.*):(\d+)\)$/;
+function parseStackTraceElement(stackTraceLine) {
+    const match = stackTraceLine.match(re);
+    if (match !== null) {
+        const [_, maybeClassLoaderAndModuleNameAndVersion, tracePath, fileName, lineStr] = match;
+        const { classLoader, moduleNameAndVersion } = parseClassLoaderAndModule(maybeClassLoaderAndModuleNameAndVersion);
+        return {
+            classLoader,
+            moduleNameAndVersion,
+            tracePath,
+            fileName,
+            lineStr
+        };
+    }
+    return undefined;
+}
+exports.parseStackTraceElement = parseStackTraceElement;
+function parseClassLoaderAndModule(maybeClassLoaderAndModuleNameAndVersion) {
+    if (maybeClassLoaderAndModuleNameAndVersion) {
+        const res = maybeClassLoaderAndModuleNameAndVersion.split('/');
+        const classLoader = res[0];
+        let moduleNameAndVersion = res[1];
+        if (moduleNameAndVersion === '') {
+            moduleNameAndVersion = undefined;
+        }
+        return { classLoader, moduleNameAndVersion };
+    }
+    return { classLoader: undefined, moduleNameAndVersion: undefined };
+}
 
 
 /***/ }),
