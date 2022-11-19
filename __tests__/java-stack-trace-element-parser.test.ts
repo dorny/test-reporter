@@ -27,11 +27,37 @@ describe('parseStackTraceLine tests', () => {
     })
 
     it('starts with whitespaces', async () => {
-      const line = " \tat org.apache.pulsar.AddMissingPatchVersionTest.testVersionStrings(AddMissingPatchVersionTest.java:29)"
+      const line =
+        ' \tat org.apache.pulsar.AddMissingPatchVersionTest.testVersionStrings(AddMissingPatchVersionTest.java:29)'
       expect(parseStackTraceElement(line)).toEqual({
-        tracePath: "org.apache.pulsar.AddMissingPatchVersionTest.testVersionStrings",
-        fileName: "AddMissingPatchVersionTest.java",
-        lineStr: "29"
+        tracePath: 'org.apache.pulsar.AddMissingPatchVersionTest.testVersionStrings',
+        fileName: 'AddMissingPatchVersionTest.java',
+        lineStr: '29'
+      })
+    })
+
+    describe('since Java 9', () => {
+      it('with classloader and module', async () => {
+        // Based on Java 9 StackTraceElement.toString() Doc: https://docs.oracle.com/javase/9/docs/api/java/lang/StackTraceElement.html#toString--
+        const line = 'at com.foo.loader/foo@9.0/com.foo.Main.run(Main.java:101)'
+        expect(parseStackTraceElement(line)).toEqual({
+          classLoader: 'com.foo.loader',
+          moduleNameAndVersion: 'foo@9.0',
+          tracePath: 'com.foo.Main.run',
+          fileName: 'Main.java',
+          lineStr: '101'
+        })
+      })
+
+      it('with classloader', async () => {
+        const line = 'at com.foo.loader//com.foo.Main.run(Main.java:101)'
+        expect(parseStackTraceElement(line)).toEqual({
+          classLoader: 'com.foo.loader',
+          moduleNameAndVersion: undefined,
+          tracePath: 'com.foo.Main.run',
+          fileName: 'Main.java',
+          lineStr: '101'
+        })
       })
     })
   })
