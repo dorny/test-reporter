@@ -129,10 +129,12 @@ export class JavaJunitParser implements TestParser {
     let filePath
     let line
 
-    const src = this.exceptionThrowSource(details)
-    if (src) {
-      filePath = src.filePath
-      line = src.line
+    if (details != null) {
+      const src = this.exceptionThrowSource(details)
+      if (src) {
+        filePath = src.filePath
+        line = src.line
+      }
     }
 
     return {
