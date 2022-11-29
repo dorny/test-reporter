@@ -1037,10 +1037,12 @@ class JavaJunitParser {
         const details = typeof failure === 'object' ? failure._ : failure;
         let filePath;
         let line;
-        const src = this.exceptionThrowSource(details);
-        if (src) {
-            filePath = src.filePath;
-            line = src.line;
+        if (details != null) {
+            const src = this.exceptionThrowSource(details);
+            if (src) {
+                filePath = src.filePath;
+                line = src.line;
+            }
         }
         return {
             path: filePath,
