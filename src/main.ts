@@ -174,7 +174,7 @@ class TestReporter {
     core.info('Creating annotations')
     const annotations = getAnnotations(results, this.maxAnnotations)
 
-    const isFailed = results.some(tr => tr.result === 'failed')
+    const isFailed = this.failOnError && results.some(tr => tr.result === 'failed')
     const conclusion = isFailed ? 'failure' : 'success'
     const icon = isFailed ? Icon.fail : Icon.success
 
