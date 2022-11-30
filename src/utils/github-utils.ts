@@ -2,7 +2,7 @@ import {createWriteStream} from 'fs'
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import {GitHub} from '@actions/github/lib/utils'
-import {EventPayloads} from '@octokit/webhooks'
+import type {PullRequest} from '@octokit/webhooks-types'
 import * as stream from 'stream'
 import {promisify} from 'util'
 import got from 'got'
@@ -11,7 +11,7 @@ const asyncStream = promisify(stream.pipeline)
 export function getCheckRunContext(): {sha: string; runId: number} {
   if (github.context.eventName === 'workflow_run') {
     core.info('Action was triggered by workflow_run: using SHA and RUN_ID from triggering workflow')
-    const event = github.context.payload as EventPayloads.WebhookPayloadWorkflowRun
+    const event = github.context.payload
     if (!event.workflow_run) {
       throw new Error("Event of type 'workflow_run' is missing 'workflow_run' field")
     }
@@ -24,7 +24,7 @@ export function getCheckRunContext(): {sha: string; runId: number} {
   const runId = github.context.runId
   if (github.context.payload.pull_request) {
     core.info(`Action was triggered by ${github.context.eventName}: using SHA from head of source branch`)
-    const pr = github.context.payload.pull_request as EventPayloads.WebhookPayloadPullRequestPullRequest
+    const pr = github.context.payload.pull_request as PullRequest
     return {sha: pr.head.sha, runId}
   }
 
@@ -41,7 +41,7 @@ export async function downloadArtifact(
   try {
     core.info(`Artifact ID: ${artifactId}`)
 
-    const req = octokit.actions.downloadArtifact.endpoint({
+    const req = octokit.rest.actions.downloadArtifact.endpoint({
       ...github.context.repo,
       artifact_id: artifactId,
       archive_format: 'zip'
@@ -86,7 +86,7 @@ export async function downloadArtifact(
 export async function listFiles(octokit: InstanceType<typeof GitHub>, sha: string): Promise<string[]> {
   core.startGroup('Fetching list of tracked files from GitHub')
   try {
-    const commit = await octokit.git.getCommit({
+    const commit = await octokit.rest.git.getCommit({
       commit_sha: sha,
       ...github.context.repo
     })
@@ -101,7 +101,7 @@ async function listGitTree(octokit: InstanceType<typeof GitHub>, sha: string, pa
   const pathLog = path ? ` at ${path}` : ''
   core.info(`Fetching tree ${sha}${pathLog}`)
   let truncated = false
-  let tree = await octokit.git.getTree({
+  let tree = await octokit.rest.git.getTree({
     recursive: 'true',
     tree_sha: sha,
     ...github.context.repo
@@ -109,7 +109,7 @@ async function listGitTree(octokit: InstanceType<typeof GitHub>, sha: string, pa
 
   if (tree.data.truncated) {
     truncated = true
-    tree = await octokit.git.getTree({
+    tree = await octokit.rest.git.getTree({
       tree_sha: sha,
       ...github.context.repo
     })
@@ -121,7 +121,7 @@ async function listGitTree(octokit: InstanceType<typeof GitHub>, sha: string, pa
     if (tr.type === 'blob') {
       result.push(file)
     } else if (tr.type === 'tree' && truncated) {
-      const files = await listGitTree(octokit, tr.sha, `${file}/`)
+      const files = await listGitTree(octokit, tr.sha as string, `${file}/`)
       result.push(...files)
     }
   }

@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - run: node --version
       - run: npm ci
       - run: npm run build
       - run: npm run format-check
@@ -26,11 +27,3 @@ jobs:
         with:
           name: test-results
           path: __tests__/__results__/*.xml
-
-      - name: Create test report
-        uses: ./
-        if: success() || failure()
-        with:
-          name: JEST Tests
-          path: __tests__/__results__/*.xml
-          reporter: jest-junit
