@@ -326,9 +326,10 @@ class TestReporter {
                 ? new artifact_provider_1.ArtifactProvider(this.octokit, this.artifact, this.name, pattern, this.context.sha, this.context.runId, this.token)
                 : new local_file_provider_1.LocalFileProvider(this.name, pattern);
             const parseErrors = this.maxAnnotations > 0;
-            const trackedFiles = yield inputProvider.listTrackedFiles();
+            const trackedFiles = parseErrors ? yield inputProvider.listTrackedFiles() : [];
             const workDir = this.artifact ? undefined : (0, path_utils_1.normalizeDirPath)(process.cwd(), true);
-            core.info(`Found ${trackedFiles.length} files tracked by GitHub`);
+            if (parseErrors)
+                core.info(`Found ${trackedFiles.length} files tracked by GitHub`);
             const options = {
                 workDir,
                 trackedFiles,
