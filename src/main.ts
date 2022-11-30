@@ -147,11 +147,16 @@ class TestReporter {
       return []
     }
 
+    core.info(`Processing test results for check run ${name}`)
     const results: TestRunResult[] = []
     for (const {file, content} of files) {
-      core.info(`Processing test results from ${file}`)
-      const tr = await parser.parse(file, content)
-      results.push(tr)
+      try {
+        const tr = await parser.parse(file, content)
+        results.push(tr)
+      } catch (error) {
+        core.error(`Processing test results from ${file} failed`)
+        throw error
+      }
     }
 
     core.info(`Creating check run ${name}`)
