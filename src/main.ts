@@ -91,10 +91,10 @@ class TestReporter {
       : new LocalFileProvider(this.name, pattern)
 
     const parseErrors = this.maxAnnotations > 0
-    const trackedFiles = await inputProvider.listTrackedFiles()
+    const trackedFiles = parseErrors ? await inputProvider.listTrackedFiles() : []
     const workDir = this.artifact ? undefined : normalizeDirPath(process.cwd(), true)
 
-    core.info(`Found ${trackedFiles.length} files tracked by GitHub`)
+    if (parseErrors) core.info(`Found ${trackedFiles.length} files tracked by GitHub`)
 
     const options: ParseOptions = {
       workDir,
