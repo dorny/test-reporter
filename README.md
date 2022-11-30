@@ -58,6 +58,8 @@ To workaround this security restriction, it's required to use two separate workf
 1. `CI` runs in the context of the PR head branch with the read-only token. It executes the tests and uploads test results as a build artifact
 2. `Test Report` runs in the context of the repository main branch with read/write token. It will download test results and create reports
 
+The second workflow will only run after it has been merged into your default branch (typically `main` or `master`), it won't run in a PR unless after the workflow file is part of that branch.
+
 **PR head branch:**  *.github/workflows/ci.yml*
 ```yaml
 name: 'CI'
