@@ -3,7 +3,7 @@ import * as path from 'path'
 
 import {DotnetTrxParser} from '../src/parsers/dotnet-trx/dotnet-trx-parser'
 import {ParseOptions} from '../src/test-parser'
-import {getReport} from '../src/report/get-report'
+import {getReport, ReportOptions} from '../src/report/get-report'
 import {normalizeFilePath} from '../src/utils/path-utils'
 
 describe('dotnet-trx tests', () => {
@@ -40,6 +40,32 @@ describe('dotnet-trx tests', () => {
     expect(result).toMatchSnapshot()
 
     const report = getReport([result])
+    fs.mkdirSync(path.dirname(outputPath), {recursive: true})
+    fs.writeFileSync(outputPath, report)
+  })
+
+  it('matches report snapshot (only failed tests)', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'dotnet-trx.trx')
+    const outputPath = path.join(__dirname, '__outputs__', 'dotnet-trx-only-failed.md')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: ['DotnetTests.Unit/Calculator.cs', 'DotnetTests.XUnitTests/CalculatorTests.cs']
+    }
+
+    const parser = new DotnetTrxParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+    expect(result).toMatchSnapshot()
+
+    const reportOptions: ReportOptions = {
+      listSuites: 'all',
+      listTests: 'failed',
+      onlySummary: false,
+      baseUrl: ''
+    }
+    const report = getReport([result], reportOptions)
     fs.mkdirSync(path.dirname(outputPath), {recursive: true})
     fs.writeFileSync(outputPath, report)
   })
