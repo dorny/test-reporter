@@ -116,7 +116,7 @@ jobs:
     # Name of the Check Run which will be created
     name: ''
 
-    # Coma separated list of paths to test results
+    # The paths to test results, comma separated strings. 
     # Supports wildcards via [fast-glob](https://github.com/mrmlnc/fast-glob)
     # All matched result files must be of the same format
     path: ''
