@@ -13,7 +13,7 @@ TestRunResult {
               "error": undefined,
               "name": "Is_Even_Number(2)",
               "result": "success",
-              "time": 0.000622,
+              "time": 0.622,
             },
             TestCaseResult {
               "error": Object {
@@ -27,7 +27,7 @@ TestRunResult {
               },
               "name": "Is_Even_Number(3)",
               "result": "failed",
-              "time": 0.001098,
+              "time": 1.098,
             },
             TestCaseResult {
               "error": Object {
@@ -39,7 +39,7 @@ TestRunResult {
               },
               "name": "Exception_In_TargetTest",
               "result": "failed",
-              "time": 0.022805,
+              "time": 22.805,
             },
             TestCaseResult {
               "error": Object {
@@ -50,7 +50,7 @@ TestRunResult {
               },
               "name": "Exception_In_Test",
               "result": "failed",
-              "time": 0.000528,
+              "time": 0.528,
             },
             TestCaseResult {
               "error": Object {
@@ -64,25 +64,25 @@ TestRunResult {
               },
               "name": "Failing_Test",
               "result": "failed",
-              "time": 0.028162,
+              "time": 28.162,
             },
             TestCaseResult {
               "error": undefined,
               "name": "Passing_Test",
               "result": "success",
-              "time": 0.000238,
+              "time": 0.23800000000000002,
             },
             TestCaseResult {
               "error": undefined,
               "name": "Passing_Test_With_Description",
               "result": "success",
-              "time": 0.000135,
+              "time": 0.135,
             },
             TestCaseResult {
               "error": undefined,
               "name": "Skipped_Test",
               "result": "skipped",
-              "time": 0.000398,
+              "time": 0.398,
             },
             TestCaseResult {
               "error": Object {
@@ -93,7 +93,7 @@ TestRunResult {
               },
               "name": "Timeout_Test",
               "result": "failed",
-              "time": 0.014949,
+              "time": 14.949,
             },
           ],
         },
@@ -102,6 +102,6 @@ TestRunResult {
       "totalTime": undefined,
     },
   ],
-  "totalTime": 0.230308,
+  "totalTime": 230.30800000000002,
 }
 `;

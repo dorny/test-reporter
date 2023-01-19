@@ -34,7 +34,7 @@ export class DotNetNunitParser implements TestParser {
 
   private getTestRunResult(path: string, nunit: NunitReport): TestRunResult {
     const suites: TestSuiteResult[] = []
-    const time = parseFloat(nunit['test-run'].$.duration)
+    const time = parseFloat(nunit['test-run'].$.duration) * 1000
 
     this.populateTestCasesRecursive(suites, [], nunit['test-run']['test-suite'])
 
@@ -93,7 +93,7 @@ export class DotNetNunitParser implements TestParser {
       new TestCaseResult(
         testCase.$.name,
         this.getTestExecutionResult(testCase),
-        parseFloat(testCase.$.duration),
+        parseFloat(testCase.$.duration) * 1000,
         this.getTestCaseError(testCase)
       )
     )
