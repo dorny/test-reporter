@@ -1,7 +1,7 @@
 import {ParseOptions, TestParser} from '../../test-parser'
 import {parseStringPromise} from 'xml2js'
 
-import {NunitReport, TestCase, TestRun, TestSuite} from './dotnet-nunit-types'
+import {NunitReport, TestCase, TestSuite} from './dotnet-nunit-types'
 import {getExceptionSource} from '../../utils/node-utils'
 import {getBasePath, normalizeFilePath} from '../../utils/path-utils'
 
@@ -50,23 +50,23 @@ export class DotNetNunitParser implements TestParser {
       return
     }
 
-    testSuites.forEach(suite => {
+    for (const suite of testSuites) {
       suitePath.push(suite)
 
       this.populateTestCasesRecursive(result, suitePath, suite['test-suite'])
 
       const testcases = suite['test-case']
       if (testcases !== undefined) {
-        testcases.forEach(testcase => {
+        for (const testcase of testcases) {
           this.addTestCase(result, suitePath, testcase)
-        })
+        }
       }
 
       suitePath.pop()
-    })
+    }
   }
 
-  private addTestCase(result: TestSuiteResult[], suitePath: TestSuite[], testCase: TestCase) {
+  private addTestCase(result: TestSuiteResult[], suitePath: TestSuite[], testCase: TestCase): void {
     // The last suite in the suite path is the "group".
     // The rest are concatenated together to form the "suite".
     // But ignore "Theory" suites.
@@ -125,8 +125,8 @@ export class DotNetNunitParser implements TestParser {
     }
 
     return {
-      path: path,
-      line: line,
+      path,
+      line,
       message: details.message && details.message.length > 0 ? details.message[0] : '',
       details: details['stack-trace'] && details['stack-trace'].length > 0 ? details['stack-trace'][0] : ''
     }

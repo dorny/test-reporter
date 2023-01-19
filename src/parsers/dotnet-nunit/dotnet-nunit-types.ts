@@ -1,5 +1,5 @@
 export interface NunitReport {
-  "test-run": TestRun
+  'test-run': TestRun
 }
 
 export interface TestRun {
