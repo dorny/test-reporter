@@ -3,7 +3,7 @@ export interface JunitReport {
 }
 
 export interface TestSuites {
-  $: {
+  $?: {
     time: string
   }
   testsuite?: TestSuite[]

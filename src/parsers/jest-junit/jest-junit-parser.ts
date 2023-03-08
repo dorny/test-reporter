@@ -33,7 +33,7 @@ export class JestJunitParser implements TestParser {
   }
 
   private getTestRunResult(path: string, junit: JunitReport): TestRunResult {
-    const suites =
+    const suites: TestSuiteResult[] =
       junit.testsuites.testsuite === undefined
         ? []
         : junit.testsuites.testsuite.map(ts => {
@@ -43,7 +43,11 @@ export class JestJunitParser implements TestParser {
             return sr
           })
 
-    const time = parseFloat(junit.testsuites.$.time) * 1000
+    const time =
+      junit.testsuites.$ === undefined
+        ? suites.reduce((sum, suite) => sum + suite.time, 0)
+        : parseFloat(junit.testsuites.$.time) * 1000
+
     return new TestRunResult(path, suites, time)
   }
 
