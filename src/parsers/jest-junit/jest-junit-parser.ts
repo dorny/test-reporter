@@ -37,7 +37,7 @@ export class JestJunitParser implements TestParser {
       junit.testsuites.testsuite === undefined
         ? []
         : junit.testsuites.testsuite.map(ts => {
-            const name = ts.$.name.trim()
+            const name = this.escapeCharacters(ts.$.name.trim())
             const time = parseFloat(ts.$.time) * 1000
             const sr = new TestSuiteResult(name, this.getGroups(ts), time)
             return sr
@@ -117,5 +117,9 @@ export class JestJunitParser implements TestParser {
       this.assumedWorkDir ??
       (this.assumedWorkDir = getBasePath(path, this.options.trackedFiles))
     )
+  }
+
+  private escapeCharacters(s: string): string {
+    return s.replace(/([<>])/g, '\\$1')
   }
 }
