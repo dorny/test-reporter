@@ -132,6 +132,7 @@ jobs:
     #   flutter-json
     #   java-junit
     #   jest-junit
+    #   pytest-junit
     #   mocha-json
     reporter: ''
 
@@ -264,21 +265,23 @@ Some heuristic was necessary to figure out the mapping between the line in the s
 It will create test results in Junit XML format which can be then processed by this action.
 You can use the following example configuration in `package.json`:
 ```json
-"scripts": {
-  "test": "jest --ci --reporters=default --reporters=jest-Junit"
-},
-"devDependencies": {
-  "jest": "^26.5.3",
-  "jest-junit": "^12.0.0"
-},
-"jest-junit": {
-  "outputDirectory": "reports",
-  "outputName": "jest-junit.xml",
-  "ancestorSeparator": " › ",
-  "uniqueOutputName": "false",
-  "suiteNameTemplate": "{filepath}",
-  "classNameTemplate": "{classname}",
-  "titleTemplate": "{title}"
+{
+  "scripts": {
+    "test": "jest --ci --reporters=default --reporters=jest-Junit"
+  },
+  "devDependencies": {
+    "jest": "^26.5.3",
+    "jest-junit": "^12.0.0"
+  },
+  "jest-junit": {
+    "outputDirectory": "reports",
+    "outputName": "jest-junit.xml",
+    "ancestorSeparator": " › ",
+    "uniqueOutputName": "false",
+    "suiteNameTemplate": "{filepath}",
+    "classNameTemplate": "{classname}",
+    "titleTemplate": "{title}"
+  }
 }
 ```
 
@@ -294,8 +297,10 @@ Configuration of `uniqueOutputName`, `suiteNameTemplate`, `classNameTemplate`, `
 
 You can use the following example configuration in `package.json`:
 ```json
-"scripts": {
-  "test": "mocha --reporter json > test-results.json"
+{
+  "scripts": {
+    "test": "mocha --reporter json > test-results.json"
+  }
 }
 ```
 
