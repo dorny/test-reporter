@@ -1,3 +1,5 @@
+import {Failure} from '../java-junit/java-junit-types'
+
 export interface JunitReport {
   testsuites: TestSuites
 }
@@ -29,6 +31,6 @@ export interface TestCase {
     name: string
     time: string
   }
-  failure?: string[]
+  failure?: string | Failure[]
   skipped?: string[]
 }

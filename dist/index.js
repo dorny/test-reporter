@@ -264,6 +264,7 @@ const dart_json_parser_1 = __nccwpck_require__(4528);
 const dotnet_trx_parser_1 = __nccwpck_require__(2664);
 const java_junit_parser_1 = __nccwpck_require__(676);
 const jest_junit_parser_1 = __nccwpck_require__(1113);
+const pytest_junit_parser_1 = __nccwpck_require__(2842);
 const mocha_json_parser_1 = __nccwpck_require__(6043);
 const path_utils_1 = __nccwpck_require__(4070);
 const github_utils_1 = __nccwpck_require__(3522);
@@ -426,6 +427,8 @@ class TestReporter {
                 return new java_junit_parser_1.JavaJunitParser(options);
             case 'jest-junit':
                 return new jest_junit_parser_1.JestJunitParser(options);
+            case 'pytest-junit':
+                return new pytest_junit_parser_1.PytestJunitParser(options);
             case 'mocha-json':
                 return new mocha_json_parser_1.MochaJsonParser(options);
             default:
@@ -1390,6 +1393,115 @@ class MochaJsonParser {
     }
 }
 exports.MochaJsonParser = MochaJsonParser;
+
+
+/***/ }),
+
+/***/ 2842:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PytestJunitParser = void 0;
+const xml2js_1 = __nccwpck_require__(6189);
+const test_results_1 = __nccwpck_require__(2768);
+class PytestJunitParser {
+    constructor(options) {
+        this.options = options;
+    }
+    parse(path, content) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const ju = yield this.getJunitReport(path, content);
+            return this.getTestRunResult(path, ju);
+        });
+    }
+    getJunitReport(path, content) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                return (yield (0, xml2js_1.parseStringPromise)(content));
+            }
+            catch (e) {
+                throw new Error(`Invalid XML at ${path}\n\n${e}`);
+            }
+        });
+    }
+    getTestRunResult(path, junit) {
+        const suites = junit.testsuites.testsuite === undefined
+            ? []
+            : junit.testsuites.testsuite.map(ts => {
+                const name = ts.$.name.trim();
+                const time = parseFloat(ts.$.time) * 1000;
+                return new test_results_1.TestSuiteResult(name, this.getGroups(ts), time);
+            });
+        const time = junit.testsuites.$ === undefined
+            ? suites.reduce((sum, suite) => sum + suite.time, 0)
+            : parseFloat(junit.testsuites.$.time) * 1000;
+        return new test_results_1.TestRunResult(path, suites, time);
+    }
+    getGroups(suite) {
+        if (!suite.testcase) {
+            return [];
+        }
+        const groups = [];
+        for (const tc of suite.testcase) {
+            let grp = groups.find(g => g.describe === tc.$.classname);
+            if (grp === undefined) {
+                grp = { describe: tc.$.classname, tests: [] };
+                groups.push(grp);
+            }
+            grp.tests.push(tc);
+        }
+        return groups.map(grp => {
+            const tests = grp.tests.map(tc => {
+                const name = tc.$.name.trim();
+                const result = this.getTestCaseResult(tc);
+                const time = parseFloat(tc.$.time) * 1000;
+                const error = this.getTestCaseError(tc);
+                return new test_results_1.TestCaseResult(name, result, time, error);
+            });
+            return new test_results_1.TestGroupResult(grp.describe, tests);
+        });
+    }
+    getTestCaseResult(test) {
+        if (test.failure)
+            return 'failed';
+        if (test.skipped)
+            return 'skipped';
+        return 'success';
+    }
+    getTestCaseError(tc) {
+        if (!this.options.parseErrors || !tc.failure) {
+            return undefined;
+        }
+        const failure = tc.failure[0];
+        const details = typeof failure === 'object' ? failure._ : failure;
+        return Object.assign(Object.assign({}, this.errorSource(details)), { details });
+    }
+    errorSource(details) {
+        const lines = details.split('\n').map(line => line.trim());
+        const [path, pos] = lines[0].split(':');
+        const line = Number.parseInt(pos);
+        if (path && Number.isFinite(line)) {
+            return {
+                path,
+                line,
+                message: lines[1]
+            };
+        }
+        return undefined;
+    }
+}
+exports.PytestJunitParser = PytestJunitParser;
 
 
 /***/ }),

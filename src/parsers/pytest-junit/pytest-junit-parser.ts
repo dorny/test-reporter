@@ -2,8 +2,6 @@ import {ParseOptions, TestParser} from '../../test-parser'
 import {parseStringPromise} from 'xml2js'
 
 import {JunitReport, TestCase, TestSuite} from './pytest-junit-types'
-import {getExceptionSource} from '../../utils/node-utils'
-import {getBasePath, normalizeFilePath} from '../../utils/path-utils'
 
 import {
   TestExecutionResult,
@@ -88,37 +86,28 @@ export class PytestJunitParser implements TestParser {
       return undefined
     }
 
-    const details = tc.failure[0]
-    let path
-    let line
-
-    const src = getExceptionSource(details, this.options.trackedFiles, file => this.getRelativePath(file))
-    if (src) {
-      path = src.path
-      line = src.line
-    }
+    const failure = tc.failure[0]
+    const details = typeof failure === 'object' ? failure._ : failure
 
     return {
-      path,
-      line,
+      ...this.errorSource(details),
       details
     }
   }
 
-  private getRelativePath(path: string): string {
-    path = normalizeFilePath(path)
-    const workDir = this.getWorkDir(path)
-    if (workDir !== undefined && path.startsWith(workDir)) {
-      path = path.substr(workDir.length)
-    }
-    return path
-  }
+  private errorSource(details: string): {path: string; line: number; message: string} | undefined {
+    const lines = details.split('\n').map(line => line.trim())
+    const [path, pos] = lines[0].split(':')
+    const line = Number.parseInt(pos)
 
-  private getWorkDir(path: string): string | undefined {
-    return (
-      this.options.workDir ??
-      this.assumedWorkDir ??
-      (this.assumedWorkDir = getBasePath(path, this.options.trackedFiles))
-    )
+    if (path && Number.isFinite(line)) {
+      return {
+        path,
+        line,
+        message: lines[1]
+      }
+    }
+
+    return undefined
   }
 }
