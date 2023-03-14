@@ -103,7 +103,7 @@ export class PytestJunitParser implements TestParser {
 
     if (path && Number.isFinite(line)) {
       return {
-        path: this.getRelativePath(path),
+        path: this.getAbsolutePath(path),
         line,
         message: lines[1]
       }
@@ -119,6 +119,16 @@ export class PytestJunitParser implements TestParser {
       path = path.substring(workDir.length + 1)
     }
     return path
+  }
+
+  private getAbsolutePath(path: string): string {
+    const relativePath = this.getRelativePath(path)
+    for (const file of this.options.trackedFiles) {
+      if (file.endsWith(relativePath)) {
+        return file
+      }
+    }
+    return relativePath
   }
 
   private getWorkDir(path: string): string | undefined {

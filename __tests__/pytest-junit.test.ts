@@ -31,7 +31,7 @@ describe('pytest-junit tests', () => {
     const opts: ParseOptions = {
       parseErrors: true,
       workDir: 'mnt/extra-addons',
-      trackedFiles: ['mnt/extra-addons/product_changes/tests/first_test.py']
+      trackedFiles: ['addons/product_changes/tests/first_test.py']
     }
 
     const parser = new PytestJunitParser(opts)
@@ -45,6 +45,6 @@ describe('pytest-junit tests', () => {
 
     const annotations = getAnnotations([result], 1)
     expect(annotations.length).toBe(1)
-    expect(annotations[0].path).toBe('product_changes/tests/first_test.py')
+    expect(annotations[0].path).toBe('addons/product_changes/tests/first_test.py')
   })
 })

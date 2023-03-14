@@ -1494,7 +1494,7 @@ class PytestJunitParser {
         const line = Number.parseInt(pos);
         if (path && Number.isFinite(line)) {
             return {
-                path: this.getRelativePath(path),
+                path: this.getAbsolutePath(path),
                 line,
                 message: lines[1]
             };
@@ -1508,6 +1508,15 @@ class PytestJunitParser {
             path = path.substring(workDir.length + 1);
         }
         return path;
+    }
+    getAbsolutePath(path) {
+        const relativePath = this.getRelativePath(path);
+        for (const file of this.options.trackedFiles) {
+            if (file.endsWith(relativePath)) {
+                return file;
+            }
+        }
+        return relativePath;
     }
     getWorkDir(path) {
         var _a, _b;
