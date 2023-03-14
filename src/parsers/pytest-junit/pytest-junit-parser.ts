@@ -11,6 +11,7 @@ import {
   TestCaseResult,
   TestCaseError
 } from '../../test-results'
+import {getBasePath, normalizeFilePath} from '../../utils/path-utils'
 
 export class PytestJunitParser implements TestParser {
   assumedWorkDir: string | undefined
@@ -102,12 +103,29 @@ export class PytestJunitParser implements TestParser {
 
     if (path && Number.isFinite(line)) {
       return {
-        path,
+        path: this.getRelativePath(path),
         line,
         message: lines[1]
       }
     }
 
     return undefined
+  }
+
+  private getRelativePath(path: string): string {
+    path = normalizeFilePath(path)
+    const workDir = this.getWorkDir(path)
+    if (workDir !== undefined && path.startsWith(workDir)) {
+      path = path.substring(workDir.length + 1)
+    }
+    return path
+  }
+
+  private getWorkDir(path: string): string | undefined {
+    return (
+      this.options.workDir ??
+      this.assumedWorkDir ??
+      (this.assumedWorkDir = getBasePath(path, this.options.trackedFiles))
+    )
   }
 }

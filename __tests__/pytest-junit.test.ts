@@ -4,6 +4,7 @@ import * as path from 'path'
 import {PytestJunitParser} from '../src/parsers/pytest-junit/pytest-junit-parser'
 import {ParseOptions} from '../src/test-parser'
 import {normalizeFilePath} from '../src/utils/path-utils'
+import {getAnnotations} from '../src/report/get-annotations'
 
 describe('pytest-junit tests', () => {
   it('test with one successful test', async () => {
@@ -29,7 +30,8 @@ describe('pytest-junit tests', () => {
 
     const opts: ParseOptions = {
       parseErrors: true,
-      trackedFiles: []
+      workDir: 'mnt/extra-addons',
+      trackedFiles: ['mnt/extra-addons/product_changes/tests/first_test.py']
     }
 
     const parser = new PytestJunitParser(opts)
@@ -40,5 +42,9 @@ describe('pytest-junit tests', () => {
       line: 6,
       message: 'assert False'
     })
+
+    const annotations = getAnnotations([result], 1)
+    expect(annotations.length).toBe(1)
+    expect(annotations[0].path).toBe('product_changes/tests/first_test.py')
   })
 })

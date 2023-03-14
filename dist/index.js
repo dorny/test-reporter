@@ -1415,6 +1415,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.PytestJunitParser = void 0;
 const xml2js_1 = __nccwpck_require__(6189);
 const test_results_1 = __nccwpck_require__(2768);
+const path_utils_1 = __nccwpck_require__(4070);
 class PytestJunitParser {
     constructor(options) {
         this.options = options;
@@ -1493,12 +1494,24 @@ class PytestJunitParser {
         const line = Number.parseInt(pos);
         if (path && Number.isFinite(line)) {
             return {
-                path,
+                path: this.getRelativePath(path),
                 line,
                 message: lines[1]
             };
         }
         return undefined;
+    }
+    getRelativePath(path) {
+        path = (0, path_utils_1.normalizeFilePath)(path);
+        const workDir = this.getWorkDir(path);
+        if (workDir !== undefined && path.startsWith(workDir)) {
+            path = path.substring(workDir.length + 1);
+        }
+        return path;
+    }
+    getWorkDir(path) {
+        var _a, _b;
+        return ((_b = (_a = this.options.workDir) !== null && _a !== void 0 ? _a : this.assumedWorkDir) !== null && _b !== void 0 ? _b : (this.assumedWorkDir = (0, path_utils_1.getBasePath)(path, this.options.trackedFiles)));
     }
 }
 exports.PytestJunitParser = PytestJunitParser;
