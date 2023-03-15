@@ -30,6 +30,7 @@ inputs:
         - flutter-json
         - java-junit
         - jest-junit
+        - pytest-junit
         - mocha-json
     required: true
   list-suites:

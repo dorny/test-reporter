@@ -23,17 +23,21 @@ export function getBasePath(path: string, trackedFiles: string[]): string | unde
     return ''
   }
 
-  let max = ''
   for (const file of trackedFiles) {
-    if (path.endsWith(file) && file.length > max.length) {
-      max = file
+    const pathParts = path.split('/')
+    const originalLength = pathParts.length
+    const fileParts = file.split('/')
+
+    while (pathParts.length && pathParts.slice(-1)[0] === fileParts.slice(-1)[0]) {
+      pathParts.pop()
+      fileParts.pop()
+    }
+
+    // we found some matching path parts
+    if (pathParts.length !== originalLength) {
+      return pathParts.join('/')
     }
   }
 
-  if (max === '') {
-    return undefined
-  }
-
-  const base = path.substr(0, path.length - max.length)
-  return base
+  return undefined
 }

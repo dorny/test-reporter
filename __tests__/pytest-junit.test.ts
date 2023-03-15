@@ -30,7 +30,6 @@ describe('pytest-junit tests', () => {
 
     const opts: ParseOptions = {
       parseErrors: true,
-      workDir: 'mnt/extra-addons',
       trackedFiles: ['addons/product_changes/tests/first_test.py']
     }
 
