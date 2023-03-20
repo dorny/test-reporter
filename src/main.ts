@@ -44,6 +44,7 @@ class TestReporter {
   readonly workDirInput = core.getInput('working-directory', {required: false})
   readonly onlySummary = core.getInput('only-summary', {required: false}) === 'true'
   readonly token = core.getInput('token', {required: true})
+  readonly directoryMapping = core.getInput('directory-mapping', {required: true})
   readonly octokit: InstanceType<typeof GitHub>
   readonly context = getCheckRunContext()
 
@@ -64,6 +65,8 @@ class TestReporter {
       core.setFailed(`Input parameter 'max-annotations' has invalid value`)
       return
     }
+
+    console.log('Directory mapping: ', this.directoryMapping)
   }
 
   async run(): Promise<void> {
