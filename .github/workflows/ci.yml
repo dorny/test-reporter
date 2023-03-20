@@ -27,11 +27,3 @@ jobs:
         with:
           name: test-results
           path: __tests__/__results__/*.xml
-          
-      - name: Workflow Test
-        uses: ./
-        with:
-          name: Workflow Report
-          path: '*.xml'
-          reporter: jest-junit
-          show-html-notice: true
