@@ -295,6 +295,7 @@ class TestReporter {
         this.failOnError = core.getInput('fail-on-error', { required: true }) === 'true';
         this.workDirInput = core.getInput('working-directory', { required: false });
         this.onlySummary = core.getInput('only-summary', { required: false }) === 'true';
+        this.showHTMLNotice = core.getInput('show-html-notice', { required: false }) === 'true';
         this.token = core.getInput('token', { required: true });
         this.context = (0, github_utils_1.getCheckRunContext)();
         this.octokit = github.getOctokit(this.token);
@@ -411,6 +412,11 @@ class TestReporter {
             core.info(`Check run create response: ${resp.status}`);
             core.info(`Check run URL: ${resp.data.url}`);
             core.info(`Check run HTML: ${resp.data.html_url}`);
+            core.info(`****** TEST *****`);
+            core.info(`Status of showHTML: ${this.showHTMLNotice}`);
+            if (this.showHTMLNotice) {
+                console.log(`::notice title=Test Results::${resp.data.html_url}`);
+            }
             return results;
         });
     }
