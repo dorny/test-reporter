@@ -5,6 +5,7 @@ on:
     workflows: ['CI']
     types:
       - completed
+  workflow_dispatch:
 
 jobs:
   report:
