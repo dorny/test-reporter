@@ -1579,9 +1579,10 @@ function getAnnotations(results, maxCount) {
     // Limit number of created annotations
     errors.splice(maxCount + 1);
     const annotations = errors.map(e => {
+        const paths = e.path ? [e.path] : e.testRunPaths;
         const message = [
             'Failed test found in:',
-            e.testRunPaths.map(p => `  ${p}`).join('\n'),
+            paths.map(p => `  ${p}`).join('\n'),
             'Error:',
             ident((0, markdown_utils_1.fixEol)(e.message), '  ')
         ].join('\n');
@@ -2366,17 +2367,20 @@ function getBasePath(path, trackedFiles) {
     if (trackedFiles.includes(path)) {
         return '';
     }
-    let max = '';
     for (const file of trackedFiles) {
-        if (path.endsWith(file) && file.length > max.length) {
-            max = file;
+        const pathParts = path.split('/');
+        const originalLength = pathParts.length;
+        const fileParts = file.split('/');
+        while (pathParts.length && pathParts.slice(-1)[0] === fileParts.slice(-1)[0]) {
+            pathParts.pop();
+            fileParts.pop();
+        }
+        // we found some matching path parts
+        if (pathParts.length !== originalLength) {
+            return pathParts.join('/');
         }
     }
-    if (max === '') {
-        return undefined;
-    }
-    const base = path.substr(0, path.length - max.length);
-    return base;
+    return undefined;
 }
 exports.getBasePath = getBasePath;
 
