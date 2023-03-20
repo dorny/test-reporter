@@ -19,4 +19,5 @@ jobs:
         path: '*.xml'
         reporter: jest-junit
         directory-mapping:
-          from/path: to/something/else
+          from: some/path
+          to: to/something/else
