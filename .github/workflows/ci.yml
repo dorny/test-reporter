@@ -27,3 +27,4 @@ jobs:
         with:
           name: test-results
           path: __tests__/__results__/*.xml
+          show-html-notice: true

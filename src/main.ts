@@ -42,6 +42,7 @@ class TestReporter {
   readonly failOnError = core.getInput('fail-on-error', {required: true}) === 'true'
   readonly workDirInput = core.getInput('working-directory', {required: false})
   readonly onlySummary = core.getInput('only-summary', {required: false}) === 'true'
+  readonly showHTMLNotice = core.getInput('show-html-notice', {required:false}) === 'true'
   readonly token = core.getInput('token', {required: true})
   readonly octokit: InstanceType<typeof GitHub>
   readonly context = getCheckRunContext()
@@ -198,6 +199,10 @@ class TestReporter {
     core.info(`Check run create response: ${resp.status}`)
     core.info(`Check run URL: ${resp.data.url}`)
     core.info(`Check run HTML: ${resp.data.html_url}`)
+    if (this.showHTMLNotice) {
+      console.log(`::notice title=Test Results::${resp.data.html_url}`)
+    }
+    
 
     return results
   }

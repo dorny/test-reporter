@@ -60,6 +60,10 @@ inputs:
   working-directory:
     description: Relative path under $GITHUB_WORKSPACE where the repository was checked out
     required: false
+  show-html-notice:
+    description: Show the link to the html results in the form of a notice on the summary page. This was created to combat a GHA bug of not always displaying the results in the right action.
+    required: false
+    default: 'false'
   only-summary:
     description: |
       Allows you to generate only the summary.
