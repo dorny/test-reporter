@@ -18,3 +18,4 @@ jobs:
         name: Workflow Report
         path: '*.xml'
         reporter: jest-junit
+        show-html-notice: true
