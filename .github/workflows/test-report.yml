@@ -18,6 +18,4 @@ jobs:
         name: Workflow Report
         path: '*.xml'
         reporter: jest-junit
-        directory-mapping:
-          from: some/path
-          to: to/something/else
+        directory-mapping: {from: "some/path", to: "some/other/path"}
