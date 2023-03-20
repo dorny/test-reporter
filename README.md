@@ -1,5 +1,12 @@
 # Test Reporter
 
+## Fork by @cviddy
+
+This Action is exactly the same as the forked action besides the addition of the `show-html-notice` input to the action. This allows the html link to be present as an annotation on the summary of the action. This addition was to combat the GHA bug where the test results can be associated with a different action step. 
+![](assets/notice-image.png)
+
+## Dorny Test Reporter
+
 This [Github Action](https://github.com/features/actions) displays test results from popular testing frameworks directly in GitHub.
 
 ✔️ Parses test results in XML or JSON format and creates nice report as Github Check Run
@@ -160,6 +167,10 @@ jobs:
 
     # Relative path under $GITHUB_WORKSPACE where the repository was checked out.
     working-directory: ''
+
+    # Combat a GHA bug by allowing the html link appear as a notice on the summary page for easy finding. 
+    # Defaults to false
+    show-html-notice: 'true'
 
     # Personal access token used to interact with Github API
     # Default: ${{ github.token }}
