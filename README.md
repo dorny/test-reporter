@@ -3,7 +3,7 @@
 ## Fork by @cviddy
 
 This Action is exactly the same as the forked action besides the addition of the `show-html-notice` input to the action. This allows the html link to be present as an annotation on the summary of the action. This addition was to combat the GHA bug where the test results can be associated with a different action step. 
-|![](assets/notice-image.png)|
+![](assets/notice-image.png)
 
 ## Dorny Test Reporter
 
