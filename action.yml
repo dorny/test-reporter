@@ -1,7 +1,7 @@
-name: Test Reporter
+name: Test Reporter with Notice Option
 description: |
-  Shows test results in GitHub UI: .NET (xUnit, NUnit, MSTest), Dart, Flutter, Java (JUnit), JavaScript (JEST, Mocha)
-author: Michal Dorner <dorner.michal@gmail.com>
+  Fork of dorny/test-reporter but with option to surface link to html notice to combat GHA bug 
+author: Connor Vidlock <connor.vidlock@gmail.com>
 inputs:
   artifact:
     description: Name or regex of artifact containing test results
