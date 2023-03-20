@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="32" failures="0" errors="0" time="7.089">
+  <testsuite name="__tests__/java-junit.test.ts" errors="0" failures="0" skipped="0" timestamp="2023-03-20T14:58:14" time="3.494" tests="4">
+    <testcase classname="java-junit tests" name="produces empty test run result when there are no test cases" time="0.006">
+    </testcase>
+    <testcase classname="java-junit tests" name="report from apache/pulsar single suite test results matches snapshot" time="0.019">
+    </testcase>
+    <testcase classname="java-junit tests" name="report from apache/pulsar test results matches snapshot" time="0.125">
+    </testcase>
+    <testcase classname="java-junit tests" name="parses empty failures in test results" time="0.006">
+    </testcase>
+  </testsuite>
+  <testsuite name="__tests__/jest-junit.test.ts" errors="0" failures="0" skipped="0" timestamp="2023-03-20T14:58:18" time="1.703" tests="4">
+    <testcase classname="jest-junit tests" name="produces empty test run result when there are no test cases in the testsuites element" time="0.005">
+    </testcase>
+    <testcase classname="jest-junit tests" name="produces empty test run result when there are no test cases in a nested testsuite element" time="0.001">
+    </testcase>
+    <testcase classname="jest-junit tests" name="report from ./reports/jest test results matches snapshot" time="0.008">
+    </testcase>
+    <testcase classname="jest-junit tests" name="report from facebook/jest test results matches snapshot" time="0.254">
+    </testcase>
+  </testsuite>
+  <testsuite name="__tests__/dotnet-trx.test.ts" errors="0" failures="0" skipped="0" timestamp="2023-03-20T14:58:19" time="0.702" tests="4">
+    <testcase classname="dotnet-trx tests" name="produces empty test run result when there are no test cases" time="0.007">
+    </testcase>
+    <testcase classname="dotnet-trx tests" name="matches report snapshot" time="0.017">
+    </testcase>
+    <testcase classname="dotnet-trx tests" name="report from FluentValidation test results matches snapshot" time="0.238">
+    </testcase>
+    <testcase classname="dotnet-trx tests" name="report from SilentNotes test results matches snapshot" time="0.061">
+    </testcase>
+  </testsuite>
+  <testsuite name="__tests__/dart-json.test.ts" errors="0" failures="0" skipped="0" timestamp="2023-03-20T14:58:20" time="0.379" tests="3">
+    <testcase classname="dart-json tests" name="produces empty test run result when there are no test cases" time="0.003">
+    </testcase>
+    <testcase classname="dart-json tests" name="matches report snapshot" time="0.006">
+    </testcase>
+    <testcase classname="dart-json tests" name="report from rrousselGit/provider test results matches snapshot" time="0.012">
+    </testcase>
+  </testsuite>
+  <testsuite name="__tests__/mocha-json.test.ts" errors="0" failures="0" skipped="0" timestamp="2023-03-20T14:58:21" time="0.322" tests="3">
+    <testcase classname="mocha-json tests" name="produces empty test run result when there are no test cases" time="0.002">
+    </testcase>
+    <testcase classname="mocha-json tests" name="report from ./reports/mocha-json test results matches snapshot" time="0.007">
+    </testcase>
+    <testcase classname="mocha-json tests" name="report from mochajs/mocha test results matches snapshot" time="0.043">
+    </testcase>
+  </testsuite>
+  <testsuite name="__tests__/java-stack-trace-element-parser.test.ts" errors="0" failures="0" skipped="0" timestamp="2023-03-20T14:58:21" time="0.209" tests="7">
+    <testcase classname="parseStackTraceLine tests" name="empty line is not parsed" time="0.002">
+    </testcase>
+    <testcase classname="parseStackTraceLine tests › java class" name="simple" time="0.001">
+    </testcase>
+    <testcase classname="parseStackTraceLine tests › java class" name="inner class" time="0.001">
+    </testcase>
+    <testcase classname="parseStackTraceLine tests › java class" name="starts with whitespaces" time="0">
+    </testcase>
+    <testcase classname="parseStackTraceLine tests › java class › since Java 9" name="with classloader and module" time="0.001">
+    </testcase>
+    <testcase classname="parseStackTraceLine tests › java class › since Java 9" name="with classloader" time="0.004">
+    </testcase>
+    <testcase classname="parseStackTraceLine tests › Kotlin class" name="method name containing whitespaces" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="__tests__/utils/parse-utils.test.ts" errors="0" failures="0" skipped="0" timestamp="2023-03-20T14:58:21" time="0.188" tests="7">
+    <testcase classname="parseNetDuration" name="returns 0 for 00:00:00" time="0.002">
+    </testcase>
+    <testcase classname="parseNetDuration" name="returns 0 for 00:00:00.0000000" time="0">
+    </testcase>
+    <testcase classname="parseNetDuration" name="returns 123 for 00:00:00.123" time="0.001">
+    </testcase>
+    <testcase classname="parseNetDuration" name="returns 12 * 1000 for 00:00:12" time="0">
+    </testcase>
+    <testcase classname="parseNetDuration" name="returns 12 * 60 * 1000 for 00:12:00" time="0.001">
+    </testcase>
+    <testcase classname="parseNetDuration" name="returns 12 * 60 * 60 * 1000 for 12:00:00" time="0">
+    </testcase>
+    <testcase classname="parseNetDuration" name="throws when string has invalid format" time="0.007">
+    </testcase>
+  </testsuite>
+</testsuites>

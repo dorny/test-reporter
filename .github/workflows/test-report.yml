@@ -14,7 +14,6 @@ jobs:
     - uses: actions/checkout@v2
     - uses: ./
       with:
-        artifact: test-results
         name: Workflow Report
         path: '*.xml'
         reporter: jest-junit
