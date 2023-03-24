@@ -404,7 +404,7 @@ class TestReporter {
             const conclusion = isFailed ? 'failure' : 'success';
             const icon = isFailed ? markdown_utils_1.Icon.fail : markdown_utils_1.Icon.success;
             core.info(`Updating check run conclusion (${conclusion}) and output`);
-            core.info(`Posted annotations: ${annotations}`);
+            core.info(`Posted annotations: ${JSON.stringify(annotations)}`);
             const resp = yield this.octokit.rest.checks.update(Object.assign({ check_run_id: createResp.data.id, conclusion, status: 'completed', output: {
                     title: `${name} ${icon}`,
                     summary,
