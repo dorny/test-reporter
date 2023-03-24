@@ -68,11 +68,6 @@ inputs:
       Detailed listing of test suites and test cases will be skipped.
     default: 'false'
     required: false
-  directory-mapping:
-    description: |
-      Map part of the file paths to something else, so they match the paths of the repository.
-      This is needed when you use run your code in a container with a different path than the source code repository.
-    required: false
   token:
     description: GitHub Access Token
     required: false
