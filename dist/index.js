@@ -404,6 +404,7 @@ class TestReporter {
             const conclusion = isFailed ? 'failure' : 'success';
             const icon = isFailed ? markdown_utils_1.Icon.fail : markdown_utils_1.Icon.success;
             core.info(`Updating check run conclusion (${conclusion}) and output`);
+            core.info(`Posted annotations: ${annotations}`);
             const resp = yield this.octokit.rest.checks.update(Object.assign({ check_run_id: createResp.data.id, conclusion, status: 'completed', output: {
                     title: `${name} ${icon}`,
                     summary,
@@ -2367,20 +2368,17 @@ function getBasePath(path, trackedFiles) {
     if (trackedFiles.includes(path)) {
         return '';
     }
+    let max = '';
     for (const file of trackedFiles) {
-        const pathParts = path.split('/');
-        const originalLength = pathParts.length;
-        const fileParts = file.split('/');
-        while (pathParts.length && pathParts.slice(-1)[0] === fileParts.slice(-1)[0]) {
-            pathParts.pop();
-            fileParts.pop();
-        }
-        // we found some matching path parts
-        if (pathParts.length !== originalLength) {
-            return pathParts.join('/');
+        if (path.endsWith(file) && file.length > max.length) {
+            max = file;
         }
     }
-    return undefined;
+    if (max === '') {
+        return undefined;
+    }
+    const base = path.substr(0, path.length - max.length);
+    return base;
 }
 exports.getBasePath = getBasePath;
 
