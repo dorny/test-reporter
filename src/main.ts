@@ -185,7 +185,7 @@ class TestReporter {
     const icon = isFailed ? Icon.fail : Icon.success
 
     core.info(`Updating check run conclusion (${conclusion}) and output`)
-    core.info(`Posted annotations: ${annotations}`)
+    core.info(`Posted annotations: ${JSON.stringify(annotations)}`)
     const resp = await this.octokit.rest.checks.update({
       check_run_id: createResp.data.id,
       conclusion,
