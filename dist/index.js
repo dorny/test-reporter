@@ -297,7 +297,7 @@ class TestReporter {
         this.workDirInput = core.getInput('working-directory', { required: false });
         this.onlySummary = core.getInput('only-summary', { required: false }) === 'true';
         this.token = core.getInput('token', { required: true });
-        this.directoryMapping = core.getInput('directory-mapping', { required: true });
+        this.directoryMapping = core.getInput('directory-mapping', { required: false });
         this.context = (0, github_utils_1.getCheckRunContext)();
         this.octokit = github.getOctokit(this.token);
         if (this.listSuites !== 'all' && this.listSuites !== 'failed') {
