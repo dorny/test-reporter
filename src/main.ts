@@ -44,6 +44,7 @@ class TestReporter {
   readonly workDirInput = core.getInput('working-directory', {required: false})
   readonly onlySummary = core.getInput('only-summary', {required: false}) === 'true'
   readonly token = core.getInput('token', {required: true})
+  readonly directoryMapping = core.getInput('directory-mapping', {required: true})
   readonly octokit: InstanceType<typeof GitHub>
   readonly context = getCheckRunContext()
 
@@ -94,13 +95,15 @@ class TestReporter {
     const parseErrors = this.maxAnnotations > 0
     const trackedFiles = parseErrors ? await inputProvider.listTrackedFiles() : []
     const workDir = this.artifact ? undefined : normalizeDirPath(process.cwd(), true)
+    const [from, to] = this.directoryMapping.split(':')
 
     if (parseErrors) core.info(`Found ${trackedFiles.length} files tracked by GitHub`)
 
     const options: ParseOptions = {
       workDir,
       trackedFiles,
-      parseErrors
+      parseErrors,
+      directoryMapping: {from, to}
     }
 
     core.info(`Using test report parser '${this.reporter}'`)

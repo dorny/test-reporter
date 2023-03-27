@@ -103,7 +103,7 @@ export class PytestJunitParser implements TestParser {
 
     if (path && Number.isFinite(line)) {
       return {
-        path: this.getAbsolutePath(path),
+        path: this.applyDirectoryMapping(this.getAbsolutePath(path)),
         line,
         message: lines[1]
       }
@@ -112,11 +112,18 @@ export class PytestJunitParser implements TestParser {
     return undefined
   }
 
+  private applyDirectoryMapping(path: string): string {
+    if (this.options.directoryMapping && this.options.directoryMapping.from) {
+      return path.replace(this.options.directoryMapping.from, this.options.directoryMapping.to)
+    }
+    return path
+  }
+
   private getRelativePath(path: string): string {
     path = normalizeFilePath(path)
     const workDir = this.getWorkDir(path)
     if (workDir !== undefined && path.startsWith(workDir)) {
-      path = path.substring(workDir.length + 1)
+      path = path.substring(workDir.length)
     }
     return path
   }

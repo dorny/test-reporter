@@ -11,6 +11,7 @@ const input: Record<string, string> = {
   'max-annotations': '10',
   'fail-on-error': 'true',
   'only-summary': 'false',
+  'directory-mapping': 'mnt/extra-addons:mypath',
   token: '***'
 }
 
@@ -56,7 +57,7 @@ describe('integration test', () => {
     })
     jest
       .spyOn(LocalFileProvider.prototype, 'listTrackedFiles')
-      .mockResolvedValue(['addons/product_changes/tests/first_test.py'])
+      .mockResolvedValue(['mypath/product_changes/tests/first_test.py'])
 
     await import('../src/main')
     // trick to wait for the pending "main" Promise
@@ -68,7 +69,7 @@ describe('integration test', () => {
         output: expect.objectContaining({
           annotations: [
             expect.objectContaining({
-              path: 'addons/product_changes/tests/first_test.py'
+              path: 'mypath/product_changes/tests/first_test.py'
             })
           ]
         })

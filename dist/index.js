@@ -297,6 +297,7 @@ class TestReporter {
         this.workDirInput = core.getInput('working-directory', { required: false });
         this.onlySummary = core.getInput('only-summary', { required: false }) === 'true';
         this.token = core.getInput('token', { required: true });
+        this.directoryMapping = core.getInput('directory-mapping', { required: true });
         this.context = (0, github_utils_1.getCheckRunContext)();
         this.octokit = github.getOctokit(this.token);
         if (this.listSuites !== 'all' && this.listSuites !== 'failed') {
@@ -329,12 +330,14 @@ class TestReporter {
             const parseErrors = this.maxAnnotations > 0;
             const trackedFiles = parseErrors ? yield inputProvider.listTrackedFiles() : [];
             const workDir = this.artifact ? undefined : (0, path_utils_1.normalizeDirPath)(process.cwd(), true);
+            const [from, to] = this.directoryMapping.split(':');
             if (parseErrors)
                 core.info(`Found ${trackedFiles.length} files tracked by GitHub`);
             const options = {
                 workDir,
                 trackedFiles,
-                parseErrors
+                parseErrors,
+                directoryMapping: { from, to }
             };
             core.info(`Using test report parser '${this.reporter}'`);
             const parser = this.getParser(this.reporter, options);
@@ -1495,25 +1498,31 @@ class PytestJunitParser {
         const line = Number.parseInt(pos);
         if (path && Number.isFinite(line)) {
             return {
-                path: this.getAbsolutePath(path),
+                path: this.applyDirectoryMapping(this.getAbsolutePath(path)),
                 line,
                 message: lines[1]
             };
         }
         return undefined;
     }
+    applyDirectoryMapping(path) {
+        if (this.options.directoryMapping && this.options.directoryMapping.from) {
+            return path.replace(this.options.directoryMapping.from, this.options.directoryMapping.to);
+        }
+        return path;
+    }
     getRelativePath(path) {
         path = (0, path_utils_1.normalizeFilePath)(path);
         const workDir = this.getWorkDir(path);
         if (workDir !== undefined && path.startsWith(workDir)) {
-            path = path.substring(workDir.length + 1);
+            path = path.substring(workDir.length);
         }
         return path;
     }
     getAbsolutePath(path) {
         const relativePath = this.getRelativePath(path);
         for (const file of this.options.trackedFiles) {
-            if (file.endsWith(relativePath)) {
+            if (relativePath.endsWith(file)) {
                 return file;
             }
         }
