@@ -124,7 +124,7 @@ export class PytestJunitParser implements TestParser {
   private getAbsolutePath(path: string): string {
     const relativePath = this.getRelativePath(path)
     for (const file of this.options.trackedFiles) {
-      if (file.endsWith(relativePath)) {
+      if (relativePath.endsWith(file)) {
         return file
       }
     }
