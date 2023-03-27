@@ -44,7 +44,7 @@ class TestReporter {
   readonly workDirInput = core.getInput('working-directory', {required: false})
   readonly onlySummary = core.getInput('only-summary', {required: false}) === 'true'
   readonly token = core.getInput('token', {required: true})
-  readonly directoryMapping = core.getInput('directory-mapping', {required: true})
+  readonly directoryMapping = core.getInput('directory-mapping', {required: false})
   readonly octokit: InstanceType<typeof GitHub>
   readonly context = getCheckRunContext()
 
