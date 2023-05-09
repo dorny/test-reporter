@@ -339,12 +339,16 @@ class TestReporter {
             core.info(`Using test report parser '${this.reporter}'`);
             const parser = this.getParser(this.reporter, options);
             const results = [];
+            const outputHtml = [];
             const input = yield inputProvider.load();
             for (const [reportName, files] of Object.entries(input)) {
                 try {
                     core.startGroup(`Creating test report ${reportName}`);
-                    const tr = yield this.createReport(parser, reportName, files);
+                    const [tr, html] = yield this.createReport(parser, reportName, files);
                     results.push(...tr);
+                    if (html != null) {
+                        outputHtml.push(html);
+                    }
                 }
                 finally {
                     core.endGroup();
@@ -356,11 +360,13 @@ class TestReporter {
             const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
             const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
             const time = results.reduce((sum, tr) => sum + tr.time, 0);
+            const html = [...new Set(outputHtml)].join(',');
             core.setOutput('conclusion', conclusion);
             core.setOutput('passed', passed);
             core.setOutput('failed', failed);
             core.setOutput('skipped', skipped);
             core.setOutput('time', time);
+            core.setOutput('runHtmlUrl', html);
             if (this.failOnError && isFailed) {
                 core.setFailed(`Failed test were found and 'fail-on-error' option is set to ${this.failOnError}`);
                 return;
@@ -375,7 +381,7 @@ class TestReporter {
         return __awaiter(this, void 0, void 0, function* () {
             if (files.length === 0) {
                 core.warning(`No file matches path ${this.path}`);
-                return [];
+                return [[], ''];
             }
             core.info(`Processing test results for check run ${name}`);
             const results = [];
@@ -416,7 +422,7 @@ class TestReporter {
                 core.info('*** showhtmlnotice set to true');
                 console.log(`::notice title=Test Results::${resp.data.html_url}`);
             }
-            return results;
+            return [results, resp.data.html_url];
         });
     }
     getParser(reporter, options) {
