@@ -145,7 +145,7 @@ function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): s
       const passed = tr.passed
       const failed = tr.failed
       const skipped = tr.skipped
-      return [statusIcon + nameLink, passed, failed, skipped, time]
+      return [statusIcon + ' ' + nameLink, passed, failed, skipped, time]
     })
 
     const resultsTable = table(
@@ -189,11 +189,11 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
         const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed')
         const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex).link
         const tsNameLink = skipLink ? tsName : link(tsName, tsAddr)
-        const statusIcon = tr.failed > 0 ? Icon.fail : tr.passed > 0 ? Icon.success : Icon.skip
-        const passed = tr.passed
-        const failed = tr.failed
-        const skipped = tr.skipped
-        return [statusIcon + tsNameLink, passed, failed, skipped, tsTime]
+        const statusIcon = s.failed > 0 ? Icon.fail : s.passed > 0 ? Icon.success : Icon.skip
+        const passed = s.passed
+        const failed = s.failed
+        const skipped = s.skipped
+        return [statusIcon + ' ' + tsNameLink, passed, failed, skipped, tsTime]
       })
     )
     sections.push(suitesTable)
