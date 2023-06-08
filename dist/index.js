@@ -2097,9 +2097,9 @@ var Align;
     Align["None"] = "---";
 })(Align = exports.Align || (exports.Align = {}));
 exports.Icon = {
-    skip: '⬜',
-    success: '🟩',
-    fail: '🟥' // ':x:'
+    skip: '⚪',
+    success: '🟢',
+    fail: '🔴' // ':x:'
 };
 function link(title, address) {
     return `[${title}](${address})`;
