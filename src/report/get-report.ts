@@ -141,15 +141,16 @@ function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): s
       const name = tr.path
       const addr = options.baseUrl + makeRunSlug(runIndex).link
       const nameLink = link(name, addr)
-      const passed = tr.passed > 0 ? `${tr.passed}${Icon.success}` : ''
-      const failed = tr.failed > 0 ? `${tr.failed}${Icon.fail}` : ''
-      const skipped = tr.skipped > 0 ? `${tr.skipped}${Icon.skip}` : ''
-      return [nameLink, passed, failed, skipped, time]
+      const statusIcon = tr.failed > 0 ? Icon.fail : tr.passed > 0 ? Icon.success : Icon.skip
+      const passed = tr.passed
+      const failed = tr.failed
+      const skipped = tr.skipped
+      return [statusIcon, nameLink, passed, failed, skipped, time]
     })
 
     const resultsTable = table(
-      ['Report', 'Passed', 'Failed', 'Skipped', 'Time'],
-      [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right],
+      ['', 'Report', 'Passed', 'Failed', 'Skipped', 'Time'],
+      [Align.Center, Align.Left, Align.Right, Align.Right, Align.Right, Align.Right],
       ...tableData
     )
     sections.push(resultsTable)

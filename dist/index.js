@@ -1631,12 +1631,13 @@ function getTestRunsReport(testRuns, options) {
             const name = tr.path;
             const addr = options.baseUrl + makeRunSlug(runIndex).link;
             const nameLink = (0, markdown_utils_1.link)(name, addr);
-            const passed = tr.passed > 0 ? `${tr.passed}${markdown_utils_1.Icon.success}` : '';
-            const failed = tr.failed > 0 ? `${tr.failed}${markdown_utils_1.Icon.fail}` : '';
-            const skipped = tr.skipped > 0 ? `${tr.skipped}${markdown_utils_1.Icon.skip}` : '';
-            return [nameLink, passed, failed, skipped, time];
+            const statusIcon = tr.failed > 0 ? markdown_utils_1.Icon.fail : tr.passed > 0 ? markdown_utils_1.Icon.success : markdown_utils_1.Icon.skip;
+            const passed = tr.passed;
+            const failed = tr.failed;
+            const skipped = tr.skipped;
+            return [statusIcon, nameLink, passed, failed, skipped, time];
         });
-        const resultsTable = (0, markdown_utils_1.table)(['Report', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...tableData);
+        const resultsTable = (0, markdown_utils_1.table)(['', 'Report', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Center, markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...tableData);
         sections.push(resultsTable);
     }
     if (options.onlySummary === false) {
