@@ -145,12 +145,12 @@ function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): s
       const passed = tr.passed
       const failed = tr.failed
       const skipped = tr.skipped
-      return [statusIcon, nameLink, passed, failed, skipped, time]
+      return [statusIcon + nameLink, passed, failed, skipped, time]
     })
 
     const resultsTable = table(
-      ['', 'Report', 'Passed', 'Failed', 'Skipped', 'Time'],
-      [Align.Center, Align.Left, Align.Right, Align.Right, Align.Right, Align.Right],
+      ['Report', 'Passed', 'Failed', 'Skipped', 'Time'],
+      [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right],
       ...tableData
     )
     sections.push(resultsTable)
@@ -181,8 +181,8 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
   const suites = options.listSuites === 'failed' ? tr.failedSuites : tr.suites
   if (suites.length > 0) {
     const suitesTable = table(
-      ['', 'Test suite', 'Passed', 'Failed', 'Skipped', 'Time'],
-      [Align.Center, Align.Left, Align.Right, Align.Right, Align.Right, Align.Right],
+      ['Test suite', 'Passed', 'Failed', 'Skipped', 'Time'],
+      [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right],
       ...suites.map((s, suiteIndex) => {
         const tsTime = formatTime(s.time)
         const tsName = s.name
@@ -193,7 +193,7 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
         const passed = tr.passed
         const failed = tr.failed
         const skipped = tr.skipped
-        return [statusIcon, tsNameLink, passed, failed, skipped, tsTime]
+        return [statusIcon + tsNameLink, passed, failed, skipped, tsTime]
       })
     )
     sections.push(suitesTable)

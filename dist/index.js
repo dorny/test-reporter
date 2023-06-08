@@ -1635,9 +1635,9 @@ function getTestRunsReport(testRuns, options) {
             const passed = tr.passed;
             const failed = tr.failed;
             const skipped = tr.skipped;
-            return [statusIcon, nameLink, passed, failed, skipped, time];
+            return [statusIcon + nameLink, passed, failed, skipped, time];
         });
-        const resultsTable = (0, markdown_utils_1.table)(['', 'Report', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Center, markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...tableData);
+        const resultsTable = (0, markdown_utils_1.table)(['Report', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...tableData);
         sections.push(resultsTable);
     }
     if (options.onlySummary === false) {
@@ -1659,7 +1659,7 @@ function getSuitesReport(tr, runIndex, options) {
     sections.push(headingLine2);
     const suites = options.listSuites === 'failed' ? tr.failedSuites : tr.suites;
     if (suites.length > 0) {
-        const suitesTable = (0, markdown_utils_1.table)(['', 'Test suite', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Center, markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...suites.map((s, suiteIndex) => {
+        const suitesTable = (0, markdown_utils_1.table)(['Test suite', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...suites.map((s, suiteIndex) => {
             const tsTime = (0, markdown_utils_1.formatTime)(s.time);
             const tsName = s.name;
             const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed');
@@ -1669,7 +1669,7 @@ function getSuitesReport(tr, runIndex, options) {
             const passed = tr.passed;
             const failed = tr.failed;
             const skipped = tr.skipped;
-            return [statusIcon, tsNameLink, passed, failed, skipped, tsTime];
+            return [statusIcon + tsNameLink, passed, failed, skipped, tsTime];
         }));
         sections.push(suitesTable);
     }
