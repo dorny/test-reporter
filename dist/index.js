@@ -1659,16 +1659,17 @@ function getSuitesReport(tr, runIndex, options) {
     sections.push(headingLine2);
     const suites = options.listSuites === 'failed' ? tr.failedSuites : tr.suites;
     if (suites.length > 0) {
-        const suitesTable = (0, markdown_utils_1.table)(['Test suite', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...suites.map((s, suiteIndex) => {
+        const suitesTable = (0, markdown_utils_1.table)(['', 'Test suite', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Center, markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...suites.map((s, suiteIndex) => {
             const tsTime = (0, markdown_utils_1.formatTime)(s.time);
             const tsName = s.name;
             const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed');
             const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex).link;
             const tsNameLink = skipLink ? tsName : (0, markdown_utils_1.link)(tsName, tsAddr);
-            const passed = s.passed > 0 ? `${s.passed}${markdown_utils_1.Icon.success}` : '';
-            const failed = s.failed > 0 ? `${s.failed}${markdown_utils_1.Icon.fail}` : '';
-            const skipped = s.skipped > 0 ? `${s.skipped}${markdown_utils_1.Icon.skip}` : '';
-            return [tsNameLink, passed, failed, skipped, tsTime];
+            const statusIcon = tr.failed > 0 ? markdown_utils_1.Icon.fail : tr.passed > 0 ? markdown_utils_1.Icon.success : markdown_utils_1.Icon.skip;
+            const passed = tr.passed;
+            const failed = tr.failed;
+            const skipped = tr.skipped;
+            return [statusIcon, tsNameLink, passed, failed, skipped, tsTime];
         }));
         sections.push(suitesTable);
     }
