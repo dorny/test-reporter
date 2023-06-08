@@ -60,6 +60,9 @@ inputs:
   working-directory:
     description: Relative path under $GITHUB_WORKSPACE where the repository was checked out
     required: false
+  build-directory:
+    description: Relative path for the source tree when it was compiled (This can be different that working-directory if, for instance, you build inside a docker container)
+    required: false
   only-summary:
     description: |
       Allows you to generate only the summary.

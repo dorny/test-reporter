@@ -294,6 +294,7 @@ class TestReporter {
         this.maxAnnotations = parseInt(core.getInput('max-annotations', { required: true }));
         this.failOnError = core.getInput('fail-on-error', { required: true }) === 'true';
         this.workDirInput = core.getInput('working-directory', { required: false });
+        this.buildDirInput = core.getInput('build-directory', { required: false });
         this.onlySummary = core.getInput('only-summary', { required: false }) === 'true';
         this.token = core.getInput('token', { required: true });
         this.context = (0, github_utils_1.getCheckRunContext)();
@@ -327,7 +328,11 @@ class TestReporter {
                 : new local_file_provider_1.LocalFileProvider(this.name, pattern);
             const parseErrors = this.maxAnnotations > 0;
             const trackedFiles = parseErrors ? yield inputProvider.listTrackedFiles() : [];
-            const workDir = this.artifact ? undefined : (0, path_utils_1.normalizeDirPath)(process.cwd(), true);
+            const workDir = this.buildDirInput
+                ? (0, path_utils_1.normalizeDirPath)(this.buildDirInput, true)
+                : this.artifact
+                    ? undefined
+                    : (0, path_utils_1.normalizeDirPath)(process.cwd(), true);
             if (parseErrors)
                 core.info(`Found ${trackedFiles.length} files tracked by GitHub`);
             const options = {

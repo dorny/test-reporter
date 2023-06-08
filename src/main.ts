@@ -41,6 +41,7 @@ class TestReporter {
   readonly maxAnnotations = parseInt(core.getInput('max-annotations', {required: true}))
   readonly failOnError = core.getInput('fail-on-error', {required: true}) === 'true'
   readonly workDirInput = core.getInput('working-directory', {required: false})
+  readonly buildDirInput = core.getInput('build-directory', {required: false})
   readonly onlySummary = core.getInput('only-summary', {required: false}) === 'true'
   readonly token = core.getInput('token', {required: true})
   readonly octokit: InstanceType<typeof GitHub>
@@ -92,7 +93,11 @@ class TestReporter {
 
     const parseErrors = this.maxAnnotations > 0
     const trackedFiles = parseErrors ? await inputProvider.listTrackedFiles() : []
-    const workDir = this.artifact ? undefined : normalizeDirPath(process.cwd(), true)
+    const workDir = this.buildDirInput
+      ? normalizeDirPath(this.buildDirInput, true)
+      : this.artifact
+      ? undefined
+      : normalizeDirPath(process.cwd(), true)
 
     if (parseErrors) core.info(`Found ${trackedFiles.length} files tracked by GitHub`)
 
