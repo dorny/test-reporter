@@ -70,6 +70,13 @@ inputs:
       Detailed listing of test suites and test cases will be skipped.
     default: 'false'
     required: false
+  output-to:
+    description: |
+      The location to write the report to. Supported options:
+        - checks
+        - step-summary
+    default: 'step-summary'
+    required: false    
   token:
     description: GitHub Access Token
     required: false

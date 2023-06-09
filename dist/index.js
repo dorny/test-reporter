@@ -256,6 +256,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
+const crypto_1 = __nccwpck_require__(6113);
 const artifact_provider_1 = __nccwpck_require__(7171);
 const local_file_provider_1 = __nccwpck_require__(9399);
 const get_annotations_1 = __nccwpck_require__(5867);
@@ -267,7 +268,6 @@ const jest_junit_parser_1 = __nccwpck_require__(1113);
 const mocha_json_parser_1 = __nccwpck_require__(6043);
 const path_utils_1 = __nccwpck_require__(4070);
 const github_utils_1 = __nccwpck_require__(3522);
-const markdown_utils_1 = __nccwpck_require__(6482);
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -281,6 +281,15 @@ function main() {
                 core.setFailed(JSON.stringify(error));
         }
     });
+}
+function createSlugPrefix() {
+    const step_summary = process.env['GITHUB_STEP_SUMMARY'];
+    if (!step_summary || step_summary === '') {
+        return '';
+    }
+    const hash = (0, crypto_1.createHash)('sha1');
+    hash.update(step_summary);
+    return hash.digest('hex').substring(0, 8);
 }
 class TestReporter {
     constructor() {
@@ -296,7 +305,9 @@ class TestReporter {
         this.workDirInput = core.getInput('working-directory', { required: false });
         this.buildDirInput = core.getInput('build-directory', { required: false });
         this.onlySummary = core.getInput('only-summary', { required: false }) === 'true';
+        this.outputTo = core.getInput('output-to', { required: false });
         this.token = core.getInput('token', { required: true });
+        this.slugPrefix = '';
         this.context = (0, github_utils_1.getCheckRunContext)();
         this.octokit = github.getOctokit(this.token);
         if (this.listSuites !== 'all' && this.listSuites !== 'failed') {
@@ -310,6 +321,13 @@ class TestReporter {
         if (isNaN(this.maxAnnotations) || this.maxAnnotations < 0 || this.maxAnnotations > 50) {
             core.setFailed(`Input parameter 'max-annotations' has invalid value`);
             return;
+        }
+        if (this.outputTo !== 'checks' && this.outputTo !== 'step-summary') {
+            core.setFailed(`Input parameter 'output-to' has invalid value`);
+            return;
+        }
+        if (this.outputTo === 'step-summary') {
+            this.slugPrefix = createSlugPrefix();
         }
     }
     run() {
@@ -376,6 +394,7 @@ class TestReporter {
         });
     }
     createReport(parser, name, files) {
+        var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
             if (files.length === 0) {
                 core.warning(`No file matches path ${this.path}`);
@@ -393,29 +412,82 @@ class TestReporter {
                     throw error;
                 }
             }
-            core.info(`Creating check run ${name}`);
-            const createResp = yield this.octokit.rest.checks.create(Object.assign({ head_sha: this.context.sha, name, status: 'in_progress', output: {
-                    title: name,
-                    summary: ''
-                } }, github.context.repo));
+            let createResp = null;
+            let baseUrl = '';
+            let check_run_id = 0;
+            switch (this.outputTo) {
+                case 'checks': {
+                    core.info(`Creating check run ${name}`);
+                    createResp = yield this.octokit.rest.checks.create(Object.assign({ head_sha: this.context.sha, name, status: 'in_progress', output: {
+                            title: name,
+                            summary: ''
+                        } }, github.context.repo));
+                    baseUrl = (_a = createResp.data.html_url) !== null && _a !== void 0 ? _a : '';
+                    check_run_id = createResp.data.id;
+                    break;
+                }
+                case 'step-summary': {
+                    const run_attempt = (_b = process.env['GITHUB_RUN_ATTEMPT']) !== null && _b !== void 0 ? _b : 1;
+                    baseUrl = `https://github.com/${github.context.repo.owner}/${github.context.repo.repo}/actions/runs/${github.context.runId}/attempts/${run_attempt}`;
+                    break;
+                }
+            }
             core.info('Creating report summary');
-            const { listSuites, listTests, onlySummary } = this;
-            const baseUrl = createResp.data.html_url;
-            const summary = (0, get_report_1.getReport)(results, { listSuites, listTests, baseUrl, onlySummary });
+            const { listSuites, listTests, onlySummary, slugPrefix } = this;
+            const summary = (0, get_report_1.getReport)(results, { listSuites, listTests, baseUrl, slugPrefix, onlySummary });
             core.info('Creating annotations');
             const annotations = (0, get_annotations_1.getAnnotations)(results, this.maxAnnotations);
             const isFailed = this.failOnError && results.some(tr => tr.result === 'failed');
             const conclusion = isFailed ? 'failure' : 'success';
-            const icon = isFailed ? markdown_utils_1.Icon.fail : markdown_utils_1.Icon.success;
+            const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
+            const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
+            const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
+            const shortSummary = `${passed} passed, ${failed} failed and ${skipped} skipped `;
             core.info(`Updating check run conclusion (${conclusion}) and output`);
-            const resp = yield this.octokit.rest.checks.update(Object.assign({ check_run_id: createResp.data.id, conclusion, status: 'completed', output: {
-                    title: `${name} ${icon}`,
-                    summary,
-                    annotations
-                } }, github.context.repo));
-            core.info(`Check run create response: ${resp.status}`);
-            core.info(`Check run URL: ${resp.data.url}`);
-            core.info(`Check run HTML: ${resp.data.html_url}`);
+            switch (this.outputTo) {
+                case 'checks': {
+                    const resp = yield this.octokit.rest.checks.update(Object.assign({ check_run_id,
+                        conclusion, status: 'completed', output: {
+                            title: shortSummary,
+                            summary,
+                            annotations
+                        } }, github.context.repo));
+                    core.info(`Check run create response: ${resp.status}`);
+                    core.info(`Check run URL: ${resp.data.url}`);
+                    core.info(`Check run HTML: ${resp.data.html_url}`);
+                    break;
+                }
+                case 'step-summary': {
+                    core.summary.addRaw(`# ${shortSummary}`);
+                    core.summary.addRaw(summary);
+                    yield core.summary.write();
+                    for (const annotation of annotations) {
+                        let fn;
+                        switch (annotation.annotation_level) {
+                            case 'failure':
+                                fn = core.error;
+                                break;
+                            case 'warning':
+                                fn = core.warning;
+                                break;
+                            case 'notice':
+                                fn = core.notice;
+                                break;
+                            default:
+                                continue;
+                        }
+                        fn(annotation.message, {
+                            title: annotation.title,
+                            file: annotation.path,
+                            startLine: annotation.start_line,
+                            endLine: annotation.end_line,
+                            startColumn: annotation.start_column,
+                            endColumn: annotation.end_column
+                        });
+                    }
+                    break;
+                }
+            }
             return results;
         });
     }
@@ -1526,6 +1598,7 @@ const MAX_REPORT_LENGTH = 65535;
 const defaultOptions = {
     listSuites: 'all',
     listTests: 'all',
+    slugPrefix: '',
     baseUrl: '',
     onlySummary: false
 };
@@ -1629,7 +1702,7 @@ function getTestRunsReport(testRuns, options) {
         const tableData = testRuns.map((tr, runIndex) => {
             const time = (0, markdown_utils_1.formatTime)(tr.time);
             const name = tr.path;
-            const addr = options.baseUrl + makeRunSlug(runIndex).link;
+            const addr = options.baseUrl + makeRunSlug(runIndex, options.slugPrefix).link;
             const nameLink = (0, markdown_utils_1.link)(name, addr);
             const statusIcon = tr.failed > 0 ? markdown_utils_1.Icon.fail : tr.passed > 0 ? markdown_utils_1.Icon.success : markdown_utils_1.Icon.skip;
             const passed = tr.passed === 0 ? '' : tr.passed;
@@ -1648,7 +1721,7 @@ function getTestRunsReport(testRuns, options) {
 }
 function getSuitesReport(tr, runIndex, options) {
     const sections = [];
-    const trSlug = makeRunSlug(runIndex);
+    const trSlug = makeRunSlug(runIndex, options.slugPrefix);
     const nameLink = `<a id="${trSlug.id}" href="${options.baseUrl + trSlug.link}">${tr.path}</a>`;
     const icon = getResultIcon(tr.result);
     sections.push(`## ${icon}\xa0${nameLink}`);
@@ -1663,7 +1736,7 @@ function getSuitesReport(tr, runIndex, options) {
             const tsTime = (0, markdown_utils_1.formatTime)(s.time);
             const tsName = s.name;
             const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed');
-            const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex).link;
+            const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex, options.slugPrefix).link;
             const tsNameLink = skipLink ? tsName : (0, markdown_utils_1.link)(tsName, tsAddr);
             const statusIcon = s.failed > 0 ? markdown_utils_1.Icon.fail : s.passed > 0 ? markdown_utils_1.Icon.success : markdown_utils_1.Icon.skip;
             const passed = s.passed === 0 ? '' : s.passed;
@@ -1692,7 +1765,7 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
     }
     const sections = [];
     const tsName = ts.name;
-    const tsSlug = makeSuiteSlug(runIndex, suiteIndex);
+    const tsSlug = makeSuiteSlug(runIndex, suiteIndex, options.slugPrefix);
     const tsNameLink = `<a id="${tsSlug.id}" href="${options.baseUrl + tsSlug.link}">${tsName}</a>`;
     const icon = getResultIcon(ts.result);
     sections.push(`### ${icon}\xa0${tsNameLink}`);
@@ -1716,13 +1789,13 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
     sections.push('```');
     return sections;
 }
-function makeRunSlug(runIndex) {
+function makeRunSlug(runIndex, slugPrefix) {
     // use prefix to avoid slug conflicts after escaping the paths
-    return (0, slugger_1.slug)(`r${runIndex}`);
+    return (0, slugger_1.slug)(`r${slugPrefix}${runIndex}`);
 }
-function makeSuiteSlug(runIndex, suiteIndex) {
+function makeSuiteSlug(runIndex, suiteIndex, slugPrefix) {
     // use prefix to avoid slug conflicts after escaping the paths
-    return (0, slugger_1.slug)(`r${runIndex}s${suiteIndex}`);
+    return (0, slugger_1.slug)(`r${slugPrefix}${runIndex}s${suiteIndex}`);
 }
 function getResultIcon(result) {
     switch (result) {
