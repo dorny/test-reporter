@@ -211,6 +211,7 @@ class TestReporter {
     core.info(`Check run HTML: ${resp.data.html_url}`)
     if (this.showHTMLNotice) {
       core.info('*** showhtmlnotice set to true')
+      core.exportVariable('TEST-RESULTS-URL', resp.data.html_url)
       console.log(`::notice title=Test Results::${resp.data.html_url}`)
     }
 
