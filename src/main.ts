@@ -211,8 +211,9 @@ class TestReporter {
     core.info(`Check run HTML: ${resp.data.html_url}`)
     if (this.showHTMLNotice) {
       core.info('*** showhtmlnotice set to true')
-      core.exportVariable('TEST-RESULTS-URL', resp.data.html_url)
-      console.log(`::notice title=Test Results::${resp.data.html_url}`)
+      core.exportVariable('TEST_RESULTS_URL', `${resp.data.html_url}`)
+      core.info(`Set env var to: ${process.env.TEST_RESULTS_URL}`)
+      core.info(`::notice title=Test Results::${resp.data.html_url}`)
     }
 
     return [results, resp.data.html_url]
