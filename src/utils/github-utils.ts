@@ -5,6 +5,7 @@ import {GitHub} from '@actions/github/lib/utils'
 import type {PullRequest} from '@octokit/webhooks-types'
 import * as stream from 'stream'
 import {promisify} from 'util'
+// eslint-disable-next-line import/no-named-as-default
 import got from 'got'
 const asyncStream = promisify(stream.pipeline)
 
