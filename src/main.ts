@@ -119,14 +119,14 @@ class TestReporter {
 
     try {
       const readStream = input.trxZip.toBuffer()
-      const version = fs.existsSync('src/EVA.TestSuite.Core/bin/Release/version.txt')
-        ? fs.readFileSync('src/EVA.TestSuite.Core/bin/Release/version.txt').toString()
+      const version = fs.existsSync('test/EVA.TestSuite.Core/bin/Release/version.txt')
+        ? fs.readFileSync('test/EVA.TestSuite.Core/bin/Release/version.txt').toString()
         : null
-      const commitID = fs.existsSync('src/EVA.TestSuite.Core/bin/Release/commit.txt')
-        ? fs.readFileSync('src/EVA.TestSuite.Core/bin/Release/commit.txt').toString()
+      const commitID = fs.existsSync('test/EVA.TestSuite.Core/bin/Release/commit.txt')
+        ? fs.readFileSync('test/EVA.TestSuite.Core/bin/Release/commit.txt').toString()
         : null
 
-      core.info(`Using EVA version ${version}, commit ${commitID}, current directory: ${cwd()}`)
+      core.info(`Using EVA version ${version}, commit ${commitID}, branch ${this.context.branch}, current directory: ${cwd()}`)
 
       const post = bent(this.resultsEndpoint, 'POST', {}, 200)
       await post(
