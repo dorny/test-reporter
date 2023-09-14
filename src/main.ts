@@ -132,7 +132,7 @@ class TestReporter {
       await post(
         `TestResults?Secret=${this.resultsEndpointSecret}${version ? '&EVAVersion=' + version : ''}${
           commitID ? '&EVACommitID=' + commitID : ''
-        }`,
+        }&EVABranch=${encodeURI(this.context.branch)}`,
         readStream
       )
       core.info(`Uploaded TRX files`)
