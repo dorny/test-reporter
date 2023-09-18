@@ -11,7 +11,7 @@ on:
 jobs:
   build-test:
     name: Build & Test
-    runs-on: ubuntu-latest
+    runs-on: ['self-hosted', 'linux', 'x64', 'tst-eks-x64-us-east-1']
     steps:
       - uses: actions/checkout@v2
       - run: node --version
