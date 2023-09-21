@@ -33,6 +33,10 @@ If that's fine for you, using this action is as simple as:
 on:
   pull_request:
   push:
+permissions:
+  contents: read
+  actions: read
+  checks: write
 jobs:
   build-test:
     name: Build & Test
@@ -86,6 +90,10 @@ on:
     workflows: ['CI']                     # runs after CI workflow
     types:
       - completed
+permissions:
+  contents: read
+  actions: read
+  checks: write
 jobs:
   report:
     runs-on: ubuntu-latest
