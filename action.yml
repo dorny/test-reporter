@@ -11,7 +11,7 @@ inputs:
     required: true
   path:
     description: |
-      Coma separated list of paths to test results
+      Comma-separated list of paths to test results
       Supports wildcards via [fast-glob](https://github.com/mrmlnc/fast-glob)
       All matched result files must be of same format
     required: true
