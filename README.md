@@ -166,6 +166,9 @@ jobs:
     # Set action as failed if test report contains any failed test
     fail-on-error: 'true'
 
+    # Set this action as failed if no test results were found
+    fail-on-empty: 'true'
+
     # Relative path under $GITHUB_WORKSPACE where the repository was checked out.
     working-directory: ''
 

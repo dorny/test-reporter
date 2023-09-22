@@ -293,6 +293,7 @@ class TestReporter {
         this.listTests = core.getInput('list-tests', { required: true });
         this.maxAnnotations = parseInt(core.getInput('max-annotations', { required: true }));
         this.failOnError = core.getInput('fail-on-error', { required: true }) === 'true';
+        this.failOnEmpty = core.getInput('fail-on-empty', { required: true }) === 'true';
         this.workDirInput = core.getInput('working-directory', { required: false });
         this.onlySummary = core.getInput('only-summary', { required: false }) === 'true';
         this.token = core.getInput('token', { required: true });
@@ -364,7 +365,7 @@ class TestReporter {
                 core.setFailed(`Failed test were found and 'fail-on-error' option is set to ${this.failOnError}`);
                 return;
             }
-            if (results.length === 0) {
+            if (results.length === 0 && this.failOnEmpty) {
                 core.setFailed(`No test report files were found`);
                 return;
             }
