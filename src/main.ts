@@ -135,7 +135,7 @@ class TestReporter {
       return
     }
 
-    if (results.length === 0) {
+    if (this.failOnError && results.length === 0) {
       core.setFailed(`No test report files were found`)
       return
     }
@@ -179,7 +179,7 @@ class TestReporter {
     core.info('Creating annotations')
     const annotations = getAnnotations(results, this.maxAnnotations)
 
-    const isFailed = this.failOnError && results.some(tr => tr.result === 'failed')
+    const isFailed = results.some(tr => tr.result === 'failed')
     const conclusion = isFailed ? 'failure' : 'success'
     const icon = isFailed ? Icon.fail : Icon.success
 
