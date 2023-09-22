@@ -185,6 +185,8 @@ jobs:
 | failed     | Count of failed tests    |
 | skipped    | Count of skipped tests   |
 | time       | Test execution time [ms] |
+| url        | Check run URL            |
+| url_html   | Check run URL HTML       |
 
 ## Supported formats
 
