@@ -89,6 +89,10 @@ outputs:
     description: Count of skipped tests
   time:
     description: Test execution time [ms]
+  url:
+    description: Check run URL
+  url_html:
+    description: Check run URL HTML
 runs:
   using: 'node16'
   main: 'dist/index.js'
