@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+<testsuite name="TestResults" errors="0" tests="3" failures="1" time="0.22047725">
+<testcase classname="AcmeLibTests.AcmeLibTests" name="test_always_pass" time="0.036386333">
+</testcase>
+<testcase classname="AcmeLibTests.AcmeLibTests" name="test_always_skip" time="0.092039167">
+</testcase>
+<testcase classname="AcmeLibTests.AcmeLibTests" name="test_always_fail" time="0.09205175">
+<failure message="failed"></failure>
+</testcase>
+</testsuite>
+</testsuites>
