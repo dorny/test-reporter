@@ -4,6 +4,7 @@ export interface ParseOptions {
   parseErrors: boolean
   workDir?: string
   trackedFiles: string[]
+  directoryMapping?: {from: string; to: string}
 }
 
 export interface TestParser {

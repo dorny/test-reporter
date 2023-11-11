@@ -69,9 +69,10 @@ export function getAnnotations(results: TestRunResult[], maxCount: number): Anno
   errors.splice(maxCount + 1)
 
   const annotations = errors.map(e => {
+    const paths = e.path ? [e.path] : e.testRunPaths
     const message = [
       'Failed test found in:',
-      e.testRunPaths.map(p => `  ${p}`).join('\n'),
+      paths.map(p => `  ${p}`).join('\n'),
       'Error:',
       ident(fixEol(e.message), '  ')
     ].join('\n')

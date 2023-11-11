@@ -14,6 +14,7 @@ import {DartJsonParser} from './parsers/dart-json/dart-json-parser'
 import {DotnetTrxParser} from './parsers/dotnet-trx/dotnet-trx-parser'
 import {JavaJunitParser} from './parsers/java-junit/java-junit-parser'
 import {JestJunitParser} from './parsers/jest-junit/jest-junit-parser'
+import {PytestJunitParser} from './parsers/pytest-junit/pytest-junit-parser'
 import {MochaJsonParser} from './parsers/mocha-json/mocha-json-parser'
 
 import {normalizeDirPath, normalizeFilePath} from './utils/path-utils'
@@ -44,6 +45,7 @@ class TestReporter {
   readonly workDirInput = core.getInput('working-directory', {required: false})
   readonly onlySummary = core.getInput('only-summary', {required: false}) === 'true'
   readonly token = core.getInput('token', {required: true})
+  readonly directoryMapping = core.getInput('directory-mapping', {required: false})
   readonly octokit: InstanceType<typeof GitHub>
   readonly context = getCheckRunContext()
 
@@ -94,13 +96,15 @@ class TestReporter {
     const parseErrors = this.maxAnnotations > 0
     const trackedFiles = parseErrors ? await inputProvider.listTrackedFiles() : []
     const workDir = this.artifact ? undefined : normalizeDirPath(process.cwd(), true)
+    const [from, to] = this.directoryMapping.split(':')
 
     if (parseErrors) core.info(`Found ${trackedFiles.length} files tracked by GitHub`)
 
     const options: ParseOptions = {
       workDir,
       trackedFiles,
-      parseErrors
+      parseErrors,
+      directoryMapping: {from, to}
     }
 
     core.info(`Using test report parser '${this.reporter}'`)
@@ -185,6 +189,7 @@ class TestReporter {
     const icon = isFailed ? Icon.fail : Icon.success
 
     core.info(`Updating check run conclusion (${conclusion}) and output`)
+    core.info(`Posted annotations: ${JSON.stringify(annotations)}`)
     const resp = await this.octokit.rest.checks.update({
       check_run_id: createResp.data.id,
       conclusion,
@@ -217,6 +222,8 @@ class TestReporter {
         return new JavaJunitParser(options)
       case 'jest-junit':
         return new JestJunitParser(options)
+      case 'pytest-junit':
+        return new PytestJunitParser(options)
       case 'mocha-json':
         return new MochaJsonParser(options)
       default:

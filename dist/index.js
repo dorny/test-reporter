@@ -264,6 +264,7 @@ const dart_json_parser_1 = __nccwpck_require__(4528);
 const dotnet_trx_parser_1 = __nccwpck_require__(2664);
 const java_junit_parser_1 = __nccwpck_require__(676);
 const jest_junit_parser_1 = __nccwpck_require__(1113);
+const pytest_junit_parser_1 = __nccwpck_require__(2842);
 const mocha_json_parser_1 = __nccwpck_require__(6043);
 const path_utils_1 = __nccwpck_require__(4070);
 const github_utils_1 = __nccwpck_require__(3522);
@@ -297,6 +298,7 @@ class TestReporter {
         this.workDirInput = core.getInput('working-directory', { required: false });
         this.onlySummary = core.getInput('only-summary', { required: false }) === 'true';
         this.token = core.getInput('token', { required: true });
+        this.directoryMapping = core.getInput('directory-mapping', { required: false });
         this.context = (0, github_utils_1.getCheckRunContext)();
         this.octokit = github.getOctokit(this.token);
         if (this.listSuites !== 'all' && this.listSuites !== 'failed') {
@@ -329,12 +331,14 @@ class TestReporter {
             const parseErrors = this.maxAnnotations > 0;
             const trackedFiles = parseErrors ? yield inputProvider.listTrackedFiles() : [];
             const workDir = this.artifact ? undefined : (0, path_utils_1.normalizeDirPath)(process.cwd(), true);
+            const [from, to] = this.directoryMapping.split(':');
             if (parseErrors)
                 core.info(`Found ${trackedFiles.length} files tracked by GitHub`);
             const options = {
                 workDir,
                 trackedFiles,
-                parseErrors
+                parseErrors,
+                directoryMapping: { from, to }
             };
             core.info(`Using test report parser '${this.reporter}'`);
             const parser = this.getParser(this.reporter, options);
@@ -404,6 +408,7 @@ class TestReporter {
             const conclusion = isFailed ? 'failure' : 'success';
             const icon = isFailed ? markdown_utils_1.Icon.fail : markdown_utils_1.Icon.success;
             core.info(`Updating check run conclusion (${conclusion}) and output`);
+            core.info(`Posted annotations: ${JSON.stringify(annotations)}`);
             const resp = yield this.octokit.rest.checks.update(Object.assign({ check_run_id: createResp.data.id, conclusion, status: 'completed', output: {
                     title: `${name} ${icon}`,
                     summary,
@@ -429,6 +434,8 @@ class TestReporter {
                 return new java_junit_parser_1.JavaJunitParser(options);
             case 'jest-junit':
                 return new jest_junit_parser_1.JestJunitParser(options);
+            case 'pytest-junit':
+                return new pytest_junit_parser_1.PytestJunitParser(options);
             case 'mocha-json':
                 return new mocha_json_parser_1.MochaJsonParser(options);
             default:
@@ -1397,6 +1404,143 @@ exports.MochaJsonParser = MochaJsonParser;
 
 /***/ }),
 
+/***/ 2842:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PytestJunitParser = void 0;
+const xml2js_1 = __nccwpck_require__(6189);
+const test_results_1 = __nccwpck_require__(2768);
+const path_utils_1 = __nccwpck_require__(4070);
+class PytestJunitParser {
+    constructor(options) {
+        this.options = options;
+    }
+    parse(path, content) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const ju = yield this.getJunitReport(path, content);
+            return this.getTestRunResult(path, ju);
+        });
+    }
+    getJunitReport(path, content) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                return (yield (0, xml2js_1.parseStringPromise)(content));
+            }
+            catch (e) {
+                throw new Error(`Invalid XML at ${path}\n\n${e}`);
+            }
+        });
+    }
+    getTestRunResult(path, junit) {
+        const suites = junit.testsuites.testsuite === undefined
+            ? []
+            : junit.testsuites.testsuite.map(ts => {
+                const name = ts.$.name.trim();
+                const time = parseFloat(ts.$.time) * 1000;
+                return new test_results_1.TestSuiteResult(name, this.getGroups(ts), time);
+            });
+        const time = junit.testsuites.$ === undefined
+            ? suites.reduce((sum, suite) => sum + suite.time, 0)
+            : parseFloat(junit.testsuites.$.time) * 1000;
+        return new test_results_1.TestRunResult(path, suites, time);
+    }
+    getGroups(suite) {
+        if (!suite.testcase) {
+            return [];
+        }
+        const groups = [];
+        for (const tc of suite.testcase) {
+            let grp = groups.find(g => g.describe === tc.$.classname);
+            if (grp === undefined) {
+                grp = { describe: tc.$.classname, tests: [] };
+                groups.push(grp);
+            }
+            grp.tests.push(tc);
+        }
+        return groups.map(grp => {
+            const tests = grp.tests.map(tc => {
+                const name = tc.$.name.trim();
+                const result = this.getTestCaseResult(tc);
+                const time = parseFloat(tc.$.time) * 1000;
+                const error = this.getTestCaseError(tc);
+                return new test_results_1.TestCaseResult(name, result, time, error);
+            });
+            return new test_results_1.TestGroupResult(grp.describe, tests);
+        });
+    }
+    getTestCaseResult(test) {
+        if (test.failure)
+            return 'failed';
+        if (test.skipped)
+            return 'skipped';
+        return 'success';
+    }
+    getTestCaseError(tc) {
+        if (!this.options.parseErrors || !tc.failure) {
+            return undefined;
+        }
+        const failure = tc.failure[0];
+        const details = typeof failure === 'object' ? failure._ : failure;
+        return Object.assign(Object.assign({}, this.errorSource(details)), { details });
+    }
+    errorSource(details) {
+        const lines = details.split('\n').map(line => line.trim());
+        const [path, pos] = lines[0].split(':');
+        const line = Number.parseInt(pos);
+        if (path && Number.isFinite(line)) {
+            return {
+                path: this.applyDirectoryMapping(this.getAbsolutePath(path)),
+                line,
+                message: lines[1]
+            };
+        }
+        return undefined;
+    }
+    applyDirectoryMapping(path) {
+        if (this.options.directoryMapping && this.options.directoryMapping.from) {
+            return path.replace(this.options.directoryMapping.from, this.options.directoryMapping.to);
+        }
+        return path;
+    }
+    getRelativePath(path) {
+        path = (0, path_utils_1.normalizeFilePath)(path);
+        const workDir = this.getWorkDir(path);
+        if (workDir !== undefined && path.startsWith(workDir)) {
+            path = path.substring(workDir.length);
+        }
+        return path;
+    }
+    getAbsolutePath(path) {
+        const relativePath = this.getRelativePath(path);
+        for (const file of this.options.trackedFiles) {
+            if (relativePath.endsWith(file)) {
+                return file;
+            }
+        }
+        return relativePath;
+    }
+    getWorkDir(path) {
+        var _a, _b;
+        return ((_b = (_a = this.options.workDir) !== null && _a !== void 0 ? _a : this.assumedWorkDir) !== null && _b !== void 0 ? _b : (this.assumedWorkDir = (0, path_utils_1.getBasePath)(path, this.options.trackedFiles)));
+    }
+}
+exports.PytestJunitParser = PytestJunitParser;
+
+
+/***/ }),
+
 /***/ 5867:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
@@ -1448,9 +1592,10 @@ function getAnnotations(results, maxCount) {
     // Limit number of created annotations
     errors.splice(maxCount + 1);
     const annotations = errors.map(e => {
+        const paths = e.path ? [e.path] : e.testRunPaths;
         const message = [
             'Failed test found in:',
-            e.testRunPaths.map(p => `  ${p}`).join('\n'),
+            paths.map(p => `  ${p}`).join('\n'),
             'Error:',
             ident((0, markdown_utils_1.fixEol)(e.message), '  ')
         ].join('\n');

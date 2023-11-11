@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+    <testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.316"
+               timestamp="2023-03-10T11:26:51.659606" hostname="c29b94e3532a">
+        <testcase classname="product_changes.tests.first_test.MyTestCase" name="test_something" time="0.075">
+            <failure message="assert False">mnt/extra-addons/product_changes/tests/first_test.py:6: in test_something
+                assert False
+                E assert False
+            </failure>
+        </testcase>
+    </testsuite>
+</testsuites>
