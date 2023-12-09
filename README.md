@@ -18,6 +18,7 @@ This [Github Action](https://github.com/features/actions) displays test results 
 - Flutter / [test](https://pub.dev/packages/test)
 - Java / [JUnit](https://junit.org/)
 - JavaScript / [JEST](https://jestjs.io/) / [Mocha](https://mochajs.org/)
+- Swift / xUnit
 
 For more information see [Supported formats](#supported-formats) section.
 
@@ -315,6 +316,12 @@ You can use the following example configuration in `package.json`:
 Test processing might fail if any of your tests write anything on standard output.
 Mocha, unfortunately, doesn't have the option to store `json` output directly to the file, and we have to rely on redirecting its standard output.
 There is a work in progress to fix it: [mocha#4607](https://github.com/mochajs/mocha/pull/4607)
+</details>
+
+<details>
+  <summary>swift-xunit (Experimental)</summary>
+
+Support for Swift test results in xUnit format is experimental - should work but it was not extensively tested.
 </details>
 
 ## GitHub limitations
