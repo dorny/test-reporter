@@ -265,6 +265,7 @@ const dotnet_trx_parser_1 = __nccwpck_require__(2664);
 const java_junit_parser_1 = __nccwpck_require__(676);
 const jest_junit_parser_1 = __nccwpck_require__(1113);
 const mocha_json_parser_1 = __nccwpck_require__(6043);
+const swift_xunit_parser_1 = __nccwpck_require__(5366);
 const path_utils_1 = __nccwpck_require__(4070);
 const github_utils_1 = __nccwpck_require__(3522);
 const markdown_utils_1 = __nccwpck_require__(6482);
@@ -431,6 +432,8 @@ class TestReporter {
                 return new jest_junit_parser_1.JestJunitParser(options);
             case 'mocha-json':
                 return new mocha_json_parser_1.MochaJsonParser(options);
+            case 'swift-xunit':
+                return new swift_xunit_parser_1.SwiftXunitParser(options);
             default:
                 throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`);
         }
@@ -1393,6 +1396,25 @@ class MochaJsonParser {
     }
 }
 exports.MochaJsonParser = MochaJsonParser;
+
+
+/***/ }),
+
+/***/ 5366:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SwiftXunitParser = void 0;
+const java_junit_parser_1 = __nccwpck_require__(676);
+class SwiftXunitParser extends java_junit_parser_1.JavaJunitParser {
+    constructor(options) {
+        super(options);
+        this.options = options;
+    }
+}
+exports.SwiftXunitParser = SwiftXunitParser;
 
 
 /***/ }),
