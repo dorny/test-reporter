@@ -13,11 +13,7 @@ describe('swift-xunit tests', () => {
     const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
     const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
 
-    const trackedFiles = [
-      'Package.swift',
-      'Sources/AcmeLib/AcmeLib.swift',
-      'Tests/AcmeLibTests/AcmeLibTests.swift',
-    ]
+    const trackedFiles = ['Package.swift', 'Sources/AcmeLib/AcmeLib.swift', 'Tests/AcmeLibTests/AcmeLibTests.swift']
     const opts: ParseOptions = {
       parseErrors: true,
       trackedFiles
