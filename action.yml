@@ -11,7 +11,7 @@ inputs:
     required: true
   path:
     description: |
-      Coma separated list of paths to test results
+      Comma-separated list of paths to test results
       Supports wildcards via [fast-glob](https://github.com/mrmlnc/fast-glob)
       All matched result files must be of same format
     required: true
@@ -31,13 +31,14 @@ inputs:
         - java-junit
         - jest-junit
         - mocha-json
+        - swift-xunit
     required: true
   list-suites:
     description: |
       Limits which test suites are listed. Supported options:
         - all
         - only-failed
-    required: true
+    required: false
     default: 'all'
   list-tests:
     description: |
@@ -45,16 +46,20 @@ inputs:
         - all
         - only-failed
         - none
-    required: true
+    required: false
     default: 'all'
   max-annotations:
     description: |
       Limits number of created annotations with error message and stack trace captured during test execution.
       Must be less or equal to 50.
-    required: true
+    required: false
     default: '10'
   fail-on-error:
     description: Set this action as failed if test report contain any failed test
+    required: false
+    default: 'true'
+  fail-on-empty:
+    description: Set this action as failed if no test results were found
     required: true
     default: 'true'
   working-directory:
@@ -85,8 +90,12 @@ outputs:
     description: Count of skipped tests
   time:
     description: Test execution time [ms]
+  url:
+    description: Check run URL
+  url_html:
+    description: Check run URL HTML
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'dist/index.js'
 branding:
   color: blue

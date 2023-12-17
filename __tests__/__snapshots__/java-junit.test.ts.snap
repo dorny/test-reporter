@@ -3,12 +3,12 @@
 exports[`java-junit tests report from apache/pulsar single suite test results matches snapshot 1`] = `
 TestRunResult {
   "path": "fixtures/external/java/TEST-org.apache.pulsar.AddMissingPatchVersionTest.xml",
-  "suites": Array [
+  "suites": [
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testVersionStrings",
@@ -16,7 +16,7 @@ TestRunResult {
               "time": 99,
             },
             TestCaseResult {
-              "error": Object {
+              "error": {
                 "details": "
       java.lang.AssertionError: expected [1.2.1] but found [1.2.0]
 at org.testng.Assert.fail(Assert.java:99)
@@ -62,12 +62,12 @@ at java.lang.Thread.run(Thread.java:748)
 exports[`java-junit tests report from apache/pulsar test results matches snapshot 1`] = `
 TestRunResult {
   "path": "fixtures/external/java/pulsar-test-report.xml",
-  "suites": Array [
+  "suites": [
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testVersionStrings",
@@ -75,7 +75,7 @@ TestRunResult {
               "time": 99,
             },
             TestCaseResult {
-              "error": Object {
+              "error": {
                 "details": "
       java.lang.AssertionError: expected [1.2.1] but found [1.2.0]
 at org.testng.Assert.fail(Assert.java:99)
@@ -114,10 +114,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 116,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testMainRunBookieNoConfig",
@@ -179,10 +179,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 591.0000000000001,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testGetWorkerService",
@@ -202,10 +202,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 96,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testOwnedNamespaces",
@@ -237,10 +237,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 9184.999999999998,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testOffloadPoliciesAppliedApi",
@@ -290,10 +290,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 18584.000000000004,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "httpEndpoint",
@@ -313,10 +313,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1389,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testAuthentication",
@@ -336,10 +336,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 185,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "simple",
@@ -353,10 +353,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 2384,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "crossColoLookup",
@@ -388,10 +388,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1930,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testCreateNamespaceWithDefaultBundles",
@@ -411,10 +411,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 33168,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testGetAllPartitions",
@@ -434,10 +434,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 32357,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testSplitMapWithRefreshedStatMap",
@@ -505,10 +505,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 75271.99999999999,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testUnloadNotLoadedNamespace",
@@ -528,10 +528,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 13704,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testOwnershipForCurrentServer",
@@ -545,10 +545,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 15709,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testGetOwnedServiceUnits",
@@ -604,10 +604,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 15749.999999999998,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testLoadProtocolHandler",
@@ -633,10 +633,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 7398.000000000001,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testWrapper",
@@ -650,10 +650,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 15,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testStart",
@@ -697,10 +697,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 946.0000000000001,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testMessagePublishBufferThrottleEnable",
@@ -726,10 +726,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 13830,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testResumptionAfterBacklogRelaxed",
@@ -869,10 +869,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 40154,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testReleaseOwnershipWithZookeeperDisconnectedBeforeOwnershipNodeDeleted",
@@ -928,10 +928,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 114278,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testJvmDirectMemoryUsedMetric",
@@ -951,10 +951,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 49,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testAckStatsOnPartitionedTopicForExclusiveSubscription",
@@ -980,10 +980,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 21163.999999999996,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testManagedCursorMetrics",
@@ -997,10 +997,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 281,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testManagedLedgerMetrics",
@@ -1014,10 +1014,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 285,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testPerTopicStats",
@@ -1115,10 +1115,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 83145.00000000001,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testConsumersAfterMarkDelete",
@@ -1138,10 +1138,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1806,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testSimpleAggregation",
@@ -1155,10 +1155,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 40,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testSendAndReceiveNamespaceEvents",
@@ -1172,10 +1172,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1043,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "noSortedTest",
@@ -1195,10 +1195,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 29646,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testCloseReleaseAllEntries",
@@ -1224,10 +1224,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 28,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testAbortOnTopic",
@@ -1259,10 +1259,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 93,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testOpenReaderOnNonExistentTxn",
@@ -1312,10 +1312,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 80.99999999999999,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testCloseShouldReleaseBuffer",
@@ -1329,10 +1329,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 14,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testTransactionBufferLowWaterMark",
@@ -1352,10 +1352,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 37577,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "commitTxnTest",
@@ -1381,10 +1381,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 49067.00000000001,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testClientStart",
@@ -1410,10 +1410,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 95,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testTransactionMetaStoreAssignAndFailover",
@@ -1427,10 +1427,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1151,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "txnAckTestNoBatchAndSharedSubMemoryDeleteTest",
@@ -1456,10 +1456,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 57293.00000000001,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testRestException",
@@ -1485,10 +1485,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 37.00000000000001,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testTlsAuthDisallowInsecure",
@@ -1550,10 +1550,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 27441.999999999996,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testAuthorizedUserAsOriginalPrincipal",
@@ -1585,10 +1585,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 8297,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testSerializationEmpty",
@@ -1620,10 +1620,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 30,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testBatchMessageIndexAckForExclusiveSubscription",
@@ -1655,10 +1655,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 13732,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testBatchMessageIndexAckForSharedSubscription",
@@ -1696,10 +1696,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 43856,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testDisconnectClientWithoutClosingConnection",
@@ -1797,10 +1797,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 148203,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testCompactedOutMessages",
@@ -1814,10 +1814,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1385,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testAckResponse",
@@ -1831,10 +1831,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 549,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testReadCompactNonPersistentExclusive",
@@ -1866,10 +1866,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 12164,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testConsumerDedup",
@@ -1919,10 +1919,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 3522.0000000000005,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testConsumerUnsubscribeReference",
@@ -1936,10 +1936,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 129,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testTlsClientAuthOverHTTPProtocol",
@@ -1965,10 +1965,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 23461,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testTlsClientAuthOverHTTPProtocol",
@@ -1994,10 +1994,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 7675.000000000001,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testValidate",
@@ -2011,10 +2011,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 183,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testChecksumCompatibilityInMixedVersionBrokerCluster",
@@ -2040,10 +2040,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 46690,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testPublishWithFailure",
@@ -2105,10 +2105,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 73214,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testWithoutBatches",
@@ -2128,10 +2128,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 5484.999999999999,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testReadMessageWithBatchingWithMessageInclusive",
@@ -2187,10 +2187,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 35143,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testNegativeAcks",
@@ -2390,10 +2390,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 10661.999999999998,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testStartEmptyPatternConsumer",
@@ -2467,10 +2467,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 62620,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testSharedAckedNormalTopic",
@@ -2508,10 +2508,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 33504,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testMultiHostUrlRetrySuccess",
@@ -2537,10 +2537,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 15314,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testSerializationAndDeserialization",
@@ -2554,10 +2554,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 10,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "createTopicDeleteTopicCreateTopic",
@@ -2571,10 +2571,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1937,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testCheckSequenceId",
@@ -2612,10 +2612,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 17976,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testCreateConsumerOnNotExistsTopic",
@@ -2635,10 +2635,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 4053,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testSingleTopicConsumerNoBatchFullName",
@@ -2676,10 +2676,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 13659,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testTopicAutoUpdatePartitions",
@@ -2789,10 +2789,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 133445.00000000003,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testCheckUnAcknowledgedMessageTimer",
@@ -2842,10 +2842,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 43828,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "zeroQueueSizeSharedSubscription",
@@ -2937,10 +2937,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 15712,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testGetProperties",
@@ -2954,10 +2954,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 316,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testChecksumSendCommand",
@@ -2971,10 +2971,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 30,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testCompressDecompress",
@@ -3018,10 +3018,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 223.00000000000003,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testCompressDecompress",
@@ -3299,10 +3299,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 737.0000000000005,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testCrc32cHardware",
@@ -3346,10 +3346,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 5403.000000000001,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testLoadReportSerialization",
@@ -3381,10 +3381,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1530,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testInvalidMetadata",
@@ -3404,10 +3404,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 161,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testIncludes",
@@ -3451,10 +3451,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 64,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testConstructor",
@@ -3492,10 +3492,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 98.99999999999999,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "namespace",
@@ -3515,10 +3515,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 207,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testOptionalSettingPresent",
@@ -3550,10 +3550,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 48,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testShortTopicName",
@@ -3585,10 +3585,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 529,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testEmptyServiceUriString",
@@ -3722,10 +3722,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 237.00000000000006,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testAutoFailoverPolicyData",
@@ -3739,10 +3739,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 15,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testAutoFailoverPolicyType",
@@ -3756,10 +3756,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 19,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testInvalidTopicType",
@@ -3803,10 +3803,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 64,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testBacklogQuotaIdentity",
@@ -3820,10 +3820,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 12,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "simple",
@@ -3837,10 +3837,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 9,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testConsumerStats",
@@ -3854,10 +3854,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 8,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testDecodeFailed",
@@ -3877,10 +3877,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 948,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testLocalPolices",
@@ -3894,10 +3894,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 48,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testNamespaceIsolationData",
@@ -3911,10 +3911,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 76,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testSerialization",
@@ -3928,10 +3928,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 45,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testGcsConfiguration",
@@ -3975,10 +3975,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 216,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testPartitionedTopicStats",
@@ -3992,10 +3992,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 12,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testPersistencePolicies",
@@ -4009,10 +4009,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 19,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testPersistentOfflineTopicStats",
@@ -4026,10 +4026,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 29,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testPersistentTopicStatsAggregation",
@@ -4049,10 +4049,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 51,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "propertyAdmin",
@@ -4084,10 +4084,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1386,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testPublisherStats",
@@ -4107,10 +4107,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 37,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testReplicatorStatsAdd",
@@ -4130,10 +4130,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 30,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testResourceQuotaDefault",
@@ -4153,10 +4153,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 45,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testRetentionPolices",
@@ -4170,10 +4170,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 8,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testAutoFailoverPolicyFactory",
@@ -4187,10 +4187,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 22,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testMinAvailablePolicty",
@@ -4204,10 +4204,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testBrokerAssignment",
@@ -4257,10 +4257,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 265,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testFindBrokers",
@@ -4310,10 +4310,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 309.00000000000006,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testEncoder",
@@ -4333,10 +4333,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 4999.000000000001,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testSkipBrokerEntryMetadata",
@@ -4386,10 +4386,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 2812.0000000000005,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testSnapshot",
@@ -4433,10 +4433,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 3232.9999999999995,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testChannelRead",
@@ -4450,10 +4450,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 3690,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testInvokeJVMInternals",
@@ -4467,10 +4467,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 82,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testMap",
@@ -4484,10 +4484,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 242,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testFileNotModified",
@@ -4531,10 +4531,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 6161.000000000001,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testMultipleTryAcquire",
@@ -4608,10 +4608,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 7199.999999999998,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testCreateInstanceNoNoArgConstructor",
@@ -4691,10 +4691,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 172,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testParseRelativeTime",
@@ -4708,10 +4708,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 39,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testResetWords",
@@ -4731,10 +4731,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 13.000000000000002,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testRecycle",
@@ -4754,10 +4754,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 63,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testRehashingWithDeletes",
@@ -4843,10 +4843,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 28351.000000000004,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "concurrentInsertionsAndReads",
@@ -4944,10 +4944,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1519.0000000000002,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testRemove",
@@ -5027,10 +5027,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 9241,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "concurrentInsertions",
@@ -5104,10 +5104,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 7114.999999999999,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testAddForDifferentKey",
@@ -5193,10 +5193,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1355.9999999999998,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "concurrentInsertions",
@@ -5258,10 +5258,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 342,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testUpdateObject",
@@ -5281,10 +5281,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 64,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "removeTest",
@@ -5328,10 +5328,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 350,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testItems",
@@ -5429,10 +5429,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 3092.9999999999995,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testQueue",
@@ -5458,10 +5458,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 238,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "toCompletableFuture_shouldCompleteExceptionally_channelFutureCompletedAfter",
@@ -5499,10 +5499,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1549.0000000000002,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testRedirectUrlWithServerStarted",
@@ -5516,10 +5516,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 4904,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testAuthorizationWithAnonymousUser",
@@ -5539,10 +5539,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 27527,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testPulsarFunctionState",
@@ -5568,10 +5568,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 42238,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testFunctionsCreation",
@@ -5585,10 +5585,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 12012,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testAuthorization",
@@ -5602,10 +5602,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 30213,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "replayableProxyContentProviderTest",
@@ -5619,10 +5619,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 474,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testAuthenticatedProxyAsNonAdmin",
@@ -5636,10 +5636,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 2159,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testFunctionWorkerRedirect",
@@ -5653,10 +5653,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 10,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "test",
@@ -5670,10 +5670,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 125,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testTlsSyncProducerAndConsumer",
@@ -5687,10 +5687,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 2279,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testAuthentication",
@@ -5704,10 +5704,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 16696,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testInboundConnection",
@@ -5721,10 +5721,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1792,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testSimpleProduceAndConsume",
@@ -5738,10 +5738,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 511,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testForwardAuthData",
@@ -5755,10 +5755,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 31924,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testProxyToEndsInSlash",
@@ -5826,10 +5826,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1660,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testProducerFailed",
@@ -5855,10 +5855,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 6701.000000000001,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testPartitions",
@@ -5884,10 +5884,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 7220.000000000001,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testLookup",
@@ -5901,10 +5901,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 2568,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testRegexSubscription",
@@ -5942,10 +5942,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1345.9999999999998,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testIncorrectRoles",
@@ -5959,10 +5959,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 10403,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testChangeLogLevel",
@@ -5988,10 +5988,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 533,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testPartitions",
@@ -6035,10 +6035,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 2946.9999999999995,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testProducer",
@@ -6058,10 +6058,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 414.00000000000006,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testServiceStartup",
@@ -6075,10 +6075,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 4,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testProxyAuthorization",
@@ -6092,10 +6092,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 2128,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "tlsCiphersAndProtocols",
@@ -6181,10 +6181,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 32897,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testDiscoveryService",
@@ -6198,10 +6198,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 2045,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testAuthWithRandoCert",
@@ -6227,10 +6227,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 8235,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testUnauthenticatedProxy",
@@ -6250,10 +6250,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 113.99999999999999,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "test",
@@ -6267,10 +6267,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 29041,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testIsUsingAvroSchemaParser",
@@ -6296,10 +6296,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 30859,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testConsumerCompatibilityCheckCanReadLastTest",
@@ -6445,10 +6445,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 107437.00000000001,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testServiceException",
@@ -6468,10 +6468,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 40751.99999999999,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "shouldFailIfEnumParameterIsMissing",
@@ -6515,10 +6515,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 23,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "shouldNotDoAnythingWhenThereIsBeforeAndAfterMethod",
@@ -6556,10 +6556,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 36.00000000000001,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "shouldCallSetupBeforeRetrying",
@@ -6597,10 +6597,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 27,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "shouldCallSetupOnce1",
@@ -6626,10 +6626,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testHelp",
@@ -6649,10 +6649,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 17,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testBooleanFormat",
@@ -6684,10 +6684,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 49.99999999999999,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "testLists",
@@ -6731,10 +6731,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 59,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "unauthenticatedSocketTest",
@@ -6766,10 +6766,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 28904.000000000004,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "test",
@@ -6783,10 +6783,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1263,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "configTest",
@@ -6806,10 +6806,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 8943,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "socketTest",
@@ -6823,10 +6823,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 10821,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "socketTest",
@@ -6840,10 +6840,10 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 7280,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "anonymousSocketTest",

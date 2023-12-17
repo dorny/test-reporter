@@ -18,6 +18,7 @@ This [Github Action](https://github.com/features/actions) displays test results 
 - Flutter / [test](https://pub.dev/packages/test)
 - Java / [JUnit](https://junit.org/)
 - JavaScript / [JEST](https://jestjs.io/) / [Mocha](https://mochajs.org/)
+- Swift / xUnit
 
 For more information see [Supported formats](#supported-formats) section.
 
@@ -33,12 +34,16 @@ If that's fine for you, using this action is as simple as:
 on:
   pull_request:
   push:
+permissions:
+  contents: read
+  actions: read
+  checks: write
 jobs:
   build-test:
     name: Build & Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2     # checkout the repo
+      - uses: actions/checkout@v3     # checkout the repo
       - run: npm ci                   # install packages
       - run: npm test                 # run tests (configured to use jest-junit reporter)
 
@@ -69,10 +74,10 @@ jobs:
   build-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2         # checkout the repo
+      - uses: actions/checkout@v3         # checkout the repo
       - run: npm ci                       # install packages
       - run: npm test                     # run tests (configured to use jest-junit reporter)
-      - uses: actions/upload-artifact@v2  # upload test results
+      - uses: actions/upload-artifact@v3  # upload test results
         if: success() || failure()        # run this step even if previous step failed
         with:
           name: test-results
@@ -86,6 +91,10 @@ on:
     workflows: ['CI']                     # runs after CI workflow
     types:
       - completed
+permissions:
+  contents: read
+  actions: read
+  checks: write
 jobs:
   report:
     runs-on: ubuntu-latest
@@ -116,7 +125,7 @@ jobs:
     # Name of the Check Run which will be created
     name: ''
 
-    # Coma separated list of paths to test results
+    # Comma-separated list of paths to test results
     # Supports wildcards via [fast-glob](https://github.com/mrmlnc/fast-glob)
     # All matched result files must be of the same format
     path: ''
@@ -158,6 +167,9 @@ jobs:
     # Set action as failed if test report contains any failed test
     fail-on-error: 'true'
 
+    # Set this action as failed if no test results were found
+    fail-on-empty: 'true'
+
     # Relative path under $GITHUB_WORKSPACE where the repository was checked out.
     working-directory: ''
 
@@ -174,6 +186,8 @@ jobs:
 | failed     | Count of failed tests    |
 | skipped    | Count of skipped tests   |
 | time       | Test execution time [ms] |
+| url        | Check run URL            |
+| url_html   | Check run URL HTML       |
 
 ## Supported formats
 
@@ -258,14 +272,14 @@ Some heuristic was necessary to figure out the mapping between the line in the s
 </details>
 
 <details>
-  <summary>jest-Junit</summary>
+  <summary>jest-junit</summary>
 
-[JEST](https://jestjs.io/) testing framework support requires the usage of [jest-Junit](https://github.com/jest-community/jest-Junit) reporter.
+[JEST](https://jestjs.io/) testing framework support requires the usage of [jest-junit](https://github.com/jest-community/jest-junit) reporter.
 It will create test results in Junit XML format which can be then processed by this action.
 You can use the following example configuration in `package.json`:
 ```json
 "scripts": {
-  "test": "jest --ci --reporters=default --reporters=jest-Junit"
+  "test": "jest --ci --reporters=default --reporters=jest-junit"
 },
 "devDependencies": {
   "jest": "^26.5.3",
@@ -304,13 +318,19 @@ Mocha, unfortunately, doesn't have the option to store `json` output directly to
 There is a work in progress to fix it: [mocha#4607](https://github.com/mochajs/mocha/pull/4607)
 </details>
 
+<details>
+  <summary>swift-xunit (Experimental)</summary>
+
+Support for Swift test results in xUnit format is experimental - should work but it was not extensively tested.
+</details>
+
 ## GitHub limitations
 
 Unfortunately, there are some known issues and limitations caused by GitHub API:
 
 - Test report (i.e. Check Run summary) is markdown text. No custom styling or HTML is possible.
 - Maximum report size is 65535 bytes. Input parameters `list-suites` and `list-tests` will be automatically adjusted if max size is exceeded.
-- Test report can't reference any additional files (e.g. screenshots). You can use `actions/upload-artifact@v2` to upload them and inspect them manually.
+- Test report can't reference any additional files (e.g. screenshots). You can use `actions/upload-artifact@v3` to upload them and inspect them manually.
 - Check Runs are created for specific commit SHA. It's not possible to specify under which workflow test report should belong if more
   workflows are running for the same SHA. Thanks to this GitHub "feature" it's possible your test report will appear in an unexpected place in GitHub UI.
   For more information, see [#67](https://github.com/dorny/test-reporter/issues/67).

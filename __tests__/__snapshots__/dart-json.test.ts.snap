@@ -3,12 +3,12 @@
 exports[`dart-json tests matches report snapshot 1`] = `
 TestRunResult {
   "path": "fixtures/dart-json.json",
-  "suites": Array [
+  "suites": [
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "Test 1",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Passing test",
@@ -19,11 +19,11 @@ TestRunResult {
         },
         TestGroupResult {
           "name": "Test 1 Test 1.1",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
-              "error": Object {
+              "error": {
                 "details": "package:test_api          expect
-test\\\\main_test.dart 13:9  main.<fn>.<fn>.<fn>
+test\\main_test.dart 13:9  main.<fn>.<fn>.<fn>
 ",
                 "line": 13,
                 "message": "Expected: <2>
@@ -36,9 +36,9 @@ test\\\\main_test.dart 13:9  main.<fn>.<fn>.<fn>
               "time": 20,
             },
             TestCaseResult {
-              "error": Object {
+              "error": {
                 "details": "package:darttest/main.dart 2:3  throwError
-test\\\\main_test.dart 17:9        main.<fn>.<fn>.<fn>
+test\\main_test.dart 17:9        main.<fn>.<fn>.<fn>
 ",
                 "line": 17,
                 "message": "Exception: Some error",
@@ -52,10 +52,10 @@ test\\\\main_test.dart 17:9        main.<fn>.<fn>.<fn>
         },
         TestGroupResult {
           "name": "Test 2",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
-              "error": Object {
-                "details": "test\\\\main_test.dart 24:7  main.<fn>.<fn>
+              "error": {
+                "details": "test\\main_test.dart 24:7  main.<fn>.<fn>
 ",
                 "line": 24,
                 "message": "Exception: Some error",
@@ -72,12 +72,12 @@ test\\\\main_test.dart 17:9        main.<fn>.<fn>.<fn>
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
-              "error": Object {
+              "error": {
                 "details": "dart:isolate  _RawReceivePortImpl._handleMessage
 ",
                 "line": 5,
@@ -108,12 +108,12 @@ test\\\\main_test.dart 17:9        main.<fn>.<fn>.<fn>
 exports[`dart-json tests report from rrousselGit/provider test results matches snapshot 1`] = `
 TestRunResult {
   "path": "fixtures/external/flutter/provider-test-results.json",
-  "suites": Array [
+  "suites": [
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "valueListenableProvider",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "rebuilds when value change",
@@ -139,7 +139,7 @@ TestRunResult {
               "time": 22,
             },
             TestCaseResult {
-              "error": Object {
+              "error": {
                 "details": "══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
 The following TestFailure object was thrown running a test:
   Expected: <2>
@@ -178,10 +178,10 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "ListenableProvider",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "works with MultiProvider",
@@ -252,7 +252,7 @@ Unexpected number of calls
         },
         TestGroupResult {
           "name": "ListenableProvider value constructor",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "pass down key",
@@ -269,7 +269,7 @@ Unexpected number of calls
         },
         TestGroupResult {
           "name": "ListenableProvider stateful constructor",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "called with context",
@@ -295,10 +295,10 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "consumer",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "obtains value from Provider<T>",
@@ -321,7 +321,7 @@ Unexpected number of calls
         },
         TestGroupResult {
           "name": "consumer2",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "obtains value from Provider<T>",
@@ -344,7 +344,7 @@ Unexpected number of calls
         },
         TestGroupResult {
           "name": "consumer3",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "obtains value from Provider<T>",
@@ -367,7 +367,7 @@ Unexpected number of calls
         },
         TestGroupResult {
           "name": "consumer4",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "obtains value from Provider<T>",
@@ -390,7 +390,7 @@ Unexpected number of calls
         },
         TestGroupResult {
           "name": "consumer5",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "obtains value from Provider<T>",
@@ -413,7 +413,7 @@ Unexpected number of calls
         },
         TestGroupResult {
           "name": "consumer6",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "obtains value from Provider<T>",
@@ -439,10 +439,10 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Use builder property, not child",
@@ -453,7 +453,7 @@ Unexpected number of calls
         },
         TestGroupResult {
           "name": "ChangeNotifierProvider",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "value",
@@ -515,10 +515,10 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "ChangeNotifierProvider",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "default",
@@ -535,7 +535,7 @@ Unexpected number of calls
         },
         TestGroupResult {
           "name": "ListenableProvider",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "default",
@@ -552,7 +552,7 @@ Unexpected number of calls
         },
         TestGroupResult {
           "name": "Provider",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "default",
@@ -569,7 +569,7 @@ Unexpected number of calls
         },
         TestGroupResult {
           "name": "ProxyProvider",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "0",
@@ -616,7 +616,7 @@ Unexpected number of calls
         },
         TestGroupResult {
           "name": "MultiProvider",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "with 1 ChangeNotifierProvider default",
@@ -690,10 +690,10 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "MultiProvider",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "throw if providers is null",
@@ -719,10 +719,10 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "works with MultiProvider",
@@ -763,7 +763,7 @@ Unexpected number of calls
         },
         TestGroupResult {
           "name": "StreamProvider()",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "create and dispose stream with builder",
@@ -783,10 +783,10 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "watch in layoutbuilder",
@@ -827,7 +827,7 @@ Unexpected number of calls
         },
         TestGroupResult {
           "name": "BuildContext",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "internal selected value is updated",
@@ -985,10 +985,10 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "ReassembleHandler",
@@ -1014,10 +1014,10 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "works with MultiProvider",
@@ -1076,7 +1076,7 @@ Unexpected number of calls
         },
         TestGroupResult {
           "name": "FutureProvider()",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "crashes if builder is null",
@@ -1090,10 +1090,10 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "works with MultiProvider",
@@ -1104,7 +1104,7 @@ Unexpected number of calls
         },
         TestGroupResult {
           "name": "Provider.of",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "throws if T is dynamic",
@@ -1139,7 +1139,7 @@ Unexpected number of calls
         },
         TestGroupResult {
           "name": "Provider",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "throws if the provided value is a Listenable/Stream",
@@ -1177,10 +1177,10 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "regression test #377",
@@ -1371,7 +1371,7 @@ Unexpected number of calls
         },
         TestGroupResult {
           "name": "diagnostics",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "InheritedProvider.value",
@@ -1406,7 +1406,7 @@ Unexpected number of calls
         },
         TestGroupResult {
           "name": "InheritedProvider.value()",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "markNeedsNotifyDependents during startListening is noop",
@@ -1459,7 +1459,7 @@ Unexpected number of calls
         },
         TestGroupResult {
           "name": "InheritedProvider()",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "hasValue",
@@ -1614,7 +1614,7 @@ Unexpected number of calls
         },
         TestGroupResult {
           "name": "DeferredInheritedProvider.value()",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "hasValue",
@@ -1667,7 +1667,7 @@ Unexpected number of calls
         },
         TestGroupResult {
           "name": "DeferredInheritedProvider()",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "create can't call inherited widgets",
@@ -1699,10 +1699,10 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "ListenableProxyProvider",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "throws if update is missing",
@@ -1743,7 +1743,7 @@ Unexpected number of calls
         },
         TestGroupResult {
           "name": "ListenableProxyProvider variants",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "ListenableProxyProvider",
@@ -1787,10 +1787,10 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "asserts that builder/selector are not null",
@@ -1900,10 +1900,10 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "asserts",
@@ -1935,10 +1935,10 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "ProxyProvider",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "throws if the provided value is a Listenable/Stream",
@@ -2009,7 +2009,7 @@ Unexpected number of calls
         },
         TestGroupResult {
           "name": "ProxyProvider variants",
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "ProxyProvider2",
