@@ -1,5 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`jest-junit tests report from #235 testing react components named <ComponentName /> 1`] = `
+TestRunResult {
+  "path": "fixtures/external/jest/jest-react-component-test-results.xml",
+  "suites": [
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "<Component /> should render properly",
+              "result": "success",
+              "time": 704,
+            },
+          ],
+        },
+      ],
+      "name": "\\<Component /\\>",
+      "totalTime": 798,
+    },
+  ],
+  "totalTime": 1000,
+}
+`;
+
 exports[`jest-junit tests report from ./reports/jest test results matches snapshot 1`] = `
 TestRunResult {
   "path": "fixtures/jest-junit.xml",

@@ -1212,7 +1212,7 @@ class JestJunitParser {
         const suites = junit.testsuites.testsuite === undefined
             ? []
             : junit.testsuites.testsuite.map(ts => {
-                const name = ts.$.name.trim();
+                const name = this.escapeCharacters(ts.$.name.trim());
                 const time = parseFloat(ts.$.time) * 1000;
                 const sr = new test_results_1.TestSuiteResult(name, this.getGroups(ts), time);
                 return sr;
@@ -1280,6 +1280,9 @@ class JestJunitParser {
     getWorkDir(path) {
         var _a, _b;
         return ((_b = (_a = this.options.workDir) !== null && _a !== void 0 ? _a : this.assumedWorkDir) !== null && _b !== void 0 ? _b : (this.assumedWorkDir = (0, path_utils_1.getBasePath)(path, this.options.trackedFiles)));
+    }
+    escapeCharacters(s) {
+        return s.replace(/([<>])/g, '\\$1');
     }
 }
 exports.JestJunitParser = JestJunitParser;
