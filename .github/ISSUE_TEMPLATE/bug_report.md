@@ -3,8 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 title: ''
 labels: 'bug'
-assignees: 'dorny,j-catania'
-
+assignees: 'dorny,jozefizso,DominikPalo,dharmendrasha,j-catania'
 ---
 
 ## Describe the bug
