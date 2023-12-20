@@ -1,8 +1,7 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import {GitHub} from '@actions/github/lib/utils'
-import { OctokitResponse } from '@octokit/types'
-import { RestEndpointMethodTypes } from "@octokit/plugin-rest-endpoint-methods";
+import {RestEndpointMethodTypes} from '@octokit/plugin-rest-endpoint-methods'
 
 import {ArtifactProvider} from './input-providers/artifact-provider'
 import {LocalFileProvider} from './input-providers/local-file-provider'
@@ -10,6 +9,7 @@ import {FileContent} from './input-providers/input-provider'
 import {ParseOptions, TestParser} from './test-parser'
 import {TestRunResult} from './test-results'
 import {getAnnotations, Annotation} from './report/get-annotations'
+import {UpdateChecksParametersWithOutput} from './report/patch-check'
 import {getReport} from './report/get-report'
 
 import {DartJsonParser} from './parsers/dart-json/dart-json-parser'
@@ -231,10 +231,10 @@ class TestReporter {
 
   private handleAnnotations = async (
     annotations: Annotation[],
-    requestParams: RestEndpointMethodTypes['checks']['update']['parameters']
-  ): Promise<Annotation[]> => {
+    requestParams: UpdateChecksParametersWithOutput
+  ): Promise<RestEndpointMethodTypes['checks']['update']['response']> => {
     const leftAnnotations = [...annotations]
-    let response: Promise<RestEndpointMethodTypes['checks']['update']['response']>
+    let response: RestEndpointMethodTypes['checks']['update']['response']
     while (leftAnnotations.length > 0) {
       const toProcess = leftAnnotations.splice(0, 50)
       const status = leftAnnotations.length > 0 ? 'in_progress' : 'completed'
@@ -245,7 +245,7 @@ class TestReporter {
 
   private updateAnnotation = async (
     annotations: Annotation[],
-    requestParams: RestEndpointMethodTypes['checks']['update']['parameters']
+    requestParams: UpdateChecksParametersWithOutput
   ): Promise<RestEndpointMethodTypes['checks']['update']['response']> => {
     return await this.octokit.rest.checks.update({
       ...requestParams,
@@ -253,5 +253,4 @@ class TestReporter {
     })
   }
 }
-
 main()
