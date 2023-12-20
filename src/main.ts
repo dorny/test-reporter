@@ -235,11 +235,11 @@ class TestReporter {
   ): Promise<RestEndpointMethodTypes['checks']['update']['response']> => {
     const leftAnnotations = [...annotations]
     let response: RestEndpointMethodTypes['checks']['update']['response']
-    while (leftAnnotations.length > 0) {
+    do {
       const toProcess = leftAnnotations.splice(0, 50)
       const status = leftAnnotations.length > 0 ? 'in_progress' : 'completed'
       response = await this.updateAnnotation(toProcess, {...requestParams, status})
-    }
+    } while (leftAnnotations.length > 0)
     return response
   }
 
