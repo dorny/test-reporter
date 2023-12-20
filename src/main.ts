@@ -1,13 +1,15 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import {GitHub} from '@actions/github/lib/utils'
+import { OctokitResponse } from '@octokit/types'
+import { RestEndpointMethodTypes } from "@octokit/plugin-rest-endpoint-methods";
 
 import {ArtifactProvider} from './input-providers/artifact-provider'
 import {LocalFileProvider} from './input-providers/local-file-provider'
 import {FileContent} from './input-providers/input-provider'
 import {ParseOptions, TestParser} from './test-parser'
 import {TestRunResult} from './test-results'
-import {getAnnotations} from './report/get-annotations'
+import {getAnnotations, Annotation} from './report/get-annotations'
 import {getReport} from './report/get-report'
 
 import {DartJsonParser} from './parsers/dart-json/dart-json-parser'
@@ -31,6 +33,7 @@ async function main(): Promise<void> {
 }
 
 class TestReporter {
+  readonly maxAnnotationsPerBatch = 50
   readonly artifact = core.getInput('artifact', {required: false})
   readonly name = core.getInput('name', {required: true})
   readonly path = core.getInput('path', {required: true})
@@ -60,7 +63,7 @@ class TestReporter {
       return
     }
 
-    if (isNaN(this.maxAnnotations) || this.maxAnnotations < 0 || this.maxAnnotations > 50) {
+    if (isNaN(this.maxAnnotations) || this.maxAnnotations > 50) {
       core.setFailed(`Input parameter 'max-annotations' has invalid value`)
       return
     }
@@ -185,7 +188,7 @@ class TestReporter {
     const icon = isFailed ? Icon.fail : Icon.success
 
     core.info(`Updating check run conclusion (${conclusion}) and output`)
-    const resp = await this.octokit.rest.checks.update({
+    const resp = await this.handleAnnotations(annotations, {
       check_run_id: createResp.data.id,
       conclusion,
       status: 'completed',
@@ -224,6 +227,30 @@ class TestReporter {
       default:
         throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`)
     }
+  }
+
+  private handleAnnotations = async (
+    annotations: Annotation[],
+    requestParams: RestEndpointMethodTypes['checks']['update']['parameters']
+  ): Promise<Annotation[]> => {
+    const leftAnnotations = [...annotations]
+    let response: Promise<RestEndpointMethodTypes['checks']['update']['response']>
+    while (leftAnnotations.length > 0) {
+      const toProcess = leftAnnotations.splice(0, 50)
+      const status = leftAnnotations.length > 0 ? 'in_progress' : 'completed'
+      response = await this.updateAnnotation(toProcess, {...requestParams, status})
+    }
+    return response
+  }
+
+  private updateAnnotation = async (
+    annotations: Annotation[],
+    requestParams: RestEndpointMethodTypes['checks']['update']['parameters']
+  ): Promise<RestEndpointMethodTypes['checks']['update']['response']> => {
+    return await this.octokit.rest.checks.update({
+      ...requestParams,
+      output: {...requestParams.output, annotations}
+    })
   }
 }
 
