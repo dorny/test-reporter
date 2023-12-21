@@ -2,7 +2,7 @@ import {ellipsis, fixEol} from '../utils/markdown-utils'
 import {TestRunResult} from '../test-results'
 import {getFirstNonEmptyLine} from '../utils/parse-utils'
 
-type Annotation = {
+export type Annotation = {
   path: string
   start_line: number
   end_line: number

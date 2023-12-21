@@ -284,6 +284,7 @@ function main() {
 }
 class TestReporter {
     constructor() {
+        this.maxAnnotationsPerBatch = 50;
         this.artifact = core.getInput('artifact', { required: false });
         this.name = core.getInput('name', { required: true });
         this.path = core.getInput('path', { required: true });
@@ -298,6 +299,19 @@ class TestReporter {
         this.showHTMLNotice = core.getInput('show-html-notice', { required: false }) === 'true';
         this.token = core.getInput('token', { required: true });
         this.context = (0, github_utils_1.getCheckRunContext)();
+        this.handleAnnotations = (annotations, requestParams) => __awaiter(this, void 0, void 0, function* () {
+            const leftAnnotations = [...annotations];
+            let response;
+            do {
+                const toProcess = leftAnnotations.splice(0, 50);
+                const status = leftAnnotations.length > 0 ? 'in_progress' : 'completed';
+                response = yield this.updateAnnotation(toProcess, Object.assign(Object.assign({}, requestParams), { status }));
+            } while (leftAnnotations.length > 0);
+            return response;
+        });
+        this.updateAnnotation = (annotations, requestParams) => __awaiter(this, void 0, void 0, function* () {
+            return yield this.octokit.rest.checks.update(Object.assign(Object.assign({}, requestParams), { output: Object.assign(Object.assign({}, requestParams.output), { annotations }) }));
+        });
         this.octokit = github.getOctokit(this.token);
         if (this.listSuites !== 'all' && this.listSuites !== 'failed') {
             core.setFailed(`Input parameter 'list-suites' has invalid value`);
@@ -307,7 +321,7 @@ class TestReporter {
             core.setFailed(`Input parameter 'list-tests' has invalid value`);
             return;
         }
-        if (isNaN(this.maxAnnotations) || this.maxAnnotations < 0 || this.maxAnnotations > 50) {
+        if (isNaN(this.maxAnnotations) || this.maxAnnotations > 50) {
             core.setFailed(`Input parameter 'max-annotations' has invalid value`);
             return;
         }
@@ -410,7 +424,7 @@ class TestReporter {
             const conclusion = isFailed ? 'failure' : 'success';
             const icon = isFailed ? markdown_utils_1.Icon.fail : markdown_utils_1.Icon.success;
             core.info(`Updating check run conclusion (${conclusion}) and output`);
-            const resp = yield this.octokit.rest.checks.update(Object.assign({ check_run_id: createResp.data.id, conclusion, status: 'completed', output: {
+            const resp = yield this.handleAnnotations(annotations, Object.assign({ check_run_id: createResp.data.id, conclusion, status: 'completed', output: {
                     title: `${name} ${icon}`,
                     summary,
                     annotations
