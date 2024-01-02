@@ -32,6 +32,7 @@ inputs:
         - jest-junit
         - mocha-json
         - swift-xunit
+        - lcov
     required: true
   list-suites:
     description: |
