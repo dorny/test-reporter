@@ -4,6 +4,7 @@ import {TestCaseResult, TestGroupResult, TestRunResult, TestSuiteResult} from '.
 import {CovParsedStat, CovStats, LcovReport} from './lcov-types'
 
 export class LcovParser implements TestParser {
+  constructor(readonly options: ParseOptions) {}
   async parse(path: string, content: string): Promise<TestRunResult> {
     const report = this.parseFile(path, content)
     return this.getTestRunResult(path, report)
