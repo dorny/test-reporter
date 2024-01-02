@@ -14,7 +14,7 @@ describe('lcov report coverage', () => {
     const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
 
 
-    const parser = new LcovParser()
+    const parser = new LcovParser({parseErrors: true, trackedFiles: []})
     const result = await parser.parse(filePath, fileContent)
     expect(result).toMatchSnapshot()
 
