@@ -1,0 +1,140 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`lcov report coverage report from facebook/jest test results matches snapshot 1`] = `
+TestRunResult {
+  "path": "fixtures/lcov.json",
+  "suites": Array [
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": "src/core/dao.service.ts",
+          "tests": Array [
+            Object {
+              "name": "statement",
+              "result": "success",
+              "time": 0,
+            },
+            Object {
+              "name": "fonction",
+              "result": "success",
+              "time": 0,
+            },
+            Object {
+              "name": "branche",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "src/core/dao.service.ts",
+      "totalTime": undefined,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": "src/domains/auth/auth.controller.ts",
+          "tests": Array [
+            Object {
+              "name": "statement",
+              "result": "success",
+              "time": 0,
+            },
+            Object {
+              "name": "fonction",
+              "result": "failed",
+              "time": 0,
+            },
+            Object {
+              "name": "branche",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "src/domains/auth/auth.controller.ts",
+      "totalTime": undefined,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": "src/shared/notif/providers/fcm/fcm.service.spec.ts",
+          "tests": Array [
+            Object {
+              "name": "statement",
+              "result": "failed",
+              "time": 0,
+            },
+            Object {
+              "name": "fonction",
+              "result": "failed",
+              "time": 0,
+            },
+            Object {
+              "name": "branche",
+              "result": "failed",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "src/shared/notif/providers/fcm/fcm.service.spec.ts",
+      "totalTime": undefined,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": "src/shared/notif/providers/fcm/fcm.service.ts",
+          "tests": Array [
+            Object {
+              "name": "statement",
+              "result": "failed",
+              "time": 0,
+            },
+            Object {
+              "name": "fonction",
+              "result": "failed",
+              "time": 0,
+            },
+            Object {
+              "name": "branche",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "src/shared/notif/providers/fcm/fcm.service.ts",
+      "totalTime": undefined,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": "src/shared/notif/providers/mail/mail-service.ts",
+          "tests": Array [
+            Object {
+              "name": "statement",
+              "result": "failed",
+              "time": 0,
+            },
+            Object {
+              "name": "fonction",
+              "result": "failed",
+              "time": 0,
+            },
+            Object {
+              "name": "branche",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "src/shared/notif/providers/mail/mail-service.ts",
+      "totalTime": undefined,
+    },
+  ],
+  "totalTime": undefined,
+}
+`;
