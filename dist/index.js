@@ -268,7 +268,6 @@ const mocha_json_parser_1 = __nccwpck_require__(6043);
 const swift_xunit_parser_1 = __nccwpck_require__(5366);
 const path_utils_1 = __nccwpck_require__(4070);
 const github_utils_1 = __nccwpck_require__(3522);
-const markdown_utils_1 = __nccwpck_require__(6482);
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -403,10 +402,13 @@ class TestReporter {
             const annotations = (0, get_annotations_1.getAnnotations)(results, this.maxAnnotations);
             const isFailed = this.failOnError && results.some(tr => tr.result === 'failed');
             const conclusion = isFailed ? 'failure' : 'success';
-            const icon = isFailed ? markdown_utils_1.Icon.fail : markdown_utils_1.Icon.success;
+            const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
+            const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
+            const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
+            const shortSummary = `${passed} passed, ${failed} failed and ${skipped} skipped `;
             core.info(`Updating check run conclusion (${conclusion}) and output`);
             const resp = yield this.octokit.rest.checks.update(Object.assign({ check_run_id: createResp.data.id, conclusion, status: 'completed', output: {
-                    title: `${name} ${icon}`,
+                    title: shortSummary,
                     summary,
                     annotations
                 } }, github.context.repo));
