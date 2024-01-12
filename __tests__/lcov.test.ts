@@ -3,16 +3,14 @@ import * as path from 'path'
 
 import {getReport} from '../src/report/get-report'
 import {normalizeFilePath} from '../src/utils/path-utils'
-import { LcovParser } from "../src/parsers/lcov/lcov-parser";
+import {LcovParser} from '../src/parsers/lcov/lcov-parser'
 
 describe('lcov report coverage', () => {
-
   it('report from facebook/jest test results matches snapshot', async () => {
     const fixturePath = path.join(__dirname, 'fixtures', 'lcov.info')
     const outputPath = path.join(__dirname, '__outputs__', 'lcov-report-results.md')
     const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
     const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
-
 
     const parser = new LcovParser({parseErrors: true, trackedFiles: []})
     const result = await parser.parse(filePath, fileContent)

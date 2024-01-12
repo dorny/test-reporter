@@ -2,136 +2,58 @@
 
 exports[`lcov report coverage report from facebook/jest test results matches snapshot 1`] = `
 TestRunResult {
-  "path": "fixtures/lcov.json",
+  "path": "fixtures/lcov.info",
   "suites": Array [
     TestSuiteResult {
       "groups": Array [
         TestGroupResult {
-          "name": "src/core/dao.service.ts",
+          "name": "src/services/notifier/NotifierService.js",
           "tests": Array [
             Object {
-              "name": "statement",
+              "name": "lines 100% (21/21)",
               "result": "success",
               "time": 0,
             },
             Object {
-              "name": "fonction",
+              "name": "functions 100% (10/10)",
               "result": "success",
               "time": 0,
             },
             Object {
-              "name": "branche",
-              "result": "success",
+              "name": "branches 50% (3/6)",
+              "result": "failed",
               "time": 0,
             },
           ],
         },
       ],
-      "name": "src/core/dao.service.ts",
+      "name": "src/services/notifier/NotifierService.js",
       "totalTime": undefined,
     },
     TestSuiteResult {
       "groups": Array [
         TestGroupResult {
-          "name": "src/domains/auth/auth.controller.ts",
+          "name": "src/services/notifier/providers/DiscordNotifierProvider.js",
           "tests": Array [
             Object {
-              "name": "statement",
+              "name": "lines 100% (17/17)",
               "result": "success",
               "time": 0,
             },
             Object {
-              "name": "fonction",
-              "result": "failed",
-              "time": 0,
-            },
-            Object {
-              "name": "branche",
+              "name": "functions 100% (3/3)",
               "result": "success",
               "time": 0,
             },
-          ],
-        },
-      ],
-      "name": "src/domains/auth/auth.controller.ts",
-      "totalTime": undefined,
-    },
-    TestSuiteResult {
-      "groups": Array [
-        TestGroupResult {
-          "name": "src/shared/notif/providers/fcm/fcm.service.spec.ts",
-          "tests": Array [
             Object {
-              "name": "statement",
-              "result": "failed",
-              "time": 0,
-            },
-            Object {
-              "name": "fonction",
-              "result": "failed",
-              "time": 0,
-            },
-            Object {
-              "name": "branche",
+              "name": "branches 75% (3/4)",
               "result": "failed",
               "time": 0,
             },
           ],
         },
       ],
-      "name": "src/shared/notif/providers/fcm/fcm.service.spec.ts",
-      "totalTime": undefined,
-    },
-    TestSuiteResult {
-      "groups": Array [
-        TestGroupResult {
-          "name": "src/shared/notif/providers/fcm/fcm.service.ts",
-          "tests": Array [
-            Object {
-              "name": "statement",
-              "result": "failed",
-              "time": 0,
-            },
-            Object {
-              "name": "fonction",
-              "result": "failed",
-              "time": 0,
-            },
-            Object {
-              "name": "branche",
-              "result": "success",
-              "time": 0,
-            },
-          ],
-        },
-      ],
-      "name": "src/shared/notif/providers/fcm/fcm.service.ts",
-      "totalTime": undefined,
-    },
-    TestSuiteResult {
-      "groups": Array [
-        TestGroupResult {
-          "name": "src/shared/notif/providers/mail/mail-service.ts",
-          "tests": Array [
-            Object {
-              "name": "statement",
-              "result": "failed",
-              "time": 0,
-            },
-            Object {
-              "name": "fonction",
-              "result": "failed",
-              "time": 0,
-            },
-            Object {
-              "name": "branche",
-              "result": "success",
-              "time": 0,
-            },
-          ],
-        },
-      ],
-      "name": "src/shared/notif/providers/mail/mail-service.ts",
+      "name": "src/services/notifier/providers/DiscordNotifierProvider.js",
       "totalTime": undefined,
     },
   ],
