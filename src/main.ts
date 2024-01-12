@@ -20,7 +20,7 @@ import {SwiftXunitParser} from './parsers/swift-xunit/swift-xunit-parser'
 import {normalizeDirPath, normalizeFilePath} from './utils/path-utils'
 import {getCheckRunContext} from './utils/github-utils'
 import {Icon} from './utils/markdown-utils'
-import {LcovParser} from './parsers/lcov-json/lcov-parser'
+import {LcovParser} from './parsers/lcov/lcov-parser'
 
 async function main(): Promise<void> {
   try {
