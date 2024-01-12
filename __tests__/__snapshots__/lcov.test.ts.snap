@@ -3,23 +3,23 @@
 exports[`lcov report coverage report from facebook/jest test results matches snapshot 1`] = `
 TestRunResult {
   "path": "fixtures/lcov.info",
-  "suites": Array [
+  "suites": [
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "src/services/notifier/NotifierService.js",
-          "tests": Array [
-            Object {
+          "tests": [
+            {
               "name": "lines 100% (21/21)",
               "result": "success",
               "time": 0,
             },
-            Object {
+            {
               "name": "functions 100% (10/10)",
               "result": "success",
               "time": 0,
             },
-            Object {
+            {
               "name": "branches 50% (3/6)",
               "result": "failed",
               "time": 0,
@@ -31,21 +31,21 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": "src/services/notifier/providers/DiscordNotifierProvider.js",
-          "tests": Array [
-            Object {
+          "tests": [
+            {
               "name": "lines 100% (17/17)",
               "result": "success",
               "time": 0,
             },
-            Object {
+            {
               "name": "functions 100% (3/3)",
               "result": "success",
               "time": 0,
             },
-            Object {
+            {
               "name": "branches 75% (3/4)",
               "result": "failed",
               "time": 0,
