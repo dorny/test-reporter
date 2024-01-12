@@ -11,9 +11,8 @@ export class LcovParser implements TestParser {
     return this.getTestRunResult(path, report)
   }
 
-  private parseFile(path: string, content: string): Promise<LcovFile[]> {
+  private async parseFile(path: string, content: string): Promise<LcovFile[]> {
     try {
-
       return parseProm(content)
       //return JSON.parse(content) as LcovReport
     } catch (e) {
@@ -23,7 +22,7 @@ export class LcovParser implements TestParser {
   private async getTestRunResult(path: string, report: LcovFile[]): Promise<TestRunResult> {
     const suites: TestSuiteResult[] = []
 
-    for (let reportElement of report) {
+    for (const reportElement of report) {
       const fileName = reportElement.file
 
       const statementCaseResult: TestCaseResult = {
@@ -42,7 +41,6 @@ export class LcovParser implements TestParser {
         result: this.getPercentage(reportElement.branches) >= 80 ? 'success' : 'failed'
       }
 
-
       const testCases: TestCaseResult[] = [statementCaseResult, fonctionCaseResult, brancheCaseResult]
       const groups: TestGroupResult[] = [new TestGroupResult(fileName, testCases)]
       const suite: TestSuiteResult = new TestSuiteResult(fileName, groups)
@@ -53,10 +51,9 @@ export class LcovParser implements TestParser {
   }
 
   private getPercentage(stat: LcovPart<LcovLine | LcovFunc | LcovBranch>): number {
-    return stat ? stat.hit/ stat.found * 100 : 100;
+    return stat ? (stat.hit / stat.found) * 100 : 100
   }
   private getPartInfo(stat: LcovPart<LcovLine | LcovFunc | LcovBranch>): string {
-    return `${this.getPercentage(stat)}% (${stat.hit}/${stat.found})`;
+    return `${this.getPercentage(stat)}% (${stat.hit}/${stat.found})`
   }
-
 }
