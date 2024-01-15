@@ -18,7 +18,7 @@ jobs:
 
     strategy:
       matrix:
-        reporter: [ jest-junit, mocha-json, swift-xunit, dart-json, dotnet-trx, java-junit ]
+        reporter: [ jest-junit, mocha-json, swift-xunit, dart-json, dotnet-trx, java-junit, flutter-json ]
         include:
           - reporter: jest-junit
             path: ./__tests__/fixtures/jest-junit.xml
@@ -32,6 +32,8 @@ jobs:
             path: ./__tests__/fixtures/dotnet-trx.trx
           - reporter: java-junit
             path: ./__tests__/fixtures/external/java/pulsar-test-report.xml
+          - reporter: flutter-json
+            path: ./__tests__/fixtures/external/flutter/provider-test-results.json
 
     steps:
     - uses: actions/checkout@v4
