@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-
+    - run : ls -all ./__tests__/fixtures/
     - uses: ./
       with:
         artifact: ${{ matrix.reporter }}
