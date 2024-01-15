@@ -36,7 +36,7 @@ jobs:
     - run : ls -all ./__tests__/fixtures/
     - uses: ./
       with:
-        name: ${{ matrix.reporter }}
+        name: ${{ matrix.reporter }} report
         path: ${{ matrix.path }}
         reporter: ${{ matrix.reporter }}
         fail-on-error: false
