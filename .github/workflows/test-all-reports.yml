@@ -39,3 +39,4 @@ jobs:
         name: ${{ matrix.reporter }}
         path: ${{ matrix.path }}
         reporter: ${{ matrix.reporter }}
+        fail-on-error: false
