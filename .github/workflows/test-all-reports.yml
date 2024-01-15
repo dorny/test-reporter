@@ -31,7 +31,7 @@ jobs:
           - reporter: dotnet-trx
             path: ./__tests__/fixtures/dotnet-trx.trx
           - reporter: java-junit
-            path: ./__tests__/fixtures/external/pulsar-test-report.xml
+            path: ./__tests__/fixtures/external/java/pulsar-test-report.xml
 
     steps:
     - uses: actions/checkout@v4
