@@ -4,7 +4,6 @@
   "private": true,
   "description": "Presents test results from popular testing frameworks as Github check run",
   "main": "lib/main.js",
-  "type": "module",
   "scripts": {
     "build": "tsc",
     "format": "prettier --write **/*.ts",

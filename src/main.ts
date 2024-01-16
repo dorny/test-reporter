@@ -2,7 +2,6 @@ import * as core from '@actions/core'
 import * as github from '@actions/github'
 import {GitHub} from '@actions/github/lib/utils.js'
 
-import {ArtifactProvider} from './input-providers/artifact-provider.js'
 import {LocalFileProvider} from './input-providers/local-file-provider.js'
 import {FileContent} from './input-providers/input-provider.js'
 import {ParseOptions, TestParser} from './test-parser.js'
@@ -10,19 +9,14 @@ import {TestRunResult} from './test-results.js'
 import {getAnnotations} from './report/get-annotations.js'
 import {getReport} from './report/get-report.js'
 
-import {DartJsonParser} from './parsers/dart-json/dart-json-parser.js'
 import {DotnetTrxParser} from './parsers/dotnet-trx/dotnet-trx-parser.js'
-import {JavaJunitParser} from './parsers/java-junit/java-junit-parser.js'
-import {JestJunitParser} from './parsers/jest-junit/jest-junit-parser.js'
-import {MochaJsonParser} from './parsers/mocha-json/mocha-json-parser.js'
-import {SwiftXunitParser} from './parsers/swift-xunit/swift-xunit-parser.js'
 
 import {normalizeDirPath, normalizeFilePath} from './utils/path-utils.js'
 import {getCheckRunContext} from './utils/github-utils.js'
 import {IncomingWebhook} from '@slack/webhook'
 import fs from 'fs'
 import bent from 'bent'
-import { cwd } from 'process';
+import {cwd} from 'process'
 
 async function main(): Promise<void> {
   try {
@@ -86,17 +80,7 @@ class TestReporter {
     const pathsList = this.path.split(',')
     const pattern = this.pathReplaceBackslashes ? pathsList.map(normalizeFilePath) : pathsList
 
-    const inputProvider = this.artifact
-      ? new ArtifactProvider(
-          this.octokit,
-          this.artifact,
-          this.name,
-          pattern,
-          this.context.sha,
-          this.context.runId,
-          this.token
-        )
-      : new LocalFileProvider(this.name, pattern)
+    const inputProvider = new LocalFileProvider(this.name, pattern)
 
     const parseErrors = this.maxAnnotations > 0
     const trackedFiles = parseErrors ? await inputProvider.listTrackedFiles() : []
@@ -116,7 +100,6 @@ class TestReporter {
     const results: TestRunResult[] = []
     const input = await inputProvider.load()
 
-
     try {
       const readStream = input.trxZip.toBuffer()
       const version = fs.existsSync('test/EVA.TestSuite.Core/bin/Release/version.txt')
@@ -126,7 +109,9 @@ class TestReporter {
         ? fs.readFileSync('test/EVA.TestSuite.Core/bin/Release/commit.txt').toString()
         : null
 
-      core.info(`Using EVA version ${version}, commit ${commitID}, branch ${this.context.branch}, current directory: ${cwd()}`)
+      core.info(
+        `Using EVA version ${version}, commit ${commitID}, branch ${this.context.branch}, current directory: ${cwd()}`
+      )
 
       const post = bent(this.resultsEndpoint, 'POST', {}, 200)
       await post(
@@ -278,20 +263,8 @@ class TestReporter {
 
   getParser(reporter: string, options: ParseOptions): TestParser {
     switch (reporter) {
-      case 'dart-json':
-        return new DartJsonParser(options, 'dart')
       case 'dotnet-trx':
         return new DotnetTrxParser(options)
-      case 'flutter-json':
-        return new DartJsonParser(options, 'flutter')
-      case 'java-junit':
-        return new JavaJunitParser(options)
-      case 'jest-junit':
-        return new JestJunitParser(options)
-      case 'mocha-json':
-        return new MochaJsonParser(options)
-      case 'swift-xunit':
-        return new SwiftXunitParser(options)
       default:
         throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`)
     }

@@ -1,6 +1,7 @@
+import Zip from 'adm-zip'
+
 export interface ReportInput {
-  artifactFilePaths: string[]
-  versionArtifactPath?: string
+  trxZip: Zip
   reports: {
     [reportName: string]: FileContent[]
   }

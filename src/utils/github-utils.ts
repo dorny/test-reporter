@@ -28,7 +28,7 @@ export function getCheckRunContext(): {sha: string; runId: number; branch: strin
   const runId = github.context.runId
   if (github.context.payload.pull_request) {
     core.info(`Action was triggered by ${github.context.eventName}: using SHA from head of source branch`)
-    const pr = github.context.payload.pull_request;
+    const pr = github.context.payload.pull_request
     return {sha: pr.head.sha, runId, branch}
   }
 
