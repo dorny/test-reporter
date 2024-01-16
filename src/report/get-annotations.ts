@@ -1,6 +1,6 @@
-import {ellipsis, fixEol} from '../utils/markdown-utils.js'
-import {TestRunResult} from '../test-results.js'
-import {getFirstNonEmptyLine} from '../utils/parse-utils.js'
+import {ellipsis, fixEol} from '../utils/markdown-utils'
+import {TestRunResult} from '../test-results'
+import {getFirstNonEmptyLine} from '../utils/parse-utils'
 
 type Annotation = {
   path: string

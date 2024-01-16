@@ -1,5 +1,5 @@
-import {ParseOptions} from '../../test-parser.js'
-import {JavaJunitParser} from '../java-junit/java-junit-parser.js'
+import {ParseOptions} from '../../test-parser'
+import {JavaJunitParser} from '../java-junit/java-junit-parser'
 
 export class SwiftXunitParser extends JavaJunitParser {
   constructor(readonly options: ParseOptions) {

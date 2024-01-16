@@ -1,6 +1,6 @@
-import {ParseOptions, TestParser} from '../../test-parser.js'
+import {ParseOptions, TestParser} from '../../test-parser'
 
-import {getBasePath, normalizeFilePath} from '../../utils/path-utils.js'
+import {getBasePath, normalizeFilePath} from '../../utils/path-utils'
 
 import {
   ReportEvent,
@@ -17,7 +17,7 @@ import {
   isDoneEvent,
   isMessageEvent,
   MessageEvent
-} from './dart-json-types.js'
+} from './dart-json-types'
 
 import {
   TestExecutionResult,
@@ -26,7 +26,7 @@ import {
   TestGroupResult,
   TestCaseResult,
   TestCaseError
-} from '../../test-results.js'
+} from '../../test-results'
 
 class TestRun {
   constructor(

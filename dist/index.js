@@ -45,7 +45,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.LocalFileProvider = void 0;
 const fs = __importStar(__nccwpck_require__(7147));
 const fast_glob_1 = __importDefault(__nccwpck_require__(3664));
-const git_js_1 = __nccwpck_require__(9844);
+const git_1 = __nccwpck_require__(9844);
 const adm_zip_1 = __importDefault(__nccwpck_require__(6761));
 const path_1 = __importDefault(__nccwpck_require__(1017));
 class LocalFileProvider {
@@ -76,7 +76,7 @@ class LocalFileProvider {
     }
     listTrackedFiles() {
         return __awaiter(this, void 0, void 0, function* () {
-            return (0, git_js_1.listFiles)();
+            return (0, git_1.listFiles)();
         });
     }
 }
@@ -128,12 +128,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
-const local_file_provider_js_1 = __nccwpck_require__(9399);
-const get_annotations_js_1 = __nccwpck_require__(5867);
-const get_report_js_1 = __nccwpck_require__(3737);
-const dotnet_trx_parser_js_1 = __nccwpck_require__(2664);
-const path_utils_js_1 = __nccwpck_require__(4070);
-const github_utils_js_1 = __nccwpck_require__(3522);
+const local_file_provider_1 = __nccwpck_require__(9399);
+const get_annotations_1 = __nccwpck_require__(5867);
+const get_report_1 = __nccwpck_require__(3737);
+const dotnet_trx_parser_1 = __nccwpck_require__(2664);
+const path_utils_1 = __nccwpck_require__(4070);
+const github_utils_1 = __nccwpck_require__(3522);
 const webhook_1 = __nccwpck_require__(1095);
 const fs_1 = __importDefault(__nccwpck_require__(7147));
 const bent_1 = __importDefault(__nccwpck_require__(3113));
@@ -170,7 +170,7 @@ class TestReporter {
         this.slackWebhook = core.getInput('slack-url', { required: false });
         this.resultsEndpoint = core.getInput('test-results-endpoint', { required: false });
         this.resultsEndpointSecret = core.getInput('test-results-endpoint-secret', { required: false });
-        this.context = (0, github_utils_js_1.getCheckRunContext)();
+        this.context = (0, github_utils_1.getCheckRunContext)();
         this.octokit = github.getOctokit(this.token);
         if (this.listSuites !== 'all' && this.listSuites !== 'failed') {
             core.setFailed(`Input parameter 'list-suites' has invalid value`);
@@ -195,11 +195,11 @@ class TestReporter {
             // Split path pattern by ',' and optionally convert all backslashes to forward slashes
             // fast-glob (micromatch) always interprets backslashes as escape characters instead of directory separators
             const pathsList = this.path.split(',');
-            const pattern = this.pathReplaceBackslashes ? pathsList.map(path_utils_js_1.normalizeFilePath) : pathsList;
-            const inputProvider = new local_file_provider_js_1.LocalFileProvider(this.name, pattern);
+            const pattern = this.pathReplaceBackslashes ? pathsList.map(path_utils_1.normalizeFilePath) : pathsList;
+            const inputProvider = new local_file_provider_1.LocalFileProvider(this.name, pattern);
             const parseErrors = this.maxAnnotations > 0;
             const trackedFiles = parseErrors ? yield inputProvider.listTrackedFiles() : [];
-            const workDir = this.artifact ? undefined : (0, path_utils_js_1.normalizeDirPath)(process.cwd(), true);
+            const workDir = this.artifact ? undefined : (0, path_utils_1.normalizeDirPath)(process.cwd(), true);
             if (parseErrors)
                 core.info(`Found ${trackedFiles.length} files tracked by GitHub`);
             const options = {
@@ -284,9 +284,9 @@ class TestReporter {
             core.info('Creating report summary');
             const { listSuites, listTests, onlySummary } = this;
             const baseUrl = createResp.data.html_url || '';
-            const summary = (0, get_report_js_1.getReport)(results, { listSuites, listTests, baseUrl, onlySummary });
+            const summary = (0, get_report_1.getReport)(results, { listSuites, listTests, baseUrl, onlySummary });
             core.info('Creating annotations');
-            const annotations = (0, get_annotations_js_1.getAnnotations)(results, this.maxAnnotations);
+            const annotations = (0, get_annotations_1.getAnnotations)(results, this.maxAnnotations);
             const isFailed = this.failOnError && results.some(tr => tr.result === 'failed');
             const conclusion = isFailed ? 'failure' : 'success';
             const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
@@ -341,7 +341,7 @@ class TestReporter {
     getParser(reporter, options) {
         switch (reporter) {
             case 'dotnet-trx':
-                return new dotnet_trx_parser_js_1.DotnetTrxParser(options);
+                return new dotnet_trx_parser_1.DotnetTrxParser(options);
             default:
                 throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`);
         }
@@ -369,9 +369,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.DotnetTrxParser = void 0;
 const xml2js_1 = __nccwpck_require__(6189);
-const path_utils_js_1 = __nccwpck_require__(4070);
-const parse_utils_js_1 = __nccwpck_require__(7811);
-const test_results_js_1 = __nccwpck_require__(2768);
+const path_utils_1 = __nccwpck_require__(4070);
+const parse_utils_1 = __nccwpck_require__(7811);
+const test_results_1 = __nccwpck_require__(2768);
 class TestClass {
     constructor(name) {
         this.name = name;
@@ -443,7 +443,7 @@ class DotnetTrxParser {
             }
             const error = this.getErrorInfo(r.result);
             const durationAttr = r.result.$.duration;
-            const duration = durationAttr ? (0, parse_utils_js_1.parseNetDuration)(durationAttr) : 0;
+            const duration = durationAttr ? (0, parse_utils_1.parseNetDuration)(durationAttr) : 0;
             const resultTestName = r.result.$.testName;
             const testName = resultTestName.startsWith(className) && resultTestName[className.length] === '.'
                 ? resultTestName.substr(className.length + 1)
@@ -456,16 +456,16 @@ class DotnetTrxParser {
     }
     getTestRunResult(path, trx, testClasses) {
         const times = trx.TestRun.Times[0].$;
-        const totalTime = (0, parse_utils_js_1.parseIsoDate)(times.finish).getTime() - (0, parse_utils_js_1.parseIsoDate)(times.start).getTime();
+        const totalTime = (0, parse_utils_1.parseIsoDate)(times.finish).getTime() - (0, parse_utils_1.parseIsoDate)(times.start).getTime();
         const suites = testClasses.map(testClass => {
             const tests = testClass.tests.map(test => {
                 const error = this.getError(test);
-                return new test_results_js_1.TestCaseResult(test.name, test.result, test.duration, error);
+                return new test_results_1.TestCaseResult(test.name, test.result, test.duration, error);
             });
-            const group = new test_results_js_1.TestGroupResult(null, tests);
-            return new test_results_js_1.TestSuiteResult(testClass.name, [group]);
+            const group = new test_results_1.TestGroupResult(null, tests);
+            return new test_results_1.TestSuiteResult(testClass.name, [group]);
         });
-        return new test_results_js_1.TestRunResult(path, suites, totalTime);
+        return new test_results_1.TestRunResult(path, suites, totalTime);
     }
     getErrorInfo(testResult) {
         var _a;
@@ -511,7 +511,7 @@ class DotnetTrxParser {
             const match = str.match(re);
             if (match !== null) {
                 const [_, fileStr, lineStr] = match;
-                const filePath = (0, path_utils_js_1.normalizeFilePath)(fileStr);
+                const filePath = (0, path_utils_1.normalizeFilePath)(fileStr);
                 const workDir = this.getWorkDir(filePath);
                 if (workDir) {
                     const file = filePath.substr(workDir.length);
@@ -525,7 +525,7 @@ class DotnetTrxParser {
     }
     getWorkDir(path) {
         var _a, _b;
-        return ((_b = (_a = this.options.workDir) !== null && _a !== void 0 ? _a : this.assumedWorkDir) !== null && _b !== void 0 ? _b : (this.assumedWorkDir = (0, path_utils_js_1.getBasePath)(path, this.options.trackedFiles)));
+        return ((_b = (_a = this.options.workDir) !== null && _a !== void 0 ? _a : this.assumedWorkDir) !== null && _b !== void 0 ? _b : (this.assumedWorkDir = (0, path_utils_1.getBasePath)(path, this.options.trackedFiles)));
     }
 }
 exports.DotnetTrxParser = DotnetTrxParser;
@@ -540,8 +540,8 @@ exports.DotnetTrxParser = DotnetTrxParser;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getAnnotations = void 0;
-const markdown_utils_js_1 = __nccwpck_require__(6482);
-const parse_utils_js_1 = __nccwpck_require__(7811);
+const markdown_utils_1 = __nccwpck_require__(6482);
+const parse_utils_1 = __nccwpck_require__(7811);
 function getAnnotations(results, maxCount) {
     var _a, _b, _c, _d;
     if (maxCount === 0) {
@@ -573,7 +573,7 @@ function getAnnotations(results, maxCount) {
                         suiteName: ts.name,
                         testName: tg.name ? `${tg.name} ► ${tc.name}` : tc.name,
                         details: err.details,
-                        message: (_d = (_c = err.message) !== null && _c !== void 0 ? _c : (0, parse_utils_js_1.getFirstNonEmptyLine)(err.details)) !== null && _d !== void 0 ? _d : 'Test failed',
+                        message: (_d = (_c = err.message) !== null && _c !== void 0 ? _c : (0, parse_utils_1.getFirstNonEmptyLine)(err.details)) !== null && _d !== void 0 ? _d : 'Test failed',
                         path,
                         line
                     });
@@ -588,7 +588,7 @@ function getAnnotations(results, maxCount) {
             'Failed test found in:',
             e.testRunPaths.map(p => `  ${p}`).join('\n'),
             'Error:',
-            ident((0, markdown_utils_js_1.fixEol)(e.message), '  ')
+            ident((0, markdown_utils_1.fixEol)(e.message), '  ')
         ].join('\n');
         return enforceCheckRunLimits({
             path: e.path,
@@ -596,7 +596,7 @@ function getAnnotations(results, maxCount) {
             end_line: e.line,
             annotation_level: 'failure',
             title: `${e.suiteName} ► ${e.testName}`,
-            raw_details: (0, markdown_utils_js_1.fixEol)(e.details),
+            raw_details: (0, markdown_utils_1.fixEol)(e.details),
             message
         });
     });
@@ -604,10 +604,10 @@ function getAnnotations(results, maxCount) {
 }
 exports.getAnnotations = getAnnotations;
 function enforceCheckRunLimits(err) {
-    err.title = (0, markdown_utils_js_1.ellipsis)(err.title || '', 255);
-    err.message = (0, markdown_utils_js_1.ellipsis)(err.message, 65535);
+    err.title = (0, markdown_utils_1.ellipsis)(err.title || '', 255);
+    err.message = (0, markdown_utils_1.ellipsis)(err.message, 65535);
     if (err.raw_details) {
-        err.raw_details = (0, markdown_utils_js_1.ellipsis)(err.raw_details, 65535);
+        err.raw_details = (0, markdown_utils_1.ellipsis)(err.raw_details, 65535);
     }
     return err;
 }
@@ -652,10 +652,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getReport = void 0;
 const core = __importStar(__nccwpck_require__(2186));
-const node_utils_js_1 = __nccwpck_require__(5824);
-const markdown_utils_js_1 = __nccwpck_require__(6482);
-const parse_utils_js_1 = __nccwpck_require__(7811);
-const slugger_js_1 = __nccwpck_require__(3328);
+const node_utils_1 = __nccwpck_require__(5824);
+const markdown_utils_1 = __nccwpck_require__(6482);
+const parse_utils_1 = __nccwpck_require__(7811);
+const slugger_1 = __nccwpck_require__(3328);
 const MAX_REPORT_LENGTH = 65535;
 const defaultOptions = {
     listSuites: 'all',
@@ -721,9 +721,9 @@ function trimReport(lines) {
     return reportLines.join('\n');
 }
 function applySort(results) {
-    results.sort((a, b) => a.path.localeCompare(b.path, node_utils_js_1.DEFAULT_LOCALE));
+    results.sort((a, b) => a.path.localeCompare(b.path, node_utils_1.DEFAULT_LOCALE));
     for (const res of results) {
-        res.suites.sort((a, b) => a.name.localeCompare(b.name, node_utils_js_1.DEFAULT_LOCALE));
+        res.suites.sort((a, b) => a.name.localeCompare(b.name, node_utils_1.DEFAULT_LOCALE));
     }
 }
 function getByteLength(text) {
@@ -770,17 +770,17 @@ function getTestRunsReport(testRuns, options) {
     const sections = [];
     if (testRuns.length > 1 || options.onlySummary) {
         const tableData = testRuns.map((tr, runIndex) => {
-            const time = (0, markdown_utils_js_1.formatTime)(tr.time);
+            const time = (0, markdown_utils_1.formatTime)(tr.time);
             const folder = tr.path.indexOf('/TestResults/');
             const name = folder > 0 ? tr.path.slice(0, folder) : tr.path;
             const addr = options.baseUrl + makeRunSlug(runIndex).link;
-            const nameLink = (0, markdown_utils_js_1.link)(name, addr);
-            const passed = tr.passed > 0 ? `${tr.passed}${markdown_utils_js_1.Icon.success}` : '';
-            const failed = tr.failed > 0 ? `${tr.failed}${markdown_utils_js_1.Icon.fail}` : '';
-            const skipped = tr.skipped > 0 ? `${tr.skipped}${markdown_utils_js_1.Icon.skip}` : '';
+            const nameLink = (0, markdown_utils_1.link)(name, addr);
+            const passed = tr.passed > 0 ? `${tr.passed}${markdown_utils_1.Icon.success}` : '';
+            const failed = tr.failed > 0 ? `${tr.failed}${markdown_utils_1.Icon.fail}` : '';
+            const skipped = tr.skipped > 0 ? `${tr.skipped}${markdown_utils_1.Icon.skip}` : '';
             return [nameLink, passed, failed, skipped, time];
         });
-        const resultsTable = (0, markdown_utils_js_1.table)(['Report', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_js_1.Align.Left, markdown_utils_js_1.Align.Right, markdown_utils_js_1.Align.Right, markdown_utils_js_1.Align.Right, markdown_utils_js_1.Align.Right], ...tableData);
+        const resultsTable = (0, markdown_utils_1.table)(['Report', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...tableData);
         sections.push(resultsTable);
     }
     if (options.onlySummary === false) {
@@ -797,22 +797,22 @@ function getSuitesReport(tr, runIndex, options) {
     const nameLink = `<a id="${trSlug.id}" href="${options.baseUrl + trSlug.link}">${name}</a>`;
     const icon = getResultIcon(tr.result);
     sections.push(`## ${icon}\xa0${nameLink}`);
-    const time = (0, markdown_utils_js_1.formatTime)(tr.time);
+    const time = (0, markdown_utils_1.formatTime)(tr.time);
     const headingLine2 = tr.tests > 0
         ? `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`
         : 'No tests found';
     sections.push(headingLine2);
     const suites = options.listSuites === 'failed' ? tr.failedSuites : tr.suites;
     if (suites.length > 0) {
-        const suitesTable = (0, markdown_utils_js_1.table)(['Test suite', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_js_1.Align.Left, markdown_utils_js_1.Align.Right, markdown_utils_js_1.Align.Right, markdown_utils_js_1.Align.Right, markdown_utils_js_1.Align.Right], ...suites.map((s, suiteIndex) => {
-            const tsTime = (0, markdown_utils_js_1.formatTime)(s.time);
+        const suitesTable = (0, markdown_utils_1.table)(['Test suite', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...suites.map((s, suiteIndex) => {
+            const tsTime = (0, markdown_utils_1.formatTime)(s.time);
             const tsName = s.name.startsWith(name) ? s.name.slice(name.length + 1) : s.name;
             const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed');
             const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex).link;
-            const tsNameLink = skipLink ? tsName : (0, markdown_utils_js_1.link)(tsName, tsAddr);
-            const passed = s.passed > 0 ? `${s.passed}${markdown_utils_js_1.Icon.success}` : '';
-            const failed = s.failed > 0 ? `${s.failed}${markdown_utils_js_1.Icon.fail}` : '';
-            const skipped = s.skipped > 0 ? `${s.skipped}${markdown_utils_js_1.Icon.skip}` : '';
+            const tsNameLink = skipLink ? tsName : (0, markdown_utils_1.link)(tsName, tsAddr);
+            const passed = s.passed > 0 ? `${s.passed}${markdown_utils_1.Icon.success}` : '';
+            const failed = s.failed > 0 ? `${s.failed}${markdown_utils_1.Icon.fail}` : '';
+            const skipped = s.skipped > 0 ? `${s.skipped}${markdown_utils_1.Icon.skip}` : '';
             return [tsNameLink, passed, failed, skipped, tsTime];
         }));
         sections.push(suitesTable);
@@ -850,7 +850,7 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
             const result = getResultIcon(tc.result);
             sections.push(`${space}${result} ${tc.name}`);
             if (tc.error) {
-                const lines = (_c = ((_a = tc.error.message) !== null && _a !== void 0 ? _a : (_b = (0, parse_utils_js_1.getFirstNonEmptyLine)(tc.error.details)) === null || _b === void 0 ? void 0 : _b.trim())) === null || _c === void 0 ? void 0 : _c.split(/\r?\n/g).map(l => '\t' + l);
+                const lines = (_c = ((_a = tc.error.message) !== null && _a !== void 0 ? _a : (_b = (0, parse_utils_1.getFirstNonEmptyLine)(tc.error.details)) === null || _b === void 0 ? void 0 : _b.trim())) === null || _c === void 0 ? void 0 : _c.split(/\r?\n/g).map(l => '\t' + l);
                 if (lines) {
                     sections.push(...lines);
                 }
@@ -862,20 +862,20 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
 }
 function makeRunSlug(runIndex) {
     // use prefix to avoid slug conflicts after escaping the paths
-    return (0, slugger_js_1.slug)(`r${runIndex}`);
+    return (0, slugger_1.slug)(`r${runIndex}`);
 }
 function makeSuiteSlug(runIndex, suiteIndex) {
     // use prefix to avoid slug conflicts after escaping the paths
-    return (0, slugger_js_1.slug)(`r${runIndex}s${suiteIndex}`);
+    return (0, slugger_1.slug)(`r${runIndex}s${suiteIndex}`);
 }
 function getResultIcon(result) {
     switch (result) {
         case 'success':
-            return markdown_utils_js_1.Icon.success;
+            return markdown_utils_1.Icon.success;
         case 'skipped':
-            return markdown_utils_js_1.Icon.skip;
+            return markdown_utils_1.Icon.skip;
         case 'failed':
-            return markdown_utils_js_1.Icon.fail;
+            return markdown_utils_1.Icon.fail;
         default:
             return '';
     }
@@ -1296,7 +1296,7 @@ exports.formatTime = formatTime;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getExceptionSource = exports.DEFAULT_LOCALE = void 0;
-const path_utils_js_1 = __nccwpck_require__(4070);
+const path_utils_1 = __nccwpck_require__(4070);
 exports.DEFAULT_LOCALE = 'en-US';
 function getExceptionSource(stackTrace, trackedFiles, getRelativePath) {
     const lines = stackTrace.split(/\r?\n/);
@@ -1305,7 +1305,7 @@ function getExceptionSource(stackTrace, trackedFiles, getRelativePath) {
         const match = str.match(re);
         if (match !== null) {
             const [_, fileStr, lineStr] = match;
-            const filePath = (0, path_utils_js_1.normalizeFilePath)(fileStr);
+            const filePath = (0, path_utils_1.normalizeFilePath)(fileStr);
             if (filePath.startsWith('internal/') || filePath.includes('/node_modules/')) {
                 continue;
             }
