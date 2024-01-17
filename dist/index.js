@@ -131,9 +131,14 @@ const github = __importStar(__nccwpck_require__(5438));
 const local_file_provider_1 = __nccwpck_require__(9399);
 const get_annotations_1 = __nccwpck_require__(5867);
 const get_report_1 = __nccwpck_require__(3737);
+const dart_json_parser_1 = __nccwpck_require__(4528);
 const dotnet_trx_parser_1 = __nccwpck_require__(2664);
+const java_junit_parser_1 = __nccwpck_require__(676);
+const jest_junit_parser_1 = __nccwpck_require__(1113);
+const mocha_json_parser_1 = __nccwpck_require__(6043);
 const path_utils_1 = __nccwpck_require__(4070);
 const github_utils_1 = __nccwpck_require__(3522);
+const markdown_utils_1 = __nccwpck_require__(6482);
 const webhook_1 = __nccwpck_require__(1095);
 const fs_1 = __importDefault(__nccwpck_require__(7147));
 const bent_1 = __importDefault(__nccwpck_require__(3113));
@@ -268,6 +273,7 @@ class TestReporter {
             const results = [];
             for (const { file, content } of files) {
                 try {
+                    core.info(`Processing test results from ${file}`);
                     const tr = yield parser.parse(file, content);
                     results.push(tr);
                 }
@@ -287,15 +293,12 @@ class TestReporter {
             const summary = (0, get_report_1.getReport)(results, { listSuites, listTests, baseUrl, onlySummary });
             core.info('Creating annotations');
             const annotations = (0, get_annotations_1.getAnnotations)(results, this.maxAnnotations);
-            const isFailed = this.failOnError && results.some(tr => tr.result === 'failed');
+            const isFailed = results.some(tr => tr.result === 'failed');
             const conclusion = isFailed ? 'failure' : 'success';
-            const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
-            const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
-            const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
-            const shortSummary = `${passed} passed, ${failed} failed and ${skipped} skipped `;
+            const icon = isFailed ? markdown_utils_1.Icon.fail : markdown_utils_1.Icon.success;
             core.info(`Updating check run conclusion (${conclusion}) and output`);
             const resp = yield this.octokit.rest.checks.update(Object.assign({ check_run_id: createResp.data.id, conclusion, status: 'completed', output: {
-                    title: shortSummary,
+                    title: `${name} ${icon}`,
                     summary,
                     annotations
                 } }, github.context.repo));
@@ -340,14 +343,297 @@ class TestReporter {
     }
     getParser(reporter, options) {
         switch (reporter) {
+            case 'dart-json':
+                return new dart_json_parser_1.DartJsonParser(options, 'dart');
             case 'dotnet-trx':
                 return new dotnet_trx_parser_1.DotnetTrxParser(options);
+            case 'flutter-json':
+                return new dart_json_parser_1.DartJsonParser(options, 'flutter');
+            case 'java-junit':
+                return new java_junit_parser_1.JavaJunitParser(options);
+            case 'jest-junit':
+                return new jest_junit_parser_1.JestJunitParser(options);
+            case 'mocha-json':
+                return new mocha_json_parser_1.MochaJsonParser(options);
             default:
                 throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`);
         }
     }
 }
 main();
+
+
+/***/ }),
+
+/***/ 4528:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.DartJsonParser = void 0;
+const path_utils_1 = __nccwpck_require__(4070);
+const dart_json_types_1 = __nccwpck_require__(7887);
+const test_results_1 = __nccwpck_require__(2768);
+class TestRun {
+    constructor(path, suites, success, time) {
+        this.path = path;
+        this.suites = suites;
+        this.success = success;
+        this.time = time;
+    }
+}
+class TestSuite {
+    constructor(suite) {
+        this.suite = suite;
+        this.groups = {};
+    }
+}
+class TestGroup {
+    constructor(group) {
+        this.group = group;
+        this.tests = [];
+    }
+}
+class TestCase {
+    constructor(testStart) {
+        this.testStart = testStart;
+        this.print = [];
+        this.groupId = testStart.test.groupIDs[testStart.test.groupIDs.length - 1];
+    }
+    get result() {
+        var _a, _b, _c, _d;
+        if ((_a = this.testDone) === null || _a === void 0 ? void 0 : _a.skipped) {
+            return 'skipped';
+        }
+        if (((_b = this.testDone) === null || _b === void 0 ? void 0 : _b.result) === 'success') {
+            return 'success';
+        }
+        if (((_c = this.testDone) === null || _c === void 0 ? void 0 : _c.result) === 'error' || ((_d = this.testDone) === null || _d === void 0 ? void 0 : _d.result) === 'failure') {
+            return 'failed';
+        }
+        return undefined;
+    }
+    get time() {
+        return this.testDone !== undefined ? this.testDone.time - this.testStart.time : 0;
+    }
+}
+class DartJsonParser {
+    constructor(options, sdk) {
+        this.options = options;
+        this.sdk = sdk;
+    }
+    parse(path, content) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const tr = this.getTestRun(path, content);
+            const result = this.getTestRunResult(tr);
+            return Promise.resolve(result);
+        });
+    }
+    getTestRun(path, content) {
+        const lines = content.split(/\n\r?/g);
+        const events = lines
+            .map((str, i) => {
+            if (str.trim() === '') {
+                return null;
+            }
+            try {
+                return JSON.parse(str);
+            }
+            catch (e) {
+                const errWithCol = e;
+                const col = errWithCol.columnNumber !== undefined ? `:${errWithCol.columnNumber}` : '';
+                throw new Error(`Invalid JSON at ${path}:${i + 1}${col}\n\n${e}`);
+            }
+        })
+            .filter(evt => evt != null);
+        let success = false;
+        let totalTime = 0;
+        const suites = {};
+        const tests = {};
+        for (const evt of events) {
+            if ((0, dart_json_types_1.isSuiteEvent)(evt)) {
+                suites[evt.suite.id] = new TestSuite(evt.suite);
+            }
+            else if ((0, dart_json_types_1.isGroupEvent)(evt)) {
+                suites[evt.group.suiteID].groups[evt.group.id] = new TestGroup(evt.group);
+            }
+            else if ((0, dart_json_types_1.isTestStartEvent)(evt) && evt.test.url !== null) {
+                const test = new TestCase(evt);
+                const suite = suites[evt.test.suiteID];
+                const group = suite.groups[evt.test.groupIDs[evt.test.groupIDs.length - 1]];
+                group.tests.push(test);
+                tests[evt.test.id] = test;
+            }
+            else if ((0, dart_json_types_1.isTestDoneEvent)(evt) && !evt.hidden && tests[evt.testID]) {
+                tests[evt.testID].testDone = evt;
+            }
+            else if ((0, dart_json_types_1.isErrorEvent)(evt) && tests[evt.testID]) {
+                tests[evt.testID].error = evt;
+            }
+            else if ((0, dart_json_types_1.isMessageEvent)(evt) && tests[evt.testID]) {
+                tests[evt.testID].print.push(evt);
+            }
+            else if ((0, dart_json_types_1.isDoneEvent)(evt)) {
+                success = evt.success;
+                totalTime = evt.time;
+            }
+        }
+        return new TestRun(path, Object.values(suites), success, totalTime);
+    }
+    getTestRunResult(tr) {
+        const suites = tr.suites.map(s => {
+            return new test_results_1.TestSuiteResult(this.getRelativePath(s.suite.path), this.getGroups(s));
+        });
+        return new test_results_1.TestRunResult(tr.path, suites, tr.time);
+    }
+    getGroups(suite) {
+        const groups = Object.values(suite.groups).filter(grp => grp.tests.length > 0);
+        groups.sort((a, b) => { var _a, _b; return ((_a = a.group.line) !== null && _a !== void 0 ? _a : 0) - ((_b = b.group.line) !== null && _b !== void 0 ? _b : 0); });
+        return groups.map(group => {
+            group.tests.sort((a, b) => { var _a, _b; return ((_a = a.testStart.test.line) !== null && _a !== void 0 ? _a : 0) - ((_b = b.testStart.test.line) !== null && _b !== void 0 ? _b : 0); });
+            const tests = group.tests.map(tc => {
+                const error = this.getError(suite, tc);
+                const testName = group.group.name !== undefined && tc.testStart.test.name.startsWith(group.group.name)
+                    ? tc.testStart.test.name.slice(group.group.name.length).trim()
+                    : tc.testStart.test.name.trim();
+                return new test_results_1.TestCaseResult(testName, tc.result, tc.time, error);
+            });
+            return new test_results_1.TestGroupResult(group.group.name, tests);
+        });
+    }
+    getError(testSuite, test) {
+        var _a, _b, _c, _d, _e, _f;
+        if (!this.options.parseErrors || !test.error) {
+            return undefined;
+        }
+        const { trackedFiles } = this.options;
+        const stackTrace = (_b = (_a = test.error) === null || _a === void 0 ? void 0 : _a.stackTrace) !== null && _b !== void 0 ? _b : '';
+        const print = test.print
+            .filter(p => p.messageType === 'print')
+            .map(p => p.message)
+            .join('\n');
+        const details = [print, stackTrace].filter(str => str !== '').join('\n');
+        const src = this.exceptionThrowSource(details, trackedFiles);
+        const message = this.getErrorMessage((_d = (_c = test.error) === null || _c === void 0 ? void 0 : _c.error) !== null && _d !== void 0 ? _d : '', print);
+        let path;
+        let line;
+        if (src !== undefined) {
+            path = src.path;
+            line = src.line;
+        }
+        else {
+            const testStartPath = this.getRelativePath(testSuite.suite.path);
+            if (trackedFiles.includes(testStartPath)) {
+                path = testStartPath;
+                line = (_f = (_e = test.testStart.test.root_line) !== null && _e !== void 0 ? _e : test.testStart.test.line) !== null && _f !== void 0 ? _f : undefined;
+            }
+        }
+        return {
+            path,
+            line,
+            message,
+            details
+        };
+    }
+    getErrorMessage(message, print) {
+        if (this.sdk === 'flutter') {
+            const uselessMessageRe = /^Test failed\. See exception logs above\.\nThe test description was:/m;
+            const flutterPrintRe = /^══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═+\s+(.*)\s+When the exception was thrown, this was the stack:/ms;
+            if (uselessMessageRe.test(message)) {
+                const match = print.match(flutterPrintRe);
+                if (match !== null) {
+                    return match[1];
+                }
+            }
+        }
+        return message || print;
+    }
+    exceptionThrowSource(ex, trackedFiles) {
+        const lines = ex.split(/\r?\n/g);
+        // regexp to extract file path and line number from stack trace
+        const dartRe = /^(?!package:)(.*)\s+(\d+):\d+\s+/;
+        const flutterRe = /^#\d+\s+.*\((?!package:)(.*):(\d+):\d+\)$/;
+        const re = this.sdk === 'dart' ? dartRe : flutterRe;
+        for (const str of lines) {
+            const match = str.match(re);
+            if (match !== null) {
+                const [_, pathStr, lineStr] = match;
+                const path = (0, path_utils_1.normalizeFilePath)(this.getRelativePath(pathStr));
+                if (trackedFiles.includes(path)) {
+                    const line = parseInt(lineStr);
+                    return { path, line };
+                }
+            }
+        }
+    }
+    getRelativePath(path) {
+        const prefix = 'file://';
+        if (path.startsWith(prefix)) {
+            path = path.substr(prefix.length);
+        }
+        path = (0, path_utils_1.normalizeFilePath)(path);
+        const workDir = this.getWorkDir(path);
+        if (workDir !== undefined && path.startsWith(workDir)) {
+            path = path.substr(workDir.length);
+        }
+        return path;
+    }
+    getWorkDir(path) {
+        var _a, _b;
+        return ((_b = (_a = this.options.workDir) !== null && _a !== void 0 ? _a : this.assumedWorkDir) !== null && _b !== void 0 ? _b : (this.assumedWorkDir = (0, path_utils_1.getBasePath)(path, this.options.trackedFiles)));
+    }
+}
+exports.DartJsonParser = DartJsonParser;
+
+
+/***/ }),
+
+/***/ 7887:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+/// reflects documentation at https://github.com/dart-lang/test/blob/master/pkgs/test/doc/json_reporter.md
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isMessageEvent = exports.isDoneEvent = exports.isErrorEvent = exports.isTestDoneEvent = exports.isTestStartEvent = exports.isGroupEvent = exports.isSuiteEvent = void 0;
+function isSuiteEvent(event) {
+    return event.type === 'suite';
+}
+exports.isSuiteEvent = isSuiteEvent;
+function isGroupEvent(event) {
+    return event.type === 'group';
+}
+exports.isGroupEvent = isGroupEvent;
+function isTestStartEvent(event) {
+    return event.type === 'testStart';
+}
+exports.isTestStartEvent = isTestStartEvent;
+function isTestDoneEvent(event) {
+    return event.type === 'testDone';
+}
+exports.isTestDoneEvent = isTestDoneEvent;
+function isErrorEvent(event) {
+    return event.type === 'error';
+}
+exports.isErrorEvent = isErrorEvent;
+function isDoneEvent(event) {
+    return event.type === 'done';
+}
+exports.isDoneEvent = isDoneEvent;
+function isMessageEvent(event) {
+    return event.type === 'print';
+}
+exports.isMessageEvent = isMessageEvent;
 
 
 /***/ }),
@@ -529,6 +815,511 @@ class DotnetTrxParser {
     }
 }
 exports.DotnetTrxParser = DotnetTrxParser;
+
+
+/***/ }),
+
+/***/ 676:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.JavaJunitParser = void 0;
+const path = __importStar(__nccwpck_require__(1017));
+const xml2js_1 = __nccwpck_require__(6189);
+const java_stack_trace_element_parser_1 = __nccwpck_require__(5775);
+const path_utils_1 = __nccwpck_require__(4070);
+const test_results_1 = __nccwpck_require__(2768);
+class JavaJunitParser {
+    constructor(options) {
+        var _a;
+        this.options = options;
+        // Map to efficient lookup of all paths with given file name
+        this.trackedFiles = {};
+        for (const filePath of options.trackedFiles) {
+            const fileName = path.basename(filePath);
+            const files = (_a = this.trackedFiles[fileName]) !== null && _a !== void 0 ? _a : (this.trackedFiles[fileName] = []);
+            files.push((0, path_utils_1.normalizeFilePath)(filePath));
+        }
+    }
+    parse(filePath, content) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const reportOrSuite = yield this.getJunitReport(filePath, content);
+            const isReport = reportOrSuite.testsuites !== undefined;
+            // XML might contain:
+            // - multiple suites under <testsuites> root node
+            // - single <testsuite> as root node
+            let ju;
+            if (isReport) {
+                ju = reportOrSuite;
+            }
+            else {
+                // Make it behave the same way as if suite was inside <testsuites> root node
+                const suite = reportOrSuite.testsuite;
+                ju = {
+                    testsuites: {
+                        $: { time: suite.$.time },
+                        testsuite: [suite]
+                    }
+                };
+            }
+            return this.getTestRunResult(filePath, ju);
+        });
+    }
+    getJunitReport(filePath, content) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                return yield (0, xml2js_1.parseStringPromise)(content);
+            }
+            catch (e) {
+                throw new Error(`Invalid XML at ${filePath}\n\n${e}`);
+            }
+        });
+    }
+    getTestRunResult(filePath, junit) {
+        var _a;
+        const suites = junit.testsuites.testsuite === undefined
+            ? []
+            : junit.testsuites.testsuite.map(ts => {
+                const name = ts.$.name.trim();
+                const time = parseFloat(ts.$.time) * 1000;
+                const sr = new test_results_1.TestSuiteResult(name, this.getGroups(ts), time);
+                return sr;
+            });
+        const seconds = parseFloat((_a = junit.testsuites.$) === null || _a === void 0 ? void 0 : _a.time);
+        const time = isNaN(seconds) ? undefined : seconds * 1000;
+        return new test_results_1.TestRunResult(filePath, suites, time);
+    }
+    getGroups(suite) {
+        if (suite.testcase === undefined) {
+            return [];
+        }
+        const groups = [];
+        for (const tc of suite.testcase) {
+            // Normally classname is same as suite name - both refer to same Java class
+            // Therefore it doesn't make sense to process it as a group
+            // and tests will be added to default group with empty name
+            const className = tc.$.classname === suite.$.name ? '' : tc.$.classname;
+            let grp = groups.find(g => g.name === className);
+            if (grp === undefined) {
+                grp = { name: className, tests: [] };
+                groups.push(grp);
+            }
+            grp.tests.push(tc);
+        }
+        return groups.map(grp => {
+            const tests = grp.tests.map(tc => {
+                const name = tc.$.name.trim();
+                const result = this.getTestCaseResult(tc);
+                const time = parseFloat(tc.$.time) * 1000;
+                const error = this.getTestCaseError(tc);
+                return new test_results_1.TestCaseResult(name, result, time, error);
+            });
+            return new test_results_1.TestGroupResult(grp.name, tests);
+        });
+    }
+    getTestCaseResult(test) {
+        if (test.failure || test.error)
+            return 'failed';
+        if (test.skipped)
+            return 'skipped';
+        return 'success';
+    }
+    getTestCaseError(tc) {
+        var _a;
+        if (!this.options.parseErrors) {
+            return undefined;
+        }
+        // We process <error> and <failure> the same way
+        const failures = (_a = tc.failure) !== null && _a !== void 0 ? _a : tc.error;
+        if (!failures) {
+            return undefined;
+        }
+        const failure = failures[0];
+        const details = typeof failure === 'object' ? failure._ : failure;
+        let filePath;
+        let line;
+        if (details != null) {
+            const src = this.exceptionThrowSource(details);
+            if (src) {
+                filePath = src.filePath;
+                line = src.line;
+            }
+        }
+        return {
+            path: filePath,
+            line,
+            details,
+            message: typeof failure === 'object' ? failure.message : undefined
+        };
+    }
+    exceptionThrowSource(stackTrace) {
+        const lines = stackTrace.split(/\r?\n/);
+        for (const str of lines) {
+            const stackTraceElement = (0, java_stack_trace_element_parser_1.parseStackTraceElement)(str);
+            if (stackTraceElement) {
+                const { tracePath, fileName, lineStr } = stackTraceElement;
+                const filePath = this.getFilePath(tracePath, fileName);
+                if (filePath !== undefined) {
+                    const line = parseInt(lineStr);
+                    return { filePath, line };
+                }
+            }
+        }
+    }
+    // Stacktrace in Java doesn't contain full paths to source file.
+    // There are only package, file name and line.
+    // Assuming folder structure matches package name (as it should in Java),
+    // we can try to match tracked file.
+    getFilePath(tracePath, fileName) {
+        // Check if there is any tracked file with given name
+        const files = this.trackedFiles[fileName];
+        if (files === undefined) {
+            return undefined;
+        }
+        // Remove class name and method name from trace.
+        // Take parts until first item with capital letter - package names are lowercase while class name is CamelCase.
+        const packageParts = tracePath.split(/\./g);
+        const packageIndex = packageParts.findIndex(part => part[0] <= 'Z');
+        if (packageIndex !== -1) {
+            packageParts.splice(packageIndex, packageParts.length - packageIndex);
+        }
+        if (packageParts.length === 0) {
+            return undefined;
+        }
+        // Get right file
+        // - file name matches
+        // - parent folders structure must reflect the package name
+        for (const filePath of files) {
+            const dirs = path.dirname(filePath).split(/\//g);
+            if (packageParts.length > dirs.length) {
+                continue;
+            }
+            // get only N parent folders, where N = length of package name parts
+            if (dirs.length > packageParts.length) {
+                dirs.splice(0, dirs.length - packageParts.length);
+            }
+            // check if parent folder structure matches package name
+            const isMatch = packageParts.every((part, i) => part === dirs[i]);
+            if (isMatch) {
+                return filePath;
+            }
+        }
+        return undefined;
+    }
+}
+exports.JavaJunitParser = JavaJunitParser;
+
+
+/***/ }),
+
+/***/ 5775:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.parseStackTraceElement = void 0;
+// classloader and module name are optional:
+// at <CLASSLOADER>/<MODULE_NAME_AND_VERSION>/<FULLY_QUALIFIED_METHOD_NAME>(<FILE_NAME>:<LINE_NUMBER>)
+// https://github.com/eclipse-openj9/openj9/issues/11452#issuecomment-754946992
+const re = /^\s*at (\S+\/\S*\/)?(.*)\((.*):(\d+)\)$/;
+function parseStackTraceElement(stackTraceLine) {
+    const match = stackTraceLine.match(re);
+    if (match !== null) {
+        const [_, maybeClassLoaderAndModuleNameAndVersion, tracePath, fileName, lineStr] = match;
+        const { classLoader, moduleNameAndVersion } = parseClassLoaderAndModule(maybeClassLoaderAndModuleNameAndVersion);
+        return {
+            classLoader,
+            moduleNameAndVersion,
+            tracePath,
+            fileName,
+            lineStr
+        };
+    }
+    return undefined;
+}
+exports.parseStackTraceElement = parseStackTraceElement;
+function parseClassLoaderAndModule(maybeClassLoaderAndModuleNameAndVersion) {
+    if (maybeClassLoaderAndModuleNameAndVersion) {
+        const res = maybeClassLoaderAndModuleNameAndVersion.split('/');
+        const classLoader = res[0];
+        let moduleNameAndVersion = res[1];
+        if (moduleNameAndVersion === '') {
+            moduleNameAndVersion = undefined;
+        }
+        return { classLoader, moduleNameAndVersion };
+    }
+    return { classLoader: undefined, moduleNameAndVersion: undefined };
+}
+
+
+/***/ }),
+
+/***/ 1113:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.JestJunitParser = void 0;
+const xml2js_1 = __nccwpck_require__(6189);
+const node_utils_1 = __nccwpck_require__(5824);
+const path_utils_1 = __nccwpck_require__(4070);
+const test_results_1 = __nccwpck_require__(2768);
+class JestJunitParser {
+    constructor(options) {
+        this.options = options;
+    }
+    parse(path, content) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const ju = yield this.getJunitReport(path, content);
+            return this.getTestRunResult(path, ju);
+        });
+    }
+    getJunitReport(path, content) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                return (yield (0, xml2js_1.parseStringPromise)(content));
+            }
+            catch (e) {
+                throw new Error(`Invalid XML at ${path}\n\n${e}`);
+            }
+        });
+    }
+    getTestRunResult(path, junit) {
+        const suites = junit.testsuites.testsuite === undefined
+            ? []
+            : junit.testsuites.testsuite.map(ts => {
+                const name = this.escapeCharacters(ts.$.name.trim());
+                const time = parseFloat(ts.$.time) * 1000;
+                const sr = new test_results_1.TestSuiteResult(name, this.getGroups(ts), time);
+                return sr;
+            });
+        const time = parseFloat(junit.testsuites.$.time) * 1000;
+        return new test_results_1.TestRunResult(path, suites, time);
+    }
+    getGroups(suite) {
+        if (!suite.testcase) {
+            return [];
+        }
+        const groups = [];
+        for (const tc of suite.testcase) {
+            let grp = groups.find(g => g.describe === tc.$.classname);
+            if (grp === undefined) {
+                grp = { describe: tc.$.classname, tests: [] };
+                groups.push(grp);
+            }
+            grp.tests.push(tc);
+        }
+        return groups.map(grp => {
+            const tests = grp.tests.map(tc => {
+                const name = tc.$.name.trim();
+                const result = this.getTestCaseResult(tc);
+                const time = parseFloat(tc.$.time) * 1000;
+                const error = this.getTestCaseError(tc);
+                return new test_results_1.TestCaseResult(name, result, time, error);
+            });
+            return new test_results_1.TestGroupResult(grp.describe, tests);
+        });
+    }
+    getTestCaseResult(test) {
+        if (test.failure)
+            return 'failed';
+        if (test.skipped)
+            return 'skipped';
+        return 'success';
+    }
+    getTestCaseError(tc) {
+        if (!this.options.parseErrors || !tc.failure) {
+            return undefined;
+        }
+        const details = tc.failure[0];
+        let path;
+        let line;
+        const src = (0, node_utils_1.getExceptionSource)(details, this.options.trackedFiles, file => this.getRelativePath(file));
+        if (src) {
+            path = src.path;
+            line = src.line;
+        }
+        return {
+            path,
+            line,
+            details
+        };
+    }
+    getRelativePath(path) {
+        path = (0, path_utils_1.normalizeFilePath)(path);
+        const workDir = this.getWorkDir(path);
+        if (workDir !== undefined && path.startsWith(workDir)) {
+            path = path.substr(workDir.length);
+        }
+        return path;
+    }
+    getWorkDir(path) {
+        var _a, _b;
+        return ((_b = (_a = this.options.workDir) !== null && _a !== void 0 ? _a : this.assumedWorkDir) !== null && _b !== void 0 ? _b : (this.assumedWorkDir = (0, path_utils_1.getBasePath)(path, this.options.trackedFiles)));
+    }
+    escapeCharacters(s) {
+        return s.replace(/([<>])/g, '\\$1');
+    }
+}
+exports.JestJunitParser = JestJunitParser;
+
+
+/***/ }),
+
+/***/ 6043:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.MochaJsonParser = void 0;
+const test_results_1 = __nccwpck_require__(2768);
+const node_utils_1 = __nccwpck_require__(5824);
+const path_utils_1 = __nccwpck_require__(4070);
+class MochaJsonParser {
+    constructor(options) {
+        this.options = options;
+    }
+    parse(path, content) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const mocha = this.getMochaJson(path, content);
+            const result = this.getTestRunResult(path, mocha);
+            result.sort(true);
+            return Promise.resolve(result);
+        });
+    }
+    getMochaJson(path, content) {
+        try {
+            return JSON.parse(content);
+        }
+        catch (e) {
+            throw new Error(`Invalid JSON at ${path}\n\n${e}`);
+        }
+    }
+    getTestRunResult(resultsPath, mocha) {
+        const suitesMap = {};
+        const getSuite = (test) => {
+            var _a;
+            const path = this.getRelativePath(test.file);
+            return (_a = suitesMap[path]) !== null && _a !== void 0 ? _a : (suitesMap[path] = new test_results_1.TestSuiteResult(path, []));
+        };
+        for (const test of mocha.passes) {
+            const suite = getSuite(test);
+            this.processTest(suite, test, 'success');
+        }
+        for (const test of mocha.failures) {
+            const suite = getSuite(test);
+            this.processTest(suite, test, 'failed');
+        }
+        for (const test of mocha.pending) {
+            const suite = getSuite(test);
+            this.processTest(suite, test, 'skipped');
+        }
+        const suites = Object.values(suitesMap);
+        return new test_results_1.TestRunResult(resultsPath, suites, mocha.stats.duration);
+    }
+    processTest(suite, test, result) {
+        var _a;
+        const groupName = test.fullTitle !== test.title
+            ? test.fullTitle.substr(0, test.fullTitle.length - test.title.length).trimEnd()
+            : null;
+        let group = suite.groups.find(grp => grp.name === groupName);
+        if (group === undefined) {
+            group = new test_results_1.TestGroupResult(groupName, []);
+            suite.groups.push(group);
+        }
+        const error = this.getTestCaseError(test);
+        const testCase = new test_results_1.TestCaseResult(test.title, result, (_a = test.duration) !== null && _a !== void 0 ? _a : 0, error);
+        group.tests.push(testCase);
+    }
+    getTestCaseError(test) {
+        const details = test.err.stack;
+        const message = test.err.message;
+        if (details === undefined) {
+            return undefined;
+        }
+        let path;
+        let line;
+        const src = (0, node_utils_1.getExceptionSource)(details, this.options.trackedFiles, file => this.getRelativePath(file));
+        if (src) {
+            path = src.path;
+            line = src.line;
+        }
+        return {
+            path,
+            line,
+            message,
+            details
+        };
+    }
+    getRelativePath(path) {
+        path = (0, path_utils_1.normalizeFilePath)(path);
+        const workDir = this.getWorkDir(path);
+        if (workDir !== undefined && path.startsWith(workDir)) {
+            path = path.substr(workDir.length);
+        }
+        return path;
+    }
+    getWorkDir(path) {
+        var _a, _b;
+        return ((_b = (_a = this.options.workDir) !== null && _a !== void 0 ? _a : this.assumedWorkDir) !== null && _b !== void 0 ? _b : (this.assumedWorkDir = (0, path_utils_1.getBasePath)(path, this.options.trackedFiles)));
+    }
+}
+exports.MochaJsonParser = MochaJsonParser;
 
 
 /***/ }),
