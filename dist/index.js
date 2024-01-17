@@ -283,60 +283,65 @@ class TestReporter {
                 }
             }
             core.info(`Creating check run ${name}`);
-            const createResp = yield this.octokit.rest.checks.create(Object.assign({ head_sha: this.context.sha, name, status: 'in_progress', output: {
-                    title: name,
-                    summary: ''
-                } }, github.context.repo));
-            core.info('Creating report summary');
-            const { listSuites, listTests, onlySummary } = this;
-            const baseUrl = createResp.data.html_url || '';
-            const summary = (0, get_report_1.getReport)(results, { listSuites, listTests, baseUrl, onlySummary });
-            core.info('Creating annotations');
-            const annotations = (0, get_annotations_1.getAnnotations)(results, this.maxAnnotations);
-            const isFailed = results.some(tr => tr.result === 'failed');
-            const conclusion = isFailed ? 'failure' : 'success';
-            const icon = isFailed ? markdown_utils_1.Icon.fail : markdown_utils_1.Icon.success;
-            core.info(`Updating check run conclusion (${conclusion}) and output`);
-            const resp = yield this.octokit.rest.checks.update(Object.assign({ check_run_id: createResp.data.id, conclusion, status: 'completed', output: {
-                    title: `${name} ${icon}`,
-                    summary,
-                    annotations
-                } }, github.context.repo));
-            core.info(`Check run create response: ${resp.status}`);
-            core.info(`Check run URL: ${resp.data.url}`);
-            core.info(`Check run HTML: ${resp.data.html_url}`);
-            core.setOutput('url', resp.data.url);
-            core.setOutput('url_html', resp.data.html_url);
-            core.info(`Check run details: ${resp.data.details_url}`);
-            if (this.slackWebhook && this.context.branch === 'master') {
-                const webhook = new webhook_1.IncomingWebhook(this.slackWebhook);
-                const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
-                const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
-                const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
-                const req = {
-                    blocks: [
-                        {
+            try {
+                const createResp = yield this.octokit.rest.checks.create(Object.assign({ head_sha: this.context.sha, name, status: 'in_progress', output: {
+                        title: name,
+                        summary: ''
+                    } }, github.context.repo));
+                core.info('Creating report summary');
+                const { listSuites, listTests, onlySummary } = this;
+                const baseUrl = createResp.data.html_url || '';
+                const summary = (0, get_report_1.getReport)(results, { listSuites, listTests, baseUrl, onlySummary });
+                core.info('Creating annotations');
+                const annotations = (0, get_annotations_1.getAnnotations)(results, this.maxAnnotations);
+                const isFailed = results.some(tr => tr.result === 'failed');
+                const conclusion = isFailed ? 'failure' : 'success';
+                const icon = isFailed ? markdown_utils_1.Icon.fail : markdown_utils_1.Icon.success;
+                core.info(`Updating check run conclusion (${conclusion}) and output`);
+                const resp = yield this.octokit.rest.checks.update(Object.assign({ check_run_id: createResp.data.id, conclusion, status: 'completed', output: {
+                        title: `${name} ${icon}`,
+                        summary,
+                        annotations
+                    } }, github.context.repo));
+                core.info(`Check run create response: ${resp.status}`);
+                core.info(`Check run URL: ${resp.data.url}`);
+                core.info(`Check run HTML: ${resp.data.html_url}`);
+                core.setOutput('url', resp.data.url);
+                core.setOutput('url_html', resp.data.html_url);
+                core.info(`Check run details: ${resp.data.details_url}`);
+                if (this.slackWebhook && this.context.branch === 'master') {
+                    const webhook = new webhook_1.IncomingWebhook(this.slackWebhook);
+                    const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
+                    const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
+                    const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
+                    const req = {
+                        blocks: [
+                            {
+                                type: 'section',
+                                text: {
+                                    type: 'mrkdwn',
+                                    text: `:large_green_circle: ${passed} :large_orange_circle: ${skipped} :red_circle: ${failed} <${resp.data.html_url}|(view)>`
+                                }
+                            }
+                        ]
+                    };
+                    results.map((tr, runIndex) => {
+                        if (tr.failed === 0)
+                            return;
+                        const runName = tr.path.slice(0, tr.path.indexOf('/TestResults/'));
+                        req.blocks.push({
                             type: 'section',
                             text: {
                                 type: 'mrkdwn',
-                                text: `:large_green_circle: ${passed} :large_orange_circle: ${skipped} :red_circle: ${failed} <${resp.data.html_url}|(view)>`
+                                text: `:red_circle: ${tr.failed} in <${resp.data.html_url}#r${runIndex}|${runName}>`
                             }
-                        }
-                    ]
-                };
-                results.map((tr, runIndex) => {
-                    if (tr.failed === 0)
-                        return;
-                    const runName = tr.path.slice(0, tr.path.indexOf('/TestResults/'));
-                    req.blocks.push({
-                        type: 'section',
-                        text: {
-                            type: 'mrkdwn',
-                            text: `:red_circle: ${tr.failed} in <${resp.data.html_url}#r${runIndex}|${runName}>`
-                        }
+                        });
                     });
-                });
-                yield webhook.send(req);
+                    yield webhook.send(req);
+                }
+            }
+            catch (error) {
+                core.error(`Could not create check to store the results`);
             }
             return results;
         });
