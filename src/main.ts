@@ -5,7 +5,7 @@ import {GitHub} from '@actions/github/lib/utils'
 import {LocalFileProvider} from './input-providers/local-file-provider'
 import {FileContent} from './input-providers/input-provider'
 import {ParseOptions, TestParser} from './test-parser'
-import {TestRunResult} from './test-results'
+import {TestRunResult, TestRunResultWithUrl} from './test-results'
 import {getAnnotations} from './report/get-annotations'
 import {getReport} from './report/get-report'
 
@@ -102,7 +102,7 @@ class TestReporter {
     core.info(`Using test report parser '${this.reporter}'`)
     const parser = this.getParser(this.reporter, options)
 
-    const results: TestRunResult[] = []
+    const results: TestRunResultWithUrl[] = []
     const input = await inputProvider.load()
 
     try {
@@ -134,13 +134,15 @@ class TestReporter {
       try {
         core.startGroup(`Creating test report ${reportName}`)
         const tr = await this.createReport(parser, reportName, files)
-        results.push(...tr)
+        if (tr != null) {
+          results.push(tr)
+        }
       } finally {
         core.endGroup()
       }
     }
 
-    const isFailed = results.some(tr => tr.result === 'failed')
+    const isFailed = results.some(tr => tr.results.some(r => r.isFailed))
     const conclusion = isFailed ? 'failure' : 'success'
     const passed = results.reduce((sum, tr) => sum + tr.passed, 0)
     const failed = results.reduce((sum, tr) => sum + tr.failed, 0)
@@ -153,6 +155,11 @@ class TestReporter {
     core.setOutput('skipped', skipped)
     core.setOutput('time', time)
 
+    if (results.some(r => r.shouldFail)) {
+      core.setFailed(`Failed test were found and the results could not be written to github, so fail this step.`)
+      return
+    }
+
     if (this.failOnError && isFailed) {
       core.setFailed(`Failed test were found and 'fail-on-error' option is set to ${this.failOnError}`)
       return
@@ -164,14 +171,17 @@ class TestReporter {
     }
   }
 
-  async createReport(parser: TestParser, name: string, files: FileContent[]): Promise<TestRunResult[]> {
+  async createReport(parser: TestParser, name: string, files: FileContent[]): Promise<TestRunResultWithUrl | null> {
     if (files.length === 0) {
       core.warning(`No file matches path ${this.path}`)
-      return []
+      return null
     }
 
     core.info(`Processing test results for check run ${name}`)
+
     const results: TestRunResult[] = []
+    const result: TestRunResultWithUrl = new TestRunResultWithUrl(results, null)
+
     for (const {file, content} of files) {
       try {
         core.info(`Processing test results from ${file}`)
@@ -226,6 +236,7 @@ class TestReporter {
       core.setOutput('url', resp.data.url)
       core.setOutput('url_html', resp.data.html_url)
       core.info(`Check run details: ${resp.data.details_url}`)
+      result.checkUrl = resp.data.html_url
 
       if (this.slackWebhook && this.context.branch === 'master') {
         const webhook = new IncomingWebhook(this.slackWebhook)
@@ -264,7 +275,7 @@ class TestReporter {
       core.error(`Could not create check to store the results`)
     }
 
-    return results
+    return result
   }
 
   getParser(reporter: string, options: ParseOptions): TestParser {

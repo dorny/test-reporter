@@ -1,5 +1,33 @@
 import {DEFAULT_LOCALE} from './utils/node-utils'
 
+export class TestRunResultWithUrl {
+  constructor(
+    public results: TestRunResult[],
+    public checkUrl: string | null
+  ) {}
+
+  get hasCheck(): boolean {
+    return !!this.checkUrl
+  }
+
+  get shouldFail(): boolean {
+    return !this.hasCheck && this.results.some(r => r.isFailed)
+  }
+
+  get passed(): number {
+    return this.results.reduce((sum, g) => sum + g.passed, 0)
+  }
+  get failed(): number {
+    return this.results.reduce((sum, g) => sum + g.failed, 0)
+  }
+  get skipped(): number {
+    return this.results.reduce((sum, g) => sum + g.skipped, 0)
+  }
+  get time(): number {
+    return this.results.reduce((sum, g) => sum + g.time, 0)
+  }
+}
+
 export class TestRunResult {
   constructor(
     readonly path: string,
@@ -25,8 +53,12 @@ export class TestRunResult {
     return this.totalTime ?? this.suites.reduce((sum, g) => sum + g.time, 0)
   }
 
+  get isFailed(): boolean {
+    return this.suites.some(t => t.result === 'failed')
+  }
+
   get result(): TestExecutionResult {
-    return this.suites.some(t => t.result === 'failed') ? 'failed' : 'success'
+    return this.isFailed ? 'failed' : 'success'
   }
 
   get failedSuites(): TestSuiteResult[] {

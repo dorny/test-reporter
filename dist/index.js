@@ -129,6 +129,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const local_file_provider_1 = __nccwpck_require__(9399);
+const test_results_1 = __nccwpck_require__(2768);
 const get_annotations_1 = __nccwpck_require__(5867);
 const get_report_1 = __nccwpck_require__(3737);
 const dart_json_parser_1 = __nccwpck_require__(4528);
@@ -236,13 +237,15 @@ class TestReporter {
                 try {
                     core.startGroup(`Creating test report ${reportName}`);
                     const tr = yield this.createReport(parser, reportName, files);
-                    results.push(...tr);
+                    if (tr != null) {
+                        results.push(tr);
+                    }
                 }
                 finally {
                     core.endGroup();
                 }
             }
-            const isFailed = results.some(tr => tr.result === 'failed');
+            const isFailed = results.some(tr => tr.results.some(r => r.isFailed));
             const conclusion = isFailed ? 'failure' : 'success';
             const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
             const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
@@ -253,6 +256,10 @@ class TestReporter {
             core.setOutput('failed', failed);
             core.setOutput('skipped', skipped);
             core.setOutput('time', time);
+            if (results.some(r => r.shouldFail)) {
+                core.setFailed(`Failed test were found and the results could not be written to github, so fail this step.`);
+                return;
+            }
             if (this.failOnError && isFailed) {
                 core.setFailed(`Failed test were found and 'fail-on-error' option is set to ${this.failOnError}`);
                 return;
@@ -267,10 +274,11 @@ class TestReporter {
         return __awaiter(this, void 0, void 0, function* () {
             if (files.length === 0) {
                 core.warning(`No file matches path ${this.path}`);
-                return [];
+                return null;
             }
             core.info(`Processing test results for check run ${name}`);
             const results = [];
+            const result = new test_results_1.TestRunResultWithUrl(results, null);
             for (const { file, content } of files) {
                 try {
                     core.info(`Processing test results from ${file}`);
@@ -309,6 +317,7 @@ class TestReporter {
                 core.setOutput('url', resp.data.url);
                 core.setOutput('url_html', resp.data.html_url);
                 core.info(`Check run details: ${resp.data.details_url}`);
+                result.checkUrl = resp.data.html_url;
                 if (this.slackWebhook && this.context.branch === 'master') {
                     const webhook = new webhook_1.IncomingWebhook(this.slackWebhook);
                     const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
@@ -343,7 +352,7 @@ class TestReporter {
             catch (error) {
                 core.error(`Could not create check to store the results`);
             }
-            return results;
+            return result;
         });
     }
     getParser(reporter, options) {
@@ -1686,8 +1695,33 @@ function getResultIcon(result) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.TestCaseResult = exports.TestGroupResult = exports.TestSuiteResult = exports.TestRunResult = void 0;
+exports.TestCaseResult = exports.TestGroupResult = exports.TestSuiteResult = exports.TestRunResult = exports.TestRunResultWithUrl = void 0;
 const node_utils_1 = __nccwpck_require__(5824);
+class TestRunResultWithUrl {
+    constructor(results, checkUrl) {
+        this.results = results;
+        this.checkUrl = checkUrl;
+    }
+    get hasCheck() {
+        return !!this.checkUrl;
+    }
+    get shouldFail() {
+        return !this.hasCheck && this.results.some(r => r.isFailed);
+    }
+    get passed() {
+        return this.results.reduce((sum, g) => sum + g.passed, 0);
+    }
+    get failed() {
+        return this.results.reduce((sum, g) => sum + g.failed, 0);
+    }
+    get skipped() {
+        return this.results.reduce((sum, g) => sum + g.skipped, 0);
+    }
+    get time() {
+        return this.results.reduce((sum, g) => sum + g.time, 0);
+    }
+}
+exports.TestRunResultWithUrl = TestRunResultWithUrl;
 class TestRunResult {
     constructor(path, suites, totalTime) {
         this.path = path;
@@ -1710,8 +1744,11 @@ class TestRunResult {
         var _a;
         return (_a = this.totalTime) !== null && _a !== void 0 ? _a : this.suites.reduce((sum, g) => sum + g.time, 0);
     }
+    get isFailed() {
+        return this.suites.some(t => t.result === 'failed');
+    }
     get result() {
-        return this.suites.some(t => t.result === 'failed') ? 'failed' : 'success';
+        return this.isFailed ? 'failed' : 'success';
     }
     get failedSuites() {
         return this.suites.filter(s => s.result === 'failed');
