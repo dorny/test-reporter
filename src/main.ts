@@ -157,6 +157,27 @@ class TestReporter {
 
     if (results.some(r => r.shouldFail)) {
       core.setFailed(`Failed test were found and the results could not be written to github, so fail this step.`)
+
+      let counter = 0
+      core.startGroup('Failed tests')
+      for (const r of results.filter(r => r.shouldFail)) {
+        for (const rr of r.results) {
+          for (const s of rr.failedSuites) {
+            for (const g of s.failedGroups) {
+              for (const t of g.failedTests) {
+                if (++counter > 10) {
+                  core.endGroup()
+                  return
+                }
+
+                core.info(`${t.name}: ${t.error?.message}`)
+              }
+            }
+          }
+        }
+      }
+
+      core.endGroup()
       return
     }
 

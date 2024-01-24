@@ -192,6 +192,7 @@ class TestReporter {
         }
     }
     run() {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
             if (this.workDirInput) {
                 core.info(`Changing directory to '${this.workDirInput}'`);
@@ -258,6 +259,24 @@ class TestReporter {
             core.setOutput('time', time);
             if (results.some(r => r.shouldFail)) {
                 core.setFailed(`Failed test were found and the results could not be written to github, so fail this step.`);
+                let counter = 0;
+                core.startGroup('Failed tests');
+                for (const r of results.filter(r => r.shouldFail)) {
+                    for (const rr of r.results) {
+                        for (const s of rr.failedSuites) {
+                            for (const g of s.failedGroups) {
+                                for (const t of g.failedTests) {
+                                    if (++counter > 10) {
+                                        core.endGroup();
+                                        return;
+                                    }
+                                    core.info(`${t.name}: ${(_a = t.error) === null || _a === void 0 ? void 0 : _a.message}`);
+                                }
+                            }
+                        }
+                    }
+                }
+                core.endGroup();
                 return;
             }
             if (this.failOnError && isFailed) {
