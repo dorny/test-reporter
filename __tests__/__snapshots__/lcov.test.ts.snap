@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`lcov report coverage report from facebook/jest test results matches snapshot 1`] = `
+TestRunResult {
+  "path": "fixtures/lcov.info",
+  "suites": [
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "src/services/notifier/NotifierService.js",
+          "tests": [
+            {
+              "name": "lines 100% (21/21)",
+              "result": "success",
+              "time": 0,
+            },
+            {
+              "name": "functions 100% (10/10)",
+              "result": "success",
+              "time": 0,
+            },
+            {
+              "name": "branches 50% (3/6)",
+              "result": "failed",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "src/services/notifier/NotifierService.js",
+      "totalTime": undefined,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "src/services/notifier/providers/DiscordNotifierProvider.js",
+          "tests": [
+            {
+              "name": "lines 100% (17/17)",
+              "result": "success",
+              "time": 0,
+            },
+            {
+              "name": "functions 100% (3/3)",
+              "result": "success",
+              "time": 0,
+            },
+            {
+              "name": "branches 75% (3/4)",
+              "result": "failed",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "src/services/notifier/providers/DiscordNotifierProvider.js",
+      "totalTime": undefined,
+    },
+  ],
+  "totalTime": undefined,
+}
+`;

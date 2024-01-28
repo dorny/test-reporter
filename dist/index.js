@@ -268,6 +268,7 @@ const mocha_json_parser_1 = __nccwpck_require__(6043);
 const swift_xunit_parser_1 = __nccwpck_require__(5366);
 const path_utils_1 = __nccwpck_require__(4070);
 const github_utils_1 = __nccwpck_require__(3522);
+const lcov_parser_1 = __nccwpck_require__(5698);
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -436,6 +437,8 @@ class TestReporter {
                 return new mocha_json_parser_1.MochaJsonParser(options);
             case 'swift-xunit':
                 return new swift_xunit_parser_1.SwiftXunitParser(options);
+            case 'lcov':
+                return new lcov_parser_1.LcovParser(options);
             default:
                 throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`);
         }
@@ -1288,6 +1291,120 @@ class JestJunitParser {
     }
 }
 exports.JestJunitParser = JestJunitParser;
+
+
+/***/ }),
+
+/***/ 5698:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.LcovParser = void 0;
+const test_results_1 = __nccwpck_require__(2768);
+const lcov_utils_1 = __nccwpck_require__(4750);
+class LcovParser {
+    constructor(options) {
+        this.options = options;
+    }
+    parse(path, content) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const report = yield this.parseFile(path, content);
+            return this.getTestRunResult(path, report);
+        });
+    }
+    parseFile(path, content) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                return (0, lcov_utils_1.parseProm)(content);
+                //return JSON.parse(content) as LcovReport
+            }
+            catch (e) {
+                throw new Error(`Invalid JSON at ${path}\n\n${e}`);
+            }
+        });
+    }
+    getTestRunResult(path, report) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const suites = [];
+            for (const reportElement of report) {
+                const fileName = reportElement.file;
+                const statementCaseResult = {
+                    name: `lines ${this.getPartInfo(reportElement.lines)}`,
+                    time: 0,
+                    result: this.getPercentage(reportElement.lines) >= 80 ? 'success' : 'failed'
+                };
+                const fonctionCaseResult = {
+                    name: `functions ${this.getPartInfo(reportElement.functions)}`,
+                    time: 0,
+                    result: this.getPercentage(reportElement.functions) >= 80 ? 'success' : 'failed'
+                };
+                const brancheCaseResult = {
+                    name: `branches ${this.getPartInfo(reportElement.branches)}`,
+                    time: 0,
+                    result: this.getPercentage(reportElement.branches) >= 80 ? 'success' : 'failed'
+                };
+                const testCases = [statementCaseResult, fonctionCaseResult, brancheCaseResult];
+                const groups = [new test_results_1.TestGroupResult(fileName, testCases)];
+                const suite = new test_results_1.TestSuiteResult(fileName, groups);
+                suites.push(suite);
+            }
+            return new test_results_1.TestRunResult(path, suites);
+        });
+    }
+    getPercentage(stat) {
+        return stat ? (stat.hit / stat.found) * 100 : 100;
+    }
+    getPartInfo(stat) {
+        return `${this.getPercentage(stat)}% (${stat.hit}/${stat.found})`;
+    }
+}
+exports.LcovParser = LcovParser;
+
+
+/***/ }),
+
+/***/ 4750:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.parseProm = void 0;
+const lcov_parse_1 = __importDefault(__nccwpck_require__(7454));
+const parseProm = (pathOrStr) => __awaiter(void 0, void 0, void 0, function* () {
+    return new Promise((resolve, reject) => {
+        (0, lcov_parse_1.default)(pathOrStr, (err, data) => {
+            if (err) {
+                reject(err);
+            }
+            resolve(data !== null && data !== void 0 ? data : []);
+        });
+    });
+});
+exports.parseProm = parseProm;
 
 
 /***/ }),
@@ -23432,6 +23549,139 @@ class Keyv extends EventEmitter {
 }
 
 module.exports = Keyv;
+
+
+/***/ }),
+
+/***/ 7454:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+/*
+Copyright (c) 2012, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://yuilibrary.com/license/
+*/
+
+var fs = __nccwpck_require__(7147),
+    path = __nccwpck_require__(1017);
+
+/* istanbul ignore next */
+var exists = fs.exists || path.exists;
+
+var walkFile = function(str, cb) {
+    var data = [], item;
+
+    [ 'end_of_record' ].concat(str.split('\n')).forEach(function(line) {
+        line = line.trim();
+        var allparts = line.split(':'),
+            parts = [allparts.shift(), allparts.join(':')],
+            lines, fn;
+
+        switch (parts[0].toUpperCase()) {
+            case 'TN':
+                item.title = parts[1].trim();
+                break;
+            case 'SF':
+                item.file = parts.slice(1).join(':').trim();
+                break;
+            case 'FNF':
+                item.functions.found = Number(parts[1].trim());
+                break;
+            case 'FNH':
+                item.functions.hit = Number(parts[1].trim());
+                break;
+            case 'LF':
+                item.lines.found = Number(parts[1].trim());
+                break;
+            case 'LH':
+                item.lines.hit = Number(parts[1].trim());
+                break;
+            case 'DA':
+                lines = parts[1].split(',');
+                item.lines.details.push({
+                    line: Number(lines[0]),
+                    hit: Number(lines[1])
+                });
+                break;
+            case 'FN':
+                fn = parts[1].split(',');
+                item.functions.details.push({
+                    name: fn[1],
+                    line: Number(fn[0])
+                });
+                break;
+            case 'FNDA':
+                fn = parts[1].split(',');
+                item.functions.details.some(function(i, k) {
+                    if (i.name === fn[1] && i.hit === undefined) {
+                        item.functions.details[k].hit = Number(fn[0]);
+                        return true;
+                    }
+                });
+                break;
+            case 'BRDA':
+                fn = parts[1].split(',');
+                item.branches.details.push({
+                    line: Number(fn[0]),
+                    block: Number(fn[1]),
+                    branch: Number(fn[2]),
+                    taken: ((fn[3] === '-') ? 0 : Number(fn[3]))
+                });
+                break;
+            case 'BRF':
+                item.branches.found = Number(parts[1]);
+                break;
+            case 'BRH':
+                item.branches.hit = Number(parts[1]);
+                break;
+        }
+
+        if (line.indexOf('end_of_record') > -1) {
+            data.push(item);
+            item = {
+              lines: {
+                  found: 0,
+                  hit: 0,
+                  details: []
+              },
+              functions: {
+                  hit: 0,
+                  found: 0,
+                  details: []
+              },
+              branches: {
+                hit: 0,
+                found: 0,
+                details: []
+              }
+            };
+        }
+    });
+
+    data.shift();
+
+    if (data.length) {
+        cb(null, data);
+    } else {
+        cb('Failed to parse string');
+    }
+};
+
+var parse = function(file, cb) {
+    exists(file, function(x) {
+        if (!x) {
+            return walkFile(file, cb);
+        }
+        fs.readFile(file, 'utf8', function(err, str) {
+            walkFile(str, cb);
+        });
+    });
+
+};
+
+
+module.exports = parse;
+module.exports.source = walkFile;
 
 
 /***/ }),

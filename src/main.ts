@@ -19,6 +19,7 @@ import {SwiftXunitParser} from './parsers/swift-xunit/swift-xunit-parser'
 
 import {normalizeDirPath, normalizeFilePath} from './utils/path-utils'
 import {getCheckRunContext} from './utils/github-utils'
+import {LcovParser} from './parsers/lcov/lcov-parser'
 
 async function main(): Promise<void> {
   try {
@@ -225,6 +226,8 @@ class TestReporter {
         return new MochaJsonParser(options)
       case 'swift-xunit':
         return new SwiftXunitParser(options)
+      case 'lcov':
+        return new LcovParser(options)
       default:
         throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`)
     }
