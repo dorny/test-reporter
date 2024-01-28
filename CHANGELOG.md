@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.8.0
+* Add `SwiftXunitParser` class based on `JavaJunitParser` for `swift-xunit` reporter https://github.com/dorny/test-reporter/pull/317
+* Use NodeJS 18 LTS as default runtime https://github.com/dorny/test-reporter/pull/332
+* Escape `<>` characters in suite name https://github.com/dorny/test-reporter/pull/236
+* Update actions runtime to Node20 https://github.com/dorny/test-reporter/pull/315
+* Update check title and remove icon https://github.com/dorny/test-reporter/pull/144
+
 ## 1.7.0
 * Fix #199: Use ✅ instead of ✔️ for better cross platform look by @petrdvorak in https://github.com/dorny/test-reporter/pull/200
 * Verify content of dist/ folder matches build output by @dorny in https://github.com/dorny/test-reporter/pull/207
