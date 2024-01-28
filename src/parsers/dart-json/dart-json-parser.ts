@@ -29,7 +29,12 @@ import {
 } from '../../test-results'
 
 class TestRun {
-  constructor(readonly path: string, readonly suites: TestSuite[], readonly success: boolean, readonly time: number) {}
+  constructor(
+    readonly path: string,
+    readonly suites: TestSuite[],
+    readonly success: boolean,
+    readonly time: number
+  ) {}
 }
 
 class TestSuite {
@@ -74,7 +79,10 @@ class TestCase {
 export class DartJsonParser implements TestParser {
   assumedWorkDir: string | undefined
 
-  constructor(readonly options: ParseOptions, readonly sdk: 'dart' | 'flutter') {}
+  constructor(
+    readonly options: ParseOptions,
+    readonly sdk: 'dart' | 'flutter'
+  ) {}
 
   async parse(path: string, content: string): Promise<TestRunResult> {
     const tr = this.getTestRun(path, content)
