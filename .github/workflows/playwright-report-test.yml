@@ -5,6 +5,7 @@ on:
     workflows: ['CI']
     types:
       - completed
+  push:
 jobs:
   report:
     name: Workflow test
