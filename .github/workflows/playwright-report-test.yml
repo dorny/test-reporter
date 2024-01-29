@@ -19,4 +19,4 @@ jobs:
           path: 'playwright-report.xml'
           reporter: jest-junit
           show-html-notice: true
-          list-suite: non-skipped
+          list-suites: non-skipped
