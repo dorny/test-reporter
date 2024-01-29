@@ -15,7 +15,7 @@ export interface ReportOptions {
 }
 
 const defaultOptions: ReportOptions = {
-  listSuites: 'non-skipped',
+  listSuites: 'all',
   listTests: 'all',
   baseUrl: '',
   onlySummary: false
