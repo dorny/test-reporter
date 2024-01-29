@@ -53,7 +53,7 @@ class TestReporter {
   constructor() {
     this.octokit = github.getOctokit(this.token)
 
-    if (this.listSuites !== 'all' && this.listSuites !== 'failed') {
+    if (this.listSuites !== 'all' && this.listSuites !== 'failed' && this.listSuites !== 'non-skipped') {
       core.setFailed(`Input parameter 'list-suites' has invalid value`)
       return
     }
