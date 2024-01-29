@@ -8,14 +8,14 @@ import {slug} from '../utils/slugger'
 const MAX_REPORT_LENGTH = 65535
 
 export interface ReportOptions {
-  listSuites: 'all' | 'failed'
+  listSuites: 'all' | 'failed' | 'non-skipped'
   listTests: 'all' | 'failed' | 'none'
   baseUrl: string
   onlySummary: boolean
 }
 
 const defaultOptions: ReportOptions = {
-  listSuites: 'all',
+  listSuites: 'non-skipped',
   listTests: 'all',
   baseUrl: '',
   onlySummary: false
@@ -190,7 +190,12 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
         const tsNameLink = skipLink ? tsName : link(tsName, tsAddr)
         const passed = s.passed > 0 ? `${s.passed}${Icon.success}` : ''
         const failed = s.failed > 0 ? `${s.failed}${Icon.fail}` : ''
-        const skipped = s.skipped > 0 ? `${s.skipped}${Icon.skip}` : ''
+        let skipped
+        if (options.listSuites === 'non-skipped') {
+          return [tsNameLink, passed, failed, tsTime]
+        } else {
+          skipped = s.skipped > 0 ? `${s.skipped}${Icon.skip}` : ''
+        }
         return [tsNameLink, passed, failed, skipped, tsTime]
       })
     )
