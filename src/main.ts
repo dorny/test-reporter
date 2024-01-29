@@ -39,8 +39,8 @@ class TestReporter {
   readonly path = core.getInput('path', {required: true})
   readonly pathReplaceBackslashes = core.getInput('path-replace-backslashes', {required: false}) === 'true'
   readonly reporter = core.getInput('reporter', {required: true})
-  readonly listSuites = core.getInput('list-suites', {required: true}) as 'all' | 'failed' | 'non-skipped'
-  readonly listTests = core.getInput('list-tests', {required: true}) as 'all' | 'failed' | 'none'
+  readonly listSuites = core.getInput('list-suites', {required: true}) as 'all' | 'failed'
+  readonly listTests = core.getInput('list-tests', {required: true}) as 'all' | 'failed' | 'none' | 'non-skipped'
   readonly maxAnnotations = parseInt(core.getInput('max-annotations', {required: true}))
   readonly failOnError = core.getInput('fail-on-error', {required: true}) === 'true'
   readonly workDirInput = core.getInput('working-directory', {required: false})
@@ -53,12 +53,17 @@ class TestReporter {
   constructor() {
     this.octokit = github.getOctokit(this.token)
 
-    if (this.listSuites !== 'all' && this.listSuites !== 'failed' && this.listSuites !== 'non-skipped') {
+    if (this.listSuites !== 'all' && this.listSuites !== 'failed') {
       core.setFailed(`Input parameter 'list-suites' has invalid value of ${this.listSuites}`)
       return
     }
 
-    if (this.listTests !== 'all' && this.listTests !== 'failed' && this.listTests !== 'none') {
+    if (
+      this.listTests !== 'all' &&
+      this.listTests !== 'failed' &&
+      this.listTests !== 'none' &&
+      this.listTests !== 'non-skipped'
+    ) {
       core.setFailed(`Input parameter 'list-tests' has invalid value`)
       return
     }

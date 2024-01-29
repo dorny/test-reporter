@@ -8,8 +8,8 @@ import {slug} from '../utils/slugger'
 const MAX_REPORT_LENGTH = 65535
 
 export interface ReportOptions {
-  listSuites: 'all' | 'failed' | 'non-skipped'
-  listTests: 'all' | 'failed' | 'none'
+  listSuites: 'all' | 'failed'
+  listTests: 'all' | 'failed' | 'none' | 'non-skipped'
   baseUrl: string
   onlySummary: boolean
 }
@@ -191,8 +191,8 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
         const passed = s.passed > 0 ? `${s.passed}${Icon.success}` : ''
         const failed = s.failed > 0 ? `${s.failed}${Icon.fail}` : ''
         let skipped
-        if (options.listSuites === 'non-skipped') {
-          return [tsNameLink, passed, failed, tsTime]
+        if (options.listTests === 'non-skipped') {
+          return [tsNameLink, passed, failed, '', tsTime]
         } else {
           skipped = s.skipped > 0 ? `${s.skipped}${Icon.skip}` : ''
         }
@@ -217,6 +217,12 @@ function getTestsReport(ts: TestSuiteResult, runIndex: number, suiteIndex: numbe
   if (options.listTests === 'failed' && ts.result !== 'failed') {
     return []
   }
+  // if (ts.result === 'skipped') {
+  //   core.info(`SKIPPED TEST LIST ${ts.name}`)
+  // }
+  // if (options.listTests === 'non-skipped' && ts.result === 'skipped') {
+  //   return []
+  // }
   const groups = ts.groups
   if (groups.length === 0) {
     return []
@@ -237,6 +243,9 @@ function getTestsReport(ts: TestSuiteResult, runIndex: number, suiteIndex: numbe
     }
     const space = grp.name ? '  ' : ''
     for (const tc of grp.tests) {
+      if (tc.result === 'skipped') {
+        continue
+      }
       const result = getResultIcon(tc.result)
       sections.push(`${space}${result} ${tc.name}`)
       if (tc.error) {

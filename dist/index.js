@@ -313,11 +313,14 @@ class TestReporter {
             return yield this.octokit.rest.checks.update(Object.assign(Object.assign({}, requestParams), { output: Object.assign(Object.assign({}, requestParams.output), { annotations }) }));
         });
         this.octokit = github.getOctokit(this.token);
-        if (this.listSuites !== 'all' && this.listSuites !== 'failed' && this.listSuites !== 'non-skipped') {
+        if (this.listSuites !== 'all' && this.listSuites !== 'failed') {
             core.setFailed(`Input parameter 'list-suites' has invalid value of ${this.listSuites}`);
             return;
         }
-        if (this.listTests !== 'all' && this.listTests !== 'failed' && this.listTests !== 'none') {
+        if (this.listTests !== 'all' &&
+            this.listTests !== 'failed' &&
+            this.listTests !== 'none' &&
+            this.listTests !== 'non-skipped') {
             core.setFailed(`Input parameter 'list-tests' has invalid value`);
             return;
         }
@@ -1689,8 +1692,8 @@ function getSuitesReport(tr, runIndex, options) {
             const passed = s.passed > 0 ? `${s.passed}${markdown_utils_1.Icon.success}` : '';
             const failed = s.failed > 0 ? `${s.failed}${markdown_utils_1.Icon.fail}` : '';
             let skipped;
-            if (options.listSuites === 'non-skipped') {
-                return [tsNameLink, passed, failed, tsTime];
+            if (options.listTests === 'non-skipped') {
+                return [tsNameLink, passed, failed, '', tsTime];
             }
             else {
                 skipped = s.skipped > 0 ? `${s.skipped}${markdown_utils_1.Icon.skip}` : '';
@@ -1712,6 +1715,12 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
     if (options.listTests === 'failed' && ts.result !== 'failed') {
         return [];
     }
+    // if (ts.result === 'skipped') {
+    //   core.info(`SKIPPED TEST LIST ${ts.name}`)
+    // }
+    // if (options.listTests === 'non-skipped' && ts.result === 'skipped') {
+    //   return []
+    // }
     const groups = ts.groups;
     if (groups.length === 0) {
         return [];
@@ -1729,6 +1738,9 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
         }
         const space = grp.name ? '  ' : '';
         for (const tc of grp.tests) {
+            if (tc.result === 'skipped') {
+                continue;
+            }
             const result = getResultIcon(tc.result);
             sections.push(`${space}${result} ${tc.name}`);
             if (tc.error) {
