@@ -39,7 +39,7 @@ class TestReporter {
   readonly path = core.getInput('path', {required: true})
   readonly pathReplaceBackslashes = core.getInput('path-replace-backslashes', {required: false}) === 'true'
   readonly reporter = core.getInput('reporter', {required: true})
-  readonly listSuites = core.getInput('list-suites', {required: true}) as 'all' | 'failed'
+  readonly listSuites = core.getInput('list-suites', {required: true}) as 'all' | 'failed' | 'non-skipped'
   readonly listTests = core.getInput('list-tests', {required: true}) as 'all' | 'failed' | 'none'
   readonly maxAnnotations = parseInt(core.getInput('max-annotations', {required: true}))
   readonly failOnError = core.getInput('fail-on-error', {required: true}) === 'true'
