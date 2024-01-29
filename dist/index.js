@@ -1715,12 +1715,6 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
     if (options.listTests === 'failed' && ts.result !== 'failed') {
         return [];
     }
-    // if (ts.result === 'skipped') {
-    //   core.info(`SKIPPED TEST LIST ${ts.name}`)
-    // }
-    // if (options.listTests === 'non-skipped' && ts.result === 'skipped') {
-    //   return []
-    // }
     const groups = ts.groups;
     if (groups.length === 0) {
         return [];
@@ -1738,7 +1732,7 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
         }
         const space = grp.name ? '  ' : '';
         for (const tc of grp.tests) {
-            if (tc.result === 'skipped') {
+            if (options.listTests === 'non-skipped' && tc.result === 'skipped') {
                 continue;
             }
             const result = getResultIcon(tc.result);
