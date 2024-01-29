@@ -22,4 +22,4 @@ jobs:
           path: playwright-report.xml
           reporter: java-junit
           show-html-notice: true
-          list-suites: 'non-skipped'
+          list-tests: 'non-skipped'
