@@ -313,8 +313,8 @@ class TestReporter {
             return yield this.octokit.rest.checks.update(Object.assign(Object.assign({}, requestParams), { output: Object.assign(Object.assign({}, requestParams.output), { annotations }) }));
         });
         this.octokit = github.getOctokit(this.token);
-        if (this.listSuites !== 'all' && this.listSuites !== 'failed') {
-            core.setFailed(`Input parameter 'list-suites' has invalid value`);
+        if (this.listSuites !== 'all' && this.listSuites !== 'failed' && this.listSuites !== 'non-skipped') {
+            core.setFailed(`Input parameter 'list-suites' has invalid value of ${this.listSuites}`);
             return;
         }
         if (this.listTests !== 'all' && this.listTests !== 'failed' && this.listTests !== 'none') {

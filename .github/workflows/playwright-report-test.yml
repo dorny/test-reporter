@@ -11,12 +11,15 @@ jobs:
     name: Workflow test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: ./
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Check dirs
+        run: ls
+      - name: Test reporter
+        uses: ./
         with:
-          artifact: test-results
           name: Workflow Report
-          path: 'playwright-report.xml'
-          reporter: jest-junit
+          path: playwright-report.xml
+          reporter: java-junit
           show-html-notice: true
           list-suites: 'non-skipped'
