@@ -190,12 +190,7 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
         const tsNameLink = skipLink ? tsName : link(tsName, tsAddr)
         const passed = s.passed > 0 ? `${s.passed}${Icon.success}` : ''
         const failed = s.failed > 0 ? `${s.failed}${Icon.fail}` : ''
-        let skipped
-        if (options.listTests === 'non-skipped') {
-          return [tsNameLink, passed, failed, '', tsTime]
-        } else {
-          skipped = s.skipped > 0 ? `${s.skipped}${Icon.skip}` : ''
-        }
+        const skipped = s.skipped > 0 ? `${s.skipped}${Icon.skip}` : ''
         return [tsNameLink, passed, failed, skipped, tsTime]
       })
     )
