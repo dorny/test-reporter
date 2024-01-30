@@ -1691,13 +1691,7 @@ function getSuitesReport(tr, runIndex, options) {
             const tsNameLink = skipLink ? tsName : (0, markdown_utils_1.link)(tsName, tsAddr);
             const passed = s.passed > 0 ? `${s.passed}${markdown_utils_1.Icon.success}` : '';
             const failed = s.failed > 0 ? `${s.failed}${markdown_utils_1.Icon.fail}` : '';
-            let skipped;
-            if (options.listTests === 'non-skipped') {
-                return [tsNameLink, passed, failed, '', tsTime];
-            }
-            else {
-                skipped = s.skipped > 0 ? `${s.skipped}${markdown_utils_1.Icon.skip}` : '';
-            }
+            const skipped = s.skipped > 0 ? `${s.skipped}${markdown_utils_1.Icon.skip}` : '';
             return [tsNameLink, passed, failed, skipped, tsTime];
         }));
         sections.push(suitesTable);
