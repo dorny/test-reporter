@@ -156,6 +156,7 @@ jobs:
     #   all
     #   failed
     #   none
+    #   non-skipped (Only show passed / failed in the file lists)
     list-tests: 'all'
 
     # Limits number of created annotations with error message and stack trace captured during test execution.
