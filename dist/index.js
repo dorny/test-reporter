@@ -314,10 +314,13 @@ class TestReporter {
         });
         this.octokit = github.getOctokit(this.token);
         if (this.listSuites !== 'all' && this.listSuites !== 'failed') {
-            core.setFailed(`Input parameter 'list-suites' has invalid value`);
+            core.setFailed(`Input parameter 'list-suites' has invalid value of ${this.listSuites}`);
             return;
         }
-        if (this.listTests !== 'all' && this.listTests !== 'failed' && this.listTests !== 'none') {
+        if (this.listTests !== 'all' &&
+            this.listTests !== 'failed' &&
+            this.listTests !== 'none' &&
+            this.listTests !== 'non-skipped') {
             core.setFailed(`Input parameter 'list-tests' has invalid value`);
             return;
         }
@@ -1723,6 +1726,9 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
         }
         const space = grp.name ? '  ' : '';
         for (const tc of grp.tests) {
+            if (options.listTests === 'non-skipped' && tc.result === 'skipped') {
+                continue;
+            }
             const result = getResultIcon(tc.result);
             sections.push(`${space}${result} ${tc.name}`);
             if (tc.error) {

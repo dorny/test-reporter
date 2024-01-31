@@ -9,7 +9,7 @@ const MAX_REPORT_LENGTH = 65535
 
 export interface ReportOptions {
   listSuites: 'all' | 'failed'
-  listTests: 'all' | 'failed' | 'none'
+  listTests: 'all' | 'failed' | 'none' | 'non-skipped'
   baseUrl: string
   onlySummary: boolean
 }
@@ -212,6 +212,7 @@ function getTestsReport(ts: TestSuiteResult, runIndex: number, suiteIndex: numbe
   if (options.listTests === 'failed' && ts.result !== 'failed') {
     return []
   }
+
   const groups = ts.groups
   if (groups.length === 0) {
     return []
@@ -232,6 +233,9 @@ function getTestsReport(ts: TestSuiteResult, runIndex: number, suiteIndex: numbe
     }
     const space = grp.name ? '  ' : ''
     for (const tc of grp.tests) {
+      if (options.listTests === 'non-skipped' && tc.result === 'skipped') {
+        continue
+      }
       const result = getResultIcon(tc.result)
       sections.push(`${space}${result} ${tc.name}`)
       if (tc.error) {

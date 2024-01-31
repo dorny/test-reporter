@@ -1,0 +1,472 @@
+<testsuites id="" name="" tests="60" failures="4" skipped="20" errors="0" time="59.09258599999547">
+<testsuite name="auth.setup.ts" timestamp="2024-01-26T21:29:30.878Z" hostname="setup" tests="6" failures="0" skipped="0" time="6.702" errors="0">
+<testcase name="authenticate as classic admin" classname="auth.setup.ts" time="1.702">
+</testcase>
+<testcase name="authenticate as basketball admin" classname="auth.setup.ts" time="1.734">
+</testcase>
+<testcase name="authenticate as wrestling admin" classname="auth.setup.ts" time="1.697">
+</testcase>
+<testcase name="authenticate as onboarding admin 1" classname="auth.setup.ts" time="0.516">
+</testcase>
+<testcase name="authenticate as onboarding admin 3" classname="auth.setup.ts" time="0.527">
+</testcase>
+<testcase name="authenticate as coachAdmin" classname="auth.setup.ts" time="0.526">
+</testcase>
+</testsuite>
+<testsuite name="tests/analyze/load-video.spec.ts" timestamp="2024-01-26T21:29:30.878Z" hostname="chrome" tests="3" failures="0" skipped="3" time="0" errors="0">
+<testcase name="record &quot;Time to Video&quot; when loading directly via URL › using manual timings" classname="tests/analyze/load-video.spec.ts" time="0">
+<properties>
+<property name="skip" value="">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="record &quot;Time to Video&quot; when loading directly via URL › using Performance API mark" classname="tests/analyze/load-video.spec.ts" time="0">
+<properties>
+<property name="skip" value="">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="record &quot;Time to Video&quot; when loading directly via URL › using Performance API measurement" classname="tests/analyze/load-video.spec.ts" time="0">
+<properties>
+<property name="skip" value="">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/analyze/seamless-video-playback.spec.ts" timestamp="2024-01-26T21:29:30.878Z" hostname="chrome" tests="9" failures="0" skipped="9" time="0.012" errors="0">
+<testcase name="during looping playback › when clip repeats, it starts at the beginning" classname="tests/analyze/seamless-video-playback.spec.ts" time="0">
+<properties>
+<property name="skip" value="">
+</property>
+<property name="slow" value="">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="during sequential playback (&quot;Play All Clips&quot; mode) › when one clip plays through to the next, overlapping video is skipped" classname="tests/analyze/seamless-video-playback.spec.ts" time="0">
+<properties>
+<property name="skip" value="">
+</property>
+<property name="slow" value="">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="in &apos;Play All Clips&apos; mode, clip plays from beginning › when clicked on in navigation module" classname="tests/analyze/seamless-video-playback.spec.ts" time="0">
+<properties>
+<property name="skip" value="">
+</property>
+<property name="slow" value="">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="in &apos;Play All Clips&apos; mode, clip plays from beginning › with next clip button" classname="tests/analyze/seamless-video-playback.spec.ts" time="0">
+<properties>
+<property name="skip" value="">
+</property>
+<property name="slow" value="">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="in &apos;Play All Clips&apos; mode, clip plays from beginning › with previous clip button" classname="tests/analyze/seamless-video-playback.spec.ts" time="0">
+<properties>
+<property name="skip" value="">
+</property>
+<property name="slow" value="">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="in &apos;Loop Clips&apos; mode, clip plays from beginning › when clicked on in navigation module" classname="tests/analyze/seamless-video-playback.spec.ts" time="0">
+<properties>
+<property name="skip" value="">
+</property>
+<property name="slow" value="">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="in &apos;Loop Clips&apos; mode, clip plays from beginning › with next clip button" classname="tests/analyze/seamless-video-playback.spec.ts" time="0">
+<properties>
+<property name="skip" value="">
+</property>
+<property name="slow" value="">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="in &apos;Loop Clips&apos; mode, clip plays from beginning › with previous clip button" classname="tests/analyze/seamless-video-playback.spec.ts" time="0">
+<properties>
+<property name="skip" value="">
+</property>
+<property name="slow" value="">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="rewind functions normally" classname="tests/analyze/seamless-video-playback.spec.ts" time="0.012">
+<properties>
+<property name="slow" value="">
+</property>
+<property name="slow" value="">
+</property>
+<property name="fixme" value="Implement">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/app.spec.ts" timestamp="2024-01-26T21:29:30.878Z" hostname="chrome" tests="1" failures="0" skipped="1" time="0" errors="0">
+<testcase name="App › logs in and loads page" classname="tests/app.spec.ts" time="0">
+<properties>
+<property name="skip" value="">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/grid.spec.ts" timestamp="2024-01-26T21:29:30.878Z" hostname="chrome" tests="25" failures="4" skipped="3" time="115.892" errors="0">
+<testcase name="Grid › Mobile Web › Athlete › should not be able to edit data" classname="tests/grid.spec.ts" time="2.968">
+</testcase>
+<testcase name="Grid › Mobile Web › Admin or Coach › should be able to edit data" classname="tests/grid.spec.ts" time="5.762">
+</testcase>
+<testcase name="Grid › Field Sets › should update displayed grid columns after editing" classname="tests/grid.spec.ts" time="9.215">
+</testcase>
+<testcase name="Grid › Field Sets › should update displayed clip preview fields after editing" classname="tests/grid.spec.ts" time="0">
+<properties>
+<property name="skip" value="">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Grid › Basketball Navigation Module › should display correct moment data when filtered by Scout team Points" classname="tests/grid.spec.ts" time="3.15">
+</testcase>
+<testcase name="Grid › Basketball Navigation Module › should display correct moment data when filtered by Opponent Rebounds" classname="tests/grid.spec.ts" time="5.091">
+</testcase>
+<testcase name="Grid › Basketball Navigation Module › should display correct moment data when filtered by Steals" classname="tests/grid.spec.ts" time="4.261">
+</testcase>
+<testcase name="Grid › Basketball Navigation Module › should display correct moment data when filtered by Rebounds" classname="tests/grid.spec.ts" time="2.86">
+</testcase>
+<testcase name="Grid › Basketball Navigation Module › should display clips for opportunities in Period when filtered by Period" classname="tests/grid.spec.ts" time="3.501">
+</testcase>
+<testcase name="Grid › Basketball Navigation Module › should display clips for opportunities that end in a turnover when filtered by Turnovers" classname="tests/grid.spec.ts" time="3.721">
+</testcase>
+<testcase name="Grid › Basketball Navigation Module › should display correct moment data when filtered by 3FG Attempts" classname="tests/grid.spec.ts" time="3.282">
+</testcase>
+<testcase name="Grid › Column Sorting › AmFb Column Sets › should display correct data when sorting by OFF FORM column" classname="tests/grid.spec.ts" time="10">
+<failure message="grid.spec.ts:202:11 should display correct data when sorting by OFF FORM column" type="FAILURE">
+<![CDATA[  [chrome] › tests/grid.spec.ts:202:11 › Grid › Column Sorting › AmFb Column Sets › should display correct data when sorting by OFF FORM column › Sort grid by OFF FORM in ascending order 
+
+    Test timeout of 10000ms exceeded.
+
+    Error: locator.click: Target closed
+    =========================== logs ===========================
+    waiting for locator('[data-qa-id^="column-header-OFF FORM-"]')
+    ============================================================
+
+       at ../../../packages/playwright-shared/src/models/locators/table.locator.ts:12
+
+      10 |     const expectedColumnSort = this.locator.filter({ has: this.page.locator(`[data-qa-id*='${sortOrder}']`) });
+      11 |     do {
+    > 12 |       await this.locator.click();
+         |                          ^
+      13 |     } while (!expectedColumnSort.isVisible());
+      14 |   }
+      15 | }
+
+        at TableLocator.sortColumnBy (/Users/connor.vidlock/Documents/GitHub/hudl-frontends/packages/playwright-shared/src/models/locators/table.locator.ts:12:26)
+        at /Users/connor.vidlock/Documents/GitHub/hudl-frontends/apps/watch/playwright/tests/models/actions/grid.actions.ts:30:52
+        at GridActions.sortColumn (/Users/connor.vidlock/Documents/GitHub/hudl-frontends/apps/watch/playwright/tests/models/actions/grid.actions.ts:28:16)
+        at /Users/connor.vidlock/Documents/GitHub/hudl-frontends/apps/watch/playwright/tests/grid.spec.ts:205:27
+
+    Pending operations:
+      - locator.click at ../../packages/playwright-shared/src/models/locators/table.locator.ts:12:26
+
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    playwright/test-results/tests-grid-Grid-Column-Sorting-AmFb-Column-Set-8f487-ay-correct-data-when-sorting-by-OFF-FORM-column-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    playwright/test-results/tests-grid-Grid-Column-Sorting-AmFb-Column-Set-8f487-ay-correct-data-when-sorting-by-OFF-FORM-column-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace playwright/test-results/tests-grid-Grid-Column-Sorting-AmFb-Column-Set-8f487-ay-correct-data-when-sorting-by-OFF-FORM-column-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results/tests-grid-Grid-Column-Sorting-AmFb-Column-Set-8f487-ay-correct-data-when-sorting-by-OFF-FORM-column-chrome/test-failed-1.png]]
+
+[[ATTACHMENT|test-results/tests-grid-Grid-Column-Sorting-AmFb-Column-Set-8f487-ay-correct-data-when-sorting-by-OFF-FORM-column-chrome/trace.zip]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Grid › Column Sorting › Wrestling Column Sets › should display correct data when sorting by Period column" classname="tests/grid.spec.ts" time="0">
+<properties>
+<property name="skip" value="">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Grid › Quick Editor › should be able to edit data from quick editor as an admin or coach" classname="tests/grid.spec.ts" time="0">
+<properties>
+<property name="skip" value="">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Grid › Data Entry › should open select dropdown options when pressing Spacebar in grid cell" classname="tests/grid.spec.ts" time="10">
+<failure message="grid.spec.ts:254:9 should open select dropdown options when pressing Spacebar in grid cell" type="FAILURE">
+<![CDATA[  [chrome] › tests/grid.spec.ts:254:9 › Grid › Data Entry › should open select dropdown options when pressing Spacebar in grid cell › double click into column OFF FORM clip number 3 
+
+    Test timeout of 10000ms exceeded.
+
+    Error: locator.dblclick: Target closed
+    =========================== logs ===========================
+    waiting for locator('div[data-qa-id=\'OFF FORM-column-3\']')
+    ============================================================
+
+       at ../../../packages/playwright-shared/src/models/locators/base/base.locator.ts:17
+
+      15 |
+      16 |   async doubleClick() {
+    > 17 |     await this.locator.dblclick();
+         |                        ^
+      18 |   }
+      19 |
+      20 |   async getText() {
+
+        at TextInputLocator.doubleClick (/Users/connor.vidlock/Documents/GitHub/hudl-frontends/packages/playwright-shared/src/models/locators/base/base.locator.ts:17:24)
+        at /Users/connor.vidlock/Documents/GitHub/hudl-frontends/apps/watch/playwright/tests/models/actions/grid.actions.ts:48:63
+        at GridActions.doubleClickIntoGridColumn (/Users/connor.vidlock/Documents/GitHub/hudl-frontends/apps/watch/playwright/tests/models/actions/grid.actions.ts:47:16)
+        at /Users/connor.vidlock/Documents/GitHub/hudl-frontends/apps/watch/playwright/tests/grid.spec.ts:256:25
+
+    Pending operations:
+      - locator.dblclick at ../../packages/playwright-shared/src/models/locators/base/base.locator.ts:17:24
+
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    playwright/test-results/tests-grid-Grid-Data-Entry-should-open-select-dropdown-options-when-pressing-Spacebar-in-grid-cell-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    playwright/test-results/tests-grid-Grid-Data-Entry-should-open-select-dropdown-options-when-pressing-Spacebar-in-grid-cell-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace playwright/test-results/tests-grid-Grid-Data-Entry-should-open-select-dropdown-options-when-pressing-Spacebar-in-grid-cell-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results/tests-grid-Grid-Data-Entry-should-open-select-dropdown-options-when-pressing-Spacebar-in-grid-cell-chrome/test-failed-1.png]]
+
+[[ATTACHMENT|test-results/tests-grid-Grid-Data-Entry-should-open-select-dropdown-options-when-pressing-Spacebar-in-grid-cell-chrome/trace.zip]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Grid › Data Entry › should be able to use keyboard to navigate horizontal grid and enter data" classname="tests/grid.spec.ts" time="10">
+<failure message="grid.spec.ts:261:9 should be able to use keyboard to navigate horizontal grid and enter data" type="FAILURE">
+<![CDATA[  [chrome] › tests/grid.spec.ts:261:9 › Grid › Data Entry › should be able to use keyboard to navigate horizontal grid and enter data › double click into column OFF FORM clip number 3 
+
+    Test timeout of 10000ms exceeded.
+
+    Error: locator.dblclick: Target closed
+    =========================== logs ===========================
+    waiting for locator('div[data-qa-id=\'OFF FORM-column-3\']')
+    ============================================================
+
+       at ../../../packages/playwright-shared/src/models/locators/base/base.locator.ts:17
+
+      15 |
+      16 |   async doubleClick() {
+    > 17 |     await this.locator.dblclick();
+         |                        ^
+      18 |   }
+      19 |
+      20 |   async getText() {
+
+        at TextInputLocator.doubleClick (/Users/connor.vidlock/Documents/GitHub/hudl-frontends/packages/playwright-shared/src/models/locators/base/base.locator.ts:17:24)
+        at /Users/connor.vidlock/Documents/GitHub/hudl-frontends/apps/watch/playwright/tests/models/actions/grid.actions.ts:48:63
+        at GridActions.doubleClickIntoGridColumn (/Users/connor.vidlock/Documents/GitHub/hudl-frontends/apps/watch/playwright/tests/models/actions/grid.actions.ts:47:16)
+        at /Users/connor.vidlock/Documents/GitHub/hudl-frontends/apps/watch/playwright/tests/grid.spec.ts:263:25
+
+    Pending operations:
+      - locator.dblclick at ../../packages/playwright-shared/src/models/locators/base/base.locator.ts:17:24
+
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    playwright/test-results/tests-grid-Grid-Data-Entry-should-be-able-to-use-keyboard-to-navigate-horizontal-grid-and-enter-data-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    playwright/test-results/tests-grid-Grid-Data-Entry-should-be-able-to-use-keyboard-to-navigate-horizontal-grid-and-enter-data-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace playwright/test-results/tests-grid-Grid-Data-Entry-should-be-able-to-use-keyboard-to-navigate-horizontal-grid-and-enter-data-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results/tests-grid-Grid-Data-Entry-should-be-able-to-use-keyboard-to-navigate-horizontal-grid-and-enter-data-chrome/test-failed-1.png]]
+
+[[ATTACHMENT|test-results/tests-grid-Grid-Data-Entry-should-be-able-to-use-keyboard-to-navigate-horizontal-grid-and-enter-data-chrome/trace.zip]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Grid › Data Entry › should be able to use keyboard to navigate vertical grid and enter data" classname="tests/grid.spec.ts" time="10">
+<failure message="grid.spec.ts:277:9 should be able to use keyboard to navigate vertical grid and enter data" type="FAILURE">
+<![CDATA[  [chrome] › tests/grid.spec.ts:277:9 › Grid › Data Entry › should be able to use keyboard to navigate vertical grid and enter data › Select BUNCH from column OFF FORM list 
+
+    Test timeout of 10000ms exceeded.
+
+    Error: locator.click: Target closed
+    =========================== logs ===========================
+    waiting for locator('[data-qa-id="clip-edit-field-OFF FORM"]')
+    ============================================================
+
+       at ../../../packages/playwright-shared/src/models/locators/base/base.locator.ts:13
+
+      11 |
+      12 |   async click(force: boolean = false) {
+    > 13 |     await this.locator.click({ force });
+         |                        ^
+      14 |   }
+      15 |
+      16 |   async doubleClick() {
+
+        at SelectLocator.click (/Users/connor.vidlock/Documents/GitHub/hudl-frontends/packages/playwright-shared/src/models/locators/base/base.locator.ts:13:24)
+        at /Users/connor.vidlock/Documents/GitHub/hudl-frontends/apps/watch/playwright/tests/models/actions/grid.actions.ts:93:58
+        at GridActions.enterGridSelectValue (/Users/connor.vidlock/Documents/GitHub/hudl-frontends/apps/watch/playwright/tests/models/actions/grid.actions.ts:92:16)
+        at /Users/connor.vidlock/Documents/GitHub/hudl-frontends/apps/watch/playwright/tests/grid.spec.ts:279:25
+
+    Pending operations:
+      - locator.click at ../../packages/playwright-shared/src/models/locators/base/base.locator.ts:13:24
+
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    playwright/test-results/tests-grid-Grid-Data-Entry-should-be-able-to-use-keyboard-to-navigate-vertical-grid-and-enter-data-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    playwright/test-results/tests-grid-Grid-Data-Entry-should-be-able-to-use-keyboard-to-navigate-vertical-grid-and-enter-data-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace playwright/test-results/tests-grid-Grid-Data-Entry-should-be-able-to-use-keyboard-to-navigate-vertical-grid-and-enter-data-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results/tests-grid-Grid-Data-Entry-should-be-able-to-use-keyboard-to-navigate-vertical-grid-and-enter-data-chrome/test-failed-1.png]]
+
+[[ATTACHMENT|test-results/tests-grid-Grid-Data-Entry-should-be-able-to-use-keyboard-to-navigate-vertical-grid-and-enter-data-chrome/trace.zip]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Grid › Data Entry › should display error state for input with invalid data" classname="tests/grid.spec.ts" time="5.853">
+</testcase>
+<testcase name="Grid › Data Entry › confirm auto-fill works correctly" classname="tests/grid.spec.ts" time="5.021">
+</testcase>
+<testcase name="Grid › Tagged data › Wrestling › should display correct wrestler names tagged from Assist" classname="tests/grid.spec.ts" time="2.522">
+</testcase>
+<testcase name="Grid › Tagged data › Wrestling › should display correct score and points tagged from Assist" classname="tests/grid.spec.ts" time="2.655">
+</testcase>
+<testcase name="Grid › Tagged data › Wrestling › should display correct Period tagged from Assist" classname="tests/grid.spec.ts" time="2.666">
+</testcase>
+<testcase name="Grid › Tagged data › Wrestling › should display correct Key Moments tagged from Assist" classname="tests/grid.spec.ts" time="2.908">
+</testcase>
+<testcase name="Grid › Tagged data › Wrestling › should edit cells using the team roster" classname="tests/grid.spec.ts" time="4.794">
+</testcase>
+<testcase name="Grid › Tagged data › Wrestling › should change key moment type and update grid data" classname="tests/grid.spec.ts" time="5.662">
+</testcase>
+</testsuite>
+<testsuite name="tests/onboarding.spec.ts" timestamp="2024-01-26T21:29:30.878Z" hostname="chrome" tests="4" failures="0" skipped="4" time="0" errors="0">
+<testcase name="Grid › Onboarding › Field Visibility › should successfully display field visibility onboarding prompt" classname="tests/onboarding.spec.ts" time="0">
+<properties>
+<property name="skip" value="">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Grid › Onboarding › Field Visibility › Grid Hotkey Tooltip › should successfully display grid hotkey onboarding prompt" classname="tests/onboarding.spec.ts" time="0">
+<properties>
+<property name="skip" value="">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Grid › Onboarding › Field Visibility › Reorder Field Sets › should successfully display field reorder onboarding prompt" classname="tests/onboarding.spec.ts" time="0">
+<properties>
+<property name="skip" value="">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Grid › Onboarding › Field Visibility › Quick Edit › should successfully display quick edit onboarding prompt" classname="tests/onboarding.spec.ts" time="0">
+<properties>
+<property name="skip" value="">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/statsEngine.spec.ts" timestamp="2024-01-26T21:29:30.878Z" hostname="chrome" tests="12" failures="0" skipped="0" time="36.371" errors="0">
+<testcase name="Mock stats engine for speed › Filter by Offense in Phase card" classname="tests/statsEngine.spec.ts" time="3.542">
+</testcase>
+<testcase name="Mock stats engine for speed › Filter by defense in phase card" classname="tests/statsEngine.spec.ts" time="2.471">
+</testcase>
+<testcase name="Mock stats engine for speed › Key stats card stats appear as expected when opponent is selected" classname="tests/statsEngine.spec.ts" time="3.207">
+</testcase>
+<testcase name="Mock stats engine for speed › Selecting a Key Stats filter updates both the Navigation Module and Insights Module cards - FG percentage for Team in Context" classname="tests/statsEngine.spec.ts" time="2.932">
+</testcase>
+<testcase name="Mock stats engine for speed › Selecting a Key Stats filter updates both the Navigation Module and Insights Module cards - 2FG Makes for Team in Context" classname="tests/statsEngine.spec.ts" time="3.549">
+</testcase>
+<testcase name="Mock stats engine for speed › Selecting a Key Stats filter updates both the Navigation Module and Insights Module cards - 2FG Attempts for Team in Context" classname="tests/statsEngine.spec.ts" time="2.802">
+</testcase>
+<testcase name="Mock stats engine for speed › Selecting a Key Stats filter updates both the Navigation Module and Insights Module cards - 3FG Makes for Team in Context" classname="tests/statsEngine.spec.ts" time="2.949">
+</testcase>
+<testcase name="Mock stats engine for speed › Selecting a Key Stats filter updates both the Navigation Module and Insights Module cards - 3FG Attempts for Team in Context" classname="tests/statsEngine.spec.ts" time="2.937">
+</testcase>
+<testcase name="Mock stats engine for speed › Selecting a Key Stats filter updates both the Navigation Module and Insights Module cards - Off. Rebounds for Team in Context" classname="tests/statsEngine.spec.ts" time="3.277">
+</testcase>
+<testcase name="Mock stats engine for speed › Selecting a Key Stats filter updates both the Navigation Module and Insights Module cards - Def. Rebounds for Team in Context" classname="tests/statsEngine.spec.ts" time="2.799">
+</testcase>
+<testcase name="Mock stats engine for speed › Selecting a Key Stats filter updates both the Navigation Module and Insights Module cards - Assists for Team in Context" classname="tests/statsEngine.spec.ts" time="3.056">
+</testcase>
+<testcase name="Mock stats engine for speed › Selecting a Key Stats filter updates both the Navigation Module and Insights Module cards - Steal for Team in Context" classname="tests/statsEngine.spec.ts" time="2.85">
+</testcase>
+</testsuite>
+</testsuites>
