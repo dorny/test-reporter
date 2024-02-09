@@ -105,29 +105,31 @@ class TestReporter {
     const results: TestRunResultWithUrl[] = []
     const input = await inputProvider.load()
 
-    try {
-      const readStream = input.trxZip.toBuffer()
-      const version = fs.existsSync('test/EVA.TestSuite.Core/bin/Release/version.txt')
-        ? fs.readFileSync('test/EVA.TestSuite.Core/bin/Release/version.txt').toString()
-        : null
-      const commitID = fs.existsSync('test/EVA.TestSuite.Core/bin/Release/commit.txt')
-        ? fs.readFileSync('test/EVA.TestSuite.Core/bin/Release/commit.txt').toString()
-        : null
+    if (this.resultsEndpoint?.length > 0) {
+      try {
+        const readStream = input.trxZip.toBuffer()
+        const version = fs.existsSync('test/EVA.TestSuite.Core/bin/Release/version.txt')
+          ? fs.readFileSync('test/EVA.TestSuite.Core/bin/Release/version.txt').toString()
+          : null
+        const commitID = fs.existsSync('test/EVA.TestSuite.Core/bin/Release/commit.txt')
+          ? fs.readFileSync('test/EVA.TestSuite.Core/bin/Release/commit.txt').toString()
+          : null
 
-      core.info(
-        `Using EVA version ${version}, commit ${commitID}, branch ${this.context.branch}, current directory: ${cwd()}`
-      )
+        core.info(
+          `Using EVA version ${version}, commit ${commitID}, branch ${this.context.branch}, current directory: ${cwd()}`
+        )
 
-      const post = bent(this.resultsEndpoint, 'POST', {}, 200)
-      await post(
-        `TestResults?Secret=${this.resultsEndpointSecret}${version ? '&EVAVersion=' + version : ''}${
-          commitID ? '&EVACommitID=' + commitID : ''
-        }&EVABranch=${encodeURI(this.context.branch)}`,
-        readStream
-      )
-      core.info(`Uploaded TRX files`)
-    } catch (ex) {
-      core.warning(`Could not upload TRX ZIP file: ${ex}`)
+        const post = bent(this.resultsEndpoint, 'POST', {}, 200)
+        await post(
+          `TestResults?Secret=${this.resultsEndpointSecret}${version ? '&EVAVersion=' + version : ''}${
+            commitID ? '&EVACommitID=' + commitID : ''
+          }&EVABranch=${encodeURI(this.context.branch)}`,
+          readStream
+        )
+        core.info(`Uploaded TRX files`)
+      } catch (ex) {
+        core.warning(`Could not upload TRX ZIP file: ${ex}`)
+      }
     }
 
     for (const [reportName, files] of Object.entries(input.reports)) {

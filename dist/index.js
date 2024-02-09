@@ -192,7 +192,7 @@ class TestReporter {
         }
     }
     run() {
-        var _a;
+        var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
             if (this.workDirInput) {
                 core.info(`Changing directory to '${this.workDirInput}'`);
@@ -218,21 +218,23 @@ class TestReporter {
             const parser = this.getParser(this.reporter, options);
             const results = [];
             const input = yield inputProvider.load();
-            try {
-                const readStream = input.trxZip.toBuffer();
-                const version = fs_1.default.existsSync('test/EVA.TestSuite.Core/bin/Release/version.txt')
-                    ? fs_1.default.readFileSync('test/EVA.TestSuite.Core/bin/Release/version.txt').toString()
-                    : null;
-                const commitID = fs_1.default.existsSync('test/EVA.TestSuite.Core/bin/Release/commit.txt')
-                    ? fs_1.default.readFileSync('test/EVA.TestSuite.Core/bin/Release/commit.txt').toString()
-                    : null;
-                core.info(`Using EVA version ${version}, commit ${commitID}, branch ${this.context.branch}, current directory: ${(0, process_1.cwd)()}`);
-                const post = (0, bent_1.default)(this.resultsEndpoint, 'POST', {}, 200);
-                yield post(`TestResults?Secret=${this.resultsEndpointSecret}${version ? '&EVAVersion=' + version : ''}${commitID ? '&EVACommitID=' + commitID : ''}&EVABranch=${encodeURI(this.context.branch)}`, readStream);
-                core.info(`Uploaded TRX files`);
-            }
-            catch (ex) {
-                core.warning(`Could not upload TRX ZIP file: ${ex}`);
+            if (((_a = this.resultsEndpoint) === null || _a === void 0 ? void 0 : _a.length) > 0) {
+                try {
+                    const readStream = input.trxZip.toBuffer();
+                    const version = fs_1.default.existsSync('test/EVA.TestSuite.Core/bin/Release/version.txt')
+                        ? fs_1.default.readFileSync('test/EVA.TestSuite.Core/bin/Release/version.txt').toString()
+                        : null;
+                    const commitID = fs_1.default.existsSync('test/EVA.TestSuite.Core/bin/Release/commit.txt')
+                        ? fs_1.default.readFileSync('test/EVA.TestSuite.Core/bin/Release/commit.txt').toString()
+                        : null;
+                    core.info(`Using EVA version ${version}, commit ${commitID}, branch ${this.context.branch}, current directory: ${(0, process_1.cwd)()}`);
+                    const post = (0, bent_1.default)(this.resultsEndpoint, 'POST', {}, 200);
+                    yield post(`TestResults?Secret=${this.resultsEndpointSecret}${version ? '&EVAVersion=' + version : ''}${commitID ? '&EVACommitID=' + commitID : ''}&EVABranch=${encodeURI(this.context.branch)}`, readStream);
+                    core.info(`Uploaded TRX files`);
+                }
+                catch (ex) {
+                    core.warning(`Could not upload TRX ZIP file: ${ex}`);
+                }
             }
             for (const [reportName, files] of Object.entries(input.reports)) {
                 try {
@@ -270,7 +272,7 @@ class TestReporter {
                                         core.endGroup();
                                         return;
                                     }
-                                    core.info(`${t.name}: ${(_a = t.error) === null || _a === void 0 ? void 0 : _a.message}`);
+                                    core.info(`${t.name}: ${(_b = t.error) === null || _b === void 0 ? void 0 : _b.message}`);
                                 }
                             }
                         }
