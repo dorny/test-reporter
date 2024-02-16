@@ -292,6 +292,7 @@ class TestReporter {
         });
     }
     createReport(parser, name, files) {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
             if (files.length === 0) {
                 core.warning(`No file matches path ${this.path}`);
@@ -313,13 +314,22 @@ class TestReporter {
             }
             core.info(`Creating check run ${name}`);
             try {
-                const createResp = yield this.octokit.rest.checks.create(Object.assign({ head_sha: this.context.sha, name, status: 'in_progress', output: {
-                        title: name,
-                        summary: ''
-                    } }, github.context.repo));
+                const existingChecks = yield this.octokit.rest.checks.listForRef(Object.assign(Object.assign({ ref: this.context.sha }, github.context.repo), { check_name: name, status: 'queued' }));
+                const check = ((_a = existingChecks === null || existingChecks === void 0 ? void 0 : existingChecks.data) === null || _a === void 0 ? void 0 : _a.total_count) > 0
+                    ? yield this.octokit.rest.checks.get(Object.assign({ check_run_id: existingChecks.data.check_runs[0].id }, github.context.repo))
+                    : yield this.octokit.rest.checks.create(Object.assign({ head_sha: this.context.sha, name, status: 'in_progress', output: {
+                            title: name,
+                            summary: ''
+                        } }, github.context.repo));
+                if (check.data.status === 'queued') {
+                    yield this.octokit.rest.checks.update(Object.assign({ check_run_id: check.data.id, status: 'in_progress', output: {
+                            title: name,
+                            summary: ''
+                        } }, github.context.repo));
+                }
                 core.info('Creating report summary');
                 const { listSuites, listTests, onlySummary } = this;
-                const baseUrl = createResp.data.html_url || '';
+                const baseUrl = check.data.html_url || '';
                 const summary = (0, get_report_1.getReport)(results, { listSuites, listTests, baseUrl, onlySummary });
                 core.info('Creating annotations');
                 const annotations = (0, get_annotations_1.getAnnotations)(results, this.maxAnnotations);
@@ -327,7 +337,7 @@ class TestReporter {
                 const conclusion = isFailed ? 'failure' : 'success';
                 const icon = isFailed ? markdown_utils_1.Icon.fail : markdown_utils_1.Icon.success;
                 core.info(`Updating check run conclusion (${conclusion}) and output`);
-                const resp = yield this.octokit.rest.checks.update(Object.assign({ check_run_id: createResp.data.id, conclusion, status: 'completed', output: {
+                const resp = yield this.octokit.rest.checks.update(Object.assign({ check_run_id: check.data.id, conclusion, status: 'completed', output: {
                         title: `${name} ${icon}`,
                         summary,
                         annotations

@@ -218,20 +218,45 @@ class TestReporter {
 
     core.info(`Creating check run ${name}`)
     try {
-      const createResp = await this.octokit.rest.checks.create({
-        head_sha: this.context.sha,
-        name,
-        status: 'in_progress',
-        output: {
-          title: name,
-          summary: ''
-        },
-        ...github.context.repo
+      const existingChecks = await this.octokit.rest.checks.listForRef({
+        ref: this.context.sha,
+        ...github.context.repo,
+        check_name: name,
+        status: 'queued'
       })
+
+      const check =
+        existingChecks?.data?.total_count > 0
+          ? await this.octokit.rest.checks.get({
+              check_run_id: existingChecks.data.check_runs[0].id,
+              ...github.context.repo
+            })
+          : await this.octokit.rest.checks.create({
+              head_sha: this.context.sha,
+              name,
+              status: 'in_progress',
+              output: {
+                title: name,
+                summary: ''
+              },
+              ...github.context.repo
+            })
+
+      if (check.data.status === 'queued') {
+        await this.octokit.rest.checks.update({
+          check_run_id: check.data.id,
+          status: 'in_progress',
+          output: {
+            title: name,
+            summary: ''
+          },
+          ...github.context.repo
+        })
+      }
 
       core.info('Creating report summary')
       const {listSuites, listTests, onlySummary} = this
-      const baseUrl = createResp.data.html_url || ''
+      const baseUrl = check.data.html_url || ''
       const summary = getReport(results, {listSuites, listTests, baseUrl, onlySummary})
 
       core.info('Creating annotations')
@@ -243,7 +268,7 @@ class TestReporter {
 
       core.info(`Updating check run conclusion (${conclusion}) and output`)
       const resp = await this.octokit.rest.checks.update({
-        check_run_id: createResp.data.id,
+        check_run_id: check.data.id,
         conclusion,
         status: 'completed',
         output: {
