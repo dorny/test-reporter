@@ -296,7 +296,6 @@ class TestReporter {
         return __awaiter(this, void 0, void 0, function* () {
             if (files.length === 0) {
                 core.warning(`No file matches path ${this.path}`);
-                return null;
             }
             core.info(`Processing test results for check run ${name}`);
             const results = [];
@@ -326,6 +325,12 @@ class TestReporter {
                             title: name,
                             summary: ''
                         } }, github.context.repo));
+                }
+                if (files.length === 0) {
+                    yield this.octokit.rest.checks.update(Object.assign({ check_run_id: check.data.id, status: 'completed', output: {
+                            title: name,
+                            summary: 'No test result files found'
+                        }, conclusion: 'failure' }, github.context.repo));
                 }
                 core.info('Creating report summary');
                 const { listSuites, listTests, onlySummary } = this;

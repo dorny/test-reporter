@@ -197,7 +197,6 @@ class TestReporter {
   async createReport(parser: TestParser, name: string, files: FileContent[]): Promise<TestRunResultWithUrl | null> {
     if (files.length === 0) {
       core.warning(`No file matches path ${this.path}`)
-      return null
     }
 
     core.info(`Processing test results for check run ${name}`)
@@ -250,6 +249,19 @@ class TestReporter {
             title: name,
             summary: ''
           },
+          ...github.context.repo
+        })
+      }
+
+      if (files.length === 0) {
+        await this.octokit.rest.checks.update({
+          check_run_id: check.data.id,
+          status: 'completed',
+          output: {
+            title: name,
+            summary: 'No test result files found'
+          },
+          conclusion: 'failure',
           ...github.context.repo
         })
       }
