@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dorny/test-check.git"
+    "url": "git+https://github.com/dorny/test-reporter.git"
   },
   "keywords": [
     "actions",
