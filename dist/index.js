@@ -331,6 +331,7 @@ class TestReporter {
                             title: name,
                             summary: 'No test result files found'
                         }, conclusion: 'failure' }, github.context.repo));
+                    return null;
                 }
                 core.info('Creating report summary');
                 const { listSuites, listTests, onlySummary } = this;

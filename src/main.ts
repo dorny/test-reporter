@@ -264,6 +264,7 @@ class TestReporter {
           conclusion: 'failure',
           ...github.context.repo
         })
+        return null
       }
 
       core.info('Creating report summary')
