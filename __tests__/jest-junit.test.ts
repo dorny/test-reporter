@@ -82,4 +82,27 @@ describe('jest-junit tests', () => {
     fs.mkdirSync(path.dirname(outputPath), {recursive: true})
     fs.writeFileSync(outputPath, report)
   })
+
+  it('report from #235 testing react components named <ComponentName />', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'external', 'jest', 'jest-react-component-test-results.xml')
+    const trackedFilesPath = path.join(__dirname, 'fixtures', 'external', 'jest', 'files.txt')
+    const outputPath = path.join(__dirname, '__outputs__', 'jest-react-component-test-results.md')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const trackedFiles = fs.readFileSync(trackedFilesPath, {encoding: 'utf8'}).split(/\n\r?/g)
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles
+      //workDir: '/home/dorny/dorny/jest/'
+    }
+
+    const parser = new JestJunitParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+    expect(result).toMatchSnapshot()
+
+    const report = getReport([result])
+    fs.mkdirSync(path.dirname(outputPath), {recursive: true})
+    fs.writeFileSync(outputPath, report)
+  })
 })

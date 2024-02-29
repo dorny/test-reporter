@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`swift-xunit tests report from swift test results matches snapshot 1`] = `
+TestRunResult {
+  "path": "fixtures/swift-xunit.xml",
+  "suites": [
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "AcmeLibTests.AcmeLibTests",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "test_always_pass",
+              "result": "success",
+              "time": 36.386333,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "test_always_skip",
+              "result": "success",
+              "time": 92.039167,
+            },
+            TestCaseResult {
+              "error": {
+                "details": undefined,
+                "line": undefined,
+                "message": undefined,
+                "path": undefined,
+              },
+              "name": "test_always_fail",
+              "result": "failed",
+              "time": 92.05175,
+            },
+          ],
+        },
+      ],
+      "name": "TestResults",
+      "totalTime": 220.47725000000003,
+    },
+  ],
+  "totalTime": undefined,
+}
+`;
