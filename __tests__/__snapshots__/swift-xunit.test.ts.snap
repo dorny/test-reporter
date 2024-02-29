@@ -3,12 +3,12 @@
 exports[`swift-xunit tests report from swift test results matches snapshot 1`] = `
 TestRunResult {
   "path": "fixtures/swift-xunit.xml",
-  "suites": [
+  "suites": Array [
     TestSuiteResult {
-      "groups": [
+      "groups": Array [
         TestGroupResult {
           "name": "AcmeLibTests.AcmeLibTests",
-          "tests": [
+          "tests": Array [
             TestCaseResult {
               "error": undefined,
               "name": "test_always_pass",
@@ -22,7 +22,7 @@ TestRunResult {
               "time": 92.039167,
             },
             TestCaseResult {
-              "error": {
+              "error": Object {
                 "details": undefined,
                 "line": undefined,
                 "message": undefined,
