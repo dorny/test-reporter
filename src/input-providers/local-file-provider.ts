@@ -1,10 +1,13 @@
 import * as fs from 'fs'
-import glob from 'fast-glob'
+import {glob} from 'fast-glob'
 import {FileContent, InputProvider, ReportInput} from './input-provider'
 import {listFiles} from '../utils/git'
 
 export class LocalFileProvider implements InputProvider {
-  constructor(readonly name: string, readonly pattern: string[]) {}
+  constructor(
+    readonly name: string,
+    readonly pattern: string[]
+  ) {}
 
   async load(): Promise<ReportInput> {
     const result: FileContent[] = []

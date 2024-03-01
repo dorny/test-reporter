@@ -117,8 +117,8 @@ class TestReporter {
     const workDir = this.buildDirInput
       ? normalizeDirPath(this.buildDirInput, true)
       : this.artifact
-      ? undefined
-      : normalizeDirPath(process.cwd(), true)
+        ? undefined
+        : normalizeDirPath(process.cwd(), true)
 
     if (parseErrors) core.info(`Found ${trackedFiles.length} files tracked by GitHub`)
 
