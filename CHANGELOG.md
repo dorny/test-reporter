@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.7.0
+- Updated packages + runs on node20
+
 ## v1.6.0
 - [Update to node16 + recent versions of core and exec packages](https://github.com/dorny/test-reporter/pull/203)
 - [Update all dependencies to latest versions](https://github.com/dorny/test-reporter/pull/186)
