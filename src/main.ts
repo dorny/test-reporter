@@ -53,7 +53,6 @@ class TestReporter {
   readonly workDirInput = core.getInput('working-directory', {required: false})
   readonly buildDirInput = core.getInput('build-directory', {required: false})
   readonly onlySummary = core.getInput('only-summary', {required: false}) === 'true'
-  readonly outputTo = core.getInput('output-to', {required: false})
   readonly token = core.getInput('token', {required: true})
   readonly slugPrefix: string = ''
   readonly octokit: InstanceType<typeof GitHub>
@@ -77,14 +76,7 @@ class TestReporter {
       return
     }
 
-    if (this.outputTo !== 'checks' && this.outputTo !== 'step-summary') {
-      core.setFailed(`Input parameter 'output-to' has invalid value`)
-      return
-    }
-
-    if (this.outputTo === 'step-summary') {
-      this.slugPrefix = createSlugPrefix()
-    }
+    this.slugPrefix = createSlugPrefix()
   }
 
   async run(): Promise<void> {
@@ -185,33 +177,10 @@ class TestReporter {
       }
     }
 
-    let createResp = null
     let baseUrl = ''
-    let check_run_id = 0
 
-    switch (this.outputTo) {
-      case 'checks': {
-        core.info(`Creating check run ${name}`)
-        createResp = await this.octokit.rest.checks.create({
-          head_sha: this.context.sha,
-          name,
-          status: 'in_progress',
-          output: {
-            title: name,
-            summary: ''
-          },
-          ...github.context.repo
-        })
-        baseUrl = createResp.data.html_url ?? ''
-        check_run_id = createResp.data.id
-        break
-      }
-      case 'step-summary': {
-        const run_attempt = process.env['GITHUB_RUN_ATTEMPT'] ?? 1
-        baseUrl = `https://github.com/${github.context.repo.owner}/${github.context.repo.repo}/actions/runs/${github.context.runId}/attempts/${run_attempt}`
-        break
-      }
-    }
+    const run_attempt = process.env['GITHUB_RUN_ATTEMPT'] ?? 1
+    baseUrl = `https://github.com/${github.context.repo.owner}/${github.context.repo.repo}/actions/runs/${github.context.runId}/attempts/${run_attempt}`
 
     core.info('Creating report summary')
     const {listSuites, listTests, onlySummary, slugPrefix} = this
@@ -229,55 +198,34 @@ class TestReporter {
     const shortSummary = `${passed} passed, ${failed} failed and ${skipped} skipped `
 
     core.info(`Updating check run conclusion (${conclusion}) and output`)
-    switch (this.outputTo) {
-      case 'checks': {
-        const resp = await this.octokit.rest.checks.update({
-          check_run_id,
-          conclusion,
-          status: 'completed',
-          output: {
-            title: shortSummary,
-            summary,
-            annotations
-          },
-          ...github.context.repo
-        })
-        core.info(`Check run create response: ${resp.status}`)
-        core.info(`Check run URL: ${resp.data.url}`)
-        core.info(`Check run HTML: ${resp.data.html_url}`)
-        break
-      }
-      case 'step-summary': {
-        core.summary.addRaw(`# ${shortSummary}`)
-        core.summary.addRaw(summary)
-        await core.summary.write()
-        for (const annotation of annotations) {
-          let fn
-          switch (annotation.annotation_level) {
-            case 'failure':
-              fn = core.error
-              break
-            case 'warning':
-              fn = core.warning
-              break
-            case 'notice':
-              fn = core.notice
-              break
-            default:
-              continue
-          }
+    core.summary.addRaw(`# ${shortSummary}`)
+    core.summary.addRaw(summary)
+    await core.summary.write()
 
-          fn(annotation.message, {
-            title: annotation.title,
-            file: annotation.path,
-            startLine: annotation.start_line,
-            endLine: annotation.end_line,
-            startColumn: annotation.start_column,
-            endColumn: annotation.end_column
-          })
-        }
-        break
+    for (const annotation of annotations) {
+      let fn
+      switch (annotation.annotation_level) {
+        case 'failure':
+          fn = core.error
+          break
+        case 'warning':
+          fn = core.warning
+          break
+        case 'notice':
+          fn = core.notice
+          break
+        default:
+          continue
       }
+
+      fn(annotation.message, {
+        title: annotation.title,
+        file: annotation.path,
+        startLine: annotation.start_line,
+        endLine: annotation.end_line,
+        startColumn: annotation.start_column,
+        endColumn: annotation.end_column
+      })
     }
 
     return results

@@ -302,7 +302,6 @@ class TestReporter {
         this.workDirInput = core.getInput('working-directory', { required: false });
         this.buildDirInput = core.getInput('build-directory', { required: false });
         this.onlySummary = core.getInput('only-summary', { required: false }) === 'true';
-        this.outputTo = core.getInput('output-to', { required: false });
         this.token = core.getInput('token', { required: true });
         this.slugPrefix = '';
         this.context = (0, github_utils_1.getCheckRunContext)();
@@ -319,13 +318,7 @@ class TestReporter {
             core.setFailed(`Input parameter 'max-annotations' has invalid value`);
             return;
         }
-        if (this.outputTo !== 'checks' && this.outputTo !== 'step-summary') {
-            core.setFailed(`Input parameter 'output-to' has invalid value`);
-            return;
-        }
-        if (this.outputTo === 'step-summary') {
-            this.slugPrefix = createSlugPrefix();
-        }
+        this.slugPrefix = createSlugPrefix();
     }
     run() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -391,7 +384,7 @@ class TestReporter {
         });
     }
     createReport(parser, name, files) {
-        var _a, _b;
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
             if (files.length === 0) {
                 core.warning(`No file matches path ${this.path}`);
@@ -409,26 +402,9 @@ class TestReporter {
                     throw error;
                 }
             }
-            let createResp = null;
             let baseUrl = '';
-            let check_run_id = 0;
-            switch (this.outputTo) {
-                case 'checks': {
-                    core.info(`Creating check run ${name}`);
-                    createResp = yield this.octokit.rest.checks.create(Object.assign({ head_sha: this.context.sha, name, status: 'in_progress', output: {
-                            title: name,
-                            summary: ''
-                        } }, github.context.repo));
-                    baseUrl = (_a = createResp.data.html_url) !== null && _a !== void 0 ? _a : '';
-                    check_run_id = createResp.data.id;
-                    break;
-                }
-                case 'step-summary': {
-                    const run_attempt = (_b = process.env['GITHUB_RUN_ATTEMPT']) !== null && _b !== void 0 ? _b : 1;
-                    baseUrl = `https://github.com/${github.context.repo.owner}/${github.context.repo.repo}/actions/runs/${github.context.runId}/attempts/${run_attempt}`;
-                    break;
-                }
-            }
+            const run_attempt = (_a = process.env['GITHUB_RUN_ATTEMPT']) !== null && _a !== void 0 ? _a : 1;
+            baseUrl = `https://github.com/${github.context.repo.owner}/${github.context.repo.repo}/actions/runs/${github.context.runId}/attempts/${run_attempt}`;
             core.info('Creating report summary');
             const { listSuites, listTests, onlySummary, slugPrefix } = this;
             const summary = (0, get_report_1.getReport)(results, { listSuites, listTests, baseUrl, slugPrefix, onlySummary });
@@ -441,49 +417,32 @@ class TestReporter {
             const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
             const shortSummary = `${passed} passed, ${failed} failed and ${skipped} skipped `;
             core.info(`Updating check run conclusion (${conclusion}) and output`);
-            switch (this.outputTo) {
-                case 'checks': {
-                    const resp = yield this.octokit.rest.checks.update(Object.assign({ check_run_id,
-                        conclusion, status: 'completed', output: {
-                            title: shortSummary,
-                            summary,
-                            annotations
-                        } }, github.context.repo));
-                    core.info(`Check run create response: ${resp.status}`);
-                    core.info(`Check run URL: ${resp.data.url}`);
-                    core.info(`Check run HTML: ${resp.data.html_url}`);
-                    break;
+            core.summary.addRaw(`# ${shortSummary}`);
+            core.summary.addRaw(summary);
+            yield core.summary.write();
+            for (const annotation of annotations) {
+                let fn;
+                switch (annotation.annotation_level) {
+                    case 'failure':
+                        fn = core.error;
+                        break;
+                    case 'warning':
+                        fn = core.warning;
+                        break;
+                    case 'notice':
+                        fn = core.notice;
+                        break;
+                    default:
+                        continue;
                 }
-                case 'step-summary': {
-                    core.summary.addRaw(`# ${shortSummary}`);
-                    core.summary.addRaw(summary);
-                    yield core.summary.write();
-                    for (const annotation of annotations) {
-                        let fn;
-                        switch (annotation.annotation_level) {
-                            case 'failure':
-                                fn = core.error;
-                                break;
-                            case 'warning':
-                                fn = core.warning;
-                                break;
-                            case 'notice':
-                                fn = core.notice;
-                                break;
-                            default:
-                                continue;
-                        }
-                        fn(annotation.message, {
-                            title: annotation.title,
-                            file: annotation.path,
-                            startLine: annotation.start_line,
-                            endLine: annotation.end_line,
-                            startColumn: annotation.start_column,
-                            endColumn: annotation.end_column
-                        });
-                    }
-                    break;
-                }
+                fn(annotation.message, {
+                    title: annotation.title,
+                    file: annotation.path,
+                    startLine: annotation.start_line,
+                    endLine: annotation.end_line,
+                    startColumn: annotation.start_column,
+                    endColumn: annotation.end_column
+                });
             }
             return results;
         });
