@@ -19,7 +19,7 @@ export interface TestSuite {
     time: string
     timestamp?: Date
   }
-  testcase: TestCase[]
+  testcase?: TestCase[]
 }
 
 export interface TestCase {

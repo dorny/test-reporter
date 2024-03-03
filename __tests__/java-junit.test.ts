@@ -72,4 +72,22 @@ describe('java-junit tests', () => {
     fs.mkdirSync(path.dirname(outputPath), {recursive: true})
     fs.writeFileSync(outputPath, report)
   })
+
+  it('parses empty failures in test results', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'external', 'java', 'empty_failures.xml')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const trackedFiles: string[] = []
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles
+    }
+
+    const parser = new JavaJunitParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+
+    expect(result.result === 'failed')
+    expect(result.failed === 1)
+  })
 })

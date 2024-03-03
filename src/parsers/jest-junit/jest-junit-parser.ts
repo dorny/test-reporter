@@ -37,7 +37,7 @@ export class JestJunitParser implements TestParser {
       junit.testsuites.testsuite === undefined
         ? []
         : junit.testsuites.testsuite.map(ts => {
-            const name = ts.$.name.trim()
+            const name = this.escapeCharacters(ts.$.name.trim())
             const time = parseFloat(ts.$.time) * 1000
             const sr = new TestSuiteResult(name, this.getGroups(ts), time)
             return sr
@@ -48,6 +48,10 @@ export class JestJunitParser implements TestParser {
   }
 
   private getGroups(suite: TestSuite): TestGroupResult[] {
+    if (!suite.testcase) {
+      return []
+    }
+
     const groups: {describe: string; tests: TestCase[]}[] = []
     for (const tc of suite.testcase) {
       let grp = groups.find(g => g.describe === tc.$.classname)
@@ -113,5 +117,9 @@ export class JestJunitParser implements TestParser {
       this.assumedWorkDir ??
       (this.assumedWorkDir = getBasePath(path, this.options.trackedFiles))
     )
+  }
+
+  private escapeCharacters(s: string): string {
+    return s.replace(/([<>])/g, '\\$1')
   }
 }

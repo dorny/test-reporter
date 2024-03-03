@@ -1,0 +1,22 @@
+name: Manual run
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check-dist:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+
+      - name: Create test report
+        uses: ./
+        if: success() || failure()
+        with:
+          name: JEST Tests
+          path: __tests__/__results__/*.xml
+          reporter: jest-junit

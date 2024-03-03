@@ -16,10 +16,10 @@ import {DotnetTrxParser} from './parsers/dotnet-trx/dotnet-trx-parser'
 import {JavaJunitParser} from './parsers/java-junit/java-junit-parser'
 import {JestJunitParser} from './parsers/jest-junit/jest-junit-parser'
 import {MochaJsonParser} from './parsers/mocha-json/mocha-json-parser'
+import {SwiftXunitParser} from './parsers/swift-xunit/swift-xunit-parser'
 
 import {normalizeDirPath, normalizeFilePath} from './utils/path-utils'
 import {getCheckRunContext} from './utils/github-utils'
-import {Icon} from './utils/markdown-utils'
 
 async function main(): Promise<void> {
   try {
@@ -41,6 +41,7 @@ class TestReporter {
   readonly listTests = core.getInput('list-tests', {required: true}) as 'all' | 'failed' | 'none'
   readonly maxAnnotations = parseInt(core.getInput('max-annotations', {required: true}))
   readonly failOnError = core.getInput('fail-on-error', {required: true}) === 'true'
+  readonly failOnEmpty = core.getInput('fail-on-empty', {required: true}) === 'true'
   readonly workDirInput = core.getInput('working-directory', {required: false})
   readonly onlySummary = core.getInput('only-summary', {required: false}) === 'true'
   readonly useActionsSummary = core.getInput('use-actions-summary', {required: false}) === 'true'
@@ -94,10 +95,10 @@ class TestReporter {
       : new LocalFileProvider(this.name, pattern)
 
     const parseErrors = this.maxAnnotations > 0
-    const trackedFiles = await inputProvider.listTrackedFiles()
+    const trackedFiles = parseErrors ? await inputProvider.listTrackedFiles() : []
     const workDir = this.artifact ? undefined : normalizeDirPath(process.cwd(), true)
 
-    core.info(`Found ${trackedFiles.length} files tracked by GitHub`)
+    if (parseErrors) core.info(`Found ${trackedFiles.length} files tracked by GitHub`)
 
     const options: ParseOptions = {
       workDir,
@@ -138,7 +139,7 @@ class TestReporter {
       return
     }
 
-    if (results.length === 0) {
+    if (results.length === 0 && this.failOnEmpty) {
       core.setFailed(`No test report files were found`)
       return
     }
@@ -150,18 +151,30 @@ class TestReporter {
       return []
     }
 
+    core.info(`Processing test results for check run ${name}`)
     const results: TestRunResult[] = []
     for (const {file, content} of files) {
-      core.info(`Processing test results from ${file}`)
-      const tr = await parser.parse(file, content)
-      results.push(tr)
+      try {
+        const tr = await parser.parse(file, content)
+        results.push(tr)
+      } catch (error) {
+        core.error(`Processing test results from ${file} failed`)
+        throw error
+      }
     }
 
-    core.info('Creating report summary')
     const {listSuites, listTests, onlySummary, useActionsSummary, badgeTitle} = this
+
     let baseUrl = ''
-    let checkRunId = 0
-    if (!this.useActionsSummary) {
+    if (this.useActionsSummary) {
+      const summary = getReport(results, {listSuites, listTests, baseUrl, onlySummary, useActionsSummary, badgeTitle})
+
+      core.info('Summary content:')
+      core.info(summary)
+      await fs.promises.writeFile(this.path.replace('*.trx', 'test-summary.md'), summary)
+      core.info('File content:')
+      core.info(fs.readFileSync(this.path.replace('*.trx', 'test-summary.md'), 'utf8'))
+    } else {
       core.info(`Creating check run ${name}`)
       const createResp = await this.octokit.rest.checks.create({
         head_sha: this.context.sha,
@@ -173,35 +186,29 @@ class TestReporter {
         },
         ...github.context.repo
       })
+
+      core.info('Creating report summary')
       baseUrl = createResp.data.html_url as string
-      checkRunId = createResp.data.id
-    }
+      const summary = getReport(results, {listSuites, listTests, baseUrl, onlySummary, useActionsSummary, badgeTitle})
 
-    const summary = getReport(results, {listSuites, listTests, baseUrl, onlySummary, useActionsSummary, badgeTitle})
-
-    if (this.useActionsSummary) {
-      core.info('Summary content:')
-      core.info(summary)
-      await fs.promises.writeFile(this.path.replace('*.trx', 'test-summary.md'), summary)
-      core.info('File content:')
-      core.info(fs.readFileSync(this.path.replace('*.trx', 'test-summary.md'), 'utf8'))
-    }
-
-    if (!this.useActionsSummary) {
       core.info('Creating annotations')
       const annotations = getAnnotations(results, this.maxAnnotations)
 
-      const isFailed = results.some(tr => tr.result === 'failed')
+      const isFailed = this.failOnError && results.some(tr => tr.result === 'failed')
       const conclusion = isFailed ? 'failure' : 'success'
-      const icon = isFailed ? Icon.fail : Icon.success
+
+      const passed = results.reduce((sum, tr) => sum + tr.passed, 0)
+      const failed = results.reduce((sum, tr) => sum + tr.failed, 0)
+      const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0)
+      const shortSummary = `${passed} passed, ${failed} failed and ${skipped} skipped `
 
       core.info(`Updating check run conclusion (${conclusion}) and output`)
       const resp = await this.octokit.rest.checks.update({
-        check_run_id: checkRunId,
+        check_run_id: createResp.data.id,
         conclusion,
         status: 'completed',
         output: {
-          title: `${name} ${icon}`,
+          title: shortSummary,
           summary,
           annotations
         },
@@ -210,6 +217,8 @@ class TestReporter {
       core.info(`Check run create response: ${resp.status}`)
       core.info(`Check run URL: ${resp.data.url}`)
       core.info(`Check run HTML: ${resp.data.html_url}`)
+      core.setOutput('url', resp.data.url)
+      core.setOutput('url_html', resp.data.html_url)
     }
 
     return results
@@ -229,6 +238,8 @@ class TestReporter {
         return new JestJunitParser(options)
       case 'mocha-json':
         return new MochaJsonParser(options)
+      case 'swift-xunit':
+        return new SwiftXunitParser(options)
       default:
         throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`)
     }
