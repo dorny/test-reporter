@@ -6878,3 +6878,57 @@ at java.lang.Thread.run(Thread.java:748)
   "totalTime": 2126531.0000000005,
 }
 `;
+
+exports[`java-junit tests report from jest in junit format 1`] = `
+TestRunResult {
+  "path": "fixtures/external/java/test-report-jest.xml",
+  "suites": Array [
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": "MaintenanceFilterComponent",
+          "tests": Array [
+            TestCaseResult {
+              "error": Object {
+                "details": undefined,
+                "line": undefined,
+                "message": undefined,
+                "path": undefined,
+              },
+              "name": "should create",
+              "result": "failed",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "maintenance/maintenance-filter/maintenance-filter.component.spec.ts",
+      "totalTime": 1204,
+    },
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": "AppComponent",
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "should create the app",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "should forward to login page",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "app.component.spec.ts",
+      "totalTime": 1244,
+    },
+  ],
+  "totalTime": undefined,
+}
+`;
