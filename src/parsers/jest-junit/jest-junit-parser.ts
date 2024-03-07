@@ -43,7 +43,7 @@ export class JestJunitParser implements TestParser {
             return sr
           })
 
-    const time = parseFloat(junit.testsuites.$.time) * 1000
+    const time = junit.testsuites.$ && parseFloat(junit.testsuites.$.time) * 1000
     return new TestRunResult(path, suites, time)
   }
 
