@@ -30,6 +30,7 @@ export interface UnitTest {
 
 export interface TestMethod {
   $: {
+    codeBase: string
     className: string
     name: string
   }
