@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<test-run id="0" runstate="Runnable" testcasecount="9" result="Failed" total="9" passed="3" failed="5" inconclusive="0" skipped="1" asserts="5" engine-version="3.12.0.0" clr-version="3.1.16" start-time="2021-06-28 20:23:41Z" end-time="2021-06-28 20:23:41Z" duration="0.230308">
+  <command-line><![CDATA[C:\Users\Michal\.dotnet\tools\.store\nunit.consolerunner.netcore\3.12.0-beta2\nunit.consolerunner.netcore\3.12.0-beta2\tools\netcoreapp3.1\any\nunit3-console.dll reports/dotnet/DotnetTests.NUnitV3Tests/bin/Debug/netcoreapp3.1/DotnetTests.NUnitV3Tests.dll --result=__tests__/fixtures/dotnet-nunit.xml]]></command-line>
+  <test-suite type="Assembly" id="1-1011" name="DotnetTests.NUnitV3Tests.dll" fullname="C:/Users/Michal/Workspace/dorny/test-reporter/reports/dotnet/DotnetTests.NUnitV3Tests/bin/Debug/netcoreapp3.1/DotnetTests.NUnitV3Tests.dll" runstate="Runnable" testcasecount="9" result="Failed" site="Child" start-time="2021-06-28T20:23:41.4594179Z" end-time="2021-06-28T20:23:41.5420313Z" duration="0.082553" total="9" passed="3" failed="5" warnings="0" inconclusive="0" skipped="1" asserts="5">
+    <environment framework-version="3.13.2.0" clr-version="3.1.16" os-version="Microsoft Windows 10.0.19041" platform="Win32NT" cwd="C:\Users\Michal\Workspace\dorny\test-reporter" machine-name="DORNY-PC" user="Michal" user-domain="DORNY-PC" culture="sk-SK" uiculture="en-US" os-architecture="x64" />
+    <settings>
+      <setting name="DisposeRunners" value="True" />
+      <setting name="WorkDirectory" value="C:\Users\Michal\Workspace\dorny\test-reporter" />
+      <setting name="NumberOfTestWorkers" value="4" />
+    </settings>
+    <properties>
+      <property name="_PID" value="30996" />
+      <property name="_APPDOMAIN" value="nunit3-console" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="TestSuite" id="1-1012" name="DotnetTests" fullname="DotnetTests" runstate="Runnable" testcasecount="9" result="Failed" site="Child" start-time="2021-06-28T20:23:41.4647482Z" end-time="2021-06-28T20:23:41.5420271Z" duration="0.077277" total="9" passed="3" failed="5" warnings="0" inconclusive="0" skipped="1" asserts="5">
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1-1013" name="XUnitTests" fullname="DotnetTests.XUnitTests" runstate="Runnable" testcasecount="9" result="Failed" site="Child" start-time="2021-06-28T20:23:41.4649710Z" end-time="2021-06-28T20:23:41.5420231Z" duration="0.077053" total="9" passed="3" failed="5" warnings="0" inconclusive="0" skipped="1" asserts="5">
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestFixture" id="1-1000" name="CalculatorTests" fullname="DotnetTests.XUnitTests.CalculatorTests" classname="DotnetTests.XUnitTests.CalculatorTests" runstate="Runnable" testcasecount="9" result="Failed" site="Child" start-time="2021-06-28T20:23:41.4661195Z" end-time="2021-06-28T20:23:41.5420143Z" duration="0.075896" total="9" passed="3" failed="5" warnings="0" inconclusive="0" skipped="1" asserts="5">
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-case id="1-1004" name="Exception_In_TargetTest" fullname="DotnetTests.XUnitTests.CalculatorTests.Exception_In_TargetTest" methodname="Exception_In_TargetTest" classname="DotnetTests.XUnitTests.CalculatorTests" runstate="Runnable" seed="2033520428" result="Failed" label="Error" start-time="2021-06-28T20:23:41.4684284Z" end-time="2021-06-28T20:23:41.4911288Z" duration="0.022805" asserts="0">
+            <failure>
+              <message><![CDATA[System.DivideByZeroException : Attempted to divide by zero.]]></message>
+              <stack-trace><![CDATA[   at DotnetTests.Unit.Calculator.Div(Int32 a, Int32 b) in C:\Users\Michal\Workspace\dorny\test-reporter\reports\dotnet\DotnetTests.Unit\Calculator.cs:line 9
+   at DotnetTests.XUnitTests.CalculatorTests.Exception_In_TargetTest() in C:\Users\Michal\Workspace\dorny\test-reporter\reports\dotnet\DotnetTests.NUnitV3Tests\CalculatorTests.cs:line 33]]></stack-trace>
+            </failure>
+          </test-case>
+          <test-case id="1-1005" name="Exception_In_Test" fullname="DotnetTests.XUnitTests.CalculatorTests.Exception_In_Test" methodname="Exception_In_Test" classname="DotnetTests.XUnitTests.CalculatorTests" runstate="Runnable" seed="145176317" result="Failed" label="Error" start-time="2021-06-28T20:23:41.4930398Z" end-time="2021-06-28T20:23:41.4935666Z" duration="0.000528" asserts="0">
+            <failure>
+              <message><![CDATA[System.Exception : Test]]></message>
+              <stack-trace><![CDATA[   at DotnetTests.XUnitTests.CalculatorTests.Exception_In_Test() in C:\Users\Michal\Workspace\dorny\test-reporter\reports\dotnet\DotnetTests.NUnitV3Tests\CalculatorTests.cs:line 39]]></stack-trace>
+            </failure>
+          </test-case>
+          <test-case id="1-1003" name="Failing_Test" fullname="DotnetTests.XUnitTests.CalculatorTests.Failing_Test" methodname="Failing_Test" classname="DotnetTests.XUnitTests.CalculatorTests" runstate="Runnable" seed="189717168" result="Failed" start-time="2021-06-28T20:23:41.4935910Z" end-time="2021-06-28T20:23:41.5217516Z" duration="0.028162" asserts="1">
+            <failure>
+              <message><![CDATA[  Expected: 3
+  But was:  2
+]]></message>
+              <stack-trace><![CDATA[   at DotnetTests.XUnitTests.CalculatorTests.Failing_Test() in C:\Users\Michal\Workspace\dorny\test-reporter\reports\dotnet\DotnetTests.NUnitV3Tests\CalculatorTests.cs:line 27
+]]></stack-trace>
+            </failure>
+            <assertions>
+              <assertion result="Failed">
+                <message><![CDATA[  Expected: 3
+  But was:  2
+]]></message>
+                <stack-trace><![CDATA[   at DotnetTests.XUnitTests.CalculatorTests.Failing_Test() in C:\Users\Michal\Workspace\dorny\test-reporter\reports\dotnet\DotnetTests.NUnitV3Tests\CalculatorTests.cs:line 27
+]]></stack-trace>
+              </assertion>
+            </assertions>
+          </test-case>
+          <test-suite type="Theory" id="1-1010" name="Is_Even_Number" fullname="DotnetTests.XUnitTests.CalculatorTests.Is_Even_Number" classname="DotnetTests.XUnitTests.CalculatorTests" runstate="Runnable" testcasecount="2" result="Failed" site="Child" start-time="2021-06-28T20:23:41.5217837Z" end-time="2021-06-28T20:23:41.5251025Z" duration="0.003318" total="2" passed="1" failed="1" warnings="0" inconclusive="0" skipped="0" asserts="2">
+            <properties>
+              <property name="_JOINTYPE" value="Combinatorial" />
+            </properties>
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-case id="1-1008" name="Is_Even_Number(2)" fullname="DotnetTests.XUnitTests.CalculatorTests.Is_Even_Number(2)" methodname="Is_Even_Number" classname="DotnetTests.XUnitTests.CalculatorTests" runstate="Runnable" seed="2002556739" result="Passed" start-time="2021-06-28T20:23:41.5222381Z" end-time="2021-06-28T20:23:41.5228607Z" duration="0.000622" asserts="1" />
+            <test-case id="1-1009" name="Is_Even_Number(3)" fullname="DotnetTests.XUnitTests.CalculatorTests.Is_Even_Number(3)" methodname="Is_Even_Number" classname="DotnetTests.XUnitTests.CalculatorTests" runstate="Runnable" seed="1722214143" result="Failed" start-time="2021-06-28T20:23:41.5228803Z" end-time="2021-06-28T20:23:41.5239781Z" duration="0.001098" asserts="1">
+              <failure>
+                <message><![CDATA[  Expected: True
+  But was:  False
+]]></message>
+                <stack-trace><![CDATA[   at DotnetTests.XUnitTests.CalculatorTests.Is_Even_Number(Int32 i) in C:\Users\Michal\Workspace\dorny\test-reporter\reports\dotnet\DotnetTests.NUnitV3Tests\CalculatorTests.cs:line 61
+]]></stack-trace>
+              </failure>
+              <assertions>
+                <assertion result="Failed">
+                  <message><![CDATA[  Expected: True
+  But was:  False
+]]></message>
+                  <stack-trace><![CDATA[   at DotnetTests.XUnitTests.CalculatorTests.Is_Even_Number(Int32 i) in C:\Users\Michal\Workspace\dorny\test-reporter\reports\dotnet\DotnetTests.NUnitV3Tests\CalculatorTests.cs:line 61
+]]></stack-trace>
+                </assertion>
+              </assertions>
+            </test-case>
+          </test-suite>
+          <test-case id="1-1001" name="Passing_Test" fullname="DotnetTests.XUnitTests.CalculatorTests.Passing_Test" methodname="Passing_Test" classname="DotnetTests.XUnitTests.CalculatorTests" runstate="Runnable" seed="550330290" result="Passed" start-time="2021-06-28T20:23:41.5260365Z" end-time="2021-06-28T20:23:41.5262756Z" duration="0.000238" asserts="1" />
+          <test-case id="1-1002" name="Passing_Test_With_Description" fullname="DotnetTests.XUnitTests.CalculatorTests.Passing_Test_With_Description" methodname="Passing_Test_With_Description" classname="DotnetTests.XUnitTests.CalculatorTests" runstate="Runnable" seed="1693317298" result="Passed" start-time="2021-06-28T20:23:41.5263998Z" end-time="2021-06-28T20:23:41.5265354Z" duration="0.000135" asserts="1">
+            <properties>
+              <property name="Description" value="Some description" />
+            </properties>
+          </test-case>
+          <test-case id="1-1007" name="Skipped_Test" fullname="DotnetTests.XUnitTests.CalculatorTests.Skipped_Test" methodname="Skipped_Test" classname="DotnetTests.XUnitTests.CalculatorTests" runstate="Ignored" seed="1512653931" result="Skipped" label="Ignored" start-time="2021-06-28T20:23:41.5265550Z" end-time="2021-06-28T20:23:41.5269525Z" duration="0.000398" asserts="0">
+            <properties>
+              <property name="_SKIPREASON" value="Skipped" />
+            </properties>
+            <reason>
+              <message><![CDATA[Skipped]]></message>
+            </reason>
+          </test-case>
+          <test-case id="1-1006" name="Timeout_Test" fullname="DotnetTests.XUnitTests.CalculatorTests.Timeout_Test" methodname="Timeout_Test" classname="DotnetTests.XUnitTests.CalculatorTests" runstate="Runnable" seed="258810529" result="Failed" label="Test exceeded Timeout value 1ms." start-time="2021-06-28T20:23:41.5269651Z" end-time="2021-06-28T20:23:41.5419118Z" duration="0.014949" asserts="0">
+            <properties>
+              <property name="Timeout" value="1" />
+            </properties>
+            <failure />
+          </test-case>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>
