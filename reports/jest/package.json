@@ -10,7 +10,8 @@
   "license": "MIT",
   "devDependencies": {
     "jest": "^26.5.3",
-    "jest-junit": "^12.0.0"
+    "jest-junit": "^12.0.0",
+    "jsprim": "^1.4.2"
   },
   "jest-junit": {
     "suiteName": "jest tests",
