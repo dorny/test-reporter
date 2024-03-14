@@ -328,6 +328,22 @@ class TestReporter {
               text: `:red_circle: ${tr.failed} in <${resp.data.html_url}#r${runIndex}|${runName}>`
             }
           })
+
+          if (failed <= 10) {
+            tr.failedSuites.map(suite => {
+              suite.failedGroups.map(group => {
+                group.failedTests.map(test => {
+                  req.blocks.push({
+                    type: 'section',
+                    text: {
+                      type: 'mrkdwn',
+                      text: `:red_circle: <${suite.link}|${test.name}>`
+                    }
+                  })
+                })
+              })
+            })
+          }
         })
 
         await webhook.send(req)

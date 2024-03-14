@@ -82,6 +82,8 @@ export class TestSuiteResult {
     private totalTime?: number
   ) {}
 
+  link?: string
+
   get tests(): number {
     return this.groups.reduce((sum, g) => sum + g.tests.length, 0)
   }

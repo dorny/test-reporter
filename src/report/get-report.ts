@@ -199,8 +199,8 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
         const tsTime = formatTime(s.time)
         const tsName = s.name.startsWith(name) ? s.name.slice(name.length + 1) : s.name
         const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed')
-        const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex).link
-        const tsNameLink = skipLink ? tsName : link(tsName, tsAddr)
+        s.link = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex).link
+        const tsNameLink = skipLink ? tsName : link(tsName, s.link)
         const passed = s.passed > 0 ? `${s.passed}${Icon.success}` : ''
         const failed = s.failed > 0 ? `${s.failed}${Icon.fail}` : ''
         const skipped = s.skipped > 0 ? `${s.skipped}${Icon.skip}` : ''
@@ -234,7 +234,7 @@ function getTestsReport(ts: TestSuiteResult, runIndex: number, suiteIndex: numbe
 
   const tsName = ts.name
   const tsSlug = makeSuiteSlug(runIndex, suiteIndex)
-  const tsNameLink = `<a id="${tsSlug.id}" href="${options.baseUrl + tsSlug.link}">${tsName}</a>`
+  const tsNameLink = `<a id="${tsSlug.id}" href="${ts.link}">${tsName}</a>`
   const icon = getResultIcon(ts.result)
   sections.push(`### ${icon}\xa0${tsNameLink}`)
 

@@ -382,6 +382,21 @@ class TestReporter {
                                 text: `:red_circle: ${tr.failed} in <${resp.data.html_url}#r${runIndex}|${runName}>`
                             }
                         });
+                        if (failed <= 10) {
+                            tr.failedSuites.map((suite) => {
+                                suite.failedGroups.map((group) => {
+                                    group.failedTests.map((test) => {
+                                        req.blocks.push({
+                                            type: 'section',
+                                            text: {
+                                                type: 'mrkdwn',
+                                                text: `:red_circle: <${suite.link}|${test.name}>`
+                                            }
+                                        });
+                                    });
+                                });
+                            });
+                        }
                     });
                     yield webhook.send(req);
                 }
@@ -1650,8 +1665,8 @@ function getSuitesReport(tr, runIndex, options) {
             const tsTime = (0, markdown_utils_1.formatTime)(s.time);
             const tsName = s.name.startsWith(name) ? s.name.slice(name.length + 1) : s.name;
             const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed');
-            const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex).link;
-            const tsNameLink = skipLink ? tsName : (0, markdown_utils_1.link)(tsName, tsAddr);
+            s.link = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex).link;
+            const tsNameLink = skipLink ? tsName : (0, markdown_utils_1.link)(tsName, s.link);
             const passed = s.passed > 0 ? `${s.passed}${markdown_utils_1.Icon.success}` : '';
             const failed = s.failed > 0 ? `${s.failed}${markdown_utils_1.Icon.fail}` : '';
             const skipped = s.skipped > 0 ? `${s.skipped}${markdown_utils_1.Icon.skip}` : '';
@@ -1679,7 +1694,7 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
     const sections = [];
     const tsName = ts.name;
     const tsSlug = makeSuiteSlug(runIndex, suiteIndex);
-    const tsNameLink = `<a id="${tsSlug.id}" href="${options.baseUrl + tsSlug.link}">${tsName}</a>`;
+    const tsNameLink = `<a id="${tsSlug.id}" href="${ts.link}">${tsName}</a>`;
     const icon = getResultIcon(ts.result);
     sections.push(`### ${icon}\xa0${tsNameLink}`);
     sections.push('```');
