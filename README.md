@@ -142,6 +142,7 @@ jobs:
     #   java-junit
     #   jest-junit
     #   mocha-json
+    #   rspec-json
     reporter: ''
 
     # Allows you to generate only the summary.

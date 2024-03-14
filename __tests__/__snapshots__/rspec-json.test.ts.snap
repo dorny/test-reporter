@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`rspec-json tests report from ./reports/rspec-json test results matches snapshot 1`] = `
+TestRunResult {
+  "path": "fixtures/rspec-json.json",
+  "suites": [
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "CheckEnvVars#call when all env vars are defined behaves like success load",
+          "tests": [
+            TestCaseResult {
+              "error": {
+                "details": "/usr/local/bundle/ruby/3.3.0/gems/net-http-0.4.1/lib/net/http.rb:1603:in \`initialize'
+./config/check_env_vars.rb:11:in \`call'
+./spec/config/check_env_vars_spec.rb:7:in \`block (3 levels) in <top (required)>'
+./spec/config/check_env_vars_spec.rb:19:in \`block (4 levels) in <top (required)>'",
+                "line": 11,
+                "message": "(#ActiveSupport::BroadcastLogger:0x00007f1007fedf58).debug("All config env vars exist")
+    expected: 0 times with arguments: ("All config env vars exist")
+    received: 1 time with arguments: ("All config env vars exist")",
+                "path": "./config/check_env_vars.rb",
+              },
+              "name": "CheckEnvVars#call when all env vars are defined behaves like success load fails in assertion",
+              "result": "failed",
+              "time": 0.004411051,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "CheckEnvVars#call when all env vars are defined behaves like success load logs success message",
+              "result": "success",
+              "time": 0.079159625,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "CheckEnvVars#call when all env vars are defined behaves like success load skips the test",
+              "result": "skipped",
+              "time": 0.000023007,
+            },
+          ],
+        },
+      ],
+      "name": "./spec/config/check_env_vars_spec.rb",
+      "totalTime": undefined,
+    },
+  ],
+  "totalTime": 0.19118387,
+}
+`;
