@@ -25,7 +25,7 @@ TestRunResult {
               "error": {
                 "details": undefined,
                 "line": undefined,
-                "message": undefined,
+                "message": "failed",
                 "path": undefined,
               },
               "name": "test_always_fail",

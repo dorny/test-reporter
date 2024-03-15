@@ -40,6 +40,8 @@ export interface TestCase {
 
 export interface Failure {
   _: string
-  type: string
-  message: string
+  $: {
+    type?: string
+    message: string
+  }
 }

@@ -10,4 +10,5 @@ AcmeLibTests.AcmeLibTests
   ✅ test_always_pass
   ✅ test_always_skip
   ❌ test_always_fail
+	failed
 ```

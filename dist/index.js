@@ -1040,7 +1040,7 @@ class JavaJunitParser {
         return 'success';
     }
     getTestCaseError(tc) {
-        var _a;
+        var _a, _b;
         if (!this.options.parseErrors) {
             return undefined;
         }
@@ -1060,11 +1060,18 @@ class JavaJunitParser {
                 line = src.line;
             }
         }
+        let message;
+        if (typeof failure === 'object') {
+            message = failure.$.message;
+            if ((_b = failure.$) === null || _b === void 0 ? void 0 : _b.type) {
+                message = failure.$.type + ": " + message;
+            }
+        }
         return {
             path: filePath,
             line,
             details,
-            message: typeof failure === 'object' ? failure.message : undefined
+            message
         };
     }
     exceptionThrowSource(stackTrace) {
