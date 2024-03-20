@@ -356,14 +356,19 @@ class TestReporter {
                 core.info(`Check run details: ${resp.data.details_url}`);
                 result.checkUrl = resp.data.html_url;
                 if (this.slackWebhook && this.context.branch === 'master') {
-                    const webhook = new webhook_1.IncomingWebhook(this.slackWebhook, {
-                        username: name
-                    });
+                    const webhook = new webhook_1.IncomingWebhook(this.slackWebhook);
                     const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
                     const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
                     const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
                     const req = {
                         blocks: [
+                            {
+                                type: 'section',
+                                text: {
+                                    type: 'mrkdwn',
+                                    text: `*${name}*`
+                                }
+                            },
                             {
                                 type: 'section',
                                 text: {
@@ -385,18 +390,20 @@ class TestReporter {
                             }
                         });
                         if (failed <= 10) {
+                            const failedTests = [];
                             tr.failedSuites.map(suite => {
                                 suite.failedGroups.map(group => {
                                     group.failedTests.map(test => {
-                                        req.blocks.push({
-                                            type: 'section',
-                                            text: {
-                                                type: 'mrkdwn',
-                                                text: `:red_circle: <${suite.link}|${test.name}>`
-                                            }
-                                        });
+                                        failedTests.push(`* <${suite.link}|${test.name}>`);
                                     });
                                 });
+                            });
+                            req.blocks.push({
+                                type: 'section',
+                                text: {
+                                    type: 'mrkdwn',
+                                    text: failedTests.join('\n')
+                                }
                             });
                         }
                     });
