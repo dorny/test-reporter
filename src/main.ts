@@ -326,7 +326,7 @@ class TestReporter {
 
         results.map((tr, runIndex) => {
           if (tr.failed === 0) return
-          const runName = tr.path.slice(0, tr.path.indexOf('/TestResults/'))
+          const runName = tr.path.slice(0, tr.path.indexOf('/TestResults/')).slice(0, tr.path.indexOf('test/'))
 
           req.blocks.push({
             type: 'section',
@@ -341,7 +341,7 @@ class TestReporter {
             tr.failedSuites.map(suite => {
               suite.failedGroups.map(group => {
                 group.failedTests.map(test => {
-                  failedTests.push(`* <${suite.link}|${test.name}>`)
+                  failedTests.push(`- <${suite.link}|${test.name}>`)
                 })
               })
             })
