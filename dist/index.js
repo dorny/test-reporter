@@ -382,7 +382,7 @@ class TestReporter {
                         if (tr.failed === 0)
                             return;
                         let runName = tr.path.slice(0, tr.path.indexOf('/TestResults/'));
-                        runName = runName.slice(0, tr.path.indexOf('test/'));
+                        runName = runName.startsWith('test/') ? runName.slice(5) : runName;
                         req.blocks.push({
                             type: 'section',
                             text: {
