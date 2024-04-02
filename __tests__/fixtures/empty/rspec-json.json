@@ -1,0 +1,17 @@
+{
+  "version": "3.13.0",
+  "messages": [
+    "No examples found."
+  ],
+  "examples": [
+    
+  ],
+  "summary": {
+    "duration": 0.002514266,
+    "example_count": 0,
+    "failure_count": 0,
+    "pending_count": 0,
+    "errors_outside_of_examples_count": 0
+  },
+  "summary_line": "0 examples, 0 failures"
+}
