@@ -11337,7 +11337,8 @@ module.exports = function (/**String*/ input, /** object */ options) {
          *
          * @return Array
          */
-        getEntries: function () {
+        getEntries: function (/**String*/ password) {
+            _zip.password=password;
             return _zip ? _zip.entries : [];
         },
 
@@ -11414,7 +11415,7 @@ module.exports = function (/**String*/ input, /** object */ options) {
                 return true;
             }
 
-            var content = item.getData();
+            var content = item.getData(_zip.password);
             if (!content) throw new Error(Utils.Errors.CANT_EXTRACT_FILE);
 
             if (filetools.fs.existsSync(target) && !overwrite) {
@@ -11576,9 +11577,9 @@ module.exports = function (/**String*/ input, /** object */ options) {
                                     callback(getError("Unable to set times", filePath));
                                     return;
                                 }
-                                fileEntries.delete(entry);
                                 // call the callback if it was last entry
                                 done();
+                                fileEntries.delete(entry);
                             });
                         });
                     }
@@ -11742,7 +11743,9 @@ module.exports = function () {
         set time(val) {
             setTime(val);
         },
-
+        get timeHighByte() {
+            return (_time >>> 8) & 0xff;
+        },
         get crc() {
             return _crc;
         },
@@ -12356,8 +12359,12 @@ function decrypt(/*Buffer*/ data, /*Object*/ header, /*String, Buffer*/ pwd) {
     // 2. decrypt salt what is always 12 bytes and is a part of file content
     const salt = decrypter(data.slice(0, 12));
 
-    // 3. does password meet expectations
-    if (salt[11] !== header.crc >>> 24) {
+    // if bit 3 (0x08) of the general-purpose flags field is set, check salt[11] with the high byte of the header time
+    // 2 byte data block (as per Info-Zip spec), otherwise check with the high byte of the header entry
+    const verifyByte = ((header.flags & 0x8) === 0x8) ? header.timeHighByte : header.crc >>> 24;
+
+    //3. does password meet expectations
+    if (salt[11] !== verifyByte) {
         throw "ADM-ZIP: Wrong Password";
     }
 
@@ -13323,6 +13330,7 @@ module.exports = function (/*Buffer|null*/ inBuffer, /** object */ options) {
         _comment = Buffer.alloc(0),
         mainHeader = new Headers.MainHeader(),
         loadedEntries = false;
+    var password = null;
 
     // assign options
     const opts = Object.assign(Object.create(null), options);
@@ -13574,7 +13582,7 @@ module.exports = function (/*Buffer|null*/ inBuffer, /** object */ options) {
                 // 1.2. postheader - data after data header
                 const postHeader = Buffer.alloc(entryNameLen + entry.extra.length);
                 entry.rawEntryName.copy(postHeader, 0);
-                postHeader.copy(entry.extra, entryNameLen);
+                entry.extra.copy(postHeader, entryNameLen);
 
                 // 2. offsets
                 const dataLength = dataHeader.length + postHeader.length + compressedData.length;
@@ -26755,31 +26763,21 @@ module.exports.CancelError = CancelError;
 "use strict";
 
 
-const os = __nccwpck_require__(2037);
 const pico = __nccwpck_require__(3322);
-
-const isWindows = os.platform() === 'win32';
+const utils = __nccwpck_require__(479);
 
 function picomatch(glob, options, returnState = false) {
   // default to os.platform()
   if (options && (options.windows === null || options.windows === undefined)) {
     // don't mutate the original options object
-    options = { ...options, windows: isWindows };
+    options = { ...options, windows: utils.isWindows() };
   }
+
   return pico(glob, options, returnState);
 }
 
+Object.assign(picomatch, pico);
 module.exports = picomatch;
-// public api
-module.exports.test = pico.test;
-module.exports.matchBase = pico.matchBase;
-module.exports.isMatch = pico.isMatch;
-module.exports.parse = pico.parse;
-module.exports.scan = pico.scan;
-module.exports.compileRe = pico.compileRe;
-module.exports.toRegex = pico.toRegex;
-// for tests
-module.exports.makeRe = pico.makeRe;
 
 
 /***/ }),
@@ -27186,8 +27184,8 @@ const parse = (input, options) => {
 
     if (tok.value || tok.output) append(tok);
     if (prev && prev.type === 'text' && tok.type === 'text') {
+      prev.output = (prev.output || prev.value) + tok.value;
       prev.value += tok.value;
-      prev.output = (prev.output || '') + tok.value;
       return;
     }
 
@@ -27674,10 +27672,6 @@ const parse = (input, options) => {
       if (prev && prev.type === 'paren') {
         const next = peek();
         let output = value;
-
-        if (next === '<' && !utils.supportsLookbehinds()) {
-          throw new Error('Node.js v10 or higher is required for regex lookbehinds');
-        }
 
         if ((prev.value === '(' && !/[!=<:]/.test(next)) || (next === '<' && !/<([!=]|\w+>)/.test(remaining()))) {
           output = `\\${value}`;
@@ -28820,6 +28814,7 @@ module.exports = scan;
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
+/*global navigator*/
 
 
 const {
@@ -28835,20 +28830,23 @@ exports.isRegexChar = str => str.length === 1 && exports.hasRegexChars(str);
 exports.escapeRegex = str => str.replace(REGEX_SPECIAL_CHARS_GLOBAL, '\\$1');
 exports.toPosixSlashes = str => str.replace(REGEX_BACKSLASH, '/');
 
+exports.isWindows = () => {
+  if (typeof navigator !== 'undefined' && navigator.platform) {
+    const platform = navigator.platform.toLowerCase();
+    return platform === 'win32' || platform === 'windows';
+  }
+
+  if (typeof process !== 'undefined' && process.platform) {
+    return process.platform === 'win32';
+  }
+
+  return false;
+};
+
 exports.removeBackslashes = str => {
   return str.replace(REGEX_REMOVE_BACKSLASH, match => {
     return match === '\\' ? '' : match;
   });
-};
-
-exports.supportsLookbehinds = () => {
-  if (typeof process !== 'undefined') {
-    const segs = process.version.slice(1).split('.').map(Number);
-    if (segs.length === 3 && segs[0] >= 9 || (segs[0] === 8 && segs[1] >= 10)) {
-      return true;
-    }
-  }
-  return false;
 };
 
 exports.escapeLast = (input, char, lastIdx) => {
