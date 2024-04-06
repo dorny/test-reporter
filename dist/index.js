@@ -256,7 +256,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
-const fs = __importStar(__nccwpck_require__(7147));
 const artifact_provider_1 = __nccwpck_require__(7171);
 const local_file_provider_1 = __nccwpck_require__(9399);
 const get_annotations_1 = __nccwpck_require__(5867);
@@ -398,9 +397,7 @@ class TestReporter {
                 const summary = (0, get_report_1.getReport)(results, { listSuites, listTests, baseUrl, onlySummary, useActionsSummary, badgeTitle });
                 core.info('Summary content:');
                 core.info(summary);
-                yield fs.promises.writeFile(this.path.replace('*.trx', 'test-summary.md'), summary);
-                core.info('File content:');
-                core.info(fs.readFileSync(this.path.replace('*.trx', 'test-summary.md'), 'utf8'));
+                yield core.summary.addRaw(summary).write();
             }
             else {
                 core.info(`Creating check run ${name}`);

@@ -171,9 +171,7 @@ class TestReporter {
 
       core.info('Summary content:')
       core.info(summary)
-      await fs.promises.writeFile(this.path.replace('*.trx', 'test-summary.md'), summary)
-      core.info('File content:')
-      core.info(fs.readFileSync(this.path.replace('*.trx', 'test-summary.md'), 'utf8'))
+      await core.summary.addRaw(summary).write()
     } else {
       core.info(`Creating check run ${name}`)
       const createResp = await this.octokit.rest.checks.create({
