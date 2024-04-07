@@ -1,0 +1,53 @@
+{
+  "version": "3.13.0",
+  "examples": [
+    {
+      "id": "./spec/config/check_env_vars_spec.rb[1:1:1:1:1]",
+      "description": "logs success message",
+      "full_description": "CheckEnvVars#call when all env vars are defined behaves like success load logs success message",
+      "status": "passed",
+      "file_path": "./spec/config/check_env_vars_spec.rb",
+      "line_number": 12,
+      "run_time": 0.079159625,
+      "pending_message": null
+    },
+    {
+      "id": "./spec/config/check_env_vars_spec.rb[1:1:1:1:2]",
+      "description": "fails in assertion",
+      "full_description": "CheckEnvVars#call when all env vars are defined behaves like success load fails in assertion",
+      "status": "failed",
+      "file_path": "./spec/config/check_env_vars_spec.rb",
+      "line_number": 17,
+      "run_time": 0.004411051,
+      "pending_message": null,
+      "exception": {
+        "class": "RSpec::Mocks::MockExpectationError",
+        "message": "(#ActiveSupport::BroadcastLogger:0x00007f1007fedf58).debug(\"All config env vars exist\")\n    expected: 0 times with arguments: (\"All config env vars exist\")\n    received: 1 time with arguments: (\"All config env vars exist\")",
+        "backtrace": [
+          "/usr/local/bundle/ruby/3.3.0/gems/net-http-0.4.1/lib/net/http.rb:1603:in `initialize'",
+          "./config/check_env_vars.rb:11:in `call'",
+          "./spec/config/check_env_vars_spec.rb:7:in `block (3 levels) in \u003ctop (required)\u003e'",
+          "./spec/config/check_env_vars_spec.rb:19:in `block (4 levels) in \u003ctop (required)\u003e'"
+        ]
+      }
+    },
+    {
+      "id": "./spec/config/check_env_vars_spec.rb[1:1:1:1:4]",
+      "description": "skips the test",
+      "full_description": "CheckEnvVars#call when all env vars are defined behaves like success load skips the test",
+      "status": "pending",
+      "file_path": "./spec/config/check_env_vars_spec.rb",
+      "line_number": 27,
+      "run_time": 2.3007e-05,
+      "pending_message": "Temporarily skipped with xit"
+    }
+  ],
+  "summary": {
+    "duration": 0.19118387,
+    "example_count": 3,
+    "failure_count": 1,
+    "pending_count": 1,
+    "errors_outside_of_examples_count": 0
+  },
+  "summary_line": "3 examples, 1 failures, 1 pending"
+}

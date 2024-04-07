@@ -265,6 +265,7 @@ const dotnet_trx_parser_1 = __nccwpck_require__(2664);
 const java_junit_parser_1 = __nccwpck_require__(676);
 const jest_junit_parser_1 = __nccwpck_require__(1113);
 const mocha_json_parser_1 = __nccwpck_require__(6043);
+const rspec_json_parser_1 = __nccwpck_require__(406);
 const swift_xunit_parser_1 = __nccwpck_require__(5366);
 const path_utils_1 = __nccwpck_require__(4070);
 const github_utils_1 = __nccwpck_require__(3522);
@@ -434,6 +435,8 @@ class TestReporter {
                 return new jest_junit_parser_1.JestJunitParser(options);
             case 'mocha-json':
                 return new mocha_json_parser_1.MochaJsonParser(options);
+            case 'rspec-json':
+                return new rspec_json_parser_1.RspecJsonParser(options);
             case 'swift-xunit':
                 return new swift_xunit_parser_1.SwiftXunitParser(options);
             default:
@@ -1401,6 +1404,121 @@ class MochaJsonParser {
     }
 }
 exports.MochaJsonParser = MochaJsonParser;
+
+
+/***/ }),
+
+/***/ 406:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.RspecJsonParser = void 0;
+const test_results_1 = __nccwpck_require__(2768);
+class RspecJsonParser {
+    constructor(options) {
+        this.options = options;
+    }
+    parse(path, content) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const mocha = this.getRspecJson(path, content);
+            const result = this.getTestRunResult(path, mocha);
+            result.sort(true);
+            return Promise.resolve(result);
+        });
+    }
+    getRspecJson(path, content) {
+        try {
+            return JSON.parse(content);
+        }
+        catch (e) {
+            throw new Error(`Invalid JSON at ${path}\n\n${e}`);
+        }
+    }
+    getTestRunResult(resultsPath, rspec) {
+        const suitesMap = {};
+        const getSuite = (test) => {
+            var _a;
+            const path = test.file_path;
+            return (_a = suitesMap[path]) !== null && _a !== void 0 ? _a : (suitesMap[path] = new test_results_1.TestSuiteResult(path, []));
+        };
+        for (const test of rspec.examples) {
+            const suite = getSuite(test);
+            if (test.status === 'failed') {
+                this.processTest(suite, test, 'failed');
+            }
+            else if (test.status === 'passed') {
+                this.processTest(suite, test, 'success');
+            }
+            else if (test.status === 'pending') {
+                this.processTest(suite, test, 'skipped');
+            }
+        }
+        const suites = Object.values(suitesMap);
+        return new test_results_1.TestRunResult(resultsPath, suites, rspec.summary.duration);
+    }
+    processTest(suite, test, result) {
+        var _a;
+        const groupName = test.full_description !== test.description
+            ? test.full_description.substr(0, test.full_description.length - test.description.length).trimEnd()
+            : null;
+        let group = suite.groups.find(grp => grp.name === groupName);
+        if (group === undefined) {
+            group = new test_results_1.TestGroupResult(groupName, []);
+            suite.groups.push(group);
+        }
+        const error = this.getTestCaseError(test);
+        const testCase = new test_results_1.TestCaseResult(test.full_description, result, (_a = test.run_time) !== null && _a !== void 0 ? _a : 0, error);
+        group.tests.push(testCase);
+    }
+    getTestCaseError(test) {
+        var _a, _b;
+        const backtrace = (_a = test.exception) === null || _a === void 0 ? void 0 : _a.backtrace;
+        const message = (_b = test.exception) === null || _b === void 0 ? void 0 : _b.message;
+        if (backtrace === undefined) {
+            return undefined;
+        }
+        let path;
+        let line;
+        const details = backtrace.join('\n');
+        const src = this.getExceptionSource(backtrace);
+        if (src) {
+            path = src.path;
+            line = src.line;
+        }
+        return {
+            path,
+            line,
+            message,
+            details
+        };
+    }
+    getExceptionSource(backtrace) {
+        const re = /^(.*?):(\d+):/;
+        for (const str of backtrace) {
+            const match = str.match(re);
+            if (match !== null) {
+                const [_, path, lineStr] = match;
+                if (path.startsWith('./')) {
+                    const line = parseInt(lineStr);
+                    return { path, line };
+                }
+            }
+        }
+        return undefined;
+    }
+}
+exports.RspecJsonParser = RspecJsonParser;
 
 
 /***/ }),
@@ -11219,7 +11337,8 @@ module.exports = function (/**String*/ input, /** object */ options) {
          *
          * @return Array
          */
-        getEntries: function () {
+        getEntries: function (/**String*/ password) {
+            _zip.password=password;
             return _zip ? _zip.entries : [];
         },
 
@@ -11296,7 +11415,7 @@ module.exports = function (/**String*/ input, /** object */ options) {
                 return true;
             }
 
-            var content = item.getData();
+            var content = item.getData(_zip.password);
             if (!content) throw new Error(Utils.Errors.CANT_EXTRACT_FILE);
 
             if (filetools.fs.existsSync(target) && !overwrite) {
@@ -11458,9 +11577,9 @@ module.exports = function (/**String*/ input, /** object */ options) {
                                     callback(getError("Unable to set times", filePath));
                                     return;
                                 }
-                                fileEntries.delete(entry);
                                 // call the callback if it was last entry
                                 done();
+                                fileEntries.delete(entry);
                             });
                         });
                     }
@@ -11624,7 +11743,9 @@ module.exports = function () {
         set time(val) {
             setTime(val);
         },
-
+        get timeHighByte() {
+            return (_time >>> 8) & 0xff;
+        },
         get crc() {
             return _crc;
         },
@@ -12238,8 +12359,12 @@ function decrypt(/*Buffer*/ data, /*Object*/ header, /*String, Buffer*/ pwd) {
     // 2. decrypt salt what is always 12 bytes and is a part of file content
     const salt = decrypter(data.slice(0, 12));
 
-    // 3. does password meet expectations
-    if (salt[11] !== header.crc >>> 24) {
+    // if bit 3 (0x08) of the general-purpose flags field is set, check salt[11] with the high byte of the header time
+    // 2 byte data block (as per Info-Zip spec), otherwise check with the high byte of the header entry
+    const verifyByte = ((header.flags & 0x8) === 0x8) ? header.timeHighByte : header.crc >>> 24;
+
+    //3. does password meet expectations
+    if (salt[11] !== verifyByte) {
         throw "ADM-ZIP: Wrong Password";
     }
 
@@ -13205,6 +13330,7 @@ module.exports = function (/*Buffer|null*/ inBuffer, /** object */ options) {
         _comment = Buffer.alloc(0),
         mainHeader = new Headers.MainHeader(),
         loadedEntries = false;
+    var password = null;
 
     // assign options
     const opts = Object.assign(Object.create(null), options);
@@ -13456,7 +13582,7 @@ module.exports = function (/*Buffer|null*/ inBuffer, /** object */ options) {
                 // 1.2. postheader - data after data header
                 const postHeader = Buffer.alloc(entryNameLen + entry.extra.length);
                 entry.rawEntryName.copy(postHeader, 0);
-                postHeader.copy(entry.extra, entryNameLen);
+                entry.extra.copy(postHeader, entryNameLen);
 
                 // 2. offsets
                 const dataLength = dataHeader.length + postHeader.length + compressedData.length;
@@ -26637,31 +26763,21 @@ module.exports.CancelError = CancelError;
 "use strict";
 
 
-const os = __nccwpck_require__(2037);
 const pico = __nccwpck_require__(3322);
-
-const isWindows = os.platform() === 'win32';
+const utils = __nccwpck_require__(479);
 
 function picomatch(glob, options, returnState = false) {
   // default to os.platform()
   if (options && (options.windows === null || options.windows === undefined)) {
     // don't mutate the original options object
-    options = { ...options, windows: isWindows };
+    options = { ...options, windows: utils.isWindows() };
   }
+
   return pico(glob, options, returnState);
 }
 
+Object.assign(picomatch, pico);
 module.exports = picomatch;
-// public api
-module.exports.test = pico.test;
-module.exports.matchBase = pico.matchBase;
-module.exports.isMatch = pico.isMatch;
-module.exports.parse = pico.parse;
-module.exports.scan = pico.scan;
-module.exports.compileRe = pico.compileRe;
-module.exports.toRegex = pico.toRegex;
-// for tests
-module.exports.makeRe = pico.makeRe;
 
 
 /***/ }),
@@ -27068,8 +27184,8 @@ const parse = (input, options) => {
 
     if (tok.value || tok.output) append(tok);
     if (prev && prev.type === 'text' && tok.type === 'text') {
+      prev.output = (prev.output || prev.value) + tok.value;
       prev.value += tok.value;
-      prev.output = (prev.output || '') + tok.value;
       return;
     }
 
@@ -27556,10 +27672,6 @@ const parse = (input, options) => {
       if (prev && prev.type === 'paren') {
         const next = peek();
         let output = value;
-
-        if (next === '<' && !utils.supportsLookbehinds()) {
-          throw new Error('Node.js v10 or higher is required for regex lookbehinds');
-        }
 
         if ((prev.value === '(' && !/[!=<:]/.test(next)) || (next === '<' && !/<([!=]|\w+>)/.test(remaining()))) {
           output = `\\${value}`;
@@ -28702,6 +28814,7 @@ module.exports = scan;
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
+/*global navigator*/
 
 
 const {
@@ -28717,20 +28830,23 @@ exports.isRegexChar = str => str.length === 1 && exports.hasRegexChars(str);
 exports.escapeRegex = str => str.replace(REGEX_SPECIAL_CHARS_GLOBAL, '\\$1');
 exports.toPosixSlashes = str => str.replace(REGEX_BACKSLASH, '/');
 
+exports.isWindows = () => {
+  if (typeof navigator !== 'undefined' && navigator.platform) {
+    const platform = navigator.platform.toLowerCase();
+    return platform === 'win32' || platform === 'windows';
+  }
+
+  if (typeof process !== 'undefined' && process.platform) {
+    return process.platform === 'win32';
+  }
+
+  return false;
+};
+
 exports.removeBackslashes = str => {
   return str.replace(REGEX_REMOVE_BACKSLASH, match => {
     return match === '\\' ? '' : match;
   });
-};
-
-exports.supportsLookbehinds = () => {
-  if (typeof process !== 'undefined') {
-    const segs = process.version.slice(1).split('.').map(Number);
-    if (segs.length === 3 && segs[0] >= 9 || (segs[0] === 8 && segs[1] >= 10)) {
-      return true;
-    }
-  }
-  return false;
 };
 
 exports.escapeLast = (input, char, lastIdx) => {
