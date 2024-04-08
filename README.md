@@ -43,7 +43,7 @@ jobs:
     name: Build & Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3     # checkout the repo
+      - uses: actions/checkout@v4     # checkout the repo
       - run: npm ci                   # install packages
       - run: npm test                 # run tests (configured to use jest-junit reporter)
 
@@ -74,10 +74,10 @@ jobs:
   build-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3         # checkout the repo
+      - uses: actions/checkout@v4         # checkout the repo
       - run: npm ci                       # install packages
       - run: npm test                     # run tests (configured to use jest-junit reporter)
-      - uses: actions/upload-artifact@v3  # upload test results
+      - uses: actions/upload-artifact@v4  # upload test results
         if: success() || failure()        # run this step even if previous step failed
         with:
           name: test-results
@@ -331,7 +331,7 @@ Unfortunately, there are some known issues and limitations caused by GitHub API:
 
 - Test report (i.e. Check Run summary) is markdown text. No custom styling or HTML is possible.
 - Maximum report size is 65535 bytes. Input parameters `list-suites` and `list-tests` will be automatically adjusted if max size is exceeded.
-- Test report can't reference any additional files (e.g. screenshots). You can use `actions/upload-artifact@v3` to upload them and inspect them manually.
+- Test report can't reference any additional files (e.g. screenshots). You can use `actions/upload-artifact@v4` to upload them and inspect them manually.
 - Check Runs are created for specific commit SHA. It's not possible to specify under which workflow test report should belong if more
   workflows are running for the same SHA. Thanks to this GitHub "feature" it's possible your test report will appear in an unexpected place in GitHub UI.
   For more information, see [#67](https://github.com/dorny/test-reporter/issues/67).
