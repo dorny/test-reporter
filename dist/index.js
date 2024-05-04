@@ -2168,7 +2168,7 @@ function downloadArtifact(octokit, artifactId, fileName, token) {
             if (typeof url !== 'string') {
                 throw new Error(`Location header has unexpected value: ${url}`);
             }
-            const downloadStream = got_1.default.stream(url, { headers });
+            const downloadStream = got_1.default.stream(url);
             const fileWriterStream = (0, fs_1.createWriteStream)(fileName);
             core.info(`Downloading ${url}`);
             downloadStream.on('downloadProgress', ({ transferred }) => {
