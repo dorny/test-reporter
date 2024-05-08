@@ -1,6 +1,6 @@
 {
   "name": "test-reporter",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "private": true,
   "description": "Presents test results from popular testing frameworks as Github check run",
   "main": "lib/main.js",
