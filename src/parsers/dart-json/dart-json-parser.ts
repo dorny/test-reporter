@@ -123,7 +123,7 @@ export class DartJsonParser implements TestParser {
         const group = suite.groups[evt.test.groupIDs[evt.test.groupIDs.length - 1]]
         group.tests.push(test)
         tests[evt.test.id] = test
-      } else if (isTestDoneEvent(evt) && !evt.hidden && tests[evt.testID]) {
+      } else if (isTestDoneEvent(evt) && tests[evt.testID]) {
         tests[evt.testID].testDone = evt
       } else if (isErrorEvent(evt) && tests[evt.testID]) {
         tests[evt.testID].error = evt
@@ -152,14 +152,16 @@ export class DartJsonParser implements TestParser {
 
     return groups.map(group => {
       group.tests.sort((a, b) => (a.testStart.test.line ?? 0) - (b.testStart.test.line ?? 0))
-      const tests = group.tests.map(tc => {
-        const error = this.getError(suite, tc)
-        const testName =
-          group.group.name !== undefined && tc.testStart.test.name.startsWith(group.group.name)
-            ? tc.testStart.test.name.slice(group.group.name.length).trim()
-            : tc.testStart.test.name.trim()
-        return new TestCaseResult(testName, tc.result, tc.time, error)
-      })
+      const tests = group.tests
+        .filter(tc => !tc.testDone?.hidden)
+        .map(tc => {
+          const error = this.getError(suite, tc)
+          const testName =
+            group.group.name !== undefined && tc.testStart.test.name.startsWith(group.group.name)
+              ? tc.testStart.test.name.slice(group.group.name.length).trim()
+              : tc.testStart.test.name.trim()
+          return new TestCaseResult(testName, tc.result, tc.time, error)
+        })
       return new TestGroupResult(group.group.name, tests)
     })
   }

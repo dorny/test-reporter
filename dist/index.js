@@ -558,7 +558,7 @@ class DartJsonParser {
                 group.tests.push(test);
                 tests[evt.test.id] = test;
             }
-            else if ((0, dart_json_types_1.isTestDoneEvent)(evt) && !evt.hidden && tests[evt.testID]) {
+            else if ((0, dart_json_types_1.isTestDoneEvent)(evt) && tests[evt.testID]) {
                 tests[evt.testID].testDone = evt;
             }
             else if ((0, dart_json_types_1.isErrorEvent)(evt) && tests[evt.testID]) {
@@ -585,7 +585,9 @@ class DartJsonParser {
         groups.sort((a, b) => { var _a, _b; return ((_a = a.group.line) !== null && _a !== void 0 ? _a : 0) - ((_b = b.group.line) !== null && _b !== void 0 ? _b : 0); });
         return groups.map(group => {
             group.tests.sort((a, b) => { var _a, _b; return ((_a = a.testStart.test.line) !== null && _a !== void 0 ? _a : 0) - ((_b = b.testStart.test.line) !== null && _b !== void 0 ? _b : 0); });
-            const tests = group.tests.map(tc => {
+            const tests = group.tests
+                .filter(tc => { var _a; return !((_a = tc.testDone) === null || _a === void 0 ? void 0 : _a.hidden); })
+                .map(tc => {
                 const error = this.getError(suite, tc);
                 const testName = group.group.name !== undefined && tc.testStart.test.name.startsWith(group.group.name)
                     ? tc.testStart.test.name.slice(group.group.name.length).trim()
@@ -2151,26 +2153,11 @@ function downloadArtifact(octokit, artifactId, fileName, token) {
             const headers = {
                 Authorization: `Bearer ${token}`
             };
-            const resp = yield (0, got_1.default)(req.url, {
-                headers,
-                followRedirect: false
-            });
-            core.info(`Fetch artifact URL: ${resp.statusCode} ${resp.statusMessage}`);
-            if (resp.statusCode !== 302) {
-                throw new Error('Fetch artifact URL failed: received unexpected status code');
-            }
-            const url = resp.headers.location;
-            if (url === undefined) {
-                const receivedHeaders = Object.keys(resp.headers);
-                core.info(`Received headers: ${receivedHeaders.join(', ')}`);
-                throw new Error('Location header was not found in API response');
-            }
-            if (typeof url !== 'string') {
-                throw new Error(`Location header has unexpected value: ${url}`);
-            }
-            const downloadStream = got_1.default.stream(url, { headers });
+            const downloadStream = got_1.default.stream(req.url, { headers });
             const fileWriterStream = (0, fs_1.createWriteStream)(fileName);
-            core.info(`Downloading ${url}`);
+            downloadStream.on('redirect', response => {
+                core.info(`Downloading ${response.headers.location}`);
+            });
             downloadStream.on('downloadProgress', ({ transferred }) => {
                 core.info(`Progress: ${transferred} B`);
             });

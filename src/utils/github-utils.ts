@@ -50,33 +50,17 @@ export async function downloadArtifact(
     const headers = {
       Authorization: `Bearer ${token}`
     }
-    const resp = await got(req.url, {
-      headers,
-      followRedirect: false
-    })
 
-    core.info(`Fetch artifact URL: ${resp.statusCode} ${resp.statusMessage}`)
-    if (resp.statusCode !== 302) {
-      throw new Error('Fetch artifact URL failed: received unexpected status code')
-    }
-
-    const url = resp.headers.location
-    if (url === undefined) {
-      const receivedHeaders = Object.keys(resp.headers)
-      core.info(`Received headers: ${receivedHeaders.join(', ')}`)
-      throw new Error('Location header was not found in API response')
-    }
-    if (typeof url !== 'string') {
-      throw new Error(`Location header has unexpected value: ${url}`)
-    }
-
-    const downloadStream = got.stream(url, {headers})
+    const downloadStream = got.stream(req.url, {headers})
     const fileWriterStream = createWriteStream(fileName)
 
-    core.info(`Downloading ${url}`)
+    downloadStream.on('redirect', response => {
+      core.info(`Downloading ${response.headers.location}`)
+    })
     downloadStream.on('downloadProgress', ({transferred}) => {
       core.info(`Progress: ${transferred} B`)
     })
+
     await asyncStream(downloadStream, fileWriterStream)
   } finally {
     core.endGroup()
