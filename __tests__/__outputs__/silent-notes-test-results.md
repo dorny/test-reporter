@@ -3,8 +3,8 @@
  
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
-|VanillaCloudStorageClientTest|67:white_check_mark:||12:warning:|1s|
-## :white_check_mark: <a id="user-content-r0" href="#r0">VanillaCloudStorageClientTest</a>
+|fixtures/external/SilentNotes.trx|67:white_check_mark:||12:warning:|1s|
+## :white_check_mark: <a id="user-content-r0" href="#r0">fixtures/external/SilentNotes.trx</a>
 **79** tests were completed in **1s** with **67** passed, **0** failed and **12** skipped.
 |Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|

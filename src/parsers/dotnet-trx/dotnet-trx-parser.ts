@@ -16,10 +16,7 @@ import {
 } from '../../test-results'
 
 class TestClass {
-  constructor(
-    readonly name: string,
-    readonly assemblyName: string
-  ) {}
+  constructor(readonly name: string) {}
   readonly tests: Test[] = []
 }
 
@@ -84,12 +81,9 @@ export class DotnetTrxParser implements TestParser {
     const testClasses: {[name: string]: TestClass} = {}
     for (const r of unitTestsResults) {
       const className = r.test.TestMethod[0].$.className
-      const codeBase = r.test.TestMethod[0].$.codeBase
-      const pathSegments = codeBase.replace(/\\/g, '/').split('/')
-      const assemblyName = pathSegments[pathSegments.length - 1].replace('.dll', '')
       let tc = testClasses[className]
       if (tc === undefined) {
-        tc = new TestClass(className, assemblyName)
+        tc = new TestClass(className)
         testClasses[tc.name] = tc
       }
       const error = this.getErrorInfo(r.result)
@@ -122,10 +116,6 @@ export class DotnetTrxParser implements TestParser {
       const group = new TestGroupResult(null, tests)
       return new TestSuiteResult(testClass.name, [group])
     })
-
-    if (testClasses.length > 0) {
-      return new TestRunResult(testClasses[0].assemblyName, suites, totalTime)
-    }
 
     return new TestRunResult(path, suites, totalTime)
   }

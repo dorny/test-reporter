@@ -751,9 +751,8 @@ const path_utils_1 = __nccwpck_require__(4070);
 const parse_utils_1 = __nccwpck_require__(7811);
 const test_results_1 = __nccwpck_require__(2768);
 class TestClass {
-    constructor(name, assemblyName) {
+    constructor(name) {
         this.name = name;
-        this.assemblyName = assemblyName;
         this.tests = [];
     }
 }
@@ -815,12 +814,9 @@ class DotnetTrxParser {
         const testClasses = {};
         for (const r of unitTestsResults) {
             const className = r.test.TestMethod[0].$.className;
-            const codeBase = r.test.TestMethod[0].$.codeBase;
-            const pathSegments = codeBase.replace(/\\/g, '/').split('/');
-            const assemblyName = pathSegments[pathSegments.length - 1].replace('.dll', '');
             let tc = testClasses[className];
             if (tc === undefined) {
-                tc = new TestClass(className, assemblyName);
+                tc = new TestClass(className);
                 testClasses[tc.name] = tc;
             }
             const error = this.getErrorInfo(r.result);
@@ -847,9 +843,6 @@ class DotnetTrxParser {
             const group = new test_results_1.TestGroupResult(null, tests);
             return new test_results_1.TestSuiteResult(testClass.name, [group]);
         });
-        if (testClasses.length > 0) {
-            return new test_results_1.TestRunResult(testClasses[0].assemblyName, suites, totalTime);
-        }
         return new test_results_1.TestRunResult(path, suites, totalTime);
     }
     getErrorInfo(testResult) {

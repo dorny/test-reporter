@@ -2,7 +2,7 @@
 
 exports[`dotnet-trx tests matches report snapshot 1`] = `
 TestRunResult {
-  "path": "DotnetTests.XUnitTests",
+  "path": "fixtures/dotnet-trx.trx",
   "suites": [
     TestSuiteResult {
       "groups": [
@@ -131,7 +131,7 @@ Actual:   False",
 
 exports[`dotnet-trx tests report from FluentValidation test results matches snapshot 1`] = `
 TestRunResult {
-  "path": "FluentValidation.Tests",
+  "path": "fixtures/external/FluentValidation.Tests.trx",
   "suites": [
     TestSuiteResult {
       "groups": [
@@ -5646,7 +5646,7 @@ TestRunResult {
 
 exports[`dotnet-trx tests report from SilentNotes test results matches snapshot 1`] = `
 TestRunResult {
-  "path": "VanillaCloudStorageClientTest",
+  "path": "fixtures/external/SilentNotes.trx",
   "suites": [
     TestSuiteResult {
       "groups": [

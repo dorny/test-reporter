@@ -3,8 +3,8 @@
  
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
-|FluentValidation.Tests|803:white_check_mark:||1:warning:|4s|
-## :white_check_mark: <a id="user-content-r0" href="#r0">FluentValidation.Tests</a>
+|fixtures/external/FluentValidation.Tests.trx|803:white_check_mark:||1:warning:|4s|
+## :white_check_mark: <a id="user-content-r0" href="#r0">fixtures/external/FluentValidation.Tests.trx</a>
 **804** tests were completed in **4s** with **803** passed, **0** failed and **1** skipped.
 |Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
