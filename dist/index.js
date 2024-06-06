@@ -343,12 +343,10 @@ class TestReporter {
             const input = yield inputProvider.load();
             for (const [reportName, files] of Object.entries(input)) {
                 try {
-                    core.startGroup(`Creating test report ${reportName}`);
                     const tr = yield this.createReport(parser, reportName, files);
                     results.push(...tr);
                 }
                 finally {
-                    core.endGroup();
                 }
             }
             const isFailed = results.some(tr => tr.result === 'failed');

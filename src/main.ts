@@ -111,11 +111,9 @@ class TestReporter {
     const input = await inputProvider.load()
     for (const [reportName, files] of Object.entries(input)) {
       try {
-        core.startGroup(`Creating test report ${reportName}`)
         const tr = await this.createReport(parser, reportName, files)
         results.push(...tr)
       } finally {
-        core.endGroup()
       }
     }
 
