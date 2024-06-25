@@ -14,7 +14,7 @@ import {
   TestCaseError
 } from '../../test-results'
 
-export class DotNetNunitParser implements TestParser {
+export class DotnetNunitParser implements TestParser {
   assumedWorkDir: string | undefined
 
   constructor(readonly options: ParseOptions) {}

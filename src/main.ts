@@ -11,7 +11,7 @@ import {getAnnotations} from './report/get-annotations'
 import {getReport} from './report/get-report'
 
 import {DartJsonParser} from './parsers/dart-json/dart-json-parser'
-import {DotNetNunitParser} from './parsers/dotnet-nunit/dotnet-nunit-parser'
+import {DotnetNunitParser} from './parsers/dotnet-nunit/dotnet-nunit-parser'
 import {DotnetTrxParser} from './parsers/dotnet-trx/dotnet-trx-parser'
 import {JavaJunitParser} from './parsers/java-junit/java-junit-parser'
 import {JestJunitParser} from './parsers/jest-junit/jest-junit-parser'
@@ -216,7 +216,7 @@ class TestReporter {
       case 'dart-json':
         return new DartJsonParser(options, 'dart')
       case 'dotnet-nunit':
-        return new DotNetNunitParser(options)
+        return new DotnetNunitParser(options)
       case 'dotnet-trx':
         return new DotnetTrxParser(options)
       case 'flutter-json':

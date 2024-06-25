@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import * as path from 'path'
 
-import {DotNetNunitParser} from '../src/parsers/dotnet-nunit/dotnet-nunit-parser'
+import {DotnetNunitParser} from '../src/parsers/dotnet-nunit/dotnet-nunit-parser'
 import {ParseOptions} from '../src/test-parser'
 import {getReport} from '../src/report/get-report'
 import {normalizeFilePath} from '../src/utils/path-utils'
@@ -18,7 +18,7 @@ describe('dotnet-nunit tests', () => {
       trackedFiles: ['DotnetTests.Unit/Calculator.cs', 'DotnetTests.NUnitV3Tests/CalculatorTests.cs']
     }
 
-    const parser = new DotNetNunitParser(opts)
+    const parser = new DotnetNunitParser(opts)
     const result = await parser.parse(filePath, fileContent)
     expect(result).toMatchSnapshot()
 

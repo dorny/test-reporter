@@ -427,7 +427,7 @@ class TestReporter {
             case 'dart-json':
                 return new dart_json_parser_1.DartJsonParser(options, 'dart');
             case 'dotnet-nunit':
-                return new dotnet_nunit_parser_1.DotNetNunitParser(options);
+                return new dotnet_nunit_parser_1.DotnetNunitParser(options);
             case 'dotnet-trx':
                 return new dotnet_trx_parser_1.DotnetTrxParser(options);
             case 'flutter-json':
@@ -742,12 +742,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.DotNetNunitParser = void 0;
+exports.DotnetNunitParser = void 0;
 const xml2js_1 = __nccwpck_require__(6189);
 const node_utils_1 = __nccwpck_require__(5824);
 const path_utils_1 = __nccwpck_require__(4070);
 const test_results_1 = __nccwpck_require__(2768);
-class DotNetNunitParser {
+class DotnetNunitParser {
     constructor(options) {
         this.options = options;
     }
@@ -852,7 +852,7 @@ class DotNetNunitParser {
         return ((_b = (_a = this.options.workDir) !== null && _a !== void 0 ? _a : this.assumedWorkDir) !== null && _b !== void 0 ? _b : (this.assumedWorkDir = (0, path_utils_1.getBasePath)(path, this.options.trackedFiles)));
     }
 }
-exports.DotNetNunitParser = DotNetNunitParser;
+exports.DotnetNunitParser = DotnetNunitParser;
 
 
 /***/ }),
