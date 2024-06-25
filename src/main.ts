@@ -1,6 +1,5 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-import * as fs from 'fs'
 import {GitHub} from '@actions/github/lib/utils'
 
 import {ArtifactProvider} from './input-providers/artifact-provider'
