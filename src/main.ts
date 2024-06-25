@@ -12,10 +12,12 @@ import {getAnnotations} from './report/get-annotations'
 import {getReport} from './report/get-report'
 
 import {DartJsonParser} from './parsers/dart-json/dart-json-parser'
+import {DotnetNunitParser} from './parsers/dotnet-nunit/dotnet-nunit-parser'
 import {DotnetTrxParser} from './parsers/dotnet-trx/dotnet-trx-parser'
 import {JavaJunitParser} from './parsers/java-junit/java-junit-parser'
 import {JestJunitParser} from './parsers/jest-junit/jest-junit-parser'
 import {MochaJsonParser} from './parsers/mocha-json/mocha-json-parser'
+import {RspecJsonParser} from './parsers/rspec-json/rspec-json-parser'
 import {SwiftXunitParser} from './parsers/swift-xunit/swift-xunit-parser'
 
 import {normalizeDirPath, normalizeFilePath} from './utils/path-utils'
@@ -226,6 +228,8 @@ class TestReporter {
     switch (reporter) {
       case 'dart-json':
         return new DartJsonParser(options, 'dart')
+      case 'dotnet-nunit':
+        return new DotnetNunitParser(options)
       case 'dotnet-trx':
         return new DotnetTrxParser(options)
       case 'flutter-json':
@@ -236,6 +240,8 @@ class TestReporter {
         return new JestJunitParser(options)
       case 'mocha-json':
         return new MochaJsonParser(options)
+      case 'rspec-json':
+        return new RspecJsonParser(options)
       case 'swift-xunit':
         return new SwiftXunitParser(options)
       default:

@@ -13,7 +13,7 @@ This [Github Action](https://github.com/features/actions) displays test results 
 |:--:|:--:|:--:|:--:|
 
 **Supported languages / frameworks:**
-- .NET / [xUnit](https://xunit.net/) / [NUnit](https://nunit.org/) / [MSTest](https://github.com/Microsoft/testfx-docs)
+- .NET / [dotnet test](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-test#examples) ( [xUnit](https://xunit.net/) / [NUnit](https://nunit.org/) / [MSTest](https://github.com/Microsoft/testfx-docs) )
 - Dart / [test](https://pub.dev/packages/test)
 - Flutter / [test](https://pub.dev/packages/test)
 - Java / [JUnit](https://junit.org/)
@@ -43,7 +43,7 @@ jobs:
     name: Build & Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3     # checkout the repo
+      - uses: actions/checkout@v4     # checkout the repo
       - run: npm ci                   # install packages
       - run: npm test                 # run tests (configured to use jest-junit reporter)
 
@@ -74,10 +74,10 @@ jobs:
   build-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3         # checkout the repo
+      - uses: actions/checkout@v4         # checkout the repo
       - run: npm ci                       # install packages
       - run: npm test                     # run tests (configured to use jest-junit reporter)
-      - uses: actions/upload-artifact@v3  # upload test results
+      - uses: actions/upload-artifact@v4  # upload test results
         if: success() || failure()        # run this step even if previous step failed
         with:
           name: test-results
@@ -137,11 +137,13 @@ jobs:
 
     # Format of test results. Supported options:
     #   dart-json
+    #   dotnet-nunit
     #   dotnet-trx
     #   flutter-json
     #   java-junit
     #   jest-junit
     #   mocha-json
+    #   rspec-json
     reporter: ''
 
     # Allows you to generate only the summary.
@@ -315,16 +317,22 @@ Configuration of `uniqueOutputName`, `suiteNameTemplate`, `classNameTemplate`, `
 - Mocha version [v7.2.0](https://github.com/mochajs/mocha/releases/tag/v7.2.0) or higher
 - Usage of [json](https://mochajs.org/#json) reporter.
 
-You can use the following example configuration in `package.json`:
+For Mocha >= [v9.1.0](https://github.com/mochajs/mocha/releases/tag/v9.1.0), you can use the following example configuration in `package.json`:
+```json
+"scripts": {
+  "test": "mocha --reporter json --reporter-option output=test-results.json"
+}
+```
+
+For Mocha < v9.1, the command should look like this:
 ```json
 "scripts": {
   "test": "mocha --reporter json > test-results.json"
 }
 ```
-
-Test processing might fail if any of your tests write anything on standard output.
-Mocha, unfortunately, doesn't have the option to store `json` output directly to the file, and we have to rely on redirecting its standard output.
-There is a work in progress to fix it: [mocha#4607](https://github.com/mochajs/mocha/pull/4607)
+Additionally, test processing might fail if any of your tests write anything on standard output.
+Before version [v9.1.0](https://github.com/mochajs/mocha/releases/tag/v9.1.0), Mocha doesn't have the option to store `json` output directly to the file, and we have to rely on redirecting its standard output ([mocha#4607](https://github.com/mochajs/mocha/pull/4607)).
+Please update Mocha to version [v9.1.0](https://github.com/mochajs/mocha/releases/tag/v9.1.0) or above if you encounter this issue.
 </details>
 
 <details>
@@ -339,7 +347,7 @@ Unfortunately, there are some known issues and limitations caused by GitHub API:
 
 - Test report (i.e. Check Run summary) is markdown text. No custom styling or HTML is possible.
 - Maximum report size is 65535 bytes. Input parameters `list-suites` and `list-tests` will be automatically adjusted if max size is exceeded.
-- Test report can't reference any additional files (e.g. screenshots). You can use `actions/upload-artifact@v3` to upload them and inspect them manually.
+- Test report can't reference any additional files (e.g. screenshots). You can use `actions/upload-artifact@v4` to upload them and inspect them manually.
 - Check Runs are created for specific commit SHA. It's not possible to specify under which workflow test report should belong if more
   workflows are running for the same SHA. Thanks to this GitHub "feature" it's possible your test report will appear in an unexpected place in GitHub UI.
   For more information, see [#67](https://github.com/dorny/test-reporter/issues/67).

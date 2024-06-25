@@ -1,9 +1,15 @@
-{"protocolVersion":"0.1.1","runnerVersion":"1.15.4","pid":21320,"type":"start","time":0}
-{"suite":{"id":0,"platform":"vm","path":"test\\main_test.dart"},"type":"suite","time":0}
-{"test":{"id":1,"name":"loading test\\main_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":1}
-{"suite":{"id":2,"platform":"vm","path":"test\\second_test.dart"},"type":"suite","time":11}
-{"test":{"id":3,"name":"loading test\\second_test.dart","suiteID":2,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":11}
-{"count":2,"type":"allSuites","time":11}
-{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":4018}
-{"testID":3,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":4025}
-{"success":true,"type":"done","time":4029}
+{"protocolVersion":"0.1.1","runnerVersion":"1.25.3","pid":7103,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"test/second_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading test/second_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":0}
+{"suite":{"id":2,"platform":"vm","path":"test/main_test.dart"},"type":"suite","time":4}
+{"test":{"id":3,"name":"loading test/main_test.dart","suiteID":2,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":4}
+{"count":2,"time":5,"type":"allSuites"}
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":294}
+{"testID":3,"messageType":"print","message":"Hello from the test","type":"print","time":297}
+{"testID":3,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":321}
+{"group":{"id":4,"suiteID":2,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":0,"line":null,"column":null,"url":null},"type":"group","time":322}
+{"test":{"id":5,"name":"(setUpAll)","suiteID":2,"groupIDs":[4],"metadata":{"skip":false,"skipReason":null},"line":6,"column":3,"url":"file:///Users/domu/Downloads/test-reporter/reports/dart/test/main_test.dart"},"type":"testStart","time":322}
+{"testID":5,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":330}
+{"test":{"id":6,"name":"(tearDownAll)","suiteID":2,"groupIDs":[4],"metadata":{"skip":false,"skipReason":null},"line":7,"column":3,"url":"file:///Users/domu/Downloads/test-reporter/reports/dart/test/main_test.dart"},"type":"testStart","time":330}
+{"testID":6,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":331}
+{"success":true,"type":"done","time":333}
