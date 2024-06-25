@@ -13,7 +13,7 @@ This [Github Action](https://github.com/features/actions) displays test results 
 |:--:|:--:|:--:|:--:|
 
 **Supported languages / frameworks:**
-- .NET / [xUnit](https://xunit.net/) / [NUnit](https://nunit.org/) / [MSTest](https://github.com/Microsoft/testfx-docs)
+- .NET / [dotnet test](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-test#examples) ( [xUnit](https://xunit.net/) / [NUnit](https://nunit.org/) / [MSTest](https://github.com/Microsoft/testfx-docs) )
 - Dart / [test](https://pub.dev/packages/test)
 - Flutter / [test](https://pub.dev/packages/test)
 - Java / [JUnit](https://junit.org/)
