@@ -1,10 +1,13 @@
 ![Tests failed](https://img.shields.io/badge/tests-1%20passed%2C%204%20failed%2C%201%20skipped-critical)
+|Report|Passed|Failed|Skipped|Time|
+|:---|---:|---:|---:|---:|
+|fixtures/jest-junit.xml|1 ✅|4 ❌|1 ⚪|1s|
 ## ❌ <a id="user-content-r0" href="#r0">fixtures/jest-junit.xml</a>
 **6** tests were completed in **1s** with **1** passed, **4** failed and **1** skipped.
 |Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
-|[__tests__\main.test.js](#r0s0)|1✅|3❌||486ms|
-|[__tests__\second.test.js](#r0s1)||1❌|1⚪|82ms|
+|[__tests__\main.test.js](#r0s0)|1 ✅|3 ❌||486ms|
+|[__tests__\second.test.js](#r0s1)||1 ❌|1 ⚪|82ms|
 ### ❌ <a id="user-content-r0s0" href="#r0s0">__tests__\main.test.js</a>
 ```
 Test 1

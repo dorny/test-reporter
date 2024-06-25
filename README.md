@@ -2,7 +2,7 @@
 
 This [Github Action](https://github.com/features/actions) displays test results from popular testing frameworks directly in GitHub.
 
-✔️ Parses test results in XML or JSON format and creates nice report as Github Check Run
+✔️ Parses test results in XML or JSON format and creates nice report as GitHub Check Run or GitHub Actions job summaries
 
 ✔️ Annotates code where it failed based on message and stack trace captured during test execution
 
@@ -151,9 +151,18 @@ jobs:
     # Detailed listing of test suites and test cases will be skipped.
     only-summary: 'false'
 
+    # Allows you to generate reports for Actions Summary
+    # https://github.blog/2022-05-09-supercharging-github-actions-with-job-summaries/
+    use-actions-summary: 'true'
+
+    # Customize the title of badges shown for each Actions Summary.
+    # Useful when distinguish summaries for tests ran in multiple Actions steps.
+    badge-title: 'tests'
+
     # Limits which test suites are listed:
     #   all
     #   failed
+    #   none
     list-suites: 'all'
 
     # Limits which test cases are listed:

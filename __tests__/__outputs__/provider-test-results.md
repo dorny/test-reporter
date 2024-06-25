@@ -1,24 +1,27 @@
 ![Tests failed](https://img.shields.io/badge/tests-268%20passed%2C%201%20failed-critical)
+|Report|Passed|Failed|Skipped|Time|
+|:---|---:|---:|---:|---:|
+|fixtures/external/flutter/provider-test-results.json|268 ✅|1 ❌||0ms|
 ## ❌ <a id="user-content-r0" href="#r0">fixtures/external/flutter/provider-test-results.json</a>
 **269** tests were completed in **0ms** with **268** passed, **1** failed and **0** skipped.
 |Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
-|[test/builder_test.dart](#r0s0)|24✅|||402ms|
-|[test/change_notifier_provider_test.dart](#r0s1)|10✅|||306ms|
-|[test/consumer_test.dart](#r0s2)|18✅|||340ms|
-|[test/context_test.dart](#r0s3)|31✅|||698ms|
-|[test/future_provider_test.dart](#r0s4)|10✅|||305ms|
-|[test/inherited_provider_test.dart](#r0s5)|81✅|||1s|
-|[test/listenable_provider_test.dart](#r0s6)|16✅|||353ms|
-|[test/listenable_proxy_provider_test.dart](#r0s7)|12✅|||373ms|
-|[test/multi_provider_test.dart](#r0s8)|3✅|||198ms|
-|[test/provider_test.dart](#r0s9)|11✅|||306ms|
-|[test/proxy_provider_test.dart](#r0s10)|16✅|||438ms|
-|[test/reassemble_test.dart](#r0s11)|3✅|||221ms|
-|[test/selector_test.dart](#r0s12)|17✅|||364ms|
-|[test/stateful_provider_test.dart](#r0s13)|4✅|||254ms|
-|[test/stream_provider_test.dart](#r0s14)|8✅|||282ms|
-|[test/value_listenable_provider_test.dart](#r0s15)|4✅|1❌||327ms|
+|[test/builder_test.dart](#r0s0)|24 ✅|||402ms|
+|[test/change_notifier_provider_test.dart](#r0s1)|10 ✅|||306ms|
+|[test/consumer_test.dart](#r0s2)|18 ✅|||340ms|
+|[test/context_test.dart](#r0s3)|31 ✅|||698ms|
+|[test/future_provider_test.dart](#r0s4)|10 ✅|||305ms|
+|[test/inherited_provider_test.dart](#r0s5)|81 ✅|||1s|
+|[test/listenable_provider_test.dart](#r0s6)|16 ✅|||353ms|
+|[test/listenable_proxy_provider_test.dart](#r0s7)|12 ✅|||373ms|
+|[test/multi_provider_test.dart](#r0s8)|3 ✅|||198ms|
+|[test/provider_test.dart](#r0s9)|11 ✅|||306ms|
+|[test/proxy_provider_test.dart](#r0s10)|16 ✅|||438ms|
+|[test/reassemble_test.dart](#r0s11)|3 ✅|||221ms|
+|[test/selector_test.dart](#r0s12)|17 ✅|||364ms|
+|[test/stateful_provider_test.dart](#r0s13)|4 ✅|||254ms|
+|[test/stream_provider_test.dart](#r0s14)|8 ✅|||282ms|
+|[test/value_listenable_provider_test.dart](#r0s15)|4 ✅|1 ❌||327ms|
 ### ✅ <a id="user-content-r0s0" href="#r0s0">test/builder_test.dart</a>
 ```
 ChangeNotifierProvider

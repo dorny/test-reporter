@@ -40,6 +40,7 @@ inputs:
       Limits which test suites are listed. Supported options:
         - all
         - only-failed
+        - none
     required: false
     default: 'all'
   list-tests:
@@ -74,6 +75,16 @@ inputs:
       Detailed listing of test suites and test cases will be skipped.
     default: 'false'
     required: false
+  use-actions-summary:
+    description: |
+      Allows you to generate reports for Actions Summary
+      https://github.com/orgs/github/teams/engineering/discussions/871
+    default: 'true'
+    required: false
+  badge-title:
+    description: Customize badge title
+    required: false
+    default: 'tests'
   token:
     description: GitHub Access Token
     required: false

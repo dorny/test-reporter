@@ -275,12 +275,14 @@ class TestReporter {
     failOnEmpty = core.getInput('fail-on-empty', { required: true }) === 'true';
     workDirInput = core.getInput('working-directory', { required: false });
     onlySummary = core.getInput('only-summary', { required: false }) === 'true';
+    useActionsSummary = core.getInput('use-actions-summary', { required: false }) === 'true';
+    badgeTitle = core.getInput('badge-title', { required: false });
     token = core.getInput('token', { required: true });
     octokit;
     context = (0, github_utils_1.getCheckRunContext)();
     constructor() {
         this.octokit = github.getOctokit(this.token);
-        if (this.listSuites !== 'all' && this.listSuites !== 'failed') {
+        if (this.listSuites !== 'all' && this.listSuites !== 'failed' && this.listSuites !== 'none') {
             core.setFailed(`Input parameter 'list-suites' has invalid value`);
             return;
         }
@@ -367,46 +369,55 @@ class TestReporter {
                 throw error;
             }
         }
-        core.info(`Creating check run ${name}`);
-        const createResp = await this.octokit.rest.checks.create({
-            head_sha: this.context.sha,
-            name,
-            status: 'in_progress',
-            output: {
-                title: name,
-                summary: ''
-            },
-            ...github.context.repo
-        });
-        core.info('Creating report summary');
-        const { listSuites, listTests, onlySummary } = this;
-        const baseUrl = createResp.data.html_url;
-        const summary = (0, get_report_1.getReport)(results, { listSuites, listTests, baseUrl, onlySummary });
-        core.info('Creating annotations');
-        const annotations = (0, get_annotations_1.getAnnotations)(results, this.maxAnnotations);
-        const isFailed = this.failOnError && results.some(tr => tr.result === 'failed');
-        const conclusion = isFailed ? 'failure' : 'success';
-        const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
-        const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
-        const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
-        const shortSummary = `${passed} passed, ${failed} failed and ${skipped} skipped `;
-        core.info(`Updating check run conclusion (${conclusion}) and output`);
-        const resp = await this.octokit.rest.checks.update({
-            check_run_id: createResp.data.id,
-            conclusion,
-            status: 'completed',
-            output: {
-                title: shortSummary,
-                summary,
-                annotations
-            },
-            ...github.context.repo
-        });
-        core.info(`Check run create response: ${resp.status}`);
-        core.info(`Check run URL: ${resp.data.url}`);
-        core.info(`Check run HTML: ${resp.data.html_url}`);
-        core.setOutput('url', resp.data.url);
-        core.setOutput('url_html', resp.data.html_url);
+        const { listSuites, listTests, onlySummary, useActionsSummary, badgeTitle } = this;
+        let baseUrl = '';
+        if (this.useActionsSummary) {
+            const summary = (0, get_report_1.getReport)(results, { listSuites, listTests, baseUrl, onlySummary, useActionsSummary, badgeTitle });
+            core.info('Summary content:');
+            core.info(summary);
+            await core.summary.addRaw(summary).write();
+        }
+        else {
+            core.info(`Creating check run ${name}`);
+            const createResp = await this.octokit.rest.checks.create({
+                head_sha: this.context.sha,
+                name,
+                status: 'in_progress',
+                output: {
+                    title: name,
+                    summary: ''
+                },
+                ...github.context.repo
+            });
+            core.info('Creating report summary');
+            baseUrl = createResp.data.html_url;
+            const summary = (0, get_report_1.getReport)(results, { listSuites, listTests, baseUrl, onlySummary, useActionsSummary, badgeTitle });
+            core.info('Creating annotations');
+            const annotations = (0, get_annotations_1.getAnnotations)(results, this.maxAnnotations);
+            const isFailed = this.failOnError && results.some(tr => tr.result === 'failed');
+            const conclusion = isFailed ? 'failure' : 'success';
+            const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
+            const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
+            const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
+            const shortSummary = `${passed} passed, ${failed} failed and ${skipped} skipped `;
+            core.info(`Updating check run conclusion (${conclusion}) and output`);
+            const resp = await this.octokit.rest.checks.update({
+                check_run_id: createResp.data.id,
+                conclusion,
+                status: 'completed',
+                output: {
+                    title: shortSummary,
+                    summary,
+                    annotations
+                },
+                ...github.context.repo
+            });
+            core.info(`Check run create response: ${resp.status}`);
+            core.info(`Check run URL: ${resp.data.url}`);
+            core.info(`Check run HTML: ${resp.data.html_url}`);
+            core.setOutput('url', resp.data.url);
+            core.setOutput('url_html', resp.data.html_url);
+        }
         return results;
     }
     getParser(reporter, options) {
@@ -1731,11 +1742,14 @@ const node_utils_1 = __nccwpck_require__(5824);
 const parse_utils_1 = __nccwpck_require__(7811);
 const slugger_1 = __nccwpck_require__(3328);
 const MAX_REPORT_LENGTH = 65535;
+const MAX_ACTIONS_SUMMARY_LENGTH = 131072; // 1048576 soon
 const defaultOptions = {
     listSuites: 'all',
     listTests: 'all',
     baseUrl: '',
-    onlySummary: false
+    onlySummary: false,
+    useActionsSummary: true,
+    badgeTitle: 'tests'
 };
 function getReport(results, options = defaultOptions) {
     core.info('Generating check run summary');
@@ -1743,7 +1757,7 @@ function getReport(results, options = defaultOptions) {
     const opts = { ...options };
     let lines = renderReport(results, opts);
     let report = lines.join('\n');
-    if (getByteLength(report) <= MAX_REPORT_LENGTH) {
+    if (getByteLength(report) <= getMaxReportLength(options)) {
         return report;
     }
     if (opts.listTests === 'all') {
@@ -1751,18 +1765,21 @@ function getReport(results, options = defaultOptions) {
         opts.listTests = 'failed';
         lines = renderReport(results, opts);
         report = lines.join('\n');
-        if (getByteLength(report) <= MAX_REPORT_LENGTH) {
+        if (getByteLength(report) <= getMaxReportLength(options)) {
             return report;
         }
     }
-    core.warning(`Test report summary exceeded limit of ${MAX_REPORT_LENGTH} bytes and will be trimmed`);
-    return trimReport(lines);
+    core.warning(`Test report summary exceeded limit of ${getMaxReportLength(options)} bytes and will be trimmed`);
+    return trimReport(lines, options);
 }
-function trimReport(lines) {
+function getMaxReportLength(options = defaultOptions) {
+    return options.useActionsSummary ? MAX_ACTIONS_SUMMARY_LENGTH : MAX_REPORT_LENGTH;
+}
+function trimReport(lines, options) {
     const closingBlock = '```';
-    const errorMsg = `**Report exceeded GitHub limit of ${MAX_REPORT_LENGTH} bytes and has been trimmed**`;
+    const errorMsg = `**Report exceeded GitHub limit of ${getMaxReportLength(options)} bytes and has been trimmed**`;
     const maxErrorMsgLength = closingBlock.length + errorMsg.length + 2;
-    const maxReportLength = MAX_REPORT_LENGTH - maxErrorMsgLength;
+    const maxReportLength = getMaxReportLength(options) - maxErrorMsgLength;
     let reportLength = 0;
     let codeBlock = false;
     let endLineIndex = 0;
@@ -1795,19 +1812,19 @@ function getByteLength(text) {
 }
 function renderReport(results, options) {
     const sections = [];
-    const badge = getReportBadge(results);
+    const badge = getReportBadge(results, options);
     sections.push(badge);
     const runs = getTestRunsReport(results, options);
     sections.push(...runs);
     return sections;
 }
-function getReportBadge(results) {
+function getReportBadge(results, options) {
     const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
     const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
     const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
-    return getBadge(passed, failed, skipped);
+    return getBadge(passed, failed, skipped, options);
 }
-function getBadge(passed, failed, skipped) {
+function getBadge(passed, failed, skipped, options) {
     const text = [];
     if (passed > 0) {
         text.push(`${passed} passed`);
@@ -1827,21 +1844,26 @@ function getBadge(passed, failed, skipped) {
         color = 'yellow';
     }
     const hint = failed > 0 ? 'Tests failed' : 'Tests passed successfully';
-    const uri = encodeURIComponent(`tests-${message}-${color}`);
+    const uri = encodeURIComponent(`${options.badgeTitle}-${message}-${color}`);
     return `![${hint}](https://img.shields.io/badge/${uri})`;
 }
 function getTestRunsReport(testRuns, options) {
     const sections = [];
-    if (testRuns.length > 1 || options.onlySummary) {
-        const tableData = testRuns.map((tr, runIndex) => {
+    const totalFailed = testRuns.reduce((sum, tr) => sum + tr.failed, 0);
+    if (totalFailed === 0) {
+        sections.push(`<details><summary>Expand for details</summary>`);
+        sections.push(` `);
+    }
+    if (testRuns.length > 0 || options.onlySummary) {
+        const tableData = testRuns
+            .filter(tr => tr.passed > 0 || tr.failed > 0 || tr.skipped > 0)
+            .map(tr => {
             const time = (0, markdown_utils_1.formatTime)(tr.time);
             const name = tr.path;
-            const addr = options.baseUrl + makeRunSlug(runIndex).link;
-            const nameLink = (0, markdown_utils_1.link)(name, addr);
-            const passed = tr.passed > 0 ? `${tr.passed}${markdown_utils_1.Icon.success}` : '';
-            const failed = tr.failed > 0 ? `${tr.failed}${markdown_utils_1.Icon.fail}` : '';
-            const skipped = tr.skipped > 0 ? `${tr.skipped}${markdown_utils_1.Icon.skip}` : '';
-            return [nameLink, passed, failed, skipped, time];
+            const passed = tr.passed > 0 ? `${tr.passed} ${markdown_utils_1.Icon.success}` : '';
+            const failed = tr.failed > 0 ? `${tr.failed} ${markdown_utils_1.Icon.fail}` : '';
+            const skipped = tr.skipped > 0 ? `${tr.skipped} ${markdown_utils_1.Icon.skip}` : '';
+            return [name, passed, failed, skipped, time];
         });
         const resultsTable = (0, markdown_utils_1.table)(['Report', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...tableData);
         sections.push(resultsTable);
@@ -1850,33 +1872,38 @@ function getTestRunsReport(testRuns, options) {
         const suitesReports = testRuns.map((tr, i) => getSuitesReport(tr, i, options)).flat();
         sections.push(...suitesReports);
     }
+    if (totalFailed === 0) {
+        sections.push(`</details>`);
+    }
     return sections;
 }
 function getSuitesReport(tr, runIndex, options) {
     const sections = [];
-    const trSlug = makeRunSlug(runIndex);
-    const nameLink = `<a id="${trSlug.id}" href="${options.baseUrl + trSlug.link}">${tr.path}</a>`;
-    const icon = getResultIcon(tr.result);
-    sections.push(`## ${icon}\xa0${nameLink}`);
-    const time = (0, markdown_utils_1.formatTime)(tr.time);
-    const headingLine2 = tr.tests > 0
-        ? `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`
-        : 'No tests found';
-    sections.push(headingLine2);
     const suites = options.listSuites === 'failed' ? tr.failedSuites : tr.suites;
-    if (suites.length > 0) {
-        const suitesTable = (0, markdown_utils_1.table)(['Test suite', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...suites.map((s, suiteIndex) => {
-            const tsTime = (0, markdown_utils_1.formatTime)(s.time);
-            const tsName = s.name;
-            const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed');
-            const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex).link;
-            const tsNameLink = skipLink ? tsName : (0, markdown_utils_1.link)(tsName, tsAddr);
-            const passed = s.passed > 0 ? `${s.passed}${markdown_utils_1.Icon.success}` : '';
-            const failed = s.failed > 0 ? `${s.failed}${markdown_utils_1.Icon.fail}` : '';
-            const skipped = s.skipped > 0 ? `${s.skipped}${markdown_utils_1.Icon.skip}` : '';
-            return [tsNameLink, passed, failed, skipped, tsTime];
-        }));
-        sections.push(suitesTable);
+    if (options.listSuites !== 'none') {
+        const trSlug = makeRunSlug(runIndex);
+        const nameLink = `<a id="${trSlug.id}" href="${options.baseUrl + trSlug.link}">${tr.path}</a>`;
+        const icon = getResultIcon(tr.result);
+        sections.push(`## ${icon}\xa0${nameLink}`);
+        const time = (0, markdown_utils_1.formatTime)(tr.time);
+        const headingLine2 = tr.tests > 0
+            ? `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`
+            : 'No tests found';
+        sections.push(headingLine2);
+        if (suites.length > 0) {
+            const suitesTable = (0, markdown_utils_1.table)(['Test suite', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...suites.map((s, suiteIndex) => {
+                const tsTime = (0, markdown_utils_1.formatTime)(s.time);
+                const tsName = s.name;
+                const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed');
+                const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex).link;
+                const tsNameLink = skipLink ? tsName : (0, markdown_utils_1.link)(tsName, tsAddr);
+                const passed = s.passed > 0 ? `${s.passed} ${markdown_utils_1.Icon.success}` : '';
+                const failed = s.failed > 0 ? `${s.failed} ${markdown_utils_1.Icon.fail}` : '';
+                const skipped = s.skipped > 0 ? `${s.skipped} ${markdown_utils_1.Icon.skip}` : '';
+                return [tsNameLink, passed, failed, skipped, tsTime];
+            }));
+            sections.push(suitesTable);
+        }
     }
     if (options.listTests !== 'none') {
         const tests = suites.map((ts, suiteIndex) => getTestsReport(ts, runIndex, suiteIndex, options)).flat();

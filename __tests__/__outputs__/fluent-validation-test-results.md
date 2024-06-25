@@ -1,70 +1,75 @@
 ![Tests passed successfully](https://img.shields.io/badge/tests-803%20passed%2C%201%20skipped-success)
+<details><summary>Expand for details</summary>
+ 
+|Report|Passed|Failed|Skipped|Time|
+|:---|---:|---:|---:|---:|
+|fixtures/external/FluentValidation.Tests.trx|803 ✅||1 ⚪|4s|
 ## ✅ <a id="user-content-r0" href="#r0">fixtures/external/FluentValidation.Tests.trx</a>
 **804** tests were completed in **4s** with **803** passed, **0** failed and **1** skipped.
 |Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
-|[FluentValidation.Tests.AbstractValidatorTester](#r0s0)|35✅|||12ms|
-|[FluentValidation.Tests.AccessorCacheTests](#r0s1)|4✅||1⚪|4ms|
-|[FluentValidation.Tests.AssemblyScannerTester](#r0s2)|2✅|||2ms|
-|[FluentValidation.Tests.CascadingFailuresTester](#r0s3)|38✅|||23ms|
-|[FluentValidation.Tests.ChainedValidationTester](#r0s4)|13✅|||6ms|
-|[FluentValidation.Tests.ChainingValidatorsTester](#r0s5)|3✅|||1ms|
-|[FluentValidation.Tests.ChildRulesTests](#r0s6)|2✅|||7ms|
-|[FluentValidation.Tests.CollectionValidatorWithParentTests](#r0s7)|16✅|||13ms|
-|[FluentValidation.Tests.ComplexValidationTester](#r0s8)|17✅|||26ms|
-|[FluentValidation.Tests.ConditionTests](#r0s9)|18✅|||9ms|
-|[FluentValidation.Tests.CreditCardValidatorTests](#r0s10)|2✅|||2ms|
-|[FluentValidation.Tests.CustomFailureActionTester](#r0s11)|3✅|||1ms|
-|[FluentValidation.Tests.CustomMessageFormatTester](#r0s12)|6✅|||3ms|
-|[FluentValidation.Tests.CustomValidatorTester](#r0s13)|10✅|||6ms|
-|[FluentValidation.Tests.DefaultValidatorExtensionTester](#r0s14)|30✅|||38ms|
-|[FluentValidation.Tests.EmailValidatorTests](#r0s15)|36✅|||18ms|
-|[FluentValidation.Tests.EmptyTester](#r0s16)|9✅|||5ms|
-|[FluentValidation.Tests.EnumValidatorTests](#r0s17)|12✅|||24ms|
-|[FluentValidation.Tests.EqualValidatorTests](#r0s18)|10✅|||3ms|
-|[FluentValidation.Tests.ExactLengthValidatorTester](#r0s19)|6✅|||2ms|
-|[FluentValidation.Tests.ExclusiveBetweenValidatorTests](#r0s20)|19✅|||6ms|
-|[FluentValidation.Tests.ExtensionTester](#r0s21)|4✅|||1ms|
-|[FluentValidation.Tests.ForEachRuleTests](#r0s22)|34✅|||47ms|
-|[FluentValidation.Tests.GreaterThanOrEqualToValidatorTester](#r0s23)|14✅|||5ms|
-|[FluentValidation.Tests.GreaterThanValidatorTester](#r0s24)|13✅|||4ms|
-|[FluentValidation.Tests.InclusiveBetweenValidatorTests](#r0s25)|18✅|||4ms|
-|[FluentValidation.Tests.InheritanceValidatorTest](#r0s26)|11✅|||18ms|
-|[FluentValidation.Tests.InlineValidatorTester](#r0s27)|1✅|||2ms|
-|[FluentValidation.Tests.LanguageManagerTests](#r0s28)|21✅|||28ms|
-|[FluentValidation.Tests.LengthValidatorTests](#r0s29)|16✅|||17ms|
-|[FluentValidation.Tests.LessThanOrEqualToValidatorTester](#r0s30)|13✅|||4ms|
-|[FluentValidation.Tests.LessThanValidatorTester](#r0s31)|16✅|||6ms|
-|[FluentValidation.Tests.LocalisedMessagesTester](#r0s32)|6✅|||3ms|
-|[FluentValidation.Tests.LocalisedNameTester](#r0s33)|2✅|||1ms|
-|[FluentValidation.Tests.MemberAccessorTests](#r0s34)|9✅|||5ms|
-|[FluentValidation.Tests.MessageFormatterTests](#r0s35)|10✅|||2ms|
-|[FluentValidation.Tests.ModelLevelValidatorTests](#r0s36)|2✅|||1ms|
-|[FluentValidation.Tests.NameResolutionPluggabilityTester](#r0s37)|3✅|||2ms|
-|[FluentValidation.Tests.NotEmptyTester](#r0s38)|10✅|||7ms|
-|[FluentValidation.Tests.NotEqualValidatorTests](#r0s39)|11✅|||7ms|
-|[FluentValidation.Tests.NotNullTester](#r0s40)|5✅|||1ms|
-|[FluentValidation.Tests.NullTester](#r0s41)|5✅|||2ms|
-|[FluentValidation.Tests.OnFailureTests](#r0s42)|10✅|||8ms|
-|[FluentValidation.Tests.PredicateValidatorTester](#r0s43)|5✅|||2ms|
-|[FluentValidation.Tests.PropertyChainTests](#r0s44)|7✅|||1ms|
-|[FluentValidation.Tests.RegularExpressionValidatorTests](#r0s45)|15✅|||6ms|
-|[FluentValidation.Tests.RuleBuilderTests](#r0s46)|29✅|||96ms|
-|[FluentValidation.Tests.RuleDependencyTests](#r0s47)|14✅|||3s|
-|[FluentValidation.Tests.RulesetTests](#r0s48)|21✅|||14ms|
-|[FluentValidation.Tests.ScalePrecisionValidatorTests](#r0s49)|6✅|||4ms|
-|[FluentValidation.Tests.SharedConditionTests](#r0s50)|42✅|||42ms|
-|[FluentValidation.Tests.StandalonePropertyValidationTester](#r0s51)|1✅|||0ms|
-|[FluentValidation.Tests.StringEnumValidatorTests](#r0s52)|10✅|||5ms|
-|[FluentValidation.Tests.TrackingCollectionTests](#r0s53)|3✅|||2ms|
-|[FluentValidation.Tests.TransformTests](#r0s54)|4✅|||3ms|
-|[FluentValidation.Tests.UserSeverityTester](#r0s55)|7✅|||3ms|
-|[FluentValidation.Tests.UserStateTester](#r0s56)|4✅|||3ms|
-|[FluentValidation.Tests.ValidateAndThrowTester](#r0s57)|14✅|||25ms|
-|[FluentValidation.Tests.ValidationResultTests](#r0s58)|8✅|||8ms|
-|[FluentValidation.Tests.ValidatorDescriptorTester](#r0s59)|5✅|||1ms|
-|[FluentValidation.Tests.ValidatorSelectorTests](#r0s60)|10✅|||9ms|
-|[FluentValidation.Tests.ValidatorTesterTester](#r0s61)|73✅|||74ms|
+|[FluentValidation.Tests.AbstractValidatorTester](#r0s0)|35 ✅|||12ms|
+|[FluentValidation.Tests.AccessorCacheTests](#r0s1)|4 ✅||1 ⚪|4ms|
+|[FluentValidation.Tests.AssemblyScannerTester](#r0s2)|2 ✅|||2ms|
+|[FluentValidation.Tests.CascadingFailuresTester](#r0s3)|38 ✅|||23ms|
+|[FluentValidation.Tests.ChainedValidationTester](#r0s4)|13 ✅|||6ms|
+|[FluentValidation.Tests.ChainingValidatorsTester](#r0s5)|3 ✅|||1ms|
+|[FluentValidation.Tests.ChildRulesTests](#r0s6)|2 ✅|||7ms|
+|[FluentValidation.Tests.CollectionValidatorWithParentTests](#r0s7)|16 ✅|||13ms|
+|[FluentValidation.Tests.ComplexValidationTester](#r0s8)|17 ✅|||26ms|
+|[FluentValidation.Tests.ConditionTests](#r0s9)|18 ✅|||9ms|
+|[FluentValidation.Tests.CreditCardValidatorTests](#r0s10)|2 ✅|||2ms|
+|[FluentValidation.Tests.CustomFailureActionTester](#r0s11)|3 ✅|||1ms|
+|[FluentValidation.Tests.CustomMessageFormatTester](#r0s12)|6 ✅|||3ms|
+|[FluentValidation.Tests.CustomValidatorTester](#r0s13)|10 ✅|||6ms|
+|[FluentValidation.Tests.DefaultValidatorExtensionTester](#r0s14)|30 ✅|||38ms|
+|[FluentValidation.Tests.EmailValidatorTests](#r0s15)|36 ✅|||18ms|
+|[FluentValidation.Tests.EmptyTester](#r0s16)|9 ✅|||5ms|
+|[FluentValidation.Tests.EnumValidatorTests](#r0s17)|12 ✅|||24ms|
+|[FluentValidation.Tests.EqualValidatorTests](#r0s18)|10 ✅|||3ms|
+|[FluentValidation.Tests.ExactLengthValidatorTester](#r0s19)|6 ✅|||2ms|
+|[FluentValidation.Tests.ExclusiveBetweenValidatorTests](#r0s20)|19 ✅|||6ms|
+|[FluentValidation.Tests.ExtensionTester](#r0s21)|4 ✅|||1ms|
+|[FluentValidation.Tests.ForEachRuleTests](#r0s22)|34 ✅|||47ms|
+|[FluentValidation.Tests.GreaterThanOrEqualToValidatorTester](#r0s23)|14 ✅|||5ms|
+|[FluentValidation.Tests.GreaterThanValidatorTester](#r0s24)|13 ✅|||4ms|
+|[FluentValidation.Tests.InclusiveBetweenValidatorTests](#r0s25)|18 ✅|||4ms|
+|[FluentValidation.Tests.InheritanceValidatorTest](#r0s26)|11 ✅|||18ms|
+|[FluentValidation.Tests.InlineValidatorTester](#r0s27)|1 ✅|||2ms|
+|[FluentValidation.Tests.LanguageManagerTests](#r0s28)|21 ✅|||28ms|
+|[FluentValidation.Tests.LengthValidatorTests](#r0s29)|16 ✅|||17ms|
+|[FluentValidation.Tests.LessThanOrEqualToValidatorTester](#r0s30)|13 ✅|||4ms|
+|[FluentValidation.Tests.LessThanValidatorTester](#r0s31)|16 ✅|||6ms|
+|[FluentValidation.Tests.LocalisedMessagesTester](#r0s32)|6 ✅|||3ms|
+|[FluentValidation.Tests.LocalisedNameTester](#r0s33)|2 ✅|||1ms|
+|[FluentValidation.Tests.MemberAccessorTests](#r0s34)|9 ✅|||5ms|
+|[FluentValidation.Tests.MessageFormatterTests](#r0s35)|10 ✅|||2ms|
+|[FluentValidation.Tests.ModelLevelValidatorTests](#r0s36)|2 ✅|||1ms|
+|[FluentValidation.Tests.NameResolutionPluggabilityTester](#r0s37)|3 ✅|||2ms|
+|[FluentValidation.Tests.NotEmptyTester](#r0s38)|10 ✅|||7ms|
+|[FluentValidation.Tests.NotEqualValidatorTests](#r0s39)|11 ✅|||7ms|
+|[FluentValidation.Tests.NotNullTester](#r0s40)|5 ✅|||1ms|
+|[FluentValidation.Tests.NullTester](#r0s41)|5 ✅|||2ms|
+|[FluentValidation.Tests.OnFailureTests](#r0s42)|10 ✅|||8ms|
+|[FluentValidation.Tests.PredicateValidatorTester](#r0s43)|5 ✅|||2ms|
+|[FluentValidation.Tests.PropertyChainTests](#r0s44)|7 ✅|||1ms|
+|[FluentValidation.Tests.RegularExpressionValidatorTests](#r0s45)|15 ✅|||6ms|
+|[FluentValidation.Tests.RuleBuilderTests](#r0s46)|29 ✅|||96ms|
+|[FluentValidation.Tests.RuleDependencyTests](#r0s47)|14 ✅|||3s|
+|[FluentValidation.Tests.RulesetTests](#r0s48)|21 ✅|||14ms|
+|[FluentValidation.Tests.ScalePrecisionValidatorTests](#r0s49)|6 ✅|||4ms|
+|[FluentValidation.Tests.SharedConditionTests](#r0s50)|42 ✅|||42ms|
+|[FluentValidation.Tests.StandalonePropertyValidationTester](#r0s51)|1 ✅|||0ms|
+|[FluentValidation.Tests.StringEnumValidatorTests](#r0s52)|10 ✅|||5ms|
+|[FluentValidation.Tests.TrackingCollectionTests](#r0s53)|3 ✅|||2ms|
+|[FluentValidation.Tests.TransformTests](#r0s54)|4 ✅|||3ms|
+|[FluentValidation.Tests.UserSeverityTester](#r0s55)|7 ✅|||3ms|
+|[FluentValidation.Tests.UserStateTester](#r0s56)|4 ✅|||3ms|
+|[FluentValidation.Tests.ValidateAndThrowTester](#r0s57)|14 ✅|||25ms|
+|[FluentValidation.Tests.ValidationResultTests](#r0s58)|8 ✅|||8ms|
+|[FluentValidation.Tests.ValidatorDescriptorTester](#r0s59)|5 ✅|||1ms|
+|[FluentValidation.Tests.ValidatorSelectorTests](#r0s60)|10 ✅|||9ms|
+|[FluentValidation.Tests.ValidatorTesterTester](#r0s61)|73 ✅|||74ms|
 ### ✅ <a id="user-content-r0s0" href="#r0s0">FluentValidation.Tests.AbstractValidatorTester</a>
 ```
 ✅ Can_replace_default_errorcode_resolver
@@ -1055,3 +1060,4 @@
 ✅ Unexpected_severity_check
 ✅ Unexpected_state_check
 ```
+</details>
