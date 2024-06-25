@@ -261,6 +261,7 @@ const local_file_provider_1 = __nccwpck_require__(9399);
 const get_annotations_1 = __nccwpck_require__(5867);
 const get_report_1 = __nccwpck_require__(3737);
 const dart_json_parser_1 = __nccwpck_require__(4528);
+const dotnet_nunit_parser_1 = __nccwpck_require__(5706);
 const dotnet_trx_parser_1 = __nccwpck_require__(2664);
 const java_junit_parser_1 = __nccwpck_require__(676);
 const jest_junit_parser_1 = __nccwpck_require__(1113);
@@ -425,6 +426,8 @@ class TestReporter {
         switch (reporter) {
             case 'dart-json':
                 return new dart_json_parser_1.DartJsonParser(options, 'dart');
+            case 'dotnet-nunit':
+                return new dotnet_nunit_parser_1.DotNetNunitParser(options);
             case 'dotnet-trx':
                 return new dotnet_trx_parser_1.DotnetTrxParser(options);
             case 'flutter-json':
@@ -720,6 +723,136 @@ function isMessageEvent(event) {
     return event.type === 'print';
 }
 exports.isMessageEvent = isMessageEvent;
+
+
+/***/ }),
+
+/***/ 5706:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.DotNetNunitParser = void 0;
+const xml2js_1 = __nccwpck_require__(6189);
+const node_utils_1 = __nccwpck_require__(5824);
+const path_utils_1 = __nccwpck_require__(4070);
+const test_results_1 = __nccwpck_require__(2768);
+class DotNetNunitParser {
+    constructor(options) {
+        this.options = options;
+    }
+    parse(path, content) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const ju = yield this.getNunitReport(path, content);
+            return this.getTestRunResult(path, ju);
+        });
+    }
+    getNunitReport(path, content) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                return (yield (0, xml2js_1.parseStringPromise)(content));
+            }
+            catch (e) {
+                throw new Error(`Invalid XML at ${path}\n\n${e}`);
+            }
+        });
+    }
+    getTestRunResult(path, nunit) {
+        const suites = [];
+        const time = parseFloat(nunit['test-run'].$.duration) * 1000;
+        this.populateTestCasesRecursive(suites, [], nunit['test-run']['test-suite']);
+        return new test_results_1.TestRunResult(path, suites, time);
+    }
+    populateTestCasesRecursive(result, suitePath, testSuites) {
+        if (testSuites === undefined) {
+            return;
+        }
+        for (const suite of testSuites) {
+            suitePath.push(suite);
+            this.populateTestCasesRecursive(result, suitePath, suite['test-suite']);
+            const testcases = suite['test-case'];
+            if (testcases !== undefined) {
+                for (const testcase of testcases) {
+                    this.addTestCase(result, suitePath, testcase);
+                }
+            }
+            suitePath.pop();
+        }
+    }
+    addTestCase(result, suitePath, testCase) {
+        // The last suite in the suite path is the "group".
+        // The rest are concatenated together to form the "suite".
+        // But ignore "Theory" suites.
+        const suitesWithoutTheories = suitePath.filter(suite => suite.$.type !== 'Theory');
+        const suiteName = suitesWithoutTheories
+            .slice(0, suitesWithoutTheories.length - 1)
+            .map(suite => suite.$.name)
+            .join('.');
+        const groupName = suitesWithoutTheories[suitesWithoutTheories.length - 1].$.name;
+        let existingSuite = result.find(existingSuite => existingSuite.name === suiteName);
+        if (existingSuite === undefined) {
+            existingSuite = new test_results_1.TestSuiteResult(suiteName, []);
+            result.push(existingSuite);
+        }
+        let existingGroup = existingSuite.groups.find(existingGroup => existingGroup.name === groupName);
+        if (existingGroup === undefined) {
+            existingGroup = new test_results_1.TestGroupResult(groupName, []);
+            existingSuite.groups.push(existingGroup);
+        }
+        existingGroup.tests.push(new test_results_1.TestCaseResult(testCase.$.name, this.getTestExecutionResult(testCase), parseFloat(testCase.$.duration) * 1000, this.getTestCaseError(testCase)));
+    }
+    getTestExecutionResult(test) {
+        if (test.$.result === 'Failed' || test.failure)
+            return 'failed';
+        if (test.$.result === 'Skipped')
+            return 'skipped';
+        return 'success';
+    }
+    getTestCaseError(tc) {
+        if (!this.options.parseErrors || !tc.failure || tc.failure.length === 0) {
+            return undefined;
+        }
+        const details = tc.failure[0];
+        let path;
+        let line;
+        if (details['stack-trace'] !== undefined && details['stack-trace'].length > 0) {
+            const src = (0, node_utils_1.getExceptionSource)(details['stack-trace'][0], this.options.trackedFiles, file => this.getRelativePath(file));
+            if (src) {
+                path = src.path;
+                line = src.line;
+            }
+        }
+        return {
+            path,
+            line,
+            message: details.message && details.message.length > 0 ? details.message[0] : '',
+            details: details['stack-trace'] && details['stack-trace'].length > 0 ? details['stack-trace'][0] : ''
+        };
+    }
+    getRelativePath(path) {
+        path = (0, path_utils_1.normalizeFilePath)(path);
+        const workDir = this.getWorkDir(path);
+        if (workDir !== undefined && path.startsWith(workDir)) {
+            path = path.substr(workDir.length);
+        }
+        return path;
+    }
+    getWorkDir(path) {
+        var _a, _b;
+        return ((_b = (_a = this.options.workDir) !== null && _a !== void 0 ? _a : this.assumedWorkDir) !== null && _b !== void 0 ? _b : (this.assumedWorkDir = (0, path_utils_1.getBasePath)(path, this.options.trackedFiles)));
+    }
+}
+exports.DotNetNunitParser = DotNetNunitParser;
 
 
 /***/ }),
