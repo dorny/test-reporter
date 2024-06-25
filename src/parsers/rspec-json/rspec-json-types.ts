@@ -17,7 +17,7 @@ export interface RspecExample {
   exception?: RspecException
 }
 
-type TestStatus = 'passed' | 'failed' | 'pending';
+type TestStatus = 'passed' | 'failed' | 'pending'
 
 export interface RspecException {
   class: string

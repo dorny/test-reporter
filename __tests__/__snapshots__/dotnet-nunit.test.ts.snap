@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`dotnet-nunit tests report from ./reports/dotnet test results matches snapshot 1`] = `
+TestRunResult {
+  "path": "fixtures/dotnet-nunit.xml",
+  "suites": [
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "CalculatorTests",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "Is_Even_Number(2)",
+              "result": "success",
+              "time": 0.622,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "   at DotnetTests.XUnitTests.CalculatorTests.Is_Even_Number(Int32 i) in C:\\Users\\Michal\\Workspace\\dorny\\test-reporter\\reports\\dotnet\\DotnetTests.NUnitV3Tests\\CalculatorTests.cs:line 61
+",
+                "line": undefined,
+                "message": "  Expected: True
+  But was:  False
+",
+                "path": undefined,
+              },
+              "name": "Is_Even_Number(3)",
+              "result": "failed",
+              "time": 1.098,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "   at DotnetTests.Unit.Calculator.Div(Int32 a, Int32 b) in C:\\Users\\Michal\\Workspace\\dorny\\test-reporter\\reports\\dotnet\\DotnetTests.Unit\\Calculator.cs:line 9
+   at DotnetTests.XUnitTests.CalculatorTests.Exception_In_TargetTest() in C:\\Users\\Michal\\Workspace\\dorny\\test-reporter\\reports\\dotnet\\DotnetTests.NUnitV3Tests\\CalculatorTests.cs:line 33",
+                "line": undefined,
+                "message": "System.DivideByZeroException : Attempted to divide by zero.",
+                "path": undefined,
+              },
+              "name": "Exception_In_TargetTest",
+              "result": "failed",
+              "time": 22.805,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "   at DotnetTests.XUnitTests.CalculatorTests.Exception_In_Test() in C:\\Users\\Michal\\Workspace\\dorny\\test-reporter\\reports\\dotnet\\DotnetTests.NUnitV3Tests\\CalculatorTests.cs:line 39",
+                "line": undefined,
+                "message": "System.Exception : Test",
+                "path": undefined,
+              },
+              "name": "Exception_In_Test",
+              "result": "failed",
+              "time": 0.528,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "   at DotnetTests.XUnitTests.CalculatorTests.Failing_Test() in C:\\Users\\Michal\\Workspace\\dorny\\test-reporter\\reports\\dotnet\\DotnetTests.NUnitV3Tests\\CalculatorTests.cs:line 27
+",
+                "line": undefined,
+                "message": "  Expected: 3
+  But was:  2
+",
+                "path": undefined,
+              },
+              "name": "Failing_Test",
+              "result": "failed",
+              "time": 28.162,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Passing_Test",
+              "result": "success",
+              "time": 0.23800000000000002,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Passing_Test_With_Description",
+              "result": "success",
+              "time": 0.135,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Skipped_Test",
+              "result": "skipped",
+              "time": 0.398,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "",
+                "line": undefined,
+                "message": "",
+                "path": undefined,
+              },
+              "name": "Timeout_Test",
+              "result": "failed",
+              "time": 14.949,
+            },
+          ],
+        },
+      ],
+      "name": "DotnetTests.NUnitV3Tests.dll.DotnetTests.XUnitTests",
+      "totalTime": undefined,
+    },
+  ],
+  "totalTime": 230.30800000000002,
+}
+`;
