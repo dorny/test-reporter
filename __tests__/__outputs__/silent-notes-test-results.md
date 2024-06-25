@@ -3,140 +3,140 @@
  
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
-|fixtures/external/SilentNotes.trx|67:white_check_mark:||12:warning:|1s|
-## :white_check_mark: <a id="user-content-r0" href="#r0">fixtures/external/SilentNotes.trx</a>
+|fixtures/external/SilentNotes.trx|67 ✅||12 ⚪|1s|
+## ✅ <a id="user-content-r0" href="#r0">fixtures/external/SilentNotes.trx</a>
 **79** tests were completed in **1s** with **67** passed, **0** failed and **12** skipped.
 |Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
-|[VanillaCloudStorageClientTest.CloudStorageCredentialsTest](#r0s0)|6:white_check_mark:|||30ms|
-|[VanillaCloudStorageClientTest.CloudStorageProviders.DropboxCloudStorageClientTest](#r0s1)|2:white_check_mark:||3:warning:|101ms|
-|[VanillaCloudStorageClientTest.CloudStorageProviders.FtpCloudStorageClientTest](#r0s2)|4:white_check_mark:||3:warning:|166ms|
-|[VanillaCloudStorageClientTest.CloudStorageProviders.GmxCloudStorageClientTest](#r0s3)|2:white_check_mark:|||7ms|
-|[VanillaCloudStorageClientTest.CloudStorageProviders.GoogleCloudStorageClientTest](#r0s4)|1:white_check_mark:||3:warning:|40ms|
-|[VanillaCloudStorageClientTest.CloudStorageProviders.OnedriveCloudStorageClientTest](#r0s5)|1:white_check_mark:||3:warning:|15ms|
-|[VanillaCloudStorageClientTest.CloudStorageProviders.WebdavCloudStorageClientTest](#r0s6)|5:white_check_mark:|||16ms|
-|[VanillaCloudStorageClientTest.CloudStorageTokenTest](#r0s7)|9:white_check_mark:|||0ms|
-|[VanillaCloudStorageClientTest.OAuth2.AuthorizationResponseErrorTest](#r0s8)|3:white_check_mark:|||3ms|
-|[VanillaCloudStorageClientTest.OAuth2.OAuth2UtilsTest](#r0s9)|9:white_check_mark:|||12ms|
-|[VanillaCloudStorageClientTest.OAuth2CloudStorageClientTest](#r0s10)|5:white_check_mark:|||13ms|
-|[VanillaCloudStorageClientTest.SecureStringExtensionsTest](#r0s11)|7:white_check_mark:|||0ms|
-|[VanillaCloudStorageClientTest.SerializeableCloudStorageCredentialsTest](#r0s12)|13:white_check_mark:|||43ms|
-### :white_check_mark: <a id="user-content-r0s0" href="#r0s0">VanillaCloudStorageClientTest.CloudStorageCredentialsTest</a>
+|[VanillaCloudStorageClientTest.CloudStorageCredentialsTest](#r0s0)|6 ✅|||30ms|
+|[VanillaCloudStorageClientTest.CloudStorageProviders.DropboxCloudStorageClientTest](#r0s1)|2 ✅||3 ⚪|101ms|
+|[VanillaCloudStorageClientTest.CloudStorageProviders.FtpCloudStorageClientTest](#r0s2)|4 ✅||3 ⚪|166ms|
+|[VanillaCloudStorageClientTest.CloudStorageProviders.GmxCloudStorageClientTest](#r0s3)|2 ✅|||7ms|
+|[VanillaCloudStorageClientTest.CloudStorageProviders.GoogleCloudStorageClientTest](#r0s4)|1 ✅||3 ⚪|40ms|
+|[VanillaCloudStorageClientTest.CloudStorageProviders.OnedriveCloudStorageClientTest](#r0s5)|1 ✅||3 ⚪|15ms|
+|[VanillaCloudStorageClientTest.CloudStorageProviders.WebdavCloudStorageClientTest](#r0s6)|5 ✅|||16ms|
+|[VanillaCloudStorageClientTest.CloudStorageTokenTest](#r0s7)|9 ✅|||0ms|
+|[VanillaCloudStorageClientTest.OAuth2.AuthorizationResponseErrorTest](#r0s8)|3 ✅|||3ms|
+|[VanillaCloudStorageClientTest.OAuth2.OAuth2UtilsTest](#r0s9)|9 ✅|||12ms|
+|[VanillaCloudStorageClientTest.OAuth2CloudStorageClientTest](#r0s10)|5 ✅|||13ms|
+|[VanillaCloudStorageClientTest.SecureStringExtensionsTest](#r0s11)|7 ✅|||0ms|
+|[VanillaCloudStorageClientTest.SerializeableCloudStorageCredentialsTest](#r0s12)|13 ✅|||43ms|
+### ✅ <a id="user-content-r0s0" href="#r0s0">VanillaCloudStorageClientTest.CloudStorageCredentialsTest</a>
 ```
-:white_check_mark: AreEqualWorksWithDifferentPassword
-:white_check_mark: AreEqualWorksWithSameContent
-:white_check_mark: CorrectlyConvertsSecureStringToString
-:white_check_mark: CorrectlyConvertsStringToSecureString
-:white_check_mark: ValidateAcceptsValidCredentials
-:white_check_mark: ValidateRejectsInvalidCredentials
+✅ AreEqualWorksWithDifferentPassword
+✅ AreEqualWorksWithSameContent
+✅ CorrectlyConvertsSecureStringToString
+✅ CorrectlyConvertsStringToSecureString
+✅ ValidateAcceptsValidCredentials
+✅ ValidateRejectsInvalidCredentials
 ```
-### :white_check_mark: <a id="user-content-r0s1" href="#r0s1">VanillaCloudStorageClientTest.CloudStorageProviders.DropboxCloudStorageClientTest</a>
+### ✅ <a id="user-content-r0s1" href="#r0s1">VanillaCloudStorageClientTest.CloudStorageProviders.DropboxCloudStorageClientTest</a>
 ```
-:white_check_mark: FileLifecycleWorks
-:warning: ReallyDoFetchToken
-:warning: ReallyDoOpenAuthorizationPageInBrowser
-:warning: ReallyDoRefreshToken
-:white_check_mark: ThrowsAccessDeniedExceptionWithInvalidToken
+✅ FileLifecycleWorks
+⚪ ReallyDoFetchToken
+⚪ ReallyDoOpenAuthorizationPageInBrowser
+⚪ ReallyDoRefreshToken
+✅ ThrowsAccessDeniedExceptionWithInvalidToken
 ```
-### :white_check_mark: <a id="user-content-r0s2" href="#r0s2">VanillaCloudStorageClientTest.CloudStorageProviders.FtpCloudStorageClientTest</a>
+### ✅ <a id="user-content-r0s2" href="#r0s2">VanillaCloudStorageClientTest.CloudStorageProviders.FtpCloudStorageClientTest</a>
 ```
-:white_check_mark: FileLifecycleWorks
-:white_check_mark: SanitizeCredentials_ChangesInvalidPrefix
-:white_check_mark: SecureSslConnectionWorks
-:white_check_mark: ThrowsWithHttpInsteadOfFtp
-:warning: ThrowsWithInvalidPassword
-:warning: ThrowsWithInvalidUrl
-:warning: ThrowsWithInvalidUsername
+✅ FileLifecycleWorks
+✅ SanitizeCredentials_ChangesInvalidPrefix
+✅ SecureSslConnectionWorks
+✅ ThrowsWithHttpInsteadOfFtp
+⚪ ThrowsWithInvalidPassword
+⚪ ThrowsWithInvalidUrl
+⚪ ThrowsWithInvalidUsername
 ```
-### :white_check_mark: <a id="user-content-r0s3" href="#r0s3">VanillaCloudStorageClientTest.CloudStorageProviders.GmxCloudStorageClientTest</a>
+### ✅ <a id="user-content-r0s3" href="#r0s3">VanillaCloudStorageClientTest.CloudStorageProviders.GmxCloudStorageClientTest</a>
 ```
-:white_check_mark: ChoosesCorrectUrlForGmxComEmail
-:white_check_mark: ChoosesCorrectUrlForGmxNetEmail
+✅ ChoosesCorrectUrlForGmxComEmail
+✅ ChoosesCorrectUrlForGmxNetEmail
 ```
-### :white_check_mark: <a id="user-content-r0s4" href="#r0s4">VanillaCloudStorageClientTest.CloudStorageProviders.GoogleCloudStorageClientTest</a>
+### ✅ <a id="user-content-r0s4" href="#r0s4">VanillaCloudStorageClientTest.CloudStorageProviders.GoogleCloudStorageClientTest</a>
 ```
-:white_check_mark: FileLifecycleWorks
-:warning: ReallyDoFetchToken
-:warning: ReallyDoOpenAuthorizationPageInBrowser
-:warning: ReallyDoRefreshToken
+✅ FileLifecycleWorks
+⚪ ReallyDoFetchToken
+⚪ ReallyDoOpenAuthorizationPageInBrowser
+⚪ ReallyDoRefreshToken
 ```
-### :white_check_mark: <a id="user-content-r0s5" href="#r0s5">VanillaCloudStorageClientTest.CloudStorageProviders.OnedriveCloudStorageClientTest</a>
+### ✅ <a id="user-content-r0s5" href="#r0s5">VanillaCloudStorageClientTest.CloudStorageProviders.OnedriveCloudStorageClientTest</a>
 ```
-:white_check_mark: FileLifecycleWorks
-:warning: ReallyDoFetchToken
-:warning: ReallyDoOpenAuthorizationPageInBrowser
-:warning: ReallyDoRefreshToken
+✅ FileLifecycleWorks
+⚪ ReallyDoFetchToken
+⚪ ReallyDoOpenAuthorizationPageInBrowser
+⚪ ReallyDoRefreshToken
 ```
-### :white_check_mark: <a id="user-content-r0s6" href="#r0s6">VanillaCloudStorageClientTest.CloudStorageProviders.WebdavCloudStorageClientTest</a>
+### ✅ <a id="user-content-r0s6" href="#r0s6">VanillaCloudStorageClientTest.CloudStorageProviders.WebdavCloudStorageClientTest</a>
 ```
-:white_check_mark: FileLifecycleWorks
-:white_check_mark: ParseGmxWebdavResponseCorrectly
-:white_check_mark: ParseStratoWebdavResponseCorrectly
-:white_check_mark: ThrowsWithInvalidPath
-:white_check_mark: ThrowsWithInvalidUsername
+✅ FileLifecycleWorks
+✅ ParseGmxWebdavResponseCorrectly
+✅ ParseStratoWebdavResponseCorrectly
+✅ ThrowsWithInvalidPath
+✅ ThrowsWithInvalidUsername
 ```
-### :white_check_mark: <a id="user-content-r0s7" href="#r0s7">VanillaCloudStorageClientTest.CloudStorageTokenTest</a>
+### ✅ <a id="user-content-r0s7" href="#r0s7">VanillaCloudStorageClientTest.CloudStorageTokenTest</a>
 ```
-:white_check_mark: AreEqualWorksWithNullDate
-:white_check_mark: AreEqualWorksWithSameContent
-:white_check_mark: NeedsRefreshReturnsFalseForTokenFlow
-:white_check_mark: NeedsRefreshReturnsFalseIfNotExpired
-:white_check_mark: NeedsRefreshReturnsTrueIfExpired
-:white_check_mark: NeedsRefreshReturnsTrueIfNoExpirationDate
-:white_check_mark: SetExpiryDateBySecondsWorks
-:white_check_mark: SetExpiryDateBySecondsWorksWithNull
-:white_check_mark: SetExpiryDateBySecondsWorksWithVeryShortPeriod
+✅ AreEqualWorksWithNullDate
+✅ AreEqualWorksWithSameContent
+✅ NeedsRefreshReturnsFalseForTokenFlow
+✅ NeedsRefreshReturnsFalseIfNotExpired
+✅ NeedsRefreshReturnsTrueIfExpired
+✅ NeedsRefreshReturnsTrueIfNoExpirationDate
+✅ SetExpiryDateBySecondsWorks
+✅ SetExpiryDateBySecondsWorksWithNull
+✅ SetExpiryDateBySecondsWorksWithVeryShortPeriod
 ```
-### :white_check_mark: <a id="user-content-r0s8" href="#r0s8">VanillaCloudStorageClientTest.OAuth2.AuthorizationResponseErrorTest</a>
+### ✅ <a id="user-content-r0s8" href="#r0s8">VanillaCloudStorageClientTest.OAuth2.AuthorizationResponseErrorTest</a>
 ```
-:white_check_mark: ParsesAllErrorCodesCorrectly
-:white_check_mark: ParsesNullErrorCodeCorrectly
-:white_check_mark: ParsesUnknownErrorCodeCorrectly
+✅ ParsesAllErrorCodesCorrectly
+✅ ParsesNullErrorCodeCorrectly
+✅ ParsesUnknownErrorCodeCorrectly
 ```
-### :white_check_mark: <a id="user-content-r0s9" href="#r0s9">VanillaCloudStorageClientTest.OAuth2.OAuth2UtilsTest</a>
+### ✅ <a id="user-content-r0s9" href="#r0s9">VanillaCloudStorageClientTest.OAuth2.OAuth2UtilsTest</a>
 ```
-:white_check_mark: BuildAuthorizationRequestUrlEscapesParameters
-:white_check_mark: BuildAuthorizationRequestUrlLeavesOutOptionalParameters
-:white_check_mark: BuildAuthorizationRequestUrlThrowsWithMissingRedirectUrlForTokenFlow
-:white_check_mark: BuildAuthorizationRequestUrlUsesAllParameters
-:white_check_mark: BuildAuthorizationRequestUrlUsesCodeVerifier
-:white_check_mark: ParseRealWorldDropboxRejectResponse
-:white_check_mark: ParseRealWorldDropboxSuccessResponse
-:white_check_mark: ParseRealWorldGoogleRejectResponse
-:white_check_mark: ParseRealWorldGoogleSuccessResponse
+✅ BuildAuthorizationRequestUrlEscapesParameters
+✅ BuildAuthorizationRequestUrlLeavesOutOptionalParameters
+✅ BuildAuthorizationRequestUrlThrowsWithMissingRedirectUrlForTokenFlow
+✅ BuildAuthorizationRequestUrlUsesAllParameters
+✅ BuildAuthorizationRequestUrlUsesCodeVerifier
+✅ ParseRealWorldDropboxRejectResponse
+✅ ParseRealWorldDropboxSuccessResponse
+✅ ParseRealWorldGoogleRejectResponse
+✅ ParseRealWorldGoogleSuccessResponse
 ```
-### :white_check_mark: <a id="user-content-r0s10" href="#r0s10">VanillaCloudStorageClientTest.OAuth2CloudStorageClientTest</a>
+### ✅ <a id="user-content-r0s10" href="#r0s10">VanillaCloudStorageClientTest.OAuth2CloudStorageClientTest</a>
 ```
-:white_check_mark: BuildOAuth2AuthorizationRequestUrlWorks
-:white_check_mark: FetchTokenCanInterpretGoogleResponse
-:white_check_mark: FetchTokenReturnsNullForDeniedAccess
-:white_check_mark: FetchTokenThrowsWithWrongState
-:white_check_mark: RefreshTokenCanInterpretGoogleResponse
+✅ BuildOAuth2AuthorizationRequestUrlWorks
+✅ FetchTokenCanInterpretGoogleResponse
+✅ FetchTokenReturnsNullForDeniedAccess
+✅ FetchTokenThrowsWithWrongState
+✅ RefreshTokenCanInterpretGoogleResponse
 ```
-### :white_check_mark: <a id="user-content-r0s11" href="#r0s11">VanillaCloudStorageClientTest.SecureStringExtensionsTest</a>
+### ✅ <a id="user-content-r0s11" href="#r0s11">VanillaCloudStorageClientTest.SecureStringExtensionsTest</a>
 ```
-:white_check_mark: AreEqualsWorksCorrectly
-:white_check_mark: CorrectlyConvertsSecureStringToString
-:white_check_mark: CorrectlyConvertsSecureStringToUnicodeBytes
-:white_check_mark: CorrectlyConvertsSecureStringToUtf8Bytes
-:white_check_mark: CorrectlyConvertsStringToSecureString
-:white_check_mark: CorrectlyConvertsUnicodeBytesToSecureString
-:white_check_mark: CorrectlyConvertsUtf8BytesToSecureString
+✅ AreEqualsWorksCorrectly
+✅ CorrectlyConvertsSecureStringToString
+✅ CorrectlyConvertsSecureStringToUnicodeBytes
+✅ CorrectlyConvertsSecureStringToUtf8Bytes
+✅ CorrectlyConvertsStringToSecureString
+✅ CorrectlyConvertsUnicodeBytesToSecureString
+✅ CorrectlyConvertsUtf8BytesToSecureString
 ```
-### :white_check_mark: <a id="user-content-r0s12" href="#r0s12">VanillaCloudStorageClientTest.SerializeableCloudStorageCredentialsTest</a>
+### ✅ <a id="user-content-r0s12" href="#r0s12">VanillaCloudStorageClientTest.SerializeableCloudStorageCredentialsTest</a>
 ```
-:white_check_mark: DecryptAfterDesrializationCanReadAllPropertiesBack
-:white_check_mark: DecryptAfterDesrializationRespectsNullProperties
-:white_check_mark: EncryptBeforeSerializationProtectsAllNecessaryProperties
-:white_check_mark: EncryptBeforeSerializationRespectsNullProperties
-:white_check_mark: SerializedDatacontractCanBeReadBack
-:white_check_mark: SerializedDatacontractDoesNotContainNullProperties
-:white_check_mark: SerializedDatacontractDoesNotContainPlaintextData
-:white_check_mark: SerializedJsonCanBeReadBack
-:white_check_mark: SerializedJsonDoesNotContainNullProperties
-:white_check_mark: SerializedJsonDoesNotContainPlaintextData
-:white_check_mark: SerializedXmlCanBeReadBack
-:white_check_mark: SerializedXmlDoesNotContainNullProperties
-:white_check_mark: SerializedXmlDoesNotContainPlaintextData
+✅ DecryptAfterDesrializationCanReadAllPropertiesBack
+✅ DecryptAfterDesrializationRespectsNullProperties
+✅ EncryptBeforeSerializationProtectsAllNecessaryProperties
+✅ EncryptBeforeSerializationRespectsNullProperties
+✅ SerializedDatacontractCanBeReadBack
+✅ SerializedDatacontractDoesNotContainNullProperties
+✅ SerializedDatacontractDoesNotContainPlaintextData
+✅ SerializedJsonCanBeReadBack
+✅ SerializedJsonDoesNotContainNullProperties
+✅ SerializedJsonDoesNotContainPlaintextData
+✅ SerializedXmlCanBeReadBack
+✅ SerializedXmlDoesNotContainNullProperties
+✅ SerializedXmlDoesNotContainPlaintextData
 ```
 </details>

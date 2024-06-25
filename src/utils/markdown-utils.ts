@@ -6,9 +6,9 @@ export enum Align {
 }
 
 export const Icon = {
-  skip: ':warning:',
-  success: ':white_check_mark:',
-  fail: ':x:'
+  skip: '⚪', // ':white_circle:'
+  success: '✅', // ':white_check_mark:'
+  fail: '❌' // ':x:'
 }
 
 export function link(title: string, address: string): string {
