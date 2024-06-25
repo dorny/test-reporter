@@ -29,15 +29,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -49,6 +40,16 @@ const adm_zip_1 = __importDefault(__nccwpck_require__(6761));
 const picomatch_1 = __importDefault(__nccwpck_require__(8569));
 const github_utils_1 = __nccwpck_require__(3522);
 class ArtifactProvider {
+    octokit;
+    artifact;
+    name;
+    pattern;
+    sha;
+    runId;
+    token;
+    artifactNameMatch;
+    fileNameMatch;
+    getReportName;
     constructor(octokit, artifact, name, pattern, sha, runId, token) {
         this.octokit = octokit;
         this.artifact = artifact;
@@ -81,60 +82,59 @@ class ArtifactProvider {
         }
         this.fileNameMatch = (0, picomatch_1.default)(pattern);
     }
-    load() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const result = {};
-            const resp = yield this.octokit.rest.actions.listWorkflowRunArtifacts(Object.assign(Object.assign({}, github.context.repo), { run_id: this.runId }));
-            if (resp.data.artifacts.length === 0) {
-                core.warning(`No artifacts found in run ${this.runId}`);
-                return {};
-            }
-            const artifacts = resp.data.artifacts.filter(a => this.artifactNameMatch(a.name));
-            if (artifacts.length === 0) {
-                core.warning(`No artifact matches ${this.artifact}`);
-                return {};
-            }
-            for (const art of artifacts) {
-                const fileName = `${art.name}.zip`;
-                yield (0, github_utils_1.downloadArtifact)(this.octokit, art.id, fileName, this.token);
-                core.startGroup(`Reading archive ${fileName}`);
-                try {
-                    const reportName = this.getReportName(art.name);
-                    core.info(`Report name: ${reportName}`);
-                    const files = [];
-                    const zip = new adm_zip_1.default(fileName);
-                    for (const entry of zip.getEntries()) {
-                        const file = entry.entryName;
-                        if (entry.isDirectory) {
-                            core.info(`Skipping ${file}: entry is a directory`);
-                            continue;
-                        }
-                        if (!this.fileNameMatch(file)) {
-                            core.info(`Skipping ${file}: filename does not match pattern`);
-                            continue;
-                        }
-                        const content = zip.readAsText(entry);
-                        files.push({ file, content });
-                        core.info(`Read ${file}: ${content.length} chars`);
-                    }
-                    if (result[reportName]) {
-                        result[reportName].push(...files);
-                    }
-                    else {
-                        result[reportName] = files;
-                    }
-                }
-                finally {
-                    core.endGroup();
-                }
-            }
-            return result;
+    async load() {
+        const result = {};
+        const resp = await this.octokit.rest.actions.listWorkflowRunArtifacts({
+            ...github.context.repo,
+            run_id: this.runId
         });
+        if (resp.data.artifacts.length === 0) {
+            core.warning(`No artifacts found in run ${this.runId}`);
+            return {};
+        }
+        const artifacts = resp.data.artifacts.filter(a => this.artifactNameMatch(a.name));
+        if (artifacts.length === 0) {
+            core.warning(`No artifact matches ${this.artifact}`);
+            return {};
+        }
+        for (const art of artifacts) {
+            const fileName = `${art.name}.zip`;
+            await (0, github_utils_1.downloadArtifact)(this.octokit, art.id, fileName, this.token);
+            core.startGroup(`Reading archive ${fileName}`);
+            try {
+                const reportName = this.getReportName(art.name);
+                core.info(`Report name: ${reportName}`);
+                const files = [];
+                const zip = new adm_zip_1.default(fileName);
+                for (const entry of zip.getEntries()) {
+                    const file = entry.entryName;
+                    if (entry.isDirectory) {
+                        core.info(`Skipping ${file}: entry is a directory`);
+                        continue;
+                    }
+                    if (!this.fileNameMatch(file)) {
+                        core.info(`Skipping ${file}: filename does not match pattern`);
+                        continue;
+                    }
+                    const content = zip.readAsText(entry);
+                    files.push({ file, content });
+                    core.info(`Read ${file}: ${content.length} chars`);
+                }
+                if (result[reportName]) {
+                    result[reportName].push(...files);
+                }
+                else {
+                    result[reportName] = files;
+                }
+            }
+            finally {
+                core.endGroup();
+            }
+        }
+        return result;
     }
-    listTrackedFiles() {
-        return __awaiter(this, void 0, void 0, function* () {
-            return (0, github_utils_1.listFiles)(this.octokit, this.sha);
-        });
+    async listTrackedFiles() {
+        return (0, github_utils_1.listFiles)(this.octokit, this.sha);
     }
 }
 exports.ArtifactProvider = ArtifactProvider;
@@ -170,15 +170,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -188,27 +179,25 @@ const fs = __importStar(__nccwpck_require__(7147));
 const fast_glob_1 = __importDefault(__nccwpck_require__(3664));
 const git_1 = __nccwpck_require__(9844);
 class LocalFileProvider {
+    name;
+    pattern;
     constructor(name, pattern) {
         this.name = name;
         this.pattern = pattern;
     }
-    load() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const result = [];
-            for (const pat of this.pattern) {
-                const paths = yield (0, fast_glob_1.default)(pat, { dot: true });
-                for (const file of paths) {
-                    const content = yield fs.promises.readFile(file, { encoding: 'utf8' });
-                    result.push({ file, content });
-                }
+    async load() {
+        const result = [];
+        for (const pat of this.pattern) {
+            const paths = await (0, fast_glob_1.default)(pat, { dot: true });
+            for (const file of paths) {
+                const content = await fs.promises.readFile(file, { encoding: 'utf8' });
+                result.push({ file, content });
             }
-            return { [this.name]: result };
-        });
+        }
+        return { [this.name]: result };
     }
-    listTrackedFiles() {
-        return __awaiter(this, void 0, void 0, function* () {
-            return (0, git_1.listFiles)();
-        });
+    async listTrackedFiles() {
+        return (0, git_1.listFiles)();
     }
 }
 exports.LocalFileProvider = LocalFileProvider;
@@ -244,15 +233,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
@@ -270,36 +250,35 @@ const rspec_json_parser_1 = __nccwpck_require__(406);
 const swift_xunit_parser_1 = __nccwpck_require__(5366);
 const path_utils_1 = __nccwpck_require__(4070);
 const github_utils_1 = __nccwpck_require__(3522);
-function main() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const testReporter = new TestReporter();
-            yield testReporter.run();
-        }
-        catch (error) {
-            if (error instanceof Error)
-                core.setFailed(error);
-            else
-                core.setFailed(JSON.stringify(error));
-        }
-    });
+async function main() {
+    try {
+        const testReporter = new TestReporter();
+        await testReporter.run();
+    }
+    catch (error) {
+        if (error instanceof Error)
+            core.setFailed(error);
+        else
+            core.setFailed(JSON.stringify(error));
+    }
 }
 class TestReporter {
+    artifact = core.getInput('artifact', { required: false });
+    name = core.getInput('name', { required: true });
+    path = core.getInput('path', { required: true });
+    pathReplaceBackslashes = core.getInput('path-replace-backslashes', { required: false }) === 'true';
+    reporter = core.getInput('reporter', { required: true });
+    listSuites = core.getInput('list-suites', { required: true });
+    listTests = core.getInput('list-tests', { required: true });
+    maxAnnotations = parseInt(core.getInput('max-annotations', { required: true }));
+    failOnError = core.getInput('fail-on-error', { required: true }) === 'true';
+    failOnEmpty = core.getInput('fail-on-empty', { required: true }) === 'true';
+    workDirInput = core.getInput('working-directory', { required: false });
+    onlySummary = core.getInput('only-summary', { required: false }) === 'true';
+    token = core.getInput('token', { required: true });
+    octokit;
+    context = (0, github_utils_1.getCheckRunContext)();
     constructor() {
-        this.artifact = core.getInput('artifact', { required: false });
-        this.name = core.getInput('name', { required: true });
-        this.path = core.getInput('path', { required: true });
-        this.pathReplaceBackslashes = core.getInput('path-replace-backslashes', { required: false }) === 'true';
-        this.reporter = core.getInput('reporter', { required: true });
-        this.listSuites = core.getInput('list-suites', { required: true });
-        this.listTests = core.getInput('list-tests', { required: true });
-        this.maxAnnotations = parseInt(core.getInput('max-annotations', { required: true }));
-        this.failOnError = core.getInput('fail-on-error', { required: true }) === 'true';
-        this.failOnEmpty = core.getInput('fail-on-empty', { required: true }) === 'true';
-        this.workDirInput = core.getInput('working-directory', { required: false });
-        this.onlySummary = core.getInput('only-summary', { required: false }) === 'true';
-        this.token = core.getInput('token', { required: true });
-        this.context = (0, github_utils_1.getCheckRunContext)();
         this.octokit = github.getOctokit(this.token);
         if (this.listSuites !== 'all' && this.listSuites !== 'failed') {
             core.setFailed(`Input parameter 'list-suites' has invalid value`);
@@ -314,113 +293,121 @@ class TestReporter {
             return;
         }
     }
-    run() {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (this.workDirInput) {
-                core.info(`Changing directory to '${this.workDirInput}'`);
-                process.chdir(this.workDirInput);
+    async run() {
+        if (this.workDirInput) {
+            core.info(`Changing directory to '${this.workDirInput}'`);
+            process.chdir(this.workDirInput);
+        }
+        core.info(`Check runs will be created with SHA=${this.context.sha}`);
+        // Split path pattern by ',' and optionally convert all backslashes to forward slashes
+        // fast-glob (micromatch) always interprets backslashes as escape characters instead of directory separators
+        const pathsList = this.path.split(',');
+        const pattern = this.pathReplaceBackslashes ? pathsList.map(path_utils_1.normalizeFilePath) : pathsList;
+        const inputProvider = this.artifact
+            ? new artifact_provider_1.ArtifactProvider(this.octokit, this.artifact, this.name, pattern, this.context.sha, this.context.runId, this.token)
+            : new local_file_provider_1.LocalFileProvider(this.name, pattern);
+        const parseErrors = this.maxAnnotations > 0;
+        const trackedFiles = parseErrors ? await inputProvider.listTrackedFiles() : [];
+        const workDir = this.artifact ? undefined : (0, path_utils_1.normalizeDirPath)(process.cwd(), true);
+        if (parseErrors)
+            core.info(`Found ${trackedFiles.length} files tracked by GitHub`);
+        const options = {
+            workDir,
+            trackedFiles,
+            parseErrors
+        };
+        core.info(`Using test report parser '${this.reporter}'`);
+        const parser = this.getParser(this.reporter, options);
+        const results = [];
+        const input = await inputProvider.load();
+        for (const [reportName, files] of Object.entries(input)) {
+            try {
+                core.startGroup(`Creating test report ${reportName}`);
+                const tr = await this.createReport(parser, reportName, files);
+                results.push(...tr);
             }
-            core.info(`Check runs will be created with SHA=${this.context.sha}`);
-            // Split path pattern by ',' and optionally convert all backslashes to forward slashes
-            // fast-glob (micromatch) always interprets backslashes as escape characters instead of directory separators
-            const pathsList = this.path.split(',');
-            const pattern = this.pathReplaceBackslashes ? pathsList.map(path_utils_1.normalizeFilePath) : pathsList;
-            const inputProvider = this.artifact
-                ? new artifact_provider_1.ArtifactProvider(this.octokit, this.artifact, this.name, pattern, this.context.sha, this.context.runId, this.token)
-                : new local_file_provider_1.LocalFileProvider(this.name, pattern);
-            const parseErrors = this.maxAnnotations > 0;
-            const trackedFiles = parseErrors ? yield inputProvider.listTrackedFiles() : [];
-            const workDir = this.artifact ? undefined : (0, path_utils_1.normalizeDirPath)(process.cwd(), true);
-            if (parseErrors)
-                core.info(`Found ${trackedFiles.length} files tracked by GitHub`);
-            const options = {
-                workDir,
-                trackedFiles,
-                parseErrors
-            };
-            core.info(`Using test report parser '${this.reporter}'`);
-            const parser = this.getParser(this.reporter, options);
-            const results = [];
-            const input = yield inputProvider.load();
-            for (const [reportName, files] of Object.entries(input)) {
-                try {
-                    core.startGroup(`Creating test report ${reportName}`);
-                    const tr = yield this.createReport(parser, reportName, files);
-                    results.push(...tr);
-                }
-                finally {
-                    core.endGroup();
-                }
+            finally {
+                core.endGroup();
             }
-            const isFailed = results.some(tr => tr.result === 'failed');
-            const conclusion = isFailed ? 'failure' : 'success';
-            const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
-            const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
-            const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
-            const time = results.reduce((sum, tr) => sum + tr.time, 0);
-            core.setOutput('conclusion', conclusion);
-            core.setOutput('passed', passed);
-            core.setOutput('failed', failed);
-            core.setOutput('skipped', skipped);
-            core.setOutput('time', time);
-            if (this.failOnError && isFailed) {
-                core.setFailed(`Failed test were found and 'fail-on-error' option is set to ${this.failOnError}`);
-                return;
-            }
-            if (results.length === 0 && this.failOnEmpty) {
-                core.setFailed(`No test report files were found`);
-                return;
-            }
-        });
+        }
+        const isFailed = results.some(tr => tr.result === 'failed');
+        const conclusion = isFailed ? 'failure' : 'success';
+        const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
+        const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
+        const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
+        const time = results.reduce((sum, tr) => sum + tr.time, 0);
+        core.setOutput('conclusion', conclusion);
+        core.setOutput('passed', passed);
+        core.setOutput('failed', failed);
+        core.setOutput('skipped', skipped);
+        core.setOutput('time', time);
+        if (this.failOnError && isFailed) {
+            core.setFailed(`Failed test were found and 'fail-on-error' option is set to ${this.failOnError}`);
+            return;
+        }
+        if (results.length === 0 && this.failOnEmpty) {
+            core.setFailed(`No test report files were found`);
+            return;
+        }
     }
-    createReport(parser, name, files) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (files.length === 0) {
-                core.warning(`No file matches path ${this.path}`);
-                return [];
+    async createReport(parser, name, files) {
+        if (files.length === 0) {
+            core.warning(`No file matches path ${this.path}`);
+            return [];
+        }
+        core.info(`Processing test results for check run ${name}`);
+        const results = [];
+        for (const { file, content } of files) {
+            try {
+                const tr = await parser.parse(file, content);
+                results.push(tr);
             }
-            core.info(`Processing test results for check run ${name}`);
-            const results = [];
-            for (const { file, content } of files) {
-                try {
-                    const tr = yield parser.parse(file, content);
-                    results.push(tr);
-                }
-                catch (error) {
-                    core.error(`Processing test results from ${file} failed`);
-                    throw error;
-                }
+            catch (error) {
+                core.error(`Processing test results from ${file} failed`);
+                throw error;
             }
-            core.info(`Creating check run ${name}`);
-            const createResp = yield this.octokit.rest.checks.create(Object.assign({ head_sha: this.context.sha, name, status: 'in_progress', output: {
-                    title: name,
-                    summary: ''
-                } }, github.context.repo));
-            core.info('Creating report summary');
-            const { listSuites, listTests, onlySummary } = this;
-            const baseUrl = createResp.data.html_url;
-            const summary = (0, get_report_1.getReport)(results, { listSuites, listTests, baseUrl, onlySummary });
-            core.info('Creating annotations');
-            const annotations = (0, get_annotations_1.getAnnotations)(results, this.maxAnnotations);
-            const isFailed = this.failOnError && results.some(tr => tr.result === 'failed');
-            const conclusion = isFailed ? 'failure' : 'success';
-            const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
-            const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
-            const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
-            const shortSummary = `${passed} passed, ${failed} failed and ${skipped} skipped `;
-            core.info(`Updating check run conclusion (${conclusion}) and output`);
-            const resp = yield this.octokit.rest.checks.update(Object.assign({ check_run_id: createResp.data.id, conclusion, status: 'completed', output: {
-                    title: shortSummary,
-                    summary,
-                    annotations
-                } }, github.context.repo));
-            core.info(`Check run create response: ${resp.status}`);
-            core.info(`Check run URL: ${resp.data.url}`);
-            core.info(`Check run HTML: ${resp.data.html_url}`);
-            core.setOutput('url', resp.data.url);
-            core.setOutput('url_html', resp.data.html_url);
-            return results;
+        }
+        core.info(`Creating check run ${name}`);
+        const createResp = await this.octokit.rest.checks.create({
+            head_sha: this.context.sha,
+            name,
+            status: 'in_progress',
+            output: {
+                title: name,
+                summary: ''
+            },
+            ...github.context.repo
         });
+        core.info('Creating report summary');
+        const { listSuites, listTests, onlySummary } = this;
+        const baseUrl = createResp.data.html_url;
+        const summary = (0, get_report_1.getReport)(results, { listSuites, listTests, baseUrl, onlySummary });
+        core.info('Creating annotations');
+        const annotations = (0, get_annotations_1.getAnnotations)(results, this.maxAnnotations);
+        const isFailed = this.failOnError && results.some(tr => tr.result === 'failed');
+        const conclusion = isFailed ? 'failure' : 'success';
+        const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
+        const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
+        const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
+        const shortSummary = `${passed} passed, ${failed} failed and ${skipped} skipped `;
+        core.info(`Updating check run conclusion (${conclusion}) and output`);
+        const resp = await this.octokit.rest.checks.update({
+            check_run_id: createResp.data.id,
+            conclusion,
+            status: 'completed',
+            output: {
+                title: shortSummary,
+                summary,
+                annotations
+            },
+            ...github.context.repo
+        });
+        core.info(`Check run create response: ${resp.status}`);
+        core.info(`Check run URL: ${resp.data.url}`);
+        core.info(`Check run HTML: ${resp.data.html_url}`);
+        core.setOutput('url', resp.data.url);
+        core.setOutput('url_html', resp.data.html_url);
+        return results;
     }
     getParser(reporter, options) {
         switch (reporter) {
@@ -453,25 +440,20 @@ main();
 /***/ }),
 
 /***/ 4528:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.DartJsonParser = void 0;
 const path_utils_1 = __nccwpck_require__(4070);
 const dart_json_types_1 = __nccwpck_require__(7887);
 const test_results_1 = __nccwpck_require__(2768);
 class TestRun {
+    path;
+    suites;
+    success;
+    time;
     constructor(path, suites, success, time) {
         this.path = path;
         this.suites = suites;
@@ -480,32 +462,37 @@ class TestRun {
     }
 }
 class TestSuite {
+    suite;
     constructor(suite) {
         this.suite = suite;
-        this.groups = {};
     }
+    groups = {};
 }
 class TestGroup {
+    group;
     constructor(group) {
         this.group = group;
-        this.tests = [];
     }
+    tests = [];
 }
 class TestCase {
+    testStart;
     constructor(testStart) {
         this.testStart = testStart;
-        this.print = [];
         this.groupId = testStart.test.groupIDs[testStart.test.groupIDs.length - 1];
     }
+    groupId;
+    print = [];
+    testDone;
+    error;
     get result() {
-        var _a, _b, _c, _d;
-        if ((_a = this.testDone) === null || _a === void 0 ? void 0 : _a.skipped) {
+        if (this.testDone?.skipped) {
             return 'skipped';
         }
-        if (((_b = this.testDone) === null || _b === void 0 ? void 0 : _b.result) === 'success') {
+        if (this.testDone?.result === 'success') {
             return 'success';
         }
-        if (((_c = this.testDone) === null || _c === void 0 ? void 0 : _c.result) === 'error' || ((_d = this.testDone) === null || _d === void 0 ? void 0 : _d.result) === 'failure') {
+        if (this.testDone?.result === 'error' || this.testDone?.result === 'failure') {
             return 'failed';
         }
         return undefined;
@@ -515,16 +502,17 @@ class TestCase {
     }
 }
 class DartJsonParser {
+    options;
+    sdk;
+    assumedWorkDir;
     constructor(options, sdk) {
         this.options = options;
         this.sdk = sdk;
     }
-    parse(path, content) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const tr = this.getTestRun(path, content);
-            const result = this.getTestRunResult(tr);
-            return Promise.resolve(result);
-        });
+    async parse(path, content) {
+        const tr = this.getTestRun(path, content);
+        const result = this.getTestRunResult(tr);
+        return Promise.resolve(result);
     }
     getTestRun(path, content) {
         const lines = content.split(/\n\r?/g);
@@ -585,11 +573,11 @@ class DartJsonParser {
     }
     getGroups(suite) {
         const groups = Object.values(suite.groups).filter(grp => grp.tests.length > 0);
-        groups.sort((a, b) => { var _a, _b; return ((_a = a.group.line) !== null && _a !== void 0 ? _a : 0) - ((_b = b.group.line) !== null && _b !== void 0 ? _b : 0); });
+        groups.sort((a, b) => (a.group.line ?? 0) - (b.group.line ?? 0));
         return groups.map(group => {
-            group.tests.sort((a, b) => { var _a, _b; return ((_a = a.testStart.test.line) !== null && _a !== void 0 ? _a : 0) - ((_b = b.testStart.test.line) !== null && _b !== void 0 ? _b : 0); });
+            group.tests.sort((a, b) => (a.testStart.test.line ?? 0) - (b.testStart.test.line ?? 0));
             const tests = group.tests
-                .filter(tc => { var _a; return !((_a = tc.testDone) === null || _a === void 0 ? void 0 : _a.hidden); })
+                .filter(tc => !tc.testDone?.hidden)
                 .map(tc => {
                 const error = this.getError(suite, tc);
                 const testName = group.group.name !== undefined && tc.testStart.test.name.startsWith(group.group.name)
@@ -601,19 +589,18 @@ class DartJsonParser {
         });
     }
     getError(testSuite, test) {
-        var _a, _b, _c, _d, _e, _f;
         if (!this.options.parseErrors || !test.error) {
             return undefined;
         }
         const { trackedFiles } = this.options;
-        const stackTrace = (_b = (_a = test.error) === null || _a === void 0 ? void 0 : _a.stackTrace) !== null && _b !== void 0 ? _b : '';
+        const stackTrace = test.error?.stackTrace ?? '';
         const print = test.print
             .filter(p => p.messageType === 'print')
             .map(p => p.message)
             .join('\n');
         const details = [print, stackTrace].filter(str => str !== '').join('\n');
         const src = this.exceptionThrowSource(details, trackedFiles);
-        const message = this.getErrorMessage((_d = (_c = test.error) === null || _c === void 0 ? void 0 : _c.error) !== null && _d !== void 0 ? _d : '', print);
+        const message = this.getErrorMessage(test.error?.error ?? '', print);
         let path;
         let line;
         if (src !== undefined) {
@@ -624,7 +611,7 @@ class DartJsonParser {
             const testStartPath = this.getRelativePath(testSuite.suite.path);
             if (trackedFiles.includes(testStartPath)) {
                 path = testStartPath;
-                line = (_f = (_e = test.testStart.test.root_line) !== null && _e !== void 0 ? _e : test.testStart.test.line) !== null && _f !== void 0 ? _f : undefined;
+                line = test.testStart.test.root_line ?? test.testStart.test.line ?? undefined;
             }
         }
         return {
@@ -678,8 +665,9 @@ class DartJsonParser {
         return path;
     }
     getWorkDir(path) {
-        var _a, _b;
-        return ((_b = (_a = this.options.workDir) !== null && _a !== void 0 ? _a : this.assumedWorkDir) !== null && _b !== void 0 ? _b : (this.assumedWorkDir = (0, path_utils_1.getBasePath)(path, this.options.trackedFiles)));
+        return (this.options.workDir ??
+            this.assumedWorkDir ??
+            (this.assumedWorkDir = (0, path_utils_1.getBasePath)(path, this.options.trackedFiles)));
     }
 }
 exports.DartJsonParser = DartJsonParser;
@@ -694,53 +682,43 @@ exports.DartJsonParser = DartJsonParser;
 
 /// reflects documentation at https://github.com/dart-lang/test/blob/master/pkgs/test/doc/json_reporter.md
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isMessageEvent = exports.isDoneEvent = exports.isErrorEvent = exports.isTestDoneEvent = exports.isTestStartEvent = exports.isGroupEvent = exports.isSuiteEvent = void 0;
+exports.isSuiteEvent = isSuiteEvent;
+exports.isGroupEvent = isGroupEvent;
+exports.isTestStartEvent = isTestStartEvent;
+exports.isTestDoneEvent = isTestDoneEvent;
+exports.isErrorEvent = isErrorEvent;
+exports.isDoneEvent = isDoneEvent;
+exports.isMessageEvent = isMessageEvent;
 function isSuiteEvent(event) {
     return event.type === 'suite';
 }
-exports.isSuiteEvent = isSuiteEvent;
 function isGroupEvent(event) {
     return event.type === 'group';
 }
-exports.isGroupEvent = isGroupEvent;
 function isTestStartEvent(event) {
     return event.type === 'testStart';
 }
-exports.isTestStartEvent = isTestStartEvent;
 function isTestDoneEvent(event) {
     return event.type === 'testDone';
 }
-exports.isTestDoneEvent = isTestDoneEvent;
 function isErrorEvent(event) {
     return event.type === 'error';
 }
-exports.isErrorEvent = isErrorEvent;
 function isDoneEvent(event) {
     return event.type === 'done';
 }
-exports.isDoneEvent = isDoneEvent;
 function isMessageEvent(event) {
     return event.type === 'print';
 }
-exports.isMessageEvent = isMessageEvent;
 
 
 /***/ }),
 
 /***/ 5706:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.DotnetNunitParser = void 0;
 const xml2js_1 = __nccwpck_require__(6189);
@@ -748,24 +726,22 @@ const node_utils_1 = __nccwpck_require__(5824);
 const path_utils_1 = __nccwpck_require__(4070);
 const test_results_1 = __nccwpck_require__(2768);
 class DotnetNunitParser {
+    options;
+    assumedWorkDir;
     constructor(options) {
         this.options = options;
     }
-    parse(path, content) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const ju = yield this.getNunitReport(path, content);
-            return this.getTestRunResult(path, ju);
-        });
+    async parse(path, content) {
+        const ju = await this.getNunitReport(path, content);
+        return this.getTestRunResult(path, ju);
     }
-    getNunitReport(path, content) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                return (yield (0, xml2js_1.parseStringPromise)(content));
-            }
-            catch (e) {
-                throw new Error(`Invalid XML at ${path}\n\n${e}`);
-            }
-        });
+    async getNunitReport(path, content) {
+        try {
+            return (await (0, xml2js_1.parseStringPromise)(content));
+        }
+        catch (e) {
+            throw new Error(`Invalid XML at ${path}\n\n${e}`);
+        }
     }
     getTestRunResult(path, nunit) {
         const suites = [];
@@ -848,8 +824,9 @@ class DotnetNunitParser {
         return path;
     }
     getWorkDir(path) {
-        var _a, _b;
-        return ((_b = (_a = this.options.workDir) !== null && _a !== void 0 ? _a : this.assumedWorkDir) !== null && _b !== void 0 ? _b : (this.assumedWorkDir = (0, path_utils_1.getBasePath)(path, this.options.trackedFiles)));
+        return (this.options.workDir ??
+            this.assumedWorkDir ??
+            (this.assumedWorkDir = (0, path_utils_1.getBasePath)(path, this.options.trackedFiles)));
     }
 }
 exports.DotnetNunitParser = DotnetNunitParser;
@@ -858,19 +835,10 @@ exports.DotnetNunitParser = DotnetNunitParser;
 /***/ }),
 
 /***/ 2664:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.DotnetTrxParser = void 0;
 const xml2js_1 = __nccwpck_require__(6189);
@@ -878,12 +846,17 @@ const path_utils_1 = __nccwpck_require__(4070);
 const parse_utils_1 = __nccwpck_require__(7811);
 const test_results_1 = __nccwpck_require__(2768);
 class TestClass {
+    name;
     constructor(name) {
         this.name = name;
-        this.tests = [];
     }
+    tests = [];
 }
 class Test {
+    name;
+    outcome;
+    duration;
+    error;
     constructor(name, outcome, duration, error) {
         this.name = name;
         this.outcome = outcome;
@@ -902,27 +875,25 @@ class Test {
     }
 }
 class DotnetTrxParser {
+    options;
+    assumedWorkDir;
     constructor(options) {
         this.options = options;
     }
-    parse(path, content) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const trx = yield this.getTrxReport(path, content);
-            const tc = this.getTestClasses(trx);
-            const tr = this.getTestRunResult(path, trx, tc);
-            tr.sort(true);
-            return tr;
-        });
+    async parse(path, content) {
+        const trx = await this.getTrxReport(path, content);
+        const tc = this.getTestClasses(trx);
+        const tr = this.getTestRunResult(path, trx, tc);
+        tr.sort(true);
+        return tr;
     }
-    getTrxReport(path, content) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                return (yield (0, xml2js_1.parseStringPromise)(content));
-            }
-            catch (e) {
-                throw new Error(`Invalid XML at ${path}\n\n${e}`);
-            }
-        });
+    async getTrxReport(path, content) {
+        try {
+            return (await (0, xml2js_1.parseStringPromise)(content));
+        }
+        catch (e) {
+            throw new Error(`Invalid XML at ${path}\n\n${e}`);
+        }
     }
     getTestClasses(trx) {
         if (trx.TestRun.TestDefinitions === undefined || trx.TestRun.Results === undefined) {
@@ -973,12 +944,11 @@ class DotnetTrxParser {
         return new test_results_1.TestRunResult(path, suites, totalTime);
     }
     getErrorInfo(testResult) {
-        var _a;
         if (testResult.$.outcome !== 'Failed') {
             return undefined;
         }
         const output = testResult.Output;
-        const error = (output === null || output === void 0 ? void 0 : output.length) > 0 && ((_a = output[0].ErrorInfo) === null || _a === void 0 ? void 0 : _a.length) > 0 ? output[0].ErrorInfo[0] : undefined;
+        const error = output?.length > 0 && output[0].ErrorInfo?.length > 0 ? output[0].ErrorInfo[0] : undefined;
         return error;
     }
     getError(test) {
@@ -1029,8 +999,9 @@ class DotnetTrxParser {
         }
     }
     getWorkDir(path) {
-        var _a, _b;
-        return ((_b = (_a = this.options.workDir) !== null && _a !== void 0 ? _a : this.assumedWorkDir) !== null && _b !== void 0 ? _b : (this.assumedWorkDir = (0, path_utils_1.getBasePath)(path, this.options.trackedFiles)));
+        return (this.options.workDir ??
+            this.assumedWorkDir ??
+            (this.assumedWorkDir = (0, path_utils_1.getBasePath)(path, this.options.trackedFiles)));
     }
 }
 exports.DotnetTrxParser = DotnetTrxParser;
@@ -1066,15 +1037,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.JavaJunitParser = void 0;
 const path = __importStar(__nccwpck_require__(1017));
@@ -1083,53 +1045,49 @@ const java_stack_trace_element_parser_1 = __nccwpck_require__(5775);
 const path_utils_1 = __nccwpck_require__(4070);
 const test_results_1 = __nccwpck_require__(2768);
 class JavaJunitParser {
+    options;
+    trackedFiles;
     constructor(options) {
-        var _a;
         this.options = options;
         // Map to efficient lookup of all paths with given file name
         this.trackedFiles = {};
         for (const filePath of options.trackedFiles) {
             const fileName = path.basename(filePath);
-            const files = (_a = this.trackedFiles[fileName]) !== null && _a !== void 0 ? _a : (this.trackedFiles[fileName] = []);
+            const files = this.trackedFiles[fileName] ?? (this.trackedFiles[fileName] = []);
             files.push((0, path_utils_1.normalizeFilePath)(filePath));
         }
     }
-    parse(filePath, content) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const reportOrSuite = yield this.getJunitReport(filePath, content);
-            const isReport = reportOrSuite.testsuites !== undefined;
-            // XML might contain:
-            // - multiple suites under <testsuites> root node
-            // - single <testsuite> as root node
-            let ju;
-            if (isReport) {
-                ju = reportOrSuite;
-            }
-            else {
-                // Make it behave the same way as if suite was inside <testsuites> root node
-                const suite = reportOrSuite.testsuite;
-                ju = {
-                    testsuites: {
-                        $: { time: suite.$.time },
-                        testsuite: [suite]
-                    }
-                };
-            }
-            return this.getTestRunResult(filePath, ju);
-        });
+    async parse(filePath, content) {
+        const reportOrSuite = await this.getJunitReport(filePath, content);
+        const isReport = reportOrSuite.testsuites !== undefined;
+        // XML might contain:
+        // - multiple suites under <testsuites> root node
+        // - single <testsuite> as root node
+        let ju;
+        if (isReport) {
+            ju = reportOrSuite;
+        }
+        else {
+            // Make it behave the same way as if suite was inside <testsuites> root node
+            const suite = reportOrSuite.testsuite;
+            ju = {
+                testsuites: {
+                    $: { time: suite.$.time },
+                    testsuite: [suite]
+                }
+            };
+        }
+        return this.getTestRunResult(filePath, ju);
     }
-    getJunitReport(filePath, content) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                return yield (0, xml2js_1.parseStringPromise)(content);
-            }
-            catch (e) {
-                throw new Error(`Invalid XML at ${filePath}\n\n${e}`);
-            }
-        });
+    async getJunitReport(filePath, content) {
+        try {
+            return await (0, xml2js_1.parseStringPromise)(content);
+        }
+        catch (e) {
+            throw new Error(`Invalid XML at ${filePath}\n\n${e}`);
+        }
     }
     getTestRunResult(filePath, junit) {
-        var _a;
         const suites = junit.testsuites.testsuite === undefined
             ? []
             : junit.testsuites.testsuite.map(ts => {
@@ -1138,7 +1096,7 @@ class JavaJunitParser {
                 const sr = new test_results_1.TestSuiteResult(name, this.getGroups(ts), time);
                 return sr;
             });
-        const seconds = parseFloat((_a = junit.testsuites.$) === null || _a === void 0 ? void 0 : _a.time);
+        const seconds = parseFloat(junit.testsuites.$?.time);
         const time = isNaN(seconds) ? undefined : seconds * 1000;
         return new test_results_1.TestRunResult(filePath, suites, time);
     }
@@ -1178,12 +1136,11 @@ class JavaJunitParser {
         return 'success';
     }
     getTestCaseError(tc) {
-        var _a, _b;
         if (!this.options.parseErrors) {
             return undefined;
         }
         // We process <error> and <failure> the same way
-        const failures = (_a = tc.failure) !== null && _a !== void 0 ? _a : tc.error;
+        const failures = tc.failure ?? tc.error;
         if (!failures) {
             return undefined;
         }
@@ -1201,7 +1158,7 @@ class JavaJunitParser {
         let message;
         if (typeof failure === 'object') {
             message = failure.$.message;
-            if ((_b = failure.$) === null || _b === void 0 ? void 0 : _b.type) {
+            if (failure.$?.type) {
                 message = failure.$.type + ': ' + message;
             }
         }
@@ -1278,7 +1235,7 @@ exports.JavaJunitParser = JavaJunitParser;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.parseStackTraceElement = void 0;
+exports.parseStackTraceElement = parseStackTraceElement;
 // classloader and module name are optional:
 // at <CLASSLOADER>/<MODULE_NAME_AND_VERSION>/<FULLY_QUALIFIED_METHOD_NAME>(<FILE_NAME>:<LINE_NUMBER>)
 // https://github.com/eclipse-openj9/openj9/issues/11452#issuecomment-754946992
@@ -1298,7 +1255,6 @@ function parseStackTraceElement(stackTraceLine) {
     }
     return undefined;
 }
-exports.parseStackTraceElement = parseStackTraceElement;
 function parseClassLoaderAndModule(maybeClassLoaderAndModuleNameAndVersion) {
     if (maybeClassLoaderAndModuleNameAndVersion) {
         const res = maybeClassLoaderAndModuleNameAndVersion.split('/');
@@ -1316,19 +1272,10 @@ function parseClassLoaderAndModule(maybeClassLoaderAndModuleNameAndVersion) {
 /***/ }),
 
 /***/ 1113:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.JestJunitParser = void 0;
 const xml2js_1 = __nccwpck_require__(6189);
@@ -1336,24 +1283,22 @@ const node_utils_1 = __nccwpck_require__(5824);
 const path_utils_1 = __nccwpck_require__(4070);
 const test_results_1 = __nccwpck_require__(2768);
 class JestJunitParser {
+    options;
+    assumedWorkDir;
     constructor(options) {
         this.options = options;
     }
-    parse(path, content) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const ju = yield this.getJunitReport(path, content);
-            return this.getTestRunResult(path, ju);
-        });
+    async parse(path, content) {
+        const ju = await this.getJunitReport(path, content);
+        return this.getTestRunResult(path, ju);
     }
-    getJunitReport(path, content) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                return (yield (0, xml2js_1.parseStringPromise)(content));
-            }
-            catch (e) {
-                throw new Error(`Invalid XML at ${path}\n\n${e}`);
-            }
-        });
+    async getJunitReport(path, content) {
+        try {
+            return (await (0, xml2js_1.parseStringPromise)(content));
+        }
+        catch (e) {
+            throw new Error(`Invalid XML at ${path}\n\n${e}`);
+        }
     }
     getTestRunResult(path, junit) {
         const suites = junit.testsuites.testsuite === undefined
@@ -1425,8 +1370,9 @@ class JestJunitParser {
         return path;
     }
     getWorkDir(path) {
-        var _a, _b;
-        return ((_b = (_a = this.options.workDir) !== null && _a !== void 0 ? _a : this.assumedWorkDir) !== null && _b !== void 0 ? _b : (this.assumedWorkDir = (0, path_utils_1.getBasePath)(path, this.options.trackedFiles)));
+        return (this.options.workDir ??
+            this.assumedWorkDir ??
+            (this.assumedWorkDir = (0, path_utils_1.getBasePath)(path, this.options.trackedFiles)));
     }
     escapeCharacters(s) {
         return s.replace(/([<>])/g, '\\$1');
@@ -1438,35 +1384,26 @@ exports.JestJunitParser = JestJunitParser;
 /***/ }),
 
 /***/ 6043:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.MochaJsonParser = void 0;
 const test_results_1 = __nccwpck_require__(2768);
 const node_utils_1 = __nccwpck_require__(5824);
 const path_utils_1 = __nccwpck_require__(4070);
 class MochaJsonParser {
+    options;
+    assumedWorkDir;
     constructor(options) {
         this.options = options;
     }
-    parse(path, content) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const mocha = this.getMochaJson(path, content);
-            const result = this.getTestRunResult(path, mocha);
-            result.sort(true);
-            return Promise.resolve(result);
-        });
+    async parse(path, content) {
+        const mocha = this.getMochaJson(path, content);
+        const result = this.getTestRunResult(path, mocha);
+        result.sort(true);
+        return Promise.resolve(result);
     }
     getMochaJson(path, content) {
         try {
@@ -1479,9 +1416,8 @@ class MochaJsonParser {
     getTestRunResult(resultsPath, mocha) {
         const suitesMap = {};
         const getSuite = (test) => {
-            var _a;
             const path = this.getRelativePath(test.file);
-            return (_a = suitesMap[path]) !== null && _a !== void 0 ? _a : (suitesMap[path] = new test_results_1.TestSuiteResult(path, []));
+            return suitesMap[path] ?? (suitesMap[path] = new test_results_1.TestSuiteResult(path, []));
         };
         for (const test of mocha.passes) {
             const suite = getSuite(test);
@@ -1499,7 +1435,6 @@ class MochaJsonParser {
         return new test_results_1.TestRunResult(resultsPath, suites, mocha.stats.duration);
     }
     processTest(suite, test, result) {
-        var _a;
         const groupName = test.fullTitle !== test.title
             ? test.fullTitle.substr(0, test.fullTitle.length - test.title.length).trimEnd()
             : null;
@@ -1509,7 +1444,7 @@ class MochaJsonParser {
             suite.groups.push(group);
         }
         const error = this.getTestCaseError(test);
-        const testCase = new test_results_1.TestCaseResult(test.title, result, (_a = test.duration) !== null && _a !== void 0 ? _a : 0, error);
+        const testCase = new test_results_1.TestCaseResult(test.title, result, test.duration ?? 0, error);
         group.tests.push(testCase);
     }
     getTestCaseError(test) {
@@ -1541,8 +1476,9 @@ class MochaJsonParser {
         return path;
     }
     getWorkDir(path) {
-        var _a, _b;
-        return ((_b = (_a = this.options.workDir) !== null && _a !== void 0 ? _a : this.assumedWorkDir) !== null && _b !== void 0 ? _b : (this.assumedWorkDir = (0, path_utils_1.getBasePath)(path, this.options.trackedFiles)));
+        return (this.options.workDir ??
+            this.assumedWorkDir ??
+            (this.assumedWorkDir = (0, path_utils_1.getBasePath)(path, this.options.trackedFiles)));
     }
 }
 exports.MochaJsonParser = MochaJsonParser;
@@ -1551,33 +1487,24 @@ exports.MochaJsonParser = MochaJsonParser;
 /***/ }),
 
 /***/ 406:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.RspecJsonParser = void 0;
 const test_results_1 = __nccwpck_require__(2768);
 class RspecJsonParser {
+    options;
+    assumedWorkDir;
     constructor(options) {
         this.options = options;
     }
-    parse(path, content) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const mocha = this.getRspecJson(path, content);
-            const result = this.getTestRunResult(path, mocha);
-            result.sort(true);
-            return Promise.resolve(result);
-        });
+    async parse(path, content) {
+        const mocha = this.getRspecJson(path, content);
+        const result = this.getTestRunResult(path, mocha);
+        result.sort(true);
+        return Promise.resolve(result);
     }
     getRspecJson(path, content) {
         try {
@@ -1590,9 +1517,8 @@ class RspecJsonParser {
     getTestRunResult(resultsPath, rspec) {
         const suitesMap = {};
         const getSuite = (test) => {
-            var _a;
             const path = test.file_path;
-            return (_a = suitesMap[path]) !== null && _a !== void 0 ? _a : (suitesMap[path] = new test_results_1.TestSuiteResult(path, []));
+            return suitesMap[path] ?? (suitesMap[path] = new test_results_1.TestSuiteResult(path, []));
         };
         for (const test of rspec.examples) {
             const suite = getSuite(test);
@@ -1610,7 +1536,6 @@ class RspecJsonParser {
         return new test_results_1.TestRunResult(resultsPath, suites, rspec.summary.duration);
     }
     processTest(suite, test, result) {
-        var _a;
         const groupName = test.full_description !== test.description
             ? test.full_description.substr(0, test.full_description.length - test.description.length).trimEnd()
             : null;
@@ -1620,13 +1545,12 @@ class RspecJsonParser {
             suite.groups.push(group);
         }
         const error = this.getTestCaseError(test);
-        const testCase = new test_results_1.TestCaseResult(test.full_description, result, (_a = test.run_time) !== null && _a !== void 0 ? _a : 0, error);
+        const testCase = new test_results_1.TestCaseResult(test.full_description, result, test.run_time ?? 0, error);
         group.tests.push(testCase);
     }
     getTestCaseError(test) {
-        var _a, _b;
-        const backtrace = (_a = test.exception) === null || _a === void 0 ? void 0 : _a.backtrace;
-        const message = (_b = test.exception) === null || _b === void 0 ? void 0 : _b.message;
+        const backtrace = test.exception?.backtrace;
+        const message = test.exception?.message;
         if (backtrace === undefined) {
             return undefined;
         }
@@ -1674,6 +1598,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.SwiftXunitParser = void 0;
 const java_junit_parser_1 = __nccwpck_require__(676);
 class SwiftXunitParser extends java_junit_parser_1.JavaJunitParser {
+    options;
     constructor(options) {
         super(options);
         this.options = options;
@@ -1690,11 +1615,10 @@ exports.SwiftXunitParser = SwiftXunitParser;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getAnnotations = void 0;
+exports.getAnnotations = getAnnotations;
 const markdown_utils_1 = __nccwpck_require__(6482);
 const parse_utils_1 = __nccwpck_require__(7811);
 function getAnnotations(results, maxCount) {
-    var _a, _b, _c, _d;
     if (maxCount === 0) {
         return [];
     }
@@ -1710,8 +1634,8 @@ function getAnnotations(results, maxCount) {
                     if (err === undefined) {
                         continue;
                     }
-                    const path = (_a = err.path) !== null && _a !== void 0 ? _a : tr.path;
-                    const line = (_b = err.line) !== null && _b !== void 0 ? _b : 0;
+                    const path = err.path ?? tr.path;
+                    const line = err.line ?? 0;
                     if (mergeDup) {
                         const dup = errors.find(e => path === e.path && line === e.line && err.details === e.details);
                         if (dup !== undefined) {
@@ -1724,7 +1648,7 @@ function getAnnotations(results, maxCount) {
                         suiteName: ts.name,
                         testName: tg.name ? `${tg.name} ► ${tc.name}` : tc.name,
                         details: err.details,
-                        message: (_d = (_c = err.message) !== null && _c !== void 0 ? _c : (0, parse_utils_1.getFirstNonEmptyLine)(err.details)) !== null && _d !== void 0 ? _d : 'Test failed',
+                        message: err.message ?? (0, parse_utils_1.getFirstNonEmptyLine)(err.details) ?? 'Test failed',
                         path,
                         line
                     });
@@ -1753,7 +1677,6 @@ function getAnnotations(results, maxCount) {
     });
     return annotations;
 }
-exports.getAnnotations = getAnnotations;
 function enforceCheckRunLimits(err) {
     err.title = (0, markdown_utils_1.ellipsis)(err.title || '', 255);
     err.message = (0, markdown_utils_1.ellipsis)(err.message, 65535);
@@ -1801,7 +1724,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getReport = void 0;
+exports.getReport = getReport;
 const core = __importStar(__nccwpck_require__(2186));
 const markdown_utils_1 = __nccwpck_require__(6482);
 const node_utils_1 = __nccwpck_require__(5824);
@@ -1817,7 +1740,7 @@ const defaultOptions = {
 function getReport(results, options = defaultOptions) {
     core.info('Generating check run summary');
     applySort(results);
-    const opts = Object.assign({}, options);
+    const opts = { ...options };
     let lines = renderReport(results, opts);
     let report = lines.join('\n');
     if (getByteLength(report) <= MAX_REPORT_LENGTH) {
@@ -1835,7 +1758,6 @@ function getReport(results, options = defaultOptions) {
     core.warning(`Test report summary exceeded limit of ${MAX_REPORT_LENGTH} bytes and will be trimmed`);
     return trimReport(lines);
 }
-exports.getReport = getReport;
 function trimReport(lines) {
     const closingBlock = '```';
     const errorMsg = `**Report exceeded GitHub limit of ${MAX_REPORT_LENGTH} bytes and has been trimmed**`;
@@ -1965,7 +1887,6 @@ function getSuitesReport(tr, runIndex, options) {
     return sections;
 }
 function getTestsReport(ts, runIndex, suiteIndex, options) {
-    var _a, _b, _c;
     if (options.listTests === 'failed' && ts.result !== 'failed') {
         return [];
     }
@@ -1989,7 +1910,9 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
             const result = getResultIcon(tc.result);
             sections.push(`${space}${result} ${tc.name}`);
             if (tc.error) {
-                const lines = (_c = ((_a = tc.error.message) !== null && _a !== void 0 ? _a : (_b = (0, parse_utils_1.getFirstNonEmptyLine)(tc.error.details)) === null || _b === void 0 ? void 0 : _b.trim())) === null || _c === void 0 ? void 0 : _c.split(/\r?\n/g).map(l => '\t' + l);
+                const lines = (tc.error.message ?? (0, parse_utils_1.getFirstNonEmptyLine)(tc.error.details)?.trim())
+                    ?.split(/\r?\n/g)
+                    .map(l => '\t' + l);
                 if (lines) {
                     sections.push(...lines);
                 }
@@ -2032,6 +1955,9 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TestCaseResult = exports.TestGroupResult = exports.TestSuiteResult = exports.TestRunResult = void 0;
 const node_utils_1 = __nccwpck_require__(5824);
 class TestRunResult {
+    path;
+    suites;
+    totalTime;
     constructor(path, suites, totalTime) {
         this.path = path;
         this.suites = suites;
@@ -2050,8 +1976,7 @@ class TestRunResult {
         return this.suites.reduce((sum, g) => sum + g.skipped, 0);
     }
     get time() {
-        var _a;
-        return (_a = this.totalTime) !== null && _a !== void 0 ? _a : this.suites.reduce((sum, g) => sum + g.time, 0);
+        return this.totalTime ?? this.suites.reduce((sum, g) => sum + g.time, 0);
     }
     get result() {
         return this.suites.some(t => t.result === 'failed') ? 'failed' : 'success';
@@ -2070,6 +1995,9 @@ class TestRunResult {
 }
 exports.TestRunResult = TestRunResult;
 class TestSuiteResult {
+    name;
+    groups;
+    totalTime;
     constructor(name, groups, totalTime) {
         this.name = name;
         this.groups = groups;
@@ -2088,8 +2016,7 @@ class TestSuiteResult {
         return this.groups.reduce((sum, g) => sum + g.skipped, 0);
     }
     get time() {
-        var _a;
-        return (_a = this.totalTime) !== null && _a !== void 0 ? _a : this.groups.reduce((sum, g) => sum + g.time, 0);
+        return this.totalTime ?? this.groups.reduce((sum, g) => sum + g.time, 0);
     }
     get result() {
         return this.groups.some(t => t.result === 'failed') ? 'failed' : 'success';
@@ -2098,7 +2025,7 @@ class TestSuiteResult {
         return this.groups.filter(grp => grp.result === 'failed');
     }
     sort(deep) {
-        this.groups.sort((a, b) => { var _a, _b; return ((_a = a.name) !== null && _a !== void 0 ? _a : '').localeCompare((_b = b.name) !== null && _b !== void 0 ? _b : '', node_utils_1.DEFAULT_LOCALE); });
+        this.groups.sort((a, b) => (a.name ?? '').localeCompare(b.name ?? '', node_utils_1.DEFAULT_LOCALE));
         if (deep) {
             for (const grp of this.groups) {
                 grp.sort();
@@ -2108,6 +2035,8 @@ class TestSuiteResult {
 }
 exports.TestSuiteResult = TestSuiteResult;
 class TestGroupResult {
+    name;
+    tests;
     constructor(name, tests) {
         this.name = name;
         this.tests = tests;
@@ -2136,6 +2065,10 @@ class TestGroupResult {
 }
 exports.TestGroupResult = TestGroupResult;
 class TestCaseResult {
+    name;
+    result;
+    time;
+    error;
     constructor(name, result, time, error) {
         this.name = name;
         this.result = result;
@@ -2176,34 +2109,22 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.listFiles = void 0;
+exports.listFiles = listFiles;
 const core = __importStar(__nccwpck_require__(2186));
 const exec_1 = __nccwpck_require__(1514);
-function listFiles() {
-    return __awaiter(this, void 0, void 0, function* () {
-        core.startGroup('Listing all files tracked by git');
-        let output = '';
-        try {
-            output = (yield (0, exec_1.getExecOutput)('git', ['ls-files', '-z'])).stdout;
-        }
-        finally {
-            fixStdOutNullTermination();
-            core.endGroup();
-        }
-        return output.split('\u0000').filter(s => s.length > 0);
-    });
+async function listFiles() {
+    core.startGroup('Listing all files tracked by git');
+    let output = '';
+    try {
+        output = (await (0, exec_1.getExecOutput)('git', ['ls-files', '-z'])).stdout;
+    }
+    finally {
+        fixStdOutNullTermination();
+        core.endGroup();
+    }
+    return output.split('\u0000').filter(s => s.length > 0);
 }
-exports.listFiles = listFiles;
 function fixStdOutNullTermination() {
     // Previous command uses NULL as delimiters and output is printed to stdout.
     // We have to make sure next thing written to stdout will start on new line.
@@ -2242,20 +2163,13 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.listFiles = exports.downloadArtifact = exports.getCheckRunContext = void 0;
+exports.getCheckRunContext = getCheckRunContext;
+exports.downloadArtifact = downloadArtifact;
+exports.listFiles = listFiles;
 const fs_1 = __nccwpck_require__(7147);
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
@@ -2283,69 +2197,74 @@ function getCheckRunContext() {
     }
     return { sha: github.context.sha, runId };
 }
-exports.getCheckRunContext = getCheckRunContext;
-function downloadArtifact(octokit, artifactId, fileName, token) {
-    return __awaiter(this, void 0, void 0, function* () {
-        core.startGroup(`Downloading artifact ${fileName}`);
-        try {
-            core.info(`Artifact ID: ${artifactId}`);
-            const req = octokit.rest.actions.downloadArtifact.endpoint(Object.assign(Object.assign({}, github.context.repo), { artifact_id: artifactId, archive_format: 'zip' }));
-            const headers = {
-                Authorization: `Bearer ${token}`
-            };
-            const downloadStream = got_1.default.stream(req.url, { headers });
-            const fileWriterStream = (0, fs_1.createWriteStream)(fileName);
-            downloadStream.on('redirect', response => {
-                core.info(`Downloading ${response.headers.location}`);
-            });
-            downloadStream.on('downloadProgress', ({ transferred }) => {
-                core.info(`Progress: ${transferred} B`);
-            });
-            yield asyncStream(downloadStream, fileWriterStream);
-        }
-        finally {
-            core.endGroup();
-        }
-    });
+async function downloadArtifact(octokit, artifactId, fileName, token) {
+    core.startGroup(`Downloading artifact ${fileName}`);
+    try {
+        core.info(`Artifact ID: ${artifactId}`);
+        const req = octokit.rest.actions.downloadArtifact.endpoint({
+            ...github.context.repo,
+            artifact_id: artifactId,
+            archive_format: 'zip'
+        });
+        const headers = {
+            Authorization: `Bearer ${token}`
+        };
+        const downloadStream = got_1.default.stream(req.url, { headers });
+        const fileWriterStream = (0, fs_1.createWriteStream)(fileName);
+        downloadStream.on('redirect', response => {
+            core.info(`Downloading ${response.headers.location}`);
+        });
+        downloadStream.on('downloadProgress', ({ transferred }) => {
+            core.info(`Progress: ${transferred} B`);
+        });
+        await asyncStream(downloadStream, fileWriterStream);
+    }
+    finally {
+        core.endGroup();
+    }
 }
-exports.downloadArtifact = downloadArtifact;
-function listFiles(octokit, sha) {
-    return __awaiter(this, void 0, void 0, function* () {
-        core.startGroup('Fetching list of tracked files from GitHub');
-        try {
-            const commit = yield octokit.rest.git.getCommit(Object.assign({ commit_sha: sha }, github.context.repo));
-            const files = yield listGitTree(octokit, commit.data.tree.sha, '');
-            return files;
-        }
-        finally {
-            core.endGroup();
-        }
-    });
+async function listFiles(octokit, sha) {
+    core.startGroup('Fetching list of tracked files from GitHub');
+    try {
+        const commit = await octokit.rest.git.getCommit({
+            commit_sha: sha,
+            ...github.context.repo
+        });
+        const files = await listGitTree(octokit, commit.data.tree.sha, '');
+        return files;
+    }
+    finally {
+        core.endGroup();
+    }
 }
-exports.listFiles = listFiles;
-function listGitTree(octokit, sha, path) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const pathLog = path ? ` at ${path}` : '';
-        core.info(`Fetching tree ${sha}${pathLog}`);
-        let truncated = false;
-        let tree = yield octokit.rest.git.getTree(Object.assign({ recursive: 'true', tree_sha: sha }, github.context.repo));
-        if (tree.data.truncated) {
-            truncated = true;
-            tree = yield octokit.rest.git.getTree(Object.assign({ tree_sha: sha }, github.context.repo));
-        }
-        const result = [];
-        for (const tr of tree.data.tree) {
-            const file = `${path}${tr.path}`;
-            if (tr.type === 'blob') {
-                result.push(file);
-            }
-            else if (tr.type === 'tree' && truncated) {
-                const files = yield listGitTree(octokit, tr.sha, `${file}/`);
-                result.push(...files);
-            }
-        }
-        return result;
+async function listGitTree(octokit, sha, path) {
+    const pathLog = path ? ` at ${path}` : '';
+    core.info(`Fetching tree ${sha}${pathLog}`);
+    let truncated = false;
+    let tree = await octokit.rest.git.getTree({
+        recursive: 'true',
+        tree_sha: sha,
+        ...github.context.repo
     });
+    if (tree.data.truncated) {
+        truncated = true;
+        tree = await octokit.rest.git.getTree({
+            tree_sha: sha,
+            ...github.context.repo
+        });
+    }
+    const result = [];
+    for (const tr of tree.data.tree) {
+        const file = `${path}${tr.path}`;
+        if (tr.type === 'blob') {
+            result.push(file);
+        }
+        else if (tr.type === 'tree' && truncated) {
+            const files = await listGitTree(octokit, tr.sha, `${file}/`);
+            result.push(...files);
+        }
+    }
+    return result;
 }
 
 
@@ -2357,7 +2276,13 @@ function listGitTree(octokit, sha, path) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.formatTime = exports.ellipsis = exports.fixEol = exports.tableEscape = exports.table = exports.link = exports.Icon = exports.Align = void 0;
+exports.Icon = exports.Align = void 0;
+exports.link = link;
+exports.table = table;
+exports.tableEscape = tableEscape;
+exports.fixEol = fixEol;
+exports.ellipsis = ellipsis;
+exports.formatTime = formatTime;
 var Align;
 (function (Align) {
     Align["Left"] = ":---";
@@ -2373,37 +2298,30 @@ exports.Icon = {
 function link(title, address) {
     return `[${title}](${address})`;
 }
-exports.link = link;
 function table(headers, align, ...rows) {
     const headerRow = `|${headers.map(tableEscape).join('|')}|`;
     const alignRow = `|${align.join('|')}|`;
     const contentRows = rows.map(row => `|${row.map(tableEscape).join('|')}|`).join('\n');
     return [headerRow, alignRow, contentRows].join('\n');
 }
-exports.table = table;
 function tableEscape(content) {
     return content.toString().replace('|', '\\|');
 }
-exports.tableEscape = tableEscape;
 function fixEol(text) {
-    var _a;
-    return (_a = text === null || text === void 0 ? void 0 : text.replace(/\r/g, '')) !== null && _a !== void 0 ? _a : '';
+    return text?.replace(/\r/g, '') ?? '';
 }
-exports.fixEol = fixEol;
 function ellipsis(text, maxLength) {
     if (text.length <= maxLength) {
         return text;
     }
     return text.substr(0, maxLength - 3) + '...';
 }
-exports.ellipsis = ellipsis;
 function formatTime(ms) {
     if (ms > 1000) {
         return `${Math.round(ms / 1000)}s`;
     }
     return `${Math.round(ms)}ms`;
 }
-exports.formatTime = formatTime;
 
 
 /***/ }),
@@ -2414,7 +2332,8 @@ exports.formatTime = formatTime;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getExceptionSource = exports.DEFAULT_LOCALE = void 0;
+exports.DEFAULT_LOCALE = void 0;
+exports.getExceptionSource = getExceptionSource;
 const path_utils_1 = __nccwpck_require__(4070);
 exports.DEFAULT_LOCALE = 'en-US';
 function getExceptionSource(stackTrace, trackedFiles, getRelativePath) {
@@ -2439,7 +2358,6 @@ function getExceptionSource(stackTrace, trackedFiles, getRelativePath) {
         }
     }
 }
-exports.getExceptionSource = getExceptionSource;
 
 
 /***/ }),
@@ -2450,7 +2368,9 @@ exports.getExceptionSource = getExceptionSource;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getFirstNonEmptyLine = exports.parseIsoDate = exports.parseNetDuration = void 0;
+exports.parseNetDuration = parseNetDuration;
+exports.parseIsoDate = parseIsoDate;
+exports.getFirstNonEmptyLine = getFirstNonEmptyLine;
 function parseNetDuration(str) {
     const durationRe = /^(\d\d):(\d\d):(\d\d(?:\.\d+)?)$/;
     const durationMatch = str.match(durationRe);
@@ -2460,7 +2380,6 @@ function parseNetDuration(str) {
     const [_, hourStr, minStr, secStr] = durationMatch;
     return (parseInt(hourStr) * 3600 + parseInt(minStr) * 60 + parseFloat(secStr)) * 1000;
 }
-exports.parseNetDuration = parseNetDuration;
 function parseIsoDate(str) {
     const isoDateRe = /^\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)$/;
     if (str === undefined || !isoDateRe.test(str)) {
@@ -2468,12 +2387,10 @@ function parseIsoDate(str) {
     }
     return new Date(str);
 }
-exports.parseIsoDate = parseIsoDate;
 function getFirstNonEmptyLine(stackTrace) {
-    const lines = stackTrace === null || stackTrace === void 0 ? void 0 : stackTrace.split(/\r?\n/g);
-    return lines === null || lines === void 0 ? void 0 : lines.find(str => !/^\s*$/.test(str));
+    const lines = stackTrace?.split(/\r?\n/g);
+    return lines?.find(str => !/^\s*$/.test(str));
 }
-exports.getFirstNonEmptyLine = getFirstNonEmptyLine;
 
 
 /***/ }),
@@ -2484,7 +2401,9 @@ exports.getFirstNonEmptyLine = getFirstNonEmptyLine;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getBasePath = exports.normalizeFilePath = exports.normalizeDirPath = void 0;
+exports.normalizeDirPath = normalizeDirPath;
+exports.normalizeFilePath = normalizeFilePath;
+exports.getBasePath = getBasePath;
 function normalizeDirPath(path, addTrailingSlash) {
     if (!path) {
         return path;
@@ -2495,14 +2414,12 @@ function normalizeDirPath(path, addTrailingSlash) {
     }
     return path;
 }
-exports.normalizeDirPath = normalizeDirPath;
 function normalizeFilePath(path) {
     if (!path) {
         return path;
     }
     return path.trim().replace(/\\/g, '/');
 }
-exports.normalizeFilePath = normalizeFilePath;
 function getBasePath(path, trackedFiles) {
     if (trackedFiles.includes(path)) {
         return '';
@@ -2519,7 +2436,6 @@ function getBasePath(path, trackedFiles) {
     const base = path.substr(0, path.length - max.length);
     return base;
 }
-exports.getBasePath = getBasePath;
 
 
 /***/ }),
@@ -2530,7 +2446,7 @@ exports.getBasePath = getBasePath;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.slug = void 0;
+exports.slug = slug;
 // Returns HTML element id and href link usable as manual anchor links
 // This is needed because Github in check run summary doesn't automatically
 // create links out of headings as it normally does for other markdown content
@@ -2544,7 +2460,6 @@ function slug(name) {
     const link = `#${slugId}`;
     return { id, link };
 }
-exports.slug = slug;
 
 
 /***/ }),
@@ -11422,7 +11337,7 @@ module.exports = function (/**String*/ input, /** object */ options) {
             // prepare new entry
             if (!update) {
                 entry = new ZipEntry();
-                entry.entryName = entryName;
+                entry.entryName = Utils.canonical(entryName);
             }
             entry.comment = comment || "";
 
@@ -11457,6 +11372,8 @@ module.exports = function (/**String*/ input, /** object */ options) {
 
             entry.setData(content);
             if (!update) _zip.setEntry(entry);
+
+            return entry;
         },
 
         /**
@@ -11465,7 +11382,7 @@ module.exports = function (/**String*/ input, /** object */ options) {
          * @return Array
          */
         getEntries: function (/**String*/ password) {
-            _zip.password=password;
+            _zip.password = password;
             return _zip ? _zip.entries : [];
         },
 
@@ -11628,13 +11545,20 @@ module.exports = function (/**String*/ input, /** object */ options) {
          * @param callback The callback will be executed when all entries are extracted successfully or any error is thrown.
          */
         extractAllToAsync: function (/**String*/ targetPath, /**Boolean*/ overwrite, /**Boolean*/ keepOriginalPermission, /**Function*/ callback) {
+            if (typeof overwrite === "function" && !callback) callback = overwrite;
             overwrite = get_Bool(overwrite, false);
             if (typeof keepOriginalPermission === "function" && !callback) callback = keepOriginalPermission;
             keepOriginalPermission = get_Bool(keepOriginalPermission, false);
             if (!callback) {
-                callback = function (err) {
-                    throw new Error(err);
-                };
+                return new Promise((resolve, reject) => {
+                    this.extractAllToAsync(targetPath, overwrite, keepOriginalPermission, function (err) {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(this);
+                        }
+                    });
+                });
             }
             if (!_zip) {
                 callback(new Error(Utils.Errors.NO_ZIP));
@@ -11648,12 +11572,12 @@ module.exports = function (/**String*/ input, /** object */ options) {
 
             // separate directories from files
             const dirEntries = [];
-            const fileEntries = new Set();
+            const fileEntries = [];
             _zip.entries.forEach((e) => {
                 if (e.isDirectory) {
                     dirEntries.push(e);
                 } else {
-                    fileEntries.add(e);
+                    fileEntries.push(e);
                 }
             });
 
@@ -11673,47 +11597,38 @@ module.exports = function (/**String*/ input, /** object */ options) {
                 }
             }
 
-            // callback wrapper, for some house keeping
-            const done = () => {
-                if (fileEntries.size === 0) {
-                    callback();
-                }
-            };
-
-            // Extract file entries asynchronously
-            for (const entry of fileEntries.values()) {
-                const entryName = pth.normalize(canonical(entry.entryName.toString()));
-                const filePath = sanitize(targetPath, entryName);
-                entry.getDataAsync(function (content, err_1) {
-                    if (err_1) {
-                        callback(new Error(err_1));
-                        return;
-                    }
-                    if (!content) {
-                        callback(new Error(Utils.Errors.CANT_EXTRACT_FILE));
+            fileEntries.reverse().reduce(function (next, entry) {
+                return function (err) {
+                    if (err) {
+                        next(err);
                     } else {
-                        // The reverse operation for attr depend on method addFile()
-                        const fileAttr = keepOriginalPermission ? entry.header.fileAttr : undefined;
-                        filetools.writeFileToAsync(filePath, content, overwrite, fileAttr, function (succ) {
-                            if (!succ) {
-                                callback(getError("Unable to write file", filePath));
-                                return;
+                        const entryName = pth.normalize(canonical(entry.entryName.toString()));
+                        const filePath = sanitize(targetPath, entryName);
+                        entry.getDataAsync(function (content, err_1) {
+                            if (err_1) {
+                                next(new Error(err_1));
+                            } else if (!content) {
+                                next(new Error(Utils.Errors.CANT_EXTRACT_FILE));
+                            } else {
+                                // The reverse operation for attr depend on method addFile()
+                                const fileAttr = keepOriginalPermission ? entry.header.fileAttr : undefined;
+                                filetools.writeFileToAsync(filePath, content, overwrite, fileAttr, function (succ) {
+                                    if (!succ) {
+                                        next(getError("Unable to write file", filePath));
+                                    }
+                                    filetools.fs.utimes(filePath, entry.header.time, entry.header.time, function (err_2) {
+                                        if (err_2) {
+                                            next(getError("Unable to set times", filePath));
+                                        } else {
+                                            next();
+                                        }
+                                    });
+                                });
                             }
-                            filetools.fs.utimes(filePath, entry.header.time, entry.header.time, function (err_2) {
-                                if (err_2) {
-                                    callback(getError("Unable to set times", filePath));
-                                    return;
-                                }
-                                // call the callback if it was last entry
-                                done();
-                                fileEntries.delete(entry);
-                            });
                         });
                     }
-                });
-            }
-            // call the callback if fileEntries was empty
-            done();
+                };
+            }, callback)();
         },
 
         /**
@@ -11812,7 +11727,7 @@ module.exports = function () {
     // Without it file names may be corrupted for other apps when file names use unicode chars
     _flags |= Constants.FLG_EFS;
 
-    var _dataHeader = {};
+    var _localHeader = {};
 
     function setTime(val) {
         val = new Date(val);
@@ -11948,29 +11863,29 @@ module.exports = function () {
             _offset = Math.max(0, val) >>> 0;
         },
 
-        get encripted() {
+        get encrypted() {
             return (_flags & 1) === 1;
         },
 
-        get entryHeaderSize() {
+        get centralHeaderSize() {
             return Constants.CENHDR + _fnameLen + _extraLen + _comLen;
         },
 
         get realDataOffset() {
-            return _offset + Constants.LOCHDR + _dataHeader.fnameLen + _dataHeader.extraLen;
+            return _offset + Constants.LOCHDR + _localHeader.fnameLen + _localHeader.extraLen;
         },
 
-        get dataHeader() {
-            return _dataHeader;
+        get localHeader() {
+            return _localHeader;
         },
 
-        loadDataHeaderFromBinary: function (/*Buffer*/ input) {
+        loadLocalHeaderFromBinary: function (/*Buffer*/ input) {
             var data = input.slice(_offset, _offset + Constants.LOCHDR);
             // 30 bytes and should start with "PK\003\004"
             if (data.readUInt32LE(0) !== Constants.LOCSIG) {
                 throw new Error(Utils.Errors.INVALID_LOC);
             }
-            _dataHeader = {
+            _localHeader = {
                 // version needed to extract
                 version: data.readUInt16LE(Constants.LOCVER),
                 // general purpose bit flag
@@ -12029,7 +11944,7 @@ module.exports = function () {
             _offset = data.readUInt32LE(Constants.CENOFF);
         },
 
-        dataHeaderToBinary: function () {
+        localHeaderToBinary: function () {
             // LOC header size (30 bytes)
             var data = Buffer.alloc(Constants.LOCHDR);
             // "PK\003\004"
@@ -12055,7 +11970,7 @@ module.exports = function () {
             return data;
         },
 
-        entryHeaderToBinary: function () {
+        centralHeaderToBinary: function () {
             // CEN header size (46 bytes)
             var data = Buffer.alloc(Constants.CENHDR + _fnameLen + _extraLen + _comLen);
             // "PK\001\002"
@@ -12116,7 +12031,7 @@ module.exports = function () {
                 inAttr: _inattr,
                 attr: _attr,
                 offset: _offset,
-                entryHeaderSize: bytes(Constants.CENHDR + _fnameLen + _extraLen + _comLen)
+                centralHeaderSize: bytes(Constants.CENHDR + _fnameLen + _extraLen + _comLen)
             };
         },
 
@@ -12270,7 +12185,8 @@ module.exports = function () {
         }
     };
 };
- // Misspelled 
+// Misspelled
+
 
 /***/ }),
 
@@ -12327,16 +12243,19 @@ exports.ZipCrypto = __nccwpck_require__(3228);
 /***/ 2153:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-module.exports = function (/*Buffer*/ inbuf) {
+const version = +(process.versions ? process.versions.node : "").split(".")[0] || 0;
+
+module.exports = function (/*Buffer*/ inbuf, /*number*/ expectedLength) {
     var zlib = __nccwpck_require__(9796);
+    const option = version >= 15 && expectedLength > 0 ? { maxOutputLength: expectedLength } : {};
 
     return {
         inflate: function () {
-            return zlib.inflateRawSync(inbuf);
+            return zlib.inflateRawSync(inbuf, option);
         },
 
         inflateAsync: function (/*Function*/ callback) {
-            var tmp = zlib.createInflateRaw(),
+            var tmp = zlib.createInflateRaw(option),
                 parts = [],
                 total = 0;
             tmp.on("data", function (data) {
@@ -12488,7 +12407,7 @@ function decrypt(/*Buffer*/ data, /*Object*/ header, /*String, Buffer*/ pwd) {
 
     // if bit 3 (0x08) of the general-purpose flags field is set, check salt[11] with the high byte of the header time
     // 2 byte data block (as per Info-Zip spec), otherwise check with the high byte of the header entry
-    const verifyByte = ((header.flags & 0x8) === 0x8) ? header.timeHighByte : header.crc >>> 24;
+    const verifyByte = (header.flags & 0x8) === 0x8 ? header.timeHighByte : header.crc >>> 24;
 
     //3. does password meet expectations
     if (salt[11] !== verifyByte) {
@@ -12723,6 +12642,7 @@ module.exports = {
     /* ADM-ZIP error messages */
     CANT_EXTRACT_FILE: "Could not extract the file",
     CANT_OVERRIDE: "Target file already exists",
+    DISK_ENTRY_TOO_LARGE: "Number of disk entries is too large",
     NO_ZIP: "No zip file was loaded",
     NO_ENTRY: "Entry doesn't exist",
     DIRECTORY_CONTENT_ERROR: "A directory cannot have content",
@@ -13113,7 +13033,7 @@ var Utils = __nccwpck_require__(5182),
     Methods = __nccwpck_require__(3928);
 
 module.exports = function (/*Buffer*/ input) {
-    var _entryHeader = new Headers.EntryHeader(),
+    var _centralHeader = new Headers.EntryHeader(),
         _entryName = Buffer.alloc(0),
         _comment = Buffer.alloc(0),
         _isDirectory = false,
@@ -13121,17 +13041,18 @@ module.exports = function (/*Buffer*/ input) {
         _extra = Buffer.alloc(0);
 
     function getCompressedDataFromZip() {
-        if (!input || !Buffer.isBuffer(input)) {
+        //if (!input || !Buffer.isBuffer(input)) {
+        if (!input || !(input instanceof Uint8Array)) {
             return Buffer.alloc(0);
         }
-        _entryHeader.loadDataHeaderFromBinary(input);
-        return input.slice(_entryHeader.realDataOffset, _entryHeader.realDataOffset + _entryHeader.compressedSize);
+        _centralHeader.loadLocalHeaderFromBinary(input);
+        return input.slice(_centralHeader.realDataOffset, _centralHeader.realDataOffset + _centralHeader.compressedSize);
     }
 
     function crc32OK(data) {
         // if bit 3 (0x08) of the general-purpose flags field is set, then the CRC-32 and file sizes are not known when the header is written
-        if ((_entryHeader.flags & 0x8) !== 0x8) {
-            if (Utils.crc32(data) !== _entryHeader.dataHeader.crc) {
+        if ((_centralHeader.flags & 0x8) !== 0x8) {
+            if (Utils.crc32(data) !== _centralHeader.localHeader.crc) {
                 return false;
             }
         } else {
@@ -13162,16 +13083,16 @@ module.exports = function (/*Buffer*/ input) {
             return compressedData;
         }
 
-        if (_entryHeader.encripted) {
+        if (_centralHeader.encrypted) {
             if ("string" !== typeof pass && !Buffer.isBuffer(pass)) {
                 throw new Error("ADM-ZIP: Incompatible password parameter");
             }
-            compressedData = Methods.ZipCrypto.decrypt(compressedData, _entryHeader, pass);
+            compressedData = Methods.ZipCrypto.decrypt(compressedData, _centralHeader, pass);
         }
 
-        var data = Buffer.alloc(_entryHeader.size);
+        var data = Buffer.alloc(_centralHeader.size);
 
-        switch (_entryHeader.method) {
+        switch (_centralHeader.method) {
             case Utils.Constants.STORED:
                 compressedData.copy(data);
                 if (!crc32OK(data)) {
@@ -13183,7 +13104,7 @@ module.exports = function (/*Buffer*/ input) {
                     return data;
                 }
             case Utils.Constants.DEFLATED:
-                var inflater = new Methods.Inflater(compressedData);
+                var inflater = new Methods.Inflater(compressedData, _centralHeader.size);
                 if (!async) {
                     const result = inflater.inflate(data);
                     result.copy(data, 0);
@@ -13220,9 +13141,9 @@ module.exports = function (/*Buffer*/ input) {
         if (uncompressedData.length && !_isDirectory) {
             var compressedData;
             // Local file header
-            switch (_entryHeader.method) {
+            switch (_centralHeader.method) {
                 case Utils.Constants.STORED:
-                    _entryHeader.compressedSize = _entryHeader.size;
+                    _centralHeader.compressedSize = _centralHeader.size;
 
                     compressedData = Buffer.alloc(uncompressedData.length);
                     uncompressedData.copy(compressedData);
@@ -13234,12 +13155,12 @@ module.exports = function (/*Buffer*/ input) {
                     var deflater = new Methods.Deflater(uncompressedData);
                     if (!async) {
                         var deflated = deflater.deflate();
-                        _entryHeader.compressedSize = deflated.length;
+                        _centralHeader.compressedSize = deflated.length;
                         return deflated;
                     } else {
                         deflater.deflateAsync(function (data) {
                             compressedData = Buffer.alloc(data.length);
-                            _entryHeader.compressedSize = data.length;
+                            _centralHeader.compressedSize = data.length;
                             data.copy(compressedData);
                             callback && callback(compressedData);
                         });
@@ -13280,26 +13201,26 @@ module.exports = function (/*Buffer*/ input) {
 
         if (data.length >= Constants.EF_ZIP64_SCOMP) {
             size = readUInt64LE(data, Constants.EF_ZIP64_SUNCOMP);
-            if (_entryHeader.size === Constants.EF_ZIP64_OR_32) {
-                _entryHeader.size = size;
+            if (_centralHeader.size === Constants.EF_ZIP64_OR_32) {
+                _centralHeader.size = size;
             }
         }
         if (data.length >= Constants.EF_ZIP64_RHO) {
             compressedSize = readUInt64LE(data, Constants.EF_ZIP64_SCOMP);
-            if (_entryHeader.compressedSize === Constants.EF_ZIP64_OR_32) {
-                _entryHeader.compressedSize = compressedSize;
+            if (_centralHeader.compressedSize === Constants.EF_ZIP64_OR_32) {
+                _centralHeader.compressedSize = compressedSize;
             }
         }
         if (data.length >= Constants.EF_ZIP64_DSN) {
             offset = readUInt64LE(data, Constants.EF_ZIP64_RHO);
-            if (_entryHeader.offset === Constants.EF_ZIP64_OR_32) {
-                _entryHeader.offset = offset;
+            if (_centralHeader.offset === Constants.EF_ZIP64_OR_32) {
+                _centralHeader.offset = offset;
             }
         }
         if (data.length >= Constants.EF_ZIP64_DSN + 4) {
             diskNumStart = data.readUInt32LE(Constants.EF_ZIP64_DSN);
-            if (_entryHeader.diskNumStart === Constants.EF_ZIP64_OR_16) {
-                _entryHeader.diskNumStart = diskNumStart;
+            if (_centralHeader.diskNumStart === Constants.EF_ZIP64_OR_16) {
+                _centralHeader.diskNumStart = diskNumStart;
             }
         }
     }
@@ -13315,7 +13236,7 @@ module.exports = function (/*Buffer*/ input) {
             _entryName = Utils.toBuffer(val);
             var lastChar = _entryName[_entryName.length - 1];
             _isDirectory = lastChar === 47 || lastChar === 92;
-            _entryHeader.fileNameLength = _entryName.length;
+            _centralHeader.fileNameLength = _entryName.length;
         },
 
         get extra() {
@@ -13323,7 +13244,7 @@ module.exports = function (/*Buffer*/ input) {
         },
         set extra(val) {
             _extra = val;
-            _entryHeader.extraLength = val.length;
+            _centralHeader.extraLength = val.length;
             parseExtra(val);
         },
 
@@ -13332,7 +13253,7 @@ module.exports = function (/*Buffer*/ input) {
         },
         set comment(val) {
             _comment = Utils.toBuffer(val);
-            _entryHeader.commentLength = _comment.length;
+            _centralHeader.commentLength = _comment.length;
         },
 
         get name() {
@@ -13359,18 +13280,18 @@ module.exports = function (/*Buffer*/ input) {
         setData: function (value) {
             uncompressedData = Utils.toBuffer(value);
             if (!_isDirectory && uncompressedData.length) {
-                _entryHeader.size = uncompressedData.length;
-                _entryHeader.method = Utils.Constants.DEFLATED;
-                _entryHeader.crc = Utils.crc32(value);
-                _entryHeader.changed = true;
+                _centralHeader.size = uncompressedData.length;
+                _centralHeader.method = Utils.Constants.DEFLATED;
+                _centralHeader.crc = Utils.crc32(value);
+                _centralHeader.changed = true;
             } else {
                 // folders and blank files should be stored
-                _entryHeader.method = Utils.Constants.STORED;
+                _centralHeader.method = Utils.Constants.STORED;
             }
         },
 
         getData: function (pass) {
-            if (_entryHeader.changed) {
+            if (_centralHeader.changed) {
                 return uncompressedData;
             } else {
                 return decompress(false, null, pass);
@@ -13378,7 +13299,7 @@ module.exports = function (/*Buffer*/ input) {
         },
 
         getDataAsync: function (/*Function*/ callback, pass) {
-            if (_entryHeader.changed) {
+            if (_centralHeader.changed) {
                 callback(uncompressedData);
             } else {
                 decompress(true, callback, pass);
@@ -13386,37 +13307,57 @@ module.exports = function (/*Buffer*/ input) {
         },
 
         set attr(attr) {
-            _entryHeader.attr = attr;
+            _centralHeader.attr = attr;
         },
         get attr() {
-            return _entryHeader.attr;
+            return _centralHeader.attr;
         },
 
         set header(/*Buffer*/ data) {
-            _entryHeader.loadFromBinary(data);
+            _centralHeader.loadFromBinary(data);
         },
 
         get header() {
-            return _entryHeader;
+            return _centralHeader;
         },
 
-        packHeader: function () {
+        packCentralHeader: function () {
             // 1. create header (buffer)
-            var header = _entryHeader.entryHeaderToBinary();
+            var header = _centralHeader.centralHeaderToBinary();
             var addpos = Utils.Constants.CENHDR;
             // 2. add file name
             _entryName.copy(header, addpos);
             addpos += _entryName.length;
             // 3. add extra data
-            if (_entryHeader.extraLength) {
+            if (_centralHeader.extraLength) {
                 _extra.copy(header, addpos);
-                addpos += _entryHeader.extraLength;
+                addpos += _centralHeader.extraLength;
             }
             // 4. add file comment
-            if (_entryHeader.commentLength) {
+            if (_centralHeader.commentLength) {
                 _comment.copy(header, addpos);
             }
             return header;
+        },
+
+        packLocalHeader: function () {
+            let addpos = 0;
+
+            // 1. construct local header Buffer
+            const localHeaderBuf = _centralHeader.localHeaderToBinary();
+            // 2. localHeader - crate header buffer
+            const localHeader = Buffer.alloc(localHeaderBuf.length + _entryName.length + _extra.length);
+            // 2.1 add localheader
+            localHeaderBuf.copy(localHeader, addpos);
+            addpos += localHeaderBuf.length;
+            // 2.2 add file name
+            _entryName.copy(localHeader, addpos);
+            addpos += _entryName.length;
+            // 2.3 add extra field
+            _extra.copy(localHeader, addpos);
+            addpos += _extra.length;
+
+            return localHeader;
         },
 
         toJSON: function () {
@@ -13429,7 +13370,7 @@ module.exports = function (/*Buffer*/ input) {
                 name: this.name,
                 comment: this.comment,
                 isDirectory: this.isDirectory,
-                header: _entryHeader.toJSON(),
+                header: _centralHeader.toJSON(),
                 compressedData: bytes(input),
                 data: bytes(uncompressedData)
             };
@@ -13483,7 +13424,7 @@ module.exports = function (/*Buffer|null*/ inBuffer, /** object */ options) {
             entry.header = inBuffer.slice(tmp, (tmp += Utils.Constants.CENHDR));
             entry.entryName = inBuffer.slice(tmp, (tmp += entry.header.fileNameLength));
 
-            index += entry.header.entryHeaderSize;
+            index += entry.header.centralHeaderSize;
 
             callback(entry);
         }
@@ -13492,6 +13433,9 @@ module.exports = function (/*Buffer|null*/ inBuffer, /** object */ options) {
     function readEntries() {
         loadedEntries = true;
         entryTable = {};
+        if (mainHeader.diskEntries > (inBuffer.length - mainHeader.offset) / Utils.Constants.CENHDR) {
+            throw new Error(Utils.Errors.DISK_ENTRY_TOO_LARGE);
+        }
         entryList = new Array(mainHeader.diskEntries); // total number of entries
         var index = mainHeader.offset; // offset of first CEN header
         for (var i = 0; i < entryList.length; i++) {
@@ -13507,7 +13451,7 @@ module.exports = function (/*Buffer|null*/ inBuffer, /** object */ options) {
 
             if (entry.header.commentLength) entry.comment = inBuffer.slice(tmp, tmp + entry.header.commentLength);
 
-            index += entry.header.entryHeaderSize;
+            index += entry.header.centralHeaderSize;
 
             entryList[i] = entry;
             entryTable[entry.entryName] = entry;
@@ -13692,7 +13636,7 @@ module.exports = function (/*Buffer|null*/ inBuffer, /** object */ options) {
             sortEntries();
 
             const dataBlock = [];
-            const entryHeaders = [];
+            const headerBlocks = [];
             let totalSize = 0;
             let dindex = 0;
 
@@ -13702,30 +13646,25 @@ module.exports = function (/*Buffer|null*/ inBuffer, /** object */ options) {
             for (const entry of entryList) {
                 // compress data and set local and entry header accordingly. Reason why is called first
                 const compressedData = entry.getCompressedData();
-                // 1. construct data header
                 entry.header.offset = dindex;
-                const dataHeader = entry.header.dataHeaderToBinary();
-                const entryNameLen = entry.rawEntryName.length;
-                // 1.2. postheader - data after data header
-                const postHeader = Buffer.alloc(entryNameLen + entry.extra.length);
-                entry.rawEntryName.copy(postHeader, 0);
-                entry.extra.copy(postHeader, entryNameLen);
+
+                // 1. construct local header
+                const localHeader = entry.packLocalHeader();
 
                 // 2. offsets
-                const dataLength = dataHeader.length + postHeader.length + compressedData.length;
+                const dataLength = localHeader.length + compressedData.length;
                 dindex += dataLength;
 
                 // 3. store values in sequence
-                dataBlock.push(dataHeader);
-                dataBlock.push(postHeader);
+                dataBlock.push(localHeader);
                 dataBlock.push(compressedData);
 
-                // 4. construct entry header
-                const entryHeader = entry.packHeader();
-                entryHeaders.push(entryHeader);
+                // 4. construct central header
+                const centralHeader = entry.packCentralHeader();
+                headerBlocks.push(centralHeader);
                 // 5. update main header
-                mainHeader.size += entryHeader.length;
-                totalSize += dataLength + entryHeader.length;
+                mainHeader.size += centralHeader.length;
+                totalSize += dataLength + centralHeader.length;
             }
 
             totalSize += mainHeader.mainHeaderSize; // also includes zip file comment length
@@ -13741,7 +13680,7 @@ module.exports = function (/*Buffer|null*/ inBuffer, /** object */ options) {
             }
 
             // write central directory entries
-            for (const content of entryHeaders) {
+            for (const content of headerBlocks) {
                 content.copy(outBuffer, dindex);
                 dindex += content.length;
             }
@@ -13764,7 +13703,7 @@ module.exports = function (/*Buffer|null*/ inBuffer, /** object */ options) {
                 sortEntries();
 
                 const dataBlock = [];
-                const entryHeaders = [];
+                const centralHeaders = [];
                 let totalSize = 0;
                 let dindex = 0;
 
@@ -13772,29 +13711,30 @@ module.exports = function (/*Buffer|null*/ inBuffer, /** object */ options) {
                 mainHeader.offset = 0;
 
                 const compress2Buffer = function (entryLists) {
-                    if (entryLists.length) {
-                        const entry = entryLists.pop();
+                    if (entryLists.length > 0) {
+                        const entry = entryLists.shift();
                         const name = entry.entryName + entry.extra.toString();
                         if (onItemStart) onItemStart(name);
                         entry.getCompressedDataAsync(function (compressedData) {
                             if (onItemEnd) onItemEnd(name);
-
                             entry.header.offset = dindex;
-                            // data header
-                            const dataHeader = entry.header.dataHeaderToBinary();
-                            const postHeader = Buffer.alloc(name.length, name);
-                            const dataLength = dataHeader.length + postHeader.length + compressedData.length;
 
+                            // 1. construct local header
+                            const localHeader = entry.packLocalHeader();
+
+                            // 2. offsets
+                            const dataLength = localHeader.length + compressedData.length;
                             dindex += dataLength;
 
-                            dataBlock.push(dataHeader);
-                            dataBlock.push(postHeader);
+                            // 3. store values in sequence
+                            dataBlock.push(localHeader);
                             dataBlock.push(compressedData);
 
-                            const entryHeader = entry.packHeader();
-                            entryHeaders.push(entryHeader);
-                            mainHeader.size += entryHeader.length;
-                            totalSize += dataLength + entryHeader.length;
+                            // central header
+                            const centalHeader = entry.packCentralHeader();
+                            centralHeaders.push(centalHeader);
+                            mainHeader.size += centalHeader.length;
+                            totalSize += dataLength + centalHeader.length;
 
                             compress2Buffer(entryLists);
                         });
@@ -13809,7 +13749,7 @@ module.exports = function (/*Buffer|null*/ inBuffer, /** object */ options) {
                             content.copy(outBuffer, dindex); // write data blocks
                             dindex += content.length;
                         });
-                        entryHeaders.forEach(function (content) {
+                        centralHeaders.forEach(function (content) {
                             content.copy(outBuffer, dindex); // write central directory entries
                             dindex += content.length;
                         });
@@ -13825,7 +13765,7 @@ module.exports = function (/*Buffer|null*/ inBuffer, /** object */ options) {
                     }
                 };
 
-                compress2Buffer(entryList);
+                compress2Buffer(Array.from(entryList));
             } catch (e) {
                 onFail(e);
             }
