@@ -61,19 +61,28 @@ export class JavaJunitParser implements TestParser {
   }
 
   private getTestRunResult(filePath: string, junit: JunitReport): TestRunResult {
-    const suites =
-      junit.testsuites.testsuite === undefined
-        ? []
-        : junit.testsuites.testsuite.map(ts => {
-            const name = ts.$.name.trim()
-            const time = parseFloat(ts.$.time) * 1000
-            const sr = new TestSuiteResult(name, this.getGroups(ts), time)
-            return sr
-          })
+    let suites: TestSuiteResult[] = []
+
+    this.appendSuites(suites, junit.testsuites.testsuite ?? [])
 
     const seconds = parseFloat(junit.testsuites.$?.time)
     const time = isNaN(seconds) ? undefined : seconds * 1000
     return new TestRunResult(filePath, suites, time)
+  }
+
+  private appendSuites(results: TestSuiteResult[], testsuites?: TestSuite[]): void
+  {
+    if (testsuites === undefined) return
+
+    for (const ts of testsuites) {
+      this.appendSuites(results, ts.testsuite)
+
+      results.push(new TestSuiteResult(
+        ts.$.name.trim(),
+        this.getGroups(ts),
+        parseFloat(ts.$.time) * 1000
+      ));
+    }
   }
 
   private getGroups(suite: TestSuite): TestGroupResult[] {
