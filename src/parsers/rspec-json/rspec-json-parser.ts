@@ -1,4 +1,3 @@
-import { Console } from 'console'
 import {ParseOptions, TestParser} from '../../test-parser'
 import {
   TestCaseError,
