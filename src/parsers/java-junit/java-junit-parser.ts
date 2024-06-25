@@ -137,13 +137,11 @@ export class JavaJunitParser implements TestParser {
       }
     }
 
-    
-
     let message
-    if(typeof failure === 'object') {
+    if (typeof failure === 'object') {
       message = failure.$.message
-      if(failure.$?.type) {
-        message = failure.$.type + ": "+ message
+      if (failure.$?.type) {
+        message = failure.$.type + ': ' + message
       }
     }
     return {
