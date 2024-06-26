@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+<testsuite package="org.eslint" time="0" tests="1" errors="0" name="test.jsx">
+<testcase time="0" name="test.jsx" classname="test" />
+</testsuite>
+</testsuites>

@@ -1320,7 +1320,7 @@ class JestJunitParser {
                 const sr = new test_results_1.TestSuiteResult(name, this.getGroups(ts), time);
                 return sr;
             });
-        const time = parseFloat(junit.testsuites.$.time) * 1000;
+        const time = junit.testsuites.$ && parseFloat(junit.testsuites.$.time) * 1000;
         return new test_results_1.TestRunResult(path, suites, time);
     }
     getGroups(suite) {
