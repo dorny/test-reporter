@@ -1,7 +1,7 @@
-[![Tests passed successfully](https://img.shields.io/badge/tests-833%20passed%2C%206%20skipped-success)](#test-report)
+[![Tests passed successfully](https://img.shields.io/badge/tests-833%20passed%2C%206%20skipped-success)](#user-content-test-report)
 <details><summary>Expand for details</summary>
  
-# <a name="test-report"></a> Tests report
+# <a name="user-content-test-report"></a> Tests report
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
 |fixtures/external/mocha/mocha-test-results.json|833 ✅||6 ⚪|6s|

@@ -138,7 +138,7 @@ function getBadge(passed: number, failed: number, skipped: number, options: Repo
   }
   const hint = failed > 0 ? 'Tests failed' : 'Tests passed successfully'
   const uri = encodeURIComponent(`${options.badgeTitle}-${message}-${color}`)
-  return `[![${hint}](https://img.shields.io/badge/${uri})](#test-report)`
+  return `[![${hint}](https://img.shields.io/badge/${uri})](#user-content-test-report)`
 }
 
 function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): string[] {
@@ -149,7 +149,7 @@ function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): s
     sections.push(` `)
   }
 
-  sections.push('# <a name="test-report"></a> Tests report')
+  sections.push('# <a name="user-content-test-report"></a> Tests report')
 
   if (testRuns.length > 0 || options.onlySummary) {
     const tableData = testRuns
