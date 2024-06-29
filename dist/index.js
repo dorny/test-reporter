@@ -1845,7 +1845,7 @@ function getBadge(passed, failed, skipped, options) {
     }
     const hint = failed > 0 ? 'Tests failed' : 'Tests passed successfully';
     const uri = encodeURIComponent(`${options.badgeTitle}-${message}-${color}`);
-    return `![${hint}](https://img.shields.io/badge/${uri})`;
+    return `[![${hint}](https://img.shields.io/badge/${uri})](#user-content-test-report)`;
 }
 function getTestRunsReport(testRuns, options) {
     const sections = [];
@@ -1854,6 +1854,7 @@ function getTestRunsReport(testRuns, options) {
         sections.push(`<details><summary>Expand for details</summary>`);
         sections.push(` `);
     }
+    sections.push('# <a name="user-content-test-report"></a> Tests report');
     if (testRuns.length > 0 || options.onlySummary) {
         const tableData = testRuns
             .filter(tr => tr.passed > 0 || tr.failed > 0 || tr.skipped > 0)
