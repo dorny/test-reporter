@@ -13,7 +13,7 @@ jobs:
     name: Build & Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v4
       - run: node --version
       - run: npm ci
       - run: npm run build
