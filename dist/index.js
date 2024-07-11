@@ -250,6 +250,7 @@ const rspec_json_parser_1 = __nccwpck_require__(406);
 const swift_xunit_parser_1 = __nccwpck_require__(5366);
 const path_utils_1 = __nccwpck_require__(4070);
 const github_utils_1 = __nccwpck_require__(3522);
+const apex_json_parsers_1 = __nccwpck_require__(3754);
 async function main() {
     try {
         const testReporter = new TestReporter();
@@ -440,12 +441,75 @@ class TestReporter {
                 return new rspec_json_parser_1.RspecJsonParser(options);
             case 'swift-xunit':
                 return new swift_xunit_parser_1.SwiftXunitParser(options);
+            case 'apex-json':
+                return new apex_json_parsers_1.ApexJsonParser(options);
             default:
                 throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`);
         }
     }
 }
 main();
+
+
+/***/ }),
+
+/***/ 3754:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ApexJsonParser = void 0;
+const test_results_1 = __nccwpck_require__(2768);
+class ApexJsonParser {
+    options;
+    constructor(options) {
+        this.options = options;
+    }
+    async parse(path, content) {
+        const report = await this.getReport(path, content);
+        return this.getTestRunResult(path, report);
+    }
+    async getReport(path, content) {
+        try {
+            return JSON.parse(content);
+        }
+        catch (e) {
+            throw new Error(`Invalid JSON at ${path}\n\n${e}`);
+        }
+    }
+    getTestRunResult(path, report) {
+        const time = report.result.summary.testTotalTime;
+        const timeAsNumber = Number.parseInt(time, 10);
+        // group tests by test.ApexClass.Name
+        const groupsMap = report.result.tests.reduce((map, test) => {
+            const key = test.ApexClass.Name;
+            const testResults = map.get(key) || [];
+            let result = 'skipped';
+            if (test.Outcome === 'Pass') {
+                result = 'success';
+            }
+            else if (test.Outcome === 'Fail') {
+                result = 'failed';
+            }
+            const testCaseError = test.Message ? { details: test.Message } : undefined;
+            const testResult = new test_results_1.TestCaseResult(test.MethodName, result, test.RunTime, testCaseError);
+            testResults.push(testResult);
+            map.set(key, testResults);
+            return map;
+        }, new Map());
+        const groups = [];
+        for (const [name, tests] of groupsMap) {
+            const suite = new test_results_1.TestGroupResult(name, tests);
+            groups.push(suite);
+        }
+        const coverageString = report.result.summary.testRunCoverage;
+        const coverage = coverageString ? Number.parseInt(coverageString.replace('%', ''), 10) : undefined;
+        const suite = new test_results_1.TestSuiteResult('Apex Tests', groups, timeAsNumber, coverage);
+        return new test_results_1.TestRunResult(path, [suite], timeAsNumber, coverage);
+    }
+}
+exports.ApexJsonParser = ApexJsonParser;
 
 
 /***/ }),
@@ -1854,6 +1918,13 @@ function getTestRunsReport(testRuns, options) {
         sections.push(`<details><summary>Expand for details</summary>`);
         sections.push(` `);
     }
+    const shouldShowCoverage = testRuns.some(tr => tr.coverage !== undefined);
+    const columnNames = ['Report', 'Passed', 'Failed', 'Skipped', 'Time'];
+    const columnAligns = [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right];
+    if (shouldShowCoverage) {
+        columnNames.push('Coverage');
+        columnAligns.push(markdown_utils_1.Align.Right);
+    }
     if (testRuns.length > 0 || options.onlySummary) {
         const tableData = testRuns
             .filter(tr => tr.passed > 0 || tr.failed > 0 || tr.skipped > 0)
@@ -1863,9 +1934,13 @@ function getTestRunsReport(testRuns, options) {
             const passed = tr.passed > 0 ? `${tr.passed} ${markdown_utils_1.Icon.success}` : '';
             const failed = tr.failed > 0 ? `${tr.failed} ${markdown_utils_1.Icon.fail}` : '';
             const skipped = tr.skipped > 0 ? `${tr.skipped} ${markdown_utils_1.Icon.skip}` : '';
+            if (shouldShowCoverage) {
+                const coverage = tr.coverage !== undefined ? tr.coverage + '%' : '';
+                return [name, passed, failed, skipped, time, coverage];
+            }
             return [name, passed, failed, skipped, time];
         });
-        const resultsTable = (0, markdown_utils_1.table)(['Report', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...tableData);
+        const resultsTable = (0, markdown_utils_1.table)(columnNames, columnAligns, ...tableData);
         sections.push(resultsTable);
     }
     if (options.onlySummary === false) {
@@ -1891,7 +1966,14 @@ function getSuitesReport(tr, runIndex, options) {
             : 'No tests found';
         sections.push(headingLine2);
         if (suites.length > 0) {
-            const suitesTable = (0, markdown_utils_1.table)(['Test suite', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...suites.map((s, suiteIndex) => {
+            const shouldShowCoverage = suites.some(s => s.coverage !== undefined);
+            const columnNames = ['Test suite', 'Passed', 'Failed', 'Skipped', 'Time'];
+            const columnAligns = [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right];
+            if (shouldShowCoverage) {
+                columnNames.push('Coverage');
+                columnAligns.push(markdown_utils_1.Align.Right);
+            }
+            const suitesTable = (0, markdown_utils_1.table)(columnNames, columnAligns, ...suites.map((s, suiteIndex) => {
                 const tsTime = (0, markdown_utils_1.formatTime)(s.time);
                 const tsName = s.name;
                 const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed');
@@ -1900,6 +1982,10 @@ function getSuitesReport(tr, runIndex, options) {
                 const passed = s.passed > 0 ? `${s.passed} ${markdown_utils_1.Icon.success}` : '';
                 const failed = s.failed > 0 ? `${s.failed} ${markdown_utils_1.Icon.fail}` : '';
                 const skipped = s.skipped > 0 ? `${s.skipped} ${markdown_utils_1.Icon.skip}` : '';
+                const coverage = s.coverage !== undefined ? s.coverage + '%' : '';
+                if (shouldShowCoverage) {
+                    return [tsNameLink, passed, failed, skipped, tsTime, coverage];
+                }
                 return [tsNameLink, passed, failed, skipped, tsTime];
             }));
             sections.push(suitesTable);
@@ -1985,10 +2071,12 @@ class TestRunResult {
     path;
     suites;
     totalTime;
-    constructor(path, suites, totalTime) {
+    coveragePercentage;
+    constructor(path, suites, totalTime, coveragePercentage) {
         this.path = path;
         this.suites = suites;
         this.totalTime = totalTime;
+        this.coveragePercentage = coveragePercentage;
     }
     get tests() {
         return this.suites.reduce((sum, g) => sum + g.tests, 0);
@@ -2004,6 +2092,9 @@ class TestRunResult {
     }
     get time() {
         return this.totalTime ?? this.suites.reduce((sum, g) => sum + g.time, 0);
+    }
+    get coverage() {
+        return this.coveragePercentage;
     }
     get result() {
         return this.suites.some(t => t.result === 'failed') ? 'failed' : 'success';
@@ -2025,10 +2116,12 @@ class TestSuiteResult {
     name;
     groups;
     totalTime;
-    constructor(name, groups, totalTime) {
+    coveragePercentage;
+    constructor(name, groups, totalTime, coveragePercentage) {
         this.name = name;
         this.groups = groups;
         this.totalTime = totalTime;
+        this.coveragePercentage = coveragePercentage;
     }
     get tests() {
         return this.groups.reduce((sum, g) => sum + g.tests.length, 0);
@@ -2044,6 +2137,9 @@ class TestSuiteResult {
     }
     get time() {
         return this.totalTime ?? this.groups.reduce((sum, g) => sum + g.time, 0);
+    }
+    get coverage() {
+        return this.coveragePercentage;
     }
     get result() {
         return this.groups.some(t => t.result === 'failed') ? 'failed' : 'success';
