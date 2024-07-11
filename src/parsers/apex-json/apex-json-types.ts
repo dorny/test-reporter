@@ -1,4 +1,4 @@
-export interface RootObject {
+export interface ApexTestReport {
   result: Result
 }
 
@@ -55,7 +55,7 @@ export interface Test {
   Id: string
   QueueItemId: string
   StackTrace: null
-  Message: null
+  Message: string | null
   AsyncApexJobId: string
   MethodName: string
   Outcome: string

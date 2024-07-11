@@ -2,12 +2,12 @@
     "result": {
       "summary": {
         "failRate": "0%",
-        "failing": 0,
+        "failing": 1,
         "hostname": "https://scratch.my.salesforce.com",
         "orgId": "00DOy000005q2CXMAY",
         "outcome": "Passed",
         "passRate": "100%",
-        "passing": 736,
+        "passing": 735,
         "skipped": 0,
         "testRunId": "707Oy00000Tp86T",
         "testStartTime": "2024-07-11T16:27:20.000Z",
@@ -16,17 +16,19 @@
         "username": "test@example.com",
         "commandTime": "474 ms",
         "testExecutionTime": "26480 ms",
-        "testTotalTime": "26480 ms"
+        "testTotalTime": "26480 ms",
+        "orgWideCoverage": "81%",
+        "testRunCoverage": "85%"
       },
       "tests": [
         {
           "Id": "07MOy000007kEKWMA2",
           "QueueItemId": "709Oy000006AA2fIAG",
           "StackTrace": null,
-          "Message": null,
+          "Message": "Validation Errors While Saving Record(s)",
           "AsyncApexJobId": "707Oy00000Tp86TIAR",
           "MethodName": "testSetup",
-          "Outcome": "Pass",
+          "Outcome": "Fail",
           "ApexClass": {
             "Id": "01pOy000002qAfKIAU",
             "Name": "fflib_SecurityUtilsTest",

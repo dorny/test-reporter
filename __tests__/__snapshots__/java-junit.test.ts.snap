@@ -2,9 +2,11 @@
 
 exports[`java-junit tests report from apache/pulsar single suite test results matches snapshot 1`] = `
 TestRunResult {
+  "coveragePercentage": undefined,
   "path": "fixtures/external/java/TEST-org.apache.pulsar.AddMissingPatchVersionTest.xml",
   "suites": [
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -61,9 +63,11 @@ at java.lang.Thread.run(Thread.java:748)
 
 exports[`java-junit tests report from apache/pulsar test results matches snapshot 1`] = `
 TestRunResult {
+  "coveragePercentage": undefined,
   "path": "fixtures/external/java/pulsar-test-report.xml",
   "suites": [
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -114,6 +118,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 116,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -179,6 +184,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 591.0000000000001,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -202,6 +208,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 96,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -237,6 +244,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 9184.999999999998,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -290,6 +298,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 18584.000000000004,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -313,6 +322,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1389,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -336,6 +346,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 185,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -353,6 +364,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 2384,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -388,6 +400,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1930,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -411,6 +424,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 33168,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -434,6 +448,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 32357,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -505,6 +520,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 75271.99999999999,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -528,6 +544,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 13704,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -545,6 +562,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 15709,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -604,6 +622,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 15749.999999999998,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -633,6 +652,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 7398.000000000001,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -650,6 +670,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 15,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -697,6 +718,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 946.0000000000001,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -726,6 +748,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 13830,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -869,6 +892,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 40154,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -928,6 +952,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 114278,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -951,6 +976,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 49,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -980,6 +1006,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 21163.999999999996,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -997,6 +1024,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 281,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1014,6 +1042,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 285,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1115,6 +1144,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 83145.00000000001,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1138,6 +1168,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1806,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1155,6 +1186,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 40,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1172,6 +1204,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1043,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1195,6 +1228,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 29646,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1224,6 +1258,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 28,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1259,6 +1294,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 93,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1312,6 +1348,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 80.99999999999999,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1329,6 +1366,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 14,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1352,6 +1390,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 37577,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1381,6 +1420,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 49067.00000000001,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1410,6 +1450,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 95,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1427,6 +1468,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1151,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1456,6 +1498,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 57293.00000000001,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1485,6 +1528,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 37.00000000000001,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1550,6 +1594,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 27441.999999999996,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1585,6 +1630,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 8297,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1620,6 +1666,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 30,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1655,6 +1702,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 13732,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1696,6 +1744,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 43856,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1797,6 +1846,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 148203,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1814,6 +1864,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1385,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1831,6 +1882,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 549,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1866,6 +1918,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 12164,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1919,6 +1972,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 3522.0000000000005,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1936,6 +1990,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 129,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1965,6 +2020,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 23461,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1994,6 +2050,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 7675.000000000001,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -2011,6 +2068,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 183,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -2040,6 +2098,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 46690,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -2105,6 +2164,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 73214,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -2128,6 +2188,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 5484.999999999999,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -2187,6 +2248,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 35143,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -2390,6 +2452,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 10661.999999999998,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -2467,6 +2530,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 62620,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -2508,6 +2572,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 33504,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -2537,6 +2602,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 15314,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -2554,6 +2620,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 10,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -2571,6 +2638,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1937,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -2612,6 +2680,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 17976,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -2635,6 +2704,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 4053,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -2676,6 +2746,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 13659,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -2789,6 +2860,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 133445.00000000003,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -2842,6 +2914,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 43828,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -2937,6 +3010,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 15712,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -2954,6 +3028,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 316,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -2971,6 +3046,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 30,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3018,6 +3094,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 223.00000000000003,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3299,6 +3376,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 737.0000000000005,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3346,6 +3424,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 5403.000000000001,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3381,6 +3460,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1530,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3404,6 +3484,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 161,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3451,6 +3532,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 64,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3492,6 +3574,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 98.99999999999999,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3515,6 +3598,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 207,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3550,6 +3634,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 48,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3585,6 +3670,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 529,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3722,6 +3808,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 237.00000000000006,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3739,6 +3826,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 15,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3756,6 +3844,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 19,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3803,6 +3892,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 64,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3820,6 +3910,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 12,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3837,6 +3928,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 9,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3854,6 +3946,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 8,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3877,6 +3970,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 948,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3894,6 +3988,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 48,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3911,6 +4006,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 76,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3928,6 +4024,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 45,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3975,6 +4072,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 216,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3992,6 +4090,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 12,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4009,6 +4108,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 19,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4026,6 +4126,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 29,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4049,6 +4150,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 51,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4084,6 +4186,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1386,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4107,6 +4210,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 37,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4130,6 +4234,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 30,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4153,6 +4258,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 45,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4170,6 +4276,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 8,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4187,6 +4294,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 22,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4204,6 +4312,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4257,6 +4366,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 265,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4310,6 +4420,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 309.00000000000006,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4333,6 +4444,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 4999.000000000001,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4386,6 +4498,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 2812.0000000000005,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4433,6 +4546,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 3232.9999999999995,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4450,6 +4564,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 3690,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4467,6 +4582,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 82,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4484,6 +4600,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 242,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4531,6 +4648,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 6161.000000000001,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4608,6 +4726,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 7199.999999999998,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4691,6 +4810,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 172,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4708,6 +4828,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 39,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4731,6 +4852,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 13.000000000000002,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4754,6 +4876,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 63,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4843,6 +4966,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 28351.000000000004,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4944,6 +5068,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1519.0000000000002,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5027,6 +5152,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 9241,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5104,6 +5230,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 7114.999999999999,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5193,6 +5320,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1355.9999999999998,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5258,6 +5386,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 342,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5281,6 +5410,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 64,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5328,6 +5458,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 350,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5429,6 +5560,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 3092.9999999999995,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5458,6 +5590,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 238,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5499,6 +5632,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1549.0000000000002,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5516,6 +5650,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 4904,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5539,6 +5674,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 27527,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5568,6 +5704,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 42238,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5585,6 +5722,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 12012,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5602,6 +5740,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 30213,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5619,6 +5758,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 474,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5636,6 +5776,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 2159,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5653,6 +5794,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 10,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5670,6 +5812,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 125,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5687,6 +5830,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 2279,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5704,6 +5848,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 16696,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5721,6 +5866,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1792,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5738,6 +5884,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 511,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5755,6 +5902,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 31924,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5826,6 +5974,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1660,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5855,6 +6004,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 6701.000000000001,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5884,6 +6034,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 7220.000000000001,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5901,6 +6052,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 2568,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5942,6 +6094,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1345.9999999999998,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5959,6 +6112,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 10403,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5988,6 +6142,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 533,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -6035,6 +6190,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 2946.9999999999995,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -6058,6 +6214,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 414.00000000000006,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -6075,6 +6232,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 4,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -6092,6 +6250,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 2128,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -6181,6 +6340,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 32897,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -6198,6 +6358,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 2045,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -6227,6 +6388,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 8235,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -6250,6 +6412,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 113.99999999999999,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -6267,6 +6430,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 29041,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -6296,6 +6460,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 30859,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -6445,6 +6610,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 107437.00000000001,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -6468,6 +6634,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 40751.99999999999,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -6515,6 +6682,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 23,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -6556,6 +6724,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 36.00000000000001,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -6597,6 +6766,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 27,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -6626,6 +6796,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -6649,6 +6820,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 17,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -6684,6 +6856,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 49.99999999999999,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -6731,6 +6904,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 59,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -6766,6 +6940,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 28904.000000000004,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -6783,6 +6958,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 1263,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -6806,6 +6982,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 8943,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -6823,6 +7000,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 10821,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -6840,6 +7018,7 @@ at java.lang.Thread.run(Thread.java:748)
       "totalTime": 7280,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",

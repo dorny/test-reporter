@@ -149,6 +149,16 @@ function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): s
     sections.push(` `)
   }
 
+  const shouldShowCoverage = testRuns.some(tr => tr.coverage !== undefined)
+
+  const columnNames = ['Report', 'Passed', 'Failed', 'Skipped', 'Time']
+  const columnAligns = [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right]
+
+  if (shouldShowCoverage) {
+    columnNames.push('Coverage')
+    columnAligns.push(Align.Right)
+  }
+
   if (testRuns.length > 0 || options.onlySummary) {
     const tableData = testRuns
       .filter(tr => tr.passed > 0 || tr.failed > 0 || tr.skipped > 0)
@@ -158,14 +168,16 @@ function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): s
         const passed = tr.passed > 0 ? `${tr.passed} ${Icon.success}` : ''
         const failed = tr.failed > 0 ? `${tr.failed} ${Icon.fail}` : ''
         const skipped = tr.skipped > 0 ? `${tr.skipped} ${Icon.skip}` : ''
+
+        if (shouldShowCoverage) {
+          const coverage = tr.coverage !== undefined ? tr.coverage + '%' : ''
+          return [name, passed, failed, skipped, time, coverage]
+        }
+
         return [name, passed, failed, skipped, time]
       })
 
-    const resultsTable = table(
-      ['Report', 'Passed', 'Failed', 'Skipped', 'Time'],
-      [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right],
-      ...tableData
-    )
+    const resultsTable = table(columnNames, columnAligns, ...tableData)
     sections.push(resultsTable)
   }
 
@@ -198,9 +210,19 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
     sections.push(headingLine2)
 
     if (suites.length > 0) {
+      const shouldShowCoverage = suites.some(s => s.coverage !== undefined)
+
+      const columnNames = ['Test suite', 'Passed', 'Failed', 'Skipped', 'Time']
+      const columnAligns = [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right]
+
+      if (shouldShowCoverage) {
+        columnNames.push('Coverage')
+        columnAligns.push(Align.Right)
+      }
+
       const suitesTable = table(
-        ['Test suite', 'Passed', 'Failed', 'Skipped', 'Time'],
-        [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right],
+        columnNames,
+        columnAligns,
         ...suites.map((s, suiteIndex) => {
           const tsTime = formatTime(s.time)
           const tsName = s.name
@@ -210,6 +232,13 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
           const passed = s.passed > 0 ? `${s.passed} ${Icon.success}` : ''
           const failed = s.failed > 0 ? `${s.failed} ${Icon.fail}` : ''
           const skipped = s.skipped > 0 ? `${s.skipped} ${Icon.skip}` : ''
+
+          const coverage = s.coverage !== undefined ? s.coverage + '%' : ''
+
+          if (shouldShowCoverage) {
+            return [tsNameLink, passed, failed, skipped, tsTime, coverage]
+          }
+
           return [tsNameLink, passed, failed, skipped, tsTime]
         })
       )
