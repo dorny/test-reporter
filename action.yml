@@ -1,6 +1,6 @@
 name: Test Reporter
 description: |
-  Shows test results in GitHub UI: .NET (xUnit, NUnit, MSTest), Dart, Flutter, Java (JUnit), JavaScript (JEST, Mocha)
+  Shows test results in GitHub UI: .NET (xUnit, NUnit, MSTest), Dart, Flutter, Java (JUnit), JavaScript (JEST, Mocha), Apex (Salesforce via json)
 author: Michal Dorner <dorner.michal@gmail.com>
 inputs:
   artifact:
@@ -90,6 +90,12 @@ inputs:
     description: GitHub Access Token
     required: false
     default: ${{ github.token }}
+  create-pr-comment:
+    description: |
+      Allows you to create a comment on the pull request with the test results.
+      If enabled, the comment will contain a summary of the test results
+    default: 'false'
+    required: false
 outputs:
   conclusion:
     description: |

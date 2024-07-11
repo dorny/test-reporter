@@ -279,6 +279,7 @@ class TestReporter {
     useActionsSummary = core.getInput('use-actions-summary', { required: false }) === 'true';
     badgeTitle = core.getInput('badge-title', { required: false });
     token = core.getInput('token', { required: true });
+    createPRComment = core.getInput('create-pr-comment', { required: false }) === 'true';
     octokit;
     context = (0, github_utils_1.getCheckRunContext)();
     constructor() {
@@ -418,6 +419,18 @@ class TestReporter {
             core.info(`Check run HTML: ${resp.data.html_url}`);
             core.setOutput('url', resp.data.url);
             core.setOutput('url_html', resp.data.html_url);
+            if (this.createPRComment) {
+                const { pull_request } = github.context.payload;
+                if (pull_request) {
+                    core.info('Attaching Test Summary as a comment to the PR');
+                    const comment = `## Test Summary\n\n${summary}`;
+                    await this.octokit.rest.issues.createComment({
+                        ...github.context.repo,
+                        issue_number: pull_request.number,
+                        body: comment
+                    });
+                }
+            }
         }
         return results;
     }

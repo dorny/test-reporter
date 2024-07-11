@@ -49,6 +49,7 @@ class TestReporter {
   readonly useActionsSummary = core.getInput('use-actions-summary', {required: false}) === 'true'
   readonly badgeTitle = core.getInput('badge-title', {required: false})
   readonly token = core.getInput('token', {required: true})
+  readonly createPRComment = core.getInput('create-pr-comment', {required: false}) === 'true'
   readonly octokit: InstanceType<typeof GitHub>
   readonly context = getCheckRunContext()
 
@@ -220,18 +221,20 @@ class TestReporter {
       core.setOutput('url', resp.data.url)
       core.setOutput('url_html', resp.data.html_url)
 
-      const {pull_request} = github.context.payload
+      if (this.createPRComment) {
+        const {pull_request} = github.context.payload
 
-      if (pull_request) {
-        core.info('Attaching Test Summary as a comment to the PR')
+        if (pull_request) {
+          core.info('Attaching Test Summary as a comment to the PR')
 
-        const comment = `## Test Summary\n\n${summary}`
+          const comment = `## Test Summary\n\n${summary}`
 
-        await this.octokit.rest.issues.createComment({
-          ...github.context.repo,
-          issue_number: pull_request.number,
-          body: comment
-        })
+          await this.octokit.rest.issues.createComment({
+            ...github.context.repo,
+            issue_number: pull_request.number,
+            body: comment
+          })
+        }
       }
     }
 
