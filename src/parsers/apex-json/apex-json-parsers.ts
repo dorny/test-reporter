@@ -1,5 +1,12 @@
 import {ParseOptions, TestParser} from '../../test-parser'
-import {TestCaseError, TestCaseResult, TestExecutionResult, TestGroupResult, TestRunResult, TestSuiteResult} from '../../test-results'
+import {
+  TestCaseError,
+  TestCaseResult,
+  TestExecutionResult,
+  TestGroupResult,
+  TestRunResult,
+  TestSuiteResult
+} from '../../test-results'
 import {ApexTestReport} from './apex-json-types'
 
 export class ApexJsonParser implements TestParser {
