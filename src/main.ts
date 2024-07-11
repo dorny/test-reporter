@@ -219,6 +219,20 @@ class TestReporter {
       core.info(`Check run HTML: ${resp.data.html_url}`)
       core.setOutput('url', resp.data.url)
       core.setOutput('url_html', resp.data.html_url)
+
+      const {pull_request} = github.context.payload
+
+      if (pull_request) {
+        core.info('Attaching Test Summary as a comment to the PR')
+
+        const comment = `## Test Summary\n\n${summary}`
+
+        await this.octokit.rest.issues.createComment({
+          ...github.context.repo,
+          issue_number: pull_request.number,
+          body: comment
+        })
+      }
     }
 
     return results
