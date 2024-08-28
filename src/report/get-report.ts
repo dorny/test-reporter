@@ -149,21 +149,21 @@ function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): s
     sections.push(` `)
   }
 
-  if (testRuns.length > 0 || options.onlySummary) {
-    const tableData = testRuns
-      .filter(tr => tr.passed > 0 || tr.failed > 0 || tr.skipped > 0)
-      .map(tr => {
-        const time = formatTime(tr.time)
-        const name = tr.path
-        const passed = tr.passed > 0 ? `${tr.passed} ${Icon.success}` : ''
-        const failed = tr.failed > 0 ? `${tr.failed} ${Icon.fail}` : ''
-        const skipped = tr.skipped > 0 ? `${tr.skipped} ${Icon.skip}` : ''
-        return [name, passed, failed, skipped, time]
-      })
+  if (testRuns.length > 1 || options.onlySummary) {
+    const tableData = testRuns.map((tr, runIndex) => {
+      const time = formatTime(tr.time)
+      const name = tr.path
+      const addr = options.baseUrl + makeRunSlug(runIndex).link
+      const nameLink = link(name, addr)
+      const passed = tr.passed > 0 ? `${tr.passed}${Icon.success}` : ''
+      const failed = tr.failed > 0 ? `${tr.failed}${Icon.fail}` : ''
+      const skipped = tr.skipped > 0 ? `${tr.skipped}${Icon.skip}` : ''
+      return [nameLink, passed, failed, skipped, time, addr, options.baseUrl]
+    })
 
     const resultsTable = table(
-      ['Report', 'Passed', 'Failed', 'Skipped', 'Time'],
-      [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right],
+      ['Report', 'Passed', 'Failed', 'Skipped', 'Time', 'Addr', 'Base'],
+      [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right, Align.Right, Align.Right],
       ...tableData
     )
     sections.push(resultsTable)
@@ -204,9 +204,9 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
         ...suites.map((s, suiteIndex) => {
           const tsTime = formatTime(s.time)
           const tsName = s.name
-          const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed')
+//        const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed')
           const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex).link
-          const tsNameLink = skipLink ? tsName : link(tsName, tsAddr)
+          const tsNameLink = link(tsName, tsAddr)
           const passed = s.passed > 0 ? `${s.passed} ${Icon.success}` : ''
           const failed = s.failed > 0 ? `${s.failed} ${Icon.fail}` : ''
           const skipped = s.skipped > 0 ? `${s.skipped} ${Icon.skip}` : ''
@@ -271,12 +271,12 @@ function getTestsReport(ts: TestSuiteResult, runIndex: number, suiteIndex: numbe
 
 function makeRunSlug(runIndex: number): {id: string; link: string} {
   // use prefix to avoid slug conflicts after escaping the paths
-  return slug(`r${runIndex}`)
+  return slug(`user-content-r${runIndex}`)
 }
 
 function makeSuiteSlug(runIndex: number, suiteIndex: number): {id: string; link: string} {
   // use prefix to avoid slug conflicts after escaping the paths
-  return slug(`r${runIndex}s${suiteIndex}`)
+  return slug(`user-content-r${runIndex}s${suiteIndex}`)
 }
 
 function getResultIcon(result: TestExecutionResult): string {
