@@ -310,13 +310,9 @@ Configuration of `uniqueOutputName`, `suiteNameTemplate`, `classNameTemplate`, `
 You can use the following example configuration in `package.json`:
 ```json
 "scripts": {
-  "test": "mocha --reporter json > test-results.json"
+  "test": "mocha --reporter json --reporter-option output=test-results.json"
 }
 ```
-
-Test processing might fail if any of your tests write anything on standard output.
-Mocha, unfortunately, doesn't have the option to store `json` output directly to the file, and we have to rely on redirecting its standard output.
-There is a work in progress to fix it: [mocha#4607](https://github.com/mochajs/mocha/pull/4607)
 </details>
 
 <details>
