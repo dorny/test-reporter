@@ -1,6 +1,7 @@
-![Tests passed successfully](https://img.shields.io/badge/tests-1%20passed-success)
+[![Tests passed successfully](https://img.shields.io/badge/tests-1%20passed-success)](#user-content-test-report)
 <details><summary>Expand for details</summary>
  
+# <a name="user-content-test-report"></a> Tests report
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
 |fixtures/external/jest/jest-react-component-test-results.xml|1 ✅|||1000ms|
