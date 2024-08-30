@@ -2,9 +2,11 @@
 
 exports[`mocha-json tests report from ./reports/mocha-json test results matches snapshot 1`] = `
 TestRunResult {
+  "coveragePercentage": undefined,
   "path": "fixtures/mocha-json.json",
   "suites": [
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Test 1",
@@ -78,6 +80,7 @@ false !== true
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -114,9 +117,11 @@ false !== true
 
 exports[`mocha-json tests report from mochajs/mocha test results matches snapshot 1`] = `
 TestRunResult {
+  "coveragePercentage": undefined,
   "path": "fixtures/external/mocha/mocha-test-results.json",
   "suites": [
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "class BufferedWorkerPool constructor",
@@ -267,6 +272,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "cli/config findConfig()",
@@ -378,6 +384,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "node-flags impliesNoTimeouts()",
@@ -1044,6 +1051,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "options loadOptions() "extension" handling when user does not supply "extension" option",
@@ -1366,6 +1374,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "helpers list() when given a comma-delimited string",
@@ -1461,6 +1470,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "command run builder array type",
@@ -1727,6 +1737,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Mocha instance method addFile()",
@@ -1962,6 +1973,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "parallel-buffered-runner ParallelBufferedRunner constructor",
@@ -2162,6 +2174,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "ParallelBuffered constructor",
@@ -2224,6 +2237,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "serializer function deserialize when passed a non-object value",
@@ -2635,6 +2649,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "stackTraceFilter() on browser",
@@ -2692,6 +2707,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "utils function canonicalType()",
@@ -2743,6 +2759,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "worker when run as main process",
@@ -2894,6 +2911,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Context nested",
@@ -2978,6 +2996,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "durations when fast",
@@ -3017,6 +3036,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Errors createForbiddenExclusivityError() when Mocha instance is not running in a worker process",
@@ -3146,6 +3166,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "global leaks",
@@ -3181,6 +3202,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Mocha .grep()",
@@ -3255,6 +3277,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "async hooks",
@@ -3284,6 +3307,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "serial nested",
@@ -3324,6 +3348,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "serial hooks",
@@ -3353,6 +3378,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "hook timeout",
@@ -3370,6 +3396,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Hook error",
@@ -3410,6 +3437,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Mocha constructor",
@@ -4517,6 +4545,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "overspecified asynchronous resolution method",
@@ -4534,6 +4563,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "parseQuery()",
@@ -4557,6 +4587,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "plugin module class PluginLoader constructor when passed custom plugins",
@@ -4985,6 +5016,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "using imported describe",
@@ -5002,6 +5034,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "root",
@@ -5019,6 +5052,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Runnable(title, fn) .run(fn) if async",
@@ -5570,6 +5604,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Runner instance method _uncaught() when called with a non-Runner context",
@@ -6218,6 +6253,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Suite instance method addSuite()",
@@ -6731,6 +6767,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Test .clone()",
@@ -6847,6 +6884,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "a test that throws non-extensible",
@@ -6922,6 +6960,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "timeouts",
@@ -7011,6 +7050,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "lib/utils canonicalType()",

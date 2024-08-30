@@ -1,0 +1,25 @@
+{
+    "result": {
+      "summary": {
+        "failRate": "0%",
+        "failing": 0,
+        "hostname": "https://scratch.my.salesforce.com",
+        "orgId": "0000000000000",
+        "outcome": "Passed",
+        "passRate": "0%",
+        "passing": 0,
+        "skipped": 0,
+        "testRunId": "000000000000",
+        "testStartTime": "2024-07-11T15:21:00.000Z",
+        "testsRan": 0,
+        "userId": "000000000000000",
+        "username": "test@example.com",
+        "commandTime": "357 ms",
+        "testExecutionTime": "1000 ms",
+        "testTotalTime": "1000 ms",
+        "orgWideCoverage": "0%",
+        "testRunCoverage": "0%"
+      },
+      "tests": []
+    }
+}

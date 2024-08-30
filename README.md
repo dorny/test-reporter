@@ -19,6 +19,7 @@ This [Github Action](https://github.com/features/actions) displays test results 
 - Java / [JUnit](https://junit.org/)
 - JavaScript / [JEST](https://jestjs.io/) / [Mocha](https://mochajs.org/)
 - Swift / xUnit
+- Apex / [JSON](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_testing.htm)
 
 For more information see [Supported formats](#supported-formats) section.
 
@@ -339,6 +340,16 @@ Please update Mocha to version [v9.1.0](https://github.com/mochajs/mocha/release
   <summary>swift-xunit (Experimental)</summary>
 
 Support for Swift test results in xUnit format is experimental - should work but it was not extensively tested.
+</details>
+
+<details>
+  <summary>apex-json (Experimental)</summary>
+
+Support for [Salesforce Apex](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_testing.htm)
+
+```bash
+sf apex test run --result-format json --wait 30 > test-results.json
+```
 </details>
 
 ## GitHub limitations

@@ -2,9 +2,11 @@
 
 exports[`jest-junit tests parsing ESLint report without timing information works - PR #134 1`] = `
 TestRunResult {
+  "coveragePercentage": undefined,
   "path": "fixtures/jest-junit-eslint.xml",
   "suites": [
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "test",
@@ -28,9 +30,11 @@ TestRunResult {
 
 exports[`jest-junit tests report from #235 testing react components named <ComponentName /> 1`] = `
 TestRunResult {
+  "coveragePercentage": undefined,
   "path": "fixtures/external/jest/jest-react-component-test-results.xml",
   "suites": [
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -54,9 +58,11 @@ TestRunResult {
 
 exports[`jest-junit tests report from ./reports/jest test results matches snapshot 1`] = `
 TestRunResult {
+  "coveragePercentage": undefined,
   "path": "fixtures/jest-junit.xml",
   "suites": [
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Test 1",
@@ -138,6 +144,7 @@ Received: false
       "totalTime": 486,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -184,9 +191,11 @@ Received: false
 
 exports[`jest-junit tests report from facebook/jest test results matches snapshot 1`] = `
 TestRunResult {
+  "coveragePercentage": undefined,
   "path": "fixtures/external/jest/jest-test-results.xml",
   "suites": [
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1111,6 +1120,7 @@ TestRunResult {
       "totalTime": 798,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Repl cli",
@@ -1128,6 +1138,7 @@ TestRunResult {
       "totalTime": 1172,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "chalk",
@@ -1700,6 +1711,7 @@ TestRunResult {
       "totalTime": 1188,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1717,6 +1729,7 @@ TestRunResult {
       "totalTime": 672,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "isCoreModule",
@@ -1849,6 +1862,7 @@ TestRunResult {
       "totalTime": 1308,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "toEqual",
@@ -1872,6 +1886,7 @@ TestRunResult {
       "totalTime": 1062,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1907,6 +1922,7 @@ TestRunResult {
       "totalTime": 366,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1936,6 +1952,7 @@ TestRunResult {
       "totalTime": 135,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "generateEmptyCoverage",
@@ -1965,6 +1982,7 @@ TestRunResult {
       "totalTime": 1129,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -2204,6 +2222,7 @@ TestRunResult {
       "totalTime": 207,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "onRunComplete",
@@ -2292,6 +2311,7 @@ TestRunResult {
       "totalTime": 397,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -2435,6 +2455,7 @@ TestRunResult {
       "totalTime": 1149,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -2452,6 +2473,7 @@ TestRunResult {
       "totalTime": 76,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -2493,6 +2515,7 @@ TestRunResult {
       "totalTime": 57,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "toThrowError",
@@ -3247,6 +3270,7 @@ TestRunResult {
       "totalTime": 257,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3396,6 +3420,7 @@ TestRunResult {
       "totalTime": 283,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "defaults",
@@ -3477,6 +3502,7 @@ TestRunResult {
       "totalTime": 98,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3500,6 +3526,7 @@ TestRunResult {
       "totalTime": 199,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3552,6 +3579,7 @@ TestRunResult {
       "totalTime": 371,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Resolve config path .js",
@@ -3643,6 +3671,7 @@ TestRunResult {
       "totalTime": 183,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "groupTestsBySuites",
@@ -3720,6 +3749,7 @@ TestRunResult {
       "totalTime": 425,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -3902,6 +3932,7 @@ TestRunResult {
       "totalTime": 214,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4026,6 +4057,7 @@ TestRunResult {
       "totalTime": 166,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Runtime CLI",
@@ -4061,6 +4093,7 @@ TestRunResult {
       "totalTime": 4094.0000000000005,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4132,6 +4165,7 @@ TestRunResult {
       "totalTime": 99,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "getCallsite",
@@ -4161,6 +4195,7 @@ TestRunResult {
       "totalTime": 86,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4196,6 +4231,7 @@ TestRunResult {
       "totalTime": 53,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4225,6 +4261,7 @@ TestRunResult {
       "totalTime": 91,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "docblock",
@@ -4452,6 +4489,7 @@ TestRunResult {
       "totalTime": 177,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "dedentLines non-null",
@@ -4570,6 +4608,7 @@ TestRunResult {
       "totalTime": 94,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "getMaxWorkers",
@@ -4628,6 +4667,7 @@ TestRunResult {
       "totalTime": 67,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "wrapAnsiString()",
@@ -4709,6 +4749,7 @@ TestRunResult {
       "totalTime": 85,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4743,6 +4784,7 @@ TestRunResult {
       "totalTime": 481,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4760,6 +4802,7 @@ TestRunResult {
       "totalTime": 131,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "validate pattern function",
@@ -4795,6 +4838,7 @@ TestRunResult {
       "totalTime": 52,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "isBuiltinModule",
@@ -4830,6 +4874,7 @@ TestRunResult {
       "totalTime": 36,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4847,6 +4892,7 @@ TestRunResult {
       "totalTime": 533,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "replacePathSepForRegex() posix",
@@ -4911,6 +4957,7 @@ TestRunResult {
       "totalTime": 56,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -4982,6 +5029,7 @@ TestRunResult {
       "totalTime": 45,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "getWatermarks",
@@ -5005,6 +5053,7 @@ TestRunResult {
       "totalTime": 37,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5028,6 +5077,7 @@ TestRunResult {
       "totalTime": 148,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5063,6 +5113,7 @@ TestRunResult {
       "totalTime": 30,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "toEqual duck type Text",
@@ -5171,6 +5222,7 @@ TestRunResult {
       "totalTime": 99,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "NodeEnvironment",
@@ -5218,6 +5270,7 @@ TestRunResult {
       "totalTime": 184,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5247,6 +5300,7 @@ TestRunResult {
       "totalTime": 28,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5294,6 +5348,7 @@ TestRunResult {
       "totalTime": 83,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5329,6 +5384,7 @@ TestRunResult {
       "totalTime": 49,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "for multiline test name returns",
@@ -5421,6 +5477,7 @@ TestRunResult {
       "totalTime": 129,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "shouldInstrument should return true",
@@ -5587,6 +5644,7 @@ TestRunResult {
       "totalTime": 155,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "ScriptTransformer",
@@ -5730,6 +5788,7 @@ TestRunResult {
       "totalTime": 1660,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -5753,6 +5812,7 @@ TestRunResult {
       "totalTime": 2902,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "moduleMocker getMetadata",
@@ -6313,6 +6373,7 @@ TestRunResult {
       "totalTime": 509,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -6342,6 +6403,7 @@ TestRunResult {
       "totalTime": 3762,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Runtime requireModule",
@@ -6520,6 +6582,7 @@ TestRunResult {
       "totalTime": 2439,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Runtime jest.mock",
@@ -6560,6 +6623,7 @@ TestRunResult {
       "totalTime": 743,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "test/it error throwing",
@@ -6619,6 +6683,7 @@ TestRunResult {
       "totalTime": 300,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "BaseWorkerPool",
@@ -6701,6 +6766,7 @@ TestRunResult {
       "totalTime": 653,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -7443,6 +7509,7 @@ TestRunResult {
       "totalTime": 443,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Runtime requireModule",
@@ -7460,6 +7527,7 @@ TestRunResult {
       "totalTime": 584,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "JSDomEnvironment",
@@ -7483,6 +7551,7 @@ TestRunResult {
       "totalTime": 783,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "babel-plugin-jest-hoist",
@@ -7518,6 +7587,7 @@ TestRunResult {
       "totalTime": 347,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -7631,6 +7701,7 @@ TestRunResult {
       "totalTime": 184,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "jest-each .test",
@@ -8681,6 +8752,7 @@ TestRunResult {
       "totalTime": 192,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "jest-each .test",
@@ -10229,6 +10301,7 @@ TestRunResult {
       "totalTime": 483,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -10595,6 +10668,7 @@ TestRunResult {
       "totalTime": 325,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -10642,6 +10716,7 @@ TestRunResult {
       "totalTime": 5755,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "prettyFormat()",
@@ -11179,6 +11254,7 @@ TestRunResult {
       "totalTime": 219,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Farm",
@@ -11250,6 +11326,7 @@ TestRunResult {
       "totalTime": 158,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -11321,6 +11398,7 @@ TestRunResult {
       "totalTime": 120,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "queueRunner",
@@ -11368,6 +11446,7 @@ TestRunResult {
       "totalTime": 93,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -11469,6 +11548,7 @@ TestRunResult {
       "totalTime": 258,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -11540,6 +11620,7 @@ TestRunResult {
       "totalTime": 135,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -11563,6 +11644,7 @@ TestRunResult {
       "totalTime": 905,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "beforeEach hooks error throwing",
@@ -11781,6 +11863,7 @@ TestRunResult {
       "totalTime": 127,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Using V8 implementation",
@@ -11934,6 +12017,7 @@ TestRunResult {
       "totalTime": 158,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "CustomConsole assert",
@@ -12095,6 +12179,7 @@ TestRunResult {
       "totalTime": 171,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "CustomConsole log",
@@ -12289,6 +12374,7 @@ TestRunResult {
       "totalTime": 115,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "DOMCollection plugin for object properties",
@@ -12365,6 +12451,7 @@ TestRunResult {
       "totalTime": 64,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "test/it.todo error throwing",
@@ -12394,6 +12481,7 @@ TestRunResult {
       "totalTime": 81,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -12453,6 +12541,7 @@ TestRunResult {
       "totalTime": 251,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Suite",
@@ -12470,6 +12559,7 @@ TestRunResult {
       "totalTime": 84,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -12719,6 +12809,7 @@ TestRunResult {
       "totalTime": 137,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "ConvertAnsi plugin",
@@ -12766,6 +12857,7 @@ TestRunResult {
       "totalTime": 43,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "getConsoleOutput",
@@ -12849,6 +12941,7 @@ TestRunResult {
       "totalTime": 56,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "expectationResultFactory",
@@ -12902,6 +12995,7 @@ TestRunResult {
       "totalTime": 70,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "array .add",
@@ -12988,6 +13082,7 @@ TestRunResult {
       "totalTime": 44,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "pretty-format",
@@ -13177,6 +13272,7 @@ TestRunResult {
       "totalTime": 148,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "formatTestResults",
@@ -13194,6 +13290,7 @@ TestRunResult {
       "totalTime": 53,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -13253,6 +13350,7 @@ TestRunResult {
       "totalTime": 230,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "beforeEach hooks error throwing",
@@ -13471,6 +13569,7 @@ TestRunResult {
       "totalTime": 51,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Jasmine2Reporter",
@@ -13488,6 +13587,7 @@ TestRunResult {
       "totalTime": 107,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "test/it.todo error throwing",
@@ -13517,6 +13617,7 @@ TestRunResult {
       "totalTime": 27,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "test/it error throwing",
@@ -13564,6 +13665,7 @@ TestRunResult {
       "totalTime": 32,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "iterators",
@@ -13599,6 +13701,7 @@ TestRunResult {
       "totalTime": 43,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "pTimeout",
@@ -13628,6 +13731,7 @@ TestRunResult {
       "totalTime": 44,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -13645,6 +13749,7 @@ TestRunResult {
       "totalTime": 75,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "concurrent",
@@ -13674,6 +13779,7 @@ TestRunResult {
       "totalTime": 24,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -13691,6 +13797,7 @@ TestRunResult {
       "totalTime": 23,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "ReactElement Plugin",
@@ -13720,6 +13827,7 @@ TestRunResult {
       "totalTime": 64,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -13749,6 +13857,7 @@ TestRunResult {
       "totalTime": 48,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -13790,6 +13899,7 @@ TestRunResult {
       "totalTime": 63,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "SearchSource isTestFilePath",
@@ -13983,6 +14093,7 @@ TestRunResult {
       "totalTime": 2596,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -17668,6 +17779,7 @@ Is good for you.")",
       "totalTime": 862,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -17685,6 +17797,7 @@ Is good for you.")",
       "totalTime": 1665,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Watch mode flows",
@@ -18181,6 +18294,7 @@ Is good for you.")",
       "totalTime": 6755,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "transitive dependencies",
@@ -18228,6 +18342,7 @@ Is good for you.")",
       "totalTime": 2366,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Watch mode flows with changed files",
@@ -18245,6 +18360,7 @@ Is good for you.")",
       "totalTime": 1514,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "HasteMap",
@@ -18540,6 +18656,7 @@ Is good for you.")",
       "totalTime": 1145,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -18557,6 +18674,7 @@ Is good for you.")",
       "totalTime": 1873,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -18574,6 +18692,7 @@ Is good for you.")",
       "totalTime": 1407,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -18591,6 +18710,7 @@ Is good for you.")",
       "totalTime": 1744,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -18608,6 +18728,7 @@ Is good for you.")",
       "totalTime": 1863,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Snapshot",
@@ -18678,6 +18799,7 @@ Is good for you.")",
       "totalTime": 13899,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -18806,6 +18928,7 @@ Is good for you.")",
       "totalTime": 1223,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Runtime requireMock",
@@ -18895,6 +19018,7 @@ Is good for you.")",
       "totalTime": 962,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Runtime",
@@ -18930,6 +19054,7 @@ Is good for you.")",
       "totalTime": 1088,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Runtime require.resolve",
@@ -18976,6 +19101,7 @@ Is good for you.")",
       "totalTime": 707,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -19023,6 +19149,7 @@ Is good for you.")",
       "totalTime": 986,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "async jasmine with pending during test",
@@ -19046,6 +19173,7 @@ Is good for you.")",
       "totalTime": 72,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -19105,6 +19233,7 @@ Is good for you.")",
       "totalTime": 520,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -19122,6 +19251,7 @@ Is good for you.")",
       "totalTime": 1527,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Runtime requireActual",
@@ -19145,6 +19275,7 @@ Is good for you.")",
       "totalTime": 478,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Runtime require.cache",
@@ -19168,6 +19299,7 @@ Is good for you.")",
       "totalTime": 454,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Runtime",
@@ -19203,6 +19335,7 @@ Is good for you.")",
       "totalTime": 525,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Runtime internalModule",
@@ -19238,6 +19371,7 @@ Is good for you.")",
       "totalTime": 727,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "check",
@@ -19356,6 +19490,7 @@ Is good for you.")",
       "totalTime": 345,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Runtime jest.spyOn",
@@ -19384,6 +19519,7 @@ Is good for you.")",
       "totalTime": 521,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -19461,6 +19597,7 @@ Is good for you.")",
       "totalTime": 666,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -19543,6 +19680,7 @@ Is good for you.")",
       "totalTime": 205,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "different types",
@@ -20376,6 +20514,7 @@ Is good for you.")",
       "totalTime": 625,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Watch mode flows",
@@ -20393,6 +20532,7 @@ Is good for you.")",
       "totalTime": 246,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "toBeCalled",
@@ -22017,6 +22157,7 @@ Is good for you.")",
       "totalTime": 395,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -22102,6 +22243,7 @@ Is good for you.")",
       "totalTime": 9045,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "stringify()",
@@ -22436,6 +22578,7 @@ Is good for you.")",
       "totalTime": 391,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Watch mode flows",
@@ -22459,6 +22602,7 @@ Is good for you.")",
       "totalTime": 165,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Runtime createMockFromModule",
@@ -22493,6 +22637,7 @@ Is good for you.")",
       "totalTime": 606,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Runtime requireModule",
@@ -22516,6 +22661,7 @@ Is good for you.")",
       "totalTime": 497,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -22533,6 +22679,7 @@ Is good for you.")",
       "totalTime": 337,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "watchman watch",
@@ -22592,6 +22739,7 @@ Is good for you.")",
       "totalTime": 153,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "FakeTimers construction",
@@ -22953,6 +23101,7 @@ Is good for you.")",
       "totalTime": 302,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Runtime jest.fn",
@@ -22998,6 +23147,7 @@ Is good for you.")",
       "totalTime": 479,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "toStrictEqual",
@@ -23032,6 +23182,7 @@ Is good for you.")",
       "totalTime": 394,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -23085,6 +23236,7 @@ Is good for you.")",
       "totalTime": 357,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "FakeTimers construction",
@@ -23381,6 +23533,7 @@ Is good for you.")",
       "totalTime": 317,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "toContain",
@@ -23404,6 +23557,7 @@ Is good for you.")",
       "totalTime": 236,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Runtime wrapCodeInModuleWrapper",
@@ -23427,6 +23581,7 @@ Is good for you.")",
       "totalTime": 263,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "toContainEqual",
@@ -23450,6 +23605,7 @@ Is good for you.")",
       "totalTime": 287,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "invalid arg length",
@@ -23814,6 +23970,7 @@ Is good for you.")",
       "totalTime": 195,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": ".getType()",
@@ -23909,6 +24066,7 @@ Is good for you.")",
       "totalTime": 45,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "init project with package.json and no jest config all questions answered with answer: "No"",
@@ -24114,6 +24272,7 @@ Is good for you.")",
       "totalTime": 119,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Runtime requireModule with no extension",
@@ -24131,6 +24290,7 @@ Is good for you.")",
       "totalTime": 261,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -24214,6 +24374,7 @@ Is good for you.")",
       "totalTime": 86,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -24231,6 +24392,7 @@ Is good for you.")",
       "totalTime": 138,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -24266,6 +24428,7 @@ Is good for you.")",
       "totalTime": 81,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -24283,6 +24446,7 @@ Is good for you.")",
       "totalTime": 275,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "runJest",
@@ -24306,6 +24470,7 @@ Is good for you.")",
       "totalTime": 261,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Replaceable constructor",
@@ -24439,6 +24604,7 @@ Is good for you.")",
       "totalTime": 111,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -24516,6 +24682,7 @@ Is good for you.")",
       "totalTime": 82,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Jest Worker Process Integration",
@@ -24563,6 +24730,7 @@ Is good for you.")",
       "totalTime": 114,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "worker",
@@ -24616,6 +24784,7 @@ Is good for you.")",
       "totalTime": 100,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "printDiffOrStringify",
@@ -24763,6 +24932,7 @@ Is good for you.")",
       "totalTime": 114,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "getPath()",
@@ -25065,6 +25235,7 @@ Is good for you.")",
       "totalTime": 147,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -25142,6 +25313,7 @@ Is good for you.")",
       "totalTime": 49,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "isError",
@@ -25177,6 +25349,7 @@ Is good for you.")",
       "totalTime": 43,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": ".isPrimitive()",
@@ -25296,6 +25469,7 @@ Is good for you.")",
       "totalTime": 36,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "node crawler",
@@ -25372,6 +25546,7 @@ Is good for you.")",
       "totalTime": 170,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -25457,6 +25632,7 @@ Received string:  "·
       "totalTime": 22281,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "joinAlignedDiffsExpand",
@@ -25509,6 +25685,7 @@ Received string:  "·
       "totalTime": 44,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "SnapshotInteractiveMode",
@@ -25598,6 +25775,7 @@ Received string:  "·
       "totalTime": 89,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Runtime statics",
@@ -25621,6 +25799,7 @@ Received string:  "·
       "totalTime": 162,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "getAlignedDiffs lines",
@@ -25801,6 +25980,7 @@ Received string:  "·
       "totalTime": 72,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": ".assertions()",
@@ -25853,6 +26033,7 @@ Received string:  "·
       "totalTime": 60,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "getPlatformExtension",
@@ -25870,6 +26051,7 @@ Received string:  "·
       "totalTime": 35,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "isRegExpSupported",
@@ -25893,6 +26075,7 @@ Received string:  "·
       "totalTime": 31,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -25922,6 +26105,7 @@ Received string:  "·
       "totalTime": 69,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Jest Worker Integration",
@@ -25963,6 +26147,7 @@ Received string:  "·
       "totalTime": 62,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -25992,6 +26177,7 @@ Received string:  "·
       "totalTime": 166,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "ErrorWithStack",
@@ -26009,6 +26195,7 @@ Received string:  "·
       "totalTime": 41,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -26032,6 +26219,7 @@ Received string:  "·
       "totalTime": 35,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "diffStringsRaw",
@@ -26055,6 +26243,7 @@ Received string:  "·
       "totalTime": 55,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -26090,6 +26279,7 @@ Received string:  "·
       "totalTime": 56,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -26173,6 +26363,7 @@ Received string:  "·
       "totalTime": 48,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -26196,6 +26387,7 @@ Received string:  "·
       "totalTime": 68,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "getMockName",
@@ -26213,6 +26405,7 @@ Received string:  "·
       "totalTime": 22,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "WorkerPool",
@@ -26242,6 +26435,7 @@ Received string:  "·
       "totalTime": 51,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "dependencyExtractor",
@@ -26343,6 +26537,7 @@ Received string:  "·
       "totalTime": 56,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "normalizePathSep",
@@ -26366,6 +26561,7 @@ Received string:  "·
       "totalTime": 35,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "fastPath.relative",
@@ -26412,6 +26608,7 @@ Received string:  "·
       "totalTime": 29,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "FailedTestsCache",
@@ -26429,6 +26626,7 @@ Received string:  "·
       "totalTime": 25,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "getNoTestsFoundMessage",
@@ -26470,6 +26668,7 @@ Received string:  "·
       "totalTime": 61,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Common globals",
@@ -26487,6 +26686,7 @@ Received string:  "·
       "totalTime": 22,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -26516,6 +26716,7 @@ Received string:  "·
       "totalTime": 48,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "not a Promise: ",
@@ -26592,6 +26793,7 @@ Received string:  "·
       "totalTime": 30,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -26627,6 +26829,7 @@ Received string:  "·
       "totalTime": 30,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Symbol in objects",
@@ -26656,6 +26859,7 @@ Received string:  "·
       "totalTime": 33,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -26673,6 +26877,7 @@ Received string:  "·
       "totalTime": 37,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -26690,6 +26895,7 @@ Received string:  "·
       "totalTime": 19,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -26707,6 +26913,7 @@ Received string:  "·
       "totalTime": 31,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -26730,6 +26937,7 @@ Received string:  "·
       "totalTime": 48,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "on node ^12.16.0 || >=13.7.0",
@@ -26747,6 +26955,7 @@ Received string:  "·
       "totalTime": 956,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -26764,6 +26973,7 @@ Received string:  "·
       "totalTime": 12701,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -26817,6 +27027,7 @@ Received string:  "·
       "totalTime": 11886,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -26917,6 +27128,7 @@ Received string:  "·
       "totalTime": 16360,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -26982,6 +27194,7 @@ Received string:  "·
       "totalTime": 17025,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -27056,6 +27269,7 @@ Received string:  "·
       "totalTime": 7528,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -27109,6 +27323,7 @@ Received string:  "·
       "totalTime": 10353,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -27162,6 +27377,7 @@ Received string:  "·
       "totalTime": 8071.999999999999,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -27233,6 +27449,7 @@ Received string:  "·
       "totalTime": 7505,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -27274,6 +27491,7 @@ Received string:  "·
       "totalTime": 4868,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -27291,6 +27509,7 @@ Received string:  "·
       "totalTime": 3076,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Dynamic test filtering",
@@ -27344,6 +27563,7 @@ Received string:  "·
       "totalTime": 5422,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Given a config with two named projects, first-project and second-project when Jest is started with \`--selectProjects first-project\`",
@@ -27498,6 +27718,7 @@ Received string:  "·
       "totalTime": 5236,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -27557,6 +27778,7 @@ Received string:  "·
       "totalTime": 6771,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Stack Trace",
@@ -27610,6 +27832,7 @@ Received string:  "·
       "totalTime": 4725,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -27663,6 +27886,7 @@ Received string:  "·
       "totalTime": 4721,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -27698,6 +27922,7 @@ Received string:  "·
       "totalTime": 3562,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -27715,6 +27940,7 @@ Received string:  "·
       "totalTime": 4370,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -27732,6 +27958,7 @@ Received string:  "·
       "totalTime": 2715,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -27761,6 +27988,7 @@ Received string:  "·
       "totalTime": 2389,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Wrong globals for environment",
@@ -27802,6 +28030,7 @@ Received string:  "·
       "totalTime": 3877,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "setupFilesAfterEnv",
@@ -27825,6 +28054,7 @@ Received string:  "·
       "totalTime": 1967,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "No tests are found",
@@ -27866,6 +28096,7 @@ Received string:  "·
       "totalTime": 2739,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -27889,6 +28120,7 @@ Received string:  "·
       "totalTime": 1539,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -27924,6 +28156,7 @@ Received string:  "·
       "totalTime": 4641,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -27947,6 +28180,7 @@ Received string:  "·
       "totalTime": 1681,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -27964,6 +28198,7 @@ Received string:  "·
       "totalTime": 2208,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -27987,6 +28222,7 @@ Received string:  "·
       "totalTime": 4476,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28004,6 +28240,7 @@ Received string:  "·
       "totalTime": 967,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28027,6 +28264,7 @@ Received string:  "·
       "totalTime": 1878,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28044,6 +28282,7 @@ Received string:  "·
       "totalTime": 1493,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28067,6 +28306,7 @@ Received string:  "·
       "totalTime": 1263,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28084,6 +28324,7 @@ Received string:  "·
       "totalTime": 1422,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28101,6 +28342,7 @@ Received string:  "·
       "totalTime": 1352,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28118,6 +28360,7 @@ Received string:  "·
       "totalTime": 1361,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28135,6 +28378,7 @@ Received string:  "·
       "totalTime": 1341,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28152,6 +28396,7 @@ Received string:  "·
       "totalTime": 1008.9999999999999,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28169,6 +28414,7 @@ Received string:  "·
       "totalTime": 976,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "jest --clearCache",
@@ -28192,6 +28438,7 @@ Received string:  "·
       "totalTime": 1004,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Runtime Internal Module Registry",
@@ -28209,6 +28456,7 @@ Received string:  "·
       "totalTime": 1202,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28226,6 +28474,7 @@ Received string:  "·
       "totalTime": 943,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28243,6 +28492,7 @@ Received string:  "·
       "totalTime": 904,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "JSON Reporter",
@@ -28260,6 +28510,7 @@ Received string:  "·
       "totalTime": 885,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28277,6 +28528,7 @@ Received string:  "·
       "totalTime": 858,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28294,6 +28546,7 @@ Received string:  "·
       "totalTime": 1018,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28311,6 +28564,7 @@ Received string:  "·
       "totalTime": 40,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28334,6 +28588,7 @@ Received string:  "·
       "totalTime": 575,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28351,6 +28606,7 @@ Received string:  "·
       "totalTime": 49,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28368,6 +28624,7 @@ Received string:  "·
       "totalTime": 379,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28403,6 +28660,7 @@ Received string:  "·
       "totalTime": 627,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28420,6 +28678,7 @@ Received string:  "·
       "totalTime": 855,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28437,6 +28696,7 @@ Received string:  "·
       "totalTime": 1507,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28478,6 +28738,7 @@ Received string:  "·
       "totalTime": 5395,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Custom Reporters Integration",
@@ -28543,6 +28804,7 @@ Received string:  "·
       "totalTime": 6553,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "--findRelatedTests flag",
@@ -28584,6 +28846,7 @@ Received string:  "·
       "totalTime": 6230,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Environment override",
@@ -28636,6 +28899,7 @@ Received string:  "·
       "totalTime": 5221,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28707,6 +28971,7 @@ Received string:  "·
       "totalTime": 13926,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28730,6 +28995,7 @@ Received string:  "·
       "totalTime": 4751,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28747,6 +29013,7 @@ Received string:  "·
       "totalTime": 6249,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28764,6 +29031,7 @@ Received string:  "·
       "totalTime": 5029,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28799,6 +29067,7 @@ Received string:  "·
       "totalTime": 71,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28816,6 +29085,7 @@ Received string:  "·
       "totalTime": 4127,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28857,6 +29127,7 @@ Received string:  "·
       "totalTime": 3524,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28898,6 +29169,7 @@ Received string:  "·
       "totalTime": 3573,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28915,6 +29187,7 @@ Received string:  "·
       "totalTime": 2893,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28938,6 +29211,7 @@ Received string:  "·
       "totalTime": 1966,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -28961,6 +29235,7 @@ Received string:  "·
       "totalTime": 2732,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "babel-jest",
@@ -29123,6 +29398,7 @@ Received string:  "·
       "totalTime": 26740,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29140,6 +29416,7 @@ Received string:  "·
       "totalTime": 1902,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29157,6 +29434,7 @@ Received string:  "·
       "totalTime": 2444,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29186,6 +29464,7 @@ Received string:  "·
       "totalTime": 2757,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Correct BeforeAll run",
@@ -29203,6 +29482,7 @@ Received string:  "·
       "totalTime": 958,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Fake promises",
@@ -29226,6 +29506,7 @@ Received string:  "·
       "totalTime": 1716,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29243,6 +29524,7 @@ Received string:  "·
       "totalTime": 2185,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29260,6 +29542,7 @@ Received string:  "·
       "totalTime": 847,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29283,6 +29566,7 @@ Received string:  "·
       "totalTime": 2045.9999999999998,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29300,6 +29584,7 @@ Received string:  "·
       "totalTime": 976,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29317,6 +29602,7 @@ Received string:  "·
       "totalTime": 886,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29334,6 +29620,7 @@ Received string:  "·
       "totalTime": 921,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29351,6 +29638,7 @@ Received string:  "·
       "totalTime": 861,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29368,6 +29656,7 @@ Received string:  "·
       "totalTime": 298,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29391,6 +29680,7 @@ Received string:  "·
       "totalTime": 29,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29408,6 +29698,7 @@ Received string:  "·
       "totalTime": 910,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "jest --debug",
@@ -29425,6 +29716,7 @@ Received string:  "·
       "totalTime": 899,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29442,6 +29734,7 @@ Received string:  "·
       "totalTime": 1043,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29459,6 +29752,7 @@ Received string:  "·
       "totalTime": 826,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29476,6 +29770,7 @@ Received string:  "·
       "totalTime": 1451,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29499,6 +29794,7 @@ Received string:  "·
       "totalTime": 1860,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29516,6 +29812,7 @@ Received string:  "·
       "totalTime": 1061,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29533,6 +29830,7 @@ Received string:  "·
       "totalTime": 2206,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Regex Char In Path",
@@ -29550,6 +29848,7 @@ Received string:  "·
       "totalTime": 962,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Coverage Report",
@@ -29578,6 +29877,7 @@ Received string:  "·
       "totalTime": 1063,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29617,6 +29917,7 @@ Received string:  "·
       "totalTime": 905,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29640,6 +29941,7 @@ Received string:  "·
       "totalTime": 968,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29657,6 +29959,7 @@ Received string:  "·
       "totalTime": 783,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29674,6 +29977,7 @@ Received string:  "·
       "totalTime": 859,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29691,6 +29995,7 @@ Received string:  "·
       "totalTime": 55,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29714,6 +30019,7 @@ Received string:  "·
       "totalTime": 397,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29731,6 +30037,7 @@ Received string:  "·
       "totalTime": 869,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29748,6 +30055,7 @@ Received string:  "·
       "totalTime": 1501,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29765,6 +30073,7 @@ Received string:  "·
       "totalTime": 882,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29800,6 +30109,7 @@ Received string:  "·
       "totalTime": 2886,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -29961,6 +30271,7 @@ Received string:  "·
       "totalTime": 56,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Test Retries",
@@ -29996,6 +30307,7 @@ Received string:  "·
       "totalTime": 3277,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30037,6 +30349,7 @@ Received string:  "·
       "totalTime": 14322,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30120,6 +30433,7 @@ Received string:  "·
       "totalTime": 22264,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30203,6 +30517,7 @@ Received string:  "·
       "totalTime": 23917,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30238,6 +30553,7 @@ Received string:  "·
       "totalTime": 8559,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30267,6 +30583,7 @@ Received string:  "·
       "totalTime": 4670,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30302,6 +30619,7 @@ Received string:  "·
       "totalTime": 4029,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30331,6 +30649,7 @@ Received string:  "·
       "totalTime": 3544,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "async jasmine",
@@ -30432,6 +30751,7 @@ Received string:  "·
       "totalTime": 28291,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30479,6 +30799,7 @@ Received string:  "·
       "totalTime": 3945,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30496,6 +30817,7 @@ Received string:  "·
       "totalTime": 3167,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30519,6 +30841,7 @@ Received string:  "·
       "totalTime": 4435,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30542,6 +30865,7 @@ Received string:  "·
       "totalTime": 3503,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30571,6 +30895,7 @@ Received string:  "·
       "totalTime": 3411,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30588,6 +30913,7 @@ Received string:  "·
       "totalTime": 2119,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30605,6 +30931,7 @@ Received string:  "·
       "totalTime": 2893,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30634,6 +30961,7 @@ Received string:  "·
       "totalTime": 2134,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30657,6 +30985,7 @@ Received string:  "·
       "totalTime": 1961,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "modern implementation of fake timers",
@@ -30680,6 +31009,7 @@ Received string:  "·
       "totalTime": 1680,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30697,6 +31027,7 @@ Received string:  "·
       "totalTime": 1999,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30714,6 +31045,7 @@ Received string:  "·
       "totalTime": 1628,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30737,6 +31069,7 @@ Received string:  "·
       "totalTime": 1591,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30760,6 +31093,7 @@ Received string:  "·
       "totalTime": 1797,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "JSON Reporter",
@@ -30783,6 +31117,7 @@ Received string:  "·
       "totalTime": 1514,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30806,6 +31141,7 @@ Received string:  "·
       "totalTime": 1666,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30823,6 +31159,7 @@ Received string:  "·
       "totalTime": 888,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30840,6 +31177,7 @@ Received string:  "·
       "totalTime": 1394,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30868,6 +31206,7 @@ Received string:  "·
       "totalTime": 55,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30885,6 +31224,7 @@ Received string:  "·
       "totalTime": 1010.9999999999999,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Snapshot serializers",
@@ -30908,6 +31248,7 @@ Received string:  "·
       "totalTime": 2065,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30931,6 +31272,7 @@ Received string:  "·
       "totalTime": 1764,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30948,6 +31290,7 @@ Received string:  "·
       "totalTime": 793,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30965,6 +31308,7 @@ Received string:  "·
       "totalTime": 833,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -30982,6 +31326,7 @@ Received string:  "·
       "totalTime": 1075,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31005,6 +31350,7 @@ Received string:  "·
       "totalTime": 1230,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "on node >=12.2.0",
@@ -31022,6 +31368,7 @@ Received string:  "·
       "totalTime": 966,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31039,6 +31386,7 @@ Received string:  "·
       "totalTime": 926,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31056,6 +31404,7 @@ Received string:  "·
       "totalTime": 1075,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31073,6 +31422,7 @@ Received string:  "·
       "totalTime": 1027,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31090,6 +31440,7 @@ Received string:  "·
       "totalTime": 1155,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31113,6 +31464,7 @@ Received string:  "·
       "totalTime": 2412,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31130,6 +31482,7 @@ Received string:  "·
       "totalTime": 1170,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31147,6 +31500,7 @@ Received string:  "·
       "totalTime": 884,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31164,6 +31518,7 @@ Received string:  "·
       "totalTime": 1137,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31181,6 +31536,7 @@ Received string:  "·
       "totalTime": 883,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Snapshot serializers",
@@ -31198,6 +31554,7 @@ Received string:  "·
       "totalTime": 838,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "AppComponent",
@@ -31227,6 +31584,7 @@ Received string:  "·
       "totalTime": 654,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31244,6 +31602,7 @@ Received string:  "·
       "totalTime": 899,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31261,6 +31620,7 @@ Received string:  "·
       "totalTime": 991,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31278,6 +31638,7 @@ Received string:  "·
       "totalTime": 907,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Custom snapshot resolver",
@@ -31295,6 +31656,7 @@ Received string:  "·
       "totalTime": 823,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31312,6 +31674,7 @@ Received string:  "·
       "totalTime": 1070,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31329,6 +31692,7 @@ Received string:  "·
       "totalTime": 866,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31346,6 +31710,7 @@ Received string:  "·
       "totalTime": 683,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "--listTests flag",
@@ -31369,6 +31734,7 @@ Received string:  "·
       "totalTime": 945,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31386,6 +31752,7 @@ Received string:  "·
       "totalTime": 908,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31403,6 +31770,7 @@ Received string:  "·
       "totalTime": 469,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Service: DataService",
@@ -31426,6 +31794,7 @@ Received string:  "·
       "totalTime": 431,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31443,6 +31812,7 @@ Received string:  "·
       "totalTime": 892,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31477,6 +31847,7 @@ Received string:  "·
       "totalTime": 526,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31494,6 +31865,7 @@ Received string:  "·
       "totalTime": 434,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "define mock per test",
@@ -31517,6 +31889,7 @@ Received string:  "·
       "totalTime": 116,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31534,6 +31907,7 @@ Received string:  "·
       "totalTime": 236,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31569,6 +31943,7 @@ Received string:  "·
       "totalTime": 181,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31586,6 +31961,7 @@ Received string:  "·
       "totalTime": 227,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31603,6 +31979,7 @@ Received string:  "·
       "totalTime": 256,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31620,6 +31997,7 @@ Received string:  "·
       "totalTime": 195,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31637,6 +32015,7 @@ Received string:  "·
       "totalTime": 62,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31654,6 +32033,7 @@ Received string:  "·
       "totalTime": 94,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31677,6 +32057,7 @@ Received string:  "·
       "totalTime": 196,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31694,6 +32075,7 @@ Received string:  "·
       "totalTime": 196,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "timerGame",
@@ -31723,6 +32105,7 @@ Received string:  "·
       "totalTime": 74,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31782,6 +32165,7 @@ Received string:  "·
       "totalTime": 96,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31805,6 +32189,7 @@ Received string:  "·
       "totalTime": 115,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "listFilesInDirectorySync",
@@ -31822,6 +32207,7 @@ Received string:  "·
       "totalTime": 87,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "calc - mocks",
@@ -31869,6 +32255,7 @@ Received string:  "·
       "totalTime": 276,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31886,6 +32273,7 @@ Received string:  "·
       "totalTime": 78,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Service: SubService",
@@ -31903,6 +32291,7 @@ Received string:  "·
       "totalTime": 109,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31920,6 +32309,7 @@ Received string:  "·
       "totalTime": 41,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31943,6 +32333,7 @@ Received string:  "·
       "totalTime": 69,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31966,6 +32357,7 @@ Received string:  "·
       "totalTime": 74,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -31983,6 +32375,7 @@ Received string:  "·
       "totalTime": 109,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -32000,6 +32393,7 @@ Received string:  "·
       "totalTime": 105,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -32023,6 +32417,7 @@ Received string:  "·
       "totalTime": 100,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -32040,6 +32435,7 @@ Received string:  "·
       "totalTime": 21,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -32057,6 +32453,7 @@ Received string:  "·
       "totalTime": 43,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -32074,6 +32471,7 @@ Received string:  "·
       "totalTime": 60,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -32091,6 +32489,7 @@ Received string:  "·
       "totalTime": 31,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -32108,6 +32507,7 @@ Received string:  "·
       "totalTime": 24,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "timers",
@@ -32131,6 +32531,7 @@ Received string:  "·
       "totalTime": 30,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -32148,6 +32549,7 @@ Received string:  "·
       "totalTime": 30,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "timers",
@@ -32165,6 +32567,7 @@ Received string:  "·
       "totalTime": 34,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -32182,6 +32585,7 @@ Received string:  "·
       "totalTime": 215,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -32199,6 +32603,7 @@ Received string:  "·
       "totalTime": 21,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -32216,6 +32621,7 @@ Received string:  "·
       "totalTime": 29,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -32233,6 +32639,7 @@ Received string:  "·
       "totalTime": 27,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -32250,6 +32657,7 @@ Received string:  "·
       "totalTime": 42,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",

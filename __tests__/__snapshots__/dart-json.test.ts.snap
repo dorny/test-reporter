@@ -2,9 +2,11 @@
 
 exports[`dart-json tests matches report snapshot 1`] = `
 TestRunResult {
+  "coveragePercentage": undefined,
   "path": "fixtures/dart-json.json",
   "suites": [
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "Test 1",
@@ -72,6 +74,7 @@ test\\main_test.dart 17:9        main.<fn>.<fn>.<fn>
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -107,9 +110,11 @@ test\\main_test.dart 17:9        main.<fn>.<fn>.<fn>
 
 exports[`dart-json tests report from rrousselGit/provider test results matches snapshot 1`] = `
 TestRunResult {
+  "coveragePercentage": undefined,
   "path": "fixtures/external/flutter/provider-test-results.json",
   "suites": [
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "valueListenableProvider",
@@ -178,6 +183,7 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "ListenableProvider",
@@ -295,6 +301,7 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "consumer",
@@ -439,6 +446,7 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -515,6 +523,7 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "ChangeNotifierProvider",
@@ -690,6 +699,7 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "MultiProvider",
@@ -719,6 +729,7 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -783,6 +794,7 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -985,6 +997,7 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1014,6 +1027,7 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1090,6 +1104,7 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1177,6 +1192,7 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1699,6 +1715,7 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "ListenableProxyProvider",
@@ -1787,6 +1804,7 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1900,6 +1918,7 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "",
@@ -1935,6 +1954,7 @@ Unexpected number of calls
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "ProxyProvider",

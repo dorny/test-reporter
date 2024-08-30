@@ -2,9 +2,11 @@
 
 exports[`dotnet-trx tests matches report snapshot 1`] = `
 TestRunResult {
+  "coveragePercentage": undefined,
   "path": "fixtures/dotnet-trx.trx",
   "suites": [
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -131,9 +133,11 @@ Actual:   False",
 
 exports[`dotnet-trx tests report from FluentValidation test results matches snapshot 1`] = `
 TestRunResult {
+  "coveragePercentage": undefined,
   "path": "fixtures/external/FluentValidation.Tests.trx",
   "suites": [
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -355,6 +359,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -396,6 +401,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -419,6 +425,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -658,6 +665,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -747,6 +755,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -776,6 +785,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -799,6 +809,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -906,6 +917,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -1019,6 +1031,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -1138,6 +1151,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -1161,6 +1175,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -1190,6 +1205,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -1237,6 +1253,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -1308,6 +1325,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -1499,6 +1517,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -1726,6 +1745,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -1791,6 +1811,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -1874,6 +1895,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -1945,6 +1967,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -1992,6 +2015,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -2117,6 +2141,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -2152,6 +2177,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -2367,6 +2393,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -2462,6 +2489,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -2551,6 +2579,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -2670,6 +2699,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -2747,6 +2777,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -2764,6 +2795,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -2901,6 +2933,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -3008,6 +3041,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -3097,6 +3131,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -3204,6 +3239,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -3251,6 +3287,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -3274,6 +3311,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -3339,6 +3377,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -3410,6 +3449,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -3433,6 +3473,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -3462,6 +3503,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -3533,6 +3575,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -3610,6 +3653,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -3651,6 +3695,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -3692,6 +3737,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -3763,6 +3809,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -3804,6 +3851,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -3857,6 +3905,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -3958,6 +4007,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -4143,6 +4193,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -4238,6 +4289,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -4375,6 +4427,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -4422,6 +4475,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -4685,6 +4739,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -4702,6 +4757,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -4773,6 +4829,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -4802,6 +4859,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -4837,6 +4895,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -4890,6 +4949,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -4925,6 +4985,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -5020,6 +5081,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -5079,6 +5141,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -5120,6 +5183,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -5191,6 +5255,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -5646,9 +5711,11 @@ TestRunResult {
 
 exports[`dotnet-trx tests report from SilentNotes test results matches snapshot 1`] = `
 TestRunResult {
+  "coveragePercentage": undefined,
   "path": "fixtures/external/SilentNotes.trx",
   "suites": [
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -5696,6 +5763,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -5737,6 +5805,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -5790,6 +5859,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -5813,6 +5883,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -5848,6 +5919,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -5883,6 +5955,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -5924,6 +5997,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -5989,6 +6063,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -6018,6 +6093,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -6083,6 +6159,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -6124,6 +6201,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,
@@ -6177,6 +6255,7 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": null,

@@ -2,9 +2,11 @@
 
 exports[`rspec-json tests report from ./reports/rspec-json test results matches snapshot 1`] = `
 TestRunResult {
+  "coveragePercentage": undefined,
   "path": "fixtures/rspec-json.json",
   "suites": [
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "CheckEnvVars#call when all env vars are defined behaves like success load",

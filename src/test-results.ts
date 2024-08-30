@@ -4,7 +4,8 @@ export class TestRunResult {
   constructor(
     readonly path: string,
     readonly suites: TestSuiteResult[],
-    private totalTime?: number
+    private totalTime?: number,
+    private coveragePercentage?: number
   ) {}
 
   get tests(): number {
@@ -23,6 +24,10 @@ export class TestRunResult {
 
   get time(): number {
     return this.totalTime ?? this.suites.reduce((sum, g) => sum + g.time, 0)
+  }
+
+  get coverage(): number | undefined {
+    return this.coveragePercentage
   }
 
   get result(): TestExecutionResult {
@@ -47,7 +52,8 @@ export class TestSuiteResult {
   constructor(
     readonly name: string,
     readonly groups: TestGroupResult[],
-    private totalTime?: number
+    private totalTime?: number,
+    private coveragePercentage?: number
   ) {}
 
   get tests(): number {
@@ -65,6 +71,9 @@ export class TestSuiteResult {
   }
   get time(): number {
     return this.totalTime ?? this.groups.reduce((sum, g) => sum + g.time, 0)
+  }
+  get coverage(): number | undefined {
+    return this.coveragePercentage
   }
 
   get result(): TestExecutionResult {
