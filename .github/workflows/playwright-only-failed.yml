@@ -1,4 +1,4 @@
-name: Playwright Test Report
+name: Playwright Test Report - only failed tests
 
 on:
   workflow_run:
@@ -23,4 +23,5 @@ jobs:
           reporter: java-junit
           show-html-notice: true
           list-tests: 'failed'
+          list-suites: 'failed'
           fail-on-error: false
