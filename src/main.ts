@@ -12,7 +12,7 @@ import {getAnnotations, Annotation} from './report/get-annotations'
 import {UpdateChecksParametersWithOutput} from './report/patch-check'
 import {getReport} from './report/get-report'
 
-import {DartJsonParser} from './parsers/dart-json/dart-json-parser'
+// import {DartJsonParser} from './parsers/dart-json/dart-json-parser'
 import {DotnetTrxParser} from './parsers/dotnet-trx/dotnet-trx-parser'
 import {JavaJunitParser} from './parsers/java-junit/java-junit-parser'
 import {JestJunitParser} from './parsers/jest-junit/jest-junit-parser'
@@ -236,12 +236,12 @@ class TestReporter {
 
   getParser(reporter: string, options: ParseOptions): TestParser {
     switch (reporter) {
-      case 'dart-json':
-        return new DartJsonParser(options, 'dart')
+      // case 'dart-json':
+      //   return new DartJsonParser(options, 'dart')
       case 'dotnet-trx':
         return new DotnetTrxParser(options)
-      case 'flutter-json':
-        return new DartJsonParser(options, 'flutter')
+      // case 'flutter-json':
+      //   return new DartJsonParser(options, 'flutter')
       case 'java-junit':
         return new JavaJunitParser(options)
       case 'jest-junit':
