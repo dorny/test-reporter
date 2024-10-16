@@ -233,6 +233,9 @@ function getTestsReport(ts: TestSuiteResult, runIndex: number, suiteIndex: numbe
     }
     const space = grp.name ? '  ' : ''
     for (const tc of grp.tests) {
+      if (options.listTests === 'failed' && tc.result !== 'failed') {
+        continue
+      }
       if (options.listTests === 'non-skipped' && tc.result === 'skipped') {
         continue
       }

@@ -1,0 +1,27 @@
+name: Playwright Test Report - only failed tests
+
+on:
+  workflow_run:
+    workflows: ['CI']
+    types:
+      - completed
+  push:
+jobs:
+  report:
+    name: Workflow test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Check dirs
+        run: ls
+      - name: Test reporter
+        uses: ./
+        with:
+          name: Workflow Report
+          path: playwright-report.xml
+          reporter: java-junit
+          show-html-notice: true
+          list-tests: 'failed'
+          list-suites: 'failed'
+          fail-on-error: false
