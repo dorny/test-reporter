@@ -240,7 +240,7 @@ const artifact_provider_1 = __nccwpck_require__(4548);
 const local_file_provider_1 = __nccwpck_require__(922);
 const get_annotations_1 = __nccwpck_require__(4400);
 const get_report_1 = __nccwpck_require__(4689);
-// import {DartJsonParser} from './parsers/dart-json/dart-json-parser'
+const dart_json_parser_1 = __nccwpck_require__(1254);
 const dotnet_trx_parser_1 = __nccwpck_require__(1658);
 const java_junit_parser_1 = __nccwpck_require__(8342);
 const jest_junit_parser_1 = __nccwpck_require__(1042);
@@ -426,12 +426,12 @@ class TestReporter {
     }
     getParser(reporter, options) {
         switch (reporter) {
-            // case 'dart-json':
-            //   return new DartJsonParser(options, 'dart')
+            case 'dart-json':
+                return new dart_json_parser_1.DartJsonParser(options, 'dart');
             case 'dotnet-trx':
                 return new dotnet_trx_parser_1.DotnetTrxParser(options);
-            // case 'flutter-json':
-            //   return new DartJsonParser(options, 'flutter')
+            case 'flutter-json':
+                return new dart_json_parser_1.DartJsonParser(options, 'flutter');
             case 'java-junit':
                 return new java_junit_parser_1.JavaJunitParser(options);
             case 'jest-junit':
@@ -462,6 +462,279 @@ class TestReporter {
     };
 }
 main();
+
+
+/***/ }),
+
+/***/ 1254:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.DartJsonParser = void 0;
+const path_utils_1 = __nccwpck_require__(9132);
+const dart_json_types_1 = __nccwpck_require__(7064);
+const test_results_1 = __nccwpck_require__(613);
+class TestRun {
+    path;
+    suites;
+    success;
+    time;
+    constructor(path, suites, success, time) {
+        this.path = path;
+        this.suites = suites;
+        this.success = success;
+        this.time = time;
+    }
+}
+class TestSuite {
+    suite;
+    constructor(suite) {
+        this.suite = suite;
+    }
+    groups = {};
+}
+class TestGroup {
+    group;
+    constructor(group) {
+        this.group = group;
+    }
+    tests = [];
+}
+class TestCase {
+    testStart;
+    constructor(testStart) {
+        this.testStart = testStart;
+        this.groupId = testStart.test.groupIDs[testStart.test.groupIDs.length - 1];
+    }
+    groupId;
+    print = [];
+    testDone;
+    error;
+    get result() {
+        if (this.testDone?.skipped) {
+            return 'skipped';
+        }
+        if (this.testDone?.result === 'success') {
+            return 'success';
+        }
+        if (this.testDone?.result === 'error' || this.testDone?.result === 'failure') {
+            return 'failed';
+        }
+        return undefined;
+    }
+    get time() {
+        return this.testDone !== undefined ? this.testDone.time - this.testStart.time : 0;
+    }
+}
+class DartJsonParser {
+    options;
+    sdk;
+    assumedWorkDir;
+    constructor(options, sdk) {
+        this.options = options;
+        this.sdk = sdk;
+    }
+    async parse(path, content) {
+        const tr = this.getTestRun(path, content);
+        const result = this.getTestRunResult(tr);
+        return Promise.resolve(result);
+    }
+    getTestRun(path, content) {
+        const lines = content.split(/\n\r?/g);
+        const events = lines
+            .map((str, i) => {
+            if (str.trim() === '') {
+                return null;
+            }
+            try {
+                return JSON.parse(str);
+            }
+            catch (e) {
+                const errWithCol = e;
+                const col = errWithCol.columnNumber !== undefined ? `:${errWithCol.columnNumber}` : '';
+                throw new Error(`Invalid JSON at ${path}:${i + 1}${col}\n\n${e}`);
+            }
+        })
+            .filter(evt => evt != null);
+        let success = false;
+        let totalTime = 0;
+        const suites = {};
+        const tests = {};
+        for (const evt of events) {
+            if ((0, dart_json_types_1.isSuiteEvent)(evt)) {
+                suites[evt.suite.id] = new TestSuite(evt.suite);
+            }
+            else if ((0, dart_json_types_1.isGroupEvent)(evt)) {
+                suites[evt.group.suiteID].groups[evt.group.id] = new TestGroup(evt.group);
+            }
+            else if ((0, dart_json_types_1.isTestStartEvent)(evt) && evt.test.url !== null) {
+                const test = new TestCase(evt);
+                const suite = suites[evt.test.suiteID];
+                const group = suite.groups[evt.test.groupIDs[evt.test.groupIDs.length - 1]];
+                group.tests.push(test);
+                tests[evt.test.id] = test;
+            }
+            else if ((0, dart_json_types_1.isTestDoneEvent)(evt) && !evt.hidden && tests[evt.testID]) {
+                tests[evt.testID].testDone = evt;
+            }
+            else if ((0, dart_json_types_1.isErrorEvent)(evt) && tests[evt.testID]) {
+                tests[evt.testID].error = evt;
+            }
+            else if ((0, dart_json_types_1.isMessageEvent)(evt) && tests[evt.testID]) {
+                tests[evt.testID].print.push(evt);
+            }
+            else if ((0, dart_json_types_1.isDoneEvent)(evt)) {
+                success = evt.success;
+                totalTime = evt.time;
+            }
+        }
+        return new TestRun(path, Object.values(suites), success, totalTime);
+    }
+    getTestRunResult(tr) {
+        const suites = tr.suites.map(s => {
+            return new test_results_1.TestSuiteResult(this.getRelativePath(s.suite.path), this.getGroups(s));
+        });
+        return new test_results_1.TestRunResult(tr.path, suites, tr.time);
+    }
+    getGroups(suite) {
+        const groups = Object.values(suite.groups).filter(grp => grp.tests.length > 0);
+        groups.sort((a, b) => (a.group.line ?? 0) - (b.group.line ?? 0));
+        return groups.map(group => {
+            group.tests.sort((a, b) => (a.testStart.test.line ?? 0) - (b.testStart.test.line ?? 0));
+            const tests = group.tests.map(tc => {
+                const error = this.getError(suite, tc);
+                const testName = group.group.name !== undefined && tc.testStart.test.name.startsWith(group.group.name)
+                    ? tc.testStart.test.name.slice(group.group.name.length).trim()
+                    : tc.testStart.test.name.trim();
+                return new test_results_1.TestCaseResult(testName, tc.result, tc.time, error);
+            });
+            return new test_results_1.TestGroupResult(group.group.name, tests);
+        });
+    }
+    getError(testSuite, test) {
+        if (!this.options.parseErrors || !test.error) {
+            return undefined;
+        }
+        const { trackedFiles } = this.options;
+        const stackTrace = test.error?.stackTrace ?? '';
+        const print = test.print
+            .filter(p => p.messageType === 'print')
+            .map(p => p.message)
+            .join('\n');
+        const details = [print, stackTrace].filter(str => str !== '').join('\n');
+        const src = this.exceptionThrowSource(details, trackedFiles);
+        const message = this.getErrorMessage(test.error?.error ?? '', print);
+        let path;
+        let line;
+        if (src !== undefined) {
+            path = src.path;
+            line = src.line;
+        }
+        else {
+            const testStartPath = this.getRelativePath(testSuite.suite.path);
+            if (trackedFiles.includes(testStartPath)) {
+                path = testStartPath;
+                line = test.testStart.test.root_line ?? test.testStart.test.line ?? undefined;
+            }
+        }
+        return {
+            path,
+            line,
+            message,
+            details
+        };
+    }
+    getErrorMessage(message, print) {
+        if (this.sdk === 'flutter') {
+            const uselessMessageRe = /^Test failed\. See exception logs above\.\nThe test description was:/m;
+            const flutterPrintRe = /^══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═+\s+(.*)\s+When the exception was thrown, this was the stack:/ms;
+            if (uselessMessageRe.test(message)) {
+                const match = print.match(flutterPrintRe);
+                if (match !== null) {
+                    return match[1];
+                }
+            }
+        }
+        return message || print;
+    }
+    exceptionThrowSource(ex, trackedFiles) {
+        const lines = ex.split(/\r?\n/g);
+        // regexp to extract file path and line number from stack trace
+        const dartRe = /^(?!package:)(.*)\s+(\d+):\d+\s+/;
+        const flutterRe = /^#\d+\s+.*\((?!package:)(.*):(\d+):\d+\)$/;
+        const re = this.sdk === 'dart' ? dartRe : flutterRe;
+        for (const str of lines) {
+            const match = str.match(re);
+            if (match !== null) {
+                const [_, pathStr, lineStr] = match;
+                const path = (0, path_utils_1.normalizeFilePath)(this.getRelativePath(pathStr));
+                if (trackedFiles.includes(path)) {
+                    const line = parseInt(lineStr);
+                    return { path, line };
+                }
+            }
+        }
+    }
+    getRelativePath(path) {
+        const prefix = 'file://';
+        if (path.startsWith(prefix)) {
+            path = path.substr(prefix.length);
+        }
+        path = (0, path_utils_1.normalizeFilePath)(path);
+        const workDir = this.getWorkDir(path);
+        if (workDir !== undefined && path.startsWith(workDir)) {
+            path = path.substr(workDir.length);
+        }
+        return path;
+    }
+    getWorkDir(path) {
+        return (this.options.workDir ??
+            this.assumedWorkDir ??
+            (this.assumedWorkDir = (0, path_utils_1.getBasePath)(path, this.options.trackedFiles)));
+    }
+}
+exports.DartJsonParser = DartJsonParser;
+
+
+/***/ }),
+
+/***/ 7064:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+/// reflects documentation at https://github.com/dart-lang/test/blob/master/pkgs/test/doc/json_reporter.md
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isSuiteEvent = isSuiteEvent;
+exports.isGroupEvent = isGroupEvent;
+exports.isTestStartEvent = isTestStartEvent;
+exports.isTestDoneEvent = isTestDoneEvent;
+exports.isErrorEvent = isErrorEvent;
+exports.isDoneEvent = isDoneEvent;
+exports.isMessageEvent = isMessageEvent;
+function isSuiteEvent(event) {
+    return event.type === 'suite';
+}
+function isGroupEvent(event) {
+    return event.type === 'group';
+}
+function isTestStartEvent(event) {
+    return event.type === 'testStart';
+}
+function isTestDoneEvent(event) {
+    return event.type === 'testDone';
+}
+function isErrorEvent(event) {
+    return event.type === 'error';
+}
+function isDoneEvent(event) {
+    return event.type === 'done';
+}
+function isMessageEvent(event) {
+    return event.type === 'print';
+}
 
 
 /***/ }),
