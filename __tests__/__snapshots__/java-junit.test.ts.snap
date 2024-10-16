@@ -630,6 +630,636 @@ TestRunResult {
 }
 `;
 
+exports[`java-junit tests playwright test report - default options 1`] = `
+TestRunResult {
+  "path": "fixtures/external/java/playwright-report.xml",
+  "suites": [
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "authenticate as classic admin",
+              "result": "success",
+              "time": 1702,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "authenticate as basketball admin",
+              "result": "success",
+              "time": 1734,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "authenticate as wrestling admin",
+              "result": "success",
+              "time": 1697,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "authenticate as onboarding admin 1",
+              "result": "success",
+              "time": 516,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "authenticate as onboarding admin 3",
+              "result": "success",
+              "time": 527,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "authenticate as coachAdmin",
+              "result": "success",
+              "time": 526,
+            },
+          ],
+        },
+      ],
+      "name": "auth.setup.ts",
+      "totalTime": 6702,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "record "Time to Video" when loading directly via URL › using manual timings",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "record "Time to Video" when loading directly via URL › using Performance API mark",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "record "Time to Video" when loading directly via URL › using Performance API measurement",
+              "result": "skipped",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "tests/analyze/load-video.spec.ts",
+      "totalTime": 0,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "during looping playback › when clip repeats, it starts at the beginning",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "during sequential playback ("Play All Clips" mode) › when one clip plays through to the next, overlapping video is skipped",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "in 'Play All Clips' mode, clip plays from beginning › when clicked on in navigation module",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "in 'Play All Clips' mode, clip plays from beginning › with next clip button",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "in 'Play All Clips' mode, clip plays from beginning › with previous clip button",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "in 'Loop Clips' mode, clip plays from beginning › when clicked on in navigation module",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "in 'Loop Clips' mode, clip plays from beginning › with next clip button",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "in 'Loop Clips' mode, clip plays from beginning › with previous clip button",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "rewind functions normally",
+              "result": "skipped",
+              "time": 12,
+            },
+          ],
+        },
+      ],
+      "name": "tests/analyze/seamless-video-playback.spec.ts",
+      "totalTime": 12,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "App › logs in and loads page",
+              "result": "skipped",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "tests/app.spec.ts",
+      "totalTime": 0,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "Grid › Mobile Web › Athlete › should not be able to edit data",
+              "result": "success",
+              "time": 2968,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Grid › Mobile Web › Admin or Coach › should be able to edit data",
+              "result": "success",
+              "time": 5762,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Grid › Field Sets › should update displayed grid columns after editing",
+              "result": "success",
+              "time": 9215,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Grid › Field Sets › should update displayed clip preview fields after editing",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Grid › Basketball Navigation Module › should display correct moment data when filtered by Scout team Points",
+              "result": "success",
+              "time": 3150,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Grid › Basketball Navigation Module › should display correct moment data when filtered by Opponent Rebounds",
+              "result": "success",
+              "time": 5091,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Grid › Basketball Navigation Module › should display correct moment data when filtered by Steals",
+              "result": "success",
+              "time": 4261,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Grid › Basketball Navigation Module › should display correct moment data when filtered by Rebounds",
+              "result": "success",
+              "time": 2860,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Grid › Basketball Navigation Module › should display clips for opportunities in Period when filtered by Period",
+              "result": "success",
+              "time": 3501,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Grid › Basketball Navigation Module › should display clips for opportunities that end in a turnover when filtered by Turnovers",
+              "result": "success",
+              "time": 3721,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Grid › Basketball Navigation Module › should display correct moment data when filtered by 3FG Attempts",
+              "result": "success",
+              "time": 3282,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "
+  [chrome] › tests/grid.spec.ts:202:11 › Grid › Column Sorting › AmFb Column Sets › should display correct data when sorting by OFF FORM column › Sort grid by OFF FORM in ascending order 
+
+    Test timeout of 10000ms exceeded.
+
+    Error: locator.click: Target closed
+    =========================== logs ===========================
+    waiting for locator('[data-qa-id^="column-header-OFF FORM-"]')
+    ============================================================
+
+       at ../../../packages/playwright-shared/src/models/locators/table.locator.ts:12
+
+      10 |     const expectedColumnSort = this.locator.filter({ has: this.page.locator(\`[data-qa-id*='\${sortOrder}']\`) });
+      11 |     do {
+    > 12 |       await this.locator.click();
+         |                          ^
+      13 |     } while (!expectedColumnSort.isVisible());
+      14 |   }
+      15 | }
+
+        at TableLocator.sortColumnBy (/Users/connor.vidlock/Documents/GitHub/hudl-frontends/packages/playwright-shared/src/models/locators/table.locator.ts:12:26)
+        at /Users/connor.vidlock/Documents/GitHub/hudl-frontends/apps/watch/playwright/tests/models/actions/grid.actions.ts:30:52
+        at GridActions.sortColumn (/Users/connor.vidlock/Documents/GitHub/hudl-frontends/apps/watch/playwright/tests/models/actions/grid.actions.ts:28:16)
+        at /Users/connor.vidlock/Documents/GitHub/hudl-frontends/apps/watch/playwright/tests/grid.spec.ts:205:27
+
+    Pending operations:
+      - locator.click at ../../packages/playwright-shared/src/models/locators/table.locator.ts:12:26
+
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    playwright/test-results/tests-grid-Grid-Column-Sorting-AmFb-Column-Set-8f487-ay-correct-data-when-sorting-by-OFF-FORM-column-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    playwright/test-results/tests-grid-Grid-Column-Sorting-AmFb-Column-Set-8f487-ay-correct-data-when-sorting-by-OFF-FORM-column-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace playwright/test-results/tests-grid-Grid-Column-Sorting-AmFb-Column-Set-8f487-ay-correct-data-when-sorting-by-OFF-FORM-column-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+",
+                "line": undefined,
+                "message": undefined,
+                "path": undefined,
+              },
+              "name": "Grid › Column Sorting › AmFb Column Sets › should display correct data when sorting by OFF FORM column",
+              "result": "failed",
+              "time": 10000,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Grid › Column Sorting › Wrestling Column Sets › should display correct data when sorting by Period column",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Grid › Quick Editor › should be able to edit data from quick editor as an admin or coach",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "
+  [chrome] › tests/grid.spec.ts:254:9 › Grid › Data Entry › should open select dropdown options when pressing Spacebar in grid cell › double click into column OFF FORM clip number 3 
+
+    Test timeout of 10000ms exceeded.
+
+    Error: locator.dblclick: Target closed
+    =========================== logs ===========================
+    waiting for locator('div[data-qa-id=\\'OFF FORM-column-3\\']')
+    ============================================================
+
+       at ../../../packages/playwright-shared/src/models/locators/base/base.locator.ts:17
+
+      15 |
+      16 |   async doubleClick() {
+    > 17 |     await this.locator.dblclick();
+         |                        ^
+      18 |   }
+      19 |
+      20 |   async getText() {
+
+        at TextInputLocator.doubleClick (/Users/connor.vidlock/Documents/GitHub/hudl-frontends/packages/playwright-shared/src/models/locators/base/base.locator.ts:17:24)
+        at /Users/connor.vidlock/Documents/GitHub/hudl-frontends/apps/watch/playwright/tests/models/actions/grid.actions.ts:48:63
+        at GridActions.doubleClickIntoGridColumn (/Users/connor.vidlock/Documents/GitHub/hudl-frontends/apps/watch/playwright/tests/models/actions/grid.actions.ts:47:16)
+        at /Users/connor.vidlock/Documents/GitHub/hudl-frontends/apps/watch/playwright/tests/grid.spec.ts:256:25
+
+    Pending operations:
+      - locator.dblclick at ../../packages/playwright-shared/src/models/locators/base/base.locator.ts:17:24
+
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    playwright/test-results/tests-grid-Grid-Data-Entry-should-open-select-dropdown-options-when-pressing-Spacebar-in-grid-cell-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    playwright/test-results/tests-grid-Grid-Data-Entry-should-open-select-dropdown-options-when-pressing-Spacebar-in-grid-cell-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace playwright/test-results/tests-grid-Grid-Data-Entry-should-open-select-dropdown-options-when-pressing-Spacebar-in-grid-cell-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+",
+                "line": undefined,
+                "message": undefined,
+                "path": undefined,
+              },
+              "name": "Grid › Data Entry › should open select dropdown options when pressing Spacebar in grid cell",
+              "result": "failed",
+              "time": 10000,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "
+  [chrome] › tests/grid.spec.ts:261:9 › Grid › Data Entry › should be able to use keyboard to navigate horizontal grid and enter data › double click into column OFF FORM clip number 3 
+
+    Test timeout of 10000ms exceeded.
+
+    Error: locator.dblclick: Target closed
+    =========================== logs ===========================
+    waiting for locator('div[data-qa-id=\\'OFF FORM-column-3\\']')
+    ============================================================
+
+       at ../../../packages/playwright-shared/src/models/locators/base/base.locator.ts:17
+
+      15 |
+      16 |   async doubleClick() {
+    > 17 |     await this.locator.dblclick();
+         |                        ^
+      18 |   }
+      19 |
+      20 |   async getText() {
+
+        at TextInputLocator.doubleClick (/Users/connor.vidlock/Documents/GitHub/hudl-frontends/packages/playwright-shared/src/models/locators/base/base.locator.ts:17:24)
+        at /Users/connor.vidlock/Documents/GitHub/hudl-frontends/apps/watch/playwright/tests/models/actions/grid.actions.ts:48:63
+        at GridActions.doubleClickIntoGridColumn (/Users/connor.vidlock/Documents/GitHub/hudl-frontends/apps/watch/playwright/tests/models/actions/grid.actions.ts:47:16)
+        at /Users/connor.vidlock/Documents/GitHub/hudl-frontends/apps/watch/playwright/tests/grid.spec.ts:263:25
+
+    Pending operations:
+      - locator.dblclick at ../../packages/playwright-shared/src/models/locators/base/base.locator.ts:17:24
+
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    playwright/test-results/tests-grid-Grid-Data-Entry-should-be-able-to-use-keyboard-to-navigate-horizontal-grid-and-enter-data-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    playwright/test-results/tests-grid-Grid-Data-Entry-should-be-able-to-use-keyboard-to-navigate-horizontal-grid-and-enter-data-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace playwright/test-results/tests-grid-Grid-Data-Entry-should-be-able-to-use-keyboard-to-navigate-horizontal-grid-and-enter-data-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+",
+                "line": undefined,
+                "message": undefined,
+                "path": undefined,
+              },
+              "name": "Grid › Data Entry › should be able to use keyboard to navigate horizontal grid and enter data",
+              "result": "failed",
+              "time": 10000,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "
+  [chrome] › tests/grid.spec.ts:277:9 › Grid › Data Entry › should be able to use keyboard to navigate vertical grid and enter data › Select BUNCH from column OFF FORM list 
+
+    Test timeout of 10000ms exceeded.
+
+    Error: locator.click: Target closed
+    =========================== logs ===========================
+    waiting for locator('[data-qa-id="clip-edit-field-OFF FORM"]')
+    ============================================================
+
+       at ../../../packages/playwright-shared/src/models/locators/base/base.locator.ts:13
+
+      11 |
+      12 |   async click(force: boolean = false) {
+    > 13 |     await this.locator.click({ force });
+         |                        ^
+      14 |   }
+      15 |
+      16 |   async doubleClick() {
+
+        at SelectLocator.click (/Users/connor.vidlock/Documents/GitHub/hudl-frontends/packages/playwright-shared/src/models/locators/base/base.locator.ts:13:24)
+        at /Users/connor.vidlock/Documents/GitHub/hudl-frontends/apps/watch/playwright/tests/models/actions/grid.actions.ts:93:58
+        at GridActions.enterGridSelectValue (/Users/connor.vidlock/Documents/GitHub/hudl-frontends/apps/watch/playwright/tests/models/actions/grid.actions.ts:92:16)
+        at /Users/connor.vidlock/Documents/GitHub/hudl-frontends/apps/watch/playwright/tests/grid.spec.ts:279:25
+
+    Pending operations:
+      - locator.click at ../../packages/playwright-shared/src/models/locators/base/base.locator.ts:13:24
+
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    playwright/test-results/tests-grid-Grid-Data-Entry-should-be-able-to-use-keyboard-to-navigate-vertical-grid-and-enter-data-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    playwright/test-results/tests-grid-Grid-Data-Entry-should-be-able-to-use-keyboard-to-navigate-vertical-grid-and-enter-data-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace playwright/test-results/tests-grid-Grid-Data-Entry-should-be-able-to-use-keyboard-to-navigate-vertical-grid-and-enter-data-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+",
+                "line": undefined,
+                "message": undefined,
+                "path": undefined,
+              },
+              "name": "Grid › Data Entry › should be able to use keyboard to navigate vertical grid and enter data",
+              "result": "failed",
+              "time": 10000,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Grid › Data Entry › should display error state for input with invalid data",
+              "result": "success",
+              "time": 5853,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Grid › Data Entry › confirm auto-fill works correctly",
+              "result": "success",
+              "time": 5021,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Grid › Tagged data › Wrestling › should display correct wrestler names tagged from Assist",
+              "result": "success",
+              "time": 2522,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Grid › Tagged data › Wrestling › should display correct score and points tagged from Assist",
+              "result": "success",
+              "time": 2655,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Grid › Tagged data › Wrestling › should display correct Period tagged from Assist",
+              "result": "success",
+              "time": 2666,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Grid › Tagged data › Wrestling › should display correct Key Moments tagged from Assist",
+              "result": "success",
+              "time": 2908,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Grid › Tagged data › Wrestling › should edit cells using the team roster",
+              "result": "success",
+              "time": 4794,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Grid › Tagged data › Wrestling › should change key moment type and update grid data",
+              "result": "success",
+              "time": 5662,
+            },
+          ],
+        },
+      ],
+      "name": "tests/grid.spec.ts",
+      "totalTime": 115892,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "Grid › Onboarding › Field Visibility › should successfully display field visibility onboarding prompt",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Grid › Onboarding › Field Visibility › Grid Hotkey Tooltip › should successfully display grid hotkey onboarding prompt",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Grid › Onboarding › Field Visibility › Reorder Field Sets › should successfully display field reorder onboarding prompt",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Grid › Onboarding › Field Visibility › Quick Edit › should successfully display quick edit onboarding prompt",
+              "result": "skipped",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "tests/onboarding.spec.ts",
+      "totalTime": 0,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "Mock stats engine for speed › Filter by Offense in Phase card",
+              "result": "success",
+              "time": 3542,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Mock stats engine for speed › Filter by defense in phase card",
+              "result": "success",
+              "time": 2471,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Mock stats engine for speed › Key stats card stats appear as expected when opponent is selected",
+              "result": "success",
+              "time": 3207,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Mock stats engine for speed › Selecting a Key Stats filter updates both the Navigation Module and Insights Module cards - FG percentage for Team in Context",
+              "result": "success",
+              "time": 2932,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Mock stats engine for speed › Selecting a Key Stats filter updates both the Navigation Module and Insights Module cards - 2FG Makes for Team in Context",
+              "result": "success",
+              "time": 3549,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Mock stats engine for speed › Selecting a Key Stats filter updates both the Navigation Module and Insights Module cards - 2FG Attempts for Team in Context",
+              "result": "success",
+              "time": 2802,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Mock stats engine for speed › Selecting a Key Stats filter updates both the Navigation Module and Insights Module cards - 3FG Makes for Team in Context",
+              "result": "success",
+              "time": 2949,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Mock stats engine for speed › Selecting a Key Stats filter updates both the Navigation Module and Insights Module cards - 3FG Attempts for Team in Context",
+              "result": "success",
+              "time": 2937,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Mock stats engine for speed › Selecting a Key Stats filter updates both the Navigation Module and Insights Module cards - Off. Rebounds for Team in Context",
+              "result": "success",
+              "time": 3277,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Mock stats engine for speed › Selecting a Key Stats filter updates both the Navigation Module and Insights Module cards - Def. Rebounds for Team in Context",
+              "result": "success",
+              "time": 2799,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Mock stats engine for speed › Selecting a Key Stats filter updates both the Navigation Module and Insights Module cards - Assists for Team in Context",
+              "result": "success",
+              "time": 3056,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Mock stats engine for speed › Selecting a Key Stats filter updates both the Navigation Module and Insights Module cards - Steal for Team in Context",
+              "result": "success",
+              "time": 2850,
+            },
+          ],
+        },
+      ],
+      "name": "tests/statsEngine.spec.ts",
+      "totalTime": 36371,
+    },
+  ],
+  "totalTime": 59092.58599999547,
+}
+`;
+
 exports[`java-junit tests playwright test report - ignore skipped tests 1`] = `
 TestRunResult {
   "path": "fixtures/external/java/playwright-report.xml",
