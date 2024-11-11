@@ -47,6 +47,7 @@ class TestReporter {
   readonly workDirInput = core.getInput('working-directory', {required: false})
   readonly onlySummary = core.getInput('only-summary', {required: false}) === 'true'
   readonly showHTMLNotice = core.getInput('show-html-notice', {required: false}) === 'true'
+  readonly actionRunNumber = core.getInput('action-run-number', {required: false})
   readonly token = core.getInput('token', {required: true})
   readonly octokit: InstanceType<typeof GitHub>
   readonly context = getCheckRunContext()
@@ -226,7 +227,7 @@ class TestReporter {
       core.info('*** showhtmlnotice set to true')
       core.exportVariable('TEST_RESULTS_URL', `${resp.data.html_url}`)
       core.info(`Set env var to: ${process.env.TEST_RESULTS_URL}`)
-      core.info(`::notice title=Test Results::${resp.data.html_url}`)
+      core.info(`::notice title=Test Results ${this.actionRunNumber}::${resp.data.html_url}`)
     }
     core.setOutput('url', resp.data.url)
     core.setOutput('url_html', resp.data.html_url)

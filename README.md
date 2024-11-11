@@ -185,6 +185,9 @@ jobs:
     # Defaults to false
     show-html-notice: 'true'
 
+    # Allows for passing through calling actions run number and attempt. When running reruns, its hard to differentiate runs. 
+    action-run-number: ''
+
     # Personal access token used to interact with Github API
     # Default: ${{ github.token }}
     token: ''

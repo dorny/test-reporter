@@ -69,6 +69,11 @@ inputs:
     description: Show the link to the html results in the form of a notice on the summary page. This was created to combat a GHA bug of not always displaying the results in the right action.
     required: false
     default: 'false'
+  action-run-number:
+    description: |
+      The run number of the action that generated the test results. Passed in through calling action into reporter
+    required: false
+    default: ''
   only-summary:
     description: |
       Allows you to generate only the summary.
