@@ -147,6 +147,7 @@ export class DotnetTrxParser implements TestParser {
 
     const message = test.error.Message[0]
     const stackTrace = test.error.StackTrace[0]
+    const stdOut = test.error.StdOut?.join('\n') || ''
     let path
     let line
 
@@ -160,7 +161,7 @@ export class DotnetTrxParser implements TestParser {
       path,
       line,
       message,
-      details: `${message}\n${stackTrace}`
+      details: `${message}\n${stackTrace}\n${stdOut}`
     }
   }
 
