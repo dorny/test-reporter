@@ -151,9 +151,10 @@ export class DotnetTrxParser implements TestParser {
       return undefined;
     }
 
-    const message = error.Message[0];
-    const stackTrace = error.StackTrace[0];
-    const stdOut = test.stdOut || ''; // Use StdOut from Test object
+    const message = test.error.Message[0];
+    const stackTrace = test.error.StackTrace[0];
+    const stdOut = test.stdOut || ''; // Add StdOut
+
     let path;
     let line;
 
@@ -167,7 +168,8 @@ export class DotnetTrxParser implements TestParser {
       path,
       line,
       message,
-      details: `${message}\n${stackTrace}\n${stdOut}`,
+      details: `${message}\n${stackTrace}`,
+      stdOut, // Include StdOut in TestCaseError
     };
   }
 
