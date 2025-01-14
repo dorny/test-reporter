@@ -51,7 +51,7 @@ export interface UnitTestResult {
 
 export interface Output {
   ErrorInfo: ErrorInfo[]
-  StdOut: string[]
+  StdOut: string[] | undefined;
 }
 export interface ErrorInfo {
   Message: string[]
