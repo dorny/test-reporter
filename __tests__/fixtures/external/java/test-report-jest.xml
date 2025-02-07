@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite id="0" name="maintenance/maintenance-filter/maintenance-filter.component.spec.ts" errors="0" package="maintenance-filter.component.spec.ts" hostname="localhost" tests="1" failures="1" time="1.204" timestamp="2023-05-22T13:04:47">
+    <properties>
+    </properties>
+    <testcase classname="MaintenanceFilterComponent" name="should create" time="0">
+      <failure message="NullInjectorError: R3InjectorError(DynamicTestModule)[InjectionToken L10N_LOCALE -&gt; InjectionToken L10N_LOCALE]: 
+  NullInjectorError: No provider for InjectionToken L10N_LOCALE!
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)" type="AssertionError">
+      </failure>
+    </testcase>
+    <system-out/>
+    <system-err/>
+  </testsuite>
+  <testsuite id="1" name="app.component.spec.ts" errors="0" package="app.component.spec.ts" hostname="localhost" tests="2" failures="0" time="1.244" timestamp="2023-05-22T13:04:47">
+    <properties>
+    </properties>
+    <testcase classname="AppComponent" name="should create the app" time="0">
+    </testcase>
+    <testcase classname="AppComponent" name="should forward to login page" time="0">
+    </testcase>
+    <system-out/>
+    <system-err/>
+  </testsuite>
+</testsuites>
