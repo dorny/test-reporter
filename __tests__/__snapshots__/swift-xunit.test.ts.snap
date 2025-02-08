@@ -2,9 +2,11 @@
 
 exports[`swift-xunit tests report from swift test results matches snapshot 1`] = `
 TestRunResult {
+  "coveragePercentage": undefined,
   "path": "fixtures/swift-xunit.xml",
   "suites": [
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "AcmeLibTests.AcmeLibTests",

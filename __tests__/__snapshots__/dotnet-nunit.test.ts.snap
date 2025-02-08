@@ -2,9 +2,11 @@
 
 exports[`dotnet-nunit tests report from ./reports/dotnet test results matches snapshot 1`] = `
 TestRunResult {
+  "coveragePercentage": undefined,
   "path": "fixtures/dotnet-nunit.xml",
   "suites": [
     TestSuiteResult {
+      "coveragePercentage": undefined,
       "groups": [
         TestGroupResult {
           "name": "CalculatorTests",

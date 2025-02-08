@@ -21,6 +21,7 @@ import {SwiftXunitParser} from './parsers/swift-xunit/swift-xunit-parser'
 
 import {normalizeDirPath, normalizeFilePath} from './utils/path-utils'
 import {getCheckRunContext} from './utils/github-utils'
+import {ApexJsonParser} from './parsers/apex-json/apex-json-parsers'
 
 async function main(): Promise<void> {
   try {
@@ -48,6 +49,7 @@ class TestReporter {
   readonly useActionsSummary = core.getInput('use-actions-summary', {required: false}) === 'true'
   readonly badgeTitle = core.getInput('badge-title', {required: false})
   readonly token = core.getInput('token', {required: true})
+  readonly createPRComment = core.getInput('create-pr-comment', {required: false}) === 'true'
   readonly octokit: InstanceType<typeof GitHub>
   readonly context = getCheckRunContext()
 
@@ -218,6 +220,22 @@ class TestReporter {
       core.info(`Check run HTML: ${resp.data.html_url}`)
       core.setOutput('url', resp.data.url)
       core.setOutput('url_html', resp.data.html_url)
+
+      if (this.createPRComment) {
+        const {pull_request} = github.context.payload
+
+        if (pull_request) {
+          core.info('Attaching Test Summary as a comment to the PR')
+
+          const comment = `## Test Summary\n\n${summary}`
+
+          await this.octokit.rest.issues.createComment({
+            ...github.context.repo,
+            issue_number: pull_request.number,
+            body: comment
+          })
+        }
+      }
     }
 
     return results
@@ -243,6 +261,8 @@ class TestReporter {
         return new RspecJsonParser(options)
       case 'swift-xunit':
         return new SwiftXunitParser(options)
+      case 'apex-json':
+        return new ApexJsonParser(options)
       default:
         throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`)
     }
