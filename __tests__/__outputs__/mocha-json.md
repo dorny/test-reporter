@@ -1,4 +1,5 @@
-![Tests failed](https://img.shields.io/badge/tests-1%20passed%2C%204%20failed%2C%201%20skipped-critical)
+[![Tests failed](https://img.shields.io/badge/tests-1%20passed%2C%204%20failed%2C%201%20skipped-critical)](#user-content-test-report)
+# <a name="user-content-test-report"></a> Tests report
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
 |fixtures/mocha-json.json|1 ✅|4 ❌|1 ⚪|12ms|
