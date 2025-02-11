@@ -230,44 +230,55 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
 
 function getTestsReport(ts: TestSuiteResult, runIndex: number, suiteIndex: number, options: ReportOptions): string[] {
   if (options.listTests === 'failed' && ts.result !== 'failed') {
-    return []
+    return [];
   }
-  const groups = ts.groups
+  const groups = ts.groups;
   if (groups.length === 0) {
-    return []
+    return [];
   }
 
-  const sections: string[] = []
+  const sections: string[] = [];
 
-  const tsName = ts.name
-  const tsSlug = makeSuiteSlug(runIndex, suiteIndex)
-  const tsNameLink = `<a id="${tsSlug.id}" href="${options.baseUrl + tsSlug.link}">${tsName}</a>`
-  const icon = getResultIcon(ts.result)
-  sections.push(`### ${icon}\xa0${tsNameLink}`)
+  const tsName = ts.name;
+  const tsSlug = makeSuiteSlug(runIndex, suiteIndex);
+  const tsNameLink = `<a id="${tsSlug.id}" href="${options.baseUrl + tsSlug.link}">${tsName}</a>`;
+  const icon = getResultIcon(ts.result);
+  sections.push(`### ${icon}\xa0${tsNameLink}`);
 
-  sections.push('```')
+  sections.push('```');
   for (const grp of groups) {
     if (grp.name) {
-      sections.push(grp.name)
+      sections.push(grp.name);
     }
-    const space = grp.name ? '  ' : ''
+    const space = grp.name ? '  ' : '';
     for (const tc of grp.tests) {
-      const result = getResultIcon(tc.result)
-      sections.push(`${space}${result} ${tc.name}`)
+      const result = getResultIcon(tc.result);
+      sections.push(`${space}${result} ${tc.name}`);
       if (tc.error) {
-        const lines = (tc.error.message ?? getFirstNonEmptyLine(tc.error.details)?.trim())
-          ?.split(/\r?\n/g)
-          .map(l => '\t' + l)
-        if (lines) {
-          sections.push(...lines)
+        const errorDetails: string[] = [];
+
+        if (tc.error.message) {
+          errorDetails.push(tc.error.message);
         }
+        if (tc.error.details) {
+          errorDetails.push(tc.error.details);
+        }
+        if (tc.error.stdOut) {
+          errorDetails.push(`StdOut:\n${tc.error.stdOut}`); // Include StdOut in report
+        }
+
+        const lines = errorDetails.flatMap((detail) =>
+          detail.split(/\r?\n/g).map((line) => `\t${line}`)
+        );
+        sections.push(...lines);
       }
     }
   }
-  sections.push('```')
+  sections.push('```');
 
-  return sections
+  return sections;
 }
+
 
 function makeRunSlug(runIndex: number): {id: string; link: string} {
   // use prefix to avoid slug conflicts after escaping the paths
