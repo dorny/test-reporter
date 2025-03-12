@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.0.0
+* Parse JUnit report with detailed message in failure https://github.com/dorny/test-reporter/pull/559
+* Support displaying test results in markdown using GitHub Actions Job Summaries https://github.com/dorny/test-reporter/pull/383
+
+## 1.9.1
+* Fix problematic retransmission of authentication token https://github.com/dorny/test-reporter/pull/438
+* Report correct number of tests in Dart https://github.com/dorny/test-reporter/pull/426
+* Number of completed tests mismatches passed/failed https://github.com/dorny/test-reporter/issues/319
+
+## 1.9.0
+* Add support for Rspec (Ruby) https://github.com/dorny/test-reporter/pull/398
+
 ## 1.8.0
 * Add `SwiftXunitParser` class based on `JavaJunitParser` for `swift-xunit` reporter https://github.com/dorny/test-reporter/pull/317
 * Use NodeJS 18 LTS as default runtime https://github.com/dorny/test-reporter/pull/332
