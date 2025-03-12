@@ -26,6 +26,38 @@ TestRunResult {
 }
 `;
 
+exports[`jest-junit tests parsing junit report with message succeeds 1`] = `
+TestRunResult {
+  "path": "fixtures/junit-with-message.xml",
+  "suites": [
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "Fails",
+          "tests": [
+            TestCaseResult {
+              "error": {
+                "details": "error.cpp:01
+      Expected: true
+      Which is: false >",
+                "line": undefined,
+                "path": undefined,
+              },
+              "name": "Test",
+              "result": "failed",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "Test",
+      "totalTime": 1,
+    },
+  ],
+  "totalTime": 1,
+}
+`;
+
 exports[`jest-junit tests report from #235 testing react components named <ComponentName /> 1`] = `
 TestRunResult {
   "path": "fixtures/external/jest/jest-react-component-test-results.xml",
