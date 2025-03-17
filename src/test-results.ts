@@ -129,8 +129,10 @@ export class TestCaseResult {
 export type TestExecutionResult = 'success' | 'skipped' | 'failed' | undefined
 
 export interface TestCaseError {
-  path?: string
-  line?: number
-  message?: string
-  details: string
+  path?: string;
+  line?: number;
+  message: string;
+  details: string;
+  stdOut?: string;
 }
+
