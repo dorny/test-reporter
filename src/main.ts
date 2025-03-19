@@ -48,6 +48,7 @@ class TestReporter {
   readonly onlySummary = core.getInput('only-summary', {required: false}) === 'true'
   readonly token = core.getInput('token', {required: true})
   readonly slackWebhook = core.getInput('slack-url', {required: false})
+  readonly githubEvent = core.getInput('github-event', {required: false})
   readonly resultsEndpoint = core.getInput('test-results-endpoint', {required: false})
   readonly resultsEndpointSecret = core.getInput('test-results-endpoint-secret', {required: false})
   readonly octokit: InstanceType<typeof GitHub>
@@ -357,7 +358,9 @@ class TestReporter {
           }
         })
 
-        await webhook.send(req)
+        if (this.githubEvent === 'schedule' || failed > 0) {
+          await webhook.send(req)
+        }
       }
     } catch (error) {
       core.error(`Could not create check to store the results`)

@@ -174,6 +174,7 @@ class TestReporter {
         this.onlySummary = core.getInput('only-summary', { required: false }) === 'true';
         this.token = core.getInput('token', { required: true });
         this.slackWebhook = core.getInput('slack-url', { required: false });
+        this.githubEvent = core.getInput('github-event', { required: false });
         this.resultsEndpoint = core.getInput('test-results-endpoint', { required: false });
         this.resultsEndpointSecret = core.getInput('test-results-endpoint-secret', { required: false });
         this.context = (0, github_utils_1.getCheckRunContext)();
@@ -408,7 +409,9 @@ class TestReporter {
                             });
                         }
                     });
-                    yield webhook.send(req);
+                    if (this.githubEvent === 'schedule' || failed > 0) {
+                        yield webhook.send(req);
+                    }
                 }
             }
             catch (error) {
