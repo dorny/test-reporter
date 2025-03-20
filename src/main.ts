@@ -9,11 +9,7 @@ import {TestRunResult, TestRunResultWithUrl} from './test-results'
 import {getAnnotations} from './report/get-annotations'
 import {getReport} from './report/get-report'
 
-import {DartJsonParser} from './parsers/dart-json/dart-json-parser'
 import {DotnetTrxParser} from './parsers/dotnet-trx/dotnet-trx-parser'
-import {JavaJunitParser} from './parsers/java-junit/java-junit-parser'
-import {JestJunitParser} from './parsers/jest-junit/jest-junit-parser'
-import {MochaJsonParser} from './parsers/mocha-json/mocha-json-parser'
 
 import {normalizeDirPath, normalizeFilePath} from './utils/path-utils'
 import {getCheckRunContext} from './utils/github-utils'
@@ -370,22 +366,7 @@ class TestReporter {
   }
 
   getParser(reporter: string, options: ParseOptions): TestParser {
-    switch (reporter) {
-      case 'dart-json':
-        return new DartJsonParser(options, 'dart')
-      case 'dotnet-trx':
-        return new DotnetTrxParser(options)
-      case 'flutter-json':
-        return new DartJsonParser(options, 'flutter')
-      case 'java-junit':
-        return new JavaJunitParser(options)
-      case 'jest-junit':
-        return new JestJunitParser(options)
-      case 'mocha-json':
-        return new MochaJsonParser(options)
-      default:
-        throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`)
-    }
+    return new DotnetTrxParser(options)
   }
 }
 
