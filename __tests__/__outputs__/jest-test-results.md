@@ -2,7 +2,7 @@
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
 |fixtures/external/jest/jest-test-results.xml|4207 ✅|2 ❌|30 ⚪|166s|
-## ❌ <a id="user-content-r0" href="#r0">fixtures/external/jest/jest-test-results.xml</a>
+## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/external/jest/jest-test-results.xml</a>
 **4239** tests were completed in **166s** with **4207** passed, **2** failed and **30** skipped.
 |Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
@@ -81,7 +81,7 @@
 |e2e/__tests__/jasmineAsyncWithPendingDuringTest.ts|1 ✅||1 ⚪|72ms|
 |e2e/__tests__/jest.config.js.test.ts|3 ✅|||2s|
 |e2e/__tests__/jest.config.ts.test.ts|5 ✅|||14s|
-|[e2e/__tests__/jestChangedFiles.test.ts](#r0s75)|9 ✅|1 ❌||9s|
+|[e2e/__tests__/jestChangedFiles.test.ts](#user-content-r0s75)|9 ✅|1 ❌||9s|
 |e2e/__tests__/jestEnvironmentJsdom.test.ts|1 ✅|||2s|
 |e2e/__tests__/jestRequireActual.test.ts|1 ✅|||2s|
 |e2e/__tests__/jestRequireMock.test.ts|1 ✅|||2s|
@@ -104,7 +104,7 @@
 |e2e/__tests__/nodePath.test.ts|1 ✅|||866ms|
 |e2e/__tests__/noTestFound.test.ts|2 ✅|||1s|
 |e2e/__tests__/noTestsFound.test.ts|5 ✅|||3s|
-|[e2e/__tests__/onlyChanged.test.ts](#r0s98)|8 ✅|1 ❌||22s|
+|[e2e/__tests__/onlyChanged.test.ts](#user-content-r0s98)|8 ✅|1 ❌||22s|
 |e2e/__tests__/onlyFailuresNonWatch.test.ts|1 ✅|||3s|
 |e2e/__tests__/overrideGlobals.test.ts|2 ✅|||2s|
 |e2e/__tests__/pnp.test.ts|1 ✅|||3s|
@@ -406,7 +406,7 @@
 |packages/pretty-format/src/__tests__/prettyFormat.test.ts|86 ✅|||219ms|
 |packages/pretty-format/src/__tests__/react.test.tsx|55 ✅|||325ms|
 |packages/pretty-format/src/__tests__/ReactElement.test.ts|3 ✅|||64ms|
-### ❌ <a id="user-content-r0s75" href="#r0s75">e2e/__tests__/jestChangedFiles.test.ts</a>
+### ❌ <a id="user-content-r0s75" href="#user-content-r0s75">e2e/__tests__/jestChangedFiles.test.ts</a>
 ```
 ✅ gets hg SCM roots and dedupes them
 ✅ gets git SCM roots and dedupes them
@@ -420,7 +420,7 @@
 ✅ monitors only root paths for hg
 ✅ handles a bad revision for "changedSince", for hg
 ```
-### ❌ <a id="user-content-r0s98" href="#r0s98">e2e/__tests__/onlyChanged.test.ts</a>
+### ❌ <a id="user-content-r0s98" href="#user-content-r0s98">e2e/__tests__/onlyChanged.test.ts</a>
 ```
 ✅ run for "onlyChanged" and "changedSince"
 ✅ run only changed files

@@ -2,12 +2,12 @@
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
 |fixtures/dotnet-nunit.xml|3 ✅|5 ❌|1 ⚪|230ms|
-## ❌ <a id="user-content-r0" href="#r0">fixtures/dotnet-nunit.xml</a>
+## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/dotnet-nunit.xml</a>
 **9** tests were completed in **230ms** with **3** passed, **5** failed and **1** skipped.
 |Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
-|[DotnetTests.NUnitV3Tests.dll.DotnetTests.XUnitTests](#r0s0)|3 ✅|5 ❌|1 ⚪|69ms|
-### ❌ <a id="user-content-r0s0" href="#r0s0">DotnetTests.NUnitV3Tests.dll.DotnetTests.XUnitTests</a>
+|[DotnetTests.NUnitV3Tests.dll.DotnetTests.XUnitTests](#user-content-r0s0)|3 ✅|5 ❌|1 ⚪|69ms|
+### ❌ <a id="user-content-r0s0" href="#user-content-r0s0">DotnetTests.NUnitV3Tests.dll.DotnetTests.XUnitTests</a>
 ```
 CalculatorTests
   ✅ Is_Even_Number(2)

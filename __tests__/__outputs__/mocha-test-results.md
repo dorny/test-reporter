@@ -4,47 +4,47 @@
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
 |fixtures/external/mocha/mocha-test-results.json|833 ✅||6 ⚪|6s|
-## ✅ <a id="user-content-r0" href="#r0">fixtures/external/mocha/mocha-test-results.json</a>
+## ✅ <a id="user-content-r0" href="#user-content-r0">fixtures/external/mocha/mocha-test-results.json</a>
 **839** tests were completed in **6s** with **833** passed, **0** failed and **6** skipped.
 |Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
-|[test/node-unit/buffered-worker-pool.spec.js](#r0s0)|14 ✅|||8ms|
-|[test/node-unit/cli/config.spec.js](#r0s1)|10 ✅|||8ms|
-|[test/node-unit/cli/node-flags.spec.js](#r0s2)|105 ✅|||9ms|
-|[test/node-unit/cli/options.spec.js](#r0s3)|36 ✅|||250ms|
-|[test/node-unit/cli/run-helpers.spec.js](#r0s4)|9 ✅|||8ms|
-|[test/node-unit/cli/run.spec.js](#r0s5)|40 ✅|||4ms|
-|[test/node-unit/mocha.spec.js](#r0s6)|24 ✅|||33ms|
-|[test/node-unit/parallel-buffered-runner.spec.js](#r0s7)|19 ✅|||23ms|
-|[test/node-unit/reporters/parallel-buffered.spec.js](#r0s8)|6 ✅|||16ms|
-|[test/node-unit/serializer.spec.js](#r0s9)|40 ✅|||31ms|
-|[test/node-unit/stack-trace-filter.spec.js](#r0s10)|2 ✅||4 ⚪|1ms|
-|[test/node-unit/utils.spec.js](#r0s11)|5 ✅|||1ms|
-|[test/node-unit/worker.spec.js](#r0s12)|15 ✅|||92ms|
-|[test/unit/context.spec.js](#r0s13)|8 ✅|||5ms|
-|[test/unit/duration.spec.js](#r0s14)|3 ✅|||166ms|
-|[test/unit/errors.spec.js](#r0s15)|13 ✅|||5ms|
-|[test/unit/globals.spec.js](#r0s16)|4 ✅|||0ms|
-|[test/unit/grep.spec.js](#r0s17)|8 ✅|||2ms|
-|[test/unit/hook-async.spec.js](#r0s18)|3 ✅|||1ms|
-|[test/unit/hook-sync-nested.spec.js](#r0s19)|4 ✅|||1ms|
-|[test/unit/hook-sync.spec.js](#r0s20)|3 ✅|||0ms|
-|[test/unit/hook-timeout.spec.js](#r0s21)|1 ✅|||0ms|
-|[test/unit/hook.spec.js](#r0s22)|4 ✅|||0ms|
-|[test/unit/mocha.spec.js](#r0s23)|115 ✅||1 ⚪|128ms|
-|[test/unit/overspecified-async.spec.js](#r0s24)|1 ✅|||3ms|
-|[test/unit/parse-query.spec.js](#r0s25)|2 ✅|||1ms|
-|[test/unit/plugin-loader.spec.js](#r0s26)|41 ✅||1 ⚪|16ms|
-|[test/unit/required-tokens.spec.js](#r0s27)|1 ✅|||0ms|
-|[test/unit/root.spec.js](#r0s28)|1 ✅|||0ms|
-|[test/unit/runnable.spec.js](#r0s29)|55 ✅|||122ms|
-|[test/unit/runner.spec.js](#r0s30)|77 ✅|||43ms|
-|[test/unit/suite.spec.js](#r0s31)|57 ✅|||14ms|
-|[test/unit/test.spec.js](#r0s32)|15 ✅|||0ms|
-|[test/unit/throw.spec.js](#r0s33)|9 ✅|||9ms|
-|[test/unit/timeout.spec.js](#r0s34)|8 ✅|||109ms|
-|[test/unit/utils.spec.js](#r0s35)|75 ✅|||24ms|
-### ✅ <a id="user-content-r0s0" href="#r0s0">test/node-unit/buffered-worker-pool.spec.js</a>
+|[test/node-unit/buffered-worker-pool.spec.js](#user-content-r0s0)|14 ✅|||8ms|
+|[test/node-unit/cli/config.spec.js](#user-content-r0s1)|10 ✅|||8ms|
+|[test/node-unit/cli/node-flags.spec.js](#user-content-r0s2)|105 ✅|||9ms|
+|[test/node-unit/cli/options.spec.js](#user-content-r0s3)|36 ✅|||250ms|
+|[test/node-unit/cli/run-helpers.spec.js](#user-content-r0s4)|9 ✅|||8ms|
+|[test/node-unit/cli/run.spec.js](#user-content-r0s5)|40 ✅|||4ms|
+|[test/node-unit/mocha.spec.js](#user-content-r0s6)|24 ✅|||33ms|
+|[test/node-unit/parallel-buffered-runner.spec.js](#user-content-r0s7)|19 ✅|||23ms|
+|[test/node-unit/reporters/parallel-buffered.spec.js](#user-content-r0s8)|6 ✅|||16ms|
+|[test/node-unit/serializer.spec.js](#user-content-r0s9)|40 ✅|||31ms|
+|[test/node-unit/stack-trace-filter.spec.js](#user-content-r0s10)|2 ✅||4 ⚪|1ms|
+|[test/node-unit/utils.spec.js](#user-content-r0s11)|5 ✅|||1ms|
+|[test/node-unit/worker.spec.js](#user-content-r0s12)|15 ✅|||92ms|
+|[test/unit/context.spec.js](#user-content-r0s13)|8 ✅|||5ms|
+|[test/unit/duration.spec.js](#user-content-r0s14)|3 ✅|||166ms|
+|[test/unit/errors.spec.js](#user-content-r0s15)|13 ✅|||5ms|
+|[test/unit/globals.spec.js](#user-content-r0s16)|4 ✅|||0ms|
+|[test/unit/grep.spec.js](#user-content-r0s17)|8 ✅|||2ms|
+|[test/unit/hook-async.spec.js](#user-content-r0s18)|3 ✅|||1ms|
+|[test/unit/hook-sync-nested.spec.js](#user-content-r0s19)|4 ✅|||1ms|
+|[test/unit/hook-sync.spec.js](#user-content-r0s20)|3 ✅|||0ms|
+|[test/unit/hook-timeout.spec.js](#user-content-r0s21)|1 ✅|||0ms|
+|[test/unit/hook.spec.js](#user-content-r0s22)|4 ✅|||0ms|
+|[test/unit/mocha.spec.js](#user-content-r0s23)|115 ✅||1 ⚪|128ms|
+|[test/unit/overspecified-async.spec.js](#user-content-r0s24)|1 ✅|||3ms|
+|[test/unit/parse-query.spec.js](#user-content-r0s25)|2 ✅|||1ms|
+|[test/unit/plugin-loader.spec.js](#user-content-r0s26)|41 ✅||1 ⚪|16ms|
+|[test/unit/required-tokens.spec.js](#user-content-r0s27)|1 ✅|||0ms|
+|[test/unit/root.spec.js](#user-content-r0s28)|1 ✅|||0ms|
+|[test/unit/runnable.spec.js](#user-content-r0s29)|55 ✅|||122ms|
+|[test/unit/runner.spec.js](#user-content-r0s30)|77 ✅|||43ms|
+|[test/unit/suite.spec.js](#user-content-r0s31)|57 ✅|||14ms|
+|[test/unit/test.spec.js](#user-content-r0s32)|15 ✅|||0ms|
+|[test/unit/throw.spec.js](#user-content-r0s33)|9 ✅|||9ms|
+|[test/unit/timeout.spec.js](#user-content-r0s34)|8 ✅|||109ms|
+|[test/unit/utils.spec.js](#user-content-r0s35)|75 ✅|||24ms|
+### ✅ <a id="user-content-r0s0" href="#user-content-r0s0">test/node-unit/buffered-worker-pool.spec.js</a>
 ```
 class BufferedWorkerPool constructor
   ✅ should apply defaults
@@ -73,7 +73,7 @@ class BufferedWorkerPool static method serializeOptions() when called multiple t
 class BufferedWorkerPool static method serializeOptions() when passed no arguments
   ✅ should not throw
 ```
-### ✅ <a id="user-content-r0s1" href="#r0s1">test/node-unit/cli/config.spec.js</a>
+### ✅ <a id="user-content-r0s1" href="#user-content-r0s1">test/node-unit/cli/config.spec.js</a>
 ```
 cli/config findConfig()
   ✅ should look for one of the config files using findup-sync
@@ -95,7 +95,7 @@ cli/config loadConfig() when parsing succeeds when supplied a filepath with ".ym
 cli/config loadConfig() when supplied a filepath with unsupported extension
   ✅ should use the JSON parser
 ```
-### ✅ <a id="user-content-r0s2" href="#r0s2">test/node-unit/cli/node-flags.spec.js</a>
+### ✅ <a id="user-content-r0s2" href="#user-content-r0s2">test/node-unit/cli/node-flags.spec.js</a>
 ```
 node-flags impliesNoTimeouts()
   ✅ should return true for inspect flags
@@ -209,7 +209,7 @@ node-flags unparseNodeFlags()
   ✅ should handle multiple v8 flags
   ✅ should handle single v8 flags
 ```
-### ✅ <a id="user-content-r0s3" href="#r0s3">test/node-unit/cli/options.spec.js</a>
+### ✅ <a id="user-content-r0s3" href="#user-content-r0s3">test/node-unit/cli/options.spec.js</a>
 ```
 options loadOptions() "extension" handling when user does not supply "extension" option
   ✅ should retain the default
@@ -268,7 +268,7 @@ options loadOptions() when parameter provided rc file when path to config (`--co
   ✅ should not look for a config
   ✅ should throw to warn the user
 ```
-### ✅ <a id="user-content-r0s4" href="#r0s4">test/node-unit/cli/run-helpers.spec.js</a>
+### ✅ <a id="user-content-r0s4" href="#user-content-r0s4">test/node-unit/cli/run-helpers.spec.js</a>
 ```
 helpers list() when given a comma-delimited string
   ✅ should return a flat array
@@ -287,7 +287,7 @@ helpers validateLegacyPlugin() when used with an "interfaces" key
 helpers validateLegacyPlugin() when used with an unknown plugin type
   ✅ should fail
 ```
-### ✅ <a id="user-content-r0s5" href="#r0s5">test/node-unit/cli/run.spec.js</a>
+### ✅ <a id="user-content-r0s5" href="#user-content-r0s5">test/node-unit/cli/run.spec.js</a>
 ```
 command run builder array type
   ✅ should include option extension
@@ -334,7 +334,7 @@ command run builder string type
   ✅ should include option timeout
   ✅ should include option ui
 ```
-### ✅ <a id="user-content-r0s6" href="#r0s6">test/node-unit/mocha.spec.js</a>
+### ✅ <a id="user-content-r0s6" href="#user-content-r0s6">test/node-unit/mocha.spec.js</a>
 ```
 Mocha instance method addFile()
   ✅ should add the given file to the files array
@@ -378,7 +378,7 @@ Mocha instance method unloadFiles()
 Mocha static method unloadFile()
   ✅ should unload a specific file from cache
 ```
-### ✅ <a id="user-content-r0s7" href="#r0s7">test/node-unit/parallel-buffered-runner.spec.js</a>
+### ✅ <a id="user-content-r0s7" href="#user-content-r0s7">test/node-unit/parallel-buffered-runner.spec.js</a>
 ```
 parallel-buffered-runner ParallelBufferedRunner constructor
   ✅ should start in "IDLE" state
@@ -416,7 +416,7 @@ parallel-buffered-runner ParallelBufferedRunner instance method workerReporter()
 parallel-buffered-runner ParallelBufferedRunner instance property _state
   ✅ should disallow an invalid state transition
 ```
-### ✅ <a id="user-content-r0s8" href="#r0s8">test/node-unit/reporters/parallel-buffered.spec.js</a>
+### ✅ <a id="user-content-r0s8" href="#user-content-r0s8">test/node-unit/reporters/parallel-buffered.spec.js</a>
 ```
 ParallelBuffered constructor
   ✅ should listen for Runner events
@@ -429,7 +429,7 @@ ParallelBuffered instance method done
   ✅ should execute its callback with a SerializableWorkerResult
   ✅ should reset its `events` prop
 ```
-### ✅ <a id="user-content-r0s9" href="#r0s9">test/node-unit/serializer.spec.js</a>
+### ✅ <a id="user-content-r0s9" href="#user-content-r0s9">test/node-unit/serializer.spec.js</a>
 ```
 serializer function deserialize when passed a non-object value
   ✅ should return the value
@@ -505,7 +505,7 @@ serializer SerializableWorkerResult static method isSerializedWorkerResult when 
 serializer SerializableWorkerResult static method isSerializedWorkerResult when passed an object without an appropriate `__type` prop
   ✅ should return `false`
 ```
-### ✅ <a id="user-content-r0s10" href="#r0s10">test/node-unit/stack-trace-filter.spec.js</a>
+### ✅ <a id="user-content-r0s10" href="#user-content-r0s10">test/node-unit/stack-trace-filter.spec.js</a>
 ```
 stackTraceFilter() on browser
   ✅ does not strip out other bower_components
@@ -517,7 +517,7 @@ stackTraceFilter() on node on POSIX OS
 stackTraceFilter() on node on Windows
   ✅ should work on Windows
 ```
-### ✅ <a id="user-content-r0s11" href="#r0s11">test/node-unit/utils.spec.js</a>
+### ✅ <a id="user-content-r0s11" href="#user-content-r0s11">test/node-unit/utils.spec.js</a>
 ```
 utils function canonicalType()
   ✅ should return "asyncfunction" if the parameter is an async function
@@ -528,7 +528,7 @@ utils function type()
   ✅ should return "error" if the parameter is an Error
   ✅ should return "function" if the parameter is an async function
 ```
-### ✅ <a id="user-content-r0s12" href="#r0s12">test/node-unit/worker.spec.js</a>
+### ✅ <a id="user-content-r0s12" href="#user-content-r0s12">test/node-unit/worker.spec.js</a>
 ```
 worker when run as main process
   ✅ should throw
@@ -557,7 +557,7 @@ worker when run as worker process function run() when the file at "filepath" is 
 worker when run as worker process function run() when the file at "filepath" is loadable when serialization succeeds
   ✅ should resolve with a SerializedWorkerResult
 ```
-### ✅ <a id="user-content-r0s13" href="#r0s13">test/unit/context.spec.js</a>
+### ✅ <a id="user-content-r0s13" href="#user-content-r0s13">test/unit/context.spec.js</a>
 ```
 Context nested
   ✅ should work
@@ -574,7 +574,7 @@ methods slow()
 methods timeout()
   ✅ should return the timeout
 ```
-### ✅ <a id="user-content-r0s14" href="#r0s14">test/unit/duration.spec.js</a>
+### ✅ <a id="user-content-r0s14" href="#user-content-r0s14">test/unit/duration.spec.js</a>
 ```
 durations when fast
   ✅ should not highlight
@@ -583,7 +583,7 @@ durations when reasonable
 durations when slow
   ✅ should highlight in red
 ```
-### ✅ <a id="user-content-r0s15" href="#r0s15">test/unit/errors.spec.js</a>
+### ✅ <a id="user-content-r0s15" href="#user-content-r0s15">test/unit/errors.spec.js</a>
 ```
 Errors createForbiddenExclusivityError() when Mocha instance is not running in a worker process
   ✅ should output a message regarding --forbid-only
@@ -608,7 +608,7 @@ Errors warn()
   ✅ should ignore falsy messages
   ✅ should not cache messages
 ```
-### ✅ <a id="user-content-r0s16" href="#r0s16">test/unit/globals.spec.js</a>
+### ✅ <a id="user-content-r0s16" href="#user-content-r0s16">test/unit/globals.spec.js</a>
 ```
 global leaks
   ✅ should cause tests to fail
@@ -616,7 +616,7 @@ global leaks
   ✅ should pass when prefixed "mocha-"
   ✅ should pass with wildcard
 ```
-### ✅ <a id="user-content-r0s17" href="#r0s17">test/unit/grep.spec.js</a>
+### ✅ <a id="user-content-r0s17" href="#user-content-r0s17">test/unit/grep.spec.js</a>
 ```
 Mocha .grep()
   ✅ should add a RegExp to the mocha.options object
@@ -631,14 +631,14 @@ Mocha "grep" option
 Mocha "invert" option
   ✅ should add a Boolean to the mocha.options object
 ```
-### ✅ <a id="user-content-r0s18" href="#r0s18">test/unit/hook-async.spec.js</a>
+### ✅ <a id="user-content-r0s18" href="#user-content-r0s18">test/unit/hook-async.spec.js</a>
 ```
 async hooks
   ✅ one
   ✅ three
   ✅ two
 ```
-### ✅ <a id="user-content-r0s19" href="#r0s19">test/unit/hook-sync-nested.spec.js</a>
+### ✅ <a id="user-content-r0s19" href="#user-content-r0s19">test/unit/hook-sync-nested.spec.js</a>
 ```
 serial nested
   ✅ bar
@@ -647,19 +647,19 @@ serial nested hooks
   ✅ one
   ✅ two
 ```
-### ✅ <a id="user-content-r0s20" href="#r0s20">test/unit/hook-sync.spec.js</a>
+### ✅ <a id="user-content-r0s20" href="#user-content-r0s20">test/unit/hook-sync.spec.js</a>
 ```
 serial hooks
   ✅ one
   ✅ three
   ✅ two
 ```
-### ✅ <a id="user-content-r0s21" href="#r0s21">test/unit/hook-timeout.spec.js</a>
+### ✅ <a id="user-content-r0s21" href="#user-content-r0s21">test/unit/hook-timeout.spec.js</a>
 ```
 hook timeout
   ✅ should work
 ```
-### ✅ <a id="user-content-r0s22" href="#r0s22">test/unit/hook.spec.js</a>
+### ✅ <a id="user-content-r0s22" href="#user-content-r0s22">test/unit/hook.spec.js</a>
 ```
 Hook error
   ✅ should get the hook._error when called without arguments
@@ -668,7 +668,7 @@ Hook reset
   ✅ should call Runnable.reset
   ✅ should reset the error state
 ```
-### ✅ <a id="user-content-r0s23" href="#r0s23">test/unit/mocha.spec.js</a>
+### ✅ <a id="user-content-r0s23" href="#user-content-r0s23">test/unit/mocha.spec.js</a>
 ```
 Mocha constructor
   ✅ should set _cleanReferencesAfterRun to true
@@ -868,18 +868,18 @@ Mocha instance method runGlobalTeardown() when fixture(s) are present
 Mocha instance method unloadFile() when run in a browser
   ✅ should throw
 ```
-### ✅ <a id="user-content-r0s24" href="#r0s24">test/unit/overspecified-async.spec.js</a>
+### ✅ <a id="user-content-r0s24" href="#user-content-r0s24">test/unit/overspecified-async.spec.js</a>
 ```
 overspecified asynchronous resolution method
   ✅ should fail when multiple methods are used
 ```
-### ✅ <a id="user-content-r0s25" href="#r0s25">test/unit/parse-query.spec.js</a>
+### ✅ <a id="user-content-r0s25" href="#user-content-r0s25">test/unit/parse-query.spec.js</a>
 ```
 parseQuery()
   ✅ should get queryString and return key-value object
   ✅ should parse "+" as a space
 ```
-### ✅ <a id="user-content-r0s26" href="#r0s26">test/unit/plugin-loader.spec.js</a>
+### ✅ <a id="user-content-r0s26" href="#user-content-r0s26">test/unit/plugin-loader.spec.js</a>
 ```
 plugin module class PluginLoader constructor when passed custom plugins
   ✅ should register the custom plugins
@@ -958,17 +958,17 @@ plugin module root hooks plugin 🎣 when impl is an array
 plugin module root hooks plugin 🎣 when impl is an object of functions
   ⚪ should pass validation
 ```
-### ✅ <a id="user-content-r0s27" href="#r0s27">test/unit/required-tokens.spec.js</a>
+### ✅ <a id="user-content-r0s27" href="#user-content-r0s27">test/unit/required-tokens.spec.js</a>
 ```
 using imported describe
   ✅ using imported it
 ```
-### ✅ <a id="user-content-r0s28" href="#r0s28">test/unit/root.spec.js</a>
+### ✅ <a id="user-content-r0s28" href="#user-content-r0s28">test/unit/root.spec.js</a>
 ```
 root
   ✅ should be a valid suite
 ```
-### ✅ <a id="user-content-r0s29" href="#r0s29">test/unit/runnable.spec.js</a>
+### ✅ <a id="user-content-r0s29" href="#user-content-r0s29">test/unit/runnable.spec.js</a>
 ```
 Runnable(title, fn) .run(fn) if async
   ✅ this.skip() should halt synchronous execution
@@ -1069,7 +1069,7 @@ Runnable(title, fn) when arity >= 1
   ✅ should be .async
   ✅ should not be .sync
 ```
-### ✅ <a id="user-content-r0s30" href="#r0s30">test/unit/runner.spec.js</a>
+### ✅ <a id="user-content-r0s30" href="#user-content-r0s30">test/unit/runner.spec.js</a>
 ```
 Runner instance method _uncaught() when called with a non-Runner context
   ✅ should throw
@@ -1185,7 +1185,7 @@ Runner instance method uncaught() when provided an object argument when argument
 Runner instance method workerReporter()
   ✅ should throw
 ```
-### ✅ <a id="user-content-r0s31" href="#r0s31">test/unit/suite.spec.js</a>
+### ✅ <a id="user-content-r0s31" href="#user-content-r0s31">test/unit/suite.spec.js</a>
 ```
 Suite instance method addSuite()
   ✅ adds the suite to the suites collection
@@ -1278,7 +1278,7 @@ Test initialization
   ✅ should not throw if the title is a string
   ✅ should throw an error if the title isn't a string
 ```
-### ✅ <a id="user-content-r0s32" href="#r0s32">test/unit/test.spec.js</a>
+### ✅ <a id="user-content-r0s32" href="#user-content-r0s32">test/unit/test.spec.js</a>
 ```
 Test .clone()
   ✅ should add/keep the retriedTest value
@@ -1300,7 +1300,7 @@ Test .reset()
   ✅ should call Runnable.reset
   ✅ should reset the run state
 ```
-### ✅ <a id="user-content-r0s33" href="#r0s33">test/unit/throw.spec.js</a>
+### ✅ <a id="user-content-r0s33" href="#user-content-r0s33">test/unit/throw.spec.js</a>
 ```
 a test that throws non-extensible
   ✅ should not pass if throwing async and test is async
@@ -1315,7 +1315,7 @@ a test that throws undefined
   ✅ should not pass if throwing sync and test is async
   ✅ should not pass if throwing sync and test is sync
 ```
-### ✅ <a id="user-content-r0s34" href="#r0s34">test/unit/timeout.spec.js</a>
+### ✅ <a id="user-content-r0s34" href="#user-content-r0s34">test/unit/timeout.spec.js</a>
 ```
 timeouts
   ✅ should allow overriding per-test
@@ -1333,7 +1333,7 @@ timeouts disabling using beforeEach
 timeouts disabling using timeout(0)
   ✅ should suppress timeout(4)
 ```
-### ✅ <a id="user-content-r0s35" href="#r0s35">test/unit/utils.spec.js</a>
+### ✅ <a id="user-content-r0s35" href="#user-content-r0s35">test/unit/utils.spec.js</a>
 ```
 lib/utils canonicalType()
   ✅ should recognize various types

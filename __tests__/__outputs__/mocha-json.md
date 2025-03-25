@@ -2,13 +2,13 @@
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
 |fixtures/mocha-json.json|1 ✅|4 ❌|1 ⚪|12ms|
-## ❌ <a id="user-content-r0" href="#r0">fixtures/mocha-json.json</a>
+## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/mocha-json.json</a>
 **6** tests were completed in **12ms** with **1** passed, **4** failed and **1** skipped.
 |Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
-|[test/main.test.js](#r0s0)|1 ✅|3 ❌||1ms|
-|[test/second.test.js](#r0s1)||1 ❌|1 ⚪|8ms|
-### ❌ <a id="user-content-r0s0" href="#r0s0">test/main.test.js</a>
+|[test/main.test.js](#user-content-r0s0)|1 ✅|3 ❌||1ms|
+|[test/second.test.js](#user-content-r0s1)||1 ❌|1 ⚪|8ms|
+### ❌ <a id="user-content-r0s0" href="#user-content-r0s0">test/main.test.js</a>
 ```
 Test 1
   ✅ Passing test
@@ -24,7 +24,7 @@ Test 2
   ❌ Exception in test
 	Some error
 ```
-### ❌ <a id="user-content-r0s1" href="#r0s1">test/second.test.js</a>
+### ❌ <a id="user-content-r0s1" href="#user-content-r0s1">test/second.test.js</a>
 ```
 ⚪ Skipped test
 ❌ Timeout test
