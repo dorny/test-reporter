@@ -2,27 +2,27 @@
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
 |fixtures/external/flutter/provider-test-results.json|268 ✅|1 ❌||0ms|
-## ❌ <a id="user-content-r0" href="#r0">fixtures/external/flutter/provider-test-results.json</a>
+## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/external/flutter/provider-test-results.json</a>
 **269** tests were completed in **0ms** with **268** passed, **1** failed and **0** skipped.
 |Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
-|[test/builder_test.dart](#r0s0)|24 ✅|||402ms|
-|[test/change_notifier_provider_test.dart](#r0s1)|10 ✅|||306ms|
-|[test/consumer_test.dart](#r0s2)|18 ✅|||340ms|
-|[test/context_test.dart](#r0s3)|31 ✅|||698ms|
-|[test/future_provider_test.dart](#r0s4)|10 ✅|||305ms|
-|[test/inherited_provider_test.dart](#r0s5)|81 ✅|||1s|
-|[test/listenable_provider_test.dart](#r0s6)|16 ✅|||353ms|
-|[test/listenable_proxy_provider_test.dart](#r0s7)|12 ✅|||373ms|
-|[test/multi_provider_test.dart](#r0s8)|3 ✅|||198ms|
-|[test/provider_test.dart](#r0s9)|11 ✅|||306ms|
-|[test/proxy_provider_test.dart](#r0s10)|16 ✅|||438ms|
-|[test/reassemble_test.dart](#r0s11)|3 ✅|||221ms|
-|[test/selector_test.dart](#r0s12)|17 ✅|||364ms|
-|[test/stateful_provider_test.dart](#r0s13)|4 ✅|||254ms|
-|[test/stream_provider_test.dart](#r0s14)|8 ✅|||282ms|
-|[test/value_listenable_provider_test.dart](#r0s15)|4 ✅|1 ❌||327ms|
-### ✅ <a id="user-content-r0s0" href="#r0s0">test/builder_test.dart</a>
+|[test/builder_test.dart](#user-content-r0s0)|24 ✅|||402ms|
+|[test/change_notifier_provider_test.dart](#user-content-r0s1)|10 ✅|||306ms|
+|[test/consumer_test.dart](#user-content-r0s2)|18 ✅|||340ms|
+|[test/context_test.dart](#user-content-r0s3)|31 ✅|||698ms|
+|[test/future_provider_test.dart](#user-content-r0s4)|10 ✅|||305ms|
+|[test/inherited_provider_test.dart](#user-content-r0s5)|81 ✅|||1s|
+|[test/listenable_provider_test.dart](#user-content-r0s6)|16 ✅|||353ms|
+|[test/listenable_proxy_provider_test.dart](#user-content-r0s7)|12 ✅|||373ms|
+|[test/multi_provider_test.dart](#user-content-r0s8)|3 ✅|||198ms|
+|[test/provider_test.dart](#user-content-r0s9)|11 ✅|||306ms|
+|[test/proxy_provider_test.dart](#user-content-r0s10)|16 ✅|||438ms|
+|[test/reassemble_test.dart](#user-content-r0s11)|3 ✅|||221ms|
+|[test/selector_test.dart](#user-content-r0s12)|17 ✅|||364ms|
+|[test/stateful_provider_test.dart](#user-content-r0s13)|4 ✅|||254ms|
+|[test/stream_provider_test.dart](#user-content-r0s14)|8 ✅|||282ms|
+|[test/value_listenable_provider_test.dart](#user-content-r0s15)|4 ✅|1 ❌||327ms|
+### ✅ <a id="user-content-r0s0" href="#user-content-r0s0">test/builder_test.dart</a>
 ```
 ChangeNotifierProvider
   ✅ default
@@ -54,7 +54,7 @@ MultiProvider
   ✅ with ProxyProvider5
   ✅ with ProxyProvider6
 ```
-### ✅ <a id="user-content-r0s1" href="#r0s1">test/change_notifier_provider_test.dart</a>
+### ✅ <a id="user-content-r0s1" href="#user-content-r0s1">test/change_notifier_provider_test.dart</a>
 ```
 ✅ Use builder property, not child
 ChangeNotifierProvider
@@ -68,7 +68,7 @@ ChangeNotifierProvider
   ✅ builder6
   ✅ builder0
 ```
-### ✅ <a id="user-content-r0s2" href="#r0s2">test/consumer_test.dart</a>
+### ✅ <a id="user-content-r0s2" href="#user-content-r0s2">test/consumer_test.dart</a>
 ```
 consumer
   ✅ obtains value from Provider<T>
@@ -95,7 +95,7 @@ consumer6
   ✅ crashed with no builder
   ✅ can be used inside MultiProvider
 ```
-### ✅ <a id="user-content-r0s3" href="#r0s3">test/context_test.dart</a>
+### ✅ <a id="user-content-r0s3" href="#user-content-r0s3">test/context_test.dart</a>
 ```
 ✅ watch in layoutbuilder
 ✅ select in layoutbuilder
@@ -130,7 +130,7 @@ BuildContext
   ✅ context.select deeply compares sets
   ✅ context.watch listens to value changes
 ```
-### ✅ <a id="user-content-r0s4" href="#r0s4">test/future_provider_test.dart</a>
+### ✅ <a id="user-content-r0s4" href="#user-content-r0s4">test/future_provider_test.dart</a>
 ```
 ✅ works with MultiProvider
 ✅ (catchError) previous future completes after transition is no-op
@@ -144,7 +144,7 @@ BuildContext
 FutureProvider()
   ✅ crashes if builder is null
 ```
-### ✅ <a id="user-content-r0s5" href="#r0s5">test/inherited_provider_test.dart</a>
+### ✅ <a id="user-content-r0s5" href="#user-content-r0s5">test/inherited_provider_test.dart</a>
 ```
 ✅ regression test #377
 ✅ rebuild on dependency flags update
@@ -233,7 +233,7 @@ DeferredInheritedProvider()
   ✅ dispose
   ✅ dispose no-op if never built
 ```
-### ✅ <a id="user-content-r0s6" href="#r0s6">test/listenable_provider_test.dart</a>
+### ✅ <a id="user-content-r0s6" href="#user-content-r0s6">test/listenable_provider_test.dart</a>
 ```
 ListenableProvider
   ✅ works with MultiProvider
@@ -255,7 +255,7 @@ ListenableProvider stateful constructor
   ✅ pass down key
   ✅ throws if create is null
 ```
-### ✅ <a id="user-content-r0s7" href="#r0s7">test/listenable_proxy_provider_test.dart</a>
+### ✅ <a id="user-content-r0s7" href="#user-content-r0s7">test/listenable_proxy_provider_test.dart</a>
 ```
 ListenableProxyProvider
   ✅ throws if update is missing
@@ -272,14 +272,14 @@ ListenableProxyProvider variants
   ✅ ListenableProxyProvider5
   ✅ ListenableProxyProvider6
 ```
-### ✅ <a id="user-content-r0s8" href="#r0s8">test/multi_provider_test.dart</a>
+### ✅ <a id="user-content-r0s8" href="#user-content-r0s8">test/multi_provider_test.dart</a>
 ```
 MultiProvider
   ✅ throw if providers is null
   ✅ MultiProvider children can only access parent providers
   ✅ MultiProvider.providers with ignored child
 ```
-### ✅ <a id="user-content-r0s9" href="#r0s9">test/provider_test.dart</a>
+### ✅ <a id="user-content-r0s9" href="#user-content-r0s9">test/provider_test.dart</a>
 ```
 ✅ works with MultiProvider
 Provider.of
@@ -295,7 +295,7 @@ Provider
   ✅ throws an error if no provider found
   ✅ update should notify
 ```
-### ✅ <a id="user-content-r0s10" href="#r0s10">test/proxy_provider_test.dart</a>
+### ✅ <a id="user-content-r0s10" href="#user-content-r0s10">test/proxy_provider_test.dart</a>
 ```
 ProxyProvider
   ✅ throws if the provided value is a Listenable/Stream
@@ -316,13 +316,13 @@ ProxyProvider variants
   ✅ ProxyProvider5
   ✅ ProxyProvider6
 ```
-### ✅ <a id="user-content-r0s11" href="#r0s11">test/reassemble_test.dart</a>
+### ✅ <a id="user-content-r0s11" href="#user-content-r0s11">test/reassemble_test.dart</a>
 ```
 ✅ ReassembleHandler
 ✅ unevaluated create
 ✅ unevaluated create
 ```
-### ✅ <a id="user-content-r0s12" href="#r0s12">test/selector_test.dart</a>
+### ✅ <a id="user-content-r0s12" href="#user-content-r0s12">test/selector_test.dart</a>
 ```
 ✅ asserts that builder/selector are not null
 ✅ Deep compare maps by default
@@ -342,14 +342,14 @@ ProxyProvider variants
 ✅ Selector5
 ✅ Selector6
 ```
-### ✅ <a id="user-content-r0s13" href="#r0s13">test/stateful_provider_test.dart</a>
+### ✅ <a id="user-content-r0s13" href="#user-content-r0s13">test/stateful_provider_test.dart</a>
 ```
 ✅ asserts
 ✅ works with MultiProvider
 ✅ calls create only once
 ✅ dispose
 ```
-### ✅ <a id="user-content-r0s14" href="#r0s14">test/stream_provider_test.dart</a>
+### ✅ <a id="user-content-r0s14" href="#user-content-r0s14">test/stream_provider_test.dart</a>
 ```
 ✅ works with MultiProvider
 ✅ transition from stream to stream preserve state
@@ -361,7 +361,7 @@ StreamProvider()
   ✅ create and dispose stream with builder
   ✅ crashes if builder is null
 ```
-### ❌ <a id="user-content-r0s15" href="#r0s15">test/value_listenable_provider_test.dart</a>
+### ❌ <a id="user-content-r0s15" href="#user-content-r0s15">test/value_listenable_provider_test.dart</a>
 ```
 valueListenableProvider
   ✅ rebuilds when value change
