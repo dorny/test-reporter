@@ -1,4 +1,5 @@
-![Tests failed](https://img.shields.io/badge/tests-793%20passed%2C%201%20failed%2C%2014%20skipped-critical)
+[![Tests failed](https://img.shields.io/badge/tests-793%20passed%2C%201%20failed%2C%2014%20skipped-critical)](#user-content-test-report)
+# <a name="user-content-test-report"></a> Tests report
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
 |fixtures/external/java/pulsar-test-report.xml|793 ✅|1 ❌|14 ⚪|2127s|

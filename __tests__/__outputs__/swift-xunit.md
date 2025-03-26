@@ -1,4 +1,5 @@
-![Tests failed](https://img.shields.io/badge/tests-2%20passed%2C%201%20failed-critical)
+[![Tests failed](https://img.shields.io/badge/tests-2%20passed%2C%201%20failed-critical)](#user-content-test-report)
+# <a name="user-content-test-report"></a> Tests report
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
 |fixtures/swift-xunit.xml|2 ✅|1 ❌||220ms|

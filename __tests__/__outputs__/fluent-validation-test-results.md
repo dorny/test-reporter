@@ -1,6 +1,7 @@
-![Tests passed successfully](https://img.shields.io/badge/tests-803%20passed%2C%201%20skipped-success)
+[![Tests passed successfully](https://img.shields.io/badge/tests-803%20passed%2C%201%20skipped-success)](#user-content-test-report)
 <details><summary>Expand for details</summary>
  
+# <a name="user-content-test-report"></a> Tests report
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
 |fixtures/external/FluentValidation.Tests.trx|803 ✅||1 ⚪|4s|
