@@ -3,7 +3,7 @@ import * as path from 'path'
 
 import {JavaJunitParser} from '../src/parsers/java-junit/java-junit-parser'
 import {ParseOptions} from '../src/test-parser'
-import {getReport} from '../src/report/get-report'
+import {ReportOptions, getReport} from '../src/report/get-report'
 import {normalizeFilePath} from '../src/utils/path-utils'
 
 describe('java-junit tests', () => {
@@ -89,5 +89,48 @@ describe('java-junit tests', () => {
 
     expect(result.result === 'failed')
     expect(result.failed === 1)
+  })
+
+  it('report includes the default report title', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'empty', 'java-junit.xml')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: []
+    }
+
+    const parser = new JavaJunitParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+    const report = getReport([result])
+    // Report should have the title as the first line
+    expect(report).toMatch(/^# Test Results\n/)
+  })
+
+  it('report includes a custom report title', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'empty', 'java-junit.xml')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: []
+    }
+
+    const parser = new JavaJunitParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+    const reportOpts: ReportOptions = {
+      listSuites: 'all',
+      listTests: 'all',
+      baseUrl: '',
+      onlySummary: false,
+      useActionsSummary: true,
+      badgeTitle: 'tests',
+      reportTitle: 'My Custom Title'
+    }
+    const report = getReport([result], reportOpts)
+    // Report should have the title as the first line
+    expect(report).toMatch(/^# My Custom Title\n/)
   })
 })
