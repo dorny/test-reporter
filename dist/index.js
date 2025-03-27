@@ -307,6 +307,7 @@ class TestReporter {
     onlySummary = core.getInput('only-summary', { required: false }) === 'true';
     useActionsSummary = core.getInput('use-actions-summary', { required: false }) === 'true';
     badgeTitle = core.getInput('badge-title', { required: false });
+    reportTitle = core.getInput('report-title', { required: false });
     token = core.getInput('token', { required: true });
     octokit;
     context = (0, github_utils_1.getCheckRunContext)();
@@ -399,10 +400,18 @@ class TestReporter {
                 throw error;
             }
         }
-        const { listSuites, listTests, onlySummary, useActionsSummary, badgeTitle } = this;
+        const { listSuites, listTests, onlySummary, useActionsSummary, badgeTitle, reportTitle } = this;
         let baseUrl = '';
         if (this.useActionsSummary) {
-            const summary = (0, get_report_1.getReport)(results, { listSuites, listTests, baseUrl, onlySummary, useActionsSummary, badgeTitle });
+            const summary = (0, get_report_1.getReport)(results, {
+                listSuites,
+                listTests,
+                baseUrl,
+                onlySummary,
+                useActionsSummary,
+                badgeTitle,
+                reportTitle
+            });
             core.info('Summary content:');
             core.info(summary);
             await core.summary.addRaw(summary).write();
@@ -421,7 +430,15 @@ class TestReporter {
             });
             core.info('Creating report summary');
             baseUrl = createResp.data.html_url;
-            const summary = (0, get_report_1.getReport)(results, { listSuites, listTests, baseUrl, onlySummary, useActionsSummary, badgeTitle });
+            const summary = (0, get_report_1.getReport)(results, {
+                listSuites,
+                listTests,
+                baseUrl,
+                onlySummary,
+                useActionsSummary,
+                badgeTitle,
+                reportTitle
+            });
             core.info('Creating annotations');
             const annotations = (0, get_annotations_1.getAnnotations)(results, this.maxAnnotations);
             const isFailed = this.failOnError && results.some(tr => tr.result === 'failed');
@@ -1800,7 +1817,8 @@ const defaultOptions = {
     baseUrl: '',
     onlySummary: false,
     useActionsSummary: true,
-    badgeTitle: 'tests'
+    badgeTitle: 'tests',
+    reportTitle: 'Test Results'
 };
 function getReport(results, options = defaultOptions) {
     core.info('Generating check run summary');
@@ -1863,6 +1881,7 @@ function getByteLength(text) {
 }
 function renderReport(results, options) {
     const sections = [];
+    sections.push(`# ${options.reportTitle}`);
     const badge = getReportBadge(results, options);
     sections.push(badge);
     const runs = getTestRunsReport(results, options);
