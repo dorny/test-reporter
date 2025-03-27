@@ -1,7 +1,6 @@
 import * as fs from 'fs'
 import glob from 'fast-glob'
 import {FileContent, InputProvider, ReportInput} from './input-provider'
-import {listFiles} from '../utils/git'
 import Zip from 'adm-zip'
 import path from 'path'
 
@@ -33,6 +32,6 @@ export class LocalFileProvider implements InputProvider {
   }
 
   async listTrackedFiles(): Promise<string[]> {
-    return listFiles()
+    return [];
   }
 }
