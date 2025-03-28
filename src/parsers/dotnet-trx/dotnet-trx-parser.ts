@@ -109,10 +109,17 @@ export class DotnetTrxParser implements TestParser {
     const totalTime = parseIsoDate(times.finish).getTime() - parseIsoDate(times.start).getTime()
 
     const suites = testClasses.map(testClass => {
-      const tests = testClass.tests.map(test => {
-        const error = this.getError(test)
-        return new TestCaseResult(test.name, test.result, test.duration, error)
-      })
+      const tests = testClass.tests
+        .map(test => {
+          const error = this.getError(test)
+
+          if (error?.message === 'Skipping test: it does not belong to this partition.') {
+            return null
+          }
+
+          return new TestCaseResult(test.name, test.result, test.duration, error)
+        })
+        .filter(t => t != null)
       const group = new TestGroupResult(null, tests)
       return new TestSuiteResult(testClass.name, [group])
     })

@@ -5,7 +5,7 @@ import {GitHub} from '@actions/github/lib/utils'
 import {LocalFileProvider} from './input-providers/local-file-provider'
 import {FileContent} from './input-providers/input-provider'
 import {ParseOptions, TestParser} from './test-parser'
-import {TestRunResult, TestRunResultWithUrl} from './test-results'
+import {TestRunResult, TestRunResultWithUrl, TestSuiteResult} from './test-results'
 import {getAnnotations} from './report/get-annotations'
 import {getReport} from './report/get-report'
 
@@ -198,7 +198,7 @@ class TestReporter {
 
     core.info(`Processing test results for check run ${name}`)
 
-    const results: TestRunResult[] = []
+    var results: TestRunResult[] = []
     const result: TestRunResultWithUrl = new TestRunResultWithUrl(results, null)
 
     for (const {file, content} of files) {
@@ -211,6 +211,41 @@ class TestReporter {
         throw error
       }
     }
+
+    function groupByPath(results: TestRunResult[]): TestRunResult[] {
+      // Group by path and merge results
+      return Object.values(
+        results.reduce(
+          (acc, result) => {
+            const existing = acc[result.path] || []
+            acc[result.path] = [...existing, result]
+            return acc
+          },
+          {} as Record<string, TestRunResult[]>
+        )
+      ).map(group => {
+        if (group.length === 1) return group[0]
+
+        // Just concatenate all suites and groups
+        const allSuites = group.flatMap(r => r.suites)
+        const allGroups = allSuites.flatMap(s => s.groups)
+
+        // Create a single suite with all groups
+        const mergedSuite = new TestSuiteResult(
+          allSuites[0].name,
+          allGroups,
+          allSuites.reduce((sum, s) => sum + s.time, 0)
+        )
+
+        return new TestRunResult(
+          group[0].path,
+          [mergedSuite],
+          group.reduce((sum, r) => sum + r.time, 0)
+        )
+      })
+    }
+
+    results = groupByPath(results)
 
     core.info(`Creating check run ${name}`)
     try {
