@@ -13,7 +13,8 @@ describe('java-junit tests', () => {
     baseUrl: '',
     onlySummary: false,
     useActionsSummary: true,
-    badgeTitle: 'tests'
+    badgeTitle: 'tests',
+    reportTitle: ''
   }
 
   it('produces empty test run result when there are no test cases', async () => {

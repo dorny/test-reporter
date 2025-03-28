@@ -154,6 +154,11 @@ jobs:
     # Allows you to generate reports for Actions Summary
     # https://github.blog/2022-05-09-supercharging-github-actions-with-job-summaries/
     use-actions-summary: 'true'
+    
+    # Optionally specify a title (Heading level 1) for the report. Leading and trailing whitespace are ignored.
+    # This is useful for separating your test report from other sections in the build summary.
+    # If omitted or set to whitespace/empty, no title will be printed.
+    report-title: ''
 
     # Customize the title of badges shown for each Actions Summary.
     # Useful when distinguish summaries for tests ran in multiple Actions steps.
@@ -345,7 +350,7 @@ Support for Swift test results in xUnit format is experimental - should work but
 
 Unfortunately, there are some known issues and limitations caused by GitHub API:
 
-- Test report (i.e. Check Run summary) is markdown text. No custom styling or HTML is possible.
+- Test report (i.e. build summary) is Markdown text. No custom styling or HTML is possible.
 - Maximum report size is 65535 bytes. Input parameters `list-suites` and `list-tests` will be automatically adjusted if max size is exceeded.
 - Test report can't reference any additional files (e.g. screenshots). You can use `actions/upload-artifact@v4` to upload them and inspect them manually.
 - Check Runs are created for specific commit SHA. It's not possible to specify under which workflow test report should belong if more
