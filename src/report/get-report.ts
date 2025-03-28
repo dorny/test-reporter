@@ -15,7 +15,7 @@ export interface ReportOptions {
   onlySummary: boolean
   useActionsSummary: boolean
   badgeTitle: string
-  reportTitle?: string
+  reportTitle: string
 }
 
 const defaultOptions: ReportOptions = {
@@ -24,7 +24,8 @@ const defaultOptions: ReportOptions = {
   baseUrl: '',
   onlySummary: false,
   useActionsSummary: true,
-  badgeTitle: 'tests'
+  badgeTitle: 'tests',
+  reportTitle: ''
 }
 
 export function getReport(results: TestRunResult[], options: ReportOptions = defaultOptions): string {
@@ -103,9 +104,8 @@ function getByteLength(text: string): number {
 function renderReport(results: TestRunResult[], options: ReportOptions): string[] {
   const sections: string[] = []
 
-  const {reportTitle} = options
-  // Suppress the report title for empty string or whitespace
-  if (reportTitle && reportTitle.trim()) {
+  const reportTitle: string = options.reportTitle.trim()
+  if (reportTitle) {
     sections.push(`# ${reportTitle}`)
   }
 
