@@ -5,7 +5,7 @@ import {GitHub} from '@actions/github/lib/utils'
 import {LocalFileProvider} from './input-providers/local-file-provider'
 import {FileContent} from './input-providers/input-provider'
 import {ParseOptions, TestParser} from './test-parser'
-import {TestRunResult, TestRunResultWithUrl, TestSuiteResult} from './test-results'
+import {TestRunResult, TestRunResultWithUrl} from './test-results'
 import {getAnnotations} from './report/get-annotations'
 import {getReport} from './report/get-report'
 
@@ -213,36 +213,26 @@ class TestReporter {
     }
 
     function groupByPath(results: TestRunResult[]): TestRunResult[] {
-      // Group by path and merge results
-      return Object.values(
-        results.reduce(
-          (acc, result) => {
-            const existing = acc[result.path] || []
-            acc[result.path] = [...existing, result]
-            return acc
-          },
-          {} as Record<string, TestRunResult[]>
-        )
-      ).map(group => {
-        if (group.length === 1) return group[0]
+      const pathMap = new Map<string, TestRunResult[]>()
 
-        // Just concatenate all suites and groups
-        const allSuites = group.flatMap(r => r.suites)
-        const allGroups = allSuites.flatMap(s => s.groups)
+      for (const result of results) {
+        const existing = pathMap.get(result.path) || []
+        pathMap.set(result.path, [...existing, result])
+      }
 
-        // Create a single suite with all groups
-        const mergedSuite = new TestSuiteResult(
-          allSuites[0].name,
-          allGroups,
-          allSuites.reduce((sum, s) => sum + s.time, 0)
-        )
+      const groupedResults: TestRunResult[] = []
 
-        return new TestRunResult(
-          group[0].path,
-          [mergedSuite],
-          group.reduce((sum, r) => sum + r.time, 0)
+      pathMap.forEach((results, path) => {
+        groupedResults.push(
+          new TestRunResult(
+            path,
+            results.flatMap(r => r.suites),
+            results.reduce((sum, r) => sum + r.time, 0)
+          )
         )
       })
+
+      return groupedResults
     }
 
     results = groupByPath(results)

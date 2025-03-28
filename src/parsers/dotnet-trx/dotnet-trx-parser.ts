@@ -113,7 +113,7 @@ export class DotnetTrxParser implements TestParser {
         .map(test => {
           const error = this.getError(test)
 
-          if (error?.message === 'Skipping test: it does not belong to this partition.') {
+          if (error?.message?.trim().match(/it does not belong to this partition/)) {
             return null
           }
 

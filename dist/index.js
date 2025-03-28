@@ -328,21 +328,16 @@ class TestReporter {
                 }
             }
             function groupByPath(results) {
-                // Group by path and merge results
-                return Object.values(results.reduce((acc, result) => {
-                    const existing = acc[result.path] || [];
-                    acc[result.path] = [...existing, result];
-                    return acc;
-                }, {})).map(group => {
-                    if (group.length === 1)
-                        return group[0];
-                    // Just concatenate all suites and groups
-                    const allSuites = group.flatMap(r => r.suites);
-                    const allGroups = allSuites.flatMap(s => s.groups);
-                    // Create a single suite with all groups
-                    const mergedSuite = new test_results_1.TestSuiteResult(allSuites[0].name, allGroups, allSuites.reduce((sum, s) => sum + s.time, 0));
-                    return new test_results_1.TestRunResult(group[0].path, [mergedSuite], group.reduce((sum, r) => sum + r.time, 0));
+                const pathMap = new Map();
+                for (const result of results) {
+                    const existing = pathMap.get(result.path) || [];
+                    pathMap.set(result.path, [...existing, result]);
+                }
+                const groupedResults = [];
+                pathMap.forEach((results, path) => {
+                    groupedResults.push(new test_results_1.TestRunResult(path, results.flatMap(r => r.suites), results.reduce((sum, r) => sum + r.time, 0)));
                 });
+                return groupedResults;
             }
             results = groupByPath(results);
             core.info(`Creating check run ${name}`);
@@ -570,8 +565,9 @@ class DotnetTrxParser {
         const suites = testClasses.map(testClass => {
             const tests = testClass.tests
                 .map(test => {
+                var _a;
                 const error = this.getError(test);
-                if ((error === null || error === void 0 ? void 0 : error.message) === 'Skipping test: it does not belong to this partition.') {
+                if ((_a = error === null || error === void 0 ? void 0 : error.message) === null || _a === void 0 ? void 0 : _a.trim().match(/it does not belong to this partition/)) {
                     return null;
                 }
                 return new test_results_1.TestCaseResult(test.name, test.result, test.duration, error);

@@ -9,6 +9,7 @@
   },
   "rules": {
     "no-var" : "off",
+    "github/array-foreach": "off",
     "i18n-text/no-en": "off",
     "eslint-comments/no-use": "off",
     "import/no-namespace": "off",
