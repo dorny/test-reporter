@@ -1,4 +1,3 @@
-# Test Results
 ![Tests passed successfully](https://img.shields.io/badge/tests-1%20passed-success)
 <details><summary>Expand for details</summary>
  

@@ -1816,8 +1816,7 @@ const defaultOptions = {
     baseUrl: '',
     onlySummary: false,
     useActionsSummary: true,
-    badgeTitle: 'tests',
-    reportTitle: 'Test Results'
+    badgeTitle: 'tests'
 };
 function getReport(results, options = defaultOptions) {
     core.info('Generating check run summary');
@@ -1880,7 +1879,11 @@ function getByteLength(text) {
 }
 function renderReport(results, options) {
     const sections = [];
-    sections.push(`# ${options.reportTitle}`);
+    const { reportTitle } = options;
+    // Suppress the report title for empty string or whitespace
+    if (reportTitle && reportTitle.trim()) {
+        sections.push(`# ${reportTitle}`);
+    }
     const badge = getReportBadge(results, options);
     sections.push(badge);
     const runs = getTestRunsReport(results, options);

@@ -1,4 +1,3 @@
-# Test Results
 ![Tests failed](https://img.shields.io/badge/tests-1%20passed%2C%201%20failed%2C%201%20skipped-critical)
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
