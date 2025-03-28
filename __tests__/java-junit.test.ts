@@ -7,6 +7,15 @@ import {ReportOptions, getReport} from '../src/report/get-report'
 import {normalizeFilePath} from '../src/utils/path-utils'
 
 describe('java-junit tests', () => {
+  const reportOpts: ReportOptions = {
+    listSuites: 'all',
+    listTests: 'all',
+    baseUrl: '',
+    onlySummary: false,
+    useActionsSummary: true,
+    badgeTitle: 'tests'
+  }
+
   it('produces empty test run result when there are no test cases', async () => {
     const fixturePath = path.join(__dirname, 'fixtures', 'empty', 'java-junit.xml')
     const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
@@ -91,8 +100,8 @@ describe('java-junit tests', () => {
     expect(result.failed === 1)
   })
 
-  it('report includes the default report title', async () => {
-    const fixturePath = path.join(__dirname, 'fixtures', 'empty', 'java-junit.xml')
+  it('report does not include a title by default', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'junit-with-message.xml')
     const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
     const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
 
@@ -104,8 +113,33 @@ describe('java-junit tests', () => {
     const parser = new JavaJunitParser(opts)
     const result = await parser.parse(filePath, fileContent)
     const report = getReport([result])
-    // Report should have the title as the first line
-    expect(report).toMatch(/^# Test Results\n/)
+    // Report should have the badge as the first line
+    expect(report).toMatch(/^!\[Tests failed]/)
+  })
+
+  it.each([
+    ['empty string', ''],
+    ['space', ' '],
+    ['tab', '\t'],
+    ['newline', '\n']
+  ])('report does not include a title when configured value is %s', async (_, reportTitle) => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'junit-with-message.xml')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: []
+    }
+
+    const parser = new JavaJunitParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+    const report = getReport([result], {
+      ...reportOpts,
+      reportTitle
+    })
+    // Report should have the badge as the first line
+    expect(report).toMatch(/^!\[Tests failed]/)
   })
 
   it('report includes a custom report title', async () => {
