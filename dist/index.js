@@ -314,7 +314,7 @@ class TestReporter {
                 core.warning(`No file matches path ${this.path}`);
             }
             core.info(`Processing test results for check run ${name}`);
-            const results = [];
+            var results = [];
             const result = new test_results_1.TestRunResultWithUrl(results, null);
             for (const { file, content } of files) {
                 try {
@@ -327,6 +327,24 @@ class TestReporter {
                     throw error;
                 }
             }
+            function groupByPath(results) {
+                // Group by path and merge results
+                return Object.values(results.reduce((acc, result) => {
+                    const existing = acc[result.path] || [];
+                    acc[result.path] = [...existing, result];
+                    return acc;
+                }, {})).map(group => {
+                    if (group.length === 1)
+                        return group[0];
+                    // Just concatenate all suites and groups
+                    const allSuites = group.flatMap(r => r.suites);
+                    const allGroups = allSuites.flatMap(s => s.groups);
+                    // Create a single suite with all groups
+                    const mergedSuite = new test_results_1.TestSuiteResult(allSuites[0].name, allGroups, allSuites.reduce((sum, s) => sum + s.time, 0));
+                    return new test_results_1.TestRunResult(group[0].path, [mergedSuite], group.reduce((sum, r) => sum + r.time, 0));
+                });
+            }
+            results = groupByPath(results);
             core.info(`Creating check run ${name}`);
             try {
                 const existingChecks = yield this.octokit.rest.checks.listForRef(Object.assign(Object.assign({ ref: this.context.sha }, github.context.repo), { check_name: name, status: 'queued' }));
@@ -550,10 +568,15 @@ class DotnetTrxParser {
         const times = trx.TestRun.Times[0].$;
         const totalTime = (0, parse_utils_1.parseIsoDate)(times.finish).getTime() - (0, parse_utils_1.parseIsoDate)(times.start).getTime();
         const suites = testClasses.map(testClass => {
-            const tests = testClass.tests.map(test => {
+            const tests = testClass.tests
+                .map(test => {
                 const error = this.getError(test);
+                if ((error === null || error === void 0 ? void 0 : error.message) === 'Skipping test: it does not belong to this partition.') {
+                    return null;
+                }
                 return new test_results_1.TestCaseResult(test.name, test.result, test.duration, error);
-            });
+            })
+                .filter(t => t != null);
             const group = new test_results_1.TestGroupResult(null, tests);
             return new test_results_1.TestSuiteResult(testClass.name, [group]);
         });
