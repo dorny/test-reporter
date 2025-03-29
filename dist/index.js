@@ -1803,6 +1803,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.DEFAULT_OPTIONS = void 0;
 exports.getReport = getReport;
 const core = __importStar(__nccwpck_require__(7484));
 const markdown_utils_1 = __nccwpck_require__(5129);
@@ -1811,7 +1812,7 @@ const parse_utils_1 = __nccwpck_require__(9633);
 const slugger_1 = __nccwpck_require__(9537);
 const MAX_REPORT_LENGTH = 65535;
 const MAX_ACTIONS_SUMMARY_LENGTH = 1048576;
-const defaultOptions = {
+exports.DEFAULT_OPTIONS = {
     listSuites: 'all',
     listTests: 'all',
     baseUrl: '',
@@ -1820,7 +1821,7 @@ const defaultOptions = {
     badgeTitle: 'tests',
     reportTitle: ''
 };
-function getReport(results, options = defaultOptions) {
+function getReport(results, options = exports.DEFAULT_OPTIONS) {
     core.info('Generating check run summary');
     applySort(results);
     const opts = { ...options };
@@ -1841,7 +1842,7 @@ function getReport(results, options = defaultOptions) {
     core.warning(`Test report summary exceeded limit of ${getMaxReportLength(options)} bytes and will be trimmed`);
     return trimReport(lines, options);
 }
-function getMaxReportLength(options = defaultOptions) {
+function getMaxReportLength(options = exports.DEFAULT_OPTIONS) {
     return options.useActionsSummary ? MAX_ACTIONS_SUMMARY_LENGTH : MAX_REPORT_LENGTH;
 }
 function trimReport(lines, options) {

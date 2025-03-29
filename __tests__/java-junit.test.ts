@@ -3,20 +3,10 @@ import * as path from 'path'
 
 import {JavaJunitParser} from '../src/parsers/java-junit/java-junit-parser'
 import {ParseOptions} from '../src/test-parser'
-import {ReportOptions, getReport} from '../src/report/get-report'
+import {DEFAULT_OPTIONS, getReport} from '../src/report/get-report'
 import {normalizeFilePath} from '../src/utils/path-utils'
 
 describe('java-junit tests', () => {
-  const reportOpts: ReportOptions = {
-    listSuites: 'all',
-    listTests: 'all',
-    baseUrl: '',
-    onlySummary: false,
-    useActionsSummary: true,
-    badgeTitle: 'tests',
-    reportTitle: ''
-  }
-
   it('produces empty test run result when there are no test cases', async () => {
     const fixturePath = path.join(__dirname, 'fixtures', 'empty', 'java-junit.xml')
     const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
@@ -136,7 +126,7 @@ describe('java-junit tests', () => {
     const parser = new JavaJunitParser(opts)
     const result = await parser.parse(filePath, fileContent)
     const report = getReport([result], {
-      ...reportOpts,
+      ...DEFAULT_OPTIONS,
       reportTitle
     })
     // Report should have the badge as the first line
@@ -155,16 +145,10 @@ describe('java-junit tests', () => {
 
     const parser = new JavaJunitParser(opts)
     const result = await parser.parse(filePath, fileContent)
-    const reportOpts: ReportOptions = {
-      listSuites: 'all',
-      listTests: 'all',
-      baseUrl: '',
-      onlySummary: false,
-      useActionsSummary: true,
-      badgeTitle: 'tests',
+    const report = getReport([result], {
+      ...DEFAULT_OPTIONS,
       reportTitle: 'My Custom Title'
-    }
-    const report = getReport([result], reportOpts)
+    })
     // Report should have the title as the first line
     expect(report).toMatch(/^# My Custom Title\n/)
   })

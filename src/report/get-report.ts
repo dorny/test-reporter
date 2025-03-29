@@ -18,7 +18,7 @@ export interface ReportOptions {
   reportTitle: string
 }
 
-const defaultOptions: ReportOptions = {
+export const DEFAULT_OPTIONS: ReportOptions = {
   listSuites: 'all',
   listTests: 'all',
   baseUrl: '',
@@ -28,7 +28,7 @@ const defaultOptions: ReportOptions = {
   reportTitle: ''
 }
 
-export function getReport(results: TestRunResult[], options: ReportOptions = defaultOptions): string {
+export function getReport(results: TestRunResult[], options: ReportOptions = DEFAULT_OPTIONS): string {
   core.info('Generating check run summary')
 
   applySort(results)
@@ -55,7 +55,7 @@ export function getReport(results: TestRunResult[], options: ReportOptions = def
   return trimReport(lines, options)
 }
 
-function getMaxReportLength(options: ReportOptions = defaultOptions): number {
+function getMaxReportLength(options: ReportOptions = DEFAULT_OPTIONS): number {
   return options.useActionsSummary ? MAX_ACTIONS_SUMMARY_LENGTH : MAX_REPORT_LENGTH
 }
 
