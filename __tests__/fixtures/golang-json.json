@@ -1,0 +1,46 @@
+{"Time":"2025-04-21T14:45:43.899731191-05:00","Action":"start","Package":"_/home/james_t/git/test-reporter/reports/go"}
+{"Time":"2025-04-21T14:45:43.907303273-05:00","Action":"run","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestPassing"}
+{"Time":"2025-04-21T14:45:43.907333465-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestPassing","Output":"=== RUN   TestPassing\n"}
+{"Time":"2025-04-21T14:45:43.998551886-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestPassing","Output":"    calculator_test.go:11: pass!\n"}
+{"Time":"2025-04-21T14:45:43.998572844-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestPassing","Output":"--- PASS: TestPassing (0.09s)\n"}
+{"Time":"2025-04-21T14:45:43.998576971-05:00","Action":"pass","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestPassing","Elapsed":0.09}
+{"Time":"2025-04-21T14:45:43.998580617-05:00","Action":"run","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestFailing"}
+{"Time":"2025-04-21T14:45:43.998582298-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestFailing","Output":"=== RUN   TestFailing\n"}
+{"Time":"2025-04-21T14:45:44.763532195-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestFailing","Output":"    calculator_test.go:19: expected 1+1 = 3, got 2\n"}
+{"Time":"2025-04-21T14:45:44.763556975-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestFailing","Output":"--- FAIL: TestFailing (0.76s)\n"}
+{"Time":"2025-04-21T14:45:44.763560434-05:00","Action":"fail","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestFailing","Elapsed":0.76}
+{"Time":"2025-04-21T14:45:44.763564534-05:00","Action":"run","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestPanicInsideFunction"}
+{"Time":"2025-04-21T14:45:44.763566339-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestPanicInsideFunction","Output":"=== RUN   TestPanicInsideFunction\n"}
+{"Time":"2025-04-21T14:45:44.763568422-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestPanicInsideFunction","Output":"    calculator_test.go:71: caught panic: runtime error: integer divide by zero\n"}
+{"Time":"2025-04-21T14:45:44.763571047-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestPanicInsideFunction","Output":"--- FAIL: TestPanicInsideFunction (0.00s)\n"}
+{"Time":"2025-04-21T14:45:44.763575434-05:00","Action":"fail","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestPanicInsideFunction","Elapsed":0}
+{"Time":"2025-04-21T14:45:44.763577511-05:00","Action":"run","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestPanicInsideTest"}
+{"Time":"2025-04-21T14:45:44.763579734-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestPanicInsideTest","Output":"=== RUN   TestPanicInsideTest\n"}
+{"Time":"2025-04-21T14:45:44.763584346-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestPanicInsideTest","Output":"    calculator_test.go:71: caught panic: bad stuff\n"}
+{"Time":"2025-04-21T14:45:44.763592493-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestPanicInsideTest","Output":"--- FAIL: TestPanicInsideTest (0.00s)\n"}
+{"Time":"2025-04-21T14:45:44.763595682-05:00","Action":"fail","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestPanicInsideTest","Elapsed":0}
+{"Time":"2025-04-21T14:45:44.763598032-05:00","Action":"run","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestSkipped"}
+{"Time":"2025-04-21T14:45:44.763600787-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestSkipped","Output":"=== RUN   TestSkipped\n"}
+{"Time":"2025-04-21T14:45:44.875085305-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestSkipped","Output":"    calculator_test.go:45: skipping test\n"}
+{"Time":"2025-04-21T14:45:44.875128112-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestSkipped","Output":"--- SKIP: TestSkipped (0.11s)\n"}
+{"Time":"2025-04-21T14:45:44.875136234-05:00","Action":"skip","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestSkipped","Elapsed":0.11}
+{"Time":"2025-04-21T14:45:44.87514445-05:00","Action":"run","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestCases"}
+{"Time":"2025-04-21T14:45:44.87514908-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestCases","Output":"=== RUN   TestCases\n"}
+{"Time":"2025-04-21T14:45:44.875158116-05:00","Action":"run","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestCases/1_+_2_=_3"}
+{"Time":"2025-04-21T14:45:44.875163067-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestCases/1_+_2_=_3","Output":"=== RUN   TestCases/1_+_2_=_3\n"}
+{"Time":"2025-04-21T14:45:45.413895814-05:00","Action":"run","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestCases/4_+_7_=_11"}
+{"Time":"2025-04-21T14:45:45.413916191-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestCases/4_+_7_=_11","Output":"=== RUN   TestCases/4_+_7_=_11\n"}
+{"Time":"2025-04-21T14:45:45.957801848-05:00","Action":"run","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestCases/2_+_3_=_4"}
+{"Time":"2025-04-21T14:45:45.957836789-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestCases/2_+_3_=_4","Output":"=== RUN   TestCases/2_+_3_=_4\n"}
+{"Time":"2025-04-21T14:45:46.492673381-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestCases/2_+_3_=_4","Output":"    calculator_test.go:62: expected 2 + 3 = 4, got 5\n"}
+{"Time":"2025-04-21T14:45:46.492759645-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestCases","Output":"--- FAIL: TestCases (1.62s)\n"}
+{"Time":"2025-04-21T14:45:46.492779916-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestCases/1_+_2_=_3","Output":"    --- PASS: TestCases/1_+_2_=_3 (0.54s)\n"}
+{"Time":"2025-04-21T14:45:46.492787539-05:00","Action":"pass","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestCases/1_+_2_=_3","Elapsed":0.54}
+{"Time":"2025-04-21T14:45:46.492795891-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestCases/4_+_7_=_11","Output":"    --- PASS: TestCases/4_+_7_=_11 (0.54s)\n"}
+{"Time":"2025-04-21T14:45:46.492801851-05:00","Action":"pass","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestCases/4_+_7_=_11","Elapsed":0.54}
+{"Time":"2025-04-21T14:45:46.492806634-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestCases/2_+_3_=_4","Output":"    --- FAIL: TestCases/2_+_3_=_4 (0.53s)\n"}
+{"Time":"2025-04-21T14:45:46.492811453-05:00","Action":"fail","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestCases/2_+_3_=_4","Elapsed":0.53}
+{"Time":"2025-04-21T14:45:46.49281562-05:00","Action":"fail","Package":"_/home/james_t/git/test-reporter/reports/go","Test":"TestCases","Elapsed":1.62}
+{"Time":"2025-04-21T14:45:46.492821605-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Output":"FAIL\n"}
+{"Time":"2025-04-21T14:45:46.493310745-05:00","Action":"output","Package":"_/home/james_t/git/test-reporter/reports/go","Output":"FAIL\t_/home/james_t/git/test-reporter/reports/go\t2.593s\n"}
+{"Time":"2025-04-21T14:45:46.493343801-05:00","Action":"fail","Package":"_/home/james_t/git/test-reporter/reports/go","Elapsed":2.594}
