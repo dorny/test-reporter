@@ -13,6 +13,7 @@ import {getReport} from './report/get-report'
 import {DartJsonParser} from './parsers/dart-json/dart-json-parser'
 import {DotnetNunitParser} from './parsers/dotnet-nunit/dotnet-nunit-parser'
 import {DotnetTrxParser} from './parsers/dotnet-trx/dotnet-trx-parser'
+import {GolangJsonParser} from './parsers/golang-json/golang-json-parser'
 import {JavaJunitParser} from './parsers/java-junit/java-junit-parser'
 import {JestJunitParser} from './parsers/jest-junit/jest-junit-parser'
 import {MochaJsonParser} from './parsers/mocha-json/mocha-json-parser'
@@ -248,6 +249,8 @@ class TestReporter {
         return new DotnetNunitParser(options)
       case 'dotnet-trx':
         return new DotnetTrxParser(options)
+      case 'golang-json':
+        return new GolangJsonParser(options)
       case 'flutter-json':
         return new DartJsonParser(options, 'flutter')
       case 'java-junit':
