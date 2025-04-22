@@ -64,8 +64,9 @@ export class GolangJsonParser implements TestParser {
       }
 
       let groupName: string | null
-      let testName: string
-      [groupName, testName] = event.Test.split('/', 2)
+      let rest: string[]
+      [groupName, ...rest] = event.Test.split('/')
+      let testName = rest.join('/')
       if (!testName) {
         testName = groupName
         groupName = null

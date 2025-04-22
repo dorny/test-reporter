@@ -48,16 +48,21 @@ func TestSkipped(t *testing.T) {
 func TestCases(t *testing.T) {
 	for _, tc := range []struct {
 		name    string
+		fn      func(int, int) int
 		a, b, c int
 	}{
-		{"1 + 2 = 3", 1, 2, 3},
-		{"4 + 7 = 11", 4, 7, 11},
-		{"2 + 3 = 4", 2, 3, 4},
+		{"1 + 2 = 3", CalculatorSum, 1, 2, 3},
+		{"4 + 7 = 11", CalculatorSum, 4, 7, 11},
+		{"2 + 3 = 4", CalculatorSum, 2, 3, 4},
+
+		{"1 / 2 = 1", CalculatorDivide, 1, 2, 1},
+		{"9 / 3 = 3", CalculatorDivide, 9, 3, 3},
+		{"14 / 7 = 2", CalculatorDivide, 14, 7, 2},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			randomSleep()
 
-			c := CalculatorSum(tc.a, tc.b)
+			c := tc.fn(tc.a, tc.b)
 			if c != tc.c {
 				t.Fatalf("expected %s, got %d", tc.name, c)
 			}

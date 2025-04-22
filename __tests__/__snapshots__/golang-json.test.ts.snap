@@ -13,7 +13,7 @@ TestRunResult {
               "error": undefined,
               "name": "TestPassing",
               "result": "success",
-              "time": 90,
+              "time": 60,
             },
             TestCaseResult {
               "error": {
@@ -24,13 +24,13 @@ TestRunResult {
               },
               "name": "TestFailing",
               "result": "failed",
-              "time": 760,
+              "time": 890,
             },
             TestCaseResult {
               "error": {
-                "details": "calculator_test.go:71: caught panic: runtime error: integer divide by zero
+                "details": "calculator_test.go:76: caught panic: runtime error: integer divide by zero
 ",
-                "message": "calculator_test.go:71: caught panic: runtime error: integer divide by zero
+                "message": "calculator_test.go:76: caught panic: runtime error: integer divide by zero
 ",
               },
               "name": "TestPanicInsideFunction",
@@ -39,9 +39,9 @@ TestRunResult {
             },
             TestCaseResult {
               "error": {
-                "details": "calculator_test.go:71: caught panic: bad stuff
+                "details": "calculator_test.go:76: caught panic: bad stuff
 ",
-                "message": "calculator_test.go:71: caught panic: bad stuff
+                "message": "calculator_test.go:76: caught panic: bad stuff
 ",
               },
               "name": "TestPanicInsideTest",
@@ -57,7 +57,7 @@ TestRunResult {
               },
               "name": "TestSkipped",
               "result": "skipped",
-              "time": 110,
+              "time": 940,
             },
             TestCaseResult {
               "error": {
@@ -66,7 +66,7 @@ TestRunResult {
               },
               "name": "TestCases",
               "result": "failed",
-              "time": 1620,
+              "time": 2250,
             },
           ],
         },
@@ -77,24 +77,47 @@ TestRunResult {
               "error": undefined,
               "name": "1_+_2_=_3",
               "result": "success",
-              "time": 540,
+              "time": 400,
             },
             TestCaseResult {
               "error": undefined,
               "name": "4_+_7_=_11",
               "result": "success",
-              "time": 540,
+              "time": 460,
             },
             TestCaseResult {
               "error": {
-                "details": "calculator_test.go:62: expected 2 + 3 = 4, got 5
+                "details": "calculator_test.go:67: expected 2 + 3 = 4, got 5
 ",
-                "message": "calculator_test.go:62: expected 2 + 3 = 4, got 5
+                "message": "calculator_test.go:67: expected 2 + 3 = 4, got 5
 ",
               },
               "name": "2_+_3_=_4",
               "result": "failed",
-              "time": 530,
+              "time": 90,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "calculator_test.go:67: expected 1 / 2 = 1, got 0
+",
+                "message": "calculator_test.go:67: expected 1 / 2 = 1, got 0
+",
+              },
+              "name": "1_/_2_=_1",
+              "result": "failed",
+              "time": 920,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "9_/_3_=_3",
+              "result": "success",
+              "time": 340,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "14_/_7_=_2",
+              "result": "success",
+              "time": 40,
             },
           ],
         },
