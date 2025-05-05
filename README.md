@@ -50,7 +50,7 @@ jobs:
 
       - name: Test Report
         uses: dorny/test-reporter@v2
-        if: success() || failure()    # run this step even if previous step failed
+        if: ${{ !cancelled() }}       # run this step even if previous step failed
         with:
           name: JEST Tests            # Name of the check run which will be created
           path: reports/jest-*.xml    # Path to test results
@@ -79,7 +79,7 @@ jobs:
       - run: npm ci                       # install packages
       - run: npm test                     # run tests (configured to use jest-junit reporter)
       - uses: actions/upload-artifact@v4  # upload test results
-        if: success() || failure()        # run this step even if previous step failed
+        if: ${{ !cancelled() }}           # run this step even if previous step failed
         with:
           name: test-results
           path: jest-junit.xml
