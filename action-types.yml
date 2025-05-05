@@ -1,0 +1,92 @@
+# See https://github.com/typesafegithub/github-actions-typing/
+inputs:
+  artifact:
+    type: string
+
+  name:
+    type: string
+
+  path:
+    type: list
+    separator: ','
+    list-item:
+      type: string
+
+  path-replace-backslashes:
+    type: boolean
+
+  reporter:
+    type: enum
+    allowed-values:
+      - dart-json
+      - dotnet-nunit
+      - dotnet-trx
+      - flutter-json
+      - java-junit
+      - jest-junit
+      - mocha-json
+      - rspec-json
+      - swift-xunit
+
+  list-suites:
+    type: enum
+    allowed-values:
+      - all
+      - failed
+      - none
+
+  list-tests:
+    type: enum
+    allowed-values:
+      - all
+      - failed
+      - none
+
+  max-annotations:
+    type: integer
+
+  fail-on-error:
+    type: boolean
+
+  fail-on-empty:
+    type: boolean
+
+  working-directory:
+    type: string
+
+  only-summary:
+    type: boolean
+
+  use-actions-summary:
+    type: boolean
+
+  badge-title:
+    type: string
+
+  token:
+    type: string
+
+outputs:
+  conclusion:
+    type: enum
+    allowed-values:
+      - success
+      - failure
+
+  passed:
+    type: integer
+
+  failed:
+    type: integer
+
+  skipped:
+    type: integer
+
+  time:
+    type: integer
+
+  url:
+    type: string
+
+  url_html:
+    type: string
