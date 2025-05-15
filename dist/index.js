@@ -1792,7 +1792,7 @@ const node_utils_1 = __nccwpck_require__(5384);
 const parse_utils_1 = __nccwpck_require__(9633);
 const slugger_1 = __nccwpck_require__(9537);
 const MAX_REPORT_LENGTH = 65535;
-const MAX_ACTIONS_SUMMARY_LENGTH = 131072; // 1048576 soon
+const MAX_ACTIONS_SUMMARY_LENGTH = 1048576;
 const defaultOptions = {
     listSuites: 'all',
     listTests: 'all',
