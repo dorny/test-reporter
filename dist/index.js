@@ -937,7 +937,8 @@ class DotnetTrxParser {
         }
     }
     getTestClasses(trx) {
-        if (trx.TestRun.TestDefinitions === undefined || trx.TestRun.Results === undefined) {
+        if (trx.TestRun.TestDefinitions === undefined || trx.TestRun.Results === undefined ||
+            !trx.TestRun.TestDefinitions.some(td => td.UnitTest && Array.isArray(td.UnitTest))) {
             return [];
         }
         const unitTests = {};
