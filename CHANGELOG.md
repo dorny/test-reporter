@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.0
+* Feature: Add summary title https://github.com/dorny/test-reporter/pull/568
+* Feature: Add Golang test parser https://github.com/dorny/test-reporter/pull/571
+* Increase step summary limit to 1MiB https://github.com/dorny/test-reporter/pull/581
+* Fix for empty TRX TestDefinitions https://github.com/dorny/test-reporter/pull/582
+* Fix input description for list options https://github.com/dorny/test-reporter/pull/572
+* Update npm packages https://github.com/dorny/test-reporter/pull/583
+
 ## 2.0.0
 * Parse JUnit report with detailed message in failure https://github.com/dorny/test-reporter/pull/559
 * Support displaying test results in markdown using GitHub Actions Job Summaries https://github.com/dorny/test-reporter/pull/383
