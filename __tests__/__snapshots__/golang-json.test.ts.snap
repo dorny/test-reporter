@@ -1,0 +1,131 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`golang-json tests report from ./reports/dotnet test results matches snapshot 1`] = `
+TestRunResult {
+  "path": "fixtures/golang-json.json",
+  "suites": [
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": null,
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "TestPassing",
+              "result": "success",
+              "time": 60,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "calculator_test.go:19: expected 1+1 = 3, got 2
+",
+                "message": "calculator_test.go:19: expected 1+1 = 3, got 2
+",
+              },
+              "name": "TestFailing",
+              "result": "failed",
+              "time": 890,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "calculator_test.go:76: caught panic: runtime error: integer divide by zero
+",
+                "message": "calculator_test.go:76: caught panic: runtime error: integer divide by zero
+",
+              },
+              "name": "TestPanicInsideFunction",
+              "result": "failed",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "calculator_test.go:76: caught panic: bad stuff
+",
+                "message": "calculator_test.go:76: caught panic: bad stuff
+",
+              },
+              "name": "TestPanicInsideTest",
+              "result": "failed",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "calculator_test.go:45: skipping test
+",
+                "message": "calculator_test.go:45: skipping test
+",
+              },
+              "name": "TestSkipped",
+              "result": "skipped",
+              "time": 940,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "",
+                "message": "",
+              },
+              "name": "TestCases",
+              "result": "failed",
+              "time": 2250,
+            },
+          ],
+        },
+        TestGroupResult {
+          "name": "TestCases",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "1_+_2_=_3",
+              "result": "success",
+              "time": 400,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "4_+_7_=_11",
+              "result": "success",
+              "time": 460,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "calculator_test.go:67: expected 2 + 3 = 4, got 5
+",
+                "message": "calculator_test.go:67: expected 2 + 3 = 4, got 5
+",
+              },
+              "name": "2_+_3_=_4",
+              "result": "failed",
+              "time": 90,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "calculator_test.go:67: expected 1 / 2 = 1, got 0
+",
+                "message": "calculator_test.go:67: expected 1 / 2 = 1, got 0
+",
+              },
+              "name": "1_/_2_=_1",
+              "result": "failed",
+              "time": 920,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "9_/_3_=_3",
+              "result": "success",
+              "time": 340,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "14_/_7_=_2",
+              "result": "success",
+              "time": 40,
+            },
+          ],
+        },
+      ],
+      "name": "_/home/james_t/git/test-reporter/reports/go",
+      "totalTime": undefined,
+    },
+  ],
+  "totalTime": undefined,
+}
+`;

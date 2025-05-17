@@ -16,6 +16,7 @@ This [Github Action](https://github.com/features/actions) displays test results 
 - .NET / [dotnet test](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-test#examples) ( [xUnit](https://xunit.net/) / [NUnit](https://nunit.org/) / [MSTest](https://github.com/Microsoft/testfx-docs) )
 - Dart / [test](https://pub.dev/packages/test)
 - Flutter / [test](https://pub.dev/packages/test)
+- Go / [go test](https://pkg.go.dev/testing)
 - Java / [JUnit](https://junit.org/)
 - JavaScript / [JEST](https://jestjs.io/) / [Mocha](https://mochajs.org/)
 - Swift / xUnit
@@ -140,6 +141,7 @@ jobs:
     #   dotnet-nunit
     #   dotnet-trx
     #   flutter-json
+    #   golang-json
     #   java-junit
     #   jest-junit
     #   mocha-json
@@ -275,6 +277,13 @@ For more information see:
 - [test configuration](https://github.com/dart-lang/test/blob/master/pkgs/test/doc/configuration.md)
 - [flutter-cli](https://flutter.dev/docs/reference/flutter-cli)
 - [unit testing introduction](https://flutter.dev/docs/cookbook/testing/unit/introduction)
+
+</details>
+
+<details>
+  <summary>golang-json</summary>
+
+You must use the `-json` flag and output the results to a file (ex: `go test -json > testresults.json`)
 
 </details>
 
