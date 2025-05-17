@@ -8,6 +8,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "moduleResolution": "node16",
+    "isolatedModules": true,
 
     "outDir": "./lib",
     "rootDir": "./src",
