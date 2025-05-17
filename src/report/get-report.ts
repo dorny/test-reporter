@@ -15,18 +15,20 @@ export interface ReportOptions {
   onlySummary: boolean
   useActionsSummary: boolean
   badgeTitle: string
+  reportTitle: string
 }
 
-const defaultOptions: ReportOptions = {
+export const DEFAULT_OPTIONS: ReportOptions = {
   listSuites: 'all',
   listTests: 'all',
   baseUrl: '',
   onlySummary: false,
   useActionsSummary: true,
-  badgeTitle: 'tests'
+  badgeTitle: 'tests',
+  reportTitle: ''
 }
 
-export function getReport(results: TestRunResult[], options: ReportOptions = defaultOptions): string {
+export function getReport(results: TestRunResult[], options: ReportOptions = DEFAULT_OPTIONS): string {
   core.info('Generating check run summary')
 
   applySort(results)
@@ -53,7 +55,7 @@ export function getReport(results: TestRunResult[], options: ReportOptions = def
   return trimReport(lines, options)
 }
 
-function getMaxReportLength(options: ReportOptions = defaultOptions): number {
+function getMaxReportLength(options: ReportOptions = DEFAULT_OPTIONS): number {
   return options.useActionsSummary ? MAX_ACTIONS_SUMMARY_LENGTH : MAX_REPORT_LENGTH
 }
 
@@ -101,6 +103,12 @@ function getByteLength(text: string): number {
 
 function renderReport(results: TestRunResult[], options: ReportOptions): string[] {
   const sections: string[] = []
+
+  const reportTitle: string = options.reportTitle.trim()
+  if (reportTitle) {
+    sections.push(`# ${reportTitle}`)
+  }
+
   const badge = getReportBadge(results, options)
   sections.push(badge)
 
