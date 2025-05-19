@@ -24,7 +24,7 @@ jobs:
       - run: npm test
 
       - name: Upload test results
-        if: success() || failure()
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
           name: test-results
