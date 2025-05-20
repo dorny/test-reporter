@@ -168,6 +168,11 @@ class TestReporter {
 
     const {listSuites, listTests, onlySummary, useActionsSummary, badgeTitle, reportTitle} = this
 
+    const passed = results.reduce((sum, tr) => sum + tr.passed, 0)
+    const failed = results.reduce((sum, tr) => sum + tr.failed, 0)
+    const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0)
+    const shortSummary = `${passed} passed, ${failed} failed and ${skipped} skipped `
+
     let baseUrl = ''
     if (this.useActionsSummary) {
       const summary = getReport(results, {
@@ -182,6 +187,7 @@ class TestReporter {
 
       core.info('Summary content:')
       core.info(summary)
+      core.summary.addRaw(`# ${shortSummary}`)
       await core.summary.addRaw(summary).write()
     } else {
       core.info(`Creating check run ${name}`)
@@ -213,11 +219,6 @@ class TestReporter {
 
       const isFailed = this.failOnError && results.some(tr => tr.result === 'failed')
       const conclusion = isFailed ? 'failure' : 'success'
-
-      const passed = results.reduce((sum, tr) => sum + tr.passed, 0)
-      const failed = results.reduce((sum, tr) => sum + tr.failed, 0)
-      const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0)
-      const shortSummary = `${passed} passed, ${failed} failed and ${skipped} skipped `
 
       core.info(`Updating check run conclusion (${conclusion}) and output`)
       const resp = await this.octokit.rest.checks.update({
