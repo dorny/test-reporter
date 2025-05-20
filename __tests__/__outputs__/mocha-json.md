@@ -1,7 +1,7 @@
 ![Tests failed](https://img.shields.io/badge/tests-1%20passed%2C%204%20failed%2C%201%20skipped-critical)
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
-|fixtures/mocha-json.json|1 ✅|4 ❌|1 ⚪|12ms|
+|[fixtures/mocha-json.json](#user-content-r0)|1 ✅|4 ❌|1 ⚪|12ms|
 ## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/mocha-json.json</a>
 **6** tests were completed in **12ms** with **1** passed, **4** failed and **1** skipped.
 |Test suite|Passed|Failed|Skipped|Time|

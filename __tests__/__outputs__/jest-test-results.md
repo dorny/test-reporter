@@ -1,7 +1,7 @@
 ![Tests failed](https://img.shields.io/badge/tests-4207%20passed%2C%202%20failed%2C%2030%20skipped-critical)
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
-|fixtures/external/jest/jest-test-results.xml|4207 ✅|2 ❌|30 ⚪|166s|
+|[fixtures/external/jest/jest-test-results.xml](#user-content-r0)|4207 ✅|2 ❌|30 ⚪|166s|
 ## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/external/jest/jest-test-results.xml</a>
 **4239** tests were completed in **166s** with **4207** passed, **2** failed and **30** skipped.
 |Test suite|Passed|Failed|Skipped|Time|
