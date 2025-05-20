@@ -1,7 +1,7 @@
 ![Tests failed](https://img.shields.io/badge/tests-793%20passed%2C%201%20failed%2C%2014%20skipped-critical)
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
-|fixtures/external/java/pulsar-test-report.xml|793 ✅|1 ❌|14 ⚪|2127s|
+|[fixtures/external/java/pulsar-test-report.xml](#user-content-r0)|793 ✅|1 ❌|14 ⚪|2127s|
 ## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/external/java/pulsar-test-report.xml</a>
 **808** tests were completed in **2127s** with **793** passed, **1** failed and **14** skipped.
 |Test suite|Passed|Failed|Skipped|Time|
