@@ -15,7 +15,7 @@ jobs:
 
       - name: Create test report
         uses: ./
-        if: success() || failure()
+        if: ${{ !cancelled() }}
         with:
           name: JEST Tests
           path: __tests__/__results__/*.xml
