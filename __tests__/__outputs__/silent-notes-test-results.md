@@ -1,6 +1,7 @@
-![Tests passed successfully](https://img.shields.io/badge/tests-67%20passed%2C%2012%20skipped-success)
+[![Tests passed successfully](https://img.shields.io/badge/tests-67%20passed%2C%2012%20skipped-success)](#user-content-test-report)
 <details><summary>Expand for details</summary>
  
+# <a name="user-content-test-report"></a> Tests report
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
 |fixtures/external/SilentNotes.trx|67 ✅||12 ⚪|1s|
