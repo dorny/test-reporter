@@ -2034,14 +2034,17 @@ function getTestRunsReport(testRuns, options) {
     }
     if (testRuns.length > 0 || options.onlySummary) {
         const tableData = testRuns
-            .filter(tr => tr.passed > 0 || tr.failed > 0 || tr.skipped > 0)
-            .map(tr => {
+            .map((tr, originalIndex) => ({ tr, originalIndex }))
+            .filter(({ tr }) => tr.passed > 0 || tr.failed > 0 || tr.skipped > 0)
+            .map(({ tr, originalIndex }) => {
             const time = (0, markdown_utils_1.formatTime)(tr.time);
             const name = tr.path;
+            const addr = options.baseUrl + makeRunSlug(originalIndex, options).link;
+            const nameLink = (0, markdown_utils_1.link)(name, addr);
             const passed = tr.passed > 0 ? `${tr.passed} ${markdown_utils_1.Icon.success}` : '';
             const failed = tr.failed > 0 ? `${tr.failed} ${markdown_utils_1.Icon.fail}` : '';
             const skipped = tr.skipped > 0 ? `${tr.skipped} ${markdown_utils_1.Icon.skip}` : '';
-            return [name, passed, failed, skipped, time];
+            return [nameLink, passed, failed, skipped, time];
         });
         const resultsTable = (0, markdown_utils_1.table)(['Report', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...tableData);
         sections.push(resultsTable);
