@@ -402,6 +402,10 @@ class TestReporter {
             }
         }
         const { listSuites, listTests, onlySummary, useActionsSummary, badgeTitle, reportTitle } = this;
+        const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
+        const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
+        const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
+        const shortSummary = `${passed} passed, ${failed} failed and ${skipped} skipped `;
         let baseUrl = '';
         if (this.useActionsSummary) {
             const summary = (0, get_report_1.getReport)(results, {
@@ -415,6 +419,7 @@ class TestReporter {
             });
             core.info('Summary content:');
             core.info(summary);
+            core.summary.addRaw(`# ${shortSummary}`);
             await core.summary.addRaw(summary).write();
         }
         else {
@@ -444,10 +449,6 @@ class TestReporter {
             const annotations = (0, get_annotations_1.getAnnotations)(results, this.maxAnnotations);
             const isFailed = this.failOnError && results.some(tr => tr.result === 'failed');
             const conclusion = isFailed ? 'failure' : 'success';
-            const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
-            const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
-            const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
-            const shortSummary = `${passed} passed, ${failed} failed and ${skipped} skipped `;
             core.info(`Updating check run conclusion (${conclusion}) and output`);
             const resp = await this.octokit.rest.checks.update({
                 check_run_id: createResp.data.id,
