@@ -1,5 +1,6 @@
 import github from 'eslint-plugin-github'
 import prettier from 'eslint-plugin-prettier'
+import jest from 'eslint-plugin-jest'
 
 export default [
   github.getFlatConfigs().recommended,
@@ -16,6 +17,15 @@ export default [
       'i18n-text/no-en': 'off',
       'prefer-template': 'off',
       '@typescript-eslint/no-unused-vars': ['error', {varsIgnorePattern: '^_'}]
+    },
+  },
+  {
+    files: ['**/*.test.ts'],
+    plugins: {
+      jest,
+    },
+    languageOptions: {
+      globals: jest.environments.globals.globals,
     },
   },
   {
