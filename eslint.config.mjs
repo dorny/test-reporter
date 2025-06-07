@@ -1,4 +1,5 @@
 import github from 'eslint-plugin-github'
+import prettier from 'eslint-plugin-prettier'
 
 export default [
   github.getFlatConfigs().recommended,
@@ -6,7 +7,11 @@ export default [
   {
     files: ['**/*.ts'],
     ignores: ['eslint.config.mjs'],
+    plugins: {
+      prettier,
+    },
     rules: {
+      'prettier/prettier': 'error',
       'import/no-namespace': 'off',
       'i18n-text/no-en': 'off',
       'prefer-template': 'off',
