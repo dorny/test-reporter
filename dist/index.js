@@ -2439,11 +2439,11 @@ async function downloadArtifact(octokit, artifactId, fileName, token) {
         };
         const downloadStream = got_1.default.stream(req.url, { headers });
         const fileWriterStream = (0, fs_1.createWriteStream)(fileName);
-        downloadStream.on('redirect', response => {
+        downloadStream.on('redirect', (response) => {
             core.info(`Downloading ${response.headers.location}`);
         });
-        downloadStream.on('downloadProgress', ({ transferred }) => {
-            core.info(`Progress: ${transferred} B`);
+        downloadStream.on('downloadProgress', (progress) => {
+            core.info(`Progress: ${progress.transferred} B`);
         });
         await asyncStream(downloadStream, fileWriterStream);
     }
