@@ -1,7 +1,7 @@
 import {createWriteStream} from 'fs'
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-import {GitHub} from '@actions/github/lib/utils'
+import type {GitHub} from '@actions/github/lib/utils.js'
 import type {PullRequest} from '@octokit/webhooks-types'
 import * as stream from 'stream'
 import {promisify} from 'util'

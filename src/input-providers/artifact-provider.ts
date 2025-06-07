@@ -1,6 +1,6 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-import {GitHub} from '@actions/github/lib/utils'
+import type {GitHub} from '@actions/github/lib/utils.js'
 
 import Zip from 'adm-zip'
 import picomatch from 'picomatch'

@@ -10,6 +10,7 @@
   "rules": {
     "i18n-text/no-en": "off",
     "eslint-comments/no-use": "off",
+    "import/extensions": [ "error", "ignorePackages", { "ts": "never" } ],
     "import/no-namespace": "off",
     "import/no-named-as-default": "off",
     "no-shadow": "off",
