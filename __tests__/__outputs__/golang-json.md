@@ -1,7 +1,7 @@
 ![Tests failed](https://img.shields.io/badge/tests-5%20passed%2C%206%20failed%2C%201%20skipped-critical)
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
-|fixtures/golang-json.json|5 ✅|6 ❌|1 ⚪|6s|
+|[fixtures/golang-json.json](#user-content-r0)|5 ✅|6 ❌|1 ⚪|6s|
 ## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/golang-json.json</a>
 **12** tests were completed in **6s** with **5** passed, **6** failed and **1** skipped.
 |Test suite|Passed|Failed|Skipped|Time|

@@ -3,7 +3,7 @@
  
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
-|fixtures/external/mocha/mocha-test-results.json|833 ✅||6 ⚪|6s|
+|[fixtures/external/mocha/mocha-test-results.json](#user-content-r0)|833 ✅||6 ⚪|6s|
 ## ✅ <a id="user-content-r0" href="#user-content-r0">fixtures/external/mocha/mocha-test-results.json</a>
 **839** tests were completed in **6s** with **833** passed, **0** failed and **6** skipped.
 |Test suite|Passed|Failed|Skipped|Time|
