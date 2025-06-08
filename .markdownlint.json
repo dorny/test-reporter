@@ -1,0 +1,13 @@
+{
+  "blanks-around-headings": false,
+  "blanks-around-lists": false,
+  "blanks-around-tables": false,
+  "blanks-around-fences": false,
+  "no-bare-urls": false,
+  "line-length": false,
+  "ul-style": false,
+  "no-inline-html": false,
+  "no-multiple-blanks": {
+    "maximum": 3
+  }
+}
