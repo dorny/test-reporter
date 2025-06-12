@@ -66,7 +66,7 @@
     "jest-junit": "^16.0.0",
     "js-yaml": "^4.1.0",
     "prettier": "^3.5.3",
-    "ts-jest": "^29.3.4",
+    "ts-jest": "^29.4.0",
     "typescript": "^5.8.3"
   },
   "jest-junit": {
