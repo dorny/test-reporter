@@ -2,16 +2,17 @@ import {createWriteStream} from 'fs'
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import {GitHub} from '@actions/github/lib/utils'
-import type {PullRequest} from '@octokit/webhooks-types'
+import type {PullRequest, WorkflowRunEvent} from '@octokit/webhooks-types'
+import {IncomingMessage} from 'http'
 import * as stream from 'stream'
 import {promisify} from 'util'
-import got from 'got'
+import got, {Progress} from 'got'
 const asyncStream = promisify(stream.pipeline)
 
 export function getCheckRunContext(): {sha: string; runId: number} {
   if (github.context.eventName === 'workflow_run') {
     core.info('Action was triggered by workflow_run: using SHA and RUN_ID from triggering workflow')
-    const event = github.context.payload
+    const event = github.context.payload as WorkflowRunEvent
     if (!event.workflow_run) {
       throw new Error("Event of type 'workflow_run' is missing 'workflow_run' field")
     }
@@ -54,11 +55,11 @@ export async function downloadArtifact(
     const downloadStream = got.stream(req.url, {headers})
     const fileWriterStream = createWriteStream(fileName)
 
-    downloadStream.on('redirect', response => {
+    downloadStream.on('redirect', (response: IncomingMessage) => {
       core.info(`Downloading ${response.headers.location}`)
     })
-    downloadStream.on('downloadProgress', ({transferred}) => {
-      core.info(`Progress: ${transferred} B`)
+    downloadStream.on('downloadProgress', (progress: Progress) => {
+      core.info(`Progress: ${progress.transferred} B`)
     })
 
     await asyncStream(downloadStream, fileWriterStream)
