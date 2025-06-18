@@ -12,23 +12,29 @@
 ✅ Custom Name
 ❌ Exception_In_TargetTest
 	System.DivideByZeroException : Attempted to divide by zero.
+	   at DotnetTests.Unit.Calculator.Div(Int32 a, Int32 b) in C:\Users\Michal\Workspace\dorny\test-reporter\reports\dotnet\DotnetTests.Unit\Calculator.cs:line 9
+	   at DotnetTests.XUnitTests.CalculatorTests.Exception_In_TargetTest() in C:\Users\Michal\Workspace\dorny\test-reporter\reports\dotnet\DotnetTests.XUnitTests\CalculatorTests.cs:line 33
 ❌ Exception_In_Test
 	System.Exception : Test
+	   at DotnetTests.XUnitTests.CalculatorTests.Exception_In_Test() in C:\Users\Michal\Workspace\dorny\test-reporter\reports\dotnet\DotnetTests.XUnitTests\CalculatorTests.cs:line 39
 ❌ Failing_Test
 	Assert.Equal() Failure
 	Expected: 3
 	Actual:   2
+	   at DotnetTests.XUnitTests.CalculatorTests.Failing_Test() in C:\Users\Michal\Workspace\dorny\test-reporter\reports\dotnet\DotnetTests.XUnitTests\CalculatorTests.cs:line 27
 ✅ Is_Even_Number(i: 2)
 ❌ Is_Even_Number(i: 3)
 	Assert.True() Failure
 	Expected: True
 	Actual:   False
+	   at DotnetTests.XUnitTests.CalculatorTests.Is_Even_Number(Int32 i) in C:\Users\Michal\Workspace\dorny\test-reporter\reports\dotnet\DotnetTests.XUnitTests\CalculatorTests.cs:line 59
 ✅ Passing_Test
 ✅ Should be even number(i: 2)
 ❌ Should be even number(i: 3)
 	Assert.True() Failure
 	Expected: True
 	Actual:   False
+	   at DotnetTests.XUnitTests.CalculatorTests.Theory_With_Custom_Name(Int32 i) in C:\Users\Michal\Workspace\dorny\test-reporter\reports\dotnet\DotnetTests.XUnitTests\CalculatorTests.cs:line 67
 ⚪ Skipped_Test
 ✅ Timeout_Test
 ```
