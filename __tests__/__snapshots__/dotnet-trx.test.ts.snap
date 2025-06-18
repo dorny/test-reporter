@@ -21,7 +21,9 @@ TestRunResult {
    at DotnetTests.Unit.Calculator.Div(Int32 a, Int32 b) in C:\\Users\\Michal\\Workspace\\dorny\\test-reporter\\reports\\dotnet\\DotnetTests.Unit\\Calculator.cs:line 9
    at DotnetTests.XUnitTests.CalculatorTests.Exception_In_TargetTest() in C:\\Users\\Michal\\Workspace\\dorny\\test-reporter\\reports\\dotnet\\DotnetTests.XUnitTests\\CalculatorTests.cs:line 33",
                 "line": 9,
-                "message": "System.DivideByZeroException : Attempted to divide by zero.",
+                "message": "System.DivideByZeroException : Attempted to divide by zero.
+   at DotnetTests.Unit.Calculator.Div(Int32 a, Int32 b) in C:\\Users\\Michal\\Workspace\\dorny\\test-reporter\\reports\\dotnet\\DotnetTests.Unit\\Calculator.cs:line 9
+   at DotnetTests.XUnitTests.CalculatorTests.Exception_In_TargetTest() in C:\\Users\\Michal\\Workspace\\dorny\\test-reporter\\reports\\dotnet\\DotnetTests.XUnitTests\\CalculatorTests.cs:line 33",
                 "path": "DotnetTests.Unit/Calculator.cs",
               },
               "name": "Exception_In_TargetTest",
@@ -33,7 +35,8 @@ TestRunResult {
                 "details": "System.Exception : Test
    at DotnetTests.XUnitTests.CalculatorTests.Exception_In_Test() in C:\\Users\\Michal\\Workspace\\dorny\\test-reporter\\reports\\dotnet\\DotnetTests.XUnitTests\\CalculatorTests.cs:line 39",
                 "line": 39,
-                "message": "System.Exception : Test",
+                "message": "System.Exception : Test
+   at DotnetTests.XUnitTests.CalculatorTests.Exception_In_Test() in C:\\Users\\Michal\\Workspace\\dorny\\test-reporter\\reports\\dotnet\\DotnetTests.XUnitTests\\CalculatorTests.cs:line 39",
                 "path": "DotnetTests.XUnitTests/CalculatorTests.cs",
               },
               "name": "Exception_In_Test",
@@ -49,7 +52,8 @@ Actual:   2
                 "line": 27,
                 "message": "Assert.Equal() Failure
 Expected: 3
-Actual:   2",
+Actual:   2
+   at DotnetTests.XUnitTests.CalculatorTests.Failing_Test() in C:\\Users\\Michal\\Workspace\\dorny\\test-reporter\\reports\\dotnet\\DotnetTests.XUnitTests\\CalculatorTests.cs:line 27",
                 "path": "DotnetTests.XUnitTests/CalculatorTests.cs",
               },
               "name": "Failing_Test",
@@ -71,7 +75,8 @@ Actual:   False
                 "line": 59,
                 "message": "Assert.True() Failure
 Expected: True
-Actual:   False",
+Actual:   False
+   at DotnetTests.XUnitTests.CalculatorTests.Is_Even_Number(Int32 i) in C:\\Users\\Michal\\Workspace\\dorny\\test-reporter\\reports\\dotnet\\DotnetTests.XUnitTests\\CalculatorTests.cs:line 59",
                 "path": "DotnetTests.XUnitTests/CalculatorTests.cs",
               },
               "name": "Is_Even_Number(i: 3)",
@@ -99,7 +104,8 @@ Actual:   False
                 "line": 67,
                 "message": "Assert.True() Failure
 Expected: True
-Actual:   False",
+Actual:   False
+   at DotnetTests.XUnitTests.CalculatorTests.Theory_With_Custom_Name(Int32 i) in C:\\Users\\Michal\\Workspace\\dorny\\test-reporter\\reports\\dotnet\\DotnetTests.XUnitTests\\CalculatorTests.cs:line 67",
                 "path": "DotnetTests.XUnitTests/CalculatorTests.cs",
               },
               "name": "Should be even number(i: 3)",
@@ -150,7 +156,9 @@ TestRunResult {
    at DotnetTests.Unit.Calculator.Div(Int32 a, Int32 b) in C:\\Users\\Michal\\Workspace\\dorny\\test-reporter\\reports\\dotnet\\DotnetTests.Unit\\Calculator.cs:line 9
    at DotnetTests.XUnitTests.CalculatorTests.Exception_In_TargetTest() in C:\\Users\\Michal\\Workspace\\dorny\\test-reporter\\reports\\dotnet\\DotnetTests.XUnitTests\\CalculatorTests.cs:line 33",
                 "line": 9,
-                "message": "System.DivideByZeroException : Attempted to divide by zero.",
+                "message": "System.DivideByZeroException : Attempted to divide by zero.
+   at DotnetTests.Unit.Calculator.Div(Int32 a, Int32 b) in C:\\Users\\Michal\\Workspace\\dorny\\test-reporter\\reports\\dotnet\\DotnetTests.Unit\\Calculator.cs:line 9
+   at DotnetTests.XUnitTests.CalculatorTests.Exception_In_TargetTest() in C:\\Users\\Michal\\Workspace\\dorny\\test-reporter\\reports\\dotnet\\DotnetTests.XUnitTests\\CalculatorTests.cs:line 33",
                 "path": "DotnetTests.Unit/Calculator.cs",
               },
               "name": "Exception_In_TargetTest",
@@ -162,7 +170,8 @@ TestRunResult {
                 "details": "System.Exception : Test
    at DotnetTests.XUnitTests.CalculatorTests.Exception_In_Test() in C:\\Users\\Michal\\Workspace\\dorny\\test-reporter\\reports\\dotnet\\DotnetTests.XUnitTests\\CalculatorTests.cs:line 39",
                 "line": 39,
-                "message": "System.Exception : Test",
+                "message": "System.Exception : Test
+   at DotnetTests.XUnitTests.CalculatorTests.Exception_In_Test() in C:\\Users\\Michal\\Workspace\\dorny\\test-reporter\\reports\\dotnet\\DotnetTests.XUnitTests\\CalculatorTests.cs:line 39",
                 "path": "DotnetTests.XUnitTests/CalculatorTests.cs",
               },
               "name": "Exception_In_Test",
@@ -178,7 +187,8 @@ Actual:   2
                 "line": 27,
                 "message": "Assert.Equal() Failure
 Expected: 3
-Actual:   2",
+Actual:   2
+   at DotnetTests.XUnitTests.CalculatorTests.Failing_Test() in C:\\Users\\Michal\\Workspace\\dorny\\test-reporter\\reports\\dotnet\\DotnetTests.XUnitTests\\CalculatorTests.cs:line 27",
                 "path": "DotnetTests.XUnitTests/CalculatorTests.cs",
               },
               "name": "Failing_Test",
@@ -200,7 +210,8 @@ Actual:   False
                 "line": 59,
                 "message": "Assert.True() Failure
 Expected: True
-Actual:   False",
+Actual:   False
+   at DotnetTests.XUnitTests.CalculatorTests.Is_Even_Number(Int32 i) in C:\\Users\\Michal\\Workspace\\dorny\\test-reporter\\reports\\dotnet\\DotnetTests.XUnitTests\\CalculatorTests.cs:line 59",
                 "path": "DotnetTests.XUnitTests/CalculatorTests.cs",
               },
               "name": "Is_Even_Number(i: 3)",
@@ -228,7 +239,8 @@ Actual:   False
                 "line": 67,
                 "message": "Assert.True() Failure
 Expected: True
-Actual:   False",
+Actual:   False
+   at DotnetTests.XUnitTests.CalculatorTests.Theory_With_Custom_Name(Int32 i) in C:\\Users\\Michal\\Workspace\\dorny\\test-reporter\\reports\\dotnet\\DotnetTests.XUnitTests\\CalculatorTests.cs:line 67",
                 "path": "DotnetTests.XUnitTests/CalculatorTests.cs",
               },
               "name": "Should be even number(i: 3)",
