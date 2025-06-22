@@ -16,6 +16,7 @@
     "all": "npm run build && npm run format && npm run lint && npm run package && npm test",
     "dart-fixture": "cd \"reports/dart\" && dart test --file-reporter=\"json:../../__tests__/fixtures/dart-json.json\"",
     "dotnet-fixture": "dotnet test reports/dotnet/DotnetTests.XUnitTests --logger \"trx;LogFileName=../../../../__tests__/fixtures/dotnet-trx.trx\"",
+    "dotnet-xunitv3-fixture": "dotnet run --project reports/dotnet/DotnetTests.XUnitV3Tests/DotnetTests.XUnitV3Tests.csproj --report-trx --report-trx-filename dotnet-xunitv3.trx --results-directory __tests__/fixtures/",
     "dotnet-nunit-fixture": "nunit.exe reports/dotnet/DotnetTests.NUnitV3Tests/bin/Debug/netcoreapp3.1/DotnetTests.NUnitV3Tests.dll --result=__tests__/fixtures/dotnet-nunit.xml",
     "dotnet-nunit-legacy-fixture": "nunit-console.exe reports/dotnet-nunit-legacy/NUnitLegacy.sln --result=__tests__/fixtures/dotnet-nunit-legacy.xml",
     "golang-json-fixture": "go test -v -json -timeout 5s ./reports/go | tee __tests__/fixtures/golang-json.json",

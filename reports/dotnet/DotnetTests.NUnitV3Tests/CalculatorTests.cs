@@ -40,7 +40,7 @@ namespace DotnetTests.XUnitTests
         }
 
         [Test]
-        [Timeout(1)]
+        [CancelAfter(1)]
         public void Timeout_Test()
         {
             Thread.Sleep(100);
@@ -58,7 +58,7 @@ namespace DotnetTests.XUnitTests
         [TestCase(3)]
         public void Is_Even_Number(int i)
         {
-            Assert.True(i % 2 == 0);
+            Assert.That(i % 2 == 0);
         }
     }
 }
