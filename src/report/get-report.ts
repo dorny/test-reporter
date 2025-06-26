@@ -265,10 +265,9 @@ function getTestsReport(ts: TestSuiteResult, runIndex: number, suiteIndex: numbe
       const result = getResultIcon(tc.result)
       sections.push(`${result} ${tc.name}`)
       if (tc.error) {
-        const lines = (tc.error.message ?? getFirstNonEmptyLine(tc.error.details)?.trim())
-          ?.split(/\r?\n/g)
-          .map(l => '\t' + l)
-        if (lines) {
+        const message = tc.error.message ?? getFirstNonEmptyLine(tc.error.details)?.trim();
+        if (message) {
+            const lines = message.split(/\r?\n/g).map(l => '\t' + l);
           sections.push(...lines)
         }
       }
