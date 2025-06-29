@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`dotnet-trx tests matches report snapshot (only failed tests) 1`] = `
+exports[`dotnet-trx tests matches dotnet-trx report snapshot 1`] = `
 TestRunResult {
   "path": "fixtures/dotnet-trx.trx",
   "suites": [
@@ -135,7 +135,77 @@ Actual:   False
 }
 `;
 
-exports[`dotnet-trx tests matches report snapshot 1`] = `
+exports[`dotnet-trx tests matches dotnet-xunitv3 report snapshot 1`] = `
+TestRunResult {
+  "path": "fixtures/dotnet-xunitv3.trx",
+  "suites": [
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": null,
+          "tests": [
+            TestCaseResult {
+              "error": {
+                "details": "Assert.Null() Failure: Value is not null
+Expected: null
+Actual:   Fixture { }
+   at DotnetTests.XUnitV3Tests.FixtureTests.Failing_Test() in /_/reports/dotnet/DotnetTests.XUnitV3Tests/FixtureTests.cs:line 25
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)",
+                "line": 25,
+                "message": "Assert.Null() Failure: Value is not null
+Expected: null
+Actual:   Fixture { }
+   at DotnetTests.XUnitV3Tests.FixtureTests.Failing_Test() in /_/reports/dotnet/DotnetTests.XUnitV3Tests/FixtureTests.cs:line 25
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)",
+                "path": "DotnetTests.XUnitV3Tests/FixtureTests.cs",
+              },
+              "name": "Failing_Test",
+              "result": "failed",
+              "time": 17.0545,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Passing_Test",
+              "result": "success",
+              "time": 0.8786,
+            },
+          ],
+        },
+      ],
+      "name": "DotnetTests.XUnitV3Tests.FixtureTests",
+      "totalTime": undefined,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": null,
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "[Test Class Cleanup Failure (DotnetTests.XUnitV3Tests.FixtureTests.Failing_Test)]",
+              "result": "failed",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "[Test Class Cleanup Failure (DotnetTests.XUnitV3Tests.FixtureTests.Passing_Test)]",
+              "result": "failed",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "Unclassified",
+      "totalTime": undefined,
+    },
+  ],
+  "totalTime": 267,
+}
+`;
+
+exports[`dotnet-trx tests matches report snapshot (only failed tests) 1`] = `
 TestRunResult {
   "path": "fixtures/dotnet-trx.trx",
   "suites": [
