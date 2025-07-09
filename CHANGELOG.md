@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.1.1
+* Fix error when a TestMethod element does not have a className attribute in a trx file https://github.com/dorny/test-reporter/pull/623
+* Add stack trace from trx to summary https://github.com/dorny/test-reporter/pull/615
+* List only failed tests https://github.com/dorny/test-reporter/pull/606
+* Add type definitions to `github-utils.ts` https://github.com/dorny/test-reporter/pull/604
+* Avoid split on undefined https://github.com/dorny/test-reporter/pull/258
+* Return links to summary report https://github.com/dorny/test-reporter/pull/588
+* Add step summary short summary https://github.com/dorny/test-reporter/pull/589
+* Fix for empty TRX TestDefinitions https://github.com/dorny/test-reporter/pull/582
+* Increase step summary limit to 1MiB https://github.com/dorny/test-reporter/pull/581
+* Fix input description for list options https://github.com/dorny/test-reporter/pull/572
+
 ## 2.1.0
 * Feature: Add summary title https://github.com/dorny/test-reporter/pull/568
 * Feature: Add Golang test parser https://github.com/dorny/test-reporter/pull/571
