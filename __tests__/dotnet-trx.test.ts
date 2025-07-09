@@ -39,10 +39,7 @@ describe('dotnet-trx tests', () => {
     expect(result.result).toBe('success')
   })
 
-  it.each([
-    ['dotnet-trx'],
-    ['dotnet-xunitv3']
-  ])('matches %s report snapshot', async (reportName) => {
+  it.each([['dotnet-trx'], ['dotnet-xunitv3']])('matches %s report snapshot', async reportName => {
     const fixturePath = path.join(__dirname, 'fixtures', `${reportName}.trx`)
     const outputPath = path.join(__dirname, '__outputs__', `${reportName}.md`)
     const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
@@ -50,7 +47,11 @@ describe('dotnet-trx tests', () => {
 
     const opts: ParseOptions = {
       parseErrors: true,
-      trackedFiles: ['DotnetTests.Unit/Calculator.cs', 'DotnetTests.XUnitTests/CalculatorTests.cs', 'DotnetTests.XUnitV3Tests/FixtureTests.cs']
+      trackedFiles: [
+        'DotnetTests.Unit/Calculator.cs',
+        'DotnetTests.XUnitTests/CalculatorTests.cs',
+        'DotnetTests.XUnitV3Tests/FixtureTests.cs'
+      ]
       //workDir: 'C:/Users/Michal/Workspace/dorny/test-check/reports/dotnet/'
     }
 
