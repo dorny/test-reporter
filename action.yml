@@ -68,6 +68,10 @@ inputs:
   working-directory:
     description: Relative path under $GITHUB_WORKSPACE where the repository was checked out
     required: false
+  report-title:
+    description: Title for the test report summary
+    required: false
+    default: ''
   only-summary:
     description: |
       Allows you to generate only the summary.
