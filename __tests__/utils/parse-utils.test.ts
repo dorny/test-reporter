@@ -32,6 +32,6 @@ describe('parseNetDuration', () => {
   })
 
   it('throws when string has invalid format', () => {
-    expect(() => parseNetDuration('12:34:56 not a duration')).toThrowError(/^Invalid format/)
+    expect(() => parseNetDuration('12:34:56 not a duration')).toThrow(/^Invalid format/)
   })
 })
