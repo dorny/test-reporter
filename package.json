@@ -42,7 +42,7 @@
     "adm-zip": "^0.5.16",
     "fast-glob": "^3.3.3",
     "got": "^11.8.6",
-    "picomatch": "^4.0.2",
+    "picomatch": "^4.0.3",
     "xml2js": "^0.6.2"
   },
   "devDependencies": {
@@ -50,7 +50,7 @@
     "@types/adm-zip": "^0.5.7",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.19.2",
-    "@types/picomatch": "^2.3.4",
+    "@types/picomatch": "^4.0.1",
     "@types/xml2js": "^0.4.14",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
