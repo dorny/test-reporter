@@ -232,6 +232,33 @@ class TestReporter {
         },
         ...github.context.repo
       })
+
+      const {pull_request} = github.context.payload
+      if (pull_request !== undefined && pull_request !== null) {
+        core.info(`Looking for pre-existing test summary`)
+        const commentList = await this.octokit.rest.issues.listComments({
+          ...github.context.repo,
+          issue_number: pull_request.number
+        })
+        const targetId = commentList.data.find((el: any) => el.body?.startsWith('# 🚀 TEST RESULT SUMMARY'))?.id
+        if (targetId !== undefined) {
+          core.info(`Updating test summary as comment on pull-request`)
+          await this.octokit.rest.issues.updateComment({
+            ...github.context.repo,
+            issue_number: pull_request.number,
+            comment_id: targetId,
+            body: `# 🚀 TEST RESULT SUMMARY ${summary}`
+          })
+        } else {
+          core.info(`Attaching test summary as comment on pull-request`)
+          await this.octokit.rest.issues.createComment({
+            ...github.context.repo,
+            issue_number: pull_request.number,
+            body: `# 🚀 TEST RESULT SUMMARY ${summary}`
+          })
+        }
+      }
+
       core.info(`Check run create response: ${resp.status}`)
       core.info(`Check run URL: ${resp.data.url}`)
       core.info(`Check run HTML: ${resp.data.html_url}`)
