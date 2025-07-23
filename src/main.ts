@@ -23,6 +23,9 @@ import {SwiftXunitParser} from './parsers/swift-xunit/swift-xunit-parser'
 import {normalizeDirPath, normalizeFilePath} from './utils/path-utils'
 import {getCheckRunContext} from './utils/github-utils'
 
+export const MAX_COMMENT_LENGTH = 65536
+const COMMENT_MARKER = '<!-- test-summary-pr-comment-marker -->'
+
 async function main(): Promise<void> {
   try {
     const testReporter = new TestReporter()
@@ -235,28 +238,40 @@ class TestReporter {
 
       const {pull_request} = github.context.payload
       if (pull_request !== undefined && pull_request !== null) {
+        let commentBody = summary;
+        // if the summary is oversized, replace with minimal version
+        if (commentBody.length >= MAX_COMMENT_LENGTH) {
+          core.debug(
+            'The comment was too big for the GitHub API. Falling back to short summary'
+          )
+          commentBody = shortSummary
+        }
+
+        const commentContent = `${commentBody}\n\n${COMMENT_MARKER}`
         core.info(`Looking for pre-existing test summary`)
         const commentList = await this.octokit.rest.issues.listComments({
           ...github.context.repo,
           issue_number: pull_request.number
         })
-        const targetId = commentList.data.find((el: any) => el.body?.startsWith('# 🚀 TEST RESULT SUMMARY'))?.id
+        const targetId = commentList.data.find((el: any) => el.body?.includes(COMMENT_MARKER))?.id
         if (targetId !== undefined) {
           core.info(`Updating test summary as comment on pull-request`)
           await this.octokit.rest.issues.updateComment({
             ...github.context.repo,
             issue_number: pull_request.number,
             comment_id: targetId,
-            body: `# 🚀 TEST RESULT SUMMARY ${summary}`
+            body: commentContent
           })
         } else {
           core.info(`Attaching test summary as comment on pull-request`)
           await this.octokit.rest.issues.createComment({
             ...github.context.repo,
             issue_number: pull_request.number,
-            body: `# 🚀 TEST RESULT SUMMARY ${summary}`
+            body: commentContent
           })
         }
+      } else {
+        core.info('Not in the context of a pull request. Skipping comment creation.')
       }
 
       core.info(`Check run create response: ${resp.status}`)
