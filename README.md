@@ -19,6 +19,7 @@ This [Github Action](https://github.com/features/actions) displays test results 
 - Go / [go test](https://pkg.go.dev/testing)
 - Java / [JUnit](https://junit.org/)
 - JavaScript / [JEST](https://jestjs.io/) / [Mocha](https://mochajs.org/)
+- Python / [pytest](https://docs.pytest.org/en/stable/) / [unittest](https://docs.python.org/3/library/unittest.html)
 - Swift / xUnit
 
 For more information see [Supported formats](#supported-formats) section.
@@ -145,7 +146,9 @@ jobs:
     #   java-junit
     #   jest-junit
     #   mocha-json
+    #   python-xunit
     #   rspec-json
+    #   swift-xunit
     reporter: ''
 
     # Allows you to generate only the summary.
@@ -347,6 +350,16 @@ For Mocha < v9.1, the command should look like this:
 Additionally, test processing might fail if any of your tests write anything on standard output.
 Before version [v9.1.0](https://github.com/mochajs/mocha/releases/tag/v9.1.0), Mocha doesn't have the option to store `json` output directly to the file, and we have to rely on redirecting its standard output ([mocha#4607](https://github.com/mochajs/mocha/pull/4607)).
 Please update Mocha to version [v9.1.0](https://github.com/mochajs/mocha/releases/tag/v9.1.0) or above if you encounter this issue.
+</details>
+
+<details>
+  <summary>python-xunit (Experimental)</summary>
+
+Support for Python test results in xUnit format is experimental - should work but it was not extensively tested.
+
+For pytest support, configure [JUnit XML output](https://docs.pytest.org/en/stable/how-to/output.html#creating-junitxml-format-files) and run with the `--junit-xml` option, which also lets you specify the output path for test results.
+
+For unittest support, use a test runner that outputs the JUnit report format, such as [unittest-xml-reporting](https://pypi.org/project/unittest-xml-reporting/).
 </details>
 
 <details>
