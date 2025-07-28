@@ -207,4 +207,47 @@ describe('jest-junit tests', () => {
     // Report should have the title as the first line
     expect(report).toMatch(/^# My Custom Title\n/)
   })
+
+  it('report includes the short summary', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'jest-junit.xml')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: []
+    }
+
+    const parser = new JestJunitParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+    const shortSummary = '1 passed, 4 failed and 1 skipped'
+    const report = getReport([result], DEFAULT_OPTIONS, shortSummary)
+    // Report should have the title as the first line
+    expect(report).toMatch(/^## 1 passed, 4 failed and 1 skipped\n/)
+  })
+
+  it('report includes a custom report title and short summary', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'jest-junit.xml')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: []
+    }
+
+    const parser = new JestJunitParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+    const shortSummary = '1 passed, 4 failed and 1 skipped'
+    const report = getReport(
+      [result],
+      {
+        ...DEFAULT_OPTIONS,
+        reportTitle: 'My Custom Title'
+      },
+      shortSummary
+    )
+    // Report should have the title as the first line
+    expect(report).toMatch(/^# My Custom Title\n## 1 passed, 4 failed and 1 skipped\n/)
+  })
 })
