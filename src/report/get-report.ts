@@ -195,6 +195,12 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
   const sections: string[] = []
   const suites = options.listSuites === 'failed' ? tr.failedSuites : tr.suites
 
+  // suites gets filtered by options.listSuites, if the suites are empty, it should exit.
+  // currently it still displays all the non-failed items, making the report very verbose.
+  if (suites.length === 0) {
+    return sections
+  }  
+
   if (options.listSuites !== 'none') {
     const trSlug = makeRunSlug(runIndex, options)
     const nameLink = `<a id="${trSlug.id}" href="${options.baseUrl + trSlug.link}">${tr.path}</a>`
