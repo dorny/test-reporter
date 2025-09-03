@@ -56,7 +56,12 @@ export function getReport(results: TestRunResult[], options: ReportOptions = DEF
 }
 
 function getMaxReportLength(options: ReportOptions = DEFAULT_OPTIONS): number {
-  return options.useActionsSummary ? MAX_ACTIONS_SUMMARY_LENGTH : MAX_REPORT_LENGTH
+  if (options.useActionsSummary) {
+    const currentSummaryContent = core.summary.stringify()
+    const currentSummarySize = getByteLength(currentSummaryContent)
+    return MAX_ACTIONS_SUMMARY_LENGTH - currentSummarySize
+  }
+  return MAX_REPORT_LENGTH
 }
 
 function trimReport(lines: string[], options: ReportOptions): string {
