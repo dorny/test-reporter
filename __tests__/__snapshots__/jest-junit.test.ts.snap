@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`jest-junit tests parsing ESLint report without timing information works - PR #134 1`] = `
 TestRunResult {

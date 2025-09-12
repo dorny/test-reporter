@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`mocha-json tests report from ./reports/mocha-json test results matches snapshot 1`] = `
 TestRunResult {

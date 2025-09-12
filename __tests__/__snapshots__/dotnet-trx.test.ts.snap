@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`dotnet-trx tests matches dotnet-trx report snapshot 1`] = `
 TestRunResult {
