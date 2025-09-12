@@ -8,7 +8,7 @@
     "build": "tsc",
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
-    "lint": "eslint src/**/*.ts",
+    "lint": "eslint",
     "package": "ncc build --license licenses.txt && eolConverter lf 'dist/*'",
     "version": "npm run build && npm run package && git add dist/*",
     "test": "jest --ci --reporters=default --reporters=jest-junit",
