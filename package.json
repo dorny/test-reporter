@@ -48,7 +48,7 @@
   "devDependencies": {
     "@octokit/webhooks-types": "^7.6.1",
     "@types/adm-zip": "^0.5.7",
-    "@types/jest": "^29.5.14",
+    "@types/jest": "^30.0.0",
     "@types/node": "^20.19.2",
     "@types/picomatch": "^2.3.4",
     "@types/xml2js": "^0.4.14",
