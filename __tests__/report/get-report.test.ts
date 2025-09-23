@@ -22,7 +22,7 @@ describe('trimReport', () => {
     const trimmed = trimReport(MAX_LEN_REPORT, 0, DEFAULT_OPTIONS)
     const trimmedLength = getByteLength(trimmed)
 
-    expect(trimmed).toMatch(/has been trimmed\*\*$/)
+    expect(trimmed.endsWith('has been trimmed**')).toBe(true) // assert was trimmed
     expectToBeWithinRangeOfCeiling(trimmedLength, MAX_ACTIONS_SUMMARY_LENGTH - ALWAYS_RESERVED_SPACE, TEST_LINE_LEN)
   })
 
@@ -31,7 +31,7 @@ describe('trimReport', () => {
     const trimmed = trimReport(MAX_LEN_REPORT, prependStringLen, DEFAULT_OPTIONS)
     const trimmedLength = getByteLength(trimmed)
 
-    expect(trimmed).toMatch(/has been trimmed\*\*$/)
+    expect(trimmed.endsWith('has been trimmed**')).toBe(true) // assert was trimmed
     expectToBeWithinRangeOfCeiling(
       trimmedLength,
       MAX_ACTIONS_SUMMARY_LENGTH - ALWAYS_RESERVED_SPACE - prependStringLen,
@@ -55,7 +55,7 @@ describe('getReport', () => {
     const trimmed = getReport(MAX_LEN_RESULT, DEFAULT_OPTIONS)
     const trimmedLength = getByteLength(trimmed)
 
-    expect(trimmed).toMatch(/has been trimmed\*\*$/)
+    expect(trimmed.endsWith('has been trimmed**')).toBe(true) // assert was trimmed
     expectToBeWithinRangeOfCeiling(trimmedLength, MAX_ACTIONS_SUMMARY_LENGTH - ALWAYS_RESERVED_SPACE, FAILURE_ROW_LEN)
   })
 
@@ -65,7 +65,7 @@ describe('getReport', () => {
     const trimmed = getReport(MAX_LEN_RESULT, DEFAULT_OPTIONS, prependString)
     const trimmedLength = getByteLength(trimmed)
 
-    expect(trimmed).toMatch(/has been trimmed\*\*$/)
+    expect(trimmed.endsWith('has been trimmed**')).toBe(true) // assert was trimmed
     expectToBeWithinRangeOfCeiling(
       trimmedLength,
       MAX_ACTIONS_SUMMARY_LENGTH - ALWAYS_RESERVED_SPACE - prependStringLen,
