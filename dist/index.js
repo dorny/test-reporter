@@ -309,6 +309,7 @@ class TestReporter {
     useActionsSummary = core.getInput('use-actions-summary', { required: false }) === 'true';
     badgeTitle = core.getInput('badge-title', { required: false });
     reportTitle = core.getInput('report-title', { required: false });
+    collapsed = core.getInput('collapsed', { required: false });
     token = core.getInput('token', { required: true });
     octokit;
     context = (0, github_utils_1.getCheckRunContext)();
@@ -401,7 +402,7 @@ class TestReporter {
                 throw error;
             }
         }
-        const { listSuites, listTests, onlySummary, useActionsSummary, badgeTitle, reportTitle } = this;
+        const { listSuites, listTests, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed } = this;
         const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
         const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
         const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
@@ -415,7 +416,8 @@ class TestReporter {
                 onlySummary,
                 useActionsSummary,
                 badgeTitle,
-                reportTitle
+                reportTitle,
+                collapsed
             });
             core.info('Summary content:');
             core.info(summary);
@@ -443,7 +445,8 @@ class TestReporter {
                 onlySummary,
                 useActionsSummary,
                 badgeTitle,
-                reportTitle
+                reportTitle,
+                collapsed
             });
             core.info('Creating annotations');
             const annotations = (0, get_annotations_1.getAnnotations)(results, this.maxAnnotations);
@@ -1924,7 +1927,8 @@ exports.DEFAULT_OPTIONS = {
     onlySummary: false,
     useActionsSummary: true,
     badgeTitle: 'tests',
-    reportTitle: ''
+    reportTitle: '',
+    collapsed: 'auto'
 };
 function getReport(results, options = exports.DEFAULT_OPTIONS) {
     core.info('Generating check run summary');
@@ -2031,7 +2035,10 @@ function getBadge(passed, failed, skipped, options) {
 function getTestRunsReport(testRuns, options) {
     const sections = [];
     const totalFailed = testRuns.reduce((sum, tr) => sum + tr.failed, 0);
-    if (totalFailed === 0) {
+    // Determine if report should be collapsed based on collapsed option
+    const shouldCollapse = options.collapsed === 'always' ||
+        (options.collapsed === 'auto' && totalFailed === 0);
+    if (shouldCollapse) {
         sections.push(`<details><summary>Expand for details</summary>`);
         sections.push(` `);
     }
@@ -2056,7 +2063,7 @@ function getTestRunsReport(testRuns, options) {
         const suitesReports = testRuns.map((tr, i) => getSuitesReport(tr, i, options)).flat();
         sections.push(...suitesReports);
     }
-    if (totalFailed === 0) {
+    if (shouldCollapse) {
         sections.push(`</details>`);
     }
     return sections;
