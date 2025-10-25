@@ -6,7 +6,7 @@ import {getFirstNonEmptyLine} from '../utils/parse-utils'
 import {slug} from '../utils/slugger'
 
 const MAX_REPORT_LENGTH = 65535
-const MAX_ACTIONS_SUMMARY_LENGTH = 1048576
+export const MAX_ACTIONS_SUMMARY_LENGTH = 1048576
 
 export interface ReportOptions {
   listSuites: 'all' | 'failed' | 'none'
@@ -28,16 +28,21 @@ export const DEFAULT_OPTIONS: ReportOptions = {
   reportTitle: ''
 }
 
-export function getReport(results: TestRunResult[], options: ReportOptions = DEFAULT_OPTIONS): string {
+export function getReport(
+  results: TestRunResult[],
+  options: ReportOptions = DEFAULT_OPTIONS,
+  prependString?: string
+): string {
   core.info('Generating check run summary')
 
   applySort(results)
 
   const opts = {...options}
+  const prependStringLen = getByteLength(prependString || '')
   let lines = renderReport(results, opts)
   let report = lines.join('\n')
 
-  if (getByteLength(report) <= getMaxReportLength(options)) {
+  if (getByteLength(report) + prependStringLen <= getMaxReportLength(options)) {
     return report
   }
 
@@ -46,24 +51,24 @@ export function getReport(results: TestRunResult[], options: ReportOptions = DEF
     opts.listTests = 'failed'
     lines = renderReport(results, opts)
     report = lines.join('\n')
-    if (getByteLength(report) <= getMaxReportLength(options)) {
+    if (getByteLength(report) + prependStringLen <= getMaxReportLength(options)) {
       return report
     }
   }
 
   core.warning(`Test report summary exceeded limit of ${getMaxReportLength(options)} bytes and will be trimmed`)
-  return trimReport(lines, options)
+  return trimReport(lines, prependStringLen, options)
 }
 
 function getMaxReportLength(options: ReportOptions = DEFAULT_OPTIONS): number {
   return options.useActionsSummary ? MAX_ACTIONS_SUMMARY_LENGTH : MAX_REPORT_LENGTH
 }
 
-function trimReport(lines: string[], options: ReportOptions): string {
+export function trimReport(lines: string[], prependStringLen: number, options: ReportOptions): string {
   const closingBlock = '```'
   const errorMsg = `**Report exceeded GitHub limit of ${getMaxReportLength(options)} bytes and has been trimmed**`
   const maxErrorMsgLength = closingBlock.length + errorMsg.length + 2
-  const maxReportLength = getMaxReportLength(options) - maxErrorMsgLength
+  const maxReportLength = getMaxReportLength(options) - maxErrorMsgLength - prependStringLen
 
   let reportLength = 0
   let codeBlock = false
@@ -97,7 +102,7 @@ function applySort(results: TestRunResult[]): void {
   }
 }
 
-function getByteLength(text: string): number {
+export function getByteLength(text: string): number {
   return Buffer.byteLength(text, 'utf8')
 }
 
