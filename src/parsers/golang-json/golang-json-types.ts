@@ -1,12 +1,4 @@
-export type GoTestAction = 'start'
-  | 'run'
-  | 'pause'
-  | 'cont'
-  | 'pass'
-  | 'bench'
-  | 'fail'
-  | 'output'
-  | 'skip'
+export type GoTestAction = 'start' | 'run' | 'pause' | 'cont' | 'pass' | 'bench' | 'fail' | 'output' | 'skip'
 
 export type GoTestEvent = {
   Time: string

@@ -187,6 +187,7 @@ class TestReporter {
 
       core.info('Summary content:')
       core.info(summary)
+      core.setOutput('summary', summary)
       core.summary.addRaw(`# ${shortSummary}`)
       await core.summary.addRaw(summary).write()
     } else {
