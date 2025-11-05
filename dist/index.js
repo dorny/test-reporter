@@ -1909,6 +1909,7 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.DEFAULT_OPTIONS = void 0;
 exports.getReport = getReport;
+exports.getBadge = getBadge;
 const core = __importStar(__nccwpck_require__(7484));
 const markdown_utils_1 = __nccwpck_require__(5129);
 const node_utils_1 = __nccwpck_require__(5384);
@@ -2022,8 +2023,10 @@ function getBadge(passed, failed, skipped, options) {
         color = 'yellow';
     }
     const hint = failed > 0 ? 'Tests failed' : 'Tests passed successfully';
-    const uri = encodeURIComponent(`${options.badgeTitle}-${message}-${color}`);
-    return `![${hint}](https://img.shields.io/badge/${uri})`;
+    const encodedBadgeTitle = encodeImgShieldsURIComponent(options.badgeTitle);
+    const encodedMessage = encodeImgShieldsURIComponent(message);
+    const encodedColor = encodeImgShieldsURIComponent(color);
+    return `![${hint}](https://img.shields.io/badge/${encodedBadgeTitle}-${encodedMessage}-${encodedColor})`;
 }
 function getTestRunsReport(testRuns, options) {
     const sections = [];
@@ -2152,6 +2155,9 @@ function getResultIcon(result) {
         default:
             return '';
     }
+}
+function encodeImgShieldsURIComponent(component) {
+    return encodeURIComponent(component).replace(/-/g, '--').replace(/_/g, '__');
 }
 
 
