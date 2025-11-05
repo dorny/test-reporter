@@ -31,6 +31,16 @@ describe('getBadge', () => {
       expect(badge).toBe('![Tests passed successfully](https://img.shields.io/badge/integration--api--tests-10%20passed-success)')
     })
 
+    it('handles badge title with multiple underscores', () => {
+      const options: ReportOptions = {
+        ...DEFAULT_OPTIONS,
+        badgeTitle: 'my_integration_test'
+      }
+      const badge = getBadge(10, 0, 0, options)
+      // All underscores in the title should be encoded as __
+      expect(badge).toBe('![Tests passed successfully](https://img.shields.io/badge/my__integration__test-10%20passed-success)')
+    })
+
     it('handles badge title with version format containing hyphen', () => {
       const options: ReportOptions = {
         ...DEFAULT_OPTIONS,

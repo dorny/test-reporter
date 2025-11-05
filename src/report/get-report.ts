@@ -309,5 +309,5 @@ function getResultIcon(result: TestExecutionResult): string {
 }
 
 function encodeImgShieldsURIComponent(component: string): string {
-  return encodeURIComponent(component).replace(/-/g, '--')
+  return encodeURIComponent(component).replace(/-/g, '--').replace(/_/g, '__')
 }
