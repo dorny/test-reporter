@@ -125,7 +125,7 @@ function getReportBadge(results: TestRunResult[], options: ReportOptions): strin
   return getBadge(passed, failed, skipped, options)
 }
 
-function getBadge(passed: number, failed: number, skipped: number, options: ReportOptions): string {
+export function getBadge(passed: number, failed: number, skipped: number, options: ReportOptions): string {
   const text = []
   if (passed > 0) {
     text.push(`${passed} passed`)
