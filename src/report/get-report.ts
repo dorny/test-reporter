@@ -125,7 +125,7 @@ function getReportBadge(results: TestRunResult[], options: ReportOptions): strin
   return getBadge(passed, failed, skipped, options)
 }
 
-function getBadge(passed: number, failed: number, skipped: number, options: ReportOptions): string {
+export function getBadge(passed: number, failed: number, skipped: number, options: ReportOptions): string {
   const text = []
   if (passed > 0) {
     text.push(`${passed} passed`)
@@ -145,8 +145,10 @@ function getBadge(passed: number, failed: number, skipped: number, options: Repo
     color = 'yellow'
   }
   const hint = failed > 0 ? 'Tests failed' : 'Tests passed successfully'
-  const uri = encodeURIComponent(`${options.badgeTitle}-${message}-${color}`)
-  return `![${hint}](https://img.shields.io/badge/${uri})`
+  const encodedBadgeTitle = encodeImgShieldsURIComponent(options.badgeTitle)
+  const encodedMessage = encodeImgShieldsURIComponent(message)
+  const encodedColor = encodeImgShieldsURIComponent(color)
+  return `![${hint}](https://img.shields.io/badge/${encodedBadgeTitle}-${encodedMessage}-${encodedColor})`
 }
 
 function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): string[] {
@@ -304,4 +306,8 @@ function getResultIcon(result: TestExecutionResult): string {
     default:
       return ''
   }
+}
+
+function encodeImgShieldsURIComponent(component: string): string {
+  return encodeURIComponent(component).replace(/-/g, '--').replace(/_/g, '__')
 }
