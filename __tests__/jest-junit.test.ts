@@ -263,15 +263,15 @@ describe('jest-junit tests', () => {
 
     const parser = new JestJunitParser(opts)
     const result = await parser.parse(filePath, fileContent)
-    
+
     // Check if this fixture has failures to determine expected behavior
     const hasFailed = result.failed > 0
-    
+
     const report = getReport([result], {
       ...DEFAULT_OPTIONS,
       collapsed: 'auto'
     })
-    
+
     if (hasFailed) {
       // Should not collapse when there are failures
       expect(report).not.toContain('<details><summary>Expand for details</summary>')

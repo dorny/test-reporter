@@ -2036,8 +2036,7 @@ function getTestRunsReport(testRuns, options) {
     const sections = [];
     const totalFailed = testRuns.reduce((sum, tr) => sum + tr.failed, 0);
     // Determine if report should be collapsed based on collapsed option
-    const shouldCollapse = options.collapsed === 'always' ||
-        (options.collapsed === 'auto' && totalFailed === 0);
+    const shouldCollapse = options.collapsed === 'always' || (options.collapsed === 'auto' && totalFailed === 0);
     if (shouldCollapse) {
         sections.push(`<details><summary>Expand for details</summary>`);
         sections.push(` `);
