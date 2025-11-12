@@ -207,4 +207,100 @@ describe('jest-junit tests', () => {
     // Report should have the title as the first line
     expect(report).toMatch(/^# My Custom Title\n/)
   })
+
+  it('report can be collapsed when configured', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'jest-junit.xml')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: []
+    }
+
+    const parser = new JestJunitParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+    const report = getReport([result], {
+      ...DEFAULT_OPTIONS,
+      collapsed: 'always'
+    })
+    // Report should include collapsible details
+    expect(report).toContain('<details><summary>Expand for details</summary>')
+    expect(report).toContain('</details>')
+  })
+
+  it('report is not collapsed when configured to never', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'jest-junit.xml')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: []
+    }
+
+    const parser = new JestJunitParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+    const report = getReport([result], {
+      ...DEFAULT_OPTIONS,
+      collapsed: 'never'
+    })
+    // Report should not include collapsible details
+    expect(report).not.toContain('<details><summary>Expand for details</summary>')
+    expect(report).not.toContain('</details>')
+  })
+
+  it('report auto-collapses when all tests pass', async () => {
+    // Test with a fixture that has all passing tests (no failures)
+    const fixturePath = path.join(__dirname, 'fixtures', 'jest-junit-eslint.xml')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: []
+    }
+
+    const parser = new JestJunitParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+
+    // Verify this fixture has no failures
+    expect(result.failed).toBe(0)
+
+    const report = getReport([result], {
+      ...DEFAULT_OPTIONS,
+      collapsed: 'auto'
+    })
+
+    // Should collapse when all tests pass
+    expect(report).toContain('<details><summary>Expand for details</summary>')
+    expect(report).toContain('</details>')
+  })
+
+  it('report does not auto-collapse when tests fail', async () => {
+    // Test with a fixture that has failing tests
+    const fixturePath = path.join(__dirname, 'fixtures', 'jest-junit.xml')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: []
+    }
+
+    const parser = new JestJunitParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+
+    // Verify this fixture has failures
+    expect(result.failed).toBeGreaterThan(0)
+
+    const report = getReport([result], {
+      ...DEFAULT_OPTIONS,
+      collapsed: 'auto'
+    })
+
+    // Should not collapse when there are failures
+    expect(report).not.toContain('<details><summary>Expand for details</summary>')
+    expect(report).not.toContain('</details>')
+  })
 })
