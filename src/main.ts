@@ -67,6 +67,11 @@ class TestReporter {
       return
     }
 
+    if (this.collapsed !== 'auto' && this.collapsed !== 'always' && this.collapsed !== 'never') {
+      core.setFailed(`Input parameter 'collapsed' has invalid value`)
+      return
+    }
+
     if (isNaN(this.maxAnnotations) || this.maxAnnotations < 0 || this.maxAnnotations > 50) {
       core.setFailed(`Input parameter 'max-annotations' has invalid value`)
       return
