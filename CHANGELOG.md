@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.2.0
+* Feature: Add collapsed option to control report summary visibility https://github.com/dorny/test-reporter/pull/664
+* Fix badge encoding for values including underscore and hyphens https://github.com/dorny/test-reporter/pull/672
+* Fix missing `report-title` attribute in action definition https://github.com/dorny/test-reporter/pull/637
+* Refactor variable names to fix shadowing issues https://github.com/dorny/test-reporter/pull/630
+
 ## 2.1.1
 * Fix error when a TestMethod element does not have a className attribute in a trx file https://github.com/dorny/test-reporter/pull/623
 * Add stack trace from trx to summary https://github.com/dorny/test-reporter/pull/615
