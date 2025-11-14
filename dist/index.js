@@ -413,6 +413,7 @@ class TestReporter {
         const shortSummary = `${passed} passed, ${failed} failed and ${skipped} skipped `;
         let baseUrl = '';
         if (this.useActionsSummary) {
+            core.info(`Creating action summary`);
             const summary = (0, get_report_1.getReport)(results, {
                 listSuites,
                 listTests,
@@ -422,10 +423,9 @@ class TestReporter {
                 badgeTitle,
                 reportTitle,
                 collapsed
-            });
+            }, shortSummary);
             core.info('Summary content:');
             core.info(summary);
-            core.summary.addRaw(`# ${shortSummary}`);
             await core.summary.addRaw(summary).write();
         }
         else {
@@ -1934,11 +1934,10 @@ exports.DEFAULT_OPTIONS = {
     reportTitle: '',
     collapsed: 'auto'
 };
-function getReport(results, options = exports.DEFAULT_OPTIONS) {
-    core.info('Generating check run summary');
+function getReport(results, options = exports.DEFAULT_OPTIONS, shortSummary = '') {
     applySort(results);
     const opts = { ...options };
-    let lines = renderReport(results, opts);
+    let lines = renderReport(results, opts, shortSummary);
     let report = lines.join('\n');
     if (getByteLength(report) <= getMaxReportLength(options)) {
         return report;
@@ -1946,7 +1945,7 @@ function getReport(results, options = exports.DEFAULT_OPTIONS) {
     if (opts.listTests === 'all') {
         core.info("Test report summary is too big - setting 'listTests' to 'failed'");
         opts.listTests = 'failed';
-        lines = renderReport(results, opts);
+        lines = renderReport(results, opts, shortSummary);
         report = lines.join('\n');
         if (getByteLength(report) <= getMaxReportLength(options)) {
             return report;
@@ -1993,11 +1992,14 @@ function applySort(results) {
 function getByteLength(text) {
     return Buffer.byteLength(text, 'utf8');
 }
-function renderReport(results, options) {
+function renderReport(results, options, shortSummary) {
     const sections = [];
     const reportTitle = options.reportTitle.trim();
     if (reportTitle) {
         sections.push(`# ${reportTitle}`);
+    }
+    if (shortSummary) {
+        sections.push(`## ${shortSummary}`);
     }
     const badge = getReportBadge(results, options);
     sections.push(badge);
