@@ -30,13 +30,15 @@ export const DEFAULT_OPTIONS: ReportOptions = {
   collapsed: 'auto'
 }
 
-export function getReport(results: TestRunResult[], options: ReportOptions = DEFAULT_OPTIONS): string {
-  core.info('Generating check run summary')
-
+export function getReport(
+  results: TestRunResult[],
+  options: ReportOptions = DEFAULT_OPTIONS,
+  shortSummary = ''
+): string {
   applySort(results)
 
   const opts = {...options}
-  let lines = renderReport(results, opts)
+  let lines = renderReport(results, opts, shortSummary)
   let report = lines.join('\n')
 
   if (getByteLength(report) <= getMaxReportLength(options)) {
@@ -46,7 +48,7 @@ export function getReport(results: TestRunResult[], options: ReportOptions = DEF
   if (opts.listTests === 'all') {
     core.info("Test report summary is too big - setting 'listTests' to 'failed'")
     opts.listTests = 'failed'
-    lines = renderReport(results, opts)
+    lines = renderReport(results, opts, shortSummary)
     report = lines.join('\n')
     if (getByteLength(report) <= getMaxReportLength(options)) {
       return report
@@ -103,12 +105,16 @@ function getByteLength(text: string): number {
   return Buffer.byteLength(text, 'utf8')
 }
 
-function renderReport(results: TestRunResult[], options: ReportOptions): string[] {
+function renderReport(results: TestRunResult[], options: ReportOptions, shortSummary: string): string[] {
   const sections: string[] = []
 
   const reportTitle: string = options.reportTitle.trim()
   if (reportTitle) {
     sections.push(`# ${reportTitle}`)
+  }
+
+  if (shortSummary) {
+    sections.push(`## ${shortSummary}`)
   }
 
   const badge = getReportBadge(results, options)

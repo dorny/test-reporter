@@ -181,20 +181,23 @@ class TestReporter {
 
     let baseUrl = ''
     if (this.useActionsSummary) {
-      const summary = getReport(results, {
-        listSuites,
-        listTests,
-        baseUrl,
-        onlySummary,
-        useActionsSummary,
-        badgeTitle,
-        reportTitle,
-        collapsed
-      })
+      const summary = getReport(
+        results,
+        {
+          listSuites,
+          listTests,
+          baseUrl,
+          onlySummary,
+          useActionsSummary,
+          badgeTitle,
+          reportTitle,
+          collapsed
+        },
+        shortSummary
+      )
 
       core.info('Summary content:')
       core.info(summary)
-      core.summary.addRaw(`# ${shortSummary}`)
       await core.summary.addRaw(summary).write()
     } else {
       core.info(`Creating check run ${name}`)
