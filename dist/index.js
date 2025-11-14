@@ -413,7 +413,6 @@ class TestReporter {
         const shortSummary = `${passed} passed, ${failed} failed and ${skipped} skipped `;
         let baseUrl = '';
         if (this.useActionsSummary) {
-            core.info(`Creating action summary`);
             const summary = (0, get_report_1.getReport)(results, {
                 listSuites,
                 listTests,
