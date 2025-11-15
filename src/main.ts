@@ -17,9 +17,9 @@ import {GolangJsonParser} from './parsers/golang-json/golang-json-parser'
 import {JavaJunitParser} from './parsers/java-junit/java-junit-parser'
 import {JestJunitParser} from './parsers/jest-junit/jest-junit-parser'
 import {MochaJsonParser} from './parsers/mocha-json/mocha-json-parser'
+import {PythonXunitParser} from './parsers/python-xunit/python-xunit-parser'
 import {RspecJsonParser} from './parsers/rspec-json/rspec-json-parser'
 import {SwiftXunitParser} from './parsers/swift-xunit/swift-xunit-parser'
-
 import {normalizeDirPath, normalizeFilePath} from './utils/path-utils'
 import {getCheckRunContext} from './utils/github-utils'
 
@@ -271,6 +271,8 @@ class TestReporter {
         return new JestJunitParser(options)
       case 'mocha-json':
         return new MochaJsonParser(options)
+      case 'python-xunit':
+        return new PythonXunitParser(options)
       case 'rspec-json':
         return new RspecJsonParser(options)
       case 'swift-xunit':

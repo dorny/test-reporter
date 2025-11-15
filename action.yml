@@ -32,6 +32,7 @@ inputs:
         - java-junit
         - jest-junit
         - mocha-json
+        - python-xunit
         - rspec-json
         - swift-xunit
     required: true

@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`python-xunit unittest report report from python test results matches snapshot 1`] = `
+TestRunResult {
+  "path": "fixtures/python-xunit-unittest.xml",
+  "suites": [
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "TestAcme",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "test_always_pass",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "test_parameterized_0_param1",
+              "result": "success",
+              "time": 1,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "test_parameterized_1_param2",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "test_with_subtests",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "Traceback (most recent call last):
+  File "/Users/foo/Projects/python-test/tests/test_lib.py", line 24, in test_always_fail
+    self.fail("failed")
+AssertionError: failed
+",
+                "line": undefined,
+                "message": "AssertionError: failed",
+                "path": undefined,
+              },
+              "name": "test_always_fail",
+              "result": "failed",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "Traceback (most recent call last):
+  File "/Users/foo/Projects/python-test/tests/test_lib.py", line 31, in test_error
+    raise Exception("error")
+Exception: error
+",
+                "line": undefined,
+                "message": "Exception: error",
+                "path": undefined,
+              },
+              "name": "test_error",
+              "result": "failed",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "test_always_skip",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "test_expected_failure",
+              "result": "skipped",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "TestAcme-20251114214921",
+      "totalTime": 1,
+    },
+  ],
+  "totalTime": 1,
+}
+`;

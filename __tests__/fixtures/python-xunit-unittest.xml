@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TestAcme-20251114214921" tests="8" file=".py" time="0.001" timestamp="2025-11-14T21:49:22" failures="1" errors="1" skipped="2">
+  <testcase classname="TestAcme" name="test_always_pass" time="0.000" timestamp="2025-11-14T21:49:22" file="tests/test_lib.py" line="8"/>
+  <testcase classname="TestAcme" name="test_parameterized_0_param1" time="0.001" timestamp="2025-11-14T21:49:22" file="tests/test_lib.py" line="618"/>
+  <testcase classname="TestAcme" name="test_parameterized_1_param2" time="0.000" timestamp="2025-11-14T21:49:22" file="tests/test_lib.py" line="618"/>
+  <testcase classname="TestAcme" name="test_with_subtests" time="0.000" timestamp="2025-11-14T21:49:22" file="tests/test_lib.py" line="11"/>
+  <testcase classname="TestAcme" name="test_always_fail" time="0.000" timestamp="2025-11-14T21:49:22" file="tests/test_lib.py" line="23">
+    <failure type="AssertionError" message="failed"><![CDATA[Traceback (most recent call last):
+  File "/Users/foo/Projects/python-test/tests/test_lib.py", line 24, in test_always_fail
+    self.fail("failed")
+AssertionError: failed
+]]></failure>
+  </testcase>
+  <testcase classname="TestAcme" name="test_error" time="0.000" timestamp="2025-11-14T21:49:22" file="tests/test_lib.py" line="30">
+    <error type="Exception" message="error"><![CDATA[Traceback (most recent call last):
+  File "/Users/foo/Projects/python-test/tests/test_lib.py", line 31, in test_error
+    raise Exception("error")
+Exception: error
+]]></error>
+  </testcase>
+  <testcase classname="TestAcme" name="test_always_skip" time="0.000" timestamp="2025-11-14T21:49:22" file="tests/test_lib.py" line="20">
+    <skipped type="skip" message="skipped"/>
+  </testcase>
+  <testcase classname="TestAcme" name="test_expected_failure" time="0.000" timestamp="2025-11-14T21:49:22" file="tests/test_lib.py" line="26">
+    <skipped type="XFAIL" message="expected failure: (&lt;class 'AssertionError'&gt;, AssertionError('expected failure'), &lt;traceback object at 0x100c125c0&gt;)"/>
+  </testcase>
+</testsuite>

@@ -277,6 +277,7 @@ const golang_json_parser_1 = __nccwpck_require__(5162);
 const java_junit_parser_1 = __nccwpck_require__(8342);
 const jest_junit_parser_1 = __nccwpck_require__(1042);
 const mocha_json_parser_1 = __nccwpck_require__(5402);
+const python_xunit_parser_1 = __nccwpck_require__(6578);
 const rspec_json_parser_1 = __nccwpck_require__(9768);
 const swift_xunit_parser_1 = __nccwpck_require__(7330);
 const path_utils_1 = __nccwpck_require__(9132);
@@ -493,6 +494,8 @@ class TestReporter {
                 return new jest_junit_parser_1.JestJunitParser(options);
             case 'mocha-json':
                 return new mocha_json_parser_1.MochaJsonParser(options);
+            case 'python-xunit':
+                return new python_xunit_parser_1.PythonXunitParser(options);
             case 'rspec-json':
                 return new rspec_json_parser_1.RspecJsonParser(options);
             case 'swift-xunit':
@@ -1661,6 +1664,26 @@ class MochaJsonParser {
     }
 }
 exports.MochaJsonParser = MochaJsonParser;
+
+
+/***/ }),
+
+/***/ 6578:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PythonXunitParser = void 0;
+const java_junit_parser_1 = __nccwpck_require__(8342);
+class PythonXunitParser extends java_junit_parser_1.JavaJunitParser {
+    options;
+    constructor(options) {
+        super(options);
+        this.options = options;
+    }
+}
+exports.PythonXunitParser = PythonXunitParser;
 
 
 /***/ }),
