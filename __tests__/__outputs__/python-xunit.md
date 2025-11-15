@@ -1,17 +1,23 @@
-![Tests failed](https://img.shields.io/badge/tests-2%20passed%2C%201%20failed-critical)
+![Tests failed](https://img.shields.io/badge/tests-4%20passed%2C%202%20failed%2C%202%20skipped-critical)
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
-|[fixtures/python-xunit.xml](#user-content-r0)|2 ✅|1 ❌||220ms|
-## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/python-xunit.xml</a>
-**3** tests were completed in **220ms** with **2** passed, **1** failed and **0** skipped.
+|[fixtures/python-xunit-unittest.xml](#user-content-r0)|4 ✅|2 ❌|2 ⚪|1ms|
+## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/python-xunit-unittest.xml</a>
+**8** tests were completed in **1ms** with **4** passed, **2** failed and **2** skipped.
 |Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
-|[pytest](#user-content-r0s0)|2 ✅|1 ❌||220ms|
-### ❌ <a id="user-content-r0s0" href="#user-content-r0s0">pytest</a>
+|[TestAcme-20251114214921](#user-content-r0s0)|4 ✅|2 ❌|2 ⚪|1ms|
+### ❌ <a id="user-content-r0s0" href="#user-content-r0s0">TestAcme-20251114214921</a>
 ```
-src.acme.test_lib
+TestAcme
   ✅ test_always_pass
-  ✅ test_always_skip
+  ✅ test_parameterized_0_param1
+  ✅ test_parameterized_1_param2
+  ✅ test_with_subtests
   ❌ test_always_fail
-	failed
+	AssertionError: failed
+  ❌ test_error
+	Exception: error
+  ⚪ test_always_skip
+  ⚪ test_expected_failure
 ```

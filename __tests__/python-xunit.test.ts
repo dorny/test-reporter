@@ -6,16 +6,21 @@ import {ParseOptions} from '../src/test-parser'
 import {DEFAULT_OPTIONS, getReport} from '../src/report/get-report'
 import {normalizeFilePath} from '../src/utils/path-utils'
 
-describe('python-xunit tests', () => {
-  it('report from python test results matches snapshot', async () => {
-    const fixturePath = path.join(__dirname, 'fixtures', 'python-xunit.xml')
-    const outputPath = path.join(__dirname, '__outputs__', 'python-xunit.md')
-    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
-    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+const defaultOpts: ParseOptions = {
+  parseErrors: true,
+  trackedFiles: []
+}
 
-    const trackedFiles = ['src/acme/test_lib.py']
+describe('python-xunit unittest report', () => {
+  const fixturePath = path.join(__dirname, 'fixtures', 'python-xunit-unittest.xml')
+  const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+  const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+  it('report from python test results matches snapshot', async () => {
+    const outputPath = path.join(__dirname, '__outputs__', 'python-xunit.md')
+    const trackedFiles = ['tests/test_lib.py']
     const opts: ParseOptions = {
-      parseErrors: true,
+      ...defaultOpts,
       trackedFiles
     }
 
@@ -29,16 +34,7 @@ describe('python-xunit tests', () => {
   })
 
   it('report does not include a title by default', async () => {
-    const fixturePath = path.join(__dirname, 'fixtures', 'python-xunit.xml')
-    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
-    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
-
-    const opts: ParseOptions = {
-      parseErrors: true,
-      trackedFiles: []
-    }
-
-    const parser = new PythonXunitParser(opts)
+    const parser = new PythonXunitParser(defaultOpts)
     const result = await parser.parse(filePath, fileContent)
     const report = getReport([result])
     // Report should have the badge as the first line
@@ -51,16 +47,7 @@ describe('python-xunit tests', () => {
     ['tab', '\t'],
     ['newline', '\n']
   ])('report does not include a title when configured value is %s', async (_, reportTitle) => {
-    const fixturePath = path.join(__dirname, 'fixtures', 'python-xunit.xml')
-    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
-    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
-
-    const opts: ParseOptions = {
-      parseErrors: true,
-      trackedFiles: []
-    }
-
-    const parser = new PythonXunitParser(opts)
+    const parser = new PythonXunitParser(defaultOpts)
     const result = await parser.parse(filePath, fileContent)
     const report = getReport([result], {
       ...DEFAULT_OPTIONS,
@@ -71,16 +58,7 @@ describe('python-xunit tests', () => {
   })
 
   it('report includes a custom report title', async () => {
-    const fixturePath = path.join(__dirname, 'fixtures', 'python-xunit.xml')
-    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
-    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
-
-    const opts: ParseOptions = {
-      parseErrors: true,
-      trackedFiles: []
-    }
-
-    const parser = new PythonXunitParser(opts)
+    const parser = new PythonXunitParser(defaultOpts)
     const result = await parser.parse(filePath, fileContent)
     const report = getReport([result], {
       ...DEFAULT_OPTIONS,
