@@ -9,6 +9,8 @@ import {promisify} from 'util'
 import got, {Progress} from 'got'
 const asyncStream = promisify(stream.pipeline)
 
+type WorkflowRunPR = WorkflowRunEvent['workflow_run']['pull_requests'][number]
+
 export function getCheckRunContext(): {sha: string; runId: number} {
   if (github.context.eventName === 'workflow_run') {
     core.info('Action was triggered by workflow_run: using SHA and RUN_ID from triggering workflow')
@@ -16,8 +18,15 @@ export function getCheckRunContext(): {sha: string; runId: number} {
     if (!event.workflow_run) {
       throw new Error("Event of type 'workflow_run' is missing 'workflow_run' field")
     }
+    const prs = (event.workflow_run.pull_requests ?? []) as WorkflowRunPR[]
+    const prShaMatch = prs.find(pr => pr.head?.ref === event.workflow_run.head_branch)?.head?.sha
+    const prShaFirst = prs[0]?.head?.sha
+    const sha = prShaMatch ?? prShaFirst ?? event.workflow_run.head_sha
+    if (!sha) {
+      throw new Error('Unable to resolve SHA from workflow_run (no PR head.sha or head_sha)')
+    }
     return {
-      sha: event.workflow_run.head_commit.id,
+      sha,
       runId: event.workflow_run.id
     }
   }
