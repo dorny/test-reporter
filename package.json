@@ -69,6 +69,9 @@
     "ts-jest": "^29.4.5",
     "typescript": "^5.9.3"
   },
+  "overrides": {
+    "sax": "^1.4.3"
+  },
   "jest-junit": {
     "suiteName": "jest tests",
     "outputDirectory": "__tests__/__results__",
