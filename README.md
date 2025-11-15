@@ -357,9 +357,13 @@ Please update Mocha to version [v9.1.0](https://github.com/mochajs/mocha/release
 
 Support for Python test results in xUnit format is experimental - should work but it was not extensively tested.
 
-For pytest support, configure [JUnit XML output](https://docs.pytest.org/en/stable/how-to/output.html#creating-junitxml-format-files) and run with the `--junit-xml` option, which also lets you specify the output path for test results.
+For **pytest** support, configure [JUnit XML output](https://docs.pytest.org/en/stable/how-to/output.html#creating-junitxml-format-files) and run with the `--junit-xml` option, which also lets you specify the output path for test results.
 
-For unittest support, use a test runner that outputs the JUnit report format, such as [unittest-xml-reporting](https://pypi.org/project/unittest-xml-reporting/).
+```shell
+pytest --junit-xml=test-report.xml
+```
+
+For **unittest** support, use a test runner that outputs the JUnit report format, such as [unittest-xml-reporting](https://pypi.org/project/unittest-xml-reporting/).
 </details>
 
 <details>

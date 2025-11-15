@@ -1,5 +1,110 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
+exports[`python-xunit pytest report report from python test results matches snapshot 1`] = `
+TestRunResult {
+  "path": "fixtures/python-xunit-pytest.xml",
+  "suites": [
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "tests.test_lib",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "test_always_pass",
+              "result": "success",
+              "time": 2,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "test_with_subtests",
+              "result": "success",
+              "time": 5,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "test_parameterized[param1]",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "test_parameterized[param2]",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "test_always_skip",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "def test_always_fail():
+        > assert False
+        E assert False
+
+        tests/test_lib.py:25: AssertionError
+      ",
+                "line": undefined,
+                "message": "assert False",
+                "path": undefined,
+              },
+              "name": "test_always_fail",
+              "result": "failed",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "test_expected_failure",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "def test_error():
+        > raise Exception("error")
+        E Exception: error
+
+        tests/test_lib.py:32: Exception
+      ",
+                "line": undefined,
+                "message": "Exception: error",
+                "path": undefined,
+              },
+              "name": "test_error",
+              "result": "failed",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "test_with_record_property",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+        TestGroupResult {
+          "name": "custom_classname",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "test_with_record_xml_attribute",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "pytest",
+      "totalTime": 19,
+    },
+  ],
+  "totalTime": undefined,
+}
+`;
+
 exports[`python-xunit unittest report report from python test results matches snapshot 1`] = `
 TestRunResult {
   "path": "fixtures/python-xunit-unittest.xml",
