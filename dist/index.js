@@ -282,6 +282,7 @@ const rspec_json_parser_1 = __nccwpck_require__(9768);
 const swift_xunit_parser_1 = __nccwpck_require__(7330);
 const path_utils_1 = __nccwpck_require__(9132);
 const github_utils_1 = __nccwpck_require__(6667);
+const karma_junit_parser_1 = __nccwpck_require__(3946);
 async function main() {
     try {
         const testReporter = new TestReporter();
@@ -477,6 +478,7 @@ class TestReporter {
         return results;
     }
     getParser(reporter, options) {
+        core.info(`Selecting parser for reporter '${reporter}'`);
         switch (reporter) {
             case 'dart-json':
                 return new dart_json_parser_1.DartJsonParser(options, 'dart');
@@ -492,6 +494,8 @@ class TestReporter {
                 return new java_junit_parser_1.JavaJunitParser(options);
             case 'jest-junit':
                 return new jest_junit_parser_1.JestJunitParser(options);
+            case 'karma-junit':
+                return new karma_junit_parser_1.KarmaJunitParser(options);
             case 'mocha-json':
                 return new mocha_json_parser_1.MochaJsonParser(options);
             case 'python-xunit':
@@ -501,7 +505,7 @@ class TestReporter {
             case 'swift-xunit':
                 return new swift_xunit_parser_1.SwiftXunitParser(options);
             default:
-                throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`);
+                throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}' including this change?`);
         }
     }
 }
@@ -1561,6 +1565,118 @@ class JestJunitParser {
     }
 }
 exports.JestJunitParser = JestJunitParser;
+
+
+/***/ }),
+
+/***/ 3946:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.KarmaJunitParser = void 0;
+const xml2js_1 = __nccwpck_require__(758);
+const node_utils_1 = __nccwpck_require__(5384);
+const path_utils_1 = __nccwpck_require__(9132);
+const test_results_1 = __nccwpck_require__(613);
+class KarmaJunitParser {
+    options;
+    assumedWorkDir;
+    constructor(options) {
+        this.options = options;
+    }
+    async parse(path, content) {
+        const ju = await this.getJunitReport(path, content);
+        return this.getTestRunResult(path, ju);
+    }
+    async getJunitReport(path, content) {
+        try {
+            return (await (0, xml2js_1.parseStringPromise)(content));
+        }
+        catch (e) {
+            throw new Error(`Invalid XML at ${path}\n\n${e}`);
+        }
+    }
+    getTestRunResult(path, karma) {
+        const suites = karma.testsuite === undefined
+            ? []
+            : [karma.testsuite].map(ts => {
+                const name = this.escapeCharacters(ts.$.name.trim());
+                const time = parseFloat(ts.$.time) * 1000;
+                const sr = new test_results_1.TestSuiteResult(name, this.getGroups(ts), time);
+                return sr;
+            });
+        const time = karma.testsuite?.$ && parseFloat(karma.testsuite.$.time) * 1000;
+        return new test_results_1.TestRunResult(path, suites, time);
+    }
+    getGroups(suite) {
+        if (!suite.testcase) {
+            return [];
+        }
+        const groups = [];
+        for (const tc of suite.testcase) {
+            let grp = groups.find(g => g.describe === tc.$.classname);
+            if (grp === undefined) {
+                grp = { describe: tc.$.classname, tests: [] };
+                groups.push(grp);
+            }
+            grp.tests.push(tc);
+        }
+        return groups.map(grp => {
+            const tests = grp.tests.map(tc => {
+                const name = tc.$.name.trim();
+                const result = this.getTestCaseResult(tc);
+                const time = parseFloat(tc.$.time) * 1000;
+                const error = this.getTestCaseError(tc);
+                return new test_results_1.TestCaseResult(name, result, time, error);
+            });
+            return new test_results_1.TestGroupResult(grp.describe, tests);
+        });
+    }
+    getTestCaseResult(test) {
+        if (test.failure)
+            return 'failed';
+        if (test.skipped)
+            return 'skipped';
+        return 'success';
+    }
+    getTestCaseError(tc) {
+        if (!this.options.parseErrors || !tc.failure) {
+            return undefined;
+        }
+        const details = typeof tc.failure[0] === 'string' ? tc.failure[0] : tc.failure[0]['_'];
+        let path;
+        let line;
+        const src = (0, node_utils_1.getExceptionSource)(details, this.options.trackedFiles, file => this.getRelativePath(file));
+        if (src) {
+            path = src.path;
+            line = src.line;
+        }
+        return {
+            path,
+            line,
+            details
+        };
+    }
+    getRelativePath(path) {
+        path = (0, path_utils_1.normalizeFilePath)(path);
+        const workDir = this.getWorkDir(path);
+        if (workDir !== undefined && path.startsWith(workDir)) {
+            path = path.substr(workDir.length);
+        }
+        return path;
+    }
+    getWorkDir(path) {
+        return (this.options.workDir ??
+            this.assumedWorkDir ??
+            (this.assumedWorkDir = (0, path_utils_1.getBasePath)(path, this.options.trackedFiles)));
+    }
+    escapeCharacters(s) {
+        return s.replace(/([<>])/g, '\\$1');
+    }
+}
+exports.KarmaJunitParser = KarmaJunitParser;
 
 
 /***/ }),
