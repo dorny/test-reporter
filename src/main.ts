@@ -22,6 +22,7 @@ import {RspecJsonParser} from './parsers/rspec-json/rspec-json-parser'
 import {SwiftXunitParser} from './parsers/swift-xunit/swift-xunit-parser'
 import {normalizeDirPath, normalizeFilePath} from './utils/path-utils'
 import {getCheckRunContext} from './utils/github-utils'
+import {KarmaJunitParser} from './parsers/karma-junit/karma-junit-parser'
 
 async function main(): Promise<void> {
   try {
@@ -269,6 +270,9 @@ class TestReporter {
         return new JavaJunitParser(options)
       case 'jest-junit':
         return new JestJunitParser(options)
+      case 'karma-junit':
+        return new KarmaJunitParser(options)
+      
       case 'mocha-json':
         return new MochaJsonParser(options)
       case 'python-xunit':

@@ -1,0 +1,141 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`karma-junit tests parsing ESLint report without timing information works - PR #134 1`] = `
+TestRunResult {
+  "path": "fixtures/karma-junit-eslint.xml",
+  "suites": [
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "test",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "test.jsx",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "test.jsx",
+      "totalTime": 0,
+    },
+  ],
+  "totalTime": 0,
+}
+`;
+
+exports[`karma-junit tests parsing junit report with message succeeds 1`] = `
+TestRunResult {
+  "path": "fixtures/junit-with-message.xml",
+  "suites": [],
+  "totalTime": undefined,
+}
+`;
+
+exports[`karma-junit tests report from #235 testing react components named <ComponentName /> 1`] = `
+TestRunResult {
+  "path": "fixtures/external/karma/karma-react-component-test-results.xml",
+  "suites": [],
+  "totalTime": undefined,
+}
+`;
+
+exports[`karma-junit tests report from ./reports/karma test results matches snapshot 1`] = `
+TestRunResult {
+  "path": "fixtures/karma-junit.xml",
+  "suites": [
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "Test 1",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "Passing test",
+              "result": "success",
+              "time": 1,
+            },
+          ],
+        },
+        TestGroupResult {
+          "name": "Test 1 › Test 1.1",
+          "tests": [
+            TestCaseResult {
+              "error": {
+                "details": "Error: expect(received).toBeTruthy()
+
+Received: false
+    at Object.<anonymous> (C:\\Users\\Michal\\Workspace\\dorny\\test-check\\reports\\jest\\__tests__\\main.test.js:10:21)
+    at Object.asyncJestTest (C:\\Users\\Michal\\Workspace\\dorny\\test-check\\reports\\jest\\node_modules\\jest-jasmine2\\build\\jasmineAsyncInstall.js:106:37)
+    at C:\\Users\\Michal\\Workspace\\dorny\\test-check\\reports\\jest\\node_modules\\jest-jasmine2\\build\\queueRunner.js:45:12
+    at new Promise (<anonymous>)
+    at mapper (C:\\Users\\Michal\\Workspace\\dorny\\test-check\\reports\\jest\\node_modules\\jest-jasmine2\\build\\queueRunner.js:28:19)
+    at C:\\Users\\Michal\\Workspace\\dorny\\test-check\\reports\\jest\\node_modules\\jest-jasmine2\\build\\queueRunner.js:75:41
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)",
+                "line": 10,
+                "path": "__tests__/main.test.js",
+              },
+              "name": "Failing test",
+              "result": "failed",
+              "time": 2,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "Error: Some error
+    at Object.throwError (C:\\Users\\Michal\\Workspace\\dorny\\test-check\\reports\\jest\\lib\\main.js:2:9)
+    at Object.<anonymous> (C:\\Users\\Michal\\Workspace\\dorny\\test-check\\reports\\jest\\__tests__\\main.test.js:14:11)
+    at Object.asyncJestTest (C:\\Users\\Michal\\Workspace\\dorny\\test-check\\reports\\jest\\node_modules\\jest-jasmine2\\build\\jasmineAsyncInstall.js:106:37)
+    at C:\\Users\\Michal\\Workspace\\dorny\\test-check\\reports\\jest\\node_modules\\jest-jasmine2\\build\\queueRunner.js:45:12
+    at new Promise (<anonymous>)
+    at mapper (C:\\Users\\Michal\\Workspace\\dorny\\test-check\\reports\\jest\\node_modules\\jest-jasmine2\\build\\queueRunner.js:28:19)
+    at C:\\Users\\Michal\\Workspace\\dorny\\test-check\\reports\\jest\\node_modules\\jest-jasmine2\\build\\queueRunner.js:75:41
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)",
+                "line": 2,
+                "path": "lib/main.js",
+              },
+              "name": "Exception in target unit",
+              "result": "failed",
+              "time": 0,
+            },
+          ],
+        },
+        TestGroupResult {
+          "name": "Test 2",
+          "tests": [
+            TestCaseResult {
+              "error": {
+                "details": "Error: Some error
+    at Object.<anonymous> (C:\\Users\\Michal\\Workspace\\dorny\\test-check\\reports\\jest\\__tests__\\main.test.js:21:11)
+    at Object.asyncJestTest (C:\\Users\\Michal\\Workspace\\dorny\\test-check\\reports\\jest\\node_modules\\jest-jasmine2\\build\\jasmineAsyncInstall.js:106:37)
+    at C:\\Users\\Michal\\Workspace\\dorny\\test-check\\reports\\jest\\node_modules\\jest-jasmine2\\build\\queueRunner.js:45:12
+    at new Promise (<anonymous>)
+    at mapper (C:\\Users\\Michal\\Workspace\\dorny\\test-check\\reports\\jest\\node_modules\\jest-jasmine2\\build\\queueRunner.js:28:19)
+    at C:\\Users\\Michal\\Workspace\\dorny\\test-check\\reports\\jest\\node_modules\\jest-jasmine2\\build\\queueRunner.js:75:41
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)",
+                "line": 21,
+                "path": "__tests__/main.test.js",
+              },
+              "name": "Exception in test",
+              "result": "failed",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "__tests__\\main.test.js",
+      "totalTime": 486,
+    },
+  ],
+  "totalTime": 486,
+}
+`;
+
+exports[`karma-junit tests report from facebook/karma test results matches snapshot 1`] = `
+TestRunResult {
+  "path": "fixtures/external/karma/karma-test-results.xml",
+  "suites": [],
+  "totalTime": undefined,
+}
+`;
