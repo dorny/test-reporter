@@ -255,6 +255,7 @@ class TestReporter {
   }
 
   getParser(reporter: string, options: ParseOptions): TestParser {
+    core.info(`Selecting parser for reporter '${reporter}'`)
     switch (reporter) {
       case 'dart-json':
         return new DartJsonParser(options, 'dart')
@@ -281,7 +282,7 @@ class TestReporter {
       case 'swift-xunit':
         return new SwiftXunitParser(options)
       default:
-        throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`)
+        throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}' including this change?`)
     }
   }
 }
