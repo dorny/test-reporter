@@ -272,7 +272,6 @@ class TestReporter {
         return new JestJunitParser(options)
       case 'karma-junit':
         return new KarmaJunitParser(options)
-      
       case 'mocha-json':
         return new MochaJsonParser(options)
       case 'python-xunit':
