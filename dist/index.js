@@ -478,7 +478,6 @@ class TestReporter {
         return results;
     }
     getParser(reporter, options) {
-        core.info(`Selecting parser for reporter '${reporter}'`);
         switch (reporter) {
             case 'dart-json':
                 return new dart_json_parser_1.DartJsonParser(options, 'dart');
@@ -505,7 +504,7 @@ class TestReporter {
             case 'swift-xunit':
                 return new swift_xunit_parser_1.SwiftXunitParser(options);
             default:
-                throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}' including this change?`);
+                throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`);
         }
     }
 }
