@@ -29,6 +29,7 @@ inputs:
         - dotnet-nunit
         - dotnet-trx
         - flutter-json
+        - golang-json
         - java-junit
         - jest-junit
         - mocha-json
