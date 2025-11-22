@@ -1,6 +1,6 @@
 name: Test Reporter
 description: |
-  Shows test results in GitHub UI: .NET (xUnit, NUnit, MSTest), Dart, Flutter, Java (JUnit), JavaScript (JEST, Mocha)
+  Shows test results in GitHub UI: .NET (xUnit, NUnit, MSTest), Dart, Flutter, Go, Java (JUnit), JavaScript (JEST, Mocha), Python (pytest, unittest), Ruby (RSpec), Swift
 author: Michal Dorner <dorner.michal@gmail.com>
 inputs:
   artifact:
