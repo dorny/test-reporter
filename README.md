@@ -260,12 +260,10 @@ For more information see [dotnet test](https://docs.microsoft.com/en-us/dotnet/c
 <details>
   <summary>dotnet-nunit</summary>
 
-Test execution must be configured to produce [NUnit3](https://docs.nunit.org/articles/nunit/technical-notes/usage/Test-Result-XML-Format.html) XML test results.
-To get test results in NUnit3 format you can execute your tests with CLI arguments:
+Test execution must be configured to generate [NUnit3](https://docs.nunit.org/articles/nunit/technical-notes/usage/Test-Result-XML-Format.html) XML test results.
+Install the [NUnit3TestAdapter](https://www.nuget.org/packages/NUnit3TestAdapter) package (required; it registers the `nunit` logger for `dotnet test`), then run tests with:
 
 `dotnet test --logger "nunit;LogFileName=test-results.xml"`
-
-Or you can configure NUnit output in your test project by adding the [NUnit3TestAdapter](https://www.nuget.org/packages/NUnit3TestAdapter) package.
 
 Supported testing frameworks:
 - [NUnit](https://nunit.org/)
