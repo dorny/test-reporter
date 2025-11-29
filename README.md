@@ -20,6 +20,7 @@ This [Github Action](https://github.com/features/actions) displays test results 
 - Java / [JUnit](https://junit.org/)
 - JavaScript / [JEST](https://jestjs.io/) / [Mocha](https://mochajs.org/)
 - Python / [pytest](https://docs.pytest.org/en/stable/) / [unittest](https://docs.python.org/3/library/unittest.html)
+- Ruby / [RSpec](https://rspec.info/)
 - Swift / xUnit
 
 For more information see [Supported formats](#supported-formats) section.
@@ -257,6 +258,20 @@ For more information see [dotnet test](https://docs.microsoft.com/en-us/dotnet/c
 </details>
 
 <details>
+  <summary>dotnet-nunit</summary>
+
+Test execution must be configured to generate [NUnit3](https://docs.nunit.org/articles/nunit/technical-notes/usage/Test-Result-XML-Format.html) XML test results.
+Install the [NUnit3TestAdapter](https://www.nuget.org/packages/NUnit3TestAdapter) package (required; it registers the `nunit` logger for `dotnet test`), then run tests with:
+
+`dotnet test --logger "nunit;LogFileName=test-results.xml"`
+
+Supported testing frameworks:
+- [NUnit](https://nunit.org/)
+
+For more information see [dotnet test](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-test#examples)
+</details>
+
+<details>
   <summary>flutter-json</summary>
 
 Test run must be configured to use [JSON](https://github.com/dart-lang/test/blob/master/pkgs/test/doc/configuration.md#reporter) reporter.
@@ -364,6 +379,27 @@ pytest --junit-xml=test-report.xml
 ```
 
 For **unittest** support, use a test runner that outputs the JUnit report format, such as [unittest-xml-reporting](https://pypi.org/project/unittest-xml-reporting/).
+</details>
+
+<details>
+  <summary>rspec-json</summary>
+
+[RSpec](https://rspec.info/) testing framework support requires the usage of JSON formatter.
+You can configure RSpec to output JSON format by using the `--format json` option and redirecting to a file:
+
+```shell
+rspec --format json --out rspec-results.json
+```
+
+Or configure it in `.rspec` file:
+```
+--format json
+--out rspec-results.json
+```
+
+For more information see:
+- [RSpec documentation](https://rspec.info/)
+- [RSpec Formatters](https://relishapp.com/rspec/rspec-core/docs/formatters)
 </details>
 
 <details>
