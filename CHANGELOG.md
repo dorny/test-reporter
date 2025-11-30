@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.3.0
+* Feature: Add Python support with `python-xunit` reporter (pytest) https://github.com/dorny/test-reporter/pull/643
+* Feature: Add pytest traceback parsing and `directory-mapping` option https://github.com/dorny/test-reporter/pull/238
+* Performance: Update sax.js to fix large XML file parsing https://github.com/dorny/test-reporter/pull/681
+* Documentation: Complete documentation for all supported reporters https://github.com/dorny/test-reporter/pull/691
+* Security: Bump js-yaml and mocha in /reports/mocha (fixes prototype pollution) https://github.com/dorny/test-reporter/pull/682
+
 ## 2.2.0
 * Feature: Add collapsed option to control report summary visibility https://github.com/dorny/test-reporter/pull/664
 * Fix badge encoding for values including underscore and hyphens https://github.com/dorny/test-reporter/pull/672
