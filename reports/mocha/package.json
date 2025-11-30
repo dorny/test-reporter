@@ -9,6 +9,6 @@
   "author": "Michal Dorner <dorner.michal@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "mocha": "^8.3.0"
+    "mocha": "^11.7.5"
   }
 }
