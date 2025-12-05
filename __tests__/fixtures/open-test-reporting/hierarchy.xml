@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<h:execution xmlns:h="https://schemas.opentest4j.org/reporting/hierarchy/0.2.0"
+             xmlns="https://schemas.opentest4j.org/reporting/core/0.2.0">
+    <infrastructure>
+        <hostName>build-agent-01</hostName>
+        <userName>ci</userName>
+        <operatingSystem>Linux</operatingSystem>
+        <cpuCores>4</cpuCores>
+    </infrastructure>
+
+    <!-- Suite: UserServiceTest -->
+    <h:root duration="PT1.234S" name="com.example.UserServiceTest" start="2024-01-15T10:30:00.000Z">
+        <result status="SUCCESSFUL"/>
+        <h:child duration="PT0.123S" name="testUserCreation" start="2024-01-15T10:30:00.100Z">
+            <result status="SUCCESSFUL"/>
+        </h:child>
+        <h:child duration="PT0.234S" name="testUserDeletion" start="2024-01-15T10:30:00.300Z">
+            <result status="SUCCESSFUL"/>
+        </h:child>
+        <h:child duration="PT0.045S" name="testUserUpdate" start="2024-01-15T10:30:00.600Z">
+            <result status="SKIPPED">
+                <reason>Skipped: Database not available</reason>
+            </result>
+        </h:child>
+    </h:root>
+
+    <!-- Suite: PaymentServiceTest with nested groups -->
+    <h:root duration="PT2.5S" name="com.example.PaymentServiceTest" start="2024-01-15T10:30:02.000Z">
+        <result status="FAILED"/>
+
+        <!-- Group: ValidationTests -->
+        <h:child duration="PT0.8S" name="ValidationTests" start="2024-01-15T10:30:02.100Z">
+            <result status="SUCCESSFUL"/>
+            <h:child duration="PT0.2S" name="testValidAmount" start="2024-01-15T10:30:02.110Z">
+                <result status="SUCCESSFUL"/>
+            </h:child>
+            <h:child duration="PT0.3S" name="testInvalidAmount" start="2024-01-15T10:30:02.320Z">
+                <result status="SUCCESSFUL"/>
+            </h:child>
+        </h:child>
+
+        <!-- Group: ProcessingTests -->
+        <h:child duration="PT1.2S" name="ProcessingTests" start="2024-01-15T10:30:03.000Z">
+            <result status="FAILED"/>
+            <h:child duration="PT0.5S" name="testSuccessfulPayment" start="2024-01-15T10:30:03.100Z">
+                <result status="SUCCESSFUL"/>
+            </h:child>
+            <h:child duration="PT0.7S" name="testPaymentTimeout" start="2024-01-15T10:30:03.700Z">
+                <result status="FAILED">
+                    <reason>org.opentest4j.AssertionFailedError: Payment should complete within 500ms but took 700ms</reason>
+                </result>
+            </h:child>
+        </h:child>
+    </h:root>
+
+    <!-- Suite: EmptySuite (edge case) -->
+    <h:root duration="PT0S" name="com.example.EmptySuite" start="2024-01-15T10:30:05.000Z">
+        <result status="SUCCESSFUL"/>
+    </h:root>
+</h:execution>
