@@ -1,0 +1,298 @@
+name: Integration Tests (#217) - fail-on-error/fail-on-empty
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'dist/**'
+      - 'action.yml'
+      - '.github/workflows/integration-tests.yml'
+      - '__tests__/fixtures/integration/**'
+
+jobs:
+  # ============================================
+  # Scenario 1: Passing tests, fail-on-error=true
+  # Expected: Step passes, conclusion=success
+  # ============================================
+  test-passing-fail-on-error-true:
+    name: "Passing tests | fail-on-error=true"
+    runs-on: ubuntu-slim
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Run test reporter
+        id: report
+        uses: ./
+        with:
+          name: 'Integration Test - Passing (fail-on-error=true)'
+          path: '__tests__/fixtures/integration/passing-tests.xml'
+          reporter: java-junit
+          fail-on-error: 'true'
+          fail-on-empty: 'true'
+
+      - name: Validate results
+        run: |
+          echo "=== Test Results ==="
+          echo "Step outcome: success (would have failed otherwise)"
+          echo "Conclusion: ${{ steps.report.outputs.conclusion }}"
+          echo "Passed: ${{ steps.report.outputs.passed }}"
+          echo "Failed: ${{ steps.report.outputs.failed }}"
+
+          if [ "${{ steps.report.outputs.conclusion }}" != "success" ]; then
+            echo "FAIL: Expected conclusion 'success' but got '${{ steps.report.outputs.conclusion }}'"
+            exit 1
+          fi
+          echo "PASS: All validations passed"
+
+  # ============================================
+  # Scenario 2: Passing tests, fail-on-error=false
+  # Expected: Step passes, conclusion=success
+  # ============================================
+  test-passing-fail-on-error-false:
+    name: "Passing tests | fail-on-error=false"
+    runs-on: ubuntu-slim
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Run test reporter
+        id: report
+        uses: ./
+        with:
+          name: 'Integration Test - Passing (fail-on-error=false)'
+          path: '__tests__/fixtures/integration/passing-tests.xml'
+          reporter: java-junit
+          fail-on-error: 'false'
+          fail-on-empty: 'true'
+
+      - name: Validate results
+        run: |
+          echo "=== Test Results ==="
+          echo "Conclusion: ${{ steps.report.outputs.conclusion }}"
+
+          if [ "${{ steps.report.outputs.conclusion }}" != "success" ]; then
+            echo "FAIL: Expected conclusion 'success' but got '${{ steps.report.outputs.conclusion }}'"
+            exit 1
+          fi
+          echo "PASS: All validations passed"
+
+  # ============================================
+  # Scenario 3: Failing tests, fail-on-error=true
+  # Expected: Step FAILS, conclusion=failure
+  # ============================================
+  test-failing-fail-on-error-true:
+    name: "Failing tests | fail-on-error=true"
+    runs-on: ubuntu-slim
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Run test reporter
+        id: report
+        continue-on-error: true
+        uses: ./
+        with:
+          name: 'Integration Test - Failing (fail-on-error=true)'
+          path: '__tests__/fixtures/integration/failing-tests.xml'
+          reporter: java-junit
+          fail-on-error: 'true'
+          fail-on-empty: 'true'
+
+      - name: Validate results
+        run: |
+          echo "=== Test Results ==="
+          echo "Step outcome: ${{ steps.report.outcome }}"
+          echo "Conclusion: ${{ steps.report.outputs.conclusion }}"
+          echo "Failed count: ${{ steps.report.outputs.failed }}"
+
+          # Step should fail
+          if [ "${{ steps.report.outcome }}" != "failure" ]; then
+            echo "FAIL: Expected step to fail but got '${{ steps.report.outcome }}'"
+            exit 1
+          fi
+
+          # Conclusion should be failure
+          if [ "${{ steps.report.outputs.conclusion }}" != "failure" ]; then
+            echo "FAIL: Expected conclusion 'failure' but got '${{ steps.report.outputs.conclusion }}'"
+            exit 1
+          fi
+          echo "PASS: All validations passed"
+
+  # ============================================
+  # Scenario 4: Failing tests, fail-on-error=false
+  # Expected: Step passes, conclusion=failure
+  # BUG: Currently conclusion=success (issue #217)
+  # ============================================
+  test-failing-fail-on-error-false:
+    name: "Failing tests | fail-on-error=false [BUG #217]"
+    runs-on: ubuntu-slim
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Run test reporter
+        id: report
+        continue-on-error: true
+        uses: ./
+        with:
+          name: 'Integration Test - Failing (fail-on-error=false)'
+          path: '__tests__/fixtures/integration/failing-tests.xml'
+          reporter: java-junit
+          fail-on-error: 'false'
+          fail-on-empty: 'true'
+
+      - name: Validate results
+        run: |
+          echo "=== Test Results ==="
+          echo "Step outcome: ${{ steps.report.outcome }}"
+          echo "Conclusion: ${{ steps.report.outputs.conclusion }}"
+          echo "Failed count: ${{ steps.report.outputs.failed }}"
+
+          # Step should pass (fail-on-error is false)
+          if [ "${{ steps.report.outcome }}" != "success" ]; then
+            echo "FAIL: Expected step to pass but got '${{ steps.report.outcome }}'"
+            exit 1
+          fi
+
+          # Conclusion SHOULD be 'failure' because tests failed
+          # BUG: Currently returns 'success' - see issue #217
+          if [ "${{ steps.report.outputs.conclusion }}" != "failure" ]; then
+            echo "========================================"
+            echo "BUG DETECTED (Issue #217)"
+            echo "========================================"
+            echo "Expected conclusion 'failure' but got '${{ steps.report.outputs.conclusion }}'"
+            echo "The check conclusion should reflect test results,"
+            echo "independent of the fail-on-error setting."
+            echo "========================================"
+            exit 1
+          fi
+          echo "PASS: All validations passed (bug is fixed!)"
+
+  # ============================================
+  # Scenario 5: Empty results, fail-on-empty=true
+  # Expected: Step FAILS
+  # ============================================
+  test-empty-fail-on-empty-true:
+    name: "Empty results | fail-on-empty=true"
+    runs-on: ubuntu-slim
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Run test reporter
+        id: report
+        continue-on-error: true
+        uses: ./
+        with:
+          name: 'Integration Test - Empty (fail-on-empty=true)'
+          path: '__tests__/fixtures/integration/nonexistent-*.xml'
+          reporter: java-junit
+          fail-on-error: 'true'
+          fail-on-empty: 'true'
+
+      - name: Validate results
+        run: |
+          echo "=== Test Results ==="
+          echo "Step outcome: ${{ steps.report.outcome }}"
+
+          # Step should fail (no files found)
+          if [ "${{ steps.report.outcome }}" != "failure" ]; then
+            echo "FAIL: Expected step to fail but got '${{ steps.report.outcome }}'"
+            exit 1
+          fi
+          echo "PASS: Step correctly failed on empty results"
+
+  # ============================================
+  # Scenario 6: Empty results, fail-on-empty=false
+  # Expected: Step passes, conclusion=success
+  # ============================================
+  test-empty-fail-on-empty-false:
+    name: "Empty results | fail-on-empty=false"
+    runs-on: ubuntu-slim
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Run test reporter
+        id: report
+        continue-on-error: true
+        uses: ./
+        with:
+          name: 'Integration Test - Empty (fail-on-empty=false)'
+          path: '__tests__/fixtures/integration/nonexistent-*.xml'
+          reporter: java-junit
+          fail-on-error: 'true'
+          fail-on-empty: 'false'
+
+      - name: Validate results
+        run: |
+          echo "=== Test Results ==="
+          echo "Step outcome: ${{ steps.report.outcome }}"
+
+          # Step should pass (fail-on-empty is false)
+          if [ "${{ steps.report.outcome }}" != "success" ]; then
+            echo "FAIL: Expected step to pass but got '${{ steps.report.outcome }}'"
+            exit 1
+          fi
+          echo "PASS: Step correctly passed with empty results"
+
+  # ============================================
+  # Summary job to report overall status
+  # ============================================
+  summary:
+    name: "Test Summary"
+    needs:
+      - test-passing-fail-on-error-true
+      - test-passing-fail-on-error-false
+      - test-failing-fail-on-error-true
+      - test-failing-fail-on-error-false
+      - test-empty-fail-on-empty-true
+      - test-empty-fail-on-empty-false
+    runs-on: ubuntu-slim
+    if: always()
+    steps:
+      - name: Generate summary
+        run: |
+          # Helper function to convert result to emoji
+          result_to_emoji() {
+            case "$1" in
+              success) echo "✅ Pass" ;;
+              failure) echo "❌ Fail" ;;
+              cancelled) echo "⚪ Cancelled" ;;
+              skipped) echo "⏭️ Skipped" ;;
+              *) echo "❓ Unknown" ;;
+            esac
+          }
+
+          # Generate markdown summary
+          cat >> $GITHUB_STEP_SUMMARY << 'EOF'
+          # Integration Test Results
+
+          ## fail-on-error / fail-on-empty Scenarios
+
+          | Scenario | Test Results | fail-on-error | fail-on-empty | Expected | Result |
+          |----------|--------------|---------------|---------------|----------|--------|
+          EOF
+
+          echo "| 1 | All pass | \`true\` | \`true\` | Step: pass, Check: success | $(result_to_emoji "${{ needs.test-passing-fail-on-error-true.result }}") |" >> $GITHUB_STEP_SUMMARY
+          echo "| 2 | All pass | \`false\` | \`true\` | Step: pass, Check: success | $(result_to_emoji "${{ needs.test-passing-fail-on-error-false.result }}") |" >> $GITHUB_STEP_SUMMARY
+          echo "| 3 | Some fail | \`true\` | \`true\` | Step: fail, Check: failure | $(result_to_emoji "${{ needs.test-failing-fail-on-error-true.result }}") |" >> $GITHUB_STEP_SUMMARY
+          echo "| 4 ⚠️ | Some fail | \`false\` | \`true\` | Step: pass, Check: failure | $(result_to_emoji "${{ needs.test-failing-fail-on-error-false.result }}") |" >> $GITHUB_STEP_SUMMARY
+          echo "| 5 | Empty | \`true\` | \`true\` | Step: fail | $(result_to_emoji "${{ needs.test-empty-fail-on-empty-true.result }}") |" >> $GITHUB_STEP_SUMMARY
+          echo "| 6 | Empty | \`true\` | \`false\` | Step: pass | $(result_to_emoji "${{ needs.test-empty-fail-on-empty-false.result }}") |" >> $GITHUB_STEP_SUMMARY
+
+          cat >> $GITHUB_STEP_SUMMARY << 'EOF'
+
+          ---
+
+          > ⚠️ **Scenario 4** is expected to fail until [issue #217](https://github.com/dorny/test-reporter/issues/217) is fixed.
+          > The bug: when `fail-on-error=false`, the check conclusion shows `success` even when tests fail.
+          > Expected behavior: check conclusion should reflect actual test results, independent of `fail-on-error`.
+
+          EOF
+
+          # Also print to console
+          echo "=== Integration Test Summary ==="
+          echo "Scenario 1 (pass, fail-on-error=true):   ${{ needs.test-passing-fail-on-error-true.result }}"
+          echo "Scenario 2 (pass, fail-on-error=false):  ${{ needs.test-passing-fail-on-error-false.result }}"
+          echo "Scenario 3 (fail, fail-on-error=true):   ${{ needs.test-failing-fail-on-error-true.result }}"
+          echo "Scenario 4 (fail, fail-on-error=false):  ${{ needs.test-failing-fail-on-error-false.result }} (expected to fail until #217 fixed)"
+          echo "Scenario 5 (empty, fail-on-error=true):  ${{ needs.test-empty-fail-on-empty-true.result }}"
+          echo "Scenario 6 (empty, fail-on-error=false): ${{ needs.test-empty-fail-on-empty-false.result }}"
