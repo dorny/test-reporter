@@ -121,10 +121,10 @@ jobs:
   # ============================================
   # Scenario 4: Failing tests, fail-on-error=false
   # Expected: Step passes, conclusion=failure
-  # BUG: Currently conclusion=success (issue #217)
+  # Regression test for issue #217
   # ============================================
   test-failing-fail-on-error-false:
-    name: "Failing tests | fail-on-error=false [BUG #217]"
+    name: "Failing tests | fail-on-error=false [#217]"
     runs-on: ubuntu-slim
     steps:
       - uses: actions/checkout@v6
@@ -154,10 +154,10 @@ jobs:
           fi
 
           # Conclusion SHOULD be 'failure' because tests failed
-          # BUG: Currently returns 'success' - see issue #217
+          # Regression test for issue #217
           if [ "${{ steps.report.outputs.conclusion }}" != "failure" ]; then
             echo "========================================"
-            echo "BUG DETECTED (Issue #217)"
+            echo "REGRESSION DETECTED (Issue #217)"
             echo "========================================"
             echo "Expected conclusion 'failure' but got '${{ steps.report.outputs.conclusion }}'"
             echo "The check conclusion should reflect test results,"
@@ -165,7 +165,7 @@ jobs:
             echo "========================================"
             exit 1
           fi
-          echo "PASS: All validations passed (bug is fixed!)"
+          echo "PASS: All validations passed"
 
   # ============================================
   # Scenario 5: Empty results, fail-on-empty=true
@@ -274,7 +274,7 @@ jobs:
           echo "| 1 | All pass | \`true\` | \`true\` | Step: pass, Check: success | $(result_to_emoji "${{ needs.test-passing-fail-on-error-true.result }}") |" >> $GITHUB_STEP_SUMMARY
           echo "| 2 | All pass | \`false\` | \`true\` | Step: pass, Check: success | $(result_to_emoji "${{ needs.test-passing-fail-on-error-false.result }}") |" >> $GITHUB_STEP_SUMMARY
           echo "| 3 | Some fail | \`true\` | \`true\` | Step: fail, Check: failure | $(result_to_emoji "${{ needs.test-failing-fail-on-error-true.result }}") |" >> $GITHUB_STEP_SUMMARY
-          echo "| 4 ⚠️ | Some fail | \`false\` | \`true\` | Step: pass, Check: failure | $(result_to_emoji "${{ needs.test-failing-fail-on-error-false.result }}") |" >> $GITHUB_STEP_SUMMARY
+          echo "| 4 | Some fail | \`false\` | \`true\` | Step: pass, Check: failure | $(result_to_emoji "${{ needs.test-failing-fail-on-error-false.result }}") |" >> $GITHUB_STEP_SUMMARY
           echo "| 5 | Empty | \`true\` | \`true\` | Step: fail | $(result_to_emoji "${{ needs.test-empty-fail-on-empty-true.result }}") |" >> $GITHUB_STEP_SUMMARY
           echo "| 6 | Empty | \`true\` | \`false\` | Step: pass | $(result_to_emoji "${{ needs.test-empty-fail-on-empty-false.result }}") |" >> $GITHUB_STEP_SUMMARY
 
@@ -282,9 +282,9 @@ jobs:
 
           ---
 
-          > ⚠️ **Scenario 4** is expected to fail until [issue #217](https://github.com/dorny/test-reporter/issues/217) is fixed.
-          > The bug: when `fail-on-error=false`, the check conclusion shows `success` even when tests fail.
-          > Expected behavior: check conclusion should reflect actual test results, independent of `fail-on-error`.
+          > **Scenario 4** is a regression test for [issue #217](https://github.com/dorny/test-reporter/issues/217).
+          > It verifies that `conclusion` output correctly reflects test failures, independent of `fail-on-error` setting.
+          > When `fail-on-error=false`, the step should pass but `conclusion` should still be `failure` if tests failed.
 
           EOF
 
@@ -293,6 +293,6 @@ jobs:
           echo "Scenario 1 (pass, fail-on-error=true):   ${{ needs.test-passing-fail-on-error-true.result }}"
           echo "Scenario 2 (pass, fail-on-error=false):  ${{ needs.test-passing-fail-on-error-false.result }}"
           echo "Scenario 3 (fail, fail-on-error=true):   ${{ needs.test-failing-fail-on-error-true.result }}"
-          echo "Scenario 4 (fail, fail-on-error=false):  ${{ needs.test-failing-fail-on-error-false.result }} (expected to fail until #217 fixed)"
-          echo "Scenario 5 (empty, fail-on-error=true):  ${{ needs.test-empty-fail-on-empty-true.result }}"
-          echo "Scenario 6 (empty, fail-on-error=false): ${{ needs.test-empty-fail-on-empty-false.result }}"
+          echo "Scenario 4 (fail, fail-on-error=false):  ${{ needs.test-failing-fail-on-error-false.result }} (regression test for #217)"
+          echo "Scenario 5 (empty, fail-on-empty=true):  ${{ needs.test-empty-fail-on-empty-true.result }}"
+          echo "Scenario 6 (empty, fail-on-empty=false): ${{ needs.test-empty-fail-on-empty-false.result }}"
