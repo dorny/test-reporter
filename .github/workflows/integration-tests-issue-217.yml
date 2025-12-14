@@ -19,6 +19,8 @@ jobs:
   test-passing-fail-on-error-true:
     name: "Passing tests | fail-on-error=true"
     runs-on: ubuntu-slim
+    outputs:
+      conclusion: ${{ steps.report.outputs.conclusion }}
     steps:
       - uses: actions/checkout@v6
 
@@ -53,6 +55,8 @@ jobs:
   test-passing-fail-on-error-false:
     name: "Passing tests | fail-on-error=false"
     runs-on: ubuntu-slim
+    outputs:
+      conclusion: ${{ steps.report.outputs.conclusion }}
     steps:
       - uses: actions/checkout@v6
 
@@ -84,6 +88,8 @@ jobs:
   test-failing-fail-on-error-true:
     name: "Failing tests | fail-on-error=true"
     runs-on: ubuntu-slim
+    outputs:
+      conclusion: ${{ steps.report.outputs.conclusion }}
     steps:
       - uses: actions/checkout@v6
 
@@ -126,6 +132,8 @@ jobs:
   test-failing-fail-on-error-false:
     name: "Failing tests | fail-on-error=false [#217]"
     runs-on: ubuntu-slim
+    outputs:
+      conclusion: ${{ steps.report.outputs.conclusion }}
     steps:
       - uses: actions/checkout@v6
 
@@ -174,6 +182,8 @@ jobs:
   test-empty-fail-on-empty-true:
     name: "Empty results | fail-on-empty=true"
     runs-on: ubuntu-slim
+    outputs:
+      conclusion: ${{ steps.report.outputs.conclusion || 'N/A' }}
     steps:
       - uses: actions/checkout@v6
 
@@ -207,6 +217,8 @@ jobs:
   test-empty-fail-on-empty-false:
     name: "Empty results | fail-on-empty=false"
     runs-on: ubuntu-slim
+    outputs:
+      conclusion: ${{ steps.report.outputs.conclusion || 'N/A' }}
     steps:
       - uses: actions/checkout@v6
 
@@ -261,22 +273,32 @@ jobs:
             esac
           }
 
+          # Helper function to format conclusion
+          conclusion_to_badge() {
+            case "$1" in
+              success) echo "🟢 success" ;;
+              failure) echo "🔴 failure" ;;
+              N/A) echo "⚫ N/A" ;;
+              *) echo "⚪ $1" ;;
+            esac
+          }
+
           # Generate markdown summary
           cat >> $GITHUB_STEP_SUMMARY << 'EOF'
           # Integration Test Results
 
           ## fail-on-error / fail-on-empty Scenarios
 
-          | Scenario | Test Results | fail-on-error | fail-on-empty | Expected | Result |
-          |----------|--------------|---------------|---------------|----------|--------|
+          | Scenario | Test Results | fail-on-error | fail-on-empty | Expected | Conclusion | Result |
+          |----------|--------------|---------------|---------------|----------|------------|--------|
           EOF
 
-          echo "| 1 | All pass | \`true\` | \`true\` | Step: pass, Check: success | $(result_to_emoji "${{ needs.test-passing-fail-on-error-true.result }}") |" >> $GITHUB_STEP_SUMMARY
-          echo "| 2 | All pass | \`false\` | \`true\` | Step: pass, Check: success | $(result_to_emoji "${{ needs.test-passing-fail-on-error-false.result }}") |" >> $GITHUB_STEP_SUMMARY
-          echo "| 3 | Some fail | \`true\` | \`true\` | Step: fail, Check: failure | $(result_to_emoji "${{ needs.test-failing-fail-on-error-true.result }}") |" >> $GITHUB_STEP_SUMMARY
-          echo "| 4 | Some fail | \`false\` | \`true\` | Step: pass, Check: failure | $(result_to_emoji "${{ needs.test-failing-fail-on-error-false.result }}") |" >> $GITHUB_STEP_SUMMARY
-          echo "| 5 | Empty | \`true\` | \`true\` | Step: fail | $(result_to_emoji "${{ needs.test-empty-fail-on-empty-true.result }}") |" >> $GITHUB_STEP_SUMMARY
-          echo "| 6 | Empty | \`true\` | \`false\` | Step: pass | $(result_to_emoji "${{ needs.test-empty-fail-on-empty-false.result }}") |" >> $GITHUB_STEP_SUMMARY
+          echo "| 1 | All pass | \`true\` | \`true\` | Step: pass, Check: success | $(conclusion_to_badge "${{ needs.test-passing-fail-on-error-true.outputs.conclusion }}") | $(result_to_emoji "${{ needs.test-passing-fail-on-error-true.result }}") |" >> $GITHUB_STEP_SUMMARY
+          echo "| 2 | All pass | \`false\` | \`true\` | Step: pass, Check: success | $(conclusion_to_badge "${{ needs.test-passing-fail-on-error-false.outputs.conclusion }}") | $(result_to_emoji "${{ needs.test-passing-fail-on-error-false.result }}") |" >> $GITHUB_STEP_SUMMARY
+          echo "| 3 | Some fail | \`true\` | \`true\` | Step: fail, Check: failure | $(conclusion_to_badge "${{ needs.test-failing-fail-on-error-true.outputs.conclusion }}") | $(result_to_emoji "${{ needs.test-failing-fail-on-error-true.result }}") |" >> $GITHUB_STEP_SUMMARY
+          echo "| 4 | Some fail | \`false\` | \`true\` | Step: pass, Check: failure | $(conclusion_to_badge "${{ needs.test-failing-fail-on-error-false.outputs.conclusion }}") | $(result_to_emoji "${{ needs.test-failing-fail-on-error-false.result }}") |" >> $GITHUB_STEP_SUMMARY
+          echo "| 5 | Empty | \`true\` | \`true\` | Step: fail | $(conclusion_to_badge "${{ needs.test-empty-fail-on-empty-true.outputs.conclusion }}") | $(result_to_emoji "${{ needs.test-empty-fail-on-empty-true.result }}") |" >> $GITHUB_STEP_SUMMARY
+          echo "| 6 | Empty | \`true\` | \`false\` | Step: pass | $(conclusion_to_badge "${{ needs.test-empty-fail-on-empty-false.outputs.conclusion }}") | $(result_to_emoji "${{ needs.test-empty-fail-on-empty-false.result }}") |" >> $GITHUB_STEP_SUMMARY
 
           cat >> $GITHUB_STEP_SUMMARY << 'EOF'
 
