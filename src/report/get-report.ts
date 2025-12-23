@@ -11,7 +11,8 @@ const MAX_ACTIONS_SUMMARY_LENGTH = 1048576
 export interface ReportOptions {
   listSuites: 'all' | 'failed' | 'none'
   listTests: 'all' | 'failed' | 'none'
-  slugPrefix: string
+  slugPrefix: string;
+  listFiles: 'all' | 'failed' | 'none'
   baseUrl: string
   onlySummary: boolean
   useActionsSummary: boolean
@@ -24,6 +25,7 @@ export const DEFAULT_OPTIONS: ReportOptions = {
   listSuites: 'all',
   listTests: 'all',
   slugPrefix: '',
+  listFiles: 'all',
   baseUrl: '',
   onlySummary: false,
   useActionsSummary: true,
@@ -173,8 +175,16 @@ function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): s
     sections.push(` `)
   }
 
-  if (testRuns.length > 0 || options.onlySummary) {
-    const tableData = testRuns
+  // Filter test runs based on list-files option
+  const filteredTestRuns =
+    options.listFiles === 'failed'
+      ? testRuns.filter(tr => tr.result === 'failed')
+      : options.listFiles === 'none'
+        ? []
+        : testRuns
+
+  if (filteredTestRuns.length > 0 || options.onlySummary) {
+    const tableData = filteredTestRuns
       .map((tr, originalIndex) => ({tr, originalIndex}))
       .filter(({tr}) => tr.passed > 0 || tr.failed > 0 || tr.skipped > 0)
       .map(({tr, originalIndex}) => {
@@ -197,7 +207,7 @@ function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): s
   }
 
   if (options.onlySummary === false) {
-    const suitesReports = testRuns.map((tr, i) => getSuitesReport(tr, i, options)).flat()
+    const suitesReports = filteredTestRuns.map((tr, i) => getSuitesReport(tr, i, options)).flat()
     sections.push(...suitesReports)
   }
 
