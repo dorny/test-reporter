@@ -52,6 +52,14 @@ inputs:
         - none
     required: false
     default: 'all'
+  list-files:
+    description: |
+      Limits which test result files are listed. Supported options:
+        - all
+        - failed
+        - none
+    required: false
+    default: 'all'
   max-annotations:
     description: |
       Limits number of created annotations with error message and stack trace captured during test execution.
