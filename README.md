@@ -419,7 +419,7 @@ Support for Swift test results in xUnit format is experimental - should work but
 Unfortunately, there are some known issues and limitations caused by GitHub API:
 
 - Test report (i.e. build summary) is Markdown text. No custom styling or HTML is possible.
-- Maximum report size is 65535 bytes. Input parameters `list-suites`, `list-tests`, and `list-files` will be automatically adjusted if max size is exceeded.
+- Maximum report size is 65535 bytes. Input parameters `list-suites` and `list-tests` will be automatically adjusted if max size is exceeded.
 - Test report can't reference any additional files (e.g. screenshots). You can use `actions/upload-artifact@v4` to upload them and inspect them manually.
 - Check Runs are created for specific commit SHA. It's not possible to specify under which workflow test report should belong if more
   workflows are running for the same SHA. Thanks to this GitHub "feature" it's possible your test report will appear in an unexpected place in GitHub UI.
