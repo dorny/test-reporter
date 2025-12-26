@@ -1,5 +1,445 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
+exports[`phpunit-junit tests report from junit-basic.xml matches snapshot 1`] = `
+TestRunResult {
+  "path": "fixtures/external/phpunit/junit-basic.xml",
+  "suites": [
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "testCase1",
+              "result": "success",
+              "time": 2113.871,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testCase2",
+              "result": "success",
+              "time": 1051,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testCase3",
+              "result": "success",
+              "time": 3441,
+            },
+          ],
+        },
+      ],
+      "name": "Tests.Registration",
+      "totalTime": 6605.870999999999,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "testCase4",
+              "result": "success",
+              "time": 2244,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testCase5",
+              "result": "success",
+              "time": 781,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testCase6",
+              "result": "success",
+              "time": 1331,
+            },
+          ],
+        },
+      ],
+      "name": "Tests.Authentication.Login",
+      "totalTime": 4356,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "testCase7",
+              "result": "success",
+              "time": 2508,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testCase8",
+              "result": "success",
+              "time": 1230.8159999999998,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "",
+                "line": undefined,
+                "message": "AssertionError: Assertion error message",
+                "path": undefined,
+              },
+              "name": "testCase9",
+              "result": "failed",
+              "time": 982,
+            },
+          ],
+        },
+      ],
+      "name": "Tests.Authentication",
+      "totalTime": 9076.816,
+    },
+  ],
+  "totalTime": 15682.687,
+}
+`;
+
+exports[`phpunit-junit tests report from phpcheckstyle-phpunit.xml matches snapshot 1`] = `
+TestRunResult {
+  "path": "fixtures/external/phpunit/phpcheckstyle-phpunit.xml",
+  "suites": [
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "testGoodDoc",
+              "result": "success",
+              "time": 5.093,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testComments",
+              "result": "success",
+              "time": 0.921,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testTODOs",
+              "result": "success",
+              "time": 0.6880000000000001,
+            },
+          ],
+        },
+      ],
+      "name": "CommentsTest",
+      "totalTime": 6.702,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "testDeprecations",
+              "result": "success",
+              "time": 0.9740000000000001,
+            },
+          ],
+        },
+      ],
+      "name": "DeprecationTest",
+      "totalTime": 0.9740000000000001,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "testGood",
+              "result": "success",
+              "time": 2.6470000000000002,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testDoWhile",
+              "result": "success",
+              "time": 1.0219999999999998,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testAnonymousFunction",
+              "result": "success",
+              "time": 0.8,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testException",
+              "result": "success",
+              "time": 0.888,
+            },
+          ],
+        },
+      ],
+      "name": "GoodTest",
+      "totalTime": 5.357,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "testTabIndentation",
+              "result": "success",
+              "time": 0.857,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testSpaceIndentation",
+              "result": "success",
+              "time": 0.929,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testSpaceIndentationArray",
+              "result": "success",
+              "time": 0.975,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testGoodSpaceIndentationArray",
+              "result": "success",
+              "time": 1.212,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testGoodIndentationNewLine",
+              "result": "success",
+              "time": 0.859,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testGoodIndentationSpaces",
+              "result": "success",
+              "time": 0.78,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testBadSpaces",
+              "result": "success",
+              "time": 1.1199999999999999,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testBadSpaceAfterControl",
+              "result": "success",
+              "time": 0.9219999999999999,
+            },
+          ],
+        },
+      ],
+      "name": "IndentationTest",
+      "totalTime": 7.654,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "testMetrics",
+              "result": "success",
+              "time": 4.146999999999999,
+            },
+          ],
+        },
+      ],
+      "name": "MetricsTest",
+      "totalTime": 4.146999999999999,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "testNaming",
+              "result": "success",
+              "time": 1.426,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testFunctionNaming",
+              "result": "success",
+              "time": 1.271,
+            },
+          ],
+        },
+      ],
+      "name": "NamingTest",
+      "totalTime": 2.697,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "testTextAfterClosingTag",
+              "result": "success",
+              "time": 0.9940000000000001,
+            },
+          ],
+        },
+      ],
+      "name": "OptimizationTest",
+      "totalTime": 0.9940000000000001,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": {
+                "details": "OtherTest::testOther
+We expect 20 warnings
+Failed asserting that 19 matches expected 20.
+
+/workspace/phpcheckstyle/test/OtherTest.php:24",
+                "line": 12,
+                "message": "PHPUnit\\Framework\\ExpectationFailedException",
+                "path": undefined,
+              },
+              "name": "testOther",
+              "result": "failed",
+              "time": 5.2509999999999994,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "OtherTest::testException
+We expect 1 error
+Failed asserting that 0 matches expected 1.
+
+/workspace/phpcheckstyle/test/OtherTest.php:40",
+                "line": 31,
+                "message": "PHPUnit\\Framework\\ExpectationFailedException",
+                "path": undefined,
+              },
+              "name": "testException",
+              "result": "failed",
+              "time": 0.751,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testEmpty",
+              "result": "success",
+              "time": 0.42700000000000005,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testSwitchCaseNeedBreak",
+              "result": "success",
+              "time": 0.901,
+            },
+          ],
+        },
+      ],
+      "name": "OtherTest",
+      "totalTime": 7.329,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "testTextAfterClosingTag",
+              "result": "success",
+              "time": 0.641,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testClosingTagNotNeeded",
+              "result": "success",
+              "time": 0.631,
+            },
+          ],
+        },
+      ],
+      "name": "PHPTagsTest",
+      "totalTime": 1.272,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "testProhibited",
+              "result": "success",
+              "time": 0.9380000000000001,
+            },
+          ],
+        },
+      ],
+      "name": "ProhibitedTest",
+      "totalTime": 0.9380000000000001,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "testStrictCompare",
+              "result": "success",
+              "time": 1.578,
+            },
+          ],
+        },
+      ],
+      "name": "StrictCompareTest",
+      "totalTime": 1.578,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "testGoodUnused",
+              "result": "success",
+              "time": 0.94,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testBadUnused",
+              "result": "success",
+              "time": 0.895,
+            },
+          ],
+        },
+      ],
+      "name": "UnusedTest",
+      "totalTime": 1.835,
+    },
+  ],
+  "totalTime": undefined,
+}
+`;
+
 exports[`phpunit-junit tests report from phpunit test results matches snapshot 1`] = `
 TestRunResult {
   "path": "fixtures/phpunit/phpunit.xml",
