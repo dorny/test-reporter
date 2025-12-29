@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="React components test" tests="1" failures="0" errors="0" time="1.0">
+  <testsuite name="&lt;Component /&gt;" errors="0" failures="0" skipped="0" timestamp="2021-01-24T19:21:45" time="0.798" tests="1">
+    <testcase classname="" name="&lt;Component /&gt; should render properly" time="0.704">
+    </testcase>
+  </testsuite>
+</testsuites>
