@@ -34,6 +34,6 @@ export function getBasePath(path: string, trackedFiles: string[]): string | unde
     return undefined
   }
 
-  const base = path.substr(0, path.length - max.length)
+  const base = path.substring(0, path.length - max.length)
   return base
 }
