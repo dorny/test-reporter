@@ -197,6 +197,13 @@ export class PhpunitJunitParser implements TestParser {
     return undefined
   }
 
+  /**
+   * Converts an absolute file path to a relative path by stripping the working directory prefix.
+   *
+   * @param path - The absolute file path from PHPUnit output (e.g., `/home/runner/work/repo/src/Test.php`)
+   * @returns The relative path (e.g., `src/Test.php`) if a working directory can be determined,
+   *          otherwise returns the normalized original path
+   */
   private getRelativePath(path: string): string {
     path = normalizeFilePath(path)
     const workDir = this.getWorkDir(path)
@@ -206,6 +213,33 @@ export class PhpunitJunitParser implements TestParser {
     return path
   }
 
+  /**
+   * Determines the working directory prefix to strip from absolute file paths.
+   *
+   * The working directory is resolved using the following priority:
+   *
+   * 1. **Explicit configuration** - If `options.workDir` is set, it takes precedence.
+   *    This allows users to explicitly specify the working directory.
+   *
+   * 2. **Cached assumption** - If we've previously determined a working directory
+   *    (`assumedWorkDir`) and the current path starts with it, we reuse that value.
+   *    This avoids redundant computation for subsequent paths.
+   *
+   * 3. **Heuristic detection** - Uses `getBasePath()` to find the common prefix between
+   *    the absolute path and the list of tracked files in the repository. For example:
+   *    - Absolute path: `/home/runner/work/repo/src/Test.php`
+   *    - Tracked file: `src/Test.php`
+   *    - Detected workDir: `/home/runner/work/repo/`
+   *
+   *    Once detected, the working directory is cached in `assumedWorkDir` for efficiency.
+   *
+   * @param path - The normalized absolute file path to analyze
+   * @returns The working directory prefix (with trailing slash), or `undefined` if it cannot be determined
+   *
+   * @example
+   * // With tracked file 'src/Foo.php' and path '/home/runner/work/repo/src/Foo.php'
+   * // Returns: '/home/runner/work/repo/'
+   */
   private getWorkDir(path: string): string | undefined {
     if (this.options.workDir) {
       return this.options.workDir
