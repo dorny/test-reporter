@@ -50,17 +50,17 @@ export class ArtifactProvider implements InputProvider {
   async load(): Promise<ReportInput> {
     const result: ReportInput = {}
 
-    const resp = await this.octokit.rest.actions.listWorkflowRunArtifacts({
+    const allArtifacts = await this.octokit.paginate(this.octokit.rest.actions.listWorkflowRunArtifacts, {
       ...github.context.repo,
       run_id: this.runId
     })
 
-    if (resp.data.artifacts.length === 0) {
+    if (allArtifacts.length === 0) {
       core.warning(`No artifacts found in run ${this.runId}`)
       return {}
     }
 
-    const artifacts = resp.data.artifacts.filter(a => this.artifactNameMatch(a.name))
+    const artifacts = allArtifacts.filter(a => this.artifactNameMatch(a.name))
     if (artifacts.length === 0) {
       core.warning(`No artifact matches ${this.artifact}`)
       return {}
