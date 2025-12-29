@@ -729,12 +729,12 @@ class DartJsonParser {
     getRelativePath(path) {
         const prefix = 'file://';
         if (path.startsWith(prefix)) {
-            path = path.substr(prefix.length);
+            path = path.substring(prefix.length);
         }
         path = (0, path_utils_1.normalizeFilePath)(path);
         const workDir = this.getWorkDir(path);
         if (workDir !== undefined && path.startsWith(workDir)) {
-            path = path.substr(workDir.length);
+            path = path.substring(workDir.length);
         }
         return path;
     }
@@ -893,7 +893,7 @@ class DotnetNunitParser {
         path = (0, path_utils_1.normalizeFilePath)(path);
         const workDir = this.getWorkDir(path);
         if (workDir !== undefined && path.startsWith(workDir)) {
-            path = path.substr(workDir.length);
+            path = path.substring(workDir.length);
         }
         return path;
     }
@@ -997,7 +997,7 @@ class DotnetTrxParser {
             const duration = durationAttr ? (0, parse_utils_1.parseNetDuration)(durationAttr) : 0;
             const resultTestName = r.result.$.testName;
             const testName = resultTestName.startsWith(className) && resultTestName[className.length] === '.'
-                ? resultTestName.substr(className.length + 1)
+                ? resultTestName.substring(className.length + 1)
                 : resultTestName;
             const test = new Test(testName, r.result.$.outcome, duration, error);
             tc.tests.push(test);
@@ -1064,7 +1064,7 @@ class DotnetTrxParser {
                 const filePath = (0, path_utils_1.normalizeFilePath)(fileStr);
                 const workDir = this.getWorkDir(filePath);
                 if (workDir) {
-                    const file = filePath.substr(workDir.length);
+                    const file = filePath.substring(workDir.length);
                     if (trackedFiles.includes(file)) {
                         const line = parseInt(lineStr);
                         return { path: file, line };
@@ -1550,7 +1550,7 @@ class JestJunitParser {
         path = (0, path_utils_1.normalizeFilePath)(path);
         const workDir = this.getWorkDir(path);
         if (workDir !== undefined && path.startsWith(workDir)) {
-            path = path.substr(workDir.length);
+            path = path.substring(workDir.length);
         }
         return path;
     }
@@ -1621,7 +1621,7 @@ class MochaJsonParser {
     }
     processTest(suite, test, result) {
         const groupName = test.fullTitle !== test.title
-            ? test.fullTitle.substr(0, test.fullTitle.length - test.title.length).trimEnd()
+            ? test.fullTitle.substring(0, test.fullTitle.length - test.title.length).trimEnd()
             : null;
         let group = suite.groups.find(grp => grp.name === groupName);
         if (group === undefined) {
@@ -1656,7 +1656,7 @@ class MochaJsonParser {
         path = (0, path_utils_1.normalizeFilePath)(path);
         const workDir = this.getWorkDir(path);
         if (workDir !== undefined && path.startsWith(workDir)) {
-            path = path.substr(workDir.length);
+            path = path.substring(workDir.length);
         }
         return path;
     }
@@ -1856,7 +1856,7 @@ class PhpunitJunitParser {
         path = (0, path_utils_1.normalizeFilePath)(path);
         const workDir = this.getWorkDir(path);
         if (workDir !== undefined && path.startsWith(workDir)) {
-            path = path.substr(workDir.length);
+            path = path.substring(workDir.length);
         }
         return path;
     }
@@ -1977,7 +1977,7 @@ class RspecJsonParser {
     }
     processTest(suite, test, result) {
         const groupName = test.full_description !== test.description
-            ? test.full_description.substr(0, test.full_description.length - test.description.length).trimEnd()
+            ? test.full_description.substring(0, test.full_description.length - test.description.length).trimEnd()
             : null;
         let group = suite.groups.find(grp => grp.name === groupName);
         if (group === undefined) {
@@ -2823,7 +2823,7 @@ function ellipsis(text, maxLength) {
     if (text.length <= maxLength) {
         return text;
     }
-    return text.substr(0, maxLength - 3) + '...';
+    return text.substring(0, maxLength - 3) + '...';
 }
 function formatTime(ms) {
     if (ms > 1000) {
@@ -2942,7 +2942,7 @@ function getBasePath(path, trackedFiles) {
     if (max === '') {
         return undefined;
     }
-    const base = path.substr(0, path.length - max.length);
+    const base = path.substring(0, path.length - max.length);
     return base;
 }
 
