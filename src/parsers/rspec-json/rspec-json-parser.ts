@@ -55,7 +55,7 @@ export class RspecJsonParser implements TestParser {
   private processTest(suite: TestSuiteResult, test: RspecExample, result: TestExecutionResult): void {
     const groupName =
       test.full_description !== test.description
-        ? test.full_description.substr(0, test.full_description.length - test.description.length).trimEnd()
+        ? test.full_description.substring(0, test.full_description.length - test.description.length).trimEnd()
         : null
 
     let group = suite.groups.find(grp => grp.name === groupName)

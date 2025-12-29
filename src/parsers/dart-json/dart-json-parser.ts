@@ -242,13 +242,13 @@ export class DartJsonParser implements TestParser {
   private getRelativePath(path: string): string {
     const prefix = 'file://'
     if (path.startsWith(prefix)) {
-      path = path.substr(prefix.length)
+      path = path.substring(prefix.length)
     }
 
     path = normalizeFilePath(path)
     const workDir = this.getWorkDir(path)
     if (workDir !== undefined && path.startsWith(workDir)) {
-      path = path.substr(workDir.length)
+      path = path.substring(workDir.length)
     }
     return path
   }

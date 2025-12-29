@@ -106,7 +106,7 @@ export class JestJunitParser implements TestParser {
     path = normalizeFilePath(path)
     const workDir = this.getWorkDir(path)
     if (workDir !== undefined && path.startsWith(workDir)) {
-      path = path.substr(workDir.length)
+      path = path.substring(workDir.length)
     }
     return path
   }
