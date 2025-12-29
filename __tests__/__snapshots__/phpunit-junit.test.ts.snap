@@ -1,0 +1,188 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`phpunit-junit tests report from phpunit test results matches snapshot 1`] = `
+TestRunResult {
+  "path": "fixtures/phpunit/phpunit.xml",
+  "suites": [
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "PHPUnit.Event.CollectingDispatcherTest",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "testHasNoCollectedEventsWhenFlushedImmediatelyAfterCreation",
+              "result": "success",
+              "time": 1.441,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testCollectsDispatchedEventsUntilFlushed",
+              "result": "success",
+              "time": 2.815,
+            },
+          ],
+        },
+      ],
+      "name": "PHPUnit\\Event\\CollectingDispatcherTest",
+      "totalTime": 4.256,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "PHPUnit.Event.DeferringDispatcherTest",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "testCollectsEventsUntilFlush",
+              "result": "success",
+              "time": 1.6720000000000002,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testFlushesCollectedEvents",
+              "result": "success",
+              "time": 0.661,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testSubscriberCanBeRegistered",
+              "result": "success",
+              "time": 0.33399999999999996,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testTracerCanBeRegistered",
+              "result": "success",
+              "time": 0.262,
+            },
+          ],
+        },
+      ],
+      "name": "PHPUnit\\Event\\DeferringDispatcherTest",
+      "totalTime": 2.928,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "PHPUnit.Event.DirectDispatcherTest",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "testDispatchesEventToKnownSubscribers",
+              "result": "success",
+              "time": 0.17,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testDispatchesEventToTracers",
+              "result": "success",
+              "time": 0.248,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testRegisterRejectsUnknownSubscriber",
+              "result": "success",
+              "time": 0.257,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testDispatchRejectsUnknownEventType",
+              "result": "success",
+              "time": 0.11900000000000001,
+            },
+          ],
+        },
+      ],
+      "name": "PHPUnit\\Event\\DirectDispatcherTest",
+      "totalTime": 0.794,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": {
+                "details": "targeting-traits-with-coversclass-attribute-is-deprecated.phptFailed asserting that string matches format description.
+--- Expected
++++ Actual
+@@ @@
+ PHPUnit Started (PHPUnit 11.2-g0c2333363 using PHP 8.2.17 (cli) on Linux)
+ Test Runner Configured
+ Test Suite Loaded (1 test)
++Test Runner Triggered Warning (No code coverage driver available)
+ Event Facade Sealed
+ Test Runner Started
+ Test Suite Sorted
+@@ @@
+ Test Preparation Started (PHPUnit\\DeprecatedAnnotationsTestFixture\\TraitTargetedWithCoversClassTest::testSomething)
+ Test Prepared (PHPUnit\\DeprecatedAnnotationsTestFixture\\TraitTargetedWithCoversClassTest::testSomething)
+ Test Passed (PHPUnit\\DeprecatedAnnotationsTestFixture\\TraitTargetedWithCoversClassTest::testSomething)
+-Test Runner Triggered Deprecation (Targeting a trait such as PHPUnit\\TestFixture\\CoveredTrait with #[CoversClass] is deprecated, please refactor your test to use #[CoversTrait] instead.)
+ Test Finished (PHPUnit\\DeprecatedAnnotationsTestFixture\\TraitTargetedWithCoversClassTest::testSomething)
+ Test Suite Finished (PHPUnit\\DeprecatedAnnotationsTestFixture\\TraitTargetedWithCoversClassTest, 1 test)
+ Test Runner Execution Finished
+ Test Runner Finished
+-PHPUnit Finished (Shell Exit Code: 0)
++PHPUnit Finished (Shell Exit Code: 1)
+
+/home/matteo/OSS/phpunit/tests/end-to-end/metadata/targeting-traits-with-coversclass-attribute-is-deprecated.phpt:28
+/home/matteo/OSS/phpunit/src/Framework/TestSuite.php:369
+/home/matteo/OSS/phpunit/src/TextUI/TestRunner.php:62
+/home/matteo/OSS/phpunit/src/TextUI/Application.php:200",
+                "line": undefined,
+                "message": "PHPUnit\\Framework\\PhptAssertionFailedError",
+                "path": undefined,
+              },
+              "name": "targeting-traits-with-coversclass-attribute-is-deprecated.phpt",
+              "result": "failed",
+              "time": 68.151,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "targeting-traits-with-usesclass-attribute-is-deprecated.phptFailed asserting that string matches format description.
+--- Expected
++++ Actual
+@@ @@
+ PHPUnit Started (PHPUnit 11.2-g0c2333363 using PHP 8.2.17 (cli) on Linux)
+ Test Runner Configured
+ Test Suite Loaded (1 test)
++Test Runner Triggered Warning (No code coverage driver available)
+ Event Facade Sealed
+ Test Runner Started
+ Test Suite Sorted
+@@ @@
+ Test Preparation Started (PHPUnit\\DeprecatedAnnotationsTestFixture\\TraitTargetedWithUsesClassTest::testSomething)
+ Test Prepared (PHPUnit\\DeprecatedAnnotationsTestFixture\\TraitTargetedWithUsesClassTest::testSomething)
+ Test Passed (PHPUnit\\DeprecatedAnnotationsTestFixture\\TraitTargetedWithUsesClassTest::testSomething)
+-Test Runner Triggered Deprecation (Targeting a trait such as PHPUnit\\TestFixture\\CoveredTrait with #[UsesClass] is deprecated, please refactor your test to use #[UsesTrait] instead.)
+ Test Finished (PHPUnit\\DeprecatedAnnotationsTestFixture\\TraitTargetedWithUsesClassTest::testSomething)
+ Test Suite Finished (PHPUnit\\DeprecatedAnnotationsTestFixture\\TraitTargetedWithUsesClassTest, 1 test)
+ Test Runner Execution Finished
+ Test Runner Finished
+-PHPUnit Finished (Shell Exit Code: 0)
++PHPUnit Finished (Shell Exit Code: 1)
+
+/home/matteo/OSS/phpunit/tests/end-to-end/metadata/targeting-traits-with-usesclass-attribute-is-deprecated.phpt:28
+/home/matteo/OSS/phpunit/src/Framework/TestSuite.php:369
+/home/matteo/OSS/phpunit/src/TextUI/TestRunner.php:62
+/home/matteo/OSS/phpunit/src/TextUI/Application.php:200",
+                "line": undefined,
+                "message": "PHPUnit\\Framework\\PhptAssertionFailedError",
+                "path": undefined,
+              },
+              "name": "targeting-traits-with-usesclass-attribute-is-deprecated.phpt",
+              "result": "failed",
+              "time": 64.268,
+            },
+          ],
+        },
+      ],
+      "name": "CLI Arguments",
+      "totalTime": 140.397,
+    },
+  ],
+  "totalTime": undefined,
+}
+`;
