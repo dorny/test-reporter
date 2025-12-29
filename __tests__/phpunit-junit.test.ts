@@ -100,6 +100,67 @@ describe('phpunit-junit tests', () => {
     }
   })
 
+  it('maps absolute paths to tracked files for annotations', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'phpunit', 'phpunit-paths.xml')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: [
+        'src/Fake.php',
+        'src/Other.php',
+        'src/Paren.php',
+        'src/Win.php',
+        'src/WinParen.php',
+        'tests/Sample.phpt'
+      ]
+    }
+
+    const parser = new PhpunitJunitParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+
+    const suite = result.suites.find(s => s.name === 'SampleSuite')
+    expect(suite).toBeDefined()
+
+    const tests = suite!.groups.flatMap(g => g.tests)
+    const fileFailure = tests.find(t => t.name === 'testFailure')
+    expect(fileFailure).toBeDefined()
+    expect(fileFailure!.error).toBeDefined()
+    expect(fileFailure!.error!.path).toBe('src/Fake.php')
+    expect(fileFailure!.error!.line).toBe(42)
+
+    const stringFailure = tests.find(t => t.name === 'testStringFailure')
+    expect(stringFailure).toBeDefined()
+    expect(stringFailure!.error).toBeDefined()
+    expect(stringFailure!.error!.path).toBe('src/Other.php')
+    expect(stringFailure!.error!.line).toBe(10)
+
+    const parenFailure = tests.find(t => t.name === 'testParenFailure')
+    expect(parenFailure).toBeDefined()
+    expect(parenFailure!.error).toBeDefined()
+    expect(parenFailure!.error!.path).toBe('src/Paren.php')
+    expect(parenFailure!.error!.line).toBe(123)
+
+    const windowsFailure = tests.find(t => t.name === 'testWindowsFailure')
+    expect(windowsFailure).toBeDefined()
+    expect(windowsFailure!.error).toBeDefined()
+    expect(windowsFailure!.error!.path).toBe('src/Win.php')
+    expect(windowsFailure!.error!.line).toBe(77)
+
+    const windowsParenFailure = tests.find(t => t.name === 'testWindowsParenFailure')
+    expect(windowsParenFailure).toBeDefined()
+    expect(windowsParenFailure!.error).toBeDefined()
+    expect(windowsParenFailure!.error!.path).toBe('src/WinParen.php')
+    expect(windowsParenFailure!.error!.line).toBe(88)
+
+    const phptFailure = tests.find(t => t.name === 'testPhptFailure')
+    expect(phptFailure).toBeDefined()
+    expect(phptFailure!.error).toBeDefined()
+    expect(phptFailure!.error!.path).toBe('tests/Sample.phpt')
+    expect(phptFailure!.error!.line).toBe(12)
+  })
+
   it('parses junit-basic.xml with nested suites and failure', async () => {
     const fixturePath = path.join(__dirname, 'fixtures', 'external', 'phpunit', 'junit-basic.xml')
     const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))

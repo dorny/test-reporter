@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="SampleSuite" tests="6" failures="6" time="0.006">
+    <testcase name="testFailure" classname="SampleSuite" file="/home/runner/work/repo/src/Fake.php" line="42" time="0.001">
+      <failure type="Exception" message="Boom">/home/runner/work/repo/src/Fake.php:42</failure>
+    </testcase>
+    <testcase name="testStringFailure" classname="SampleSuite" file="/home/runner/work/repo/src/Other.php" line="10" time="0.001">
+      <failure>/home/runner/work/repo/src/Other.php:10</failure>
+    </testcase>
+    <testcase name="testParenFailure" classname="SampleSuite" file="/home/runner/work/repo/src/Paren.php" line="123" time="0.001">
+      <failure>at /home/runner/work/repo/src/Paren.php(123)</failure>
+    </testcase>
+    <testcase name="testWindowsFailure" classname="SampleSuite" file="C:\repo\src\Win.php" line="77" time="0.001">
+      <failure>C:\repo\src\Win.php:77</failure>
+    </testcase>
+    <testcase name="testWindowsParenFailure" classname="SampleSuite" file="C:\repo\src\WinParen.php" line="88" time="0.001">
+      <failure>at C:\repo\src\WinParen.php(88)</failure>
+    </testcase>
+    <testcase name="testPhptFailure" classname="SampleSuite" file="/home/runner/work/repo/tests/Sample.phpt" line="12" time="0.001">
+      <failure>/home/runner/work/repo/tests/Sample.phpt:12</failure>
+    </testcase>
+  </testsuite>
+</testsuites>

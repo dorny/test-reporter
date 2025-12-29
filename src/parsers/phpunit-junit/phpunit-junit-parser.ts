@@ -2,7 +2,7 @@ import {ParseOptions, TestParser} from '../../test-parser'
 import {parseStringPromise} from 'xml2js'
 
 import {PhpunitReport, SingleSuiteReport, TestCase, TestSuite} from './phpunit-junit-types'
-import {normalizeFilePath} from '../../utils/path-utils'
+import {getBasePath, normalizeFilePath} from '../../utils/path-utils'
 
 import {
   TestExecutionResult,
@@ -15,9 +15,12 @@ import {
 
 export class PhpunitJunitParser implements TestParser {
   readonly trackedFiles: Set<string>
+  readonly trackedFilesList: string[]
+  private assumedWorkDir: string | undefined
 
   constructor(readonly options: ParseOptions) {
-    this.trackedFiles = new Set(options.trackedFiles.map(f => normalizeFilePath(f)))
+    this.trackedFilesList = options.trackedFiles.map(f => normalizeFilePath(f))
+    this.trackedFiles = new Set(this.trackedFilesList)
   }
 
   async parse(filePath: string, content: string): Promise<TestRunResult> {
@@ -127,16 +130,16 @@ export class PhpunitJunitParser implements TestParser {
     }
 
     const failure = failures[0]
-    const details = failure._ ?? ''
+    const details = typeof failure === 'string' ? failure : failure._ ?? ''
 
     // PHPUnit provides file path directly in testcase attributes
     let filePath: string | undefined
     let line: number | undefined
 
     if (tc.$.file) {
-      const normalizedPath = normalizeFilePath(tc.$.file)
-      if (this.trackedFiles.has(normalizedPath)) {
-        filePath = normalizedPath
+      const relativePath = this.getRelativePath(tc.$.file)
+      if (this.trackedFiles.has(relativePath)) {
+        filePath = relativePath
       }
       if (tc.$.line) {
         line = parseInt(tc.$.line)
@@ -153,7 +156,7 @@ export class PhpunitJunitParser implements TestParser {
     }
 
     let message: string | undefined
-    if (failure.$) {
+    if (typeof failure !== 'string' && failure.$) {
       message = failure.$.message
       if (failure.$.type) {
         message = message ? `${failure.$.type}: ${message}` : failure.$.type
@@ -174,17 +177,48 @@ export class PhpunitJunitParser implements TestParser {
 
     for (const str of lines) {
       // Match patterns like /path/to/file.php:123 or at /path/to/file.php(123)
-      const match = str.match(/([^\s:()]+\.php):(\d+)|([^\s:()]+\.php)\((\d+)\)/)
-      if (match) {
-        const path = match[1] ?? match[3]
-        const lineStr = match[2] ?? match[4]
-        const normalizedPath = normalizeFilePath(path)
-        if (this.trackedFiles.has(normalizedPath)) {
-          return {filePath: normalizedPath, line: parseInt(lineStr)}
+      const matchColon = str.match(/((?:[A-Za-z]:)?[^\s:()]+?\.(?:php|phpt)):(\d+)/)
+      if (matchColon) {
+        const relativePath = this.getRelativePath(matchColon[1])
+        if (this.trackedFiles.has(relativePath)) {
+          return {filePath: relativePath, line: parseInt(matchColon[2])}
+        }
+      }
+
+      const matchParen = str.match(/((?:[A-Za-z]:)?[^\s:()]+?\.(?:php|phpt))\((\d+)\)/)
+      if (matchParen) {
+        const relativePath = this.getRelativePath(matchParen[1])
+        if (this.trackedFiles.has(relativePath)) {
+          return {filePath: relativePath, line: parseInt(matchParen[2])}
         }
       }
     }
 
     return undefined
+  }
+
+  private getRelativePath(path: string): string {
+    path = normalizeFilePath(path)
+    const workDir = this.getWorkDir(path)
+    if (workDir !== undefined && path.startsWith(workDir)) {
+      path = path.substr(workDir.length)
+    }
+    return path
+  }
+
+  private getWorkDir(path: string): string | undefined {
+    if (this.options.workDir) {
+      return this.options.workDir
+    }
+
+    if (this.assumedWorkDir && path.startsWith(this.assumedWorkDir)) {
+      return this.assumedWorkDir
+    }
+
+    const basePath = getBasePath(path, this.trackedFilesList)
+    if (basePath !== undefined) {
+      this.assumedWorkDir = basePath
+    }
+    return basePath
   }
 }
