@@ -1,0 +1,157 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`open-test-reporting tests report generation result matches snapshot for events format 1`] = `
+TestRunResult {
+  "path": "fixtures/open-test-reporting/events.xml",
+  "suites": [
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "testAddition",
+              "result": "success",
+              "time": 100,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testSubtraction",
+              "result": "success",
+              "time": 150,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "java.lang.ArithmeticException: Division by zero",
+                "message": "java.lang.ArithmeticException: Division by zero",
+              },
+              "name": "testDivision",
+              "result": "failed",
+              "time": 150,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testMultiplication",
+              "result": "skipped",
+              "time": 10,
+            },
+          ],
+        },
+      ],
+      "name": "com.example.CalculatorTest",
+      "totalTime": 700,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "TrimTests",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "testTrimLeft",
+              "result": "success",
+              "time": 90,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testTrimRight",
+              "result": "success",
+              "time": 90,
+            },
+          ],
+        },
+      ],
+      "name": "com.example.StringUtilsTest",
+      "totalTime": 400,
+    },
+  ],
+  "totalTime": 1100,
+}
+`;
+
+exports[`open-test-reporting tests report generation result matches snapshot for hierarchy format 1`] = `
+TestRunResult {
+  "path": "fixtures/open-test-reporting/hierarchy.xml",
+  "suites": [
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "testUserCreation",
+              "result": "success",
+              "time": 123,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testUserDeletion",
+              "result": "success",
+              "time": 234,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testUserUpdate",
+              "result": "skipped",
+              "time": 45,
+            },
+          ],
+        },
+      ],
+      "name": "com.example.UserServiceTest",
+      "totalTime": 1234,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "ValidationTests",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "testValidAmount",
+              "result": "success",
+              "time": 200,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testInvalidAmount",
+              "result": "success",
+              "time": 300,
+            },
+          ],
+        },
+        TestGroupResult {
+          "name": "ProcessingTests",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "testSuccessfulPayment",
+              "result": "success",
+              "time": 500,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "org.opentest4j.AssertionFailedError: Payment should complete within 500ms but took 700ms",
+                "message": "org.opentest4j.AssertionFailedError: Payment should complete within 500ms but took 700ms",
+              },
+              "name": "testPaymentTimeout",
+              "result": "failed",
+              "time": 700,
+            },
+          ],
+        },
+      ],
+      "name": "com.example.PaymentServiceTest",
+      "totalTime": 2500,
+    },
+    TestSuiteResult {
+      "groups": [],
+      "name": "com.example.EmptySuite",
+      "totalTime": 0,
+    },
+  ],
+  "totalTime": 3734,
+}
+`;

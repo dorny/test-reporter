@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<e:events xmlns="https://schemas.opentest4j.org/reporting/core/0.2.0"
+          xmlns:e="https://schemas.opentest4j.org/reporting/events/0.2.0">
+    <infrastructure>
+        <hostName>build-agent-02</hostName>
+        <userName>runner</userName>
+        <operatingSystem>macOS</operatingSystem>
+        <cpuCores>8</cpuCores>
+    </infrastructure>
+
+    <!-- Suite: CalculatorTest starts -->
+    <e:started id="suite-1" name="com.example.CalculatorTest" time="2024-01-15T11:00:00.000Z"/>
+
+    <!-- Test: testAddition -->
+    <e:started id="test-1" name="testAddition" parentId="suite-1" time="2024-01-15T11:00:00.100Z"/>
+    <e:finished id="test-1" time="2024-01-15T11:00:00.200Z">
+        <result status="SUCCESSFUL"/>
+    </e:finished>
+
+    <!-- Test: testSubtraction -->
+    <e:started id="test-2" name="testSubtraction" parentId="suite-1" time="2024-01-15T11:00:00.250Z"/>
+    <e:finished id="test-2" time="2024-01-15T11:00:00.400Z">
+        <result status="SUCCESSFUL"/>
+    </e:finished>
+
+    <!-- Test: testDivision (fails) -->
+    <e:started id="test-3" name="testDivision" parentId="suite-1" time="2024-01-15T11:00:00.450Z"/>
+    <e:finished id="test-3" time="2024-01-15T11:00:00.600Z">
+        <result status="FAILED">
+            <reason>java.lang.ArithmeticException: Division by zero</reason>
+        </result>
+    </e:finished>
+
+    <!-- Test: testMultiplication (skipped) -->
+    <e:started id="test-4" name="testMultiplication" parentId="suite-1" time="2024-01-15T11:00:00.650Z"/>
+    <e:finished id="test-4" time="2024-01-15T11:00:00.660Z">
+        <result status="SKIPPED">
+            <reason>Test disabled</reason>
+        </result>
+    </e:finished>
+
+    <!-- Suite: CalculatorTest finishes -->
+    <e:finished id="suite-1" time="2024-01-15T11:00:00.700Z">
+        <result status="FAILED"/>
+    </e:finished>
+
+    <!-- Suite: StringUtilsTest starts -->
+    <e:started id="suite-2" name="com.example.StringUtilsTest" time="2024-01-15T11:00:01.000Z"/>
+
+    <!-- Group: TrimTests -->
+    <e:started id="group-1" name="TrimTests" parentId="suite-2" time="2024-01-15T11:00:01.100Z"/>
+
+    <e:started id="test-5" name="testTrimLeft" parentId="group-1" time="2024-01-15T11:00:01.110Z"/>
+    <e:finished id="test-5" time="2024-01-15T11:00:01.200Z">
+        <result status="SUCCESSFUL"/>
+    </e:finished>
+
+    <e:started id="test-6" name="testTrimRight" parentId="group-1" time="2024-01-15T11:00:01.210Z"/>
+    <e:finished id="test-6" time="2024-01-15T11:00:01.300Z">
+        <result status="SUCCESSFUL"/>
+    </e:finished>
+
+    <e:finished id="group-1" time="2024-01-15T11:00:01.310Z">
+        <result status="SUCCESSFUL"/>
+    </e:finished>
+
+    <!-- Suite: StringUtilsTest finishes -->
+    <e:finished id="suite-2" time="2024-01-15T11:00:01.400Z">
+        <result status="SUCCESSFUL"/>
+    </e:finished>
+</e:events>

@@ -32,6 +32,7 @@ inputs:
         - java-junit
         - jest-junit
         - mocha-json
+        - open-test-reporting
         - python-xunit
         - rspec-json
         - swift-xunit
