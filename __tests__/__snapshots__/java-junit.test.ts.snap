@@ -6878,3 +6878,153 @@ at java.lang.Thread.run(Thread.java:748)
   "totalTime": 2126531.0000000005,
 }
 `;
+
+exports[`java-junit tests report from testmo/junitxml basic example matches snapshot 1`] = `
+TestRunResult {
+  "path": "fixtures/external/java/junit4-basic.xml",
+  "suites": [
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "testCase1",
+              "result": "success",
+              "time": 2113.871,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testCase2",
+              "result": "success",
+              "time": 1051,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testCase3",
+              "result": "success",
+              "time": 3441,
+            },
+          ],
+        },
+      ],
+      "name": "Tests.Registration",
+      "totalTime": 6605.870999999999,
+    },
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "testCase7",
+              "result": "success",
+              "time": 2508,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testCase8",
+              "result": "success",
+              "time": 1230.8159999999998,
+            },
+            TestCaseResult {
+              "error": {
+                "details": undefined,
+                "line": undefined,
+                "message": "AssertionError: Assertion error message",
+                "path": undefined,
+              },
+              "name": "testCase9",
+              "result": "failed",
+              "time": 982,
+            },
+          ],
+        },
+      ],
+      "name": "Tests.Authentication",
+      "totalTime": 9076.816,
+    },
+  ],
+  "totalTime": 15682.687,
+}
+`;
+
+exports[`java-junit tests report from testmo/junitxml complete example matches snapshot 1`] = `
+TestRunResult {
+  "path": "fixtures/external/java/junit4-complete.xml",
+  "suites": [
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "testCase1",
+              "result": "success",
+              "time": 2436,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testCase2",
+              "result": "success",
+              "time": 1534,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testCase3",
+              "result": "success",
+              "time": 822,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testCase4",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": {
+                "details": undefined,
+                "line": undefined,
+                "message": "AssertionError: Expected value did not match.",
+                "path": undefined,
+              },
+              "name": "testCase5",
+              "result": "failed",
+              "time": 2902.412,
+            },
+            TestCaseResult {
+              "error": {
+                "details": undefined,
+                "line": undefined,
+                "message": "ArithmeticError: Division by zero.",
+                "path": undefined,
+              },
+              "name": "testCase6",
+              "result": "failed",
+              "time": 3819,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testCase7",
+              "result": "success",
+              "time": 2944,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "testCase8",
+              "result": "success",
+              "time": 1625.275,
+            },
+          ],
+        },
+      ],
+      "name": "Tests.Registration",
+      "totalTime": 16082.687,
+    },
+  ],
+  "totalTime": 16082.687,
+}
+`;

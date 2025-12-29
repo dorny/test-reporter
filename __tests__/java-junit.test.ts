@@ -73,6 +73,46 @@ describe('java-junit tests', () => {
     fs.writeFileSync(outputPath, report)
   })
 
+  it('report from testmo/junitxml basic example matches snapshot', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'external', 'java', 'junit4-basic.xml')
+    const outputPath = path.join(__dirname, '__outputs__', 'junit-basic.md')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: []
+    }
+
+    const parser = new JavaJunitParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+    expect(result).toMatchSnapshot()
+
+    const report = getReport([result])
+    fs.mkdirSync(path.dirname(outputPath), {recursive: true})
+    fs.writeFileSync(outputPath, report)
+  })
+
+  it('report from testmo/junitxml complete example matches snapshot', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'external', 'java', 'junit4-complete.xml')
+    const outputPath = path.join(__dirname, '__outputs__', 'junit-complete.md')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: []
+    }
+
+    const parser = new JavaJunitParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+    expect(result).toMatchSnapshot()
+
+    const report = getReport([result])
+    fs.mkdirSync(path.dirname(outputPath), {recursive: true})
+    fs.writeFileSync(outputPath, report)
+  })
+
   it('parses empty failures in test results', async () => {
     const fixturePath = path.join(__dirname, 'fixtures', 'external', 'java', 'empty_failures.xml')
     const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
