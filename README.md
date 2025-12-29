@@ -20,6 +20,7 @@ This [Github Action](https://github.com/features/actions) displays test results 
 - Java / [JUnit](https://junit.org/)
 - JavaScript / [JEST](https://jestjs.io/) / [Mocha](https://mochajs.org/)
 - Python / [pytest](https://docs.pytest.org/en/stable/) / [unittest](https://docs.python.org/3/library/unittest.html)
+- PHP / [PHPUnit](https://phpunit.de/)
 - Ruby / [RSpec](https://rspec.info/)
 - Swift / xUnit
 
@@ -147,6 +148,7 @@ jobs:
     #   java-junit
     #   jest-junit
     #   mocha-json
+    #   phpunit-junit
     #   python-xunit
     #   rspec-json
     #   swift-xunit
@@ -312,6 +314,14 @@ Support for [JUnit](https://Junit.org/) XML is experimental - should work but it
 To have code annotations working properly, it's required your directory structure matches the package name.
 This is due to the fact Java stack traces don't contain a full path to the source file.
 Some heuristic was necessary to figure out the mapping between the line in the stack trace and an actual source file.
+</details>
+
+<details>
+  <summary>phpunit-junit</summary>
+
+[PHPUnit](https://phpunit.de/) can generate JUnit XML via CLI:
+`phpunit --log-junit reports/phpunit-junit.xml`
+
 </details>
 
 <details>

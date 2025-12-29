@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="/workspace/phpcheckstyle/phpunit.xml" tests="30" assertions="117" errors="0" failures="2" skipped="0" time="0.041478">
+    <testsuite name="PHPUnitTestSuite" tests="30" assertions="117" errors="0" failures="2" skipped="0" time="0.041478">
+      <testsuite name="CommentsTest" file="/workspace/phpcheckstyle/test/CommentsTest.php" tests="3" assertions="12" errors="0" failures="0" skipped="0" time="0.006702">
+        <testcase name="testGoodDoc" file="/workspace/phpcheckstyle/test/CommentsTest.php" line="12" class="CommentsTest" classname="CommentsTest" assertions="4" time="0.005093"/>
+        <testcase name="testComments" file="/workspace/phpcheckstyle/test/CommentsTest.php" line="30" class="CommentsTest" classname="CommentsTest" assertions="4" time="0.000921">
+          <system-out>File "./test/sample/bad_comments.php" warning, line 4 - Avoid Shell/Perl like comments.
+File "./test/sample/bad_comments.php" warning, line 6 - The class Comments must have a docblock comment.
+File "./test/sample/bad_comments.php" warning, line 10 - The function testComment must have a docblock comment.
+File "./test/sample/bad_comments.php" warning, line 18 - The function testComment returns a value and must include @returns in its docblock.
+File "./test/sample/bad_comments.php" warning, line 18 - The function testComment parameters must match those in its docblock @param.
+File "./test/sample/bad_comments.php" warning, line 18 - The function testComment throws an exception and must include @throws in its docblock.
+</system-out>
+        </testcase>
+        <testcase name="testTODOs" file="/workspace/phpcheckstyle/test/CommentsTest.php" line="48" class="CommentsTest" classname="CommentsTest" assertions="4" time="0.000688">
+          <system-out>File "./test/sample/todo.php" warning, line 3 - TODO: The todo message.
+</system-out>
+        </testcase>
+      </testsuite>
+      <testsuite name="DeprecationTest" file="/workspace/phpcheckstyle/test/DeprecationTest.php" tests="1" assertions="4" errors="0" failures="0" skipped="0" time="0.000974">
+        <testcase name="testDeprecations" file="/workspace/phpcheckstyle/test/DeprecationTest.php" line="12" class="DeprecationTest" classname="DeprecationTest" assertions="4" time="0.000974">
+          <system-out>File "./test/sample/bad_deprecation.php" warning, line 17 - split is deprecated since PHP 5.3. explode($pattern, $string) or preg_split('@'.$pattern.'@', $string) must be used instead.
+File "./test/sample/bad_deprecation.php" warning, line 19 - ereg is deprecated since PHP 5.3. preg_match('@'.$pattern.'@', $string) must be used instead.
+File "./test/sample/bad_deprecation.php" warning, line 21 - session_register is deprecated since PHP 5.3. $_SESSION must be used instead.
+File "./test/sample/bad_deprecation.php" warning, line 23 - mysql_db_query is deprecated since PHP 5.3. mysql_select_db and mysql_query must be used instead.
+File "./test/sample/bad_deprecation.php" warning, line 25 - $HTTP_GET_VARS is deprecated since PHP 5.3. $_GET must be used instead.
+</system-out>
+        </testcase>
+      </testsuite>
+      <testsuite name="GoodTest" file="/workspace/phpcheckstyle/test/GoodTest.php" tests="4" assertions="16" errors="0" failures="0" skipped="0" time="0.005357">
+        <testcase name="testGood" file="/workspace/phpcheckstyle/test/GoodTest.php" line="12" class="GoodTest" classname="GoodTest" assertions="4" time="0.002647"/>
+        <testcase name="testDoWhile" file="/workspace/phpcheckstyle/test/GoodTest.php" line="32" class="GoodTest" classname="GoodTest" assertions="4" time="0.001022"/>
+        <testcase name="testAnonymousFunction" file="/workspace/phpcheckstyle/test/GoodTest.php" line="50" class="GoodTest" classname="GoodTest" assertions="4" time="0.000800"/>
+        <testcase name="testException" file="/workspace/phpcheckstyle/test/GoodTest.php" line="68" class="GoodTest" classname="GoodTest" assertions="4" time="0.000888"/>
+      </testsuite>
+      <testsuite name="IndentationTest" file="/workspace/phpcheckstyle/test/IndentationTest.php" tests="8" assertions="32" errors="0" failures="0" skipped="0" time="0.007654">
+        <testcase name="testTabIndentation" file="/workspace/phpcheckstyle/test/IndentationTest.php" line="12" class="IndentationTest" classname="IndentationTest" assertions="4" time="0.000857">
+          <system-out>File "./test/sample/bad_indentation.php" warning, line 8 - Whitespace indentation must not be used.
+File "./test/sample/bad_indentation.php" warning, line 15 - Whitespace indentation must not be used.
+File "./test/sample/bad_indentation.php" warning, line 17 - Whitespace indentation must not be used.
+File "./test/sample/bad_indentation.php" warning, line 18 - Whitespace indentation must not be used.
+File "./test/sample/bad_indentation.php" warning, line 19 - Whitespace indentation must not be used.
+File "./test/sample/bad_indentation.php" warning, line 20 - Whitespace indentation must not be used.
+</system-out>
+        </testcase>
+        <testcase name="testSpaceIndentation" file="/workspace/phpcheckstyle/test/IndentationTest.php" line="30" class="IndentationTest" classname="IndentationTest" assertions="4" time="0.000929">
+          <system-out>File "./test/sample/bad_indentation.php" warning, line 10 - Tab indentation must not be used.
+File "./test/sample/bad_indentation.php" warning, line 10 - The indentation level must be 4 but was 1.
+File "./test/sample/bad_indentation.php" warning, line 13 - Tab indentation must not be used.
+File "./test/sample/bad_indentation.php" warning, line 13 - The indentation level must be 4 but was 1.
+File "./test/sample/bad_indentation.php" warning, line 15 - The indentation level must be 8 but was 4.
+File "./test/sample/bad_indentation.php" warning, line 16 - Tab indentation must not be used.
+File "./test/sample/bad_indentation.php" warning, line 16 - The indentation level must be 8 but was 1.
+File "./test/sample/bad_indentation.php" warning, line 17 - The indentation level must be 8 but was 3.
+File "./test/sample/bad_indentation.php" warning, line 18 - The indentation level must be 8 but was 5.
+File "./test/sample/bad_indentation.php" warning, line 19 - The indentation level must be 8 but was 6.
+File "./test/sample/bad_indentation.php" warning, line 20 - The indentation level must be 4 but was 1.
+</system-out>
+        </testcase>
+        <testcase name="testSpaceIndentationArray" file="/workspace/phpcheckstyle/test/IndentationTest.php" line="51" class="IndentationTest" classname="IndentationTest" assertions="4" time="0.000975">
+          <system-out>File "./test/sample/bad_indentation_array.php" warning, line 10 - Tab indentation must not be used.
+File "./test/sample/bad_indentation_array.php" warning, line 10 - The indentation level must be 4 but was 1.
+File "./test/sample/bad_indentation_array.php" warning, line 13 - Tab indentation must not be used.
+File "./test/sample/bad_indentation_array.php" warning, line 13 - The indentation level must be 4 but was 1.
+File "./test/sample/bad_indentation_array.php" warning, line 16 - The indentation level must be 12 but was 8.
+File "./test/sample/bad_indentation_array.php" warning, line 24 - The indentation level must be 12 but was 8.
+File "./test/sample/bad_indentation_array.php" warning, line 29 - The indentation level must be 8 but was 12.
+File "./test/sample/bad_indentation_array.php" warning, line 15 - Undeclared or unused variable: $aVar.
+File "./test/sample/bad_indentation_array.php" warning, line 19 - Undeclared or unused variable: $bVar.
+File "./test/sample/bad_indentation_array.php" warning, line 23 - Undeclared or unused variable: $cVar.
+File "./test/sample/bad_indentation_array.php" warning, line 27 - Undeclared or unused variable: $dVar.
+</system-out>
+        </testcase>
+        <testcase name="testGoodSpaceIndentationArray" file="/workspace/phpcheckstyle/test/IndentationTest.php" line="72" class="IndentationTest" classname="IndentationTest" assertions="4" time="0.001212"/>
+        <testcase name="testGoodIndentationNewLine" file="/workspace/phpcheckstyle/test/IndentationTest.php" line="93" class="IndentationTest" classname="IndentationTest" assertions="4" time="0.000859"/>
+        <testcase name="testGoodIndentationSpaces" file="/workspace/phpcheckstyle/test/IndentationTest.php" line="116" class="IndentationTest" classname="IndentationTest" assertions="4" time="0.000780"/>
+        <testcase name="testBadSpaces" file="/workspace/phpcheckstyle/test/IndentationTest.php" line="137" class="IndentationTest" classname="IndentationTest" assertions="4" time="0.001120">
+          <system-out>File "./test/sample/bad_spaces.php" warning, line 17 - Whitespace must follow ,.
+File "./test/sample/bad_spaces.php" warning, line 17 - Whitespace must precede {.
+File "./test/sample/bad_spaces.php" warning, line 19 - Whitespace must follow if.
+File "./test/sample/bad_spaces.php" warning, line 23 - Whitespace must precede =.
+File "./test/sample/bad_spaces.php" warning, line 23 - Whitespace must follow =.
+File "./test/sample/bad_spaces.php" warning, line 23 - Whitespace must precede +.
+File "./test/sample/bad_spaces.php" warning, line 23 - Whitespace must follow +.
+File "./test/sample/bad_spaces.php" info, line 25 - Whitespace must not precede ,.
+File "./test/sample/bad_spaces.php" info, line 26 - Whitespace must not follow !.
+</system-out>
+        </testcase>
+        <testcase name="testBadSpaceAfterControl" file="/workspace/phpcheckstyle/test/IndentationTest.php" line="155" class="IndentationTest" classname="IndentationTest" assertions="4" time="0.000922">
+          <system-out>File "./test/sample/bad_space_after_control.php" warning, line 19 - Whitespace must not follow if.
+</system-out>
+        </testcase>
+      </testsuite>
+      <testsuite name="MetricsTest" file="/workspace/phpcheckstyle/test/MetricsTest.php" tests="1" assertions="4" errors="0" failures="0" skipped="0" time="0.004147">
+        <testcase name="testMetrics" file="/workspace/phpcheckstyle/test/MetricsTest.php" line="12" class="MetricsTest" classname="MetricsTest" assertions="4" time="0.004147">
+          <system-out>File "./test/sample/bad_metrics.php" warning, line 21 - The function testMetrics's number of parameters (6) must not exceed 4.
+File "./test/sample/bad_metrics.php" info, line 55 - Line is too long. [233/160]
+File "./test/sample/bad_metrics.php" warning, line 21 - The Cyclomatic Complexity of function testMetrics is too high. [15/10]
+File "./test/sample/bad_metrics.php" warning, line 244 - The testMetrics function body length is too long. [223/200]
+</system-out>
+        </testcase>
+      </testsuite>
+      <testsuite name="NamingTest" file="/workspace/phpcheckstyle/test/NamingTest.php" tests="2" assertions="8" errors="0" failures="0" skipped="0" time="0.002697">
+        <testcase name="testNaming" file="/workspace/phpcheckstyle/test/NamingTest.php" line="12" class="NamingTest" classname="NamingTest" assertions="4" time="0.001426">
+          <system-out>File "./test/sample/_bad_naming.php" error, line 11 - Constant _badly_named_constant name should follow the pattern /^[A-Z][A-Z0-9_]*$/.
+File "./test/sample/_bad_naming.php" error, line 13 - Constant bad_CONST name should follow the pattern /^[A-Z][A-Z0-9_]*$/.
+File "./test/sample/_bad_naming.php" warning, line 17 - Top level variable $XXX name should follow the pattern /^[a-z_][a-zA-Z0-9]*$/.
+File "./test/sample/_bad_naming.php" warning, line 20 - Variable x name length is too short.
+File "./test/sample/_bad_naming.php" error, line 28 - Class badlynamedclass name should follow the pattern /^[A-Z][a-zA-Z0-9_]*$/.
+File "./test/sample/_bad_naming.php" warning, line 32 - Member variable $YYY name should follow the pattern /^[a-z_][a-zA-Z0-9]*$/.
+File "./test/sample/_bad_naming.php" warning, line 37 - The constructor name must be __construct().
+File "./test/sample/_bad_naming.php" error, line 44 - Function Badlynamedfunction name should follow the pattern /^[a-z][a-zA-Z0-9]*$/.
+File "./test/sample/_bad_naming.php" warning, line 47 - Local variable $ZZZ name should follow the pattern /^[a-z_][a-zA-Z0-9]*$/.
+File "./test/sample/_bad_naming.php" error, line 54 - Protected function Badlynamedfunction2 name should follow the pattern /^[a-z][a-zA-Z0-9]*$/.
+File "./test/sample/_bad_naming.php" error, line 61 - Private function badlynamedfunction3 name should follow the pattern /^_[a-z][a-zA-Z0-9]*$/.
+File "./test/sample/_bad_naming.php" error, line 70 - Interface _badlynamedinterface name should follow the pattern /^[A-Z][a-zA-Z0-9_]*$/.
+File "./test/sample/_bad_naming.php" error, line 75 - File _bad_naming.php name should follow the pattern /^[a-zA-Z][a-zA-Z0-9._]*$/.
+</system-out>
+        </testcase>
+        <testcase name="testFunctionNaming" file="/workspace/phpcheckstyle/test/NamingTest.php" line="32" class="NamingTest" classname="NamingTest" assertions="4" time="0.001271"/>
+      </testsuite>
+      <testsuite name="OptimizationTest" file="/workspace/phpcheckstyle/test/OptimizationTest.php" tests="1" assertions="4" errors="0" failures="0" skipped="0" time="0.000994">
+        <testcase name="testTextAfterClosingTag" file="/workspace/phpcheckstyle/test/OptimizationTest.php" line="12" class="OptimizationTest" classname="OptimizationTest" assertions="4" time="0.000994">
+          <system-out>File "./test/sample/bad_optimisation.php" warning, line 18 - count function must not be used inside a loop.
+File "./test/sample/bad_optimisation.php" warning, line 23 - count function must not be used inside a loop.
+</system-out>
+        </testcase>
+      </testsuite>
+      <testsuite name="OtherTest" file="/workspace/phpcheckstyle/test/OtherTest.php" tests="4" assertions="13" errors="0" failures="2" skipped="0" time="0.007329">
+        <testcase name="testOther" file="/workspace/phpcheckstyle/test/OtherTest.php" line="12" class="OtherTest" classname="OtherTest" assertions="4" time="0.005251">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">OtherTest::testOther
+We expect 20 warnings
+Failed asserting that 19 matches expected 20.
+
+/workspace/phpcheckstyle/test/OtherTest.php:24</failure>
+          <system-out>File "./test/sample/bad_other.php" warning, line 17 - All arguments with default values must be at the end of the block or statement.
+File "./test/sample/bad_other.php" warning, line 21 - Errors must not be silenced when calling a function.
+File "./test/sample/bad_other.php" warning, line 23 - Prefer single-quoted strings when you don't need string interpolation.
+File "./test/sample/bad_other.php" warning, line 23 - Encapsed variables must not be used inside a string.
+File "./test/sample/bad_other.php" warning, line 23 - Encapsed variables must not be used inside a string.
+File "./test/sample/bad_other.php" warning, line 23 - Prefer single-quoted strings when you don't need string interpolation.
+File "./test/sample/bad_other.php" warning, line 37 - TODO: Show todos
+File "./test/sample/bad_other.php" warning, line 40 - Avoid empty statements (;;).
+File "./test/sample/bad_other.php" warning, line 42 - Boolean operators (&amp;&amp;) must be used instead of logical operators (AND).
+File "./test/sample/bad_other.php" warning, line 42 - Empty if block.
+File "./test/sample/bad_other.php" warning, line 48 - Heredoc syntax must not be used.
+File "./test/sample/bad_other.php" warning, line 52 - The statement if must contain its code within a {} block.
+File "./test/sample/bad_other.php" warning, line 54 - Consider using a strict comparison operator instead of ==.
+File "./test/sample/bad_other.php" warning, line 54 - The statement while must contain its code within a {} block.
+File "./test/sample/bad_other.php" warning, line 66 - The switch statement must have a default case.
+File "./test/sample/bad_other.php" warning, line 79 - The default case of a switch statement must be located after all other cases.
+File "./test/sample/bad_other.php" warning, line 93 - Unary operators (++ or --) must not be used inside a control statement
+File "./test/sample/bad_other.php" warning, line 95 - Assigments (=) must not be used inside a control statement.
+File "./test/sample/bad_other.php" warning, line 106 - File ./test/sample/bad_other.php must not have multiple class declarations.
+</system-out>
+        </testcase>
+        <testcase name="testException" file="/workspace/phpcheckstyle/test/OtherTest.php" line="31" class="OtherTest" classname="OtherTest" assertions="1" time="0.000751">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">OtherTest::testException
+We expect 1 error
+Failed asserting that 0 matches expected 1.
+
+/workspace/phpcheckstyle/test/OtherTest.php:40</failure>
+        </testcase>
+        <testcase name="testEmpty" file="/workspace/phpcheckstyle/test/OtherTest.php" line="50" class="OtherTest" classname="OtherTest" assertions="4" time="0.000427">
+          <system-out>File "./test/sample/empty.php" warning, line 1 - The file ./test/sample/empty.php is empty.
+</system-out>
+        </testcase>
+        <testcase name="testSwitchCaseNeedBreak" file="/workspace/phpcheckstyle/test/OtherTest.php" line="69" class="OtherTest" classname="OtherTest" assertions="4" time="0.000901">
+          <system-out>File "./test/sample/switch_multi_case.php" warning, line 10 - The case statement must contain a break.
+</system-out>
+        </testcase>
+      </testsuite>
+      <testsuite name="PHPTagsTest" file="/workspace/phpcheckstyle/test/PHPTagsTest.php" tests="2" assertions="8" errors="0" failures="0" skipped="0" time="0.001272">
+        <testcase name="testTextAfterClosingTag" file="/workspace/phpcheckstyle/test/PHPTagsTest.php" line="12" class="PHPTagsTest" classname="PHPTagsTest" assertions="4" time="0.000641">
+          <system-out>File "./test/sample/bad_php_tags_text_after_end.php" warning, line 9 - A PHP close tag must not be included at the end of the file.
+</system-out>
+        </testcase>
+        <testcase name="testClosingTagNotNeeded" file="/workspace/phpcheckstyle/test/PHPTagsTest.php" line="30" class="PHPTagsTest" classname="PHPTagsTest" assertions="4" time="0.000631">
+          <system-out>File "./test/sample/bad_php_tags_end_not_needed.php" warning, line 1 - PHP tag should be at the beginning of the line.
+</system-out>
+        </testcase>
+      </testsuite>
+      <testsuite name="ProhibitedTest" file="/workspace/phpcheckstyle/test/ProhibitedTest.php" tests="1" assertions="4" errors="0" failures="0" skipped="0" time="0.000938">
+        <testcase name="testProhibited" file="/workspace/phpcheckstyle/test/ProhibitedTest.php" line="13" class="ProhibitedTest" classname="ProhibitedTest" assertions="4" time="0.000938">
+          <system-out>File "./test/sample/bad_prohibited.php" warning, line 18 - The function exec must not be called.
+File "./test/sample/bad_prohibited.php" warning, line 20 - Token T_PRINT must not be used.
+</system-out>
+        </testcase>
+      </testsuite>
+      <testsuite name="StrictCompareTest" file="/workspace/phpcheckstyle/test/StrictCompareTest.php" tests="1" assertions="4" errors="0" failures="0" skipped="0" time="0.001578">
+        <testcase name="testStrictCompare" file="/workspace/phpcheckstyle/test/StrictCompareTest.php" line="12" class="StrictCompareTest" classname="StrictCompareTest" assertions="4" time="0.001578">
+          <system-out>File "./test/sample/bad_strictcompare.php" warning, line 14 - Consider using a strict comparison operator instead of ==.
+File "./test/sample/bad_strictcompare.php" warning, line 19 - Consider using a strict comparison operator instead of !=.
+File "./test/sample/bad_strictcompare.php" warning, line 24 - Consider using a strict comparison operator instead of ==.
+File "./test/sample/bad_strictcompare.php" warning, line 29 - Consider using a strict comparison operator instead of ==.
+</system-out>
+        </testcase>
+      </testsuite>
+      <testsuite name="UnusedTest" file="/workspace/phpcheckstyle/test/UnusedTest.php" tests="2" assertions="8" errors="0" failures="0" skipped="0" time="0.001835">
+        <testcase name="testGoodUnused" file="/workspace/phpcheckstyle/test/UnusedTest.php" line="13" class="UnusedTest" classname="UnusedTest" assertions="4" time="0.000940"/>
+        <testcase name="testBadUnused" file="/workspace/phpcheckstyle/test/UnusedTest.php" line="32" class="UnusedTest" classname="UnusedTest" assertions="4" time="0.000895">
+          <system-out>File "./test/sample/bad_unused.php" warning, line 23 - Function _testUnused has unused code after RETURN.
+File "./test/sample/bad_unused.php" warning, line 27 - The function _testUnused parameter $b is not used.
+File "./test/sample/bad_unused.php" warning, line 18 - Unused private function: _testUnused.
+File "./test/sample/bad_unused.php" warning, line 20 - Undeclared or unused variable: $c.
+</system-out>
+        </testcase>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

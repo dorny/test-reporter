@@ -277,6 +277,7 @@ const golang_json_parser_1 = __nccwpck_require__(5162);
 const java_junit_parser_1 = __nccwpck_require__(8342);
 const jest_junit_parser_1 = __nccwpck_require__(1042);
 const mocha_json_parser_1 = __nccwpck_require__(5402);
+const phpunit_junit_parser_1 = __nccwpck_require__(2674);
 const python_xunit_parser_1 = __nccwpck_require__(6578);
 const rspec_json_parser_1 = __nccwpck_require__(9768);
 const swift_xunit_parser_1 = __nccwpck_require__(7330);
@@ -494,6 +495,8 @@ class TestReporter {
                 return new jest_junit_parser_1.JestJunitParser(options);
             case 'mocha-json':
                 return new mocha_json_parser_1.MochaJsonParser(options);
+            case 'phpunit-junit':
+                return new phpunit_junit_parser_1.PhpunitJunitParser(options);
             case 'python-xunit':
                 return new python_xunit_parser_1.PythonXunitParser(options);
             case 'rspec-json':
@@ -1664,6 +1667,241 @@ class MochaJsonParser {
     }
 }
 exports.MochaJsonParser = MochaJsonParser;
+
+
+/***/ }),
+
+/***/ 2674:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PhpunitJunitParser = void 0;
+const xml2js_1 = __nccwpck_require__(758);
+const path_utils_1 = __nccwpck_require__(9132);
+const test_results_1 = __nccwpck_require__(613);
+class PhpunitJunitParser {
+    options;
+    trackedFiles;
+    trackedFilesList;
+    assumedWorkDir;
+    constructor(options) {
+        this.options = options;
+        this.trackedFilesList = options.trackedFiles.map(f => (0, path_utils_1.normalizeFilePath)(f));
+        this.trackedFiles = new Set(this.trackedFilesList);
+    }
+    async parse(filePath, content) {
+        const reportOrSuite = await this.getPhpunitReport(filePath, content);
+        const isReport = reportOrSuite.testsuites !== undefined;
+        // XML might contain:
+        // - multiple suites under <testsuites> root node
+        // - single <testsuite> as root node
+        let report;
+        if (isReport) {
+            report = reportOrSuite;
+        }
+        else {
+            // Make it behave the same way as if suite was inside <testsuites> root node
+            const suite = reportOrSuite.testsuite;
+            report = {
+                testsuites: {
+                    $: { time: suite.$.time },
+                    testsuite: [suite]
+                }
+            };
+        }
+        return this.getTestRunResult(filePath, report);
+    }
+    async getPhpunitReport(filePath, content) {
+        try {
+            return await (0, xml2js_1.parseStringPromise)(content);
+        }
+        catch (e) {
+            throw new Error(`Invalid XML at ${filePath}\n\n${e}`);
+        }
+    }
+    getTestRunResult(filePath, report) {
+        const suites = [];
+        this.collectSuites(suites, report.testsuites.testsuite ?? []);
+        const seconds = parseFloat(report.testsuites.$?.time ?? '');
+        const time = isNaN(seconds) ? undefined : seconds * 1000;
+        return new test_results_1.TestRunResult(filePath, suites, time);
+    }
+    collectSuites(results, testsuites) {
+        for (const ts of testsuites) {
+            // Recursively process nested test suites first (depth-first)
+            if (ts.testsuite) {
+                this.collectSuites(results, ts.testsuite);
+            }
+            // Only add suites that have direct test cases
+            // This avoids adding container suites that only hold nested suites
+            if (ts.testcase && ts.testcase.length > 0) {
+                const name = ts.$.name.trim();
+                const time = parseFloat(ts.$.time) * 1000;
+                results.push(new test_results_1.TestSuiteResult(name, this.getGroups(ts), time));
+            }
+        }
+    }
+    getGroups(suite) {
+        if (!suite.testcase || suite.testcase.length === 0) {
+            return [];
+        }
+        const groups = [];
+        for (const tc of suite.testcase) {
+            // Use classname (PHPUnit style) for grouping
+            // If classname matches suite name, use empty string to avoid redundancy
+            const className = tc.$.classname ?? tc.$.class ?? '';
+            const groupName = className === suite.$.name ? '' : className;
+            let grp = groups.find(g => g.name === groupName);
+            if (grp === undefined) {
+                grp = { name: groupName, tests: [] };
+                groups.push(grp);
+            }
+            grp.tests.push(tc);
+        }
+        return groups.map(grp => {
+            const tests = grp.tests.map(tc => {
+                const name = tc.$.name.trim();
+                const result = this.getTestCaseResult(tc);
+                const time = parseFloat(tc.$.time) * 1000;
+                const error = this.getTestCaseError(tc);
+                return new test_results_1.TestCaseResult(name, result, time, error);
+            });
+            return new test_results_1.TestGroupResult(grp.name, tests);
+        });
+    }
+    getTestCaseResult(test) {
+        if (test.failure || test.error)
+            return 'failed';
+        if (test.skipped)
+            return 'skipped';
+        return 'success';
+    }
+    getTestCaseError(tc) {
+        if (!this.options.parseErrors) {
+            return undefined;
+        }
+        // We process <error> and <failure> the same way
+        const failures = tc.failure ?? tc.error;
+        if (!failures || failures.length === 0) {
+            return undefined;
+        }
+        const failure = failures[0];
+        const details = typeof failure === 'string' ? failure : failure._ ?? '';
+        // PHPUnit provides file path directly in testcase attributes
+        let filePath;
+        let line;
+        if (tc.$.file) {
+            const relativePath = this.getRelativePath(tc.$.file);
+            if (this.trackedFiles.has(relativePath)) {
+                filePath = relativePath;
+            }
+            if (tc.$.line) {
+                line = parseInt(tc.$.line);
+            }
+        }
+        // If file not in tracked files, try to extract from error details
+        if (!filePath && details) {
+            const extracted = this.extractFileAndLine(details);
+            if (extracted) {
+                filePath = extracted.filePath;
+                line = extracted.line;
+            }
+        }
+        let message;
+        if (typeof failure !== 'string' && failure.$) {
+            message = failure.$.message;
+            if (failure.$.type) {
+                message = message ? `${failure.$.type}: ${message}` : failure.$.type;
+            }
+        }
+        return {
+            path: filePath,
+            line,
+            details,
+            message
+        };
+    }
+    extractFileAndLine(details) {
+        // PHPUnit stack traces typically have format: /path/to/file.php:123
+        const lines = details.split(/\r?\n/);
+        for (const str of lines) {
+            // Match patterns like /path/to/file.php:123 or at /path/to/file.php(123)
+            const matchColon = str.match(/((?:[A-Za-z]:)?[^\s:()]+?\.(?:php|phpt)):(\d+)/);
+            if (matchColon) {
+                const relativePath = this.getRelativePath(matchColon[1]);
+                if (this.trackedFiles.has(relativePath)) {
+                    return { filePath: relativePath, line: parseInt(matchColon[2]) };
+                }
+            }
+            const matchParen = str.match(/((?:[A-Za-z]:)?[^\s:()]+?\.(?:php|phpt))\((\d+)\)/);
+            if (matchParen) {
+                const relativePath = this.getRelativePath(matchParen[1]);
+                if (this.trackedFiles.has(relativePath)) {
+                    return { filePath: relativePath, line: parseInt(matchParen[2]) };
+                }
+            }
+        }
+        return undefined;
+    }
+    /**
+     * Converts an absolute file path to a relative path by stripping the working directory prefix.
+     *
+     * @param path - The absolute file path from PHPUnit output (e.g., `/home/runner/work/repo/src/Test.php`)
+     * @returns The relative path (e.g., `src/Test.php`) if a working directory can be determined,
+     *          otherwise returns the normalized original path
+     */
+    getRelativePath(path) {
+        path = (0, path_utils_1.normalizeFilePath)(path);
+        const workDir = this.getWorkDir(path);
+        if (workDir !== undefined && path.startsWith(workDir)) {
+            path = path.substr(workDir.length);
+        }
+        return path;
+    }
+    /**
+     * Determines the working directory prefix to strip from absolute file paths.
+     *
+     * The working directory is resolved using the following priority:
+     *
+     * 1. **Explicit configuration** - If `options.workDir` is set, it takes precedence.
+     *    This allows users to explicitly specify the working directory.
+     *
+     * 2. **Cached assumption** - If we've previously determined a working directory
+     *    (`assumedWorkDir`) and the current path starts with it, we reuse that value.
+     *    This avoids redundant computation for subsequent paths.
+     *
+     * 3. **Heuristic detection** - Uses `getBasePath()` to find the common prefix between
+     *    the absolute path and the list of tracked files in the repository. For example:
+     *    - Absolute path: `/home/runner/work/repo/src/Test.php`
+     *    - Tracked file: `src/Test.php`
+     *    - Detected workDir: `/home/runner/work/repo/`
+     *
+     *    Once detected, the working directory is cached in `assumedWorkDir` for efficiency.
+     *
+     * @param path - The normalized absolute file path to analyze
+     * @returns The working directory prefix (with trailing slash), or `undefined` if it cannot be determined
+     *
+     * @example
+     * // With tracked file 'src/Foo.php' and path '/home/runner/work/repo/src/Foo.php'
+     * // Returns: '/home/runner/work/repo/'
+     */
+    getWorkDir(path) {
+        if (this.options.workDir) {
+            return this.options.workDir;
+        }
+        if (this.assumedWorkDir && path.startsWith(this.assumedWorkDir)) {
+            return this.assumedWorkDir;
+        }
+        const basePath = (0, path_utils_1.getBasePath)(path, this.trackedFilesList);
+        if (basePath !== undefined) {
+            this.assumedWorkDir = basePath;
+        }
+        return basePath;
+    }
+}
+exports.PhpunitJunitParser = PhpunitJunitParser;
 
 
 /***/ }),

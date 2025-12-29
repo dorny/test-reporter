@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="CLI Arguments" tests="12" assertions="12" errors="0" failures="2" skipped="0" time="0.140397">
+    <testcase name="targeting-traits-with-coversclass-attribute-is-deprecated.phpt" file="/home/matteo/OSS/phpunit/tests/end-to-end/metadata/targeting-traits-with-coversclass-attribute-is-deprecated.phpt" assertions="1" time="0.068151">
+      <failure type="PHPUnit\Framework\PhptAssertionFailedError">targeting-traits-with-coversclass-attribute-is-deprecated.phptFailed asserting that string matches format description.
+--- Expected
++++ Actual
+@@ @@
+ PHPUnit Started (PHPUnit 11.2-g0c2333363 using PHP 8.2.17 (cli) on Linux)
+ Test Runner Configured
+ Test Suite Loaded (1 test)
++Test Runner Triggered Warning (No code coverage driver available)
+ Event Facade Sealed
+ Test Runner Started
+ Test Suite Sorted
+@@ @@
+ Test Preparation Started (PHPUnit\DeprecatedAnnotationsTestFixture\TraitTargetedWithCoversClassTest::testSomething)
+ Test Prepared (PHPUnit\DeprecatedAnnotationsTestFixture\TraitTargetedWithCoversClassTest::testSomething)
+ Test Passed (PHPUnit\DeprecatedAnnotationsTestFixture\TraitTargetedWithCoversClassTest::testSomething)
+-Test Runner Triggered Deprecation (Targeting a trait such as PHPUnit\TestFixture\CoveredTrait with #[CoversClass] is deprecated, please refactor your test to use #[CoversTrait] instead.)
+ Test Finished (PHPUnit\DeprecatedAnnotationsTestFixture\TraitTargetedWithCoversClassTest::testSomething)
+ Test Suite Finished (PHPUnit\DeprecatedAnnotationsTestFixture\TraitTargetedWithCoversClassTest, 1 test)
+ Test Runner Execution Finished
+ Test Runner Finished
+-PHPUnit Finished (Shell Exit Code: 0)
++PHPUnit Finished (Shell Exit Code: 1)
+
+/home/matteo/OSS/phpunit/tests/end-to-end/metadata/targeting-traits-with-coversclass-attribute-is-deprecated.phpt:28
+/home/matteo/OSS/phpunit/src/Framework/TestSuite.php:369
+/home/matteo/OSS/phpunit/src/TextUI/TestRunner.php:62
+/home/matteo/OSS/phpunit/src/TextUI/Application.php:200</failure>
+    </testcase>
+    <testcase name="targeting-traits-with-usesclass-attribute-is-deprecated.phpt" file="/home/matteo/OSS/phpunit/tests/end-to-end/metadata/targeting-traits-with-usesclass-attribute-is-deprecated.phpt" assertions="1" time="0.064268">
+      <failure type="PHPUnit\Framework\PhptAssertionFailedError">targeting-traits-with-usesclass-attribute-is-deprecated.phptFailed asserting that string matches format description.
+--- Expected
++++ Actual
+@@ @@
+ PHPUnit Started (PHPUnit 11.2-g0c2333363 using PHP 8.2.17 (cli) on Linux)
+ Test Runner Configured
+ Test Suite Loaded (1 test)
++Test Runner Triggered Warning (No code coverage driver available)
+ Event Facade Sealed
+ Test Runner Started
+ Test Suite Sorted
+@@ @@
+ Test Preparation Started (PHPUnit\DeprecatedAnnotationsTestFixture\TraitTargetedWithUsesClassTest::testSomething)
+ Test Prepared (PHPUnit\DeprecatedAnnotationsTestFixture\TraitTargetedWithUsesClassTest::testSomething)
+ Test Passed (PHPUnit\DeprecatedAnnotationsTestFixture\TraitTargetedWithUsesClassTest::testSomething)
+-Test Runner Triggered Deprecation (Targeting a trait such as PHPUnit\TestFixture\CoveredTrait with #[UsesClass] is deprecated, please refactor your test to use #[UsesTrait] instead.)
+ Test Finished (PHPUnit\DeprecatedAnnotationsTestFixture\TraitTargetedWithUsesClassTest::testSomething)
+ Test Suite Finished (PHPUnit\DeprecatedAnnotationsTestFixture\TraitTargetedWithUsesClassTest, 1 test)
+ Test Runner Execution Finished
+ Test Runner Finished
+-PHPUnit Finished (Shell Exit Code: 0)
++PHPUnit Finished (Shell Exit Code: 1)
+
+/home/matteo/OSS/phpunit/tests/end-to-end/metadata/targeting-traits-with-usesclass-attribute-is-deprecated.phpt:28
+/home/matteo/OSS/phpunit/src/Framework/TestSuite.php:369
+/home/matteo/OSS/phpunit/src/TextUI/TestRunner.php:62
+/home/matteo/OSS/phpunit/src/TextUI/Application.php:200</failure>
+    </testcase>
+    <testsuite name="PHPUnit\Event\CollectingDispatcherTest" file="/home/matteo/OSS/phpunit/tests/unit/Event/Dispatcher/CollectingDispatcherTest.php" tests="2" assertions="2" errors="0" failures="0" skipped="0" time="0.004256">
+      <testcase name="testHasNoCollectedEventsWhenFlushedImmediatelyAfterCreation" file="/home/matteo/OSS/phpunit/tests/unit/Event/Dispatcher/CollectingDispatcherTest.php" line="20" class="PHPUnit\Event\CollectingDispatcherTest" classname="PHPUnit.Event.CollectingDispatcherTest" assertions="1" time="0.001441"/>
+      <testcase name="testCollectsDispatchedEventsUntilFlushed" file="/home/matteo/OSS/phpunit/tests/unit/Event/Dispatcher/CollectingDispatcherTest.php" line="27" class="PHPUnit\Event\CollectingDispatcherTest" classname="PHPUnit.Event.CollectingDispatcherTest" assertions="1" time="0.002815"/>
+    </testsuite>
+    <testsuite name="PHPUnit\Event\DeferringDispatcherTest" file="/home/matteo/OSS/phpunit/tests/unit/Event/Dispatcher/DeferringDispatcherTest.php" tests="4" assertions="4" errors="0" failures="0" skipped="0" time="0.002928">
+      <testcase name="testCollectsEventsUntilFlush" file="/home/matteo/OSS/phpunit/tests/unit/Event/Dispatcher/DeferringDispatcherTest.php" line="22" class="PHPUnit\Event\DeferringDispatcherTest" classname="PHPUnit.Event.DeferringDispatcherTest" assertions="1" time="0.001672"/>
+      <testcase name="testFlushesCollectedEvents" file="/home/matteo/OSS/phpunit/tests/unit/Event/Dispatcher/DeferringDispatcherTest.php" line="35" class="PHPUnit\Event\DeferringDispatcherTest" classname="PHPUnit.Event.DeferringDispatcherTest" assertions="1" time="0.000661"/>
+      <testcase name="testSubscriberCanBeRegistered" file="/home/matteo/OSS/phpunit/tests/unit/Event/Dispatcher/DeferringDispatcherTest.php" line="53" class="PHPUnit\Event\DeferringDispatcherTest" classname="PHPUnit.Event.DeferringDispatcherTest" assertions="1" time="0.000334"/>
+      <testcase name="testTracerCanBeRegistered" file="/home/matteo/OSS/phpunit/tests/unit/Event/Dispatcher/DeferringDispatcherTest.php" line="69" class="PHPUnit\Event\DeferringDispatcherTest" classname="PHPUnit.Event.DeferringDispatcherTest" assertions="1" time="0.000262"/>
+    </testsuite>
+    <testsuite name="PHPUnit\Event\DirectDispatcherTest" file="/home/matteo/OSS/phpunit/tests/unit/Event/Dispatcher/DirectDispatcherTest.php" tests="4" assertions="4" errors="0" failures="0" skipped="0" time="0.000794">
+      <testcase name="testDispatchesEventToKnownSubscribers" file="/home/matteo/OSS/phpunit/tests/unit/Event/Dispatcher/DirectDispatcherTest.php" line="24" class="PHPUnit\Event\DirectDispatcherTest" classname="PHPUnit.Event.DirectDispatcherTest" assertions="1" time="0.000170"/>
+      <testcase name="testDispatchesEventToTracers" file="/home/matteo/OSS/phpunit/tests/unit/Event/Dispatcher/DirectDispatcherTest.php" line="43" class="PHPUnit\Event\DirectDispatcherTest" classname="PHPUnit.Event.DirectDispatcherTest" assertions="1" time="0.000248"/>
+      <testcase name="testRegisterRejectsUnknownSubscriber" file="/home/matteo/OSS/phpunit/tests/unit/Event/Dispatcher/DirectDispatcherTest.php" line="62" class="PHPUnit\Event\DirectDispatcherTest" classname="PHPUnit.Event.DirectDispatcherTest" assertions="1" time="0.000257"/>
+      <testcase name="testDispatchRejectsUnknownEventType" file="/home/matteo/OSS/phpunit/tests/unit/Event/Dispatcher/DirectDispatcherTest.php" line="73" class="PHPUnit\Event\DirectDispatcherTest" classname="PHPUnit.Event.DirectDispatcherTest" assertions="1" time="0.000119"/>
+    </testsuite>
+  </testsuite>
+</testsuites>
