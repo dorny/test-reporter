@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+	<testsuite errors="1" skipped="3" tests="65" time="2.1" timestamp="2026-01-01T16:50:52">
+		<testcase classname="tests/Framework/Dumper.toPhp.php7.phpt" name="tests/Framework/Dumper.toPhp.php7.phpt">
+			<skipped/>
+		</testcase>
+		<testcase classname="tests/CodeCoverage/Collector.start.phpt" name="tests/CodeCoverage/Collector.start.phpt">
+			<skipped/>
+		</testcase>
+		<testcase classname="tests/CodeCoverage/PhpParser.parse.lines.phpt" name="tests/CodeCoverage/PhpParser.parse.lines.phpt"/>
+		<testcase classname="tests/CodeCoverage/PhpParser.parse.methods.phpt" name="tests/CodeCoverage/PhpParser.parse.methods.phpt"/>
+		<testcase classname="tests/CodeCoverage/CloverXMLGenerator.phpt" name="tests/CodeCoverage/CloverXMLGenerator.phpt"/>
+		<testcase classname="tests/CodeCoverage/PhpParser.parse.edge.phpt" name="tests/CodeCoverage/PhpParser.parse.edge.phpt"/>
+		<testcase classname="tests/CodeCoverage/PhpParser.parse.lines-of-code.phpt" name="tests/CodeCoverage/PhpParser.parse.lines-of-code.phpt"/>
+		<testcase classname="tests/CodeCoverage/PhpParser.parse.namespaces.phpt" name="tests/CodeCoverage/PhpParser.parse.namespaces.phpt"/>
+		<testcase classname="tests/Framework/Assert.contains.phpt" name="tests/Framework/Assert.contains.phpt"/>
+		<testcase classname="tests/Framework/Assert.count.phpt" name="tests/Framework/Assert.count.phpt"/>
+		<testcase classname="tests/Framework/Assert.equal.phpt" name="tests/Framework/Assert.equal.phpt"/>
+		<testcase classname="tests/Framework/Assert.equal.recursive.phpt [method=testSimple]" name="tests/Framework/Assert.equal.recursive.phpt [method=testSimple]"/>
+		<testcase classname="tests/Framework/Assert.equal.recursive.phpt [method=testMultiple]" name="tests/Framework/Assert.equal.recursive.phpt [method=testMultiple]"/>
+		<testcase classname="tests/Framework/Assert.equal.recursive.phpt [method=testDeep]" name="tests/Framework/Assert.equal.recursive.phpt [method=testDeep]"/>
+		<testcase classname="tests/Framework/Assert.equal.recursive.phpt [method=testCross]" name="tests/Framework/Assert.equal.recursive.phpt [method=testCross]"/>
+		<testcase classname="tests/Framework/Assert.equal.recursive.phpt [method=testThirdParty]" name="tests/Framework/Assert.equal.recursive.phpt [method=testThirdParty]"/>
+		<testcase classname="tests/Framework/Assert.error.phpt" name="tests/Framework/Assert.error.phpt"/>
+		<testcase classname="tests/Framework/Assert.exception.phpt" name="tests/Framework/Assert.exception.phpt"/>
+		<testcase classname="tests/Framework/Assert.false.phpt" name="tests/Framework/Assert.false.phpt"/>
+		<testcase classname="tests/Framework/Assert.match.phpt" name="tests/Framework/Assert.match.phpt"/>
+		<testcase classname="tests/Framework/Assert.match.regexp.phpt" name="tests/Framework/Assert.match.regexp.phpt"/>
+		<testcase classname="tests/Framework/Assert.nan.phpt" name="tests/Framework/Assert.nan.phpt"/>
+		<testcase classname="tests/Framework/Assert.noError.phpt" name="tests/Framework/Assert.noError.phpt"/>
+		<testcase classname="tests/Framework/Assert.same.phpt" name="tests/Framework/Assert.same.phpt"/>
+		<testcase classname="tests/Framework/Assert.null.phpt" name="tests/Framework/Assert.null.phpt"/>
+		<testcase classname="tests/Framework/Assert.true.phpt" name="tests/Framework/Assert.true.phpt"/>
+		<testcase classname="tests/Framework/Assert.truthy.phpt" name="tests/Framework/Assert.truthy.phpt"/>
+		<testcase classname="tests/Framework/DataProvider.load.phpt" name="tests/Framework/DataProvider.load.phpt"/>
+		<testcase classname="tests/Framework/Assert.type.phpt" name="tests/Framework/Assert.type.phpt"/>
+		<testcase classname="tests/Framework/DataProvider.parseAnnotation.phpt" name="tests/Framework/DataProvider.parseAnnotation.phpt"/>
+		<testcase classname="tests/Framework/DataProvider.testQuery.phpt" name="tests/Framework/DataProvider.testQuery.phpt"/>
+		<testcase classname="tests/Framework/DomQuery.css2Xpath.phpt" name="tests/Framework/DomQuery.css2Xpath.phpt"/>
+		<testcase classname="tests/Framework/DomQuery.fromHtml.phpt" name="tests/Framework/DomQuery.fromHtml.phpt"/>
+		<testcase classname="tests/Framework/DomQuery.fromXml.phpt" name="tests/Framework/DomQuery.fromXml.phpt"/>
+		<testcase classname="tests/Framework/Dumper.dumpException.phpt" name="tests/Framework/Dumper.dumpException.phpt"/>
+		<testcase classname="tests/Framework/Dumper.color.phpt" name="tests/Framework/Dumper.color.phpt"/>
+		<testcase classname="tests/Framework/Dumper.toLine.phpt" name="tests/Framework/Dumper.toLine.phpt"/>
+		<testcase classname="tests/Framework/Dumper.toPhp.recursion.phpt" name="tests/Framework/Dumper.toPhp.recursion.phpt"/>
+		<testcase classname="tests/Framework/Dumper.toPhp.phpt" name="tests/Framework/Dumper.toPhp.phpt"/>
+		<testcase classname="tests/Framework/FileMock.phpt" name="tests/Framework/FileMock.phpt"/>
+		<testcase classname="tests/Framework/Helpers.escapeArg.phpt" name="tests/Framework/Helpers.escapeArg.phpt"/>
+		<testcase classname="tests/Framework/Helpers.parseDocComment.phpt" name="tests/Framework/Helpers.parseDocComment.phpt"/>
+		<testcase classname="tests/Framework/TestCase.annotationThrows.phpt" name="tests/Framework/TestCase.annotationThrows.phpt"/>
+		<testcase classname="tests/Framework/TestCase.annotationThrows.setUp.tearDown.phpt" name="tests/Framework/TestCase.annotationThrows.setUp.tearDown.phpt"/>
+		<testcase classname="tests/Framework/TestCase.annotationThrows.syntax.phpt" name="tests/Framework/TestCase.annotationThrows.syntax.phpt"/>
+		<testcase classname="tests/Framework/TestCase.basic.phpt" name="tests/Framework/TestCase.basic.phpt"/>
+		<testcase classname="tests/Framework/TestCase.dataProvider.generator.phpt" name="tests/Framework/TestCase.dataProvider.generator.phpt"/>
+		<testcase classname="tests/Framework/TestCase.dataProvider.phpt" name="tests/Framework/TestCase.dataProvider.phpt"/>
+		<testcase classname="tests/Framework/TestCase.invalidMethods.phpt" name="tests/Framework/TestCase.invalidMethods.phpt"/>
+		<testcase classname="tests/Framework/TestCase.invalidProvider.phpt" name="tests/Framework/TestCase.invalidProvider.phpt"/>
+		<testcase classname="tests/Framework/TestCase.order.error.phpt" name="tests/Framework/TestCase.order.error.phpt"/>
+		<testcase classname="tests/Framework/TestCase.order.errorMuted.phpt" name="tests/Framework/TestCase.order.errorMuted.phpt"/>
+		<testcase classname="tests/Framework/TestCase.order.phpt" name="tests/Framework/TestCase.order.phpt"/>
+		<testcase classname="Prevent loop in error handling. The #268 regression. | tests/Framework/TestCase.ownErrorHandler.phpt" name="Prevent loop in error handling. The #268 regression. | tests/Framework/TestCase.ownErrorHandler.phpt"/>
+		<testcase classname="tests/Runner/CommandLine.phpt" name="tests/Runner/CommandLine.phpt"/>
+		<testcase classname="tests/Runner/HhvmPhpInterpreter.phpt" name="tests/Runner/HhvmPhpInterpreter.phpt">
+			<skipped/>
+		</testcase>
+		<testcase classname="tests/Runner/Runner.find-tests.phpt" name="tests/Runner/Runner.find-tests.phpt"/>
+		<testcase classname="tests/Runner/Job.phpt" name="tests/Runner/Job.phpt"/>
+		<testcase classname="tests/Runner/ZendPhpExecutable.phpt" name="tests/Runner/ZendPhpExecutable.phpt"/>
+		<testcase classname="tests/Runner/Runner.multiple.phpt" name="tests/Runner/Runner.multiple.phpt"/>
+		<testcase classname="tests/Runner/Runner.edge.phpt" name="tests/Runner/Runner.edge.phpt"/>
+		<testcase classname="tests/Runner/Runner.stop-on-fail.phpt" name="tests/Runner/Runner.stop-on-fail.phpt"/>
+		<testcase classname="tests/Runner/Runner.multiple-fails.phpt" name="tests/Runner/Runner.multiple-fails.phpt">
+			<failure message="Failed: '... in /Users/izso/Developer/nette/tester/tests/Runner/multiple-fails/...' should match 
+    ... '..., unexpected end of file in %a%testcase-syntax-error.phptx on line ...'
+
+diff '/Users/izso/Developer/nette/tester/tests/Runner/output/Runner.multiple-fails.expected' '/Users/izso/Developer/nette/tester/tests/Runner/output/Runner.multiple-fails.actual'
+
+in tests/Runner/Runner.multiple-fails.phpt(78) Tester\Assert::match()"/>
+		</testcase>
+		<testcase classname="tests/RunnerOutput/JUnitPrinter.phpt" name="tests/RunnerOutput/JUnitPrinter.phpt"/>
+		<testcase classname="tests/Runner/Runner.annotations.phpt" name="tests/Runner/Runner.annotations.phpt"/>
+	</testsuite>
+</testsuites>

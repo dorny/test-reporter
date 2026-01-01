@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+	<testsuite errors="0" skipped="0" tests="4" time="0.3" timestamp="2026-01-01T16:36:10">
+		<testcase classname="Kdyby\BootstrapFormRenderer\BootstrapRenderer. | KdybyTests/BootstrapFormRenderer/BootstrapRendererTest.phpt [method=testRenderingBasics]" name="Kdyby\BootstrapFormRenderer\BootstrapRenderer. | KdybyTests/BootstrapFormRenderer/BootstrapRendererTest.phpt [method=testRenderingBasics]"/>
+		<testcase classname="Kdyby\BootstrapFormRenderer\BootstrapRenderer. | KdybyTests/BootstrapFormRenderer/BootstrapRendererTest.phpt [method=testRenderingIndividual]" name="Kdyby\BootstrapFormRenderer\BootstrapRenderer. | KdybyTests/BootstrapFormRenderer/BootstrapRendererTest.phpt [method=testRenderingIndividual]"/>
+		<testcase classname="Kdyby\BootstrapFormRenderer\BootstrapRenderer. | KdybyTests/BootstrapFormRenderer/BootstrapRendererTest.phpt [method=testRenderingComponents]" name="Kdyby\BootstrapFormRenderer\BootstrapRenderer. | KdybyTests/BootstrapFormRenderer/BootstrapRendererTest.phpt [method=testRenderingComponents]"/>
+		<testcase classname="Kdyby\BootstrapFormRenderer\BootstrapRenderer. | KdybyTests/BootstrapFormRenderer/BootstrapRendererTest.phpt [method=testMultipleFormsInTemplate]" name="Kdyby\BootstrapFormRenderer\BootstrapRenderer. | KdybyTests/BootstrapFormRenderer/BootstrapRendererTest.phpt [method=testMultipleFormsInTemplate]"/>
+	</testsuite>
+</testsuites>

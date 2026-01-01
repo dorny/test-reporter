@@ -21,6 +21,7 @@ import {PhpunitJunitParser} from './parsers/phpunit-junit/phpunit-junit-parser'
 import {PythonXunitParser} from './parsers/python-xunit/python-xunit-parser'
 import {RspecJsonParser} from './parsers/rspec-json/rspec-json-parser'
 import {SwiftXunitParser} from './parsers/swift-xunit/swift-xunit-parser'
+import {NetteTesterJunitParser} from './parsers/tester-junit/tester-junit-parser'
 import {normalizeDirPath, normalizeFilePath} from './utils/path-utils'
 import {getCheckRunContext} from './utils/github-utils'
 
@@ -280,6 +281,8 @@ class TestReporter {
         return new RspecJsonParser(options)
       case 'swift-xunit':
         return new SwiftXunitParser(options)
+      case 'tester-junit':
+        return new NetteTesterJunitParser(options)
       default:
         throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`)
     }
