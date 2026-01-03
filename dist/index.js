@@ -304,6 +304,7 @@ class TestReporter {
     reporter = core.getInput('reporter', { required: true });
     listSuites = core.getInput('list-suites', { required: true });
     listTests = core.getInput('list-tests', { required: true });
+    listFiles = core.getInput('list-files', { required: true });
     maxAnnotations = parseInt(core.getInput('max-annotations', { required: true }));
     failOnError = core.getInput('fail-on-error', { required: true }) === 'true';
     failOnEmpty = core.getInput('fail-on-empty', { required: true }) === 'true';
@@ -324,6 +325,10 @@ class TestReporter {
         }
         if (this.listTests !== 'all' && this.listTests !== 'failed' && this.listTests !== 'none') {
             core.setFailed(`Input parameter 'list-tests' has invalid value`);
+            return;
+        }
+        if (this.listFiles !== 'all' && this.listFiles !== 'failed' && this.listFiles !== 'none') {
+            core.setFailed(`Input parameter 'list-files' has invalid value`);
             return;
         }
         if (this.collapsed !== 'auto' && this.collapsed !== 'always' && this.collapsed !== 'never') {
@@ -409,7 +414,7 @@ class TestReporter {
                 throw error;
             }
         }
-        const { listSuites, listTests, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed } = this;
+        const { listSuites, listTests, listFiles, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed } = this;
         const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
         const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
         const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
@@ -419,6 +424,7 @@ class TestReporter {
             const summary = (0, get_report_1.getReport)(results, {
                 listSuites,
                 listTests,
+                listFiles,
                 baseUrl,
                 onlySummary,
                 useActionsSummary,
@@ -447,6 +453,7 @@ class TestReporter {
             const summary = (0, get_report_1.getReport)(results, {
                 listSuites,
                 listTests,
+                listFiles,
                 baseUrl,
                 onlySummary,
                 useActionsSummary,
@@ -2446,6 +2453,7 @@ const MAX_ACTIONS_SUMMARY_LENGTH = 1048576;
 exports.DEFAULT_OPTIONS = {
     listSuites: 'all',
     listTests: 'all',
+    listFiles: 'all',
     baseUrl: '',
     onlySummary: false,
     useActionsSummary: true,
@@ -2566,8 +2574,14 @@ function getTestRunsReport(testRuns, options) {
         sections.push(`<details><summary>Expand for details</summary>`);
         sections.push(` `);
     }
-    if (testRuns.length > 0 || options.onlySummary) {
-        const tableData = testRuns
+    // Filter test runs based on list-files option
+    const filteredTestRuns = options.listFiles === 'failed'
+        ? testRuns.filter(tr => tr.result === 'failed')
+        : options.listFiles === 'none'
+            ? []
+            : testRuns;
+    if (filteredTestRuns.length > 0 || options.onlySummary) {
+        const tableData = filteredTestRuns
             .map((tr, originalIndex) => ({ tr, originalIndex }))
             .filter(({ tr }) => tr.passed > 0 || tr.failed > 0 || tr.skipped > 0)
             .map(({ tr, originalIndex }) => {
@@ -2584,7 +2598,7 @@ function getTestRunsReport(testRuns, options) {
         sections.push(resultsTable);
     }
     if (options.onlySummary === false) {
-        const suitesReports = testRuns.map((tr, i) => getSuitesReport(tr, i, options)).flat();
+        const suitesReports = filteredTestRuns.map((tr, i) => getSuitesReport(tr, i, options)).flat();
         sections.push(...suitesReports);
     }
     if (shouldCollapse) {
