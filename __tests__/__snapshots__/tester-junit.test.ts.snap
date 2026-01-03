@@ -1,0 +1,485 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`tester-junit tests parses complex test names from BootstrapFormRenderer-report.xml 1`] = `
+TestRunResult {
+  "path": "fixtures/nette-tester/BootstrapFormRenderer-report.xml",
+  "suites": [
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "KdybyTests/BootstrapFormRenderer",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "BootstrapRendererTest.phpt::testRenderingBasics",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "BootstrapRendererTest.phpt::testRenderingIndividual",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "BootstrapRendererTest.phpt::testRenderingComponents",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "BootstrapRendererTest.phpt::testMultipleFormsInTemplate",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "BootstrapFormRenderer-report.xml",
+      "totalTime": 300,
+    },
+  ],
+  "totalTime": undefined,
+}
+`;
+
+exports[`tester-junit tests report from tester-v1.7-report.xml matches snapshot 1`] = `
+TestRunResult {
+  "path": "fixtures/nette-tester/tester-v1.7-report.xml",
+  "suites": [
+    TestSuiteResult {
+      "groups": [
+        TestGroupResult {
+          "name": "tests/Framework",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "Dumper.toPhp.php7.phpt",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Assert.contains.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Assert.count.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Assert.equal.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Assert.equal.recursive.phpt::testSimple",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Assert.equal.recursive.phpt::testMultiple",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Assert.equal.recursive.phpt::testDeep",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Assert.equal.recursive.phpt::testCross",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Assert.equal.recursive.phpt::testThirdParty",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Assert.error.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Assert.exception.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Assert.false.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Assert.match.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Assert.match.regexp.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Assert.nan.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Assert.noError.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Assert.same.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Assert.null.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Assert.true.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Assert.truthy.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "DataProvider.load.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Assert.type.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "DataProvider.parseAnnotation.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "DataProvider.testQuery.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "DomQuery.css2Xpath.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "DomQuery.fromHtml.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "DomQuery.fromXml.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Dumper.dumpException.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Dumper.color.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Dumper.toLine.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Dumper.toPhp.recursion.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Dumper.toPhp.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "FileMock.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Helpers.escapeArg.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Helpers.parseDocComment.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "TestCase.annotationThrows.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "TestCase.annotationThrows.setUp.tearDown.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "TestCase.annotationThrows.syntax.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "TestCase.basic.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "TestCase.dataProvider.generator.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "TestCase.dataProvider.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "TestCase.invalidMethods.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "TestCase.invalidProvider.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "TestCase.order.error.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "TestCase.order.errorMuted.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "TestCase.order.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Prevent loop in error handling. The #268 regression. (TestCase.ownErrorHandler.phpt)",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+        TestGroupResult {
+          "name": "tests/CodeCoverage",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "Collector.start.phpt",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "PhpParser.parse.lines.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "PhpParser.parse.methods.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "CloverXMLGenerator.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "PhpParser.parse.edge.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "PhpParser.parse.lines-of-code.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "PhpParser.parse.namespaces.phpt",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+        TestGroupResult {
+          "name": "tests/Runner",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "CommandLine.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "HhvmPhpInterpreter.phpt",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Runner.find-tests.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Job.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "ZendPhpExecutable.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Runner.multiple.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Runner.edge.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Runner.stop-on-fail.phpt",
+              "result": "success",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": {
+                "details": "Failed: '... in /Users/izso/Developer/nette/tester/tests/Runner/multiple-fails/...' should match 
+    ... '..., unexpected end of file in %a%testcase-syntax-error.phptx on line ...'
+
+diff '/Users/izso/Developer/nette/tester/tests/Runner/output/Runner.multiple-fails.expected' '/Users/izso/Developer/nette/tester/tests/Runner/output/Runner.multiple-fails.actual'
+
+in tests/Runner/Runner.multiple-fails.phpt(78) Tester\\Assert::match()",
+                "line": undefined,
+                "message": "Failed: '... in /Users/izso/Developer/nette/tester/tests/Runner/multiple-fails/...' should match 
+    ... '..., unexpected end of file in %a%testcase-syntax-error.phptx on line ...'
+
+diff '/Users/izso/Developer/nette/tester/tests/Runner/output/Runner.multiple-fails.expected' '/Users/izso/Developer/nette/tester/tests/Runner/output/Runner.multiple-fails.actual'
+
+in tests/Runner/Runner.multiple-fails.phpt(78) Tester\\Assert::match()",
+                "path": undefined,
+              },
+              "name": "Runner.multiple-fails.phpt",
+              "result": "failed",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Runner.annotations.phpt",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+        TestGroupResult {
+          "name": "tests/RunnerOutput",
+          "tests": [
+            TestCaseResult {
+              "error": undefined,
+              "name": "JUnitPrinter.phpt",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "tester-v1.7-report.xml",
+      "totalTime": 2100,
+    },
+  ],
+  "totalTime": undefined,
+}
+`;

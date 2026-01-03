@@ -20,7 +20,7 @@ This [Github Action](https://github.com/features/actions) displays test results 
 - Java / [JUnit](https://junit.org/)
 - JavaScript / [JEST](https://jestjs.io/) / [Mocha](https://mochajs.org/)
 - Python / [pytest](https://docs.pytest.org/en/stable/) / [unittest](https://docs.python.org/3/library/unittest.html)
-- PHP / [PHPUnit](https://phpunit.de/)
+- PHP / [PHPUnit](https://phpunit.de/) / [Nette Tester](https://tester.nette.org/)
 - Ruby / [RSpec](https://rspec.info/)
 - Swift / xUnit
 
@@ -321,6 +321,19 @@ Some heuristic was necessary to figure out the mapping between the line in the s
 
 [PHPUnit](https://phpunit.de/) can generate JUnit XML via CLI:
 `phpunit --log-junit reports/phpunit-junit.xml`
+
+</details>
+
+<details>
+  <summary>tester-junit</summary>
+
+[Nette Tester](https://tester.nette.org/) can generate JUnit XML via CLI:
+
+```bash
+tester -s -o junit tests/ > reports/tester-junit.xml
+```
+
+**Note:** Nette Tester's JUnit output doesn't include test suite names. The parser will use the report file name as the suite name and automatically group tests by directory structure.
 
 </details>
 
