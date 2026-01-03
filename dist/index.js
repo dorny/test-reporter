@@ -281,6 +281,7 @@ const phpunit_junit_parser_1 = __nccwpck_require__(2674);
 const python_xunit_parser_1 = __nccwpck_require__(6578);
 const rspec_json_parser_1 = __nccwpck_require__(9768);
 const swift_xunit_parser_1 = __nccwpck_require__(7330);
+const tester_junit_parser_1 = __nccwpck_require__(7816);
 const path_utils_1 = __nccwpck_require__(9132);
 const github_utils_1 = __nccwpck_require__(6667);
 async function main() {
@@ -503,6 +504,8 @@ class TestReporter {
                 return new rspec_json_parser_1.RspecJsonParser(options);
             case 'swift-xunit':
                 return new swift_xunit_parser_1.SwiftXunitParser(options);
+            case 'tester-junit':
+                return new tester_junit_parser_1.NetteTesterJunitParser(options);
             default:
                 throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`);
         }
@@ -2045,6 +2048,262 @@ class SwiftXunitParser extends java_junit_parser_1.JavaJunitParser {
     }
 }
 exports.SwiftXunitParser = SwiftXunitParser;
+
+
+/***/ }),
+
+/***/ 7816:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.NetteTesterJunitParser = void 0;
+const path = __importStar(__nccwpck_require__(6928));
+const xml2js_1 = __nccwpck_require__(758);
+const path_utils_1 = __nccwpck_require__(9132);
+const test_results_1 = __nccwpck_require__(613);
+class NetteTesterJunitParser {
+    options;
+    trackedFiles;
+    trackedFilesList;
+    constructor(options) {
+        this.options = options;
+        this.trackedFilesList = options.trackedFiles.map(f => (0, path_utils_1.normalizeFilePath)(f));
+        this.trackedFiles = new Set(this.trackedFilesList);
+    }
+    async parse(filePath, content) {
+        const reportOrSuite = await this.getNetteTesterReport(filePath, content);
+        const isReport = reportOrSuite.testsuites !== undefined;
+        // XML might contain:
+        // - multiple suites under <testsuites> root node
+        // - single <testsuite> as root node
+        let report;
+        if (isReport) {
+            report = reportOrSuite;
+        }
+        else {
+            // Make it behave the same way as if suite was inside <testsuites> root node
+            const suite = reportOrSuite.testsuite;
+            report = {
+                testsuites: {
+                    $: { time: suite.$.time },
+                    testsuite: [suite]
+                }
+            };
+        }
+        return this.getTestRunResult(filePath, report);
+    }
+    async getNetteTesterReport(filePath, content) {
+        try {
+            return await (0, xml2js_1.parseStringPromise)(content);
+        }
+        catch (e) {
+            throw new Error(`Invalid XML at ${filePath}\n\n${e}`);
+        }
+    }
+    getTestRunResult(filePath, report) {
+        const suites = report.testsuites.testsuite === undefined
+            ? []
+            : report.testsuites.testsuite.map((ts, index) => {
+                // Use report file name as suite name (user preference)
+                const fileName = path.basename(filePath);
+                // If there are multiple test suites, add index to distinguish them
+                const name = report.testsuites.testsuite && report.testsuites.testsuite.length > 1
+                    ? `${fileName} #${index + 1}`
+                    : fileName;
+                const time = parseFloat(ts.$.time) * 1000;
+                const sr = new test_results_1.TestSuiteResult(name, this.getGroups(ts), time);
+                return sr;
+            });
+        const seconds = parseFloat(report.testsuites.$?.time ?? '');
+        const time = isNaN(seconds) ? undefined : seconds * 1000;
+        return new test_results_1.TestRunResult(filePath, suites, time);
+    }
+    getGroups(suite) {
+        if (!suite.testcase || suite.testcase.length === 0) {
+            return [];
+        }
+        // Group tests by directory structure
+        const groups = new Map();
+        for (const tc of suite.testcase) {
+            const parsed = this.parseTestCaseName(tc.$.classname);
+            const directory = path.dirname(parsed.filePath);
+            if (!groups.has(directory)) {
+                groups.set(directory, []);
+            }
+            groups.get(directory).push(tc);
+        }
+        return Array.from(groups.entries()).map(([dir, tests]) => {
+            const testResults = tests.map(tc => {
+                const parsed = this.parseTestCaseName(tc.$.classname);
+                const result = this.getTestCaseResult(tc);
+                const time = parseFloat(tc.$.time || '0') * 1000;
+                const error = this.getTestCaseError(tc, parsed.filePath);
+                return new test_results_1.TestCaseResult(parsed.displayName, result, time, error);
+            });
+            return new test_results_1.TestGroupResult(dir, testResults);
+        });
+    }
+    /**
+     * Parse test case name from classname attribute.
+     *
+     * Handles multiple patterns:
+     * 1. Simple: "tests/Framework/Assert.equal.phpt"
+     * 2. With method: "tests/Framework/Assert.equal.recursive.phpt [method=testSimple]"
+     * 3. With description: "Prevent loop in error handling. The #268 regression. | tests/Framework/TestCase.ownErrorHandler.phpt"
+     * 4. With class and method: "Kdyby\BootstrapFormRenderer\BootstrapRenderer. | KdybyTests/BootstrapFormRenderer/BootstrapRendererTest.phpt [method=testRenderingBasics]"
+     */
+    parseTestCaseName(classname) {
+        let filePath = classname;
+        let method;
+        let description;
+        let className;
+        // Pattern: "Description | filepath [method=methodName]"
+        // or "ClassName | filepath [method=methodName]"
+        const pipePattern = /^(.+?)\s*\|\s*(.+?)(?:\s*\[method=(.+?)\])?$/;
+        const pipeMatch = classname.match(pipePattern);
+        if (pipeMatch) {
+            const prefix = pipeMatch[1].trim();
+            filePath = pipeMatch[2].trim();
+            method = pipeMatch[3];
+            // Check if prefix looks like a class name (contains backslash AND ends with dot)
+            // Examples: "Kdyby\BootstrapFormRenderer\BootstrapRenderer."
+            // vs description: "Prevent loop in error handling. The #268 regression."
+            if (prefix.includes('\\') && prefix.endsWith('.')) {
+                className = prefix;
+            }
+            else {
+                description = prefix;
+            }
+        }
+        else {
+            // Pattern: "filepath [method=methodName]"
+            const methodPattern = /^(.+?)\s*\[method=(.+?)\]$/;
+            const methodMatch = classname.match(methodPattern);
+            if (methodMatch) {
+                filePath = methodMatch[1].trim();
+                method = methodMatch[2].trim();
+            }
+        }
+        // Generate display name
+        const baseName = path.basename(filePath);
+        let displayName = baseName;
+        if (method) {
+            displayName = `${baseName}::${method}`;
+        }
+        if (description) {
+            displayName = `${description} (${baseName})`;
+        }
+        else if (className && method) {
+            // For class names, keep them but still show the file
+            displayName = `${baseName}::${method}`;
+        }
+        return { filePath, method, description, className, displayName };
+    }
+    getTestCaseResult(test) {
+        if (test.failure || test.error)
+            return 'failed';
+        if (test.skipped)
+            return 'skipped';
+        return 'success';
+    }
+    getTestCaseError(tc, filePath) {
+        if (!this.options.parseErrors) {
+            return undefined;
+        }
+        // We process <error> and <failure> the same way
+        const failures = tc.failure ?? tc.error;
+        if (!failures || failures.length === 0) {
+            return undefined;
+        }
+        const failure = failures[0];
+        // For Nette Tester, details are in the message attribute, not as inner text
+        const details = typeof failure === 'string' ? failure : failure._ ?? failure.$?.message ?? '';
+        // Try to extract file path and line from error details
+        let errorFilePath;
+        let line;
+        if (details) {
+            const extracted = this.extractFileAndLine(details);
+            if (extracted) {
+                errorFilePath = extracted.filePath;
+                line = extracted.line;
+            }
+        }
+        // Fallback: use test file path if tracked
+        if (!errorFilePath) {
+            const normalized = (0, path_utils_1.normalizeFilePath)(filePath);
+            if (this.trackedFiles.has(normalized)) {
+                errorFilePath = normalized;
+            }
+        }
+        let message;
+        if (typeof failure !== 'string' && failure.$) {
+            message = failure.$.message;
+            if (failure.$.type) {
+                message = message ? `${failure.$.type}: ${message}` : failure.$.type;
+            }
+        }
+        return {
+            path: errorFilePath,
+            line,
+            details,
+            message
+        };
+    }
+    /**
+     * Extract file path and line number from error details.
+     * Matches patterns like: /path/to/file.phpt:123 or /path/to/file.php:456
+     */
+    extractFileAndLine(details) {
+        const lines = details.split(/\r?\n/);
+        for (const str of lines) {
+            // Match PHP file patterns: /path/to/file.phpt:123 or /path/to/file.php:456
+            const match = str.match(/((?:[A-Za-z]:)?[^\s:()]+?\.(?:php|phpt)):(\d+)/);
+            if (match) {
+                const normalized = (0, path_utils_1.normalizeFilePath)(match[1]);
+                if (this.trackedFiles.has(normalized)) {
+                    return { filePath: normalized, line: parseInt(match[2]) };
+                }
+            }
+        }
+        return undefined;
+    }
+}
+exports.NetteTesterJunitParser = NetteTesterJunitParser;
 
 
 /***/ }),
