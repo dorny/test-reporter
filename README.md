@@ -184,6 +184,12 @@ jobs:
     #   none
     list-tests: 'all'
 
+    # Limits which test result files are listed:
+    #   all
+    #   failed
+    #   none
+    list-files: 'all'
+
     # Limits number of created annotations with error message and stack trace captured during test execution.
     # Must be less or equal to 50.
     max-annotations: '10'
