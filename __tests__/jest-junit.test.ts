@@ -3,7 +3,7 @@ import * as path from 'path'
 
 import {JestJunitParser} from '../src/parsers/jest-junit/jest-junit-parser'
 import {ParseOptions} from '../src/test-parser'
-import {DEFAULT_OPTIONS, getReport} from '../src/report/get-report'
+import {DEFAULT_OPTIONS, getReport, ReportOptions} from '../src/report/get-report'
 import {normalizeFilePath} from '../src/utils/path-utils'
 
 describe('jest-junit tests', () => {
@@ -55,7 +55,12 @@ describe('jest-junit tests', () => {
     const result = await parser.parse(filePath, fileContent)
     expect(result).toMatchSnapshot()
 
-    const report = getReport([result])
+    const reportOpts: ReportOptions = {
+      ...DEFAULT_OPTIONS,
+      listTestCaseTime: true
+    }
+
+    const report = getReport([result], reportOpts)
     fs.mkdirSync(path.dirname(outputPath), {recursive: true})
     fs.writeFileSync(outputPath, report)
   })

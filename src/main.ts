@@ -43,6 +43,7 @@ class TestReporter {
   readonly reporter = core.getInput('reporter', {required: true})
   readonly listSuites = core.getInput('list-suites', {required: true}) as 'all' | 'failed' | 'none'
   readonly listTests = core.getInput('list-tests', {required: true}) as 'all' | 'failed' | 'none'
+  readonly listTestCaseTime = core.getInput('list-test-case-time', {required: false}) === 'true'
   readonly maxAnnotations = parseInt(core.getInput('max-annotations', {required: true}))
   readonly failOnError = core.getInput('fail-on-error', {required: true}) === 'true'
   readonly failOnEmpty = core.getInput('fail-on-empty', {required: true}) === 'true'
@@ -174,7 +175,16 @@ class TestReporter {
       }
     }
 
-    const {listSuites, listTests, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed} = this
+    const {
+      listSuites,
+      listTests,
+      listTestCaseTime,
+      onlySummary,
+      useActionsSummary,
+      badgeTitle,
+      reportTitle,
+      collapsed
+    } = this
 
     const passed = results.reduce((sum, tr) => sum + tr.passed, 0)
     const failed = results.reduce((sum, tr) => sum + tr.failed, 0)
@@ -188,6 +198,7 @@ class TestReporter {
         {
           listSuites,
           listTests,
+          listTestCaseTime,
           baseUrl,
           onlySummary,
           useActionsSummary,
@@ -219,6 +230,7 @@ class TestReporter {
       const summary = getReport(results, {
         listSuites,
         listTests,
+        listTestCaseTime,
         baseUrl,
         onlySummary,
         useActionsSummary,

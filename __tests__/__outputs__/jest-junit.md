@@ -11,9 +11,9 @@
 ### ❌ <a id="user-content-r0s0" href="#user-content-r0s0">__tests__\main.test.js</a>
 ```
 Test 1
-  ✅ Passing test
+  ✅ Passing test (1ms)
 Test 1 › Test 1.1
-  ❌ Failing test
+  ❌ Failing test (2ms)
 	Error: expect(received).toBeTruthy()
   ❌ Exception in target unit
 	Error: Some error
@@ -23,7 +23,7 @@ Test 2
 ```
 ### ❌ <a id="user-content-r0s1" href="#user-content-r0s1">__tests__\second.test.js</a>
 ```
-❌ Timeout test
+❌ Timeout test (4ms)
 	: Timeout - Async callback was not invoked within the 1 ms timeout specified by jest.setTimeout.Timeout - Async callback was not invoked within the 1 ms timeout specified by jest.setTimeout.Error:
 ⚪ Skipped test
 ```
