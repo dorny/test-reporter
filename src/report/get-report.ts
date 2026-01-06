@@ -11,6 +11,7 @@ const MAX_ACTIONS_SUMMARY_LENGTH = 1048576
 export interface ReportOptions {
   listSuites: 'all' | 'failed' | 'none'
   listTests: 'all' | 'failed' | 'none'
+  listTestCaseTime: boolean
   baseUrl: string
   onlySummary: boolean
   useActionsSummary: boolean
@@ -22,6 +23,7 @@ export interface ReportOptions {
 export const DEFAULT_OPTIONS: ReportOptions = {
   listSuites: 'all',
   listTests: 'all',
+  listTestCaseTime: false,
   baseUrl: '',
   onlySummary: false,
   useActionsSummary: true,
@@ -281,7 +283,8 @@ function getTestsReport(ts: TestSuiteResult, runIndex: number, suiteIndex: numbe
         continue
       }
       const result = getResultIcon(tc.result)
-      sections.push(`${space}${result} ${tc.name}`)
+      const time = options.listTestCaseTime && tc.time ? ` (${formatTime(tc.time)})` : ''
+      sections.push(`${space}${result} ${tc.name}${time}`)
       if (tc.error) {
         const lines = (tc.error.message ?? getFirstNonEmptyLine(tc.error.details)?.trim())
           ?.split(/\r?\n/g)
