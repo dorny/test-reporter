@@ -42,6 +42,7 @@ class TestReporter {
   readonly pathReplaceBackslashes = core.getInput('path-replace-backslashes', {required: false}) === 'true'
   readonly reporter = core.getInput('reporter', {required: true})
   readonly listSuites = core.getInput('list-suites', {required: true}) as 'all' | 'failed' | 'none'
+  readonly sortSuites = core.getInput('sort-suites', {required: false}) as 'name' | 'time-desc'
   readonly listTests = core.getInput('list-tests', {required: true}) as 'all' | 'failed' | 'none'
   readonly maxAnnotations = parseInt(core.getInput('max-annotations', {required: true}))
   readonly failOnError = core.getInput('fail-on-error', {required: true}) === 'true'
@@ -61,6 +62,11 @@ class TestReporter {
 
     if (this.listSuites !== 'all' && this.listSuites !== 'failed' && this.listSuites !== 'none') {
       core.setFailed(`Input parameter 'list-suites' has invalid value`)
+      return
+    }
+
+    if (this.sortSuites !== 'name' && this.sortSuites !== 'time-desc') {
+      core.setFailed(`Input parameter 'sort-suites' has invalid value`)
       return
     }
 
@@ -174,7 +180,7 @@ class TestReporter {
       }
     }
 
-    const {listSuites, listTests, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed} = this
+    const {listSuites, sortSuites, listTests, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed} = this
 
     const passed = results.reduce((sum, tr) => sum + tr.passed, 0)
     const failed = results.reduce((sum, tr) => sum + tr.failed, 0)
@@ -187,6 +193,7 @@ class TestReporter {
         results,
         {
           listSuites,
+          sortSuites,
           listTests,
           baseUrl,
           onlySummary,
@@ -218,6 +225,7 @@ class TestReporter {
       baseUrl = createResp.data.html_url as string
       const summary = getReport(results, {
         listSuites,
+        sortSuites,
         listTests,
         baseUrl,
         onlySummary,
