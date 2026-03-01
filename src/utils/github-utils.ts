@@ -1,13 +1,10 @@
 import {createWriteStream} from 'fs'
+import {pipeline} from 'stream/promises'
+import {Readable, Transform} from 'stream'
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import {GitHub} from '@actions/github/lib/utils'
 import type {PullRequest, WorkflowRunEvent} from '@octokit/webhooks-types'
-import {IncomingMessage} from 'http'
-import * as stream from 'stream'
-import {promisify} from 'util'
-import got, {Progress} from 'got'
-const asyncStream = promisify(stream.pipeline)
 
 export function getCheckRunContext(): {sha: string; runId: number} {
   if (github.context.eventName === 'workflow_run') {
@@ -48,21 +45,33 @@ export async function downloadArtifact(
       archive_format: 'zip'
     })
 
-    const headers = {
-      Authorization: `Bearer ${token}`
+    const response = await fetch(req.url, {
+      headers: {Authorization: `Bearer ${token}`},
+      redirect: 'follow'
+    })
+
+    if (!response.ok) {
+      throw new Error(`Download failed: ${response.status} ${response.statusText}`)
+    }
+    if (!response.body) {
+      throw new Error('Response body is empty')
     }
 
-    const downloadStream = got.stream(req.url, {headers})
+    core.info(`Downloading from ${response.url}`)
+
+    const readable = Readable.fromWeb(response.body)
     const fileWriterStream = createWriteStream(fileName)
 
-    downloadStream.on('redirect', (response: IncomingMessage) => {
-      core.info(`Downloading ${response.headers.location}`)
-    })
-    downloadStream.on('downloadProgress', (progress: Progress) => {
-      core.info(`Progress: ${progress.transferred} B`)
+    let transferred = 0
+    const progress = new Transform({
+      transform(chunk, _encoding, callback) {
+        transferred += chunk.length
+        core.info(`Progress: ${transferred} B`)
+        callback(null, chunk)
+      }
     })
 
-    await asyncStream(downloadStream, fileWriterStream)
+    await pipeline(readable, progress, fileWriterStream)
   } finally {
     core.endGroup()
   }
