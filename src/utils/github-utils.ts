@@ -3,7 +3,7 @@ import {pipeline} from 'stream/promises'
 import {Readable, Transform} from 'stream'
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-import {GitHub} from '@actions/github/lib/utils'
+import {GitHub} from '@actions/github/lib/utils.js'
 import type {PullRequest, WorkflowRunEvent} from '@octokit/webhooks-types'
 
 export function getCheckRunContext(): {sha: string; runId: number} {

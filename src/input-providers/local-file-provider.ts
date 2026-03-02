@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import glob from 'fast-glob'
-import {FileContent, InputProvider, ReportInput} from './input-provider'
-import {listFiles} from '../utils/git'
+import {FileContent, InputProvider, ReportInput} from './input-provider.js'
+import {listFiles} from '../utils/git.js'
 
 export class LocalFileProvider implements InputProvider {
   constructor(

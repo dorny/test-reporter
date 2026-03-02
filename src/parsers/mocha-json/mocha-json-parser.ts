@@ -1,4 +1,4 @@
-import {ParseOptions, TestParser} from '../../test-parser'
+import {ParseOptions, TestParser} from '../../test-parser.js'
 import {
   TestCaseError,
   TestCaseResult,
@@ -6,10 +6,10 @@ import {
   TestGroupResult,
   TestRunResult,
   TestSuiteResult
-} from '../../test-results'
-import {getExceptionSource} from '../../utils/node-utils'
-import {getBasePath, normalizeFilePath} from '../../utils/path-utils'
-import {MochaJson, MochaJsonTest} from './mocha-json-types'
+} from '../../test-results.js'
+import {getExceptionSource} from '../../utils/node-utils.js'
+import {getBasePath, normalizeFilePath} from '../../utils/path-utils.js'
+import {MochaJson, MochaJsonTest} from './mocha-json-types.js'
 
 export class MochaJsonParser implements TestParser {
   assumedWorkDir: string | undefined

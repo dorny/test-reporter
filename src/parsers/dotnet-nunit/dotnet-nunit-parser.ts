@@ -1,9 +1,9 @@
-import {ParseOptions, TestParser} from '../../test-parser'
+import {ParseOptions, TestParser} from '../../test-parser.js'
 import {parseStringPromise} from 'xml2js'
 
-import {NunitReport, TestCase, TestSuite} from './dotnet-nunit-types'
-import {getExceptionSource} from '../../utils/node-utils'
-import {getBasePath, normalizeFilePath} from '../../utils/path-utils'
+import {NunitReport, TestCase, TestSuite} from './dotnet-nunit-types.js'
+import {getExceptionSource} from '../../utils/node-utils.js'
+import {getBasePath, normalizeFilePath} from '../../utils/path-utils.js'
 
 import {
   TestExecutionResult,
@@ -12,7 +12,7 @@ import {
   TestGroupResult,
   TestCaseResult,
   TestCaseError
-} from '../../test-results'
+} from '../../test-results.js'
 
 export class DotnetNunitParser implements TestParser {
   assumedWorkDir: string | undefined

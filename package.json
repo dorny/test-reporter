@@ -3,6 +3,7 @@
   "version": "2.5.0",
   "private": true,
   "description": "Presents test results from popular testing frameworks as Github check run",
+  "type": "module",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
