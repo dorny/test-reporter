@@ -1,6 +1,6 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-import {GitHub} from '@actions/github/lib/utils.js'
+import {GitHub} from '@actions/github/lib/utils'
 
 import {ArtifactProvider} from './input-providers/artifact-provider.js'
 import {LocalFileProvider} from './input-providers/local-file-provider.js'

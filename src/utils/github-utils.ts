@@ -3,7 +3,7 @@ import {pipeline} from 'stream/promises'
 import {Readable, Transform} from 'stream'
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-import {GitHub} from '@actions/github/lib/utils.js'
+import {GitHub} from '@actions/github/lib/utils'
 import type {PullRequest, WorkflowRunEvent} from '@octokit/webhooks-types'
 
 export function getCheckRunContext(): {sha: string; runId: number} {
@@ -125,7 +125,11 @@ async function listGitTree(octokit: InstanceType<typeof GitHub>, sha: string, pa
     if (tr.type === 'blob') {
       result.push(file)
     } else if (tr.type === 'tree' && truncated) {
-      const files = await listGitTree(octokit, tr.sha as string, `${file}/`)
+      if (!tr.sha) {
+        core.warning(`Skipping tree ${file}: missing SHA`)
+        continue
+      }
+      const files = await listGitTree(octokit, tr.sha, `${file}/`)
       result.push(...files)
     }
   }
