@@ -1,0 +1,50 @@
+name: Rebuild dist for Dependabot
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    paths-ignore:
+      - '**.md'
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild-dist:
+    if: ${{ github.actor == 'dependabot[bot]' && github.event.pull_request.user.login == 'dependabot[bot]' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Dependabot PR branch
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Set Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Rebuild dist artifacts
+        run: |
+          npm run build
+          npm run package
+
+      - name: Commit updated dist artifacts
+        run: |
+          if git diff --quiet -- dist/; then
+            echo "No dist changes to commit."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist/
+          git commit -m "chore: rebuild dist for Dependabot update"
+          git push
