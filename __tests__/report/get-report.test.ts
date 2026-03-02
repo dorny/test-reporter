@@ -1,4 +1,4 @@
-import {getBadge, DEFAULT_OPTIONS, ReportOptions} from '../../src/report/get-report'
+import {getBadge, DEFAULT_OPTIONS, ReportOptions} from '../../src/report/get-report.js'
 
 describe('getBadge', () => {
   describe('URI encoding with special characters', () => {

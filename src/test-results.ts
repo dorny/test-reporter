@@ -1,4 +1,4 @@
-import {DEFAULT_LOCALE} from './utils/node-utils'
+import {DEFAULT_LOCALE} from './utils/node-utils.js'
 
 export class TestRunResult {
   constructor(

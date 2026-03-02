@@ -1,10 +1,15 @@
 import * as fs from 'fs'
 import * as path from 'path'
 
-import {DartJsonParser} from '../src/parsers/dart-json/dart-json-parser'
-import {ParseOptions} from '../src/test-parser'
-import {DEFAULT_OPTIONS, getReport} from '../src/report/get-report'
-import {normalizeFilePath} from '../src/utils/path-utils'
+import {DartJsonParser} from '../src/parsers/dart-json/dart-json-parser.js'
+import {ParseOptions} from '../src/test-parser.js'
+import {DEFAULT_OPTIONS, getReport} from '../src/report/get-report.js'
+import {normalizeFilePath} from '../src/utils/path-utils.js'
+
+import {fileURLToPath} from 'url'
+import {dirname} from 'path'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 describe('dart-json tests', () => {
   it('produces empty test run result when there are no test cases', async () => {

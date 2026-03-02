@@ -1,12 +1,12 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-import {GitHub} from '@actions/github/lib/utils'
+import {GitHub} from '@actions/github/lib/utils.js'
 
 import Zip from 'adm-zip'
 import picomatch from 'picomatch'
 
-import {FileContent, InputProvider, ReportInput} from './input-provider'
-import {downloadArtifact, listFiles} from '../utils/github-utils'
+import {FileContent, InputProvider, ReportInput} from './input-provider.js'
+import {downloadArtifact, listFiles} from '../utils/github-utils.js'
 
 export class ArtifactProvider implements InputProvider {
   private readonly artifactNameMatch: (name: string) => boolean

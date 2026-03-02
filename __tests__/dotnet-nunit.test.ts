@@ -1,10 +1,15 @@
 import * as fs from 'fs'
 import * as path from 'path'
 
-import {DotnetNunitParser} from '../src/parsers/dotnet-nunit/dotnet-nunit-parser'
-import {ParseOptions} from '../src/test-parser'
-import {DEFAULT_OPTIONS, getReport} from '../src/report/get-report'
-import {normalizeFilePath} from '../src/utils/path-utils'
+import {DotnetNunitParser} from '../src/parsers/dotnet-nunit/dotnet-nunit-parser.js'
+import {ParseOptions} from '../src/test-parser.js'
+import {DEFAULT_OPTIONS, getReport} from '../src/report/get-report.js'
+import {normalizeFilePath} from '../src/utils/path-utils.js'
+
+import {fileURLToPath} from 'url'
+import {dirname} from 'path'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 describe('dotnet-nunit tests', () => {
   it('report from ./reports/dotnet test results matches snapshot', async () => {
