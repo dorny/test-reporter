@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.6.0
+* Feature: Add `sort-suites` input to order test suites by execution time (descending)
+
 ## 2.5.0
 * Feature: Add Nette Tester support with `tester-junit` reporter https://github.com/dorny/test-reporter/pull/707
 * Maintenance: Bump actions/upload-artifact from 5 to 6 https://github.com/dorny/test-reporter/pull/695

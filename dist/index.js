@@ -303,6 +303,7 @@ class TestReporter {
     pathReplaceBackslashes = core.getInput('path-replace-backslashes', { required: false }) === 'true';
     reporter = core.getInput('reporter', { required: true });
     listSuites = core.getInput('list-suites', { required: true });
+    sortSuites = core.getInput('sort-suites', { required: false });
     listTests = core.getInput('list-tests', { required: true });
     maxAnnotations = parseInt(core.getInput('max-annotations', { required: true }));
     failOnError = core.getInput('fail-on-error', { required: true }) === 'true';
@@ -320,6 +321,10 @@ class TestReporter {
         this.octokit = github.getOctokit(this.token);
         if (this.listSuites !== 'all' && this.listSuites !== 'failed' && this.listSuites !== 'none') {
             core.setFailed(`Input parameter 'list-suites' has invalid value`);
+            return;
+        }
+        if (this.sortSuites !== 'name' && this.sortSuites !== 'time-desc') {
+            core.setFailed(`Input parameter 'sort-suites' has invalid value`);
             return;
         }
         if (this.listTests !== 'all' && this.listTests !== 'failed' && this.listTests !== 'none') {
@@ -409,7 +414,7 @@ class TestReporter {
                 throw error;
             }
         }
-        const { listSuites, listTests, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed } = this;
+        const { listSuites, sortSuites, listTests, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed } = this;
         const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
         const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
         const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
@@ -418,6 +423,7 @@ class TestReporter {
         if (this.useActionsSummary) {
             const summary = (0, get_report_1.getReport)(results, {
                 listSuites,
+                sortSuites,
                 listTests,
                 baseUrl,
                 onlySummary,
@@ -446,6 +452,7 @@ class TestReporter {
             baseUrl = createResp.data.html_url;
             const summary = (0, get_report_1.getReport)(results, {
                 listSuites,
+                sortSuites,
                 listTests,
                 baseUrl,
                 onlySummary,
@@ -2446,6 +2453,7 @@ const MAX_ACTIONS_SUMMARY_LENGTH = 1048576;
 exports.DEFAULT_OPTIONS = {
     listSuites: 'all',
     listTests: 'all',
+    sortSuites: 'name',
     baseUrl: '',
     onlySummary: false,
     useActionsSummary: true,
@@ -2454,7 +2462,7 @@ exports.DEFAULT_OPTIONS = {
     collapsed: 'auto'
 };
 function getReport(results, options = exports.DEFAULT_OPTIONS, shortSummary = '') {
-    applySort(results);
+    applySort(results, options);
     const opts = { ...options };
     let lines = renderReport(results, opts, shortSummary);
     let report = lines.join('\n');
@@ -2502,10 +2510,15 @@ function trimReport(lines, options) {
     reportLines.push(errorMsg);
     return reportLines.join('\n');
 }
-function applySort(results) {
+function applySort(results, options) {
     results.sort((a, b) => a.path.localeCompare(b.path, node_utils_1.DEFAULT_LOCALE));
     for (const res of results) {
-        res.suites.sort((a, b) => a.name.localeCompare(b.name, node_utils_1.DEFAULT_LOCALE));
+        if (options.sortSuites === 'time-desc') {
+            res.suites.sort((a, b) => b.time - a.time);
+        }
+        else {
+            res.suites.sort((a, b) => a.name.localeCompare(b.name, node_utils_1.DEFAULT_LOCALE));
+        }
     }
 }
 function getByteLength(text) {

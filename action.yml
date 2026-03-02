@@ -46,6 +46,13 @@ inputs:
         - none
     required: false
     default: 'all'
+  sort-suites:
+    description: |
+      Sort order for test suites. Supported options:
+        - name: Sort alphabetically by name (default)
+        - time-desc: Sort by execution time, slowest first
+    required: false
+    default: 'name'
   list-tests:
     description: |
       Limits which test cases are listed. Supported options:
