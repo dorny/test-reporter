@@ -13,8 +13,18 @@ export function getCheckRunContext(): {sha: string; runId: number} {
     if (!event.workflow_run) {
       throw new Error("Event of type 'workflow_run' is missing 'workflow_run' field")
     }
+    const prs = event.workflow_run.pull_requests ?? []
+    // For `workflow_run`, we want to report against the PR commit when possible so annotations land
+    // on the contributor's changes. Prefer the PR whose `head.ref` matches `workflow_run.head_branch`,
+    // then fall back to the first PR head SHA, and finally to `workflow_run.head_sha` for non-PR runs.
+    const prShaMatch = prs.find(pr => pr.head?.ref === event.workflow_run.head_branch)?.head?.sha
+    const prShaFirst = prs[0]?.head?.sha
+    const sha = prShaMatch ?? prShaFirst ?? event.workflow_run.head_sha
+    if (!sha) {
+      throw new Error('Unable to resolve SHA from workflow_run (no PR head.sha or head_sha)')
+    }
     return {
-      sha: event.workflow_run.head_commit.id,
+      sha,
       runId: event.workflow_run.id
     }
   }
