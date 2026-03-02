@@ -41,7 +41,7 @@ export default [
       'assets/**',
       'reports/**',
       'eslint.config.mjs',
-      'jest.config.js',
+      'jest.config.cjs',
     ],
   },
 ]
