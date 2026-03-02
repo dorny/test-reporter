@@ -1,8 +1,6 @@
-import { ParseOptions, TestParser } from '../../test-parser.js'
+import {ParseOptions, TestParser} from '../../test-parser.js'
 
-import { GoTestEvent } from './golang-json-types.js'
-import { getExceptionSource } from '../../utils/node-utils.js'
-import { getBasePath, normalizeFilePath } from '../../utils/path-utils.js'
+import {GoTestEvent} from './golang-json-types.js'
 
 import {
   TestExecutionResult,
@@ -16,7 +14,7 @@ import {
 export class GolangJsonParser implements TestParser {
   assumedWorkDir: string | undefined
 
-  constructor(readonly options: ParseOptions) { }
+  constructor(readonly options: ParseOptions) {}
 
   async parse(path: string, content: string): Promise<TestRunResult> {
     const events = await this.getGolangTestEvents(path, content)
@@ -24,13 +22,16 @@ export class GolangJsonParser implements TestParser {
   }
 
   private async getGolangTestEvents(path: string, content: string): Promise<GoTestEvent[]> {
-    return content.trim().split('\n').map((line, index) => {
-      try {
-        return JSON.parse(line) as GoTestEvent
-      } catch (e) {
-        throw new Error(`Invalid JSON at ${path} line ${index + 1}\n\n${e}`)
-      }
-    })
+    return content
+      .trim()
+      .split('\n')
+      .map((line, index) => {
+        try {
+          return JSON.parse(line) as GoTestEvent
+        } catch (e) {
+          throw new Error(`Invalid JSON at ${path} line ${index + 1}\n\n${e}`)
+        }
+      })
   }
 
   private getTestRunResult(path: string, events: GoTestEvent[]): TestRunResult {
@@ -63,9 +64,8 @@ export class GolangJsonParser implements TestParser {
         continue
       }
 
-      let groupName: string | null
-      let rest: string[]
-      [groupName, ...rest] = event.Test.split('/')
+      const [first, ...rest] = event.Test.split('/')
+      let groupName: string | null = first
       let testName = rest.join('/')
       if (!testName) {
         testName = groupName
@@ -80,9 +80,8 @@ export class GolangJsonParser implements TestParser {
 
       const lastEvent = eventGroup.at(-1)!
 
-      const result: TestExecutionResult = lastEvent.Action === 'pass' ? 'success'
-        : lastEvent.Action === 'skip' ? 'skipped'
-          : 'failed'
+      const result: TestExecutionResult =
+        lastEvent.Action === 'pass' ? 'success' : lastEvent.Action === 'skip' ? 'skipped' : 'failed'
       if (lastEvent.Elapsed === undefined) {
         throw new Error('missing elapsed on final test event')
       }
@@ -94,7 +93,7 @@ export class GolangJsonParser implements TestParser {
           .filter(e => e.Action === 'output')
           .map(e => e.Output ?? '')
           // Go output prepends indentation to help group tests - remove it
-          .map(o => o.replace(/^    /, ''))
+          .map(o => o.replace(/^ {4}/, ''))
 
         // First and last lines will be generic "test started" and "test finished" lines - remove them
         outputEvents.splice(0, 1)
@@ -103,7 +102,7 @@ export class GolangJsonParser implements TestParser {
         const details = outputEvents.join('')
         error = {
           message: details,
-          details: details
+          details
         }
       }
 
