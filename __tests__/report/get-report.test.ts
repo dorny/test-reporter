@@ -8,7 +8,9 @@ describe('getBadge', () => {
         badgeTitle: 'tests'
       }
       const badge = getBadge(5, 0, 1, options)
-      expect(badge).toBe('![Tests passed successfully](https://img.shields.io/badge/tests-5%20passed%2C%201%20skipped-success)')
+      expect(badge).toBe(
+        '![Tests passed successfully](https://img.shields.io/badge/tests-5%20passed%2C%201%20skipped-success)'
+      )
     })
 
     it('handles badge title with single hyphen', () => {
@@ -28,7 +30,9 @@ describe('getBadge', () => {
       }
       const badge = getBadge(10, 0, 0, options)
       // All hyphens in the title should be encoded as --
-      expect(badge).toBe('![Tests passed successfully](https://img.shields.io/badge/integration--api--tests-10%20passed-success)')
+      expect(badge).toBe(
+        '![Tests passed successfully](https://img.shields.io/badge/integration--api--tests-10%20passed-success)'
+      )
     })
 
     it('handles badge title with multiple underscores', () => {
@@ -38,7 +42,9 @@ describe('getBadge', () => {
       }
       const badge = getBadge(10, 0, 0, options)
       // All underscores in the title should be encoded as __
-      expect(badge).toBe('![Tests passed successfully](https://img.shields.io/badge/my__integration__test-10%20passed-success)')
+      expect(badge).toBe(
+        '![Tests passed successfully](https://img.shields.io/badge/my__integration__test-10%20passed-success)'
+      )
     })
 
     it('handles badge title with version format containing hyphen', () => {
@@ -48,7 +54,9 @@ describe('getBadge', () => {
       }
       const badge = getBadge(1, 0, 0, options)
       // The hyphen in "12.0-ubi" should be encoded as --
-      expect(badge).toBe('![Tests passed successfully](https://img.shields.io/badge/MariaDb%2012.0--ubi%20database%20tests-1%20passed-success)')
+      expect(badge).toBe(
+        '![Tests passed successfully](https://img.shields.io/badge/MariaDb%2012.0--ubi%20database%20tests-1%20passed-success)'
+      )
     })
 
     it('handles badge title with dots and hyphens', () => {
@@ -57,7 +65,9 @@ describe('getBadge', () => {
         badgeTitle: 'v1.2.3-beta-test'
       }
       const badge = getBadge(4, 1, 0, options)
-      expect(badge).toBe('![Tests failed](https://img.shields.io/badge/v1.2.3--beta--test-4%20passed%2C%201%20failed-critical)')
+      expect(badge).toBe(
+        '![Tests failed](https://img.shields.io/badge/v1.2.3--beta--test-4%20passed%2C%201%20failed-critical)'
+      )
     })
 
     it('preserves structural hyphens between label and message', () => {
@@ -67,7 +77,9 @@ describe('getBadge', () => {
       }
       const badge = getBadge(2, 3, 1, options)
       // The URI should have literal hyphens separating title-message-color
-      expect(badge).toBe('![Tests failed](https://img.shields.io/badge/test--suite-2%20passed%2C%203%20failed%2C%201%20skipped-critical)')
+      expect(badge).toBe(
+        '![Tests failed](https://img.shields.io/badge/test--suite-2%20passed%2C%203%20failed%2C%201%20skipped-critical)'
+      )
     })
   })
 
@@ -107,7 +119,9 @@ describe('getBadge', () => {
     it('includes passed, failed and skipped counts', () => {
       const options: ReportOptions = {...DEFAULT_OPTIONS}
       const badge = getBadge(5, 2, 1, options)
-      expect(badge).toBe('![Tests failed](https://img.shields.io/badge/tests-5%20passed%2C%202%20failed%2C%201%20skipped-critical)')
+      expect(badge).toBe(
+        '![Tests failed](https://img.shields.io/badge/tests-5%20passed%2C%202%20failed%2C%201%20skipped-critical)'
+      )
     })
 
     it('uses "none" message when no tests', () => {
@@ -117,4 +131,3 @@ describe('getBadge', () => {
     })
   })
 })
-

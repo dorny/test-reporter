@@ -2,6 +2,7 @@
 
 ## 2.6.0
 * Fix: For `workflow_run` events, resolve the commit of the check run from related pull request head commits first (matching `workflow_run.head_branch`, then first PR), and fall back to `workflow_run.head_sha` for non-PR runs https://github.com/dorny/test-reporter/pull/673
+* Maintenance: Upgrade to ESLint v9 https://github.com/dorny/test-reporter/pull/629
 
 ## 2.5.0
 * Feature: Add Nette Tester support with `tester-junit` reporter https://github.com/dorny/test-reporter/pull/707

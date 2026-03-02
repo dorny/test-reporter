@@ -130,7 +130,7 @@ export class PhpunitJunitParser implements TestParser {
     }
 
     const failure = failures[0]
-    const details = typeof failure === 'string' ? failure : failure._ ?? ''
+    const details = typeof failure === 'string' ? failure : (failure._ ?? '')
 
     // PHPUnit provides file path directly in testcase attributes
     let filePath: string | undefined

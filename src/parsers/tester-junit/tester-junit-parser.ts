@@ -199,7 +199,7 @@ export class NetteTesterJunitParser implements TestParser {
 
     const failure = failures[0]
     // For Nette Tester, details are in the message attribute, not as inner text
-    const details = typeof failure === 'string' ? failure : failure._ ?? failure.$?.message ?? ''
+    const details = typeof failure === 'string' ? failure : (failure._ ?? failure.$?.message ?? '')
 
     // Try to extract file path and line from error details
     let errorFilePath: string | undefined

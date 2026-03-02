@@ -56676,7 +56676,8 @@ class DotnetTrxParser {
         }
     }
     getTestClasses(trx) {
-        if (trx.TestRun.TestDefinitions === undefined || trx.TestRun.Results === undefined ||
+        if (trx.TestRun.TestDefinitions === undefined ||
+            trx.TestRun.Results === undefined ||
             !trx.TestRun.TestDefinitions.some(td => td.UnitTest && Array.isArray(td.UnitTest))) {
             return [];
         }
@@ -56692,7 +56693,7 @@ class DotnetTrxParser {
         }));
         const testClasses = {};
         for (const r of unitTestsResults) {
-            const className = r.test.TestMethod[0].$.className ?? "Unclassified";
+            const className = r.test.TestMethod[0].$.className ?? 'Unclassified';
             let tc = testClasses[className];
             if (tc === undefined) {
                 tc = new TestClass(className);
@@ -56799,7 +56800,10 @@ class GolangJsonParser {
         return this.getTestRunResult(path, events);
     }
     async getGolangTestEvents(path, content) {
-        return content.trim().split('\n').map((line, index) => {
+        return content
+            .trim()
+            .split('\n')
+            .map((line, index) => {
             try {
                 return JSON.parse(line);
             }
@@ -56833,9 +56837,8 @@ class GolangJsonParser {
             if (!event.Test) {
                 continue;
             }
-            let groupName;
-            let rest;
-            [groupName, ...rest] = event.Test.split('/');
+            const [first, ...rest] = event.Test.split('/');
+            let groupName = first;
             let testName = rest.join('/');
             if (!testName) {
                 testName = groupName;
@@ -56847,9 +56850,7 @@ class GolangJsonParser {
                 suite.groups.push(group);
             }
             const lastEvent = eventGroup.at(-1);
-            const result = lastEvent.Action === 'pass' ? 'success'
-                : lastEvent.Action === 'skip' ? 'skipped'
-                    : 'failed';
+            const result = lastEvent.Action === 'pass' ? 'success' : lastEvent.Action === 'skip' ? 'skipped' : 'failed';
             if (lastEvent.Elapsed === undefined) {
                 throw new Error('missing elapsed on final test event');
             }
@@ -56860,14 +56861,14 @@ class GolangJsonParser {
                     .filter(e => e.Action === 'output')
                     .map(e => e.Output ?? '')
                     // Go output prepends indentation to help group tests - remove it
-                    .map(o => o.replace(/^    /, ''));
+                    .map(o => o.replace(/^ {4}/, ''));
                 // First and last lines will be generic "test started" and "test finished" lines - remove them
                 outputEvents.splice(0, 1);
                 outputEvents.splice(-1, 1);
                 const details = outputEvents.join('');
                 error = {
                     message: details,
-                    details: details
+                    details
                 };
             }
             group.tests.push(new TestCaseResult(testName, result, time, error));
@@ -57402,7 +57403,7 @@ class PhpunitJunitParser {
             return undefined;
         }
         const failure = failures[0];
-        const details = typeof failure === 'string' ? failure : failure._ ?? '';
+        const details = typeof failure === 'string' ? failure : (failure._ ?? '');
         // PHPUnit provides file path directly in testcase attributes
         let filePath;
         let line;
@@ -57790,7 +57791,7 @@ class NetteTesterJunitParser {
         }
         const failure = failures[0];
         // For Nette Tester, details are in the message attribute, not as inner text
-        const details = typeof failure === 'string' ? failure : failure._ ?? failure.$?.message ?? '';
+        const details = typeof failure === 'string' ? failure : (failure._ ?? failure.$?.message ?? '');
         // Try to extract file path and line from error details
         let errorFilePath;
         let line;
