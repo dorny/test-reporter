@@ -1,4 +1,4 @@
-import {parseNetDuration} from '../../src/utils/parse-utils'
+import {parseNetDuration} from '../../src/utils/parse-utils.js'
 
 describe('parseNetDuration', () => {
   it('returns 0 for 00:00:00', () => {

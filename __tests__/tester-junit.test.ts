@@ -1,10 +1,15 @@
 import * as fs from 'fs'
 import * as path from 'path'
 
-import {NetteTesterJunitParser} from '../src/parsers/tester-junit/tester-junit-parser'
-import {ParseOptions} from '../src/test-parser'
-import {getReport} from '../src/report/get-report'
-import {normalizeFilePath} from '../src/utils/path-utils'
+import {NetteTesterJunitParser} from '../src/parsers/tester-junit/tester-junit-parser.js'
+import {ParseOptions} from '../src/test-parser.js'
+import {getReport} from '../src/report/get-report.js'
+import {normalizeFilePath} from '../src/utils/path-utils.js'
+
+import {fileURLToPath} from 'url'
+import {dirname} from 'path'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 describe('tester-junit tests', () => {
   it('produces empty test run result when there are no test cases', async () => {
