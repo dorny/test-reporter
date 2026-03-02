@@ -184,6 +184,10 @@ jobs:
     #   none
     list-tests: 'all'
 
+    # Show execution time for individual test cases
+    # When enabled, test case execution times will be displayed in parentheses next to test names
+    list-test-case-time: 'false'
+
     # Limits number of created annotations with error message and stack trace captured during test execution.
     # Must be less or equal to 50.
     max-annotations: '10'
