@@ -366,6 +366,16 @@ Configuration of `uniqueOutputName`, `suiteNameTemplate`, `classNameTemplate`, `
 </details>
 
 <details>
+  <summary>karma-junit (Experimental)</summary>
+
+Support for Karma test results in Junit format is experimental - should work but it was not extensively tested.
+
+[Karma](https://karma-runner.github.io/latest/index.html) testing framework support requires the usage of [karma-junit-reporter](https://github.com/karma-runner/karma-junit-reporter).
+It will create test results in Junit XML format which can be then processed by this action.
+</details>
+
+
+<details>
   <summary>mocha-json</summary>
 
 [Mocha](https://mochajs.org/) testing framework support requires:
