@@ -6,8 +6,6 @@ import * as github from '@actions/github'
 import {GitHub} from '@actions/github/lib/utils'
 import type {PullRequest, WorkflowRunEvent} from '@octokit/webhooks-types'
 
-type WorkflowRunPR = WorkflowRunEvent['workflow_run']['pull_requests'][number]
-
 export function getCheckRunContext(): {sha: string; runId: number} {
   if (github.context.eventName === 'workflow_run') {
     core.info('Action was triggered by workflow_run: using SHA and RUN_ID from triggering workflow')
@@ -15,7 +13,7 @@ export function getCheckRunContext(): {sha: string; runId: number} {
     if (!event.workflow_run) {
       throw new Error("Event of type 'workflow_run' is missing 'workflow_run' field")
     }
-    const prs = (event.workflow_run.pull_requests ?? []) as WorkflowRunPR[]
+    const prs = event.workflow_run.pull_requests ?? []
     // For `workflow_run`, we want to report against the PR commit when possible so annotations land
     // on the contributor's changes. Prefer the PR whose `head.ref` matches `workflow_run.head_branch`,
     // then fall back to the first PR head SHA, and finally to `workflow_run.head_sha` for non-PR runs.
