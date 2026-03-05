@@ -1,6 +1,7 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import {GitHub} from '@actions/github/lib/utils'
+import {randomBytes} from 'node:crypto'
 
 import {ArtifactProvider} from './input-providers/artifact-provider.js'
 import {LocalFileProvider} from './input-providers/local-file-provider.js'
@@ -49,6 +50,7 @@ class TestReporter {
   readonly workDirInput = core.getInput('working-directory', {required: false})
   readonly onlySummary = core.getInput('only-summary', {required: false}) === 'true'
   readonly useActionsSummary = core.getInput('use-actions-summary', {required: false}) === 'true'
+  readonly slugPrefix = `tr-${randomBytes(4).toString('base64url')}-`
   readonly badgeTitle = core.getInput('badge-title', {required: false})
   readonly reportTitle = core.getInput('report-title', {required: false})
   readonly collapsed = core.getInput('collapsed', {required: false}) as 'auto' | 'always' | 'never'
@@ -144,6 +146,7 @@ class TestReporter {
     core.setOutput('failed', failed)
     core.setOutput('skipped', skipped)
     core.setOutput('time', time)
+    core.setOutput('slug_prefix', this.slugPrefix)
 
     if (this.failOnError && isFailed) {
       core.setFailed(`Failed test were found and 'fail-on-error' option is set to ${this.failOnError}`)
@@ -174,7 +177,7 @@ class TestReporter {
       }
     }
 
-    const {listSuites, listTests, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed} = this
+    const {listSuites, listTests, slugPrefix, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed} = this
 
     const passed = results.reduce((sum, tr) => sum + tr.passed, 0)
     const failed = results.reduce((sum, tr) => sum + tr.failed, 0)
@@ -188,6 +191,7 @@ class TestReporter {
         {
           listSuites,
           listTests,
+          slugPrefix,
           baseUrl,
           onlySummary,
           useActionsSummary,
@@ -219,6 +223,7 @@ class TestReporter {
       const summary = getReport(results, {
         listSuites,
         listTests,
+        slugPrefix,
         baseUrl,
         onlySummary,
         useActionsSummary,

@@ -55383,6 +55383,8 @@ function getOctokit(token, options, ...additionalPlugins) {
     return new GitHubWithPlugins(getOctokitOptions(token, options));
 }
 //# sourceMappingURL=github.js.map
+// EXTERNAL MODULE: external "node:crypto"
+var external_node_crypto_ = __nccwpck_require__(7598);
 // EXTERNAL MODULE: ./node_modules/adm-zip/adm-zip.js
 var adm_zip = __nccwpck_require__(1316);
 // EXTERNAL MODULE: ./node_modules/picomatch/index.js
@@ -55869,7 +55871,7 @@ function getExceptionSource(stackTrace, trackedFiles, getRelativePath) {
 
 ;// CONCATENATED MODULE: ./lib/utils/slugger.js
 function slug(name, options) {
-    const slugId = name
+    const slugId = `${options.slugPrefix}${name}`
         .trim()
         .replace(/_/g, '')
         .replace(/[./\\]/g, '-')
@@ -55891,6 +55893,7 @@ const MAX_ACTIONS_SUMMARY_LENGTH = 1048576;
 const DEFAULT_OPTIONS = {
     listSuites: 'all',
     listTests: 'all',
+    slugPrefix: '',
     baseUrl: '',
     onlySummary: false,
     useActionsSummary: true,
@@ -57864,6 +57867,7 @@ class NetteTesterJunitParser {
 
 
 
+
 async function main() {
     try {
         const testReporter = new TestReporter();
@@ -57890,6 +57894,7 @@ class TestReporter {
     workDirInput = getInput('working-directory', { required: false });
     onlySummary = getInput('only-summary', { required: false }) === 'true';
     useActionsSummary = getInput('use-actions-summary', { required: false }) === 'true';
+    slugPrefix = `tr-${(0,external_node_crypto_.randomBytes)(4).toString('base64url')}-`;
     badgeTitle = getInput('badge-title', { required: false });
     reportTitle = getInput('report-title', { required: false });
     collapsed = getInput('collapsed', { required: false });
@@ -57963,6 +57968,7 @@ class TestReporter {
         setOutput('failed', failed);
         setOutput('skipped', skipped);
         setOutput('time', time);
+        setOutput('slug_prefix', this.slugPrefix);
         if (this.failOnError && isFailed) {
             setFailed(`Failed test were found and 'fail-on-error' option is set to ${this.failOnError}`);
             return;
@@ -57989,7 +57995,7 @@ class TestReporter {
                 throw error;
             }
         }
-        const { listSuites, listTests, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed } = this;
+        const { listSuites, listTests, slugPrefix, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed } = this;
         const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
         const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
         const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
@@ -57999,6 +58005,7 @@ class TestReporter {
             const summary = getReport(results, {
                 listSuites,
                 listTests,
+                slugPrefix,
                 baseUrl,
                 onlySummary,
                 useActionsSummary,
@@ -58027,6 +58034,7 @@ class TestReporter {
             const summary = getReport(results, {
                 listSuites,
                 listTests,
+                slugPrefix,
                 baseUrl,
                 onlySummary,
                 useActionsSummary,

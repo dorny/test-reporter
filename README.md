@@ -212,6 +212,7 @@ jobs:
 | time       | Test execution time [ms] |
 | url        | Check run URL            |
 | url_html   | Check run URL HTML       |
+| slug_prefix| Random anchor links slug prefix generated for the summary headers |
 
 ## Supported formats
 
