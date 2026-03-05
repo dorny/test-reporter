@@ -162,10 +162,6 @@ jobs:
     # Allows you to generate reports for Actions Summary
     # https://github.blog/2022-05-09-supercharging-github-actions-with-job-summaries/
     use-actions-summary: 'true'
-
-    # Prefix used when generating report anchor slugs.
-    # Useful to avoid collisions when multiple reports are rendered together.
-    slug-prefix: ''
     
     # Optionally specify a title (Heading level 1) for the report. Leading and trailing whitespace are ignored.
     # This is useful for separating your test report from other sections in the build summary.
@@ -216,6 +212,7 @@ jobs:
 | time       | Test execution time [ms] |
 | url        | Check run URL            |
 | url_html   | Check run URL HTML       |
+| slug_prefix| Random anchor links slug prefix generated for the summary headers |
 
 ## Supported formats
 
