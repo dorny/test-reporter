@@ -55869,7 +55869,7 @@ function getExceptionSource(stackTrace, trackedFiles, getRelativePath) {
 
 ;// CONCATENATED MODULE: ./lib/utils/slugger.js
 function slug(name, options) {
-    const slugId = name
+    const slugId = `${options.slugPrefix}${name}`
         .trim()
         .replace(/_/g, '')
         .replace(/[./\\]/g, '-')
@@ -55891,6 +55891,7 @@ const MAX_ACTIONS_SUMMARY_LENGTH = 1048576;
 const DEFAULT_OPTIONS = {
     listSuites: 'all',
     listTests: 'all',
+    slugPrefix: '',
     baseUrl: '',
     onlySummary: false,
     useActionsSummary: true,
@@ -57890,6 +57891,7 @@ class TestReporter {
     workDirInput = getInput('working-directory', { required: false });
     onlySummary = getInput('only-summary', { required: false }) === 'true';
     useActionsSummary = getInput('use-actions-summary', { required: false }) === 'true';
+    slugPrefix = getInput('slug-prefix', { required: false });
     badgeTitle = getInput('badge-title', { required: false });
     reportTitle = getInput('report-title', { required: false });
     collapsed = getInput('collapsed', { required: false });
@@ -57989,7 +57991,7 @@ class TestReporter {
                 throw error;
             }
         }
-        const { listSuites, listTests, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed } = this;
+        const { listSuites, listTests, slugPrefix, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed } = this;
         const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
         const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
         const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
@@ -57999,6 +58001,7 @@ class TestReporter {
             const summary = getReport(results, {
                 listSuites,
                 listTests,
+                slugPrefix,
                 baseUrl,
                 onlySummary,
                 useActionsSummary,
@@ -58027,6 +58030,7 @@ class TestReporter {
             const summary = getReport(results, {
                 listSuites,
                 listTests,
+                slugPrefix,
                 baseUrl,
                 onlySummary,
                 useActionsSummary,

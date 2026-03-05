@@ -88,6 +88,10 @@ inputs:
       https://github.com/orgs/github/teams/engineering/discussions/871
     default: 'true'
     required: false
+  slug-prefix:
+    description: Prefix used when generating report anchor slugs
+    required: false
+    default: ''
   badge-title:
     description: Customize badge title
     required: false

@@ -4,7 +4,7 @@
 import {ReportOptions} from '../report/get-report.js'
 
 export function slug(name: string, options: ReportOptions): {id: string; link: string} {
-  const slugId = name
+  const slugId = `${options.slugPrefix}${name}`
     .trim()
     .replace(/_/g, '')
     .replace(/[./\\]/g, '-')
