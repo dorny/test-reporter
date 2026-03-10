@@ -56,7 +56,7 @@
     "@typescript-eslint/parser": "^8.56.1",
     "@vercel/ncc": "^0.38.4",
     "eol-converter-cli": "^1.1.0",
-    "eslint": "^9.39.3",
+    "eslint": "^9.39.4",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-github": "^6.0.0",
     "eslint-plugin-import": "^2.32.0",
