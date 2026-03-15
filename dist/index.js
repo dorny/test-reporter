@@ -57248,17 +57248,18 @@ class JestJunitParser {
         });
     }
     getTestCaseResult(test) {
-        if (test.failure)
+        if (test.failure || test.error)
             return 'failed';
         if (test.skipped)
             return 'skipped';
         return 'success';
     }
     getTestCaseError(tc) {
-        if (!this.options.parseErrors || !tc.failure) {
+        if (!this.options.parseErrors || !(tc.failure || tc.error)) {
             return undefined;
         }
-        const details = typeof tc.failure[0] === 'string' ? tc.failure[0] : tc.failure[0]['_'];
+        const message = tc.failure ? tc.failure[0] : tc.error ? tc.error[0] : 'unknown failure';
+        const details = typeof message === 'string' ? message : message['_'];
         let path;
         let line;
         const src = getExceptionSource(details, this.options.trackedFiles, file => this.getRelativePath(file));
