@@ -122,6 +122,8 @@ outputs:
     description: Check run URL
   url_html:
     description: Check run URL HTML
+  slug_prefix:
+    description: Random prefix added to generated report anchor slugs for this action run
 runs:
   using: 'node20'
   main: 'dist/index.js'

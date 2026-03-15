@@ -11,6 +11,7 @@ const MAX_ACTIONS_SUMMARY_LENGTH = 1048576
 export interface ReportOptions {
   listSuites: 'all' | 'failed' | 'none'
   listTests: 'all' | 'failed' | 'none'
+  slugPrefix: string
   baseUrl: string
   onlySummary: boolean
   useActionsSummary: boolean
@@ -22,6 +23,7 @@ export interface ReportOptions {
 export const DEFAULT_OPTIONS: ReportOptions = {
   listSuites: 'all',
   listTests: 'all',
+  slugPrefix: '',
   baseUrl: '',
   onlySummary: false,
   useActionsSummary: true,
