@@ -1,0 +1,3 @@
+libs/bar.spec.ts
+libs/foo.spec.ts
+tsconfig.json
