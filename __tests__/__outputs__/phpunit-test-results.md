@@ -13,9 +13,9 @@
 ### ❌ <a id="user-content-r0s0" href="#user-content-r0s0">CLI Arguments</a>
 ```
 ❌ targeting-traits-with-coversclass-attribute-is-deprecated.phpt
-	PHPUnit\Framework\PhptAssertionFailedError
+	targeting-traits-with-coversclass-attribute-is-deprecated.phptFailed asserting that string matches format description.
 ❌ targeting-traits-with-usesclass-attribute-is-deprecated.phpt
-	PHPUnit\Framework\PhptAssertionFailedError
+	targeting-traits-with-usesclass-attribute-is-deprecated.phptFailed asserting that string matches format description.
 ```
 ### ✅ <a id="user-content-r0s1" href="#user-content-r0s1">PHPUnit\Event\CollectingDispatcherTest</a>
 ```

@@ -315,7 +315,7 @@ Failed asserting that 19 matches expected 20.
 
 /workspace/phpcheckstyle/test/OtherTest.php:24",
                 "line": 12,
-                "message": "PHPUnit\\Framework\\ExpectationFailedException",
+                "message": "OtherTest::testOther",
                 "path": undefined,
               },
               "name": "testOther",
@@ -330,7 +330,7 @@ Failed asserting that 0 matches expected 1.
 
 /workspace/phpcheckstyle/test/OtherTest.php:40",
                 "line": 31,
-                "message": "PHPUnit\\Framework\\ExpectationFailedException",
+                "message": "OtherTest::testException",
                 "path": undefined,
               },
               "name": "testException",
@@ -572,7 +572,7 @@ TestRunResult {
 /home/matteo/OSS/phpunit/src/TextUI/TestRunner.php:62
 /home/matteo/OSS/phpunit/src/TextUI/Application.php:200",
                 "line": undefined,
-                "message": "PHPUnit\\Framework\\PhptAssertionFailedError",
+                "message": "targeting-traits-with-coversclass-attribute-is-deprecated.phptFailed asserting that string matches format description.",
                 "path": undefined,
               },
               "name": "targeting-traits-with-coversclass-attribute-is-deprecated.phpt",
@@ -609,7 +609,7 @@ TestRunResult {
 /home/matteo/OSS/phpunit/src/TextUI/TestRunner.php:62
 /home/matteo/OSS/phpunit/src/TextUI/Application.php:200",
                 "line": undefined,
-                "message": "PHPUnit\\Framework\\PhptAssertionFailedError",
+                "message": "targeting-traits-with-usesclass-attribute-is-deprecated.phptFailed asserting that string matches format description.",
                 "path": undefined,
               },
               "name": "targeting-traits-with-usesclass-attribute-is-deprecated.phpt",

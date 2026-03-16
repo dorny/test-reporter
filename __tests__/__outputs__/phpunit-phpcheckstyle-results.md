@@ -62,9 +62,9 @@
 ### ❌ <a id="user-content-r0s7" href="#user-content-r0s7">OtherTest</a>
 ```
 ❌ testOther
-	PHPUnit\Framework\ExpectationFailedException
+	OtherTest::testOther
 ❌ testException
-	PHPUnit\Framework\ExpectationFailedException
+	OtherTest::testException
 ✅ testEmpty
 ✅ testSwitchCaseNeedBreak
 ```

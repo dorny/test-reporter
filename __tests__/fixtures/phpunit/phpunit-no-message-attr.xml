@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="DOMCasterTest" tests="1" assertions="0" errors="1" failures="0" skipped="0" time="0.001032">
+    <testcase name="testCastModernDocumentType" file="/home/runner/work/php-latest-builds/php-latest-builds/src/Symfony/Component/VarDumper/Tests/Caster/DOMCasterTest.php" line="230" class="Symfony\Component\VarDumper\Tests\Caster\DOMCasterTest" classname="Symfony.Component.VarDumper.Tests.Caster.DOMCasterTest" assertions="0" time="0.001032">
+      <error type="TypeError">Symfony\Component\VarDumper\Tests\Caster\DOMCasterTest::testCastModernDocumentType
+TypeError: Cannot assign DOMNodeList to property Dom\Node::$childNodes of type Dom\NodeList
+
+/home/runner/work/php-latest-builds/php-latest-builds/src/Symfony/Component/VarDumper/Caster/DOMCaster.php:190
+/home/runner/work/php-latest-builds/php-latest-builds/src/Symfony/Component/VarDumper/Cloner/AbstractCloner.php:379
+/home/runner/work/php-latest-builds/php-latest-builds/src/Symfony/Component/VarDumper/Cloner/VarCloner.php:127
+/home/runner/work/php-latest-builds/php-latest-builds/src/Symfony/Component/VarDumper/Cloner/AbstractCloner.php:318
+/home/runner/work/php-latest-builds/php-latest-builds/src/Symfony/Component/VarDumper/Test/VarDumperTestTrait.php:79
+/home/runner/work/php-latest-builds/php-latest-builds/src/Symfony/Component/VarDumper/Test/VarDumperTestTrait.php:63
+/home/runner/work/php-latest-builds/php-latest-builds/src/Symfony/Component/VarDumper/Tests/Caster/DOMCasterTest.php:235
+/home/runner/work/php-latest-builds/php-latest-builds/.phpunit/phpunit-12-0/phpunit:104
+/home/runner/work/php-latest-builds/php-latest-builds/vendor/symfony/phpunit-bridge/bin/simple-phpunit.php:458
+/home/runner/work/php-latest-builds/php-latest-builds/vendor/symfony/phpunit-bridge/bin/simple-phpunit:13</error>
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -156,11 +156,40 @@ export class PhpunitJunitParser implements TestParser {
     }
 
     let message: string | undefined
+
+    // First, try to extract message attribute (with type prepended if available)
     if (typeof failure !== 'string' && failure.$) {
-      message = failure.$.message
-      if (failure.$.type) {
-        message = message ? `${failure.$.type}: ${message}` : failure.$.type
+      if (failure.$.message) {
+        message = failure.$.type ? `${failure.$.type}: ${failure.$.message}` : failure.$.message
+      } else if (failure.$.type && !details) {
+        // Only use type alone if there's no details to extract from
+        message = failure.$.type
       }
+    }
+
+    // If no message attribute, try to extract from details
+    if (!message && details) {
+      const typePrefix = typeof failure !== 'string' && failure.$?.type ? `${failure.$.type}: ` : ''
+      const lines = details.split(/\r?\n/)
+      for (const line of lines) {
+        const trimmedLine = line.trim()
+        // Check if line starts with type prefix (e.g., "TypeError: ")
+        if (typePrefix && trimmedLine.startsWith(typePrefix)) {
+          message = trimmedLine
+          break
+        }
+      }
+
+      // If no error message pattern found, use first line
+      if (!message) {
+        const firstLine = lines[0].trim()
+        message = firstLine || undefined
+      }
+    }
+
+    // If still no message and type is available, use it as last resort
+    if (!message && typeof failure !== 'string' && failure.$?.type) {
+      message = failure.$.type
     }
 
     return {
