@@ -125,7 +125,7 @@ outputs:
   slug_prefix:
     description: Random prefix added to generated report anchor slugs for this action run
 runs:
-  using: 'node20'
+  using: 'node24'
   main: 'dist/index.js'
 branding:
   color: blue
