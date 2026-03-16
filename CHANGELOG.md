@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.7.0
+* Feature: Add `slug-prefix` output for link anchors https://github.com/dorny/test-reporter/pull/731
+* Feature: Report `jest-junit` testsuite errors as failures https://github.com/dorny/test-reporter/pull/155
+* Security: Update dependencies to fix reported security vulnerabilities
+
 ## 2.6.0
 * Fix: For `workflow_run` events, resolve the commit of the check run from related pull request head commits first (matching `workflow_run.head_branch`, then first PR), and fall back to `workflow_run.head_sha` for non-PR runs https://github.com/dorny/test-reporter/pull/673
 * Change: The `test-reporter` action will listed all artifacts associated with the build run https://github.com/dorny/test-reporter/pull/693
