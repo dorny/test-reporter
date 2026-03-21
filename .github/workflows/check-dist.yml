@@ -16,6 +16,9 @@ on:
       - '**.md'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   check-dist:
     runs-on: ubuntu-latest
