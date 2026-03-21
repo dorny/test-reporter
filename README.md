@@ -52,7 +52,7 @@ jobs:
       - run: npm test                 # run tests (configured to use jest-junit reporter)
 
       - name: Test Report
-        uses: dorny/test-reporter@v2
+        uses: dorny/test-reporter@v3
         if: ${{ !cancelled() }}       # run this step even if previous step failed
         with:
           name: JEST Tests            # Name of the check run which will be created
@@ -103,7 +103,7 @@ jobs:
   report:
     runs-on: ubuntu-latest
     steps:
-    - uses: dorny/test-reporter@v2
+    - uses: dorny/test-reporter@v3
       with:
         artifact: test-results            # artifact name
         name: JEST Tests                  # Name of the check run which will be created
@@ -114,7 +114,7 @@ jobs:
 ## Usage
 
 ```yaml
-- uses: dorny/test-reporter@v2
+- uses: dorny/test-reporter@v3
   with:
 
     # Name or regex of artifact containing test results

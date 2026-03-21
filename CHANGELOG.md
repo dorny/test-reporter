@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0
+* Feature: Use NodeJS 24 LTS as default runtime https://github.com/dorny/test-reporter/pull/738
+
 ## 2.7.0
 * Feature: Add `slug-prefix` output for link anchors https://github.com/dorny/test-reporter/pull/731
 * Feature: Report `jest-junit` testsuite errors as failures https://github.com/dorny/test-reporter/pull/155
