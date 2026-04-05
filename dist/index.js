@@ -1831,7 +1831,7 @@ module.exports = function (/**String*/ input, /** object */ options) {
     function fixPath(zipPath) {
         const { join, normalize, sep } = pth.posix;
         // convert windows file separators and normalize
-        return join(".", normalize(sep + zipPath.split("\\").join(sep) + sep));
+        return join(pth.isAbsolute(zipPath) ? "/": '.',  normalize(sep + zipPath.split("\\").join(sep) + sep));
     }
 
     function filenameFilter(filterfn) {
@@ -2799,6 +2799,7 @@ module.exports = function () {
             return Utils.fromDOS2Date(this.timeval);
         },
         set time(val) {
+            val = new Date(val);
             this.timeval = Utils.fromDate2DOS(val);
         },
 
@@ -2921,6 +2922,8 @@ module.exports = function () {
             _localHeader.version = data.readUInt16LE(Constants.LOCVER);
             // general purpose bit flag
             _localHeader.flags = data.readUInt16LE(Constants.LOCFLG);
+            // desc flag
+            _localHeader.flags_desc = (_localHeader.flags & Constants.FLG_DESC) > 0;
             // compression method
             _localHeader.method = data.readUInt16LE(Constants.LOCHOW);
             // modification time (2 bytes time, 2 bytes date)
@@ -3876,7 +3879,11 @@ Utils.prototype.makeDir = function (/*String*/ folder) {
             try {
                 stat = self.fs.statSync(resolvedPath);
             } catch (e) {
-                self.fs.mkdirSync(resolvedPath);
+                if (e.message && e.message.startsWith('ENOENT')) {
+                    self.fs.mkdirSync(resolvedPath);
+                } else {
+                    throw e;
+                }
             }
             if (stat && stat.isFile()) throw Errors.FILE_IN_THE_WAY(`"${resolvedPath}"`);
         });
@@ -4139,10 +4146,9 @@ Utils.toBuffer = function toBuffer(/*buffer, Uint8Array, string*/ input, /* func
 };
 
 Utils.readBigUInt64LE = function (/*Buffer*/ buffer, /*int*/ index) {
-    var slice = Buffer.from(buffer.slice(index, index + 8));
-    slice.swap64();
-
-    return parseInt(`0x${slice.toString("hex")}`);
+    const lo = buffer.readUInt32LE(index);
+    const hi = buffer.readUInt32LE(index + 4);
+    return hi * 0x100000000 + lo;
 };
 
 Utils.fromDOS2Date = function (val) {
@@ -4200,7 +4206,7 @@ module.exports = function (/** object */ options, /*Buffer*/ input) {
 
     function crc32OK(data) {
         // if bit 3 (0x08) of the general-purpose flags field is set, then the CRC-32 and file sizes are not known when the local header is written
-        if (!_centralHeader.flags_desc) {
+        if (!_centralHeader.flags_desc && !_centralHeader.localHeader.flags_desc) {
             if (Utils.crc32(data) !== _centralHeader.localHeader.crc) {
                 return false;
             }
@@ -4356,7 +4362,7 @@ module.exports = function (/** object */ options, /*Buffer*/ input) {
     }
 
     function readUInt64LE(buffer, offset) {
-        return (buffer.readUInt32LE(offset + 4) << 4) + buffer.readUInt32LE(offset);
+        return Utils.readBigUInt64LE(buffer, offset);
     }
 
     function parseExtra(data) {
