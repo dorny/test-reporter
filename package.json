@@ -40,7 +40,7 @@
     "@actions/core": "^3.0.0",
     "@actions/exec": "^3.0.0",
     "@actions/github": "^9.0.0",
-    "adm-zip": "^0.5.16",
+    "adm-zip": "^0.5.17",
     "fast-glob": "^3.3.3",
     "picomatch": "^4.0.4",
     "xml2js": "^0.6.2"
@@ -49,11 +49,11 @@
     "@octokit/webhooks-types": "^7.6.1",
     "@types/adm-zip": "^0.5.8",
     "@types/jest": "^30.0.0",
-    "@types/node": "^24.12.0",
+    "@types/node": "^24.12.2",
     "@types/picomatch": "^4.0.3",
     "@types/xml2js": "^0.4.14",
-    "@typescript-eslint/eslint-plugin": "^8.56.1",
-    "@typescript-eslint/parser": "^8.57.2",
+    "@typescript-eslint/eslint-plugin": "^8.58.0",
+    "@typescript-eslint/parser": "^8.58.0",
     "@vercel/ncc": "^0.38.4",
     "eol-converter-cli": "^1.1.0",
     "eslint": "^9.39.4",
@@ -66,7 +66,7 @@
     "jest-junit": "^16.0.0",
     "js-yaml": "^4.1.1",
     "prettier": "^3.8.1",
-    "ts-jest": "^29.4.6",
+    "ts-jest": "^29.4.9",
     "typescript": "^5.9.3"
   },
   "overrides": {
