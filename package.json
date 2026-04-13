@@ -53,7 +53,7 @@
     "@types/picomatch": "^4.0.3",
     "@types/xml2js": "^0.4.14",
     "@typescript-eslint/eslint-plugin": "^8.58.0",
-    "@typescript-eslint/parser": "^8.58.0",
+    "@typescript-eslint/parser": "^8.58.2",
     "@vercel/ncc": "^0.38.4",
     "eol-converter-cli": "^1.1.0",
     "eslint": "^9.39.4",
