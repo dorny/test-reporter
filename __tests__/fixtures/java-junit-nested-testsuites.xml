@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="bun test" tests="3" assertions="3" failures="1" skipped="0" time="0.018664">
+  <testsuite name="math.test.ts" file="math.test.ts" tests="3" assertions="3" failures="1" skipped="0" time="0">
+    <testcase name="top-level" classname="" time="0.000112" file="math.test.ts" line="3" assertions="1" />
+    <testsuite name="add" file="math.test.ts" line="5" tests="2" assertions="2" failures="1" skipped="0" time="0">
+      <testcase name="passes" classname="add" time="0.000006" file="math.test.ts" line="6" assertions="1" />
+      <testsuite name="negative" file="math.test.ts" line="7" tests="1" assertions="1" failures="1" skipped="0" time="0">
+        <testcase name="fails" classname="negative &amp;gt; add" time="0.000237" file="math.test.ts" line="8" assertions="1">
+          <failure type="AssertionError" />
+        </testcase>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>
