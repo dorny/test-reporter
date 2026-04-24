@@ -37,9 +37,9 @@
   "author": "Michal Dorner <dorner.michal@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^3.0.0",
+    "@actions/core": "^3.0.1",
     "@actions/exec": "^3.0.0",
-    "@actions/github": "^9.1.0",
+    "@actions/github": "^9.1.1",
     "adm-zip": "^0.5.17",
     "fast-glob": "^3.3.3",
     "picomatch": "^4.0.4",
