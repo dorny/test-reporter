@@ -183,7 +183,17 @@ class TestReporter {
       }
     }
 
-    const {listSuites, listTests, slugPrefix, listFiles, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed} = this
+    const {
+      listSuites,
+      listTests,
+      slugPrefix,
+      listFiles,
+      onlySummary,
+      useActionsSummary,
+      badgeTitle,
+      reportTitle,
+      collapsed
+    } = this
 
     const passed = results.reduce((sum, tr) => sum + tr.passed, 0)
     const failed = results.reduce((sum, tr) => sum + tr.failed, 0)

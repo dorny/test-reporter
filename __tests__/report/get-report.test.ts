@@ -1,5 +1,5 @@
 import {DEFAULT_OPTIONS, getBadge, getReport, ReportOptions} from '../../src/report/get-report.js'
-import {TestCaseResult, TestGroupResult, TestRunResult, TestSuiteResult} from '../../src/test-results'
+import {TestCaseResult, TestGroupResult, TestRunResult, TestSuiteResult} from '../../src/test-results.js'
 
 describe('getBadge', () => {
   describe('URI encoding with special characters', () => {
@@ -141,10 +141,12 @@ describe('getReport', () => {
       tests.push(new TestCaseResult(`passed-test-${i}`, 'success', 100))
     }
     for (let i = 0; i < failed; i++) {
-      tests.push(new TestCaseResult(`failed-test-${i}`, 'failed', 100, {
-        details: 'Test failed',
-        message: 'Assertion error'
-      }))
+      tests.push(
+        new TestCaseResult(`failed-test-${i}`, 'failed', 100, {
+          details: 'Test failed',
+          message: 'Assertion error'
+        })
+      )
     }
     for (let i = 0; i < skipped; i++) {
       tests.push(new TestCaseResult(`skipped-test-${i}`, 'skipped', 0))
