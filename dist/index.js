@@ -59089,6 +59089,7 @@ class TestReporter {
             }, shortSummary);
             info('Summary content:');
             info(summary);
+            setOutput('summary', summary);
             await summary_summary.addRaw(summary).write();
         }
         else {
@@ -59119,6 +59120,7 @@ class TestReporter {
             });
             info('Creating annotations');
             const annotations = getAnnotations(results, this.maxAnnotations);
+            setOutput('summary', summary);
             const isFailed = this.failOnError && results.some(tr => tr.result === 'failed');
             const conclusion = isFailed ? 'failure' : 'success';
             info(`Updating check run conclusion (${conclusion}) and output`);

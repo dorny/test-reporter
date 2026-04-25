@@ -221,6 +221,7 @@ class TestReporter {
 
       core.info('Summary content:')
       core.info(summary)
+      core.setOutput('summary', summary)
       await core.summary.addRaw(summary).write()
     } else {
       core.info(`Creating check run ${name}`)
@@ -252,6 +253,7 @@ class TestReporter {
 
       core.info('Creating annotations')
       const annotations = getAnnotations(results, this.maxAnnotations)
+      core.setOutput('summary', summary)
 
       const isFailed = this.failOnError && results.some(tr => tr.result === 'failed')
       const conclusion = isFailed ? 'failure' : 'success'

@@ -130,6 +130,8 @@ outputs:
     description: Check run URL
   url_html:
     description: Check run URL HTML
+  summary:
+    description: Generated test report summary in Markdown format
   slug_prefix:
     description: Random prefix added to generated report anchor slugs for this action run
 runs:
