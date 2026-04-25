@@ -44,6 +44,7 @@ class TestReporter {
   readonly reporter = core.getInput('reporter', {required: true})
   readonly listSuites = core.getInput('list-suites', {required: true}) as 'all' | 'failed' | 'none'
   readonly listTests = core.getInput('list-tests', {required: true}) as 'all' | 'failed' | 'none'
+  readonly listFiles = core.getInput('list-files', {required: true}) as 'all' | 'failed' | 'none'
   readonly maxAnnotations = parseInt(core.getInput('max-annotations', {required: true}))
   readonly failOnError = core.getInput('fail-on-error', {required: true}) === 'true'
   readonly failOnEmpty = core.getInput('fail-on-empty', {required: true}) === 'true'
@@ -68,6 +69,11 @@ class TestReporter {
 
     if (this.listTests !== 'all' && this.listTests !== 'failed' && this.listTests !== 'none') {
       core.setFailed(`Input parameter 'list-tests' has invalid value`)
+      return
+    }
+
+    if (this.listFiles !== 'all' && this.listFiles !== 'failed' && this.listFiles !== 'none') {
+      core.setFailed(`Input parameter 'list-files' has invalid value`)
       return
     }
 
@@ -177,7 +183,17 @@ class TestReporter {
       }
     }
 
-    const {listSuites, listTests, slugPrefix, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed} = this
+    const {
+      listSuites,
+      listTests,
+      slugPrefix,
+      listFiles,
+      onlySummary,
+      useActionsSummary,
+      badgeTitle,
+      reportTitle,
+      collapsed
+    } = this
 
     const passed = results.reduce((sum, tr) => sum + tr.passed, 0)
     const failed = results.reduce((sum, tr) => sum + tr.failed, 0)
@@ -192,6 +208,7 @@ class TestReporter {
           listSuites,
           listTests,
           slugPrefix,
+          listFiles,
           baseUrl,
           onlySummary,
           useActionsSummary,
@@ -224,6 +241,7 @@ class TestReporter {
         listSuites,
         listTests,
         slugPrefix,
+        listFiles,
         baseUrl,
         onlySummary,
         useActionsSummary,

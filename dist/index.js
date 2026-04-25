@@ -56954,6 +56954,7 @@ const DEFAULT_OPTIONS = {
     listSuites: 'all',
     listTests: 'all',
     slugPrefix: '',
+    listFiles: 'all',
     baseUrl: '',
     onlySummary: false,
     useActionsSummary: true,
@@ -57074,25 +57075,31 @@ function getTestRunsReport(testRuns, options) {
         sections.push(`<details><summary>Expand for details</summary>`);
         sections.push(` `);
     }
-    if (testRuns.length > 0 || options.onlySummary) {
-        const tableData = testRuns
-            .map((tr, originalIndex) => ({ tr, originalIndex }))
-            .filter(({ tr }) => tr.passed > 0 || tr.failed > 0 || tr.skipped > 0)
-            .map(({ tr, originalIndex }) => {
-            const time = formatTime(tr.time);
-            const name = tr.path;
-            const addr = options.baseUrl + makeRunSlug(originalIndex, options).link;
-            const nameLink = markdown_utils_link(name, addr);
-            const passed = tr.passed > 0 ? `${tr.passed} ${Icon.success}` : '';
-            const failed = tr.failed > 0 ? `${tr.failed} ${Icon.fail}` : '';
-            const skipped = tr.skipped > 0 ? `${tr.skipped} ${Icon.skip}` : '';
-            return [nameLink, passed, failed, skipped, time];
-        });
+    // Filter test runs based on list-files option
+    const filteredTestRuns = options.listFiles === 'failed'
+        ? testRuns.filter(tr => tr.result === 'failed')
+        : options.listFiles === 'none'
+            ? []
+            : testRuns;
+    const tableData = filteredTestRuns
+        .map((tr, originalIndex) => ({ tr, originalIndex }))
+        .filter(({ tr }) => tr.passed > 0 || tr.failed > 0 || tr.skipped > 0)
+        .map(({ tr, originalIndex }) => {
+        const time = formatTime(tr.time);
+        const name = tr.path;
+        const addr = options.baseUrl + makeRunSlug(originalIndex, options).link;
+        const nameLink = markdown_utils_link(name, addr);
+        const passed = tr.passed > 0 ? `${tr.passed} ${Icon.success}` : '';
+        const failed = tr.failed > 0 ? `${tr.failed} ${Icon.fail}` : '';
+        const skipped = tr.skipped > 0 ? `${tr.skipped} ${Icon.skip}` : '';
+        return [nameLink, passed, failed, skipped, time];
+    });
+    if (tableData.length > 0) {
         const resultsTable = table(['Report', 'Passed', 'Failed', 'Skipped', 'Time'], [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right], ...tableData);
         sections.push(resultsTable);
     }
     if (options.onlySummary === false) {
-        const suitesReports = testRuns.map((tr, i) => getSuitesReport(tr, i, options)).flat();
+        const suitesReports = filteredTestRuns.map((tr, i) => getSuitesReport(tr, i, options)).flat();
         sections.push(...suitesReports);
     }
     if (shouldCollapse) {
@@ -58949,6 +58956,7 @@ class TestReporter {
     reporter = getInput('reporter', { required: true });
     listSuites = getInput('list-suites', { required: true });
     listTests = getInput('list-tests', { required: true });
+    listFiles = getInput('list-files', { required: true });
     maxAnnotations = parseInt(getInput('max-annotations', { required: true }));
     failOnError = getInput('fail-on-error', { required: true }) === 'true';
     failOnEmpty = getInput('fail-on-empty', { required: true }) === 'true';
@@ -58970,6 +58978,10 @@ class TestReporter {
         }
         if (this.listTests !== 'all' && this.listTests !== 'failed' && this.listTests !== 'none') {
             setFailed(`Input parameter 'list-tests' has invalid value`);
+            return;
+        }
+        if (this.listFiles !== 'all' && this.listFiles !== 'failed' && this.listFiles !== 'none') {
+            setFailed(`Input parameter 'list-files' has invalid value`);
             return;
         }
         if (this.collapsed !== 'auto' && this.collapsed !== 'always' && this.collapsed !== 'never') {
@@ -59056,7 +59068,7 @@ class TestReporter {
                 throw error;
             }
         }
-        const { listSuites, listTests, slugPrefix, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed } = this;
+        const { listSuites, listTests, slugPrefix, listFiles, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed } = this;
         const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
         const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
         const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
@@ -59067,6 +59079,7 @@ class TestReporter {
                 listSuites,
                 listTests,
                 slugPrefix,
+                listFiles,
                 baseUrl,
                 onlySummary,
                 useActionsSummary,
@@ -59096,6 +59109,7 @@ class TestReporter {
                 listSuites,
                 listTests,
                 slugPrefix,
+                listFiles,
                 baseUrl,
                 onlySummary,
                 useActionsSummary,
