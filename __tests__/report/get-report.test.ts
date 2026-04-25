@@ -207,7 +207,7 @@ describe('getReport', () => {
       expect(report).not.toContain('passing-with-skipped-file.spec.ts')
     })
 
-    it('shows an empty summary table when list-files is "none" and only-summary is enabled', () => {
+    it('does not show an empty summary table when list-files is "none" and only-summary is enabled', () => {
       const report = getReport(results, {
         ...DEFAULT_OPTIONS,
         listFiles: 'none',
@@ -217,7 +217,7 @@ describe('getReport', () => {
       })
 
       expect(report).toContain('![')
-      expect(report).toContain('|Report|Passed|Failed|Skipped|Time|')
+      expect(report).not.toContain('|Report|Passed|Failed|Skipped|Time|')
       expect(report).not.toContain('passing-file.spec.ts')
       expect(report).not.toContain('failing-file.spec.ts')
       expect(report).not.toContain('passing-with-skipped-file.spec.ts')

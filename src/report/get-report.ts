@@ -183,21 +183,21 @@ function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): s
         ? []
         : testRuns
 
-  if (filteredTestRuns.length > 0 || options.onlySummary) {
-    const tableData = filteredTestRuns
-      .map((tr, originalIndex) => ({tr, originalIndex}))
-      .filter(({tr}) => tr.passed > 0 || tr.failed > 0 || tr.skipped > 0)
-      .map(({tr, originalIndex}) => {
-        const time = formatTime(tr.time)
-        const name = tr.path
-        const addr = options.baseUrl + makeRunSlug(originalIndex, options).link
-        const nameLink = link(name, addr)
-        const passed = tr.passed > 0 ? `${tr.passed} ${Icon.success}` : ''
-        const failed = tr.failed > 0 ? `${tr.failed} ${Icon.fail}` : ''
-        const skipped = tr.skipped > 0 ? `${tr.skipped} ${Icon.skip}` : ''
-        return [nameLink, passed, failed, skipped, time]
-      })
+  const tableData = filteredTestRuns
+    .map((tr, originalIndex) => ({tr, originalIndex}))
+    .filter(({tr}) => tr.passed > 0 || tr.failed > 0 || tr.skipped > 0)
+    .map(({tr, originalIndex}) => {
+      const time = formatTime(tr.time)
+      const name = tr.path
+      const addr = options.baseUrl + makeRunSlug(originalIndex, options).link
+      const nameLink = link(name, addr)
+      const passed = tr.passed > 0 ? `${tr.passed} ${Icon.success}` : ''
+      const failed = tr.failed > 0 ? `${tr.failed} ${Icon.fail}` : ''
+      const skipped = tr.skipped > 0 ? `${tr.skipped} ${Icon.skip}` : ''
+      return [nameLink, passed, failed, skipped, time]
+    })
 
+  if (tableData.length > 0) {
     const resultsTable = table(
       ['Report', 'Passed', 'Failed', 'Skipped', 'Time'],
       [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right],
