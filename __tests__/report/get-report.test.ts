@@ -172,6 +172,7 @@ describe('getReport', () => {
         listTests: 'none'
       })
 
+      expect(report).toContain('|Report|Passed|Failed|Skipped|Time|')
       expect(report).toContain('passing-file.spec.ts')
       expect(report).toContain('failing-file.spec.ts')
       expect(report).toContain('passing-with-skipped-file.spec.ts')
@@ -185,6 +186,7 @@ describe('getReport', () => {
         listTests: 'none'
       })
 
+      expect(report).toContain('|Report|Passed|Failed|Skipped|Time|')
       expect(report).not.toContain('passing-file.spec.ts')
       expect(report).toContain('failing-file.spec.ts')
       expect(report).not.toContain('passing-with-skipped-file.spec.ts')
@@ -198,26 +200,24 @@ describe('getReport', () => {
         listTests: 'none'
       })
 
-      // Should still have badge
       expect(report).toContain('![')
-      // Should not have file names in detail sections
+      expect(report).not.toContain('|Report|Passed|Failed|Skipped|Time|')
       expect(report).not.toContain('passing-file.spec.ts')
       expect(report).not.toContain('failing-file.spec.ts')
       expect(report).not.toContain('passing-with-skipped-file.spec.ts')
     })
 
-    it('includes summary table even with list-files "none"', () => {
+    it('shows an empty summary table when list-files is "none" and only-summary is enabled', () => {
       const report = getReport(results, {
         ...DEFAULT_OPTIONS,
         listFiles: 'none',
         listSuites: 'all',
+        onlySummary: true,
         listTests: 'none'
       })
 
-      // Badge should still be present
       expect(report).toContain('![')
-      expect(report).toContain('badge')
-      // File names should not be present
+      expect(report).toContain('|Report|Passed|Failed|Skipped|Time|')
       expect(report).not.toContain('passing-file.spec.ts')
       expect(report).not.toContain('failing-file.spec.ts')
       expect(report).not.toContain('passing-with-skipped-file.spec.ts')
@@ -231,6 +231,7 @@ describe('getReport', () => {
         listTests: 'all'
       })
 
+      expect(report).toContain('|Report|Passed|Failed|Skipped|Time|')
       expect(report).not.toContain('passing-file.spec.ts')
       expect(report).toContain('failing-file.spec.ts')
       expect(report).not.toContain('passing-with-skipped-file.spec.ts')
@@ -253,9 +254,8 @@ describe('getReport', () => {
 
       expect(report).not.toContain('passing-file-1.spec.ts')
       expect(report).not.toContain('passing-file-2.spec.ts')
-      // Badge should still be present
       expect(report).toContain('![')
-      expect(report).toContain('badge')
+      expect(report).not.toContain('|Report|Passed|Failed|Skipped|Time|')
     })
 
     it('filters correctly when all files fail and list-files is "failed"', () => {
