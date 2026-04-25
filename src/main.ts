@@ -2,6 +2,9 @@ import * as core from '@actions/core'
 import * as github from '@actions/github'
 import {GitHub} from '@actions/github/lib/utils'
 import {randomBytes} from 'node:crypto'
+import {writeFileSync} from 'node:fs'
+import {tmpdir} from 'node:os'
+import {join} from 'node:path'
 
 import {ArtifactProvider} from './input-providers/artifact-provider.js'
 import {LocalFileProvider} from './input-providers/local-file-provider.js'
@@ -221,6 +224,7 @@ class TestReporter {
 
       core.info('Summary content:')
       core.info(summary)
+      this.writeSummaryFile(summary)
       await core.summary.addRaw(summary).write()
     } else {
       core.info(`Creating check run ${name}`)
@@ -252,6 +256,7 @@ class TestReporter {
 
       core.info('Creating annotations')
       const annotations = getAnnotations(results, this.maxAnnotations)
+      this.writeSummaryFile(summary)
 
       const isFailed = this.failOnError && results.some(tr => tr.result === 'failed')
       const conclusion = isFailed ? 'failure' : 'success'
@@ -276,6 +281,14 @@ class TestReporter {
     }
 
     return results
+  }
+
+  writeSummaryFile(summary: string): void {
+    const dir = process.env.RUNNER_TEMP || tmpdir()
+    const file = join(dir, `test-reporter-summary-${randomBytes(8).toString('hex')}.md`)
+    writeFileSync(file, summary)
+    core.info(`Summary written to ${file}`)
+    core.setOutput('summary_file', file)
   }
 
   getParser(reporter: string, options: ParseOptions): TestParser {

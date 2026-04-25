@@ -16015,7 +16015,7 @@ module.exports.fetch = async function fetch (init, options = undefined) {
 }
 module.exports.Headers = __nccwpck_require__(660).Headers
 module.exports.Response = __nccwpck_require__(9051).Response
-module.exports.Request = __nccwpck_require__(2348).Request
+module.exports.Request = __nccwpck_require__(9967).Request
 module.exports.FormData = __nccwpck_require__(5910).FormData
 module.exports.File = globalThis.File ?? (__nccwpck_require__(4573).File)
 module.exports.FileReader = __nccwpck_require__(8355).FileReader
@@ -27430,7 +27430,7 @@ const { urlEquals, getFieldValues } = __nccwpck_require__(6798)
 const { kEnumerableProperty, isDisturbed } = __nccwpck_require__(3440)
 const { webidl } = __nccwpck_require__(5893)
 const { Response, cloneResponse, fromInnerResponse } = __nccwpck_require__(9051)
-const { Request, fromInnerRequest } = __nccwpck_require__(2348)
+const { Request, fromInnerRequest } = __nccwpck_require__(9967)
 const { kState } = __nccwpck_require__(3627)
 const { fetching } = __nccwpck_require__(4398)
 const { urlIsHttpHttpsScheme, createDeferredPromise, readAllBytes } = __nccwpck_require__(3168)
@@ -29744,7 +29744,7 @@ module.exports = {
 
 const { pipeline } = __nccwpck_require__(7075)
 const { fetching } = __nccwpck_require__(4398)
-const { makeRequest } = __nccwpck_require__(2348)
+const { makeRequest } = __nccwpck_require__(9967)
 const { webidl } = __nccwpck_require__(5893)
 const { EventSourceStream } = __nccwpck_require__(4031)
 const { parseMIMEType } = __nccwpck_require__(1900)
@@ -33368,7 +33368,7 @@ const {
   fromInnerResponse
 } = __nccwpck_require__(9051)
 const { HeadersList } = __nccwpck_require__(660)
-const { Request, cloneRequest } = __nccwpck_require__(2348)
+const { Request, cloneRequest } = __nccwpck_require__(9967)
 const zlib = __nccwpck_require__(8522)
 const {
   bytesMatch,
@@ -35632,7 +35632,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 2348:
+/***/ 9967:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 /* globals AbortController */
@@ -40814,7 +40814,7 @@ const {
 const { fireEvent, failWebsocketConnection, isClosing, isClosed, isEstablished, parseExtensions } = __nccwpck_require__(8625)
 const { channels } = __nccwpck_require__(2414)
 const { CloseEvent } = __nccwpck_require__(5188)
-const { makeRequest } = __nccwpck_require__(2348)
+const { makeRequest } = __nccwpck_require__(9967)
 const { fetching } = __nccwpck_require__(4398)
 const { Headers, getHeadersList } = __nccwpck_require__(660)
 const { getDecodeSplit } = __nccwpck_require__(3168)
@@ -56445,6 +56445,12 @@ function getOctokit(token, options, ...additionalPlugins) {
 //# sourceMappingURL=github.js.map
 // EXTERNAL MODULE: external "node:crypto"
 var external_node_crypto_ = __nccwpck_require__(7598);
+;// CONCATENATED MODULE: external "node:fs"
+const external_node_fs_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:fs");
+;// CONCATENATED MODULE: external "node:os"
+const external_node_os_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:os");
+;// CONCATENATED MODULE: external "node:path"
+const external_node_path_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:path");
 // EXTERNAL MODULE: ./node_modules/adm-zip/adm-zip.js
 var adm_zip = __nccwpck_require__(1316);
 // EXTERNAL MODULE: ./node_modules/picomatch/index.js
@@ -58936,6 +58942,9 @@ class NetteTesterJunitParser {
 
 
 
+
+
+
 async function main() {
     try {
         const testReporter = new TestReporter();
@@ -59089,6 +59098,7 @@ class TestReporter {
             }, shortSummary);
             info('Summary content:');
             info(summary);
+            this.writeSummaryFile(summary);
             await summary_summary.addRaw(summary).write();
         }
         else {
@@ -59119,6 +59129,7 @@ class TestReporter {
             });
             info('Creating annotations');
             const annotations = getAnnotations(results, this.maxAnnotations);
+            this.writeSummaryFile(summary);
             const isFailed = this.failOnError && results.some(tr => tr.result === 'failed');
             const conclusion = isFailed ? 'failure' : 'success';
             info(`Updating check run conclusion (${conclusion}) and output`);
@@ -59140,6 +59151,13 @@ class TestReporter {
             setOutput('url_html', resp.data.html_url);
         }
         return results;
+    }
+    writeSummaryFile(summary) {
+        const dir = process.env.RUNNER_TEMP || (0,external_node_os_namespaceObject.tmpdir)();
+        const file = (0,external_node_path_namespaceObject.join)(dir, `test-reporter-summary-${(0,external_node_crypto_.randomBytes)(8).toString('hex')}.md`);
+        (0,external_node_fs_namespaceObject.writeFileSync)(file, summary);
+        info(`Summary written to ${file}`);
+        setOutput('summary_file', file);
     }
     getParser(reporter, options) {
         switch (reporter) {
