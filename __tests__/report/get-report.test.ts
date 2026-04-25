@@ -1,4 +1,5 @@
-import {getBadge, DEFAULT_OPTIONS, ReportOptions} from '../../src/report/get-report.js'
+import {DEFAULT_OPTIONS, getBadge, getReport, ReportOptions} from '../../src/report/get-report.js'
+import {TestCaseResult, TestGroupResult, TestRunResult, TestSuiteResult} from '../../src/test-results.js'
 
 describe('getBadge', () => {
   describe('URI encoding with special characters', () => {
@@ -131,3 +132,28 @@ describe('getBadge', () => {
     })
   })
 })
+
+describe('getReport', () => {
+  it('sorts suites by descending time when configured', () => {
+    const results = [
+      new TestRunResult('report.xml', [
+        createSuite('unit', 10),
+        createSuite('integration', 30),
+        createSuite('smoke', 20)
+      ])
+    ]
+
+    const report = getReport(results, {
+      ...DEFAULT_OPTIONS,
+      sortSuites: 'time-desc',
+      listTests: 'none'
+    })
+
+    expect(report.indexOf('integration')).toBeLessThan(report.indexOf('smoke'))
+    expect(report.indexOf('smoke')).toBeLessThan(report.indexOf('unit'))
+  })
+})
+
+function createSuite(name: string, time: number): TestSuiteResult {
+  return new TestSuiteResult(name, [new TestGroupResult(name, [new TestCaseResult(`${name}-test`, 'success', time)])])
+}

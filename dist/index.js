@@ -56954,6 +56954,7 @@ const DEFAULT_OPTIONS = {
     listSuites: 'all',
     listTests: 'all',
     slugPrefix: '',
+    sortSuites: 'name',
     baseUrl: '',
     onlySummary: false,
     useActionsSummary: true,
@@ -56962,7 +56963,7 @@ const DEFAULT_OPTIONS = {
     collapsed: 'auto'
 };
 function getReport(results, options = DEFAULT_OPTIONS, shortSummary = '') {
-    applySort(results);
+    applySort(results, options);
     const opts = { ...options };
     let lines = renderReport(results, opts, shortSummary);
     let report = lines.join('\n');
@@ -57010,10 +57011,15 @@ function trimReport(lines, options) {
     reportLines.push(errorMsg);
     return reportLines.join('\n');
 }
-function applySort(results) {
+function applySort(results, options) {
     results.sort((a, b) => a.path.localeCompare(b.path, DEFAULT_LOCALE));
     for (const res of results) {
-        res.suites.sort((a, b) => a.name.localeCompare(b.name, DEFAULT_LOCALE));
+        if (options.sortSuites === 'time-desc') {
+            res.suites.sort((a, b) => b.time - a.time);
+        }
+        else {
+            res.suites.sort((a, b) => a.name.localeCompare(b.name, DEFAULT_LOCALE));
+        }
     }
 }
 function getByteLength(text) {
@@ -58948,6 +58954,7 @@ class TestReporter {
     pathReplaceBackslashes = getInput('path-replace-backslashes', { required: false }) === 'true';
     reporter = getInput('reporter', { required: true });
     listSuites = getInput('list-suites', { required: true });
+    sortSuites = getInput('sort-suites', { required: false });
     listTests = getInput('list-tests', { required: true });
     maxAnnotations = parseInt(getInput('max-annotations', { required: true }));
     failOnError = getInput('fail-on-error', { required: true }) === 'true';
@@ -58966,6 +58973,10 @@ class TestReporter {
         this.octokit = getOctokit(this.token);
         if (this.listSuites !== 'all' && this.listSuites !== 'failed' && this.listSuites !== 'none') {
             setFailed(`Input parameter 'list-suites' has invalid value`);
+            return;
+        }
+        if (this.sortSuites !== 'name' && this.sortSuites !== 'time-desc') {
+            setFailed(`Input parameter 'sort-suites' has invalid value`);
             return;
         }
         if (this.listTests !== 'all' && this.listTests !== 'failed' && this.listTests !== 'none') {
@@ -59056,7 +59067,7 @@ class TestReporter {
                 throw error;
             }
         }
-        const { listSuites, listTests, slugPrefix, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed } = this;
+        const { listSuites, sortSuites, listTests, slugPrefix, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed } = this;
         const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
         const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
         const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
@@ -59065,6 +59076,7 @@ class TestReporter {
         if (this.useActionsSummary) {
             const summary = getReport(results, {
                 listSuites,
+                sortSuites,
                 listTests,
                 slugPrefix,
                 baseUrl,
@@ -59094,6 +59106,7 @@ class TestReporter {
             baseUrl = createResp.data.html_url;
             const summary = getReport(results, {
                 listSuites,
+                sortSuites,
                 listTests,
                 slugPrefix,
                 baseUrl,

@@ -12,6 +12,7 @@ export interface ReportOptions {
   listSuites: 'all' | 'failed' | 'none'
   listTests: 'all' | 'failed' | 'none'
   slugPrefix: string
+  sortSuites: 'name' | 'time-desc'
   baseUrl: string
   onlySummary: boolean
   useActionsSummary: boolean
@@ -24,6 +25,7 @@ export const DEFAULT_OPTIONS: ReportOptions = {
   listSuites: 'all',
   listTests: 'all',
   slugPrefix: '',
+  sortSuites: 'name',
   baseUrl: '',
   onlySummary: false,
   useActionsSummary: true,
@@ -37,7 +39,7 @@ export function getReport(
   options: ReportOptions = DEFAULT_OPTIONS,
   shortSummary = ''
 ): string {
-  applySort(results)
+  applySort(results, options)
 
   const opts = {...options}
   let lines = renderReport(results, opts, shortSummary)
@@ -96,10 +98,14 @@ function trimReport(lines: string[], options: ReportOptions): string {
   return reportLines.join('\n')
 }
 
-function applySort(results: TestRunResult[]): void {
+function applySort(results: TestRunResult[], options: ReportOptions): void {
   results.sort((a, b) => a.path.localeCompare(b.path, DEFAULT_LOCALE))
   for (const res of results) {
-    res.suites.sort((a, b) => a.name.localeCompare(b.name, DEFAULT_LOCALE))
+    if (options.sortSuites === 'time-desc') {
+      res.suites.sort((a, b) => b.time - a.time)
+    } else {
+      res.suites.sort((a, b) => a.name.localeCompare(b.name, DEFAULT_LOCALE))
+    }
   }
 }
 
