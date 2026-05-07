@@ -62,7 +62,7 @@
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jest": "^29.15.2",
     "eslint-plugin-prettier": "^5.5.5",
-    "jest": "^30.3.0",
+    "jest": "^30.4.0",
     "jest-junit": "^17.0.0",
     "js-yaml": "^4.1.1",
     "prettier": "^3.8.3",
