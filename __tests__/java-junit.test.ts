@@ -252,4 +252,34 @@ describe('java-junit tests', () => {
     expect(failedTest.error?.path).toBe('service-app/src/test/java/com/example/MyClassTest.java')
     expect(failedTest.error?.line).toBe(10)
   })
+
+  it('produces a GitHub annotation for a Gradle + Spring Boot JUnit5 failure', async () => {
+    // Reproduces https://github.com/victor-fi/release-demo PRs 7 & 8: a real Gradle/Spring
+    // failure report whose stack trace interleaves `java.base/...` module-prefixed frames
+    // around the actual test frame. The annotation must resolve to the tracked source file.
+    const fixturePath = path.join(__dirname, 'fixtures', 'external', 'java', 'spring-gradle-failure.xml')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+    const trackedFiles = [
+      'service-app/src/test/java/com/victor/paymentreporting/app/PowerDroidControllerTest.java'
+    ]
+
+    const parser = new JavaJunitParser({parseErrors: true, trackedFiles})
+    const result = await parser.parse(filePath, fileContent)
+    const failedTest = result.suites[0].groups[0].tests.find(t => t.result === 'failed')
+
+    expect(failedTest).toBeDefined()
+    expect(failedTest?.error?.path).toBe(
+      'service-app/src/test/java/com/victor/paymentreporting/app/PowerDroidControllerTest.java'
+    )
+    expect(failedTest?.error?.line).toBe(37)
+
+    const annotations = getAnnotations([result], 10)
+    expect(annotations).toHaveLength(1)
+    expect(annotations[0].annotation_level).toBe('failure')
+    expect(annotations[0].path).toBe(
+      'service-app/src/test/java/com/victor/paymentreporting/app/PowerDroidControllerTest.java'
+    )
+    expect(annotations[0].start_line).toBe(37)
+  })
 })

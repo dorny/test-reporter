@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.victor.paymentreporting.app.PowerDroidControllerTest" tests="3" skipped="0" failures="1" errors="0" timestamp="2026-05-28T22:31:02" hostname="FWGV7J6Q00" time="2.638">
+  <properties/>
+  <testcase name="echoHealthCheckReturnsHealthyMessage()" classname="com.victor.paymentreporting.app.PowerDroidControllerTest" time="2.536"/>
+  <testcase name="helloReturnsPowerDroidMessage()" classname="com.victor.paymentreporting.app.PowerDroidControllerTest" time="0.03"/>
+  <testcase name="failsToDemonstrateJUnitAnnotations()" classname="com.victor.paymentreporting.app.PowerDroidControllerTest" time="0.056">
+    <failure message="java.lang.AssertionError: Response content&#10;Expected: a string containing &quot;NOT_GONK&quot;&#10;     but: was &quot;*Low mechanical hum* GONK. I am a power droid. My batteries are fully charged. GONK.&quot;" type="java.lang.AssertionError">java.lang.AssertionError: Response content
+Expected: a string containing &quot;NOT_GONK&quot;
+     but: was &quot;*Low mechanical hum* GONK. I am a power droid. My batteries are fully charged. GONK.&quot;
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at org.springframework.test.web.servlet.result.ContentResultMatchers.lambda$string$3(ContentResultMatchers.java:141)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.victor.paymentreporting.app.PowerDroidControllerTest.failsToDemonstrateJUnitAnnotations(PowerDroidControllerTest.java:37)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:728)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:60)
+</failure>
+  </testcase>
+</testsuite>
