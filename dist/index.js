@@ -57652,7 +57652,8 @@ function slug(name, options) {
         .trim()
         .replace(/_/g, '')
         .replace(/[./\\]/g, '-')
-        .replace(/[^\w-]/g, '');
+        .replace(/[^\w-]/g, '')
+        .toLowerCase();
     const id = `user-content-${slugId}`;
     // When using the Action Summary for display, links must include the "user-content-" prefix.
     const link = options.useActionsSummary ? `#${id}` : `#${slugId}`;
@@ -59689,7 +59690,7 @@ class TestReporter {
     workDirInput = getInput('working-directory', { required: false });
     onlySummary = getInput('only-summary', { required: false }) === 'true';
     useActionsSummary = getInput('use-actions-summary', { required: false }) === 'true';
-    slugPrefix = `tr-${(0,external_node_crypto_.randomBytes)(4).toString('base64url')}-`;
+    slugPrefix = `tr-${(0,external_node_crypto_.randomBytes)(4).toString('hex')}-`;
     badgeTitle = getInput('badge-title', { required: false });
     reportTitle = getInput('report-title', { required: false });
     collapsed = getInput('collapsed', { required: false });

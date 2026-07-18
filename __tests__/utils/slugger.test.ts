@@ -25,4 +25,16 @@ describe('slugger', () => {
       link: '#user-content-my-customprefix-r0'
     })
   })
+
+  it('normalizes mixed-case prefixes for GitHub anchor compatibility', () => {
+    const result = slug('test-report', {
+      ...DEFAULT_OPTIONS,
+      slugPrefix: 'tr-9VeAag-'
+    })
+
+    expect(result).toEqual({
+      id: 'user-content-tr-9veaag-test-report',
+      link: '#user-content-tr-9veaag-test-report'
+    })
+  })
 })

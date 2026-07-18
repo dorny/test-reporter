@@ -9,6 +9,7 @@ export function slug(name: string, options: ReportOptions): {id: string; link: s
     .replace(/_/g, '')
     .replace(/[./\\]/g, '-')
     .replace(/[^\w-]/g, '')
+    .toLowerCase()
 
   const id = `user-content-${slugId}`
   // When using the Action Summary for display, links must include the "user-content-" prefix.
