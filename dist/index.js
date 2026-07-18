@@ -57781,7 +57781,8 @@ function getBadge(passed, failed, skipped, options) {
     const encodedBadgeTitle = encodeImgShieldsURIComponent(options.badgeTitle);
     const encodedMessage = encodeImgShieldsURIComponent(message);
     const encodedColor = encodeImgShieldsURIComponent(color);
-    return `[![${hint}](https://img.shields.io/badge/${encodedBadgeTitle}-${encodedMessage}-${encodedColor})](#user-content-test-report)`;
+    const reportSlug = makeReportSlug(options);
+    return `[![${hint}](https://img.shields.io/badge/${encodedBadgeTitle}-${encodedMessage}-${encodedColor})](${reportSlug.link})`;
 }
 function getTestRunsReport(testRuns, options) {
     const sections = [];
@@ -57792,7 +57793,8 @@ function getTestRunsReport(testRuns, options) {
         sections.push(`<details><summary>Expand for details</summary>`);
         sections.push(` `);
     }
-    sections.push('# <a name="user-content-test-report"></a> Tests report');
+    const reportSlug = makeReportSlug(options);
+    sections.push(`# <a id="${reportSlug.id}"></a> Tests report`);
     // Filter test runs based on list-files option
     const filteredTestRuns = options.listFiles === 'failed'
         ? testRuns.filter(tr => tr.result === 'failed')
@@ -57903,6 +57905,9 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
 function makeRunSlug(runIndex, options) {
     // use prefix to avoid slug conflicts after escaping the paths
     return slug(`r${runIndex}`, options);
+}
+function makeReportSlug(options) {
+    return slug('test-report', options);
 }
 function makeSuiteSlug(runIndex, suiteIndex, options) {
     // use prefix to avoid slug conflicts after escaping the paths

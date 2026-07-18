@@ -10,7 +10,7 @@ describe('getBadge', () => {
       }
       const badge = getBadge(5, 0, 1, options)
       expect(badge).toBe(
-        '![Tests passed successfully](https://img.shields.io/badge/tests-5%20passed%2C%201%20skipped-success)'
+        '[![Tests passed successfully](https://img.shields.io/badge/tests-5%20passed%2C%201%20skipped-success)](#user-content-test-report)'
       )
     })
 
@@ -21,7 +21,9 @@ describe('getBadge', () => {
       }
       const badge = getBadge(3, 0, 0, options)
       // The hyphen in the badge title should be encoded as --
-      expect(badge).toBe('![Tests passed successfully](https://img.shields.io/badge/unit--tests-3%20passed-success)')
+      expect(badge).toBe(
+        '[![Tests passed successfully](https://img.shields.io/badge/unit--tests-3%20passed-success)](#user-content-test-report)'
+      )
     })
 
     it('handles badge title with multiple hyphens', () => {
@@ -32,7 +34,7 @@ describe('getBadge', () => {
       const badge = getBadge(10, 0, 0, options)
       // All hyphens in the title should be encoded as --
       expect(badge).toBe(
-        '![Tests passed successfully](https://img.shields.io/badge/integration--api--tests-10%20passed-success)'
+        '[![Tests passed successfully](https://img.shields.io/badge/integration--api--tests-10%20passed-success)](#user-content-test-report)'
       )
     })
 
@@ -44,7 +46,7 @@ describe('getBadge', () => {
       const badge = getBadge(10, 0, 0, options)
       // All underscores in the title should be encoded as __
       expect(badge).toBe(
-        '![Tests passed successfully](https://img.shields.io/badge/my__integration__test-10%20passed-success)'
+        '[![Tests passed successfully](https://img.shields.io/badge/my__integration__test-10%20passed-success)](#user-content-test-report)'
       )
     })
 
@@ -56,7 +58,7 @@ describe('getBadge', () => {
       const badge = getBadge(1, 0, 0, options)
       // The hyphen in "12.0-ubi" should be encoded as --
       expect(badge).toBe(
-        '![Tests passed successfully](https://img.shields.io/badge/MariaDb%2012.0--ubi%20database%20tests-1%20passed-success)'
+        '[![Tests passed successfully](https://img.shields.io/badge/MariaDb%2012.0--ubi%20database%20tests-1%20passed-success)](#user-content-test-report)'
       )
     })
 
@@ -67,7 +69,7 @@ describe('getBadge', () => {
       }
       const badge = getBadge(4, 1, 0, options)
       expect(badge).toBe(
-        '![Tests failed](https://img.shields.io/badge/v1.2.3--beta--test-4%20passed%2C%201%20failed-critical)'
+        '[![Tests failed](https://img.shields.io/badge/v1.2.3--beta--test-4%20passed%2C%201%20failed-critical)](#user-content-test-report)'
       )
     })
 
@@ -79,7 +81,7 @@ describe('getBadge', () => {
       const badge = getBadge(2, 3, 1, options)
       // The URI should have literal hyphens separating title-message-color
       expect(badge).toBe(
-        '![Tests failed](https://img.shields.io/badge/test--suite-2%20passed%2C%203%20failed%2C%201%20skipped-critical)'
+        '[![Tests failed](https://img.shields.io/badge/test--suite-2%20passed%2C%203%20failed%2C%201%20skipped-critical)](#user-content-test-report)'
       )
     })
   })
@@ -108,27 +110,33 @@ describe('getBadge', () => {
     it('includes only passed count when no failures or skips', () => {
       const options: ReportOptions = {...DEFAULT_OPTIONS}
       const badge = getBadge(5, 0, 0, options)
-      expect(badge).toBe('![Tests passed successfully](https://img.shields.io/badge/tests-5%20passed-success)')
+      expect(badge).toBe(
+        '[![Tests passed successfully](https://img.shields.io/badge/tests-5%20passed-success)](#user-content-test-report)'
+      )
     })
 
     it('includes passed and failed counts', () => {
       const options: ReportOptions = {...DEFAULT_OPTIONS}
       const badge = getBadge(5, 2, 0, options)
-      expect(badge).toBe('![Tests failed](https://img.shields.io/badge/tests-5%20passed%2C%202%20failed-critical)')
+      expect(badge).toBe(
+        '[![Tests failed](https://img.shields.io/badge/tests-5%20passed%2C%202%20failed-critical)](#user-content-test-report)'
+      )
     })
 
     it('includes passed, failed and skipped counts', () => {
       const options: ReportOptions = {...DEFAULT_OPTIONS}
       const badge = getBadge(5, 2, 1, options)
       expect(badge).toBe(
-        '![Tests failed](https://img.shields.io/badge/tests-5%20passed%2C%202%20failed%2C%201%20skipped-critical)'
+        '[![Tests failed](https://img.shields.io/badge/tests-5%20passed%2C%202%20failed%2C%201%20skipped-critical)](#user-content-test-report)'
       )
     })
 
     it('uses "none" message when no tests', () => {
       const options: ReportOptions = {...DEFAULT_OPTIONS}
       const badge = getBadge(0, 0, 0, options)
-      expect(badge).toBe('![Tests passed successfully](https://img.shields.io/badge/tests-none-yellow)')
+      expect(badge).toBe(
+        '[![Tests passed successfully](https://img.shields.io/badge/tests-none-yellow)](#user-content-test-report)'
+      )
     })
   })
 })
@@ -156,6 +164,18 @@ describe('getReport', () => {
     const suite = new TestSuiteResult('test-suite', [group])
     return new TestRunResult(path, [suite])
   }
+
+  it('uses the slug prefix for a unique badge anchor', () => {
+    const options: ReportOptions = {
+      ...DEFAULT_OPTIONS,
+      slugPrefix: 'report-a-'
+    }
+
+    const report = getReport([createTestResult('report.xml', 1, 0, 0)], options)
+
+    expect(report).toContain(')](#user-content-report-a-test-report)')
+    expect(report).toContain('<a id="user-content-report-a-test-report"></a>')
+  })
 
   describe('list-files parameter', () => {
     const results = [

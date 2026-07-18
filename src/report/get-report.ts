@@ -160,7 +160,8 @@ export function getBadge(passed: number, failed: number, skipped: number, option
   const encodedBadgeTitle = encodeImgShieldsURIComponent(options.badgeTitle)
   const encodedMessage = encodeImgShieldsURIComponent(message)
   const encodedColor = encodeImgShieldsURIComponent(color)
-  return `[![${hint}](https://img.shields.io/badge/${encodedBadgeTitle}-${encodedMessage}-${encodedColor})](#user-content-test-report)`
+  const reportSlug = makeReportSlug(options)
+  return `[![${hint}](https://img.shields.io/badge/${encodedBadgeTitle}-${encodedMessage}-${encodedColor})](${reportSlug.link})`
 }
 
 function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): string[] {
@@ -175,7 +176,8 @@ function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): s
     sections.push(` `)
   }
 
-  sections.push('# <a name="user-content-test-report"></a> Tests report')
+  const reportSlug = makeReportSlug(options)
+  sections.push(`# <a id="${reportSlug.id}"></a> Tests report`)
 
   // Filter test runs based on list-files option
   const filteredTestRuns =
@@ -314,6 +316,10 @@ function getTestsReport(ts: TestSuiteResult, runIndex: number, suiteIndex: numbe
 function makeRunSlug(runIndex: number, options: ReportOptions): {id: string; link: string} {
   // use prefix to avoid slug conflicts after escaping the paths
   return slug(`r${runIndex}`, options)
+}
+
+function makeReportSlug(options: ReportOptions): {id: string; link: string} {
+  return slug('test-report', options)
 }
 
 function makeSuiteSlug(runIndex: number, suiteIndex: number, options: ReportOptions): {id: string; link: string} {

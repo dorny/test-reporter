@@ -43,7 +43,7 @@ describe('python-xunit unittest report', () => {
     const result = await parser.parse(filePath, fileContent)
     const report = getReport([result])
     // Report should have the badge as the first line
-    expect(report).toMatch(/^!\[Tests failed]/)
+    expect(report).toMatch(/^\[!\[Tests failed]/)
   })
 
   it.each([
@@ -59,7 +59,7 @@ describe('python-xunit unittest report', () => {
       reportTitle
     })
     // Report should have the badge as the first line
-    expect(report).toMatch(/^!\[Tests failed]/)
+    expect(report).toMatch(/^\[!\[Tests failed]/)
   })
 
   it('report includes a custom report title', async () => {
