@@ -165,16 +165,22 @@ describe('getReport', () => {
     return new TestRunResult(path, [suite])
   }
 
-  it('uses the slug prefix for a unique badge anchor', () => {
-    const options: ReportOptions = {
+  it('uses distinct slug prefixes for multiple reports on one summary page', () => {
+    const firstReport = getReport([createTestResult('first-report.xml', 1, 0, 0)], {
       ...DEFAULT_OPTIONS,
       slugPrefix: 'report-a-'
-    }
+    })
+    const secondReport = getReport([createTestResult('second-report.xml', 1, 0, 0)], {
+      ...DEFAULT_OPTIONS,
+      slugPrefix: 'report-b-'
+    })
 
-    const report = getReport([createTestResult('report.xml', 1, 0, 0)], options)
-
-    expect(report).toContain(')](#user-content-report-a-test-report)')
-    expect(report).toContain('<a id="user-content-report-a-test-report"></a>')
+    expect(firstReport).toContain(')](#user-content-report-a-test-report)')
+    expect(firstReport).toContain('<a id="user-content-report-a-test-report"></a>')
+    expect(firstReport).not.toContain('report-b-test-report')
+    expect(secondReport).toContain(')](#user-content-report-b-test-report)')
+    expect(secondReport).toContain('<a id="user-content-report-b-test-report"></a>')
+    expect(secondReport).not.toContain('report-a-test-report')
   })
 
   describe('list-files parameter', () => {
