@@ -1,6 +1,7 @@
-![Tests passed successfully](https://img.shields.io/badge/tests-4%20passed-success)
+[![Tests passed successfully](https://img.shields.io/badge/tests-4%20passed-success)](#user-content-test-report)
 <details><summary>Expand for details</summary>
  
+# <a name="user-content-test-report"></a> Tests report
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
 |[fixtures/nette-tester/BootstrapFormRenderer-report.xml](#user-content-r0)|4 ✅|||300ms|

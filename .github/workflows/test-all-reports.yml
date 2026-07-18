@@ -69,8 +69,80 @@ jobs:
     - uses: actions/checkout@v7
 
     - uses: ./
+      id: report
       with:
         name: ${{ matrix.reporter }} report
         path: ${{ matrix.path }}
         reporter: ${{ matrix.reporter }}
         fail-on-error: false
+
+    - name: Generate a second report for anchor validation
+      if: ${{ matrix.reporter == 'jest-junit' }}
+      id: second_report
+      uses: ./
+      with:
+        name: jest-junit alternate report
+        path: ${{ matrix.path }}
+        reporter: ${{ matrix.reporter }}
+        fail-on-error: false
+
+    - name: Verify report names produce unique anchors
+      if: ${{ matrix.reporter == 'jest-junit' }}
+      env:
+        FIRST_REPORT_NAME: ${{ matrix.reporter }} report
+        FIRST_SLUG_PREFIX: ${{ steps.report.outputs.slug_prefix }}
+        FIRST_SUMMARY_FILE: ${{ steps.report.outputs.summary_file }}
+        SECOND_REPORT_NAME: jest-junit alternate report
+        SECOND_SLUG_PREFIX: ${{ steps.second_report.outputs.slug_prefix }}
+        SECOND_SUMMARY_FILE: ${{ steps.second_report.outputs.summary_file }}
+      run: |
+        node --input-type=module <<'NODE'
+        import {readFileSync} from 'node:fs'
+
+        function anchorId(prefix, reportName, anchor) {
+          const slug = `${prefix}${reportName}-${anchor}`
+            .trim()
+            .replace(/_/g, '')
+            .replace(/[./\\]/g, '-')
+            .replace(/[^\w-]/g, '')
+            .toLowerCase()
+          return `user-content-${slug}`
+        }
+
+        const reports = [
+          {
+            name: process.env.FIRST_REPORT_NAME,
+            prefix: process.env.FIRST_SLUG_PREFIX,
+            summaryFile: process.env.FIRST_SUMMARY_FILE
+          },
+          {
+            name: process.env.SECOND_REPORT_NAME,
+            prefix: process.env.SECOND_SLUG_PREFIX,
+            summaryFile: process.env.SECOND_SUMMARY_FILE
+          }
+        ]
+
+        const reportAnchorIds = reports.map(report => anchorId(report.prefix, report.name, 'test-report'))
+        if (new Set(reportAnchorIds).size !== reports.length) {
+          throw new Error(`Report anchors are not unique: ${reportAnchorIds.join(', ')}`)
+        }
+
+        for (const [index, report] of reports.entries()) {
+          const summary = readFileSync(report.summaryFile, 'utf8')
+          const reportAnchorId = reportAnchorIds[index]
+          const runAnchorId = anchorId(report.prefix, report.name, 'r0')
+          const suiteAnchorId = anchorId(report.prefix, report.name, 'r0s0')
+          const expectedContent = [
+            `](#${reportAnchorId})`,
+            `<a name="${reportAnchorId}"></a>`,
+            `href="#${runAnchorId}"`,
+            `href="#${suiteAnchorId}"`
+          ]
+
+          for (const expected of expectedContent) {
+            if (!summary.includes(expected)) {
+              throw new Error(`Summary ${report.summaryFile} does not contain ${expected}`)
+            }
+          }
+        }
+        NODE

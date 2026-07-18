@@ -1,4 +1,5 @@
-![Tests failed](https://img.shields.io/badge/tests-2%20failed-critical)
+[![Tests failed](https://img.shields.io/badge/tests-2%20failed-critical)](#user-content-test-report)
+# <a name="user-content-test-report"></a> Tests report
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
 |[fixtures/test-errors/jest/jest-test-results.xml](#user-content-r0)||2 ❌||646ms|

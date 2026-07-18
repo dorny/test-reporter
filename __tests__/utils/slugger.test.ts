@@ -25,4 +25,16 @@ describe('slugger', () => {
       link: '#user-content-my-customprefix-r0'
     })
   })
+
+  it('normalizes anchor IDs and links to lowercase', () => {
+    const result = slug('Report-A', {
+      ...DEFAULT_OPTIONS,
+      slugPrefix: 'TR-AbCd-'
+    })
+
+    expect(result).toEqual({
+      id: 'user-content-tr-abcd-report-a',
+      link: '#user-content-tr-abcd-report-a'
+    })
+  })
 })
