@@ -108,6 +108,11 @@ inputs:
         - never: Always expand the report details
     required: false
     default: 'auto'
+  file-name-only:
+    description: |
+      If enabled, only the file name (without directory path) will be shown in the test report summary.
+    required: false
+    default: 'false'
   token:
     description: GitHub Access Token
     required: false

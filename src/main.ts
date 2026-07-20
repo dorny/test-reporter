@@ -58,6 +58,7 @@ class TestReporter {
   readonly badgeTitle = core.getInput('badge-title', {required: false})
   readonly reportTitle = core.getInput('report-title', {required: false})
   readonly collapsed = core.getInput('collapsed', {required: false}) as 'auto' | 'always' | 'never'
+  readonly fileNameOnly = core.getInput('file-name-only', {required: false}) === 'true'
   readonly token = core.getInput('token', {required: true})
   readonly octokit: InstanceType<typeof GitHub>
   readonly context = getCheckRunContext()
@@ -195,7 +196,8 @@ class TestReporter {
       useActionsSummary,
       badgeTitle,
       reportTitle,
-      collapsed
+      collapsed,
+      fileNameOnly
     } = this
 
     const passed = results.reduce((sum, tr) => sum + tr.passed, 0)
@@ -217,7 +219,8 @@ class TestReporter {
           useActionsSummary,
           badgeTitle,
           reportTitle,
-          collapsed
+          collapsed,
+          fileNameOnly
         },
         shortSummary
       )
@@ -251,7 +254,8 @@ class TestReporter {
         useActionsSummary,
         badgeTitle,
         reportTitle,
-        collapsed
+        collapsed,
+        fileNameOnly
       })
 
       core.info('Creating annotations')
