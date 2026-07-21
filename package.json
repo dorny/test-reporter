@@ -65,7 +65,7 @@
     "jest": "^30.4.2",
     "jest-junit": "^17.0.0",
     "js-yaml": "^5.2.1",
-    "prettier": "^3.9.5",
+    "prettier": "^3.9.6",
     "ts-jest": "^29.4.11",
     "typescript": "^6.0.3"
   },
