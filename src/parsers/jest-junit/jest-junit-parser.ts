@@ -86,7 +86,7 @@ export class JestJunitParser implements TestParser {
     }
 
     const message = tc.failure ? tc.failure[0] : tc.error ? tc.error[0] : 'unknown failure'
-    const details = typeof message === 'string' ? message : message['_']
+    const details = typeof message === 'string' ? message : (message._ ?? message.$?.message ?? '')
     let path
     let line
 

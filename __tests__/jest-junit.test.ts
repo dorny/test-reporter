@@ -12,6 +12,27 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 describe('jest-junit tests', () => {
+  it('parses failures that contain only XML attributes', async () => {
+    const parser = new JestJunitParser({
+      parseErrors: true,
+      trackedFiles: []
+    })
+    const result = await parser.parse(
+      'jest-junit.xml',
+      `<?xml version="1.0" encoding="UTF-8"?>
+      <testsuites time="0.1">
+        <testsuite name="attribute failures" tests="1" errors="0" failures="1" skipped="0" time="0.1">
+          <testcase classname="example" name="fails" time="0.1">
+            <failure message="Expected true to be false" type="AssertionError" />
+          </testcase>
+        </testsuite>
+      </testsuites>`
+    )
+
+    expect(result.failed).toBe(1)
+    expect(result.suites[0].groups[0].tests[0].error?.details).toBe('Expected true to be false')
+  })
+
   it('produces empty test run result when there are no test cases in the testsuites element', async () => {
     const fixturePath = path.join(__dirname, 'fixtures', 'empty', 'jest-junit.xml')
     const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
