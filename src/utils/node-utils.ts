@@ -3,10 +3,14 @@ import {normalizeFilePath} from './path-utils.js'
 export const DEFAULT_LOCALE = 'en-US'
 
 export function getExceptionSource(
-  stackTrace: string,
+  stackTrace: unknown,
   trackedFiles: string[],
   getRelativePath: (str: string) => string
 ): {path: string; line: number} | undefined {
+  if (typeof stackTrace !== 'string') {
+    return undefined
+  }
+
   const lines = stackTrace.split(/\r?\n/)
   const re = /\((.*):(\d+):\d+\)$/
 
