@@ -57301,17 +57301,20 @@ class ArtifactProvider {
     artifact;
     name;
     pattern;
+    ignore;
     sha;
     runId;
     token;
     artifactNameMatch;
     fileNameMatch;
+    ignoreFileNameMatch;
     getReportName;
-    constructor(octokit, artifact, name, pattern, sha, runId, token) {
+    constructor(octokit, artifact, name, pattern, ignore, sha, runId, token) {
         this.octokit = octokit;
         this.artifact = artifact;
         this.name = name;
         this.pattern = pattern;
+        this.ignore = ignore;
         this.sha = sha;
         this.runId = runId;
         this.token = token;
@@ -57338,6 +57341,7 @@ class ArtifactProvider {
             this.getReportName = () => this.name;
         }
         this.fileNameMatch = picomatch(pattern);
+        this.ignoreFileNameMatch = ignore.length === 0 ? () => false : picomatch(ignore);
     }
     async load() {
         const result = {};
@@ -57371,6 +57375,10 @@ class ArtifactProvider {
                     }
                     if (!this.fileNameMatch(file)) {
                         info(`Skipping ${file}: filename does not match pattern`);
+                        continue;
+                    }
+                    if (this.ignoreFileNameMatch(file)) {
+                        info(`Skipping ${file}: filename matches ignore pattern`);
                         continue;
                     }
                     const content = zip.readAsText(entry);
@@ -57426,14 +57434,16 @@ function fixStdOutNullTermination() {
 class LocalFileProvider {
     name;
     pattern;
-    constructor(name, pattern) {
+    ignore;
+    constructor(name, pattern, ignore = []) {
         this.name = name;
         this.pattern = pattern;
+        this.ignore = ignore;
     }
     async load() {
         const result = [];
         for (const pat of this.pattern) {
-            const paths = await out(pat, { dot: true });
+            const paths = await out(pat, { dot: true, ignore: this.ignore });
             for (const file of paths) {
                 const content = await external_fs_.promises.readFile(file, { encoding: 'utf8' });
                 result.push({ file, content });
@@ -59672,6 +59682,7 @@ class TestReporter {
     artifact = getInput('artifact', { required: false });
     name = getInput('name', { required: true });
     path = getInput('path', { required: true });
+    ignore = getInput('ignore', { required: false });
     pathReplaceBackslashes = getInput('path-replace-backslashes', { required: false }) === 'true';
     reporter = getInput('reporter', { required: true });
     listSuites = getInput('list-suites', { required: true });
@@ -59722,10 +59733,12 @@ class TestReporter {
         // Split path pattern by ',' and optionally convert all backslashes to forward slashes
         // fast-glob (micromatch) always interprets backslashes as escape characters instead of directory separators
         const pathsList = this.path.split(',');
+        const ignoreList = this.ignore.length === 0 ? [] : this.ignore.split(',');
         const pattern = this.pathReplaceBackslashes ? pathsList.map(normalizeFilePath) : pathsList;
+        const ignore = this.pathReplaceBackslashes ? ignoreList.map(normalizeFilePath) : ignoreList;
         const inputProvider = this.artifact
-            ? new ArtifactProvider(this.octokit, this.artifact, this.name, pattern, this.context.sha, this.context.runId, this.token)
-            : new LocalFileProvider(this.name, pattern);
+            ? new ArtifactProvider(this.octokit, this.artifact, this.name, pattern, ignore, this.context.sha, this.context.runId, this.token)
+            : new LocalFileProvider(this.name, pattern, ignore);
         const parseErrors = this.maxAnnotations > 0;
         const trackedFiles = parseErrors ? await inputProvider.listTrackedFiles() : [];
         const workDir = this.artifact ? undefined : normalizeDirPath(process.cwd(), true);

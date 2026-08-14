@@ -14,6 +14,12 @@ inputs:
       Supports wildcards via [fast-glob](https://github.com/mrmlnc/fast-glob)
       All matched result files must be of same format
     required: true
+  ignore:
+    description: |
+      Comma-separated list of paths to ignore when searching for test results
+      Supports wildcards via [fast-glob](https://github.com/mrmlnc/fast-glob)
+    required: false
+    default: ''
   path-replace-backslashes:
     description: |
       The fast-glob library that is internally used interprets backslashes as escape characters.

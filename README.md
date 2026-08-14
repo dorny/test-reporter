@@ -134,6 +134,10 @@ jobs:
     # All matched result files must be of the same format
     path: ''
 
+    # Comma-separated list of paths to ignore when searching for test results
+    # Supports wildcards via [fast-glob](https://github.com/mrmlnc/fast-glob)
+    ignore: ''
+
     # The fast-glob library that is internally used interprets backslashes as escape characters.
     # If enabled, all backslashes in provided path will be replaced by forward slashes and act as directory separators.
     # It might be useful when path input variable is composed dynamically from existing directory paths on Windows.
@@ -214,6 +218,22 @@ jobs:
     # Default: ${{ github.token }}
     token: ''
 ```
+
+### Ignoring paths
+
+Use `ignore` when `path` needs to search broadly, but some directories should never be scanned for test results.
+For example, monorepos can exclude dependency or generated output directories while still matching reports from multiple packages:
+
+```yaml
+- uses: dorny/test-reporter@v3
+  with:
+    name: JEST Tests
+    path: '**/test-report.junit.xml'
+    ignore: '**/node_modules/**,**/dist/**'
+    reporter: jest-junit
+```
+
+Ignore patterns use the same fast-glob syntax as `path` and are applied to both local files and files inside downloaded artifacts.
 
 ## Output parameters
 | Name       | Description              |

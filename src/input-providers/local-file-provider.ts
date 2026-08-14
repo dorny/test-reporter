@@ -6,13 +6,14 @@ import {listFiles} from '../utils/git.js'
 export class LocalFileProvider implements InputProvider {
   constructor(
     readonly name: string,
-    readonly pattern: string[]
+    readonly pattern: string[],
+    readonly ignore: string[] = []
   ) {}
 
   async load(): Promise<ReportInput> {
     const result: FileContent[] = []
     for (const pat of this.pattern) {
-      const paths = await glob(pat, {dot: true})
+      const paths = await glob(pat, {dot: true, ignore: this.ignore})
       for (const file of paths) {
         const content = await fs.promises.readFile(file, {encoding: 'utf8'})
         result.push({file, content})

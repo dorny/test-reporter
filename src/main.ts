@@ -43,6 +43,7 @@ class TestReporter {
   readonly artifact = core.getInput('artifact', {required: false})
   readonly name = core.getInput('name', {required: true})
   readonly path = core.getInput('path', {required: true})
+  readonly ignore = core.getInput('ignore', {required: false})
   readonly pathReplaceBackslashes = core.getInput('path-replace-backslashes', {required: false}) === 'true'
   readonly reporter = core.getInput('reporter', {required: true})
   readonly listSuites = core.getInput('list-suites', {required: true}) as 'all' | 'failed' | 'none'
@@ -102,7 +103,9 @@ class TestReporter {
     // Split path pattern by ',' and optionally convert all backslashes to forward slashes
     // fast-glob (micromatch) always interprets backslashes as escape characters instead of directory separators
     const pathsList = this.path.split(',')
+    const ignoreList = this.ignore.length === 0 ? [] : this.ignore.split(',')
     const pattern = this.pathReplaceBackslashes ? pathsList.map(normalizeFilePath) : pathsList
+    const ignore = this.pathReplaceBackslashes ? ignoreList.map(normalizeFilePath) : ignoreList
 
     const inputProvider = this.artifact
       ? new ArtifactProvider(
@@ -110,11 +113,12 @@ class TestReporter {
           this.artifact,
           this.name,
           pattern,
+          ignore,
           this.context.sha,
           this.context.runId,
           this.token
         )
-      : new LocalFileProvider(this.name, pattern)
+      : new LocalFileProvider(this.name, pattern, ignore)
 
     const parseErrors = this.maxAnnotations > 0
     const trackedFiles = parseErrors ? await inputProvider.listTrackedFiles() : []

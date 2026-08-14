@@ -16,6 +16,7 @@ type WorkflowRunArtifact = {
 export class ArtifactProvider implements InputProvider {
   private readonly artifactNameMatch: (name: string) => boolean
   private readonly fileNameMatch: (name: string) => boolean
+  private readonly ignoreFileNameMatch: (name: string) => boolean
   private readonly getReportName: (name: string) => string
 
   constructor(
@@ -23,6 +24,7 @@ export class ArtifactProvider implements InputProvider {
     readonly artifact: string,
     readonly name: string,
     readonly pattern: string[],
+    readonly ignore: string[],
     readonly sha: string,
     readonly runId: number,
     readonly token: string
@@ -50,6 +52,7 @@ export class ArtifactProvider implements InputProvider {
     }
 
     this.fileNameMatch = picomatch(pattern)
+    this.ignoreFileNameMatch = ignore.length === 0 ? () => false : picomatch(ignore)
   }
 
   async load(): Promise<ReportInput> {
@@ -88,6 +91,10 @@ export class ArtifactProvider implements InputProvider {
           }
           if (!this.fileNameMatch(file)) {
             core.info(`Skipping ${file}: filename does not match pattern`)
+            continue
+          }
+          if (this.ignoreFileNameMatch(file)) {
+            core.info(`Skipping ${file}: filename matches ignore pattern`)
             continue
           }
           const content = zip.readAsText(entry)
