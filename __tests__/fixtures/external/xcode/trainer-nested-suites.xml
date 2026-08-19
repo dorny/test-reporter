@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites tests='6' failures='1' skipped='1' time='176.5'>
+  <testsuite name='DeeplinkTests' time='0.0127' tests='2' failures='0' skipped='0'>
+    <testsuite name='EntityIdentifierParserTests' time='0.0127' tests='2' failures='0' skipped='0'>
+      <testcase name='parse_withPlanAhead_shouldReturnEntityIdentifier()' classname='EntityIdentifierParserTests' time='0.00071'/>
+      <testcase name='parse_withLanguage_shouldReturnEntityIdentifier()' classname='EntityIdentifierParserTests' time='0.003'/>
+    </testsuite>
+  </testsuite>
+  <testsuite name='Tests' time='176.0' tests='4' failures='1' skipped='1'>
+    <testsuite name='PlanDescriptionWebViewTests' time='154.0' tests='2' failures='1' skipped='0'>
+      <testcase name='A loaded autoplay video ends up muted so it can autoplay silently' classname='PlanDescriptionWebViewTests' time='22.0'>
+        <failure message='PlanDescriptionWebViewTests.swift:67: Expectation failed: finished'/>
+      </testcase>
+      <testcase name='A loaded video keeps its own controls' classname='PlanDescriptionWebViewTests' time='1.5'/>
+    </testsuite>
+    <testsuite name='Tests.app' time='22.0' tests='2' failures='0' skipped='1'>
+      <testsuite name='FeedCarouselViewModelTests' time='22.0' tests='2' failures='0' skipped='1'>
+        <testcase name='test_onAppear_shouldTrack()' classname='FeedCarouselViewModelTests' time='0.2'/>
+        <testcase name='test_onScroll_shouldPaginate()' classname='FeedCarouselViewModelTests' time='0.0'>
+          <skipped/>
+        </testcase>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

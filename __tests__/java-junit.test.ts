@@ -23,6 +23,51 @@ describe('java-junit tests', () => {
     expect(result.result).toBe('success')
   })
 
+  it('counts test cases nested several suites deep', async () => {
+    // fastlane's trainer emits a <testsuite> per build target, then per bundle, then
+    // per class, so no test case is a direct child of the suites listed under
+    // <testsuites>. Reading only direct children reported such a run as 0 tests.
+    const fixturePath = path.join(__dirname, 'fixtures', 'external', 'xcode', 'trainer-nested-suites.xml')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: []
+    }
+
+    const parser = new JavaJunitParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+
+    expect(result.tests).toBe(6)
+    expect(result.passed).toBe(4)
+    expect(result.failed).toBe(1)
+    expect(result.skipped).toBe(1)
+    expect(result.result).toBe('failed')
+  })
+
+  it('names a nested suite as the group of the cases it holds', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'external', 'xcode', 'trainer-nested-suites.xml')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: []
+    }
+
+    const parser = new JavaJunitParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+
+    const suite = result.suites.find(s => s.name === 'Tests')
+    expect(suite?.groups.map(g => g.name).sort()).toStrictEqual([
+      'FeedCarouselViewModelTests',
+      'PlanDescriptionWebViewTests'
+    ])
+    const failed = suite?.groups.flatMap(g => g.tests).find(t => t.result === 'failed')
+    expect(failed?.name).toBe('A loaded autoplay video ends up muted so it can autoplay silently')
+  })
+
   it('report from apache/pulsar single suite test results matches snapshot', async () => {
     const fixturePath = path.join(
       __dirname,

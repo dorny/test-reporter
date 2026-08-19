@@ -77,12 +77,13 @@ export class JavaJunitParser implements TestParser {
   }
 
   private getGroups(suite: TestSuite): TestGroupResult[] {
-    if (suite.testcase === undefined) {
+    const testcases = this.getTestCases(suite)
+    if (testcases.length === 0) {
       return []
     }
 
     const groups: {name: string; tests: TestCase[]}[] = []
-    for (const tc of suite.testcase) {
+    for (const tc of testcases) {
       // Normally classname is same as suite name - both refer to same Java class
       // Therefore it doesn't make sense to process it as a group
       // and tests will be added to default group with empty name
@@ -105,6 +106,15 @@ export class JavaJunitParser implements TestParser {
       })
       return new TestGroupResult(grp.name, tests)
     })
+  }
+
+  // Some reporters nest a <testsuite> per class inside a <testsuite> per module or
+  // build target, several levels deep — fastlane's trainer emits target/bundle/class
+  // for Xcode results. Reading only the direct children of the suites listed under
+  // <testsuites> then finds no test cases at all and reports the run as empty.
+  private getTestCases(suite: TestSuite): TestCase[] {
+    const nested = suite.testsuite?.flatMap(inner => this.getTestCases(inner)) ?? []
+    return [...(suite.testcase ?? []), ...nested]
   }
 
   private getTestCaseResult(test: TestCase): TestExecutionResult {
