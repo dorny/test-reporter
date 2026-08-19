@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.6.1
+* Fix: Count test cases nested several suites deep in `java-junit` reports (fastlane trainer / Xcode results reported 0 passed, 0 failed, 0 skipped)
+
 ## 2.6.0
 * Feature: Add `sort-suites` input to order test suites by execution time (descending)
 
