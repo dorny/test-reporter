@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.6.8
+* Fix: An oversized report now gives up test cases one suite at a time — failed suites first, then the cheapest — instead of dropping every test case in the report, and says how many suites lost their listing
+
 ## 2.6.7
 * Feature: Mark a group's time as accumulated (`of test time`), since it is the sum of its cases' and can exceed the suite that holds it when a suite carries real elapsed time
 
