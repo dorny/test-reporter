@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.6.9
+* Fix: An oversized report gives up test cases one group (class) at a time rather than one suite at a time, so every suite keeps its section and only the classes that cannot fit are missing — with a note in the suite that lost them
+
 ## 2.6.8
 * Fix: An oversized report now gives up test cases one suite at a time — failed suites first, then the cheapest — instead of dropping every test case in the report, and says how many suites lost their listing
 
