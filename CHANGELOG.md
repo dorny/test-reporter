@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.6.7
+* Feature: Mark a group's time as accumulated (`of test time`), since it is the sum of its cases' and can exceed the suite that holds it when a suite carries real elapsed time
+
 ## 2.6.6
 * Feature: Rename the suites table's `Time` column to `Test time` — a suite has no elapsed time of its own, so the value is the sum of its test cases' and counts concurrent tests once each
 
