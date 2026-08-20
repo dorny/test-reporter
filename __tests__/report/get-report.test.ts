@@ -180,9 +180,11 @@ describe('collapseSuites', () => {
   })
 
   it('closes every open section before the trim message', () => {
+    // The suites table alone busts the limit, so there is nothing the report can
+    // give up to fit and it has to be cut mid-section.
     const many = new TestRunResult(
       'report.xml',
-      Array.from({length: 400}, (_, i) => suite(`Suite${i}`, [failing(`a very long test case name ${i}`.repeat(20))])),
+      Array.from({length: 900}, (_, i) => suite(`Suite with a rather long name ${i}`.repeat(3), [failing(`case ${i}`)])),
       10
     )
 
@@ -414,7 +416,7 @@ describe('a report that does not fit', () => {
   it('says that it left something out', () => {
     const report = render()
 
-    expect(report).toContain('The test cases of 1 suite(s) are not listed')
+    expect(report).toContain('group(s) of test cases are not listed')
     expect(report).toContain('65535 byte limit')
   })
 

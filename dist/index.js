@@ -2549,17 +2549,20 @@ function getReport(results, options = exports.DEFAULT_OPTIONS, shortSummary = ''
     // limit used to drop every test case in it, which on a run with no failures
     // left a table of suites and nothing behind any of them — no way to see what a
     // suite ran, and no indication that anything had been left out.
-    const omittedSuites = chooseOmittedSuites(results, opts, shortSummary);
-    if (omittedSuites.size > 0) {
-        core.info(`Test report summary is too big - omitting the test cases of ${omittedSuites.size} suite(s)`);
-        opts.omittedSuites = omittedSuites;
+    for (const slack of [1, 0.9, 0.75, 0.5]) {
+        const omittedGroups = chooseOmittedGroups(results, opts, shortSummary, slack);
+        if (omittedGroups.size === 0) {
+            break;
+        }
+        core.info(`Test report summary is too big - omitting ${omittedGroups.size} group(s) of test cases`);
+        opts.omittedGroups = omittedGroups;
         lines = renderReport(results, opts, shortSummary);
         report = lines.join('\n');
         if (getByteLength(report) <= getMaxReportLength(options)) {
             return report;
         }
     }
-    opts.omittedSuites = undefined;
+    opts.omittedGroups = undefined;
     if (opts.listTests === 'all') {
         core.info("Test report summary is too big - setting 'listTests' to 'failed'");
         opts.listTests = 'failed';
@@ -2572,23 +2575,34 @@ function getReport(results, options = exports.DEFAULT_OPTIONS, shortSummary = ''
     core.warning(`Test report summary exceeded limit of ${getMaxReportLength(options)} bytes and will be trimmed`);
     return trimReport(lines, options);
 }
-// Which suites have to give up their test cases for the report to fit. Suites
-// that failed are kept first — they are what the report is read for — then the
-// cheapest of the rest, so that as many as possible survive.
-function chooseOmittedSuites(results, options, shortSummary) {
+// Which groups of test cases have to go for the report to fit. A group is the
+// class that declares them, so giving up a group at a time keeps every suite in
+// the report — dropping whole suites instead loses the biggest one entirely, and
+// the biggest one is a whole test target.
+//
+// Groups that failed are kept first, since they are what the report is read for,
+// then the cheapest of the rest, so that as many as possible survive. The budget
+// is what is left once everything but the listings is rendered; `slack` shrinks
+// it on a retry, since a group's measured cost does not include the section its
+// suite needs once any of its groups is back.
+function chooseOmittedGroups(results, options, shortSummary, slack) {
     const everything = new Set();
     const costs = [];
     for (const [runIndex, tr] of results.entries()) {
         const suites = options.listSuites === 'failed' ? tr.failedSuites : tr.suites;
         for (const [suiteIndex, ts] of suites.entries()) {
-            const key = `${runIndex}:${suiteIndex}`;
-            everything.add(key);
-            const listing = getTestsReport(ts, runIndex, suiteIndex, options);
-            costs.push({ key, cost: getByteLength(listing.join('\n')) + 1, failed: ts.result === 'failed' });
+            for (const [groupIndex, grp] of ts.groups.entries()) {
+                everything.add(`${runIndex}:${suiteIndex}:${groupIndex}`);
+                costs.push({
+                    key: `${runIndex}:${suiteIndex}:${groupIndex}`,
+                    cost: getByteLength(getGroupReport(grp, options).join('\n')) + 1,
+                    failed: grp.result === 'failed'
+                });
+            }
         }
     }
-    const withoutAny = renderReport(results, { ...options, omittedSuites: everything }, shortSummary).join('\n');
-    let budget = getMaxReportLength(options) - getByteLength(withoutAny);
+    const withoutAny = renderReport(results, { ...options, omittedGroups: everything }, shortSummary).join('\n');
+    let budget = (getMaxReportLength(options) - getByteLength(withoutAny)) * slack;
     const kept = new Set();
     const order = [...costs].sort((a, b) => (a.failed === b.failed ? a.cost - b.cost : a.failed ? -1 : 1));
     for (const { key, cost } of order) {
@@ -2677,9 +2691,9 @@ function renderReport(results, options, shortSummary) {
     }
     const badge = getReportBadge(results, options);
     sections.push(badge);
-    const omitted = options.omittedSuites?.size ?? 0;
+    const omitted = options.omittedGroups?.size ?? 0;
     if (omitted > 0) {
-        sections.push(`> The test cases of ${omitted} suite(s) are not listed: the report reached the ${getMaxReportLength(options)} byte limit. The full results are in the run's artifacts.`);
+        sections.push(`> ${omitted} group(s) of test cases are not listed: the report reached the ${getMaxReportLength(options)} byte limit. The full results are in the run's artifacts.`);
     }
     const runs = getTestRunsReport(results, options);
     sections.push(...runs);
@@ -2774,7 +2788,7 @@ function getSuitesReport(tr, runIndex, options) {
                 const tsName = s.name;
                 const skipLink = options.listTests === 'none' ||
                     (options.listTests === 'failed' && s.result !== 'failed') ||
-                    (options.omittedSuites?.has(`${runIndex}:${suiteIndex}`) ?? false);
+                    visibleGroups(s, runIndex, suiteIndex, options).visible.length === 0;
                 const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex, options).link;
                 const tsNameLink = skipLink ? tsName : (0, markdown_utils_1.link)(tsName, tsAddr);
                 const passed = s.passed > 0 ? `${s.passed} ${markdown_utils_1.Icon.success}` : '';
@@ -2798,10 +2812,7 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
     if (options.listTests === 'failed' && ts.result !== 'failed') {
         return [];
     }
-    if (options.omittedSuites?.has(`${runIndex}:${suiteIndex}`)) {
-        return [];
-    }
-    const groups = ts.groups;
+    const { visible: groups, omitted } = visibleGroups(ts, runIndex, suiteIndex, options);
     if (groups.length === 0) {
         return [];
     }
@@ -2823,16 +2834,16 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
     else {
         sections.push(`### ${icon}\xa0${tsNameLink}`);
     }
+    if (omitted > 0) {
+        sections.push(`> ${omitted} more group(s) of test cases did not fit in the report.`);
+    }
     if (options.collapseGroups) {
         sections.push(...getCollapsedGroupsReport(groups, options));
     }
     else {
         sections.push('```');
         for (const grp of groups) {
-            if (grp.name) {
-                sections.push(grp.name);
-            }
-            sections.push(...getGroupTestLines(grp, options, grp.name ? '  ' : ''));
+            sections.push(...getGroupReport(grp, options));
         }
         sections.push('```');
     }
@@ -2841,27 +2852,40 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
     }
     return sections;
 }
+function visibleGroups(ts, runIndex, suiteIndex, options) {
+    const omittedGroups = options.omittedGroups;
+    if (omittedGroups === undefined || omittedGroups.size === 0) {
+        return { visible: ts.groups, omitted: 0 };
+    }
+    const visible = ts.groups.filter((_, groupIndex) => !omittedGroups.has(`${runIndex}:${suiteIndex}:${groupIndex}`));
+    return { visible, omitted: ts.groups.length - visible.length };
+}
 // A suite here is a whole test target, whose cases are grouped by the class that
 // declares them. Listing them all inline puts thousands of lines behind one
 // summary line, which is the wall the suite sections were closed to avoid.
 function getCollapsedGroupsReport(groups, options) {
-    const sections = [];
-    for (const grp of groups) {
-        const testLines = getGroupTestLines(grp, options, '');
-        if (testLines.length === 0) {
-            continue;
-        }
-        if (grp.name) {
-            sections.push(DETAILS_SEPARATOR);
-            sections.push(`<details><summary>${getResultIcon(grp.result)}\xa0${grp.name}\xa0${formatCounts(grp, ' of test time')}</summary>`);
-            sections.push(DETAILS_SEPARATOR);
-        }
-        sections.push('```', ...testLines, '```');
-        if (grp.name) {
-            sections.push(DETAILS_CLOSE);
-        }
+    return groups.flatMap(grp => getGroupReport(grp, options));
+}
+function getGroupReport(grp, options) {
+    const testLines = getGroupTestLines(grp, options, options.collapseGroups || !grp.name ? '' : '  ');
+    if (testLines.length === 0) {
+        return [];
     }
-    return sections;
+    if (!options.collapseGroups) {
+        return grp.name ? [grp.name, ...testLines] : testLines;
+    }
+    if (!grp.name) {
+        return ['```', ...testLines, '```'];
+    }
+    return [
+        DETAILS_SEPARATOR,
+        `<details><summary>${getResultIcon(grp.result)}\xa0${grp.name}\xa0${formatCounts(grp, ' of test time')}</summary>`,
+        DETAILS_SEPARATOR,
+        '```',
+        ...testLines,
+        '```',
+        DETAILS_CLOSE
+    ];
 }
 function getGroupTestLines(grp, options, indent) {
     const lines = [];
