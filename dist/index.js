@@ -314,6 +314,7 @@ class TestReporter {
     badgeTitle = core.getInput('badge-title', { required: false });
     reportTitle = core.getInput('report-title', { required: false });
     collapsed = core.getInput('collapsed', { required: false });
+    collapseSuites = core.getInput('collapse-suites', { required: false }) === 'true';
     token = core.getInput('token', { required: true });
     octokit;
     context = (0, github_utils_1.getCheckRunContext)();
@@ -414,7 +415,7 @@ class TestReporter {
                 throw error;
             }
         }
-        const { listSuites, sortSuites, listTests, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed } = this;
+        const { listSuites, sortSuites, listTests, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed, collapseSuites } = this;
         const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
         const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
         const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
@@ -430,7 +431,8 @@ class TestReporter {
                 useActionsSummary,
                 badgeTitle,
                 reportTitle,
-                collapsed
+                collapsed,
+                collapseSuites
             }, shortSummary);
             core.info('Summary content:');
             core.info(summary);
@@ -459,7 +461,8 @@ class TestReporter {
                 useActionsSummary,
                 badgeTitle,
                 reportTitle,
-                collapsed
+                collapsed,
+                collapseSuites
             });
             core.info('Creating annotations');
             const annotations = (0, get_annotations_1.getAnnotations)(results, this.maxAnnotations);
@@ -2457,6 +2460,9 @@ const markdown_utils_1 = __nccwpck_require__(5129);
 const node_utils_1 = __nccwpck_require__(5384);
 const parse_utils_1 = __nccwpck_require__(9633);
 const slugger_1 = __nccwpck_require__(9537);
+const DETAILS_CLOSE = '</details>';
+// A blank line, so GitHub leaves the HTML block and renders the markdown inside it.
+const DETAILS_SEPARATOR = ' ';
 const MAX_REPORT_LENGTH = 65535;
 const MAX_ACTIONS_SUMMARY_LENGTH = 1048576;
 exports.DEFAULT_OPTIONS = {
@@ -2468,7 +2474,8 @@ exports.DEFAULT_OPTIONS = {
     useActionsSummary: true,
     badgeTitle: 'tests',
     reportTitle: '',
-    collapsed: 'auto'
+    collapsed: 'auto',
+    collapseSuites: false
 };
 function getReport(results, options = exports.DEFAULT_OPTIONS, shortSummary = '') {
     applySort(results, options);
@@ -2496,7 +2503,8 @@ function getMaxReportLength(options = exports.DEFAULT_OPTIONS) {
 function trimReport(lines, options) {
     const closingBlock = '```';
     const errorMsg = `**Report exceeded GitHub limit of ${getMaxReportLength(options)} bytes and has been trimmed**`;
-    const maxErrorMsgLength = closingBlock.length + errorMsg.length + 2;
+    const maxDetailsClosingLength = countOpenDetails(lines) * (DETAILS_CLOSE.length + 1);
+    const maxErrorMsgLength = closingBlock.length + errorMsg.length + 2 + maxDetailsClosingLength;
     const maxReportLength = getMaxReportLength(options) - maxErrorMsgLength;
     let reportLength = 0;
     let codeBlock = false;
@@ -2516,8 +2524,25 @@ function trimReport(lines, options) {
     if (codeBlock) {
         reportLines.push('```');
     }
+    // The trim message must land outside every open <details>, or it is hidden in a
+    // section the reader has to guess to expand.
+    for (let i = countOpenDetails(reportLines); i > 0; i--) {
+        reportLines.push(DETAILS_CLOSE);
+    }
     reportLines.push(errorMsg);
     return reportLines.join('\n');
+}
+function countOpenDetails(lines) {
+    let depth = 0;
+    for (const line of lines) {
+        if (line.startsWith('<details')) {
+            depth++;
+        }
+        else if (line === DETAILS_CLOSE) {
+            depth--;
+        }
+    }
+    return Math.max(depth, 0);
 }
 function applySort(results, options) {
     results.sort((a, b) => a.path.localeCompare(b.path, node_utils_1.DEFAULT_LOCALE));
@@ -2586,7 +2611,7 @@ function getTestRunsReport(testRuns, options) {
     const shouldCollapse = options.collapsed === 'always' || (options.collapsed === 'auto' && totalFailed === 0);
     if (shouldCollapse) {
         sections.push(`<details><summary>Expand for details</summary>`);
-        sections.push(` `);
+        sections.push(DETAILS_SEPARATOR);
     }
     if (testRuns.length > 0 || options.onlySummary) {
         const tableData = testRuns
@@ -2610,7 +2635,7 @@ function getTestRunsReport(testRuns, options) {
         sections.push(...suitesReports);
     }
     if (shouldCollapse) {
-        sections.push(`</details>`);
+        sections.push(DETAILS_CLOSE);
     }
     return sections;
 }
@@ -2663,7 +2688,19 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
     const tsSlug = makeSuiteSlug(runIndex, suiteIndex, options);
     const tsNameLink = `<a id="${tsSlug.id}" href="${options.baseUrl + tsSlug.link}">${tsName}</a>`;
     const icon = getResultIcon(ts.result);
-    sections.push(`### ${icon}\xa0${tsNameLink}`);
+    if (options.collapseSuites) {
+        // The anchor lives in the <summary>, which renders even while the section is
+        // closed. Inside the body it would be unreachable: GitHub does not expand a
+        // <details> to reveal the anchor a link targets.
+        sections.push(DETAILS_SEPARATOR);
+        // No href on the anchor: a link in the summary would swallow the click that is
+        // supposed to open the section.
+        sections.push(`<details><summary><a id="${tsSlug.id}"></a>${icon}\xa0${tsName}\xa0${getSuiteCounts(ts)}</summary>`);
+        sections.push(DETAILS_SEPARATOR);
+    }
+    else {
+        sections.push(`### ${icon}\xa0${tsNameLink}`);
+    }
     sections.push('```');
     for (const grp of groups) {
         if (grp.name) {
@@ -2687,7 +2724,23 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
         }
     }
     sections.push('```');
+    if (options.collapseSuites) {
+        sections.push(DETAILS_CLOSE);
+    }
     return sections;
+}
+function getSuiteCounts(ts) {
+    const counts = [];
+    if (ts.passed > 0) {
+        counts.push(`${ts.passed} ${markdown_utils_1.Icon.success}`);
+    }
+    if (ts.failed > 0) {
+        counts.push(`${ts.failed} ${markdown_utils_1.Icon.fail}`);
+    }
+    if (ts.skipped > 0) {
+        counts.push(`${ts.skipped} ${markdown_utils_1.Icon.skip}`);
+    }
+    return `${counts.join(' ')} (${(0, markdown_utils_1.formatTime)(ts.time)})`;
 }
 function makeRunSlug(runIndex, options) {
     // use prefix to avoid slug conflicts after escaping the paths

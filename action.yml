@@ -107,6 +107,14 @@ inputs:
         - never: Always expand the report details
     required: false
     default: 'auto'
+  collapse-suites:
+    description: |
+      Renders each test suite's list of test cases as its own collapsible section, closed by default.
+      Keeps a report with many suites navigable: the reader expands only the suites they care about
+      instead of scrolling past every test case. Combine with `collapsed: always` to also close the
+      whole report.
+    required: false
+    default: 'false'
   token:
     description: GitHub Access Token
     required: false

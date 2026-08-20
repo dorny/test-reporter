@@ -1,4 +1,5 @@
-import {getBadge, DEFAULT_OPTIONS, ReportOptions} from '../../src/report/get-report'
+import {getBadge, getReport, DEFAULT_OPTIONS, ReportOptions} from '../../src/report/get-report'
+import {TestCaseResult, TestGroupResult, TestRunResult, TestSuiteResult} from '../../src/test-results'
 
 describe('getBadge', () => {
   describe('URI encoding with special characters', () => {
@@ -8,7 +9,9 @@ describe('getBadge', () => {
         badgeTitle: 'tests'
       }
       const badge = getBadge(5, 0, 1, options)
-      expect(badge).toBe('![Tests passed successfully](https://img.shields.io/badge/tests-5%20passed%2C%201%20skipped-success)')
+      expect(badge).toBe(
+        '![Tests passed successfully](https://img.shields.io/badge/tests-5%20passed%2C%201%20skipped-success)'
+      )
     })
 
     it('handles badge title with single hyphen', () => {
@@ -28,7 +31,9 @@ describe('getBadge', () => {
       }
       const badge = getBadge(10, 0, 0, options)
       // All hyphens in the title should be encoded as --
-      expect(badge).toBe('![Tests passed successfully](https://img.shields.io/badge/integration--api--tests-10%20passed-success)')
+      expect(badge).toBe(
+        '![Tests passed successfully](https://img.shields.io/badge/integration--api--tests-10%20passed-success)'
+      )
     })
 
     it('handles badge title with multiple underscores', () => {
@@ -38,7 +43,9 @@ describe('getBadge', () => {
       }
       const badge = getBadge(10, 0, 0, options)
       // All underscores in the title should be encoded as __
-      expect(badge).toBe('![Tests passed successfully](https://img.shields.io/badge/my__integration__test-10%20passed-success)')
+      expect(badge).toBe(
+        '![Tests passed successfully](https://img.shields.io/badge/my__integration__test-10%20passed-success)'
+      )
     })
 
     it('handles badge title with version format containing hyphen', () => {
@@ -48,7 +55,9 @@ describe('getBadge', () => {
       }
       const badge = getBadge(1, 0, 0, options)
       // The hyphen in "12.0-ubi" should be encoded as --
-      expect(badge).toBe('![Tests passed successfully](https://img.shields.io/badge/MariaDb%2012.0--ubi%20database%20tests-1%20passed-success)')
+      expect(badge).toBe(
+        '![Tests passed successfully](https://img.shields.io/badge/MariaDb%2012.0--ubi%20database%20tests-1%20passed-success)'
+      )
     })
 
     it('handles badge title with dots and hyphens', () => {
@@ -57,7 +66,9 @@ describe('getBadge', () => {
         badgeTitle: 'v1.2.3-beta-test'
       }
       const badge = getBadge(4, 1, 0, options)
-      expect(badge).toBe('![Tests failed](https://img.shields.io/badge/v1.2.3--beta--test-4%20passed%2C%201%20failed-critical)')
+      expect(badge).toBe(
+        '![Tests failed](https://img.shields.io/badge/v1.2.3--beta--test-4%20passed%2C%201%20failed-critical)'
+      )
     })
 
     it('preserves structural hyphens between label and message', () => {
@@ -67,7 +78,9 @@ describe('getBadge', () => {
       }
       const badge = getBadge(2, 3, 1, options)
       // The URI should have literal hyphens separating title-message-color
-      expect(badge).toBe('![Tests failed](https://img.shields.io/badge/test--suite-2%20passed%2C%203%20failed%2C%201%20skipped-critical)')
+      expect(badge).toBe(
+        '![Tests failed](https://img.shields.io/badge/test--suite-2%20passed%2C%203%20failed%2C%201%20skipped-critical)'
+      )
     })
   })
 
@@ -107,7 +120,9 @@ describe('getBadge', () => {
     it('includes passed, failed and skipped counts', () => {
       const options: ReportOptions = {...DEFAULT_OPTIONS}
       const badge = getBadge(5, 2, 1, options)
-      expect(badge).toBe('![Tests failed](https://img.shields.io/badge/tests-5%20passed%2C%202%20failed%2C%201%20skipped-critical)')
+      expect(badge).toBe(
+        '![Tests failed](https://img.shields.io/badge/tests-5%20passed%2C%202%20failed%2C%201%20skipped-critical)'
+      )
     })
 
     it('uses "none" message when no tests', () => {
@@ -118,3 +133,72 @@ describe('getBadge', () => {
   })
 })
 
+describe('collapseSuites', () => {
+  const suite = (name: string, cases: TestCaseResult[]): TestSuiteResult =>
+    new TestSuiteResult(name, [new TestGroupResult(name, cases)])
+
+  const passing = (name: string): TestCaseResult => new TestCaseResult(name, 'success', 1)
+  const failing = (name: string): TestCaseResult => new TestCaseResult(name, 'failed', 1)
+
+  const run = (): TestRunResult =>
+    new TestRunResult('report.xml', [suite('AlphaTests', [passing('a')]), suite('BetaTests', [failing('b')])], 10)
+
+  it('leaves suites expanded by default', () => {
+    const report = getReport([run()], {...DEFAULT_OPTIONS, collapsed: 'never'})
+
+    expect(report).toContain('### ✅\xa0<a id=')
+    expect(report).not.toContain('<details><summary>✅')
+  })
+
+  it('renders each suite as a closed section carrying its own counts', () => {
+    const report = getReport([run()], {...DEFAULT_OPTIONS, collapsed: 'never', collapseSuites: true})
+
+    expect(report).toContain('<details><summary><a id="user-content-r0s0"></a>✅\xa0AlphaTests\xa01 ✅')
+    expect(report).toContain('<details><summary><a id="user-content-r0s1"></a>❌\xa0BetaTests\xa01 ❌')
+    expect(report).not.toContain('### ')
+    // Nothing may be `open`, and every section must close.
+    expect(report).not.toContain('<details open')
+    expect(report.match(/<details/g)).toHaveLength(2)
+    expect(report.match(/<\/details>/g)).toHaveLength(2)
+  })
+
+  it('separates the summary from the fenced test list with a blank line', () => {
+    const report = getReport([run()], {...DEFAULT_OPTIONS, collapsed: 'never', collapseSuites: true})
+
+    const lines = report.split('\n')
+    const summaryIndex = lines.findIndex(l => l.startsWith('<details><summary>'))
+    expect(lines[summaryIndex + 1].trim()).toBe('')
+    expect(lines[summaryIndex + 2]).toBe('```')
+  })
+
+  it('nests the suite sections inside the whole-report section', () => {
+    const report = getReport([run()], {...DEFAULT_OPTIONS, collapsed: 'always', collapseSuites: true})
+
+    expect(report).toContain('<details><summary>Expand for details</summary>')
+    expect(report.match(/<details/g)).toHaveLength(3)
+    expect(report.match(/<\/details>/g)).toHaveLength(3)
+  })
+
+  it('closes every open section before the trim message', () => {
+    const many = new TestRunResult(
+      'report.xml',
+      Array.from({length: 400}, (_, i) => suite(`Suite${i}`, [failing(`a very long test case name ${i}`.repeat(20))])),
+      10
+    )
+
+    const report = getReport([many], {
+      ...DEFAULT_OPTIONS,
+      collapsed: 'always',
+      collapseSuites: true,
+      useActionsSummary: false
+    })
+
+    expect(report).toContain('has been trimmed')
+    const opened = report.match(/<details/g)?.length ?? 0
+    const closed = report.match(/<\/details>/g)?.length ?? 0
+    expect(closed).toBe(opened)
+    // The message is the last line, so it sits outside every section.
+    expect(report.split('\n').at(-1)).toContain('has been trimmed')
+    expect(Buffer.byteLength(report, 'utf8')).toBeLessThanOrEqual(65535)
+  })
+})

@@ -184,6 +184,12 @@ jobs:
     #   none
     list-tests: 'all'
 
+    # Renders each test suite's list of test cases as its own collapsible section, closed by default.
+    # Keeps a report with many suites navigable: the reader expands only the suites they care about
+    # instead of scrolling past every test case. Combine with `collapsed: always` to also close the
+    # whole report.
+    collapse-suites: 'false'
+
     # Limits number of created annotations with error message and stack trace captured during test execution.
     # Must be less or equal to 50.
     max-annotations: '10'
