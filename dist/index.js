@@ -2545,6 +2545,21 @@ function getReport(results, options = exports.DEFAULT_OPTIONS, shortSummary = ''
     if (getByteLength(report) <= getMaxReportLength(options)) {
         return report;
     }
+    // Listing no tests at all is the last resort, not the first. A report over the
+    // limit used to drop every test case in it, which on a run with no failures
+    // left a table of suites and nothing behind any of them — no way to see what a
+    // suite ran, and no indication that anything had been left out.
+    const omittedSuites = chooseOmittedSuites(results, opts, shortSummary);
+    if (omittedSuites.size > 0) {
+        core.info(`Test report summary is too big - omitting the test cases of ${omittedSuites.size} suite(s)`);
+        opts.omittedSuites = omittedSuites;
+        lines = renderReport(results, opts, shortSummary);
+        report = lines.join('\n');
+        if (getByteLength(report) <= getMaxReportLength(options)) {
+            return report;
+        }
+    }
+    opts.omittedSuites = undefined;
     if (opts.listTests === 'all') {
         core.info("Test report summary is too big - setting 'listTests' to 'failed'");
         opts.listTests = 'failed';
@@ -2556,6 +2571,34 @@ function getReport(results, options = exports.DEFAULT_OPTIONS, shortSummary = ''
     }
     core.warning(`Test report summary exceeded limit of ${getMaxReportLength(options)} bytes and will be trimmed`);
     return trimReport(lines, options);
+}
+// Which suites have to give up their test cases for the report to fit. Suites
+// that failed are kept first — they are what the report is read for — then the
+// cheapest of the rest, so that as many as possible survive.
+function chooseOmittedSuites(results, options, shortSummary) {
+    const everything = new Set();
+    const costs = [];
+    for (const [runIndex, tr] of results.entries()) {
+        const suites = options.listSuites === 'failed' ? tr.failedSuites : tr.suites;
+        for (const [suiteIndex, ts] of suites.entries()) {
+            const key = `${runIndex}:${suiteIndex}`;
+            everything.add(key);
+            const listing = getTestsReport(ts, runIndex, suiteIndex, options);
+            costs.push({ key, cost: getByteLength(listing.join('\n')) + 1, failed: ts.result === 'failed' });
+        }
+    }
+    const withoutAny = renderReport(results, { ...options, omittedSuites: everything }, shortSummary).join('\n');
+    let budget = getMaxReportLength(options) - getByteLength(withoutAny);
+    const kept = new Set();
+    const order = [...costs].sort((a, b) => (a.failed === b.failed ? a.cost - b.cost : a.failed ? -1 : 1));
+    for (const { key, cost } of order) {
+        if (cost > budget) {
+            continue;
+        }
+        budget -= cost;
+        kept.add(key);
+    }
+    return new Set([...everything].filter(key => !kept.has(key)));
 }
 function getMaxReportLength(options = exports.DEFAULT_OPTIONS) {
     return options.useActionsSummary ? MAX_ACTIONS_SUMMARY_LENGTH : MAX_REPORT_LENGTH;
@@ -2634,6 +2677,10 @@ function renderReport(results, options, shortSummary) {
     }
     const badge = getReportBadge(results, options);
     sections.push(badge);
+    const omitted = options.omittedSuites?.size ?? 0;
+    if (omitted > 0) {
+        sections.push(`> The test cases of ${omitted} suite(s) are not listed: the report reached the ${getMaxReportLength(options)} byte limit. The full results are in the run's artifacts.`);
+    }
     const runs = getTestRunsReport(results, options);
     sections.push(...runs);
     return sections;
@@ -2725,7 +2772,9 @@ function getSuitesReport(tr, runIndex, options) {
             const suitesTable = (0, markdown_utils_1.table)(['Test suite', 'Passed', 'Failed', 'Skipped', 'Retried', 'Test time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...suites.map((s, suiteIndex) => {
                 const tsTime = (0, markdown_utils_1.formatTime)(s.time);
                 const tsName = s.name;
-                const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed');
+                const skipLink = options.listTests === 'none' ||
+                    (options.listTests === 'failed' && s.result !== 'failed') ||
+                    (options.omittedSuites?.has(`${runIndex}:${suiteIndex}`) ?? false);
                 const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex, options).link;
                 const tsNameLink = skipLink ? tsName : (0, markdown_utils_1.link)(tsName, tsAddr);
                 const passed = s.passed > 0 ? `${s.passed} ${markdown_utils_1.Icon.success}` : '';
@@ -2747,6 +2796,9 @@ function getSuitesReport(tr, runIndex, options) {
 }
 function getTestsReport(ts, runIndex, suiteIndex, options) {
     if (options.listTests === 'failed' && ts.result !== 'failed') {
+        return [];
+    }
+    if (options.omittedSuites?.has(`${runIndex}:${suiteIndex}`)) {
         return [];
     }
     const groups = ts.groups;

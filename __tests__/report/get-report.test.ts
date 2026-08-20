@@ -375,3 +375,63 @@ describe('accumulated time', () => {
     expect(report).toContain('SlowTests\xa01 ✅ (1m 30s of test time)</summary>')
   })
 })
+
+describe('a report that does not fit', () => {
+  const bulky = (name: string, count: number, result: 'success' | 'failed' = 'success'): TestSuiteResult =>
+    new TestSuiteResult(name, [
+      new TestGroupResult(
+        name,
+        Array.from({length: count}, (_, i) => new TestCaseResult(`${'a test with a fairly long name'.repeat(4)} ${i}`, result, 1))
+      )
+    ])
+
+  const overflowing = (): TestRunResult =>
+    new TestRunResult('report.xml', [bulky('Huge', 900), bulky('Small', 3), bulky('Failing', 4, 'failed')], 10)
+
+  const render = (): string =>
+    getReport([overflowing()], {...DEFAULT_OPTIONS, collapsed: 'never', useActionsSummary: false})
+
+  it('keeps the suites it can rather than dropping every test case', () => {
+    const report = render()
+
+    expect(report).toContain('Small')
+    expect(report).toContain('a test with a fairly long name'.repeat(4) + ' 0')
+  })
+
+  it('keeps a failed suite over a passing one', () => {
+    const report = render()
+
+    // Suites sort by name, so Failing is first and Huge second.
+    expect(report).toContain('### ❌\xa0<a id="user-content-r0s0"')
+  })
+
+  it('drops the suite it cannot fit', () => {
+    const report = render()
+
+    expect(report).not.toContain('### ✅\xa0<a id="user-content-r0s1"')
+  })
+
+  it('says that it left something out', () => {
+    const report = render()
+
+    expect(report).toContain('The test cases of 1 suite(s) are not listed')
+    expect(report).toContain('65535 byte limit')
+  })
+
+  it('does not link a suite whose test cases are gone', () => {
+    const report = render()
+
+    expect(report).toContain('|Huge|')
+    expect(report).not.toContain('[Huge](#r0s1)')
+  })
+
+  it('says nothing about omissions when the whole report fits', () => {
+    const report = getReport([new TestRunResult('report.xml', [bulky('Small', 3)], 10)], {
+      ...DEFAULT_OPTIONS,
+      collapsed: 'never',
+      useActionsSummary: false
+    })
+
+    expect(report).not.toContain('are not listed')
+  })
+})
