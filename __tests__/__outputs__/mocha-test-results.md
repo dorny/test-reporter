@@ -6,7 +6,7 @@
 |[fixtures/external/mocha/mocha-test-results.json](#user-content-r0)|833 ✅||6 ⚪|6s|
 ## ✅ <a id="user-content-r0" href="#user-content-r0">fixtures/external/mocha/mocha-test-results.json</a>
 **839** tests were completed in **6s** with **833** passed, **0** failed and **6** skipped.
-|Test suite|Passed|Failed|Skipped|Retried|Time|
+|Test suite|Passed|Failed|Skipped|Retried|Test time|
 |:---|---:|---:|---:|---:|---:|
 |[test/node-unit/buffered-worker-pool.spec.js](#user-content-r0s0)|14 ✅||||8ms|
 |[test/node-unit/cli/config.spec.js](#user-content-r0s1)|10 ✅||||8ms|

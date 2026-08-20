@@ -261,8 +261,11 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
     sections.push(headingLine2)
 
     if (suites.length > 0) {
+      // Not `Time`: a suite carries no elapsed time of its own — the runner
+      // records one per test case and nothing else, so a suite's is their sum,
+      // which counts the same wall clock once per test running concurrently.
       const suitesTable = table(
-        ['Test suite', 'Passed', 'Failed', 'Skipped', 'Retried', 'Time'],
+        ['Test suite', 'Passed', 'Failed', 'Skipped', 'Retried', 'Test time'],
         [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right, Align.Right],
         ...suites.map((s, suiteIndex) => {
           const tsTime = formatTime(s.time)

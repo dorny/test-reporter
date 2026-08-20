@@ -4,7 +4,7 @@
 |[fixtures/external/java/pulsar-test-report.xml](#user-content-r0)|793 ✅|1 ❌|14 ⚪|35m 27s|
 ## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/external/java/pulsar-test-report.xml</a>
 **808** tests were completed in **35m 27s** with **793** passed, **1** failed and **14** skipped.
-|Test suite|Passed|Failed|Skipped|Retried|Time|
+|Test suite|Passed|Failed|Skipped|Retried|Test time|
 |:---|---:|---:|---:|---:|---:|
 |[org.apache.pulsar.AddMissingPatchVersionTest](#user-content-r0s0)||1 ❌|1 ⚪||116ms|
 |[org.apache.pulsar.broker.admin.AdminApiOffloadTest](#user-content-r0s1)|7 ✅||||19s|

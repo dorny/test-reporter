@@ -4,7 +4,7 @@
 |[fixtures/swift-xunit.xml](#user-content-r0)|2 ✅|1 ❌||220ms|
 ## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/swift-xunit.xml</a>
 **3** tests were completed in **220ms** with **2** passed, **1** failed and **0** skipped.
-|Test suite|Passed|Failed|Skipped|Retried|Time|
+|Test suite|Passed|Failed|Skipped|Retried|Test time|
 |:---|---:|---:|---:|---:|---:|
 |[TestResults](#user-content-r0s0)|2 ✅|1 ❌|||220ms|
 ### ❌ <a id="user-content-r0s0" href="#user-content-r0s0">TestResults</a>

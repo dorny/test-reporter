@@ -4,7 +4,7 @@
 |[fixtures/external/java/TEST-org.apache.pulsar.AddMissingPatchVersionTest.xml](#user-content-r0)||1 ❌|1 ⚪|116ms|
 ## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/external/java/TEST-org.apache.pulsar.AddMissingPatchVersionTest.xml</a>
 **2** tests were completed in **116ms** with **0** passed, **1** failed and **1** skipped.
-|Test suite|Passed|Failed|Skipped|Retried|Time|
+|Test suite|Passed|Failed|Skipped|Retried|Test time|
 |:---|---:|---:|---:|---:|---:|
 |[org.apache.pulsar.AddMissingPatchVersionTest](#user-content-r0s0)||1 ❌|1 ⚪||116ms|
 ### ❌ <a id="user-content-r0s0" href="#user-content-r0s0">org.apache.pulsar.AddMissingPatchVersionTest</a>

@@ -6,7 +6,7 @@
 |[fixtures/external/SilentNotes.trx](#user-content-r0)|67 ✅||12 ⚪|1s|
 ## ✅ <a id="user-content-r0" href="#user-content-r0">fixtures/external/SilentNotes.trx</a>
 **79** tests were completed in **1s** with **67** passed, **0** failed and **12** skipped.
-|Test suite|Passed|Failed|Skipped|Retried|Time|
+|Test suite|Passed|Failed|Skipped|Retried|Test time|
 |:---|---:|---:|---:|---:|---:|
 |[VanillaCloudStorageClientTest.CloudStorageCredentialsTest](#user-content-r0s0)|6 ✅||||30ms|
 |[VanillaCloudStorageClientTest.CloudStorageProviders.DropboxCloudStorageClientTest](#user-content-r0s1)|2 ✅||3 ⚪||101ms|

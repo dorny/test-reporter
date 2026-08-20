@@ -316,10 +316,18 @@ describe('retried tests', () => {
     expect(report).toContain('**1** of them only after being retried.')
   })
 
+  it('names the suites-table time for what it is', () => {
+    const report = getReport([run()], {...DEFAULT_OPTIONS, collapsed: 'never'})
+
+    // A suite has no elapsed time of its own; the column is the sum of its cases'.
+    expect(report).toContain('|Test suite|Passed|Failed|Skipped|Retried|Test time|')
+    expect(report).not.toContain('|Skipped|Retried|Time|')
+  })
+
   it('gives the suites table a column for them', () => {
     const report = getReport([run()], {...DEFAULT_OPTIONS, collapsed: 'never'})
 
-    expect(report).toContain('|Test suite|Passed|Failed|Skipped|Retried|Time|')
+    expect(report).toContain('|Test suite|Passed|Failed|Skipped|Retried|Test time|')
     expect(report).toContain('|1 🔁|')
   })
 

@@ -6,7 +6,7 @@
 |[fixtures/external/FluentValidation.Tests.trx](#user-content-r0)|803 ✅||1 ⚪|4s|
 ## ✅ <a id="user-content-r0" href="#user-content-r0">fixtures/external/FluentValidation.Tests.trx</a>
 **804** tests were completed in **4s** with **803** passed, **0** failed and **1** skipped.
-|Test suite|Passed|Failed|Skipped|Retried|Time|
+|Test suite|Passed|Failed|Skipped|Retried|Test time|
 |:---|---:|---:|---:|---:|---:|
 |[FluentValidation.Tests.AbstractValidatorTester](#user-content-r0s0)|35 ✅||||12ms|
 |[FluentValidation.Tests.AccessorCacheTests](#user-content-r0s1)|4 ✅||1 ⚪||4ms|

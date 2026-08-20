@@ -4,7 +4,7 @@
 |[fixtures/external/phpunit/phpcheckstyle-phpunit.xml](#user-content-r0)|28 ✅|2 ❌||41ms|
 ## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/external/phpunit/phpcheckstyle-phpunit.xml</a>
 **30** tests were completed in **41ms** with **28** passed, **2** failed and **0** skipped.
-|Test suite|Passed|Failed|Skipped|Retried|Time|
+|Test suite|Passed|Failed|Skipped|Retried|Test time|
 |:---|---:|---:|---:|---:|---:|
 |[CommentsTest](#user-content-r0s0)|3 ✅||||7ms|
 |[DeprecationTest](#user-content-r0s1)|1 ✅||||1ms|

@@ -4,7 +4,7 @@
 |[fixtures/external/flutter/provider-test-results.json](#user-content-r0)|268 ✅|1 ❌||0ms|
 ## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/external/flutter/provider-test-results.json</a>
 **269** tests were completed in **0ms** with **268** passed, **1** failed and **0** skipped.
-|Test suite|Passed|Failed|Skipped|Retried|Time|
+|Test suite|Passed|Failed|Skipped|Retried|Test time|
 |:---|---:|---:|---:|---:|---:|
 |[test/builder_test.dart](#user-content-r0s0)|24 ✅||||402ms|
 |[test/change_notifier_provider_test.dart](#user-content-r0s1)|10 ✅||||306ms|

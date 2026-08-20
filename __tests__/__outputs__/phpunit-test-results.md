@@ -4,7 +4,7 @@
 |[fixtures/phpunit/phpunit.xml](#user-content-r0)|10 ✅|2 ❌||148ms|
 ## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/phpunit/phpunit.xml</a>
 **12** tests were completed in **148ms** with **10** passed, **2** failed and **0** skipped.
-|Test suite|Passed|Failed|Skipped|Retried|Time|
+|Test suite|Passed|Failed|Skipped|Retried|Test time|
 |:---|---:|---:|---:|---:|---:|
 |[CLI Arguments](#user-content-r0s0)||2 ❌|||140ms|
 |[PHPUnit\Event\CollectingDispatcherTest](#user-content-r0s1)|2 ✅||||4ms|

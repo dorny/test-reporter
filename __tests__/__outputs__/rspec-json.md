@@ -4,7 +4,7 @@
 |[fixtures/rspec-json.json](#user-content-r0)|1 ✅|1 ❌|1 ⚪|0ms|
 ## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/rspec-json.json</a>
 **3** tests were completed in **0ms** with **1** passed, **1** failed and **1** skipped.
-|Test suite|Passed|Failed|Skipped|Retried|Time|
+|Test suite|Passed|Failed|Skipped|Retried|Test time|
 |:---|---:|---:|---:|---:|---:|
 |[./spec/config/check_env_vars_spec.rb](#user-content-r0s0)|1 ✅|1 ❌|1 ⚪||0ms|
 ### ❌ <a id="user-content-r0s0" href="#user-content-r0s0">./spec/config/check_env_vars_spec.rb</a>
