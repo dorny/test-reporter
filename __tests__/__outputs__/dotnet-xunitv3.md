@@ -4,10 +4,10 @@
 |[fixtures/dotnet-xunitv3.trx](#user-content-r0)|1 ✅|3 ❌||267ms|
 ## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/dotnet-xunitv3.trx</a>
 **4** tests were completed in **267ms** with **1** passed, **3** failed and **0** skipped.
-|Test suite|Passed|Failed|Skipped|Time|
-|:---|---:|---:|---:|---:|
-|[DotnetTests.XUnitV3Tests.FixtureTests](#user-content-r0s0)|1 ✅|1 ❌||18ms|
-|[Unclassified](#user-content-r0s1)||2 ❌||0ms|
+|Test suite|Passed|Failed|Skipped|Retried|Time|
+|:---|---:|---:|---:|---:|---:|
+|[DotnetTests.XUnitV3Tests.FixtureTests](#user-content-r0s0)|1 ✅|1 ❌|||18ms|
+|[Unclassified](#user-content-r0s1)||2 ❌|||0ms|
 ### ❌ <a id="user-content-r0s0" href="#user-content-r0s0">DotnetTests.XUnitV3Tests.FixtureTests</a>
 ```
 ❌ Failing_Test

@@ -4,9 +4,9 @@
 |[fixtures/nette-tester/tester-v1.7-report.xml](#user-content-r0)|61 ✅|1 ❌|3 ⚪|2s|
 ## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/nette-tester/tester-v1.7-report.xml</a>
 **65** tests were completed in **2s** with **61** passed, **1** failed and **3** skipped.
-|Test suite|Passed|Failed|Skipped|Time|
-|:---|---:|---:|---:|---:|
-|[tester-v1.7-report.xml](#user-content-r0s0)|61 ✅|1 ❌|3 ⚪|2s|
+|Test suite|Passed|Failed|Skipped|Retried|Time|
+|:---|---:|---:|---:|---:|---:|
+|[tester-v1.7-report.xml](#user-content-r0s0)|61 ✅|1 ❌|3 ⚪||2s|
 ### ❌ <a id="user-content-r0s0" href="#user-content-r0s0">tester-v1.7-report.xml</a>
 ```
 tests/Framework

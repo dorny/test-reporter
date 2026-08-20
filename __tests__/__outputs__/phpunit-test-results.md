@@ -4,12 +4,12 @@
 |[fixtures/phpunit/phpunit.xml](#user-content-r0)|10 ✅|2 ❌||148ms|
 ## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/phpunit/phpunit.xml</a>
 **12** tests were completed in **148ms** with **10** passed, **2** failed and **0** skipped.
-|Test suite|Passed|Failed|Skipped|Time|
-|:---|---:|---:|---:|---:|
-|[CLI Arguments](#user-content-r0s0)||2 ❌||140ms|
-|[PHPUnit\Event\CollectingDispatcherTest](#user-content-r0s1)|2 ✅|||4ms|
-|[PHPUnit\Event\DeferringDispatcherTest](#user-content-r0s2)|4 ✅|||3ms|
-|[PHPUnit\Event\DirectDispatcherTest](#user-content-r0s3)|4 ✅|||1ms|
+|Test suite|Passed|Failed|Skipped|Retried|Time|
+|:---|---:|---:|---:|---:|---:|
+|[CLI Arguments](#user-content-r0s0)||2 ❌|||140ms|
+|[PHPUnit\Event\CollectingDispatcherTest](#user-content-r0s1)|2 ✅||||4ms|
+|[PHPUnit\Event\DeferringDispatcherTest](#user-content-r0s2)|4 ✅||||3ms|
+|[PHPUnit\Event\DirectDispatcherTest](#user-content-r0s3)|4 ✅||||1ms|
 ### ❌ <a id="user-content-r0s0" href="#user-content-r0s0">CLI Arguments</a>
 ```
 ❌ targeting-traits-with-coversclass-attribute-is-deprecated.phpt

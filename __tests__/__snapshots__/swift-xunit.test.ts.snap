@@ -13,12 +13,14 @@ TestRunResult {
               "error": undefined,
               "name": "test_always_pass",
               "result": "success",
+              "retries": 0,
               "time": 36.386333,
             },
             TestCaseResult {
               "error": undefined,
               "name": "test_always_skip",
               "result": "success",
+              "retries": 0,
               "time": 92.039167,
             },
             TestCaseResult {
@@ -30,6 +32,7 @@ TestRunResult {
               },
               "name": "test_always_fail",
               "result": "failed",
+              "retries": 0,
               "time": 92.05175,
             },
           ],

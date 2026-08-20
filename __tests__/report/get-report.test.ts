@@ -279,3 +279,62 @@ describe('collapseGroups', () => {
     expect(report).not.toContain('<details')
   })
 })
+
+describe('retried tests', () => {
+  const run = (): TestRunResult =>
+    new TestRunResult(
+      'report.xml',
+      [
+        new TestSuiteResult('Tests', [
+          new TestGroupResult('TicketTests', [
+            new TestCaseResult('recovered', 'success', 1, {details: undefined, message: 'first attempt failed'}, 1),
+            new TestCaseResult('steady', 'success', 1)
+          ])
+        ])
+      ],
+      10
+    )
+
+  it('marks a retried test on its own line', () => {
+    const report = getReport([run()], {...DEFAULT_OPTIONS, collapsed: 'never'})
+
+    expect(report).toContain('✅ recovered 🔁 retried 1×')
+    expect(report).toContain('✅ steady\n')
+  })
+
+  it('does not count a retried test as a failure', () => {
+    const report = getReport([run()], {...DEFAULT_OPTIONS, collapsed: 'never'})
+
+    expect(report).toContain('**2** tests were completed')
+    expect(report).toContain('**2** passed, **0** failed and **0** skipped')
+    expect(report).not.toContain('❌')
+  })
+
+  it('says how many of the run only passed after a retry', () => {
+    const report = getReport([run()], {...DEFAULT_OPTIONS, collapsed: 'never'})
+
+    expect(report).toContain('**1** of them only after being retried.')
+  })
+
+  it('gives the suites table a column for them', () => {
+    const report = getReport([run()], {...DEFAULT_OPTIONS, collapsed: 'never'})
+
+    expect(report).toContain('|Test suite|Passed|Failed|Skipped|Retried|Time|')
+    expect(report).toContain('|1 🔁|')
+  })
+
+  it('leaves a run with no retries unmentioned', () => {
+    const steady = new TestRunResult(
+      'report.xml',
+      [
+        new TestSuiteResult('Tests', [new TestGroupResult('TicketTests', [new TestCaseResult('steady', 'success', 1)])])
+      ],
+      10
+    )
+
+    const report = getReport([steady], {...DEFAULT_OPTIONS, collapsed: 'never'})
+
+    expect(report).not.toContain('🔁')
+    expect(report).not.toContain('only after being retried')
+  })
+})

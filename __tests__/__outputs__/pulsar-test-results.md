@@ -4,184 +4,184 @@
 |[fixtures/external/java/pulsar-test-report.xml](#user-content-r0)|793 ✅|1 ❌|14 ⚪|35m 27s|
 ## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/external/java/pulsar-test-report.xml</a>
 **808** tests were completed in **35m 27s** with **793** passed, **1** failed and **14** skipped.
-|Test suite|Passed|Failed|Skipped|Time|
-|:---|---:|---:|---:|---:|
-|[org.apache.pulsar.AddMissingPatchVersionTest](#user-content-r0s0)||1 ❌|1 ⚪|116ms|
-|[org.apache.pulsar.broker.admin.AdminApiOffloadTest](#user-content-r0s1)|7 ✅|||19s|
-|[org.apache.pulsar.broker.auth.AuthenticationServiceTest](#user-content-r0s2)|2 ✅|||185ms|
-|[org.apache.pulsar.broker.auth.AuthLogsTest](#user-content-r0s3)|2 ✅|||1s|
-|[org.apache.pulsar.broker.auth.AuthorizationTest](#user-content-r0s4)|1 ✅|||2s|
-|[org.apache.pulsar.broker.lookup.http.HttpTopicLookupv2Test](#user-content-r0s5)|4 ✅|||2s|
-|[org.apache.pulsar.broker.namespace.NamespaceCreateBundlesTest](#user-content-r0s6)|2 ✅|||33s|
-|[org.apache.pulsar.broker.namespace.NamespaceOwnershipListenerTests](#user-content-r0s7)|2 ✅|||32s|
-|[org.apache.pulsar.broker.namespace.NamespaceServiceTest](#user-content-r0s8)|10 ✅|||1m 15s|
-|[org.apache.pulsar.broker.namespace.NamespaceUnloadingTest](#user-content-r0s9)|2 ✅|||14s|
-|[org.apache.pulsar.broker.namespace.OwnerShipCacheForCurrentServerTest](#user-content-r0s10)|1 ✅|||16s|
-|[org.apache.pulsar.broker.namespace.OwnershipCacheTest](#user-content-r0s11)|8 ✅|||16s|
-|[org.apache.pulsar.broker.protocol.ProtocolHandlersTest](#user-content-r0s12)|6 ✅|||946ms|
-|[org.apache.pulsar.broker.protocol.ProtocolHandlerUtilsTest](#user-content-r0s13)|3 ✅|||7s|
-|[org.apache.pulsar.broker.protocol.ProtocolHandlerWithClassLoaderTest](#user-content-r0s14)|1 ✅|||15ms|
-|[org.apache.pulsar.broker.PulsarServiceTest](#user-content-r0s15)|2 ✅|||96ms|
-|[org.apache.pulsar.broker.service.MessagePublishBufferThrottleTest](#user-content-r0s16)|3 ✅|||14s|
-|[org.apache.pulsar.broker.service.ReplicatorTest](#user-content-r0s17)|22 ✅|||40s|
-|[org.apache.pulsar.broker.service.TopicOwnerTest](#user-content-r0s18)|8 ✅|||1m 54s|
-|[org.apache.pulsar.broker.SLAMonitoringTest](#user-content-r0s19)|4 ✅|||9s|
-|[org.apache.pulsar.broker.stats.BookieClientsStatsGeneratorTest](#user-content-r0s20)|2 ✅|||49ms|
-|[org.apache.pulsar.broker.stats.ConsumerStatsTest](#user-content-r0s21)|3 ✅|||21s|
-|[org.apache.pulsar.broker.stats.ManagedCursorMetricsTest](#user-content-r0s22)|1 ✅|||281ms|
-|[org.apache.pulsar.broker.stats.ManagedLedgerMetricsTest](#user-content-r0s23)|1 ✅|||285ms|
-|[org.apache.pulsar.broker.stats.prometheus.AggregatedNamespaceStatsTest](#user-content-r0s24)|1 ✅|||40ms|
-|[org.apache.pulsar.broker.stats.PrometheusMetricsTest](#user-content-r0s25)|15 ✅|||1m 23s|
-|[org.apache.pulsar.broker.stats.SubscriptionStatsTest](#user-content-r0s26)|2 ✅|||2s|
-|[org.apache.pulsar.broker.systopic.NamespaceEventsSystemTopicServiceTest](#user-content-r0s27)|1 ✅|||1s|
-|[org.apache.pulsar.broker.transaction.buffer.InMemTransactionBufferReaderTest](#user-content-r0s28)|3 ✅|||28ms|
-|[org.apache.pulsar.broker.transaction.buffer.TransactionBufferClientTest](#user-content-r0s29)|4 ✅|||93ms|
-|[org.apache.pulsar.broker.transaction.buffer.TransactionBufferTest](#user-content-r0s30)|7 ✅|||81ms|
-|[org.apache.pulsar.broker.transaction.buffer.TransactionEntryImplTest](#user-content-r0s31)|1 ✅|||14ms|
-|[org.apache.pulsar.broker.transaction.buffer.TransactionLowWaterMarkTest](#user-content-r0s32)|2 ✅|||38s|
-|[org.apache.pulsar.broker.transaction.buffer.TransactionStablePositionTest](#user-content-r0s33)|2 ✅||1 ⚪|49s|
-|[org.apache.pulsar.broker.transaction.coordinator.TransactionCoordinatorClientTest](#user-content-r0s34)|3 ✅|||95ms|
-|[org.apache.pulsar.broker.transaction.coordinator.TransactionMetaStoreAssignmentTest](#user-content-r0s35)|1 ✅|||1s|
-|[org.apache.pulsar.broker.transaction.pendingack.PendingAckInMemoryDeleteTest](#user-content-r0s36)|2 ✅||1 ⚪|57s|
-|[org.apache.pulsar.broker.transaction.TransactionConsumeTest](#user-content-r0s37)|2 ✅|||30s|
-|[org.apache.pulsar.broker.web.RestExceptionTest](#user-content-r0s38)|3 ✅|||37ms|
-|[org.apache.pulsar.broker.web.WebServiceTest](#user-content-r0s39)|9 ✅|||27s|
-|[org.apache.pulsar.client.impl.AdminApiKeyStoreTlsAuthTest](#user-content-r0s40)|4 ✅|||8s|
-|[org.apache.pulsar.client.impl.BatchMessageIdImplSerializationTest](#user-content-r0s41)|4 ✅|||30ms|
-|[org.apache.pulsar.client.impl.BatchMessageIndexAckDisableTest](#user-content-r0s42)|4 ✅|||14s|
-|[org.apache.pulsar.client.impl.BatchMessageIndexAckTest](#user-content-r0s43)|5 ✅|||44s|
-|[org.apache.pulsar.client.impl.BrokerClientIntegrationTest](#user-content-r0s44)|15 ✅|||2m 28s|
-|[org.apache.pulsar.client.impl.CompactedOutBatchMessageTest](#user-content-r0s45)|1 ✅|||1s|
-|[org.apache.pulsar.client.impl.ConsumerAckResponseTest](#user-content-r0s46)|1 ✅|||549ms|
-|[org.apache.pulsar.client.impl.ConsumerConfigurationTest](#user-content-r0s47)|4 ✅|||12s|
-|[org.apache.pulsar.client.impl.ConsumerDedupPermitsUpdate](#user-content-r0s48)|7 ✅|||4s|
-|[org.apache.pulsar.client.impl.ConsumerUnsubscribeTest](#user-content-r0s49)|1 ✅|||129ms|
-|[org.apache.pulsar.client.impl.KeyStoreTlsProducerConsumerTestWithAuth](#user-content-r0s50)|3 ✅|||23s|
-|[org.apache.pulsar.client.impl.KeyStoreTlsProducerConsumerTestWithoutAuth](#user-content-r0s51)|3 ✅|||8s|
-|[org.apache.pulsar.client.impl.KeyStoreTlsTest](#user-content-r0s52)|1 ✅|||183ms|
-|[org.apache.pulsar.client.impl.MessageChecksumTest](#user-content-r0s53)|3 ✅|||47s|
-|[org.apache.pulsar.client.impl.MessageChunkingTest](#user-content-r0s54)|8 ✅||1 ⚪|1m 13s|
-|[org.apache.pulsar.client.impl.MessageParserTest](#user-content-r0s55)|2 ✅|||5s|
-|[org.apache.pulsar.client.impl.MultiTopicsReaderTest](#user-content-r0s56)|8 ✅|||35s|
-|[org.apache.pulsar.client.impl.NegativeAcksTest](#user-content-r0s57)|32 ✅|||11s|
-|[org.apache.pulsar.client.impl.PatternTopicsConsumerImplTest](#user-content-r0s58)|11 ✅|||1m 3s|
-|[org.apache.pulsar.client.impl.PerMessageUnAcknowledgedRedeliveryTest](#user-content-r0s59)|5 ✅|||34s|
-|[org.apache.pulsar.client.impl.PulsarMultiHostClientTest](#user-content-r0s60)|3 ✅|||15s|
-|[org.apache.pulsar.client.impl.RawMessageSerDeserTest](#user-content-r0s61)|1 ✅|||10ms|
-|[org.apache.pulsar.client.impl.SchemaDeleteTest](#user-content-r0s62)|1 ✅|||2s|
-|[org.apache.pulsar.client.impl.SequenceIdWithErrorTest](#user-content-r0s63)|3 ✅||2 ⚪|18s|
-|[org.apache.pulsar.client.impl.TopicDoesNotExistsTest](#user-content-r0s64)|2 ✅|||4s|
-|[org.apache.pulsar.client.impl.TopicFromMessageTest](#user-content-r0s65)|5 ✅|||14s|
-|[org.apache.pulsar.client.impl.TopicsConsumerImplTest](#user-content-r0s66)|17 ✅|||2m 13s|
-|[org.apache.pulsar.client.impl.UnAcknowledgedMessagesTimeoutTest](#user-content-r0s67)|7 ✅|||44s|
-|[org.apache.pulsar.client.impl.ZeroQueueSizeTest](#user-content-r0s68)|14 ✅|||16s|
-|[org.apache.pulsar.common.api.raw.RawMessageImplTest](#user-content-r0s69)|1 ✅|||316ms|
-|[org.apache.pulsar.common.compression.CommandsTest](#user-content-r0s70)|1 ✅|||30ms|
-|[org.apache.pulsar.common.compression.CompressorCodecBackwardCompatTest](#user-content-r0s71)|6 ✅|||223ms|
-|[org.apache.pulsar.common.compression.CompressorCodecTest](#user-content-r0s72)|45 ✅|||737ms|
-|[org.apache.pulsar.common.compression.Crc32cChecksumTest](#user-content-r0s73)|6 ✅|||5s|
-|[org.apache.pulsar.common.lookup.data.LookupDataTest](#user-content-r0s74)|4 ✅|||2s|
-|[org.apache.pulsar.common.naming.MetadataTests](#user-content-r0s75)|2 ✅|||161ms|
-|[org.apache.pulsar.common.naming.NamespaceBundlesTest](#user-content-r0s76)|5 ✅|||99ms|
-|[org.apache.pulsar.common.naming.NamespaceBundleTest](#user-content-r0s77)|6 ✅|||64ms|
-|[org.apache.pulsar.common.naming.NamespaceNameTest](#user-content-r0s78)|2 ✅|||207ms|
-|[org.apache.pulsar.common.naming.ServiceConfigurationTest](#user-content-r0s79)|4 ✅|||48ms|
-|[org.apache.pulsar.common.naming.TopicNameTest](#user-content-r0s80)|4 ✅|||529ms|
-|[org.apache.pulsar.common.net.ServiceURITest](#user-content-r0s81)|21 ✅|||237ms|
-|[org.apache.pulsar.common.policies.data.AutoFailoverPolicyDataTest](#user-content-r0s82)|1 ✅|||15ms|
-|[org.apache.pulsar.common.policies.data.AutoFailoverPolicyTypeTest](#user-content-r0s83)|1 ✅|||19ms|
-|[org.apache.pulsar.common.policies.data.AutoTopicCreationOverrideTest](#user-content-r0s84)|6 ✅|||64ms|
-|[org.apache.pulsar.common.policies.data.BacklogQuotaTest](#user-content-r0s85)|1 ✅|||12ms|
-|[org.apache.pulsar.common.policies.data.ClusterDataTest](#user-content-r0s86)|1 ✅|||9ms|
-|[org.apache.pulsar.common.policies.data.ConsumerStatsTest](#user-content-r0s87)|1 ✅|||8ms|
-|[org.apache.pulsar.common.policies.data.EnsemblePlacementPolicyConfigTest](#user-content-r0s88)|2 ✅|||948ms|
-|[org.apache.pulsar.common.policies.data.LocalPolicesTest](#user-content-r0s89)|1 ✅|||48ms|
-|[org.apache.pulsar.common.policies.data.NamespaceIsolationDataTest](#user-content-r0s90)|1 ✅|||76ms|
-|[org.apache.pulsar.common.policies.data.NamespaceOwnershipStatusTest](#user-content-r0s91)|1 ✅|||45ms|
-|[org.apache.pulsar.common.policies.data.OffloadPoliciesTest](#user-content-r0s92)|6 ✅|||216ms|
-|[org.apache.pulsar.common.policies.data.PartitionedTopicStatsTest](#user-content-r0s93)|1 ✅|||12ms|
-|[org.apache.pulsar.common.policies.data.PersistencePoliciesTest](#user-content-r0s94)|1 ✅|||19ms|
-|[org.apache.pulsar.common.policies.data.PersistentOfflineTopicStatsTest](#user-content-r0s95)|1 ✅|||29ms|
-|[org.apache.pulsar.common.policies.data.PersistentTopicStatsTest](#user-content-r0s96)|2 ✅|||51ms|
-|[org.apache.pulsar.common.policies.data.PoliciesDataTest](#user-content-r0s97)|4 ✅|||1s|
-|[org.apache.pulsar.common.policies.data.PublisherStatsTest](#user-content-r0s98)|2 ✅|||37ms|
-|[org.apache.pulsar.common.policies.data.ReplicatorStatsTest](#user-content-r0s99)|2 ✅|||30ms|
-|[org.apache.pulsar.common.policies.data.ResourceQuotaTest](#user-content-r0s100)|2 ✅|||45ms|
-|[org.apache.pulsar.common.policies.data.RetentionPolicesTest](#user-content-r0s101)|1 ✅|||8ms|
-|[org.apache.pulsar.common.policies.impl.AutoFailoverPolicyFactoryTest](#user-content-r0s102)|1 ✅|||22ms|
-|[org.apache.pulsar.common.policies.impl.MinAvailablePolicyTest](#user-content-r0s103)|1 ✅|||1ms|
-|[org.apache.pulsar.common.policies.impl.NamespaceIsolationPoliciesTest](#user-content-r0s104)|7 ✅|||265ms|
-|[org.apache.pulsar.common.policies.impl.NamespaceIsolationPolicyImplTest](#user-content-r0s105)|7 ✅|||309ms|
-|[org.apache.pulsar.common.protocol.ByteBufPairTest](#user-content-r0s106)|2 ✅|||5s|
-|[org.apache.pulsar.common.protocol.CommandUtilsTests](#user-content-r0s107)|7 ✅|||3s|
-|[org.apache.pulsar.common.protocol.MarkersTest](#user-content-r0s108)|6 ✅|||3s|
-|[org.apache.pulsar.common.protocol.PulsarDecoderTest](#user-content-r0s109)|1 ✅|||4s|
-|[org.apache.pulsar.common.stats.JvmDefaultGCMetricsLoggerTest](#user-content-r0s110)|1 ✅|||82ms|
-|[org.apache.pulsar.common.util.collections.BitSetRecyclableRecyclableTest](#user-content-r0s111)|2 ✅|||13ms|
-|[org.apache.pulsar.common.util.collections.ConcurrentBitSetRecyclableTest](#user-content-r0s112)|2 ✅|||63ms|
-|[org.apache.pulsar.common.util.collections.ConcurrentLongHashMapTest](#user-content-r0s113)|13 ✅|||28s|
-|[org.apache.pulsar.common.util.collections.ConcurrentLongPairSetTest](#user-content-r0s114)|15 ✅|||2s|
-|[org.apache.pulsar.common.util.collections.ConcurrentOpenHashMapTest](#user-content-r0s115)|12 ✅|||9s|
-|[org.apache.pulsar.common.util.collections.ConcurrentOpenHashSetTest](#user-content-r0s116)|11 ✅|||7s|
-|[org.apache.pulsar.common.util.collections.ConcurrentOpenLongPairRangeSetTest](#user-content-r0s117)|13 ✅|||1s|
-|[org.apache.pulsar.common.util.collections.ConcurrentSortedLongPairSetTest](#user-content-r0s118)|9 ✅|||342ms|
-|[org.apache.pulsar.common.util.collections.FieldParserTest](#user-content-r0s119)|2 ✅|||64ms|
-|[org.apache.pulsar.common.util.collections.GrowableArrayBlockingQueueTest](#user-content-r0s120)|6 ✅|||350ms|
-|[org.apache.pulsar.common.util.collections.GrowablePriorityLongPairQueueTest](#user-content-r0s121)|15 ✅|||3s|
-|[org.apache.pulsar.common.util.collections.TripleLongPriorityQueueTest](#user-content-r0s122)|3 ✅|||238ms|
-|[org.apache.pulsar.common.util.FieldParserTest](#user-content-r0s123)|1 ✅|||242ms|
-|[org.apache.pulsar.common.util.FileModifiedTimeUpdaterTest](#user-content-r0s124)|6 ✅|||6s|
-|[org.apache.pulsar.common.util.netty.ChannelFuturesTest](#user-content-r0s125)|5 ✅|||2s|
-|[org.apache.pulsar.common.util.RateLimiterTest](#user-content-r0s126)|11 ✅|||7s|
-|[org.apache.pulsar.common.util.ReflectionsTest](#user-content-r0s127)|12 ✅|||172ms|
-|[org.apache.pulsar.common.util.RelativeTimeUtilTest](#user-content-r0s128)|1 ✅|||39ms|
-|[org.apache.pulsar.discovery.service.web.DiscoveryServiceWebTest](#user-content-r0s129)|1 ✅|||5s|
-|[org.apache.pulsar.functions.worker.PulsarFunctionE2ESecurityTest](#user-content-r0s130)|2 ✅|||28s|
-|[org.apache.pulsar.functions.worker.PulsarFunctionPublishTest](#user-content-r0s131)|3 ✅|||42s|
-|[org.apache.pulsar.functions.worker.PulsarFunctionTlsTest](#user-content-r0s132)|1 ✅|||12s|
-|[org.apache.pulsar.io.PulsarFunctionTlsTest](#user-content-r0s133)|1 ✅|||30s|
-|[org.apache.pulsar.proxy.server.AdminProxyHandlerTest](#user-content-r0s134)|1 ✅|||474ms|
-|[org.apache.pulsar.proxy.server.AuthedAdminProxyHandlerTest](#user-content-r0s135)|1 ✅|||2s|
-|[org.apache.pulsar.proxy.server.FunctionWorkerRoutingTest](#user-content-r0s136)|1 ✅|||10ms|
-|[org.apache.pulsar.proxy.server.ProxyAdditionalServletTest](#user-content-r0s137)|1 ✅|||125ms|
-|[org.apache.pulsar.proxy.server.ProxyAuthenticatedProducerConsumerTest](#user-content-r0s138)|1 ✅|||2s|
-|[org.apache.pulsar.proxy.server.ProxyAuthenticationTest](#user-content-r0s139)|1 ✅|||17s|
-|[org.apache.pulsar.proxy.server.ProxyConnectionThrottlingTest](#user-content-r0s140)|1 ✅|||2s|
-|[org.apache.pulsar.proxy.server.ProxyEnableHAProxyProtocolTest](#user-content-r0s141)|1 ✅|||511ms|
-|[org.apache.pulsar.proxy.server.ProxyForwardAuthDataTest](#user-content-r0s142)|1 ✅|||32s|
-|[org.apache.pulsar.proxy.server.ProxyIsAHttpProxyTest](#user-content-r0s143)|10 ✅|||2s|
-|[org.apache.pulsar.proxy.server.ProxyKeyStoreTlsTestWithAuth](#user-content-r0s144)|3 ✅|||7s|
-|[org.apache.pulsar.proxy.server.ProxyKeyStoreTlsTestWithoutAuth](#user-content-r0s145)|3 ✅|||7s|
-|[org.apache.pulsar.proxy.server.ProxyLookupThrottlingTest](#user-content-r0s146)|1 ✅|||3s|
-|[org.apache.pulsar.proxy.server.ProxyParserTest](#user-content-r0s147)|5 ✅|||1s|
-|[org.apache.pulsar.proxy.server.ProxyRolesEnforcementTest](#user-content-r0s148)|1 ✅|||10s|
-|[org.apache.pulsar.proxy.server.ProxyStatsTest](#user-content-r0s149)|3 ✅|||533ms|
-|[org.apache.pulsar.proxy.server.ProxyTest](#user-content-r0s150)|6 ✅|||3s|
-|[org.apache.pulsar.proxy.server.ProxyTlsTest](#user-content-r0s151)|2 ✅|||414ms|
-|[org.apache.pulsar.proxy.server.ProxyTlsTestWithAuth](#user-content-r0s152)|1 ✅|||4ms|
-|[org.apache.pulsar.proxy.server.ProxyWithAuthorizationNegTest](#user-content-r0s153)|1 ✅|||2s|
-|[org.apache.pulsar.proxy.server.ProxyWithAuthorizationTest](#user-content-r0s154)|13 ✅|||33s|
-|[org.apache.pulsar.proxy.server.ProxyWithoutServiceDiscoveryTest](#user-content-r0s155)|1 ✅|||2s|
-|[org.apache.pulsar.proxy.server.SuperUserAuthedAdminProxyHandlerTest](#user-content-r0s156)|3 ✅|||8s|
-|[org.apache.pulsar.proxy.server.UnauthedAdminProxyHandlerTest](#user-content-r0s157)|2 ✅|||114ms|
-|[org.apache.pulsar.PulsarBrokerStarterTest](#user-content-r0s158)|9 ✅|||591ms|
-|[org.apache.pulsar.schema.compatibility.SchemaCompatibilityCheckTest](#user-content-r0s159)|23 ✅|||1m 47s|
-|[org.apache.pulsar.schema.PartitionedTopicSchemaTest](#user-content-r0s160)|1 ✅|||29s|
-|[org.apache.pulsar.schema.SchemaTest](#user-content-r0s161)|3 ✅|||31s|
-|[org.apache.pulsar.stats.client.PulsarBrokerStatsClientTest](#user-content-r0s162)|2 ✅|||41s|
-|[org.apache.pulsar.tests.EnumValuesDataProviderTest](#user-content-r0s163)|6 ✅|||23ms|
-|[org.apache.pulsar.tests.TestRetrySupportBeforeMethodRetryTest](#user-content-r0s164)|1 ✅||4 ⚪|36ms|
-|[org.apache.pulsar.tests.TestRetrySupportRetryTest](#user-content-r0s165)|1 ✅||4 ⚪|27ms|
-|[org.apache.pulsar.tests.TestRetrySupportSuccessTest](#user-content-r0s166)|3 ✅|||1ms|
-|[org.apache.pulsar.tests.ThreadDumpUtilTest](#user-content-r0s167)|2 ✅|||17ms|
-|[org.apache.pulsar.utils.SimpleTextOutputStreamTest](#user-content-r0s168)|4 ✅|||50ms|
-|[org.apache.pulsar.utils.StatsOutputStreamTest](#user-content-r0s169)|6 ✅|||59ms|
-|[org.apache.pulsar.websocket.proxy.ProxyAuthenticationTest](#user-content-r0s170)|4 ✅|||29s|
-|[org.apache.pulsar.websocket.proxy.ProxyAuthorizationTest](#user-content-r0s171)|1 ✅|||1s|
-|[org.apache.pulsar.websocket.proxy.ProxyConfigurationTest](#user-content-r0s172)|2 ✅|||9s|
-|[org.apache.pulsar.websocket.proxy.ProxyPublishConsumeTlsTest](#user-content-r0s173)|1 ✅|||11s|
-|[org.apache.pulsar.websocket.proxy.ProxyPublishConsumeWithoutZKTest](#user-content-r0s174)|1 ✅|||7s|
-|[org.apache.pulsar.websocket.proxy.v1.V1_ProxyAuthenticationTest](#user-content-r0s175)|4 ✅|||30s|
+|Test suite|Passed|Failed|Skipped|Retried|Time|
+|:---|---:|---:|---:|---:|---:|
+|[org.apache.pulsar.AddMissingPatchVersionTest](#user-content-r0s0)||1 ❌|1 ⚪||116ms|
+|[org.apache.pulsar.broker.admin.AdminApiOffloadTest](#user-content-r0s1)|7 ✅||||19s|
+|[org.apache.pulsar.broker.auth.AuthenticationServiceTest](#user-content-r0s2)|2 ✅||||185ms|
+|[org.apache.pulsar.broker.auth.AuthLogsTest](#user-content-r0s3)|2 ✅||||1s|
+|[org.apache.pulsar.broker.auth.AuthorizationTest](#user-content-r0s4)|1 ✅||||2s|
+|[org.apache.pulsar.broker.lookup.http.HttpTopicLookupv2Test](#user-content-r0s5)|4 ✅||||2s|
+|[org.apache.pulsar.broker.namespace.NamespaceCreateBundlesTest](#user-content-r0s6)|2 ✅||||33s|
+|[org.apache.pulsar.broker.namespace.NamespaceOwnershipListenerTests](#user-content-r0s7)|2 ✅||||32s|
+|[org.apache.pulsar.broker.namespace.NamespaceServiceTest](#user-content-r0s8)|10 ✅||||1m 15s|
+|[org.apache.pulsar.broker.namespace.NamespaceUnloadingTest](#user-content-r0s9)|2 ✅||||14s|
+|[org.apache.pulsar.broker.namespace.OwnerShipCacheForCurrentServerTest](#user-content-r0s10)|1 ✅||||16s|
+|[org.apache.pulsar.broker.namespace.OwnershipCacheTest](#user-content-r0s11)|8 ✅||||16s|
+|[org.apache.pulsar.broker.protocol.ProtocolHandlersTest](#user-content-r0s12)|6 ✅||||946ms|
+|[org.apache.pulsar.broker.protocol.ProtocolHandlerUtilsTest](#user-content-r0s13)|3 ✅||||7s|
+|[org.apache.pulsar.broker.protocol.ProtocolHandlerWithClassLoaderTest](#user-content-r0s14)|1 ✅||||15ms|
+|[org.apache.pulsar.broker.PulsarServiceTest](#user-content-r0s15)|2 ✅||||96ms|
+|[org.apache.pulsar.broker.service.MessagePublishBufferThrottleTest](#user-content-r0s16)|3 ✅||||14s|
+|[org.apache.pulsar.broker.service.ReplicatorTest](#user-content-r0s17)|22 ✅||||40s|
+|[org.apache.pulsar.broker.service.TopicOwnerTest](#user-content-r0s18)|8 ✅||||1m 54s|
+|[org.apache.pulsar.broker.SLAMonitoringTest](#user-content-r0s19)|4 ✅||||9s|
+|[org.apache.pulsar.broker.stats.BookieClientsStatsGeneratorTest](#user-content-r0s20)|2 ✅||||49ms|
+|[org.apache.pulsar.broker.stats.ConsumerStatsTest](#user-content-r0s21)|3 ✅||||21s|
+|[org.apache.pulsar.broker.stats.ManagedCursorMetricsTest](#user-content-r0s22)|1 ✅||||281ms|
+|[org.apache.pulsar.broker.stats.ManagedLedgerMetricsTest](#user-content-r0s23)|1 ✅||||285ms|
+|[org.apache.pulsar.broker.stats.prometheus.AggregatedNamespaceStatsTest](#user-content-r0s24)|1 ✅||||40ms|
+|[org.apache.pulsar.broker.stats.PrometheusMetricsTest](#user-content-r0s25)|15 ✅||||1m 23s|
+|[org.apache.pulsar.broker.stats.SubscriptionStatsTest](#user-content-r0s26)|2 ✅||||2s|
+|[org.apache.pulsar.broker.systopic.NamespaceEventsSystemTopicServiceTest](#user-content-r0s27)|1 ✅||||1s|
+|[org.apache.pulsar.broker.transaction.buffer.InMemTransactionBufferReaderTest](#user-content-r0s28)|3 ✅||||28ms|
+|[org.apache.pulsar.broker.transaction.buffer.TransactionBufferClientTest](#user-content-r0s29)|4 ✅||||93ms|
+|[org.apache.pulsar.broker.transaction.buffer.TransactionBufferTest](#user-content-r0s30)|7 ✅||||81ms|
+|[org.apache.pulsar.broker.transaction.buffer.TransactionEntryImplTest](#user-content-r0s31)|1 ✅||||14ms|
+|[org.apache.pulsar.broker.transaction.buffer.TransactionLowWaterMarkTest](#user-content-r0s32)|2 ✅||||38s|
+|[org.apache.pulsar.broker.transaction.buffer.TransactionStablePositionTest](#user-content-r0s33)|2 ✅||1 ⚪||49s|
+|[org.apache.pulsar.broker.transaction.coordinator.TransactionCoordinatorClientTest](#user-content-r0s34)|3 ✅||||95ms|
+|[org.apache.pulsar.broker.transaction.coordinator.TransactionMetaStoreAssignmentTest](#user-content-r0s35)|1 ✅||||1s|
+|[org.apache.pulsar.broker.transaction.pendingack.PendingAckInMemoryDeleteTest](#user-content-r0s36)|2 ✅||1 ⚪||57s|
+|[org.apache.pulsar.broker.transaction.TransactionConsumeTest](#user-content-r0s37)|2 ✅||||30s|
+|[org.apache.pulsar.broker.web.RestExceptionTest](#user-content-r0s38)|3 ✅||||37ms|
+|[org.apache.pulsar.broker.web.WebServiceTest](#user-content-r0s39)|9 ✅||||27s|
+|[org.apache.pulsar.client.impl.AdminApiKeyStoreTlsAuthTest](#user-content-r0s40)|4 ✅||||8s|
+|[org.apache.pulsar.client.impl.BatchMessageIdImplSerializationTest](#user-content-r0s41)|4 ✅||||30ms|
+|[org.apache.pulsar.client.impl.BatchMessageIndexAckDisableTest](#user-content-r0s42)|4 ✅||||14s|
+|[org.apache.pulsar.client.impl.BatchMessageIndexAckTest](#user-content-r0s43)|5 ✅||||44s|
+|[org.apache.pulsar.client.impl.BrokerClientIntegrationTest](#user-content-r0s44)|15 ✅||||2m 28s|
+|[org.apache.pulsar.client.impl.CompactedOutBatchMessageTest](#user-content-r0s45)|1 ✅||||1s|
+|[org.apache.pulsar.client.impl.ConsumerAckResponseTest](#user-content-r0s46)|1 ✅||||549ms|
+|[org.apache.pulsar.client.impl.ConsumerConfigurationTest](#user-content-r0s47)|4 ✅||||12s|
+|[org.apache.pulsar.client.impl.ConsumerDedupPermitsUpdate](#user-content-r0s48)|7 ✅||||4s|
+|[org.apache.pulsar.client.impl.ConsumerUnsubscribeTest](#user-content-r0s49)|1 ✅||||129ms|
+|[org.apache.pulsar.client.impl.KeyStoreTlsProducerConsumerTestWithAuth](#user-content-r0s50)|3 ✅||||23s|
+|[org.apache.pulsar.client.impl.KeyStoreTlsProducerConsumerTestWithoutAuth](#user-content-r0s51)|3 ✅||||8s|
+|[org.apache.pulsar.client.impl.KeyStoreTlsTest](#user-content-r0s52)|1 ✅||||183ms|
+|[org.apache.pulsar.client.impl.MessageChecksumTest](#user-content-r0s53)|3 ✅||||47s|
+|[org.apache.pulsar.client.impl.MessageChunkingTest](#user-content-r0s54)|8 ✅||1 ⚪||1m 13s|
+|[org.apache.pulsar.client.impl.MessageParserTest](#user-content-r0s55)|2 ✅||||5s|
+|[org.apache.pulsar.client.impl.MultiTopicsReaderTest](#user-content-r0s56)|8 ✅||||35s|
+|[org.apache.pulsar.client.impl.NegativeAcksTest](#user-content-r0s57)|32 ✅||||11s|
+|[org.apache.pulsar.client.impl.PatternTopicsConsumerImplTest](#user-content-r0s58)|11 ✅||||1m 3s|
+|[org.apache.pulsar.client.impl.PerMessageUnAcknowledgedRedeliveryTest](#user-content-r0s59)|5 ✅||||34s|
+|[org.apache.pulsar.client.impl.PulsarMultiHostClientTest](#user-content-r0s60)|3 ✅||||15s|
+|[org.apache.pulsar.client.impl.RawMessageSerDeserTest](#user-content-r0s61)|1 ✅||||10ms|
+|[org.apache.pulsar.client.impl.SchemaDeleteTest](#user-content-r0s62)|1 ✅||||2s|
+|[org.apache.pulsar.client.impl.SequenceIdWithErrorTest](#user-content-r0s63)|3 ✅||2 ⚪||18s|
+|[org.apache.pulsar.client.impl.TopicDoesNotExistsTest](#user-content-r0s64)|2 ✅||||4s|
+|[org.apache.pulsar.client.impl.TopicFromMessageTest](#user-content-r0s65)|5 ✅||||14s|
+|[org.apache.pulsar.client.impl.TopicsConsumerImplTest](#user-content-r0s66)|17 ✅||||2m 13s|
+|[org.apache.pulsar.client.impl.UnAcknowledgedMessagesTimeoutTest](#user-content-r0s67)|7 ✅||||44s|
+|[org.apache.pulsar.client.impl.ZeroQueueSizeTest](#user-content-r0s68)|14 ✅||||16s|
+|[org.apache.pulsar.common.api.raw.RawMessageImplTest](#user-content-r0s69)|1 ✅||||316ms|
+|[org.apache.pulsar.common.compression.CommandsTest](#user-content-r0s70)|1 ✅||||30ms|
+|[org.apache.pulsar.common.compression.CompressorCodecBackwardCompatTest](#user-content-r0s71)|6 ✅||||223ms|
+|[org.apache.pulsar.common.compression.CompressorCodecTest](#user-content-r0s72)|45 ✅||||737ms|
+|[org.apache.pulsar.common.compression.Crc32cChecksumTest](#user-content-r0s73)|6 ✅||||5s|
+|[org.apache.pulsar.common.lookup.data.LookupDataTest](#user-content-r0s74)|4 ✅||||2s|
+|[org.apache.pulsar.common.naming.MetadataTests](#user-content-r0s75)|2 ✅||||161ms|
+|[org.apache.pulsar.common.naming.NamespaceBundlesTest](#user-content-r0s76)|5 ✅||||99ms|
+|[org.apache.pulsar.common.naming.NamespaceBundleTest](#user-content-r0s77)|6 ✅||||64ms|
+|[org.apache.pulsar.common.naming.NamespaceNameTest](#user-content-r0s78)|2 ✅||||207ms|
+|[org.apache.pulsar.common.naming.ServiceConfigurationTest](#user-content-r0s79)|4 ✅||||48ms|
+|[org.apache.pulsar.common.naming.TopicNameTest](#user-content-r0s80)|4 ✅||||529ms|
+|[org.apache.pulsar.common.net.ServiceURITest](#user-content-r0s81)|21 ✅||||237ms|
+|[org.apache.pulsar.common.policies.data.AutoFailoverPolicyDataTest](#user-content-r0s82)|1 ✅||||15ms|
+|[org.apache.pulsar.common.policies.data.AutoFailoverPolicyTypeTest](#user-content-r0s83)|1 ✅||||19ms|
+|[org.apache.pulsar.common.policies.data.AutoTopicCreationOverrideTest](#user-content-r0s84)|6 ✅||||64ms|
+|[org.apache.pulsar.common.policies.data.BacklogQuotaTest](#user-content-r0s85)|1 ✅||||12ms|
+|[org.apache.pulsar.common.policies.data.ClusterDataTest](#user-content-r0s86)|1 ✅||||9ms|
+|[org.apache.pulsar.common.policies.data.ConsumerStatsTest](#user-content-r0s87)|1 ✅||||8ms|
+|[org.apache.pulsar.common.policies.data.EnsemblePlacementPolicyConfigTest](#user-content-r0s88)|2 ✅||||948ms|
+|[org.apache.pulsar.common.policies.data.LocalPolicesTest](#user-content-r0s89)|1 ✅||||48ms|
+|[org.apache.pulsar.common.policies.data.NamespaceIsolationDataTest](#user-content-r0s90)|1 ✅||||76ms|
+|[org.apache.pulsar.common.policies.data.NamespaceOwnershipStatusTest](#user-content-r0s91)|1 ✅||||45ms|
+|[org.apache.pulsar.common.policies.data.OffloadPoliciesTest](#user-content-r0s92)|6 ✅||||216ms|
+|[org.apache.pulsar.common.policies.data.PartitionedTopicStatsTest](#user-content-r0s93)|1 ✅||||12ms|
+|[org.apache.pulsar.common.policies.data.PersistencePoliciesTest](#user-content-r0s94)|1 ✅||||19ms|
+|[org.apache.pulsar.common.policies.data.PersistentOfflineTopicStatsTest](#user-content-r0s95)|1 ✅||||29ms|
+|[org.apache.pulsar.common.policies.data.PersistentTopicStatsTest](#user-content-r0s96)|2 ✅||||51ms|
+|[org.apache.pulsar.common.policies.data.PoliciesDataTest](#user-content-r0s97)|4 ✅||||1s|
+|[org.apache.pulsar.common.policies.data.PublisherStatsTest](#user-content-r0s98)|2 ✅||||37ms|
+|[org.apache.pulsar.common.policies.data.ReplicatorStatsTest](#user-content-r0s99)|2 ✅||||30ms|
+|[org.apache.pulsar.common.policies.data.ResourceQuotaTest](#user-content-r0s100)|2 ✅||||45ms|
+|[org.apache.pulsar.common.policies.data.RetentionPolicesTest](#user-content-r0s101)|1 ✅||||8ms|
+|[org.apache.pulsar.common.policies.impl.AutoFailoverPolicyFactoryTest](#user-content-r0s102)|1 ✅||||22ms|
+|[org.apache.pulsar.common.policies.impl.MinAvailablePolicyTest](#user-content-r0s103)|1 ✅||||1ms|
+|[org.apache.pulsar.common.policies.impl.NamespaceIsolationPoliciesTest](#user-content-r0s104)|7 ✅||||265ms|
+|[org.apache.pulsar.common.policies.impl.NamespaceIsolationPolicyImplTest](#user-content-r0s105)|7 ✅||||309ms|
+|[org.apache.pulsar.common.protocol.ByteBufPairTest](#user-content-r0s106)|2 ✅||||5s|
+|[org.apache.pulsar.common.protocol.CommandUtilsTests](#user-content-r0s107)|7 ✅||||3s|
+|[org.apache.pulsar.common.protocol.MarkersTest](#user-content-r0s108)|6 ✅||||3s|
+|[org.apache.pulsar.common.protocol.PulsarDecoderTest](#user-content-r0s109)|1 ✅||||4s|
+|[org.apache.pulsar.common.stats.JvmDefaultGCMetricsLoggerTest](#user-content-r0s110)|1 ✅||||82ms|
+|[org.apache.pulsar.common.util.collections.BitSetRecyclableRecyclableTest](#user-content-r0s111)|2 ✅||||13ms|
+|[org.apache.pulsar.common.util.collections.ConcurrentBitSetRecyclableTest](#user-content-r0s112)|2 ✅||||63ms|
+|[org.apache.pulsar.common.util.collections.ConcurrentLongHashMapTest](#user-content-r0s113)|13 ✅||||28s|
+|[org.apache.pulsar.common.util.collections.ConcurrentLongPairSetTest](#user-content-r0s114)|15 ✅||||2s|
+|[org.apache.pulsar.common.util.collections.ConcurrentOpenHashMapTest](#user-content-r0s115)|12 ✅||||9s|
+|[org.apache.pulsar.common.util.collections.ConcurrentOpenHashSetTest](#user-content-r0s116)|11 ✅||||7s|
+|[org.apache.pulsar.common.util.collections.ConcurrentOpenLongPairRangeSetTest](#user-content-r0s117)|13 ✅||||1s|
+|[org.apache.pulsar.common.util.collections.ConcurrentSortedLongPairSetTest](#user-content-r0s118)|9 ✅||||342ms|
+|[org.apache.pulsar.common.util.collections.FieldParserTest](#user-content-r0s119)|2 ✅||||64ms|
+|[org.apache.pulsar.common.util.collections.GrowableArrayBlockingQueueTest](#user-content-r0s120)|6 ✅||||350ms|
+|[org.apache.pulsar.common.util.collections.GrowablePriorityLongPairQueueTest](#user-content-r0s121)|15 ✅||||3s|
+|[org.apache.pulsar.common.util.collections.TripleLongPriorityQueueTest](#user-content-r0s122)|3 ✅||||238ms|
+|[org.apache.pulsar.common.util.FieldParserTest](#user-content-r0s123)|1 ✅||||242ms|
+|[org.apache.pulsar.common.util.FileModifiedTimeUpdaterTest](#user-content-r0s124)|6 ✅||||6s|
+|[org.apache.pulsar.common.util.netty.ChannelFuturesTest](#user-content-r0s125)|5 ✅||||2s|
+|[org.apache.pulsar.common.util.RateLimiterTest](#user-content-r0s126)|11 ✅||||7s|
+|[org.apache.pulsar.common.util.ReflectionsTest](#user-content-r0s127)|12 ✅||||172ms|
+|[org.apache.pulsar.common.util.RelativeTimeUtilTest](#user-content-r0s128)|1 ✅||||39ms|
+|[org.apache.pulsar.discovery.service.web.DiscoveryServiceWebTest](#user-content-r0s129)|1 ✅||||5s|
+|[org.apache.pulsar.functions.worker.PulsarFunctionE2ESecurityTest](#user-content-r0s130)|2 ✅||||28s|
+|[org.apache.pulsar.functions.worker.PulsarFunctionPublishTest](#user-content-r0s131)|3 ✅||||42s|
+|[org.apache.pulsar.functions.worker.PulsarFunctionTlsTest](#user-content-r0s132)|1 ✅||||12s|
+|[org.apache.pulsar.io.PulsarFunctionTlsTest](#user-content-r0s133)|1 ✅||||30s|
+|[org.apache.pulsar.proxy.server.AdminProxyHandlerTest](#user-content-r0s134)|1 ✅||||474ms|
+|[org.apache.pulsar.proxy.server.AuthedAdminProxyHandlerTest](#user-content-r0s135)|1 ✅||||2s|
+|[org.apache.pulsar.proxy.server.FunctionWorkerRoutingTest](#user-content-r0s136)|1 ✅||||10ms|
+|[org.apache.pulsar.proxy.server.ProxyAdditionalServletTest](#user-content-r0s137)|1 ✅||||125ms|
+|[org.apache.pulsar.proxy.server.ProxyAuthenticatedProducerConsumerTest](#user-content-r0s138)|1 ✅||||2s|
+|[org.apache.pulsar.proxy.server.ProxyAuthenticationTest](#user-content-r0s139)|1 ✅||||17s|
+|[org.apache.pulsar.proxy.server.ProxyConnectionThrottlingTest](#user-content-r0s140)|1 ✅||||2s|
+|[org.apache.pulsar.proxy.server.ProxyEnableHAProxyProtocolTest](#user-content-r0s141)|1 ✅||||511ms|
+|[org.apache.pulsar.proxy.server.ProxyForwardAuthDataTest](#user-content-r0s142)|1 ✅||||32s|
+|[org.apache.pulsar.proxy.server.ProxyIsAHttpProxyTest](#user-content-r0s143)|10 ✅||||2s|
+|[org.apache.pulsar.proxy.server.ProxyKeyStoreTlsTestWithAuth](#user-content-r0s144)|3 ✅||||7s|
+|[org.apache.pulsar.proxy.server.ProxyKeyStoreTlsTestWithoutAuth](#user-content-r0s145)|3 ✅||||7s|
+|[org.apache.pulsar.proxy.server.ProxyLookupThrottlingTest](#user-content-r0s146)|1 ✅||||3s|
+|[org.apache.pulsar.proxy.server.ProxyParserTest](#user-content-r0s147)|5 ✅||||1s|
+|[org.apache.pulsar.proxy.server.ProxyRolesEnforcementTest](#user-content-r0s148)|1 ✅||||10s|
+|[org.apache.pulsar.proxy.server.ProxyStatsTest](#user-content-r0s149)|3 ✅||||533ms|
+|[org.apache.pulsar.proxy.server.ProxyTest](#user-content-r0s150)|6 ✅||||3s|
+|[org.apache.pulsar.proxy.server.ProxyTlsTest](#user-content-r0s151)|2 ✅||||414ms|
+|[org.apache.pulsar.proxy.server.ProxyTlsTestWithAuth](#user-content-r0s152)|1 ✅||||4ms|
+|[org.apache.pulsar.proxy.server.ProxyWithAuthorizationNegTest](#user-content-r0s153)|1 ✅||||2s|
+|[org.apache.pulsar.proxy.server.ProxyWithAuthorizationTest](#user-content-r0s154)|13 ✅||||33s|
+|[org.apache.pulsar.proxy.server.ProxyWithoutServiceDiscoveryTest](#user-content-r0s155)|1 ✅||||2s|
+|[org.apache.pulsar.proxy.server.SuperUserAuthedAdminProxyHandlerTest](#user-content-r0s156)|3 ✅||||8s|
+|[org.apache.pulsar.proxy.server.UnauthedAdminProxyHandlerTest](#user-content-r0s157)|2 ✅||||114ms|
+|[org.apache.pulsar.PulsarBrokerStarterTest](#user-content-r0s158)|9 ✅||||591ms|
+|[org.apache.pulsar.schema.compatibility.SchemaCompatibilityCheckTest](#user-content-r0s159)|23 ✅||||1m 47s|
+|[org.apache.pulsar.schema.PartitionedTopicSchemaTest](#user-content-r0s160)|1 ✅||||29s|
+|[org.apache.pulsar.schema.SchemaTest](#user-content-r0s161)|3 ✅||||31s|
+|[org.apache.pulsar.stats.client.PulsarBrokerStatsClientTest](#user-content-r0s162)|2 ✅||||41s|
+|[org.apache.pulsar.tests.EnumValuesDataProviderTest](#user-content-r0s163)|6 ✅||||23ms|
+|[org.apache.pulsar.tests.TestRetrySupportBeforeMethodRetryTest](#user-content-r0s164)|1 ✅||4 ⚪||36ms|
+|[org.apache.pulsar.tests.TestRetrySupportRetryTest](#user-content-r0s165)|1 ✅||4 ⚪||27ms|
+|[org.apache.pulsar.tests.TestRetrySupportSuccessTest](#user-content-r0s166)|3 ✅||||1ms|
+|[org.apache.pulsar.tests.ThreadDumpUtilTest](#user-content-r0s167)|2 ✅||||17ms|
+|[org.apache.pulsar.utils.SimpleTextOutputStreamTest](#user-content-r0s168)|4 ✅||||50ms|
+|[org.apache.pulsar.utils.StatsOutputStreamTest](#user-content-r0s169)|6 ✅||||59ms|
+|[org.apache.pulsar.websocket.proxy.ProxyAuthenticationTest](#user-content-r0s170)|4 ✅||||29s|
+|[org.apache.pulsar.websocket.proxy.ProxyAuthorizationTest](#user-content-r0s171)|1 ✅||||1s|
+|[org.apache.pulsar.websocket.proxy.ProxyConfigurationTest](#user-content-r0s172)|2 ✅||||9s|
+|[org.apache.pulsar.websocket.proxy.ProxyPublishConsumeTlsTest](#user-content-r0s173)|1 ✅||||11s|
+|[org.apache.pulsar.websocket.proxy.ProxyPublishConsumeWithoutZKTest](#user-content-r0s174)|1 ✅||||7s|
+|[org.apache.pulsar.websocket.proxy.v1.V1_ProxyAuthenticationTest](#user-content-r0s175)|4 ✅||||30s|
 ### ❌ <a id="user-content-r0s0" href="#user-content-r0s0">org.apache.pulsar.AddMissingPatchVersionTest</a>
 ```
 ⚪ testVersionStrings

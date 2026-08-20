@@ -986,7 +986,8 @@ class DotnetTrxParser {
         }
     }
     getTestClasses(trx) {
-        if (trx.TestRun.TestDefinitions === undefined || trx.TestRun.Results === undefined ||
+        if (trx.TestRun.TestDefinitions === undefined ||
+            trx.TestRun.Results === undefined ||
             !trx.TestRun.TestDefinitions.some(td => td.UnitTest && Array.isArray(td.UnitTest))) {
             return [];
         }
@@ -1002,7 +1003,7 @@ class DotnetTrxParser {
         }));
         const testClasses = {};
         for (const r of unitTestsResults) {
-            const className = r.test.TestMethod[0].$.className ?? "Unclassified";
+            const className = r.test.TestMethod[0].$.className ?? 'Unclassified';
             let tc = testClasses[className];
             if (tc === undefined) {
                 tc = new TestClass(className);
@@ -1119,7 +1120,10 @@ class GolangJsonParser {
         return this.getTestRunResult(path, events);
     }
     async getGolangTestEvents(path, content) {
-        return content.trim().split('\n').map((line, index) => {
+        return content
+            .trim()
+            .split('\n')
+            .map((line, index) => {
             try {
                 return JSON.parse(line);
             }
@@ -1167,9 +1171,7 @@ class GolangJsonParser {
                 suite.groups.push(group);
             }
             const lastEvent = eventGroup.at(-1);
-            const result = lastEvent.Action === 'pass' ? 'success'
-                : lastEvent.Action === 'skip' ? 'skipped'
-                    : 'failed';
+            const result = lastEvent.Action === 'pass' ? 'success' : lastEvent.Action === 'skip' ? 'skipped' : 'failed';
             if (lastEvent.Elapsed === undefined) {
                 throw new Error('missing elapsed on final test event');
             }
@@ -1302,7 +1304,7 @@ class JavaJunitParser {
         return new test_results_1.TestRunResult(filePath, suites, time);
     }
     getGroups(suite) {
-        const testcases = this.getTestCases(suite);
+        const testcases = this.mergeRepetitions(this.getTestCases(suite));
         if (testcases.length === 0) {
             return [];
         }
@@ -1325,7 +1327,7 @@ class JavaJunitParser {
                 const result = this.getTestCaseResult(tc);
                 const time = parseFloat(tc.$.time) * 1000;
                 const error = this.getTestCaseError(tc);
-                return new test_results_1.TestCaseResult(name, result, time, error);
+                return new test_results_1.TestCaseResult(name, result, time, error, tc.retries ?? 0);
             });
             return new test_results_1.TestGroupResult(grp.name, tests);
         });
@@ -1334,6 +1336,60 @@ class JavaJunitParser {
     // build target, several levels deep — fastlane's trainer emits target/bundle/class
     // for Xcode results. Reading only the direct children of the suites listed under
     // <testsuites> then finds no test cases at all and reports the run as empty.
+    // A runner that repeats a failing test writes one <testcase> per attempt, so a
+    // test that failed once and passed on the retry counts as both a failure and a
+    // pass. The run it belongs to already reported that test as passed — it is the
+    // last attempt that decides — and a report that disagrees turns every retried
+    // flake into a red build.
+    //
+    // Attempts are merged into the one result the runner settled on, keeping the
+    // count of extra attempts so the flake stays visible, and the first failure's
+    // error so its evidence is not lost.
+    //
+    // Attempts are identified by the `repetition` property and told apart by its
+    // value: a real sequence reads "First Run", "Retry 1", "Retry 2". Consecutive
+    // cases repeating the *same* value are not attempts at all — a generator that
+    // expands a parameterized test into one case per argument can emit each of them
+    // once per repetition of the whole function, so every argument appears N times
+    // labelled "First Run". Those are folded to one without counting a retry, which
+    // is also what keeps the report's test count from running ahead of the run's.
+    mergeRepetitions(testcases) {
+        const merged = [];
+        for (const tc of testcases) {
+            const previous = merged[merged.length - 1];
+            const repetition = this.getRepetition(tc);
+            if (previous === undefined || repetition === undefined || !this.isSameTest(previous, tc)) {
+                merged.push(repetition === undefined ? tc : { ...tc, lastRepetition: repetition });
+                continue;
+            }
+            const isNewAttempt = previous.lastRepetition !== repetition;
+            merged[merged.length - 1] = {
+                ...tc,
+                lastRepetition: repetition,
+                // The attempt kept is the last one, because that is the one the runner
+                // reported. Its failure, if any, still reaches `getTestCaseError` the
+                // normal way; `retainedFailure` only carries an earlier attempt's, for
+                // the case where the last one passed and would otherwise report nothing.
+                retainedFailure: previous.failure ?? previous.error ?? previous.retainedFailure,
+                retries: (previous.retries ?? 0) + (isNewAttempt ? 1 : 0)
+            };
+        }
+        return merged;
+    }
+    isSameTest(previous, tc) {
+        return (previous.lastRepetition !== undefined &&
+            previous.$.name === tc.$.name &&
+            previous.$.classname === tc.$.classname);
+    }
+    getRepetition(tc) {
+        for (const properties of tc.properties ?? []) {
+            const repetition = properties.property?.find(prop => prop.$.name === 'repetition');
+            if (repetition !== undefined) {
+                return repetition.$.value;
+            }
+        }
+        return undefined;
+    }
     getTestCases(suite) {
         const nested = suite.testsuite?.flatMap(inner => this.getTestCases(inner)) ?? [];
         return [...(suite.testcase ?? []), ...nested];
@@ -1350,7 +1406,7 @@ class JavaJunitParser {
             return undefined;
         }
         // We process <error> and <failure> the same way
-        const failures = tc.failure ?? tc.error;
+        const failures = tc.failure ?? tc.error ?? tc.retainedFailure;
         if (!failures) {
             return undefined;
         }
@@ -1813,7 +1869,7 @@ class PhpunitJunitParser {
             return undefined;
         }
         const failure = failures[0];
-        const details = typeof failure === 'string' ? failure : failure._ ?? '';
+        const details = typeof failure === 'string' ? failure : (failure._ ?? '');
         // PHPUnit provides file path directly in testcase attributes
         let filePath;
         let line;
@@ -2274,7 +2330,7 @@ class NetteTesterJunitParser {
         }
         const failure = failures[0];
         // For Nette Tester, details are in the message attribute, not as inner text
-        const details = typeof failure === 'string' ? failure : failure._ ?? failure.$?.message ?? '';
+        const details = typeof failure === 'string' ? failure : (failure._ ?? failure.$?.message ?? '');
         // Try to extract file path and line from error details
         let errorFilePath;
         let line;
@@ -2507,7 +2563,10 @@ function getMaxReportLength(options = exports.DEFAULT_OPTIONS) {
 function trimReport(lines, options) {
     const closingBlock = '```';
     const errorMsg = `**Report exceeded GitHub limit of ${getMaxReportLength(options)} bytes and has been trimmed**`;
-    const maxDetailsClosingLength = countOpenDetails(lines) * (DETAILS_CLOSE.length + 1);
+    // The deepest nesting anywhere in the report, not the depth it ends at: a
+    // complete report is balanced, so the depth at the end is zero and would
+    // reserve nothing for the sections left open wherever the trim lands.
+    const maxDetailsClosingLength = detailsDepth(lines).peak * (DETAILS_CLOSE.length + 1);
     const maxErrorMsgLength = closingBlock.length + errorMsg.length + 2 + maxDetailsClosingLength;
     const maxReportLength = getMaxReportLength(options) - maxErrorMsgLength;
     let reportLength = 0;
@@ -2530,23 +2589,25 @@ function trimReport(lines, options) {
     }
     // The trim message must land outside every open <details>, or it is hidden in a
     // section the reader has to guess to expand.
-    for (let i = countOpenDetails(reportLines); i > 0; i--) {
+    for (let i = detailsDepth(reportLines).open; i > 0; i--) {
         reportLines.push(DETAILS_CLOSE);
     }
     reportLines.push(errorMsg);
     return reportLines.join('\n');
 }
-function countOpenDetails(lines) {
+function detailsDepth(lines) {
     let depth = 0;
+    let peak = 0;
     for (const line of lines) {
         if (line.startsWith('<details')) {
             depth++;
+            peak = Math.max(peak, depth);
         }
         else if (line === DETAILS_CLOSE) {
             depth--;
         }
     }
-    return Math.max(depth, 0);
+    return { open: Math.max(depth, 0), peak };
 }
 function applySort(results, options) {
     results.sort((a, b) => a.path.localeCompare(b.path, node_utils_1.DEFAULT_LOCALE));
@@ -2652,12 +2713,13 @@ function getSuitesReport(tr, runIndex, options) {
         const icon = getResultIcon(tr.result);
         sections.push(`## ${icon}\xa0${nameLink}`);
         const time = (0, markdown_utils_1.formatTime)(tr.time);
+        const flaky = tr.flaky > 0 ? ` **${tr.flaky}** of them only after being retried.` : '';
         const headingLine2 = tr.tests > 0
-            ? `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`
+            ? `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.${flaky}`
             : 'No tests found';
         sections.push(headingLine2);
         if (suites.length > 0) {
-            const suitesTable = (0, markdown_utils_1.table)(['Test suite', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...suites.map((s, suiteIndex) => {
+            const suitesTable = (0, markdown_utils_1.table)(['Test suite', 'Passed', 'Failed', 'Skipped', 'Retried', 'Time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...suites.map((s, suiteIndex) => {
                 const tsTime = (0, markdown_utils_1.formatTime)(s.time);
                 const tsName = s.name;
                 const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed');
@@ -2666,7 +2728,8 @@ function getSuitesReport(tr, runIndex, options) {
                 const passed = s.passed > 0 ? `${s.passed} ${markdown_utils_1.Icon.success}` : '';
                 const failed = s.failed > 0 ? `${s.failed} ${markdown_utils_1.Icon.fail}` : '';
                 const skipped = s.skipped > 0 ? `${s.skipped} ${markdown_utils_1.Icon.skip}` : '';
-                return [tsNameLink, passed, failed, skipped, tsTime];
+                const flaky = s.flaky > 0 ? `${s.flaky} ${markdown_utils_1.Icon.flaky}` : '';
+                return [tsNameLink, passed, failed, skipped, flaky, tsTime];
             }));
             sections.push(suitesTable);
         }
@@ -2752,7 +2815,8 @@ function getGroupTestLines(grp, options, indent) {
             continue;
         }
         const result = getResultIcon(tc.result);
-        lines.push(`${indent}${result} ${tc.name}`);
+        const retried = tc.retries > 0 ? ` ${markdown_utils_1.Icon.flaky} retried ${tc.retries}\xd7` : '';
+        lines.push(`${indent}${result} ${tc.name}${retried}`);
         if (tc.error) {
             const errorLines = (tc.error.message ?? (0, parse_utils_1.getFirstNonEmptyLine)(tc.error.details)?.trim())
                 ?.split(/\r?\n/g)
@@ -2774,6 +2838,9 @@ function formatCounts(result) {
     }
     if (result.skipped > 0) {
         counts.push(`${result.skipped} ${markdown_utils_1.Icon.skip}`);
+    }
+    if (result.flaky > 0) {
+        counts.push(`${result.flaky} ${markdown_utils_1.Icon.flaky}`);
     }
     return `${counts.join(' ')} (${(0, markdown_utils_1.formatTime)(result.time)})`;
 }
@@ -2839,6 +2906,9 @@ class TestRunResult {
     get result() {
         return this.suites.some(t => t.result === 'failed') ? 'failed' : 'success';
     }
+    get flaky() {
+        return this.suites.reduce((sum, s) => sum + s.flaky, 0);
+    }
     get failedSuites() {
         return this.suites.filter(s => s.result === 'failed');
     }
@@ -2879,6 +2949,9 @@ class TestSuiteResult {
     get result() {
         return this.groups.some(t => t.result === 'failed') ? 'failed' : 'success';
     }
+    get flaky() {
+        return this.groups.reduce((sum, g) => sum + g.flaky, 0);
+    }
     get failedGroups() {
         return this.groups.filter(grp => grp.result === 'failed');
     }
@@ -2914,6 +2987,9 @@ class TestGroupResult {
     get result() {
         return this.tests.some(t => t.result === 'failed') ? 'failed' : 'success';
     }
+    get flaky() {
+        return this.tests.reduce((sum, t) => (t.retries > 0 ? sum + 1 : sum), 0);
+    }
     get failedTests() {
         return this.tests.filter(tc => tc.result === 'failed');
     }
@@ -2927,11 +3003,16 @@ class TestCaseResult {
     result;
     time;
     error;
-    constructor(name, result, time, error) {
+    retries;
+    constructor(name, result, time, error, 
+    // Attempts beyond the first, for a test the runner repeated. A test that
+    // needed one is flaky whether or not the attempt that counted passed.
+    retries = 0) {
         this.name = name;
         this.result = result;
         this.time = time;
         this.error = error;
+        this.retries = retries;
     }
 }
 exports.TestCaseResult = TestCaseResult;
@@ -3171,7 +3252,8 @@ var Align;
 exports.Icon = {
     skip: '⚪', // ':white_circle:'
     success: '✅', // ':white_check_mark:'
-    fail: '❌' // ':x:'
+    fail: '❌', // ':x:'
+    flaky: '🔁' // ':repeat:'
 };
 function link(title, address) {
     return `[${title}](${address})`;

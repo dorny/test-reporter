@@ -13,6 +13,7 @@ TestRunResult {
               "error": undefined,
               "name": "Is_Even_Number(2)",
               "result": "success",
+              "retries": 0,
               "time": 0.622,
             },
             TestCaseResult {
@@ -27,6 +28,7 @@ TestRunResult {
               },
               "name": "Is_Even_Number(3)",
               "result": "failed",
+              "retries": 0,
               "time": 1.098,
             },
             TestCaseResult {
@@ -39,6 +41,7 @@ TestRunResult {
               },
               "name": "Exception_In_TargetTest",
               "result": "failed",
+              "retries": 0,
               "time": 22.805,
             },
             TestCaseResult {
@@ -50,6 +53,7 @@ TestRunResult {
               },
               "name": "Exception_In_Test",
               "result": "failed",
+              "retries": 0,
               "time": 0.528,
             },
             TestCaseResult {
@@ -64,24 +68,28 @@ TestRunResult {
               },
               "name": "Failing_Test",
               "result": "failed",
+              "retries": 0,
               "time": 28.162,
             },
             TestCaseResult {
               "error": undefined,
               "name": "Passing_Test",
               "result": "success",
+              "retries": 0,
               "time": 0.23800000000000002,
             },
             TestCaseResult {
               "error": undefined,
               "name": "Passing_Test_With_Description",
               "result": "success",
+              "retries": 0,
               "time": 0.135,
             },
             TestCaseResult {
               "error": undefined,
               "name": "Skipped_Test",
               "result": "skipped",
+              "retries": 0,
               "time": 0.398,
             },
             TestCaseResult {
@@ -93,6 +101,7 @@ TestRunResult {
               },
               "name": "Timeout_Test",
               "result": "failed",
+              "retries": 0,
               "time": 14.949,
             },
           ],

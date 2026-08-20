@@ -4,9 +4,9 @@
 |[fixtures/external/java/junit4-complete.xml](#user-content-r0)|5 ✅|2 ❌|1 ⚪|16s|
 ## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/external/java/junit4-complete.xml</a>
 **8** tests were completed in **16s** with **5** passed, **2** failed and **1** skipped.
-|Test suite|Passed|Failed|Skipped|Time|
-|:---|---:|---:|---:|---:|
-|[Tests.Registration](#user-content-r0s0)|5 ✅|2 ❌|1 ⚪|16s|
+|Test suite|Passed|Failed|Skipped|Retried|Time|
+|:---|---:|---:|---:|---:|---:|
+|[Tests.Registration](#user-content-r0s0)|5 ✅|2 ❌|1 ⚪||16s|
 ### ❌ <a id="user-content-r0s0" href="#user-content-r0s0">Tests.Registration</a>
 ```
 ✅ testCase1

@@ -6,44 +6,44 @@
 |[fixtures/external/mocha/mocha-test-results.json](#user-content-r0)|833 ✅||6 ⚪|6s|
 ## ✅ <a id="user-content-r0" href="#user-content-r0">fixtures/external/mocha/mocha-test-results.json</a>
 **839** tests were completed in **6s** with **833** passed, **0** failed and **6** skipped.
-|Test suite|Passed|Failed|Skipped|Time|
-|:---|---:|---:|---:|---:|
-|[test/node-unit/buffered-worker-pool.spec.js](#user-content-r0s0)|14 ✅|||8ms|
-|[test/node-unit/cli/config.spec.js](#user-content-r0s1)|10 ✅|||8ms|
-|[test/node-unit/cli/node-flags.spec.js](#user-content-r0s2)|105 ✅|||9ms|
-|[test/node-unit/cli/options.spec.js](#user-content-r0s3)|36 ✅|||250ms|
-|[test/node-unit/cli/run-helpers.spec.js](#user-content-r0s4)|9 ✅|||8ms|
-|[test/node-unit/cli/run.spec.js](#user-content-r0s5)|40 ✅|||4ms|
-|[test/node-unit/mocha.spec.js](#user-content-r0s6)|24 ✅|||33ms|
-|[test/node-unit/parallel-buffered-runner.spec.js](#user-content-r0s7)|19 ✅|||23ms|
-|[test/node-unit/reporters/parallel-buffered.spec.js](#user-content-r0s8)|6 ✅|||16ms|
-|[test/node-unit/serializer.spec.js](#user-content-r0s9)|40 ✅|||31ms|
-|[test/node-unit/stack-trace-filter.spec.js](#user-content-r0s10)|2 ✅||4 ⚪|1ms|
-|[test/node-unit/utils.spec.js](#user-content-r0s11)|5 ✅|||1ms|
-|[test/node-unit/worker.spec.js](#user-content-r0s12)|15 ✅|||92ms|
-|[test/unit/context.spec.js](#user-content-r0s13)|8 ✅|||5ms|
-|[test/unit/duration.spec.js](#user-content-r0s14)|3 ✅|||166ms|
-|[test/unit/errors.spec.js](#user-content-r0s15)|13 ✅|||5ms|
-|[test/unit/globals.spec.js](#user-content-r0s16)|4 ✅|||0ms|
-|[test/unit/grep.spec.js](#user-content-r0s17)|8 ✅|||2ms|
-|[test/unit/hook-async.spec.js](#user-content-r0s18)|3 ✅|||1ms|
-|[test/unit/hook-sync-nested.spec.js](#user-content-r0s19)|4 ✅|||1ms|
-|[test/unit/hook-sync.spec.js](#user-content-r0s20)|3 ✅|||0ms|
-|[test/unit/hook-timeout.spec.js](#user-content-r0s21)|1 ✅|||0ms|
-|[test/unit/hook.spec.js](#user-content-r0s22)|4 ✅|||0ms|
-|[test/unit/mocha.spec.js](#user-content-r0s23)|115 ✅||1 ⚪|128ms|
-|[test/unit/overspecified-async.spec.js](#user-content-r0s24)|1 ✅|||3ms|
-|[test/unit/parse-query.spec.js](#user-content-r0s25)|2 ✅|||1ms|
-|[test/unit/plugin-loader.spec.js](#user-content-r0s26)|41 ✅||1 ⚪|16ms|
-|[test/unit/required-tokens.spec.js](#user-content-r0s27)|1 ✅|||0ms|
-|[test/unit/root.spec.js](#user-content-r0s28)|1 ✅|||0ms|
-|[test/unit/runnable.spec.js](#user-content-r0s29)|55 ✅|||122ms|
-|[test/unit/runner.spec.js](#user-content-r0s30)|77 ✅|||43ms|
-|[test/unit/suite.spec.js](#user-content-r0s31)|57 ✅|||14ms|
-|[test/unit/test.spec.js](#user-content-r0s32)|15 ✅|||0ms|
-|[test/unit/throw.spec.js](#user-content-r0s33)|9 ✅|||9ms|
-|[test/unit/timeout.spec.js](#user-content-r0s34)|8 ✅|||109ms|
-|[test/unit/utils.spec.js](#user-content-r0s35)|75 ✅|||24ms|
+|Test suite|Passed|Failed|Skipped|Retried|Time|
+|:---|---:|---:|---:|---:|---:|
+|[test/node-unit/buffered-worker-pool.spec.js](#user-content-r0s0)|14 ✅||||8ms|
+|[test/node-unit/cli/config.spec.js](#user-content-r0s1)|10 ✅||||8ms|
+|[test/node-unit/cli/node-flags.spec.js](#user-content-r0s2)|105 ✅||||9ms|
+|[test/node-unit/cli/options.spec.js](#user-content-r0s3)|36 ✅||||250ms|
+|[test/node-unit/cli/run-helpers.spec.js](#user-content-r0s4)|9 ✅||||8ms|
+|[test/node-unit/cli/run.spec.js](#user-content-r0s5)|40 ✅||||4ms|
+|[test/node-unit/mocha.spec.js](#user-content-r0s6)|24 ✅||||33ms|
+|[test/node-unit/parallel-buffered-runner.spec.js](#user-content-r0s7)|19 ✅||||23ms|
+|[test/node-unit/reporters/parallel-buffered.spec.js](#user-content-r0s8)|6 ✅||||16ms|
+|[test/node-unit/serializer.spec.js](#user-content-r0s9)|40 ✅||||31ms|
+|[test/node-unit/stack-trace-filter.spec.js](#user-content-r0s10)|2 ✅||4 ⚪||1ms|
+|[test/node-unit/utils.spec.js](#user-content-r0s11)|5 ✅||||1ms|
+|[test/node-unit/worker.spec.js](#user-content-r0s12)|15 ✅||||92ms|
+|[test/unit/context.spec.js](#user-content-r0s13)|8 ✅||||5ms|
+|[test/unit/duration.spec.js](#user-content-r0s14)|3 ✅||||166ms|
+|[test/unit/errors.spec.js](#user-content-r0s15)|13 ✅||||5ms|
+|[test/unit/globals.spec.js](#user-content-r0s16)|4 ✅||||0ms|
+|[test/unit/grep.spec.js](#user-content-r0s17)|8 ✅||||2ms|
+|[test/unit/hook-async.spec.js](#user-content-r0s18)|3 ✅||||1ms|
+|[test/unit/hook-sync-nested.spec.js](#user-content-r0s19)|4 ✅||||1ms|
+|[test/unit/hook-sync.spec.js](#user-content-r0s20)|3 ✅||||0ms|
+|[test/unit/hook-timeout.spec.js](#user-content-r0s21)|1 ✅||||0ms|
+|[test/unit/hook.spec.js](#user-content-r0s22)|4 ✅||||0ms|
+|[test/unit/mocha.spec.js](#user-content-r0s23)|115 ✅||1 ⚪||128ms|
+|[test/unit/overspecified-async.spec.js](#user-content-r0s24)|1 ✅||||3ms|
+|[test/unit/parse-query.spec.js](#user-content-r0s25)|2 ✅||||1ms|
+|[test/unit/plugin-loader.spec.js](#user-content-r0s26)|41 ✅||1 ⚪||16ms|
+|[test/unit/required-tokens.spec.js](#user-content-r0s27)|1 ✅||||0ms|
+|[test/unit/root.spec.js](#user-content-r0s28)|1 ✅||||0ms|
+|[test/unit/runnable.spec.js](#user-content-r0s29)|55 ✅||||122ms|
+|[test/unit/runner.spec.js](#user-content-r0s30)|77 ✅||||43ms|
+|[test/unit/suite.spec.js](#user-content-r0s31)|57 ✅||||14ms|
+|[test/unit/test.spec.js](#user-content-r0s32)|15 ✅||||0ms|
+|[test/unit/throw.spec.js](#user-content-r0s33)|9 ✅||||9ms|
+|[test/unit/timeout.spec.js](#user-content-r0s34)|8 ✅||||109ms|
+|[test/unit/utils.spec.js](#user-content-r0s35)|75 ✅||||24ms|
 ### ✅ <a id="user-content-r0s0" href="#user-content-r0s0">test/node-unit/buffered-worker-pool.spec.js</a>
 ```
 class BufferedWorkerPool constructor

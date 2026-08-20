@@ -4,9 +4,9 @@
 |[fixtures/python-xunit-unittest.xml](#user-content-r0)|4 ✅|2 ❌|2 ⚪|1ms|
 ## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/python-xunit-unittest.xml</a>
 **8** tests were completed in **1ms** with **4** passed, **2** failed and **2** skipped.
-|Test suite|Passed|Failed|Skipped|Time|
-|:---|---:|---:|---:|---:|
-|[TestAcme-20251114214921](#user-content-r0s0)|4 ✅|2 ❌|2 ⚪|1ms|
+|Test suite|Passed|Failed|Skipped|Retried|Time|
+|:---|---:|---:|---:|---:|---:|
+|[TestAcme-20251114214921](#user-content-r0s0)|4 ✅|2 ❌|2 ⚪||1ms|
 ### ❌ <a id="user-content-r0s0" href="#user-content-r0s0">TestAcme-20251114214921</a>
 ```
 TestAcme

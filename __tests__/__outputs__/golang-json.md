@@ -4,9 +4,9 @@
 |[fixtures/golang-json.json](#user-content-r0)|5 ✅|6 ❌|1 ⚪|6s|
 ## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/golang-json.json</a>
 **12** tests were completed in **6s** with **5** passed, **6** failed and **1** skipped.
-|Test suite|Passed|Failed|Skipped|Time|
-|:---|---:|---:|---:|---:|
-|[_/home/james_t/git/test-reporter/reports/go](#user-content-r0s0)|5 ✅|6 ❌|1 ⚪|6s|
+|Test suite|Passed|Failed|Skipped|Retried|Time|
+|:---|---:|---:|---:|---:|---:|
+|[_/home/james_t/git/test-reporter/reports/go](#user-content-r0s0)|5 ✅|6 ❌|1 ⚪||6s|
 ### ❌ <a id="user-content-r0s0" href="#user-content-r0s0">_/home/james_t/git/test-reporter/reports/go</a>
 ```
 ✅ TestPassing

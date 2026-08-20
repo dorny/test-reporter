@@ -4,9 +4,9 @@
 |[fixtures/python-xunit-pytest.xml](#user-content-r0)|6 ✅|2 ❌|2 ⚪|19ms|
 ## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/python-xunit-pytest.xml</a>
 **10** tests were completed in **19ms** with **6** passed, **2** failed and **2** skipped.
-|Test suite|Passed|Failed|Skipped|Time|
-|:---|---:|---:|---:|---:|
-|[pytest](#user-content-r0s0)|6 ✅|2 ❌|2 ⚪|19ms|
+|Test suite|Passed|Failed|Skipped|Retried|Time|
+|:---|---:|---:|---:|---:|---:|
+|[pytest](#user-content-r0s0)|6 ✅|2 ❌|2 ⚪||19ms|
 ### ❌ <a id="user-content-r0s0" href="#user-content-r0s0">pytest</a>
 ```
 tests.test_lib

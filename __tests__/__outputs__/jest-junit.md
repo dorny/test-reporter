@@ -4,10 +4,10 @@
 |[fixtures/jest-junit.xml](#user-content-r0)|1 ✅|4 ❌|1 ⚪|1s|
 ## ❌ <a id="user-content-r0" href="#user-content-r0">fixtures/jest-junit.xml</a>
 **6** tests were completed in **1s** with **1** passed, **4** failed and **1** skipped.
-|Test suite|Passed|Failed|Skipped|Time|
-|:---|---:|---:|---:|---:|
-|[__tests__\main.test.js](#user-content-r0s0)|1 ✅|3 ❌||486ms|
-|[__tests__\second.test.js](#user-content-r0s1)||1 ❌|1 ⚪|82ms|
+|Test suite|Passed|Failed|Skipped|Retried|Time|
+|:---|---:|---:|---:|---:|---:|
+|[__tests__\main.test.js](#user-content-r0s0)|1 ✅|3 ❌|||486ms|
+|[__tests__\second.test.js](#user-content-r0s1)||1 ❌|1 ⚪||82ms|
 ### ❌ <a id="user-content-r0s0" href="#user-content-r0s0">__tests__\main.test.js</a>
 ```
 Test 1

@@ -8,7 +8,8 @@ export enum Align {
 export const Icon = {
   skip: '⚪', // ':white_circle:'
   success: '✅', // ':white_check_mark:'
-  fail: '❌' // ':x:'
+  fail: '❌', // ':x:'
+  flaky: '🔁' // ':repeat:'
 }
 
 export function link(title: string, address: string): string {

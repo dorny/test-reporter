@@ -77,7 +77,7 @@ export class JavaJunitParser implements TestParser {
   }
 
   private getGroups(suite: TestSuite): TestGroupResult[] {
-    const testcases = this.getTestCases(suite)
+    const testcases = this.mergeRepetitions(this.getTestCases(suite))
     if (testcases.length === 0) {
       return []
     }
@@ -102,7 +102,7 @@ export class JavaJunitParser implements TestParser {
         const result = this.getTestCaseResult(tc)
         const time = parseFloat(tc.$.time) * 1000
         const error = this.getTestCaseError(tc)
-        return new TestCaseResult(name, result, time, error)
+        return new TestCaseResult(name, result, time, error, tc.retries ?? 0)
       })
       return new TestGroupResult(grp.name, tests)
     })
@@ -112,6 +112,68 @@ export class JavaJunitParser implements TestParser {
   // build target, several levels deep — fastlane's trainer emits target/bundle/class
   // for Xcode results. Reading only the direct children of the suites listed under
   // <testsuites> then finds no test cases at all and reports the run as empty.
+  // A runner that repeats a failing test writes one <testcase> per attempt, so a
+  // test that failed once and passed on the retry counts as both a failure and a
+  // pass. The run it belongs to already reported that test as passed — it is the
+  // last attempt that decides — and a report that disagrees turns every retried
+  // flake into a red build.
+  //
+  // Attempts are merged into the one result the runner settled on, keeping the
+  // count of extra attempts so the flake stays visible, and the first failure's
+  // error so its evidence is not lost.
+  //
+  // Attempts are identified by the `repetition` property and told apart by its
+  // value: a real sequence reads "First Run", "Retry 1", "Retry 2". Consecutive
+  // cases repeating the *same* value are not attempts at all — a generator that
+  // expands a parameterized test into one case per argument can emit each of them
+  // once per repetition of the whole function, so every argument appears N times
+  // labelled "First Run". Those are folded to one without counting a retry, which
+  // is also what keeps the report's test count from running ahead of the run's.
+  private mergeRepetitions(testcases: TestCase[]): TestCase[] {
+    const merged: TestCase[] = []
+
+    for (const tc of testcases) {
+      const previous = merged[merged.length - 1]
+      const repetition = this.getRepetition(tc)
+      if (previous === undefined || repetition === undefined || !this.isSameTest(previous, tc)) {
+        merged.push(repetition === undefined ? tc : {...tc, lastRepetition: repetition})
+        continue
+      }
+
+      const isNewAttempt = previous.lastRepetition !== repetition
+      merged[merged.length - 1] = {
+        ...tc,
+        lastRepetition: repetition,
+        // The attempt kept is the last one, because that is the one the runner
+        // reported. Its failure, if any, still reaches `getTestCaseError` the
+        // normal way; `retainedFailure` only carries an earlier attempt's, for
+        // the case where the last one passed and would otherwise report nothing.
+        retainedFailure: previous.failure ?? previous.error ?? previous.retainedFailure,
+        retries: (previous.retries ?? 0) + (isNewAttempt ? 1 : 0)
+      }
+    }
+
+    return merged
+  }
+
+  private isSameTest(previous: TestCase, tc: TestCase): boolean {
+    return (
+      previous.lastRepetition !== undefined &&
+      previous.$.name === tc.$.name &&
+      previous.$.classname === tc.$.classname
+    )
+  }
+
+  private getRepetition(tc: TestCase): string | undefined {
+    for (const properties of tc.properties ?? []) {
+      const repetition = properties.property?.find(prop => prop.$.name === 'repetition')
+      if (repetition !== undefined) {
+        return repetition.$.value
+      }
+    }
+    return undefined
+  }
+
   private getTestCases(suite: TestSuite): TestCase[] {
     const nested = suite.testsuite?.flatMap(inner => this.getTestCases(inner)) ?? []
     return [...(suite.testcase ?? []), ...nested]
@@ -129,7 +191,7 @@ export class JavaJunitParser implements TestParser {
     }
 
     // We process <error> and <failure> the same way
-    const failures = tc.failure ?? tc.error
+    const failures = tc.failure ?? tc.error ?? tc.retainedFailure
     if (!failures) {
       return undefined
     }

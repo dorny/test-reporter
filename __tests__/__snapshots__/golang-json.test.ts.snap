@@ -13,6 +13,7 @@ TestRunResult {
               "error": undefined,
               "name": "TestPassing",
               "result": "success",
+              "retries": 0,
               "time": 60,
             },
             TestCaseResult {
@@ -24,6 +25,7 @@ TestRunResult {
               },
               "name": "TestFailing",
               "result": "failed",
+              "retries": 0,
               "time": 890,
             },
             TestCaseResult {
@@ -35,6 +37,7 @@ TestRunResult {
               },
               "name": "TestPanicInsideFunction",
               "result": "failed",
+              "retries": 0,
               "time": 0,
             },
             TestCaseResult {
@@ -46,6 +49,7 @@ TestRunResult {
               },
               "name": "TestPanicInsideTest",
               "result": "failed",
+              "retries": 0,
               "time": 0,
             },
             TestCaseResult {
@@ -57,6 +61,7 @@ TestRunResult {
               },
               "name": "TestSkipped",
               "result": "skipped",
+              "retries": 0,
               "time": 940,
             },
             TestCaseResult {
@@ -66,6 +71,7 @@ TestRunResult {
               },
               "name": "TestCases",
               "result": "failed",
+              "retries": 0,
               "time": 2250,
             },
           ],
@@ -77,12 +83,14 @@ TestRunResult {
               "error": undefined,
               "name": "1_+_2_=_3",
               "result": "success",
+              "retries": 0,
               "time": 400,
             },
             TestCaseResult {
               "error": undefined,
               "name": "4_+_7_=_11",
               "result": "success",
+              "retries": 0,
               "time": 460,
             },
             TestCaseResult {
@@ -94,6 +102,7 @@ TestRunResult {
               },
               "name": "2_+_3_=_4",
               "result": "failed",
+              "retries": 0,
               "time": 90,
             },
             TestCaseResult {
@@ -105,18 +114,21 @@ TestRunResult {
               },
               "name": "1_/_2_=_1",
               "result": "failed",
+              "retries": 0,
               "time": 920,
             },
             TestCaseResult {
               "error": undefined,
               "name": "9_/_3_=_3",
               "result": "success",
+              "retries": 0,
               "time": 340,
             },
             TestCaseResult {
               "error": undefined,
               "name": "14_/_7_=_2",
               "result": "success",
+              "retries": 0,
               "time": 40,
             },
           ],

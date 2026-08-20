@@ -37,6 +37,20 @@ export interface TestCase {
   failure?: string | Failure[]
   error?: string | Failure[]
   skipped?: string[]
+  properties?: Properties[]
+  // Set while merging repeated attempts; never present in the parsed XML.
+  retries?: number
+  retainedFailure?: string | Failure[]
+  lastRepetition?: string
+}
+
+export interface Properties {
+  property?: {
+    $: {
+      name: string
+      value: string
+    }
+  }[]
 }
 
 export interface Failure {

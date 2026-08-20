@@ -29,6 +29,10 @@ export class TestRunResult {
     return this.suites.some(t => t.result === 'failed') ? 'failed' : 'success'
   }
 
+  get flaky(): number {
+    return this.suites.reduce((sum, s) => sum + s.flaky, 0)
+  }
+
   get failedSuites(): TestSuiteResult[] {
     return this.suites.filter(s => s.result === 'failed')
   }
@@ -71,6 +75,10 @@ export class TestSuiteResult {
     return this.groups.some(t => t.result === 'failed') ? 'failed' : 'success'
   }
 
+  get flaky(): number {
+    return this.groups.reduce((sum, g) => sum + g.flaky, 0)
+  }
+
   get failedGroups(): TestGroupResult[] {
     return this.groups.filter(grp => grp.result === 'failed')
   }
@@ -108,6 +116,10 @@ export class TestGroupResult {
     return this.tests.some(t => t.result === 'failed') ? 'failed' : 'success'
   }
 
+  get flaky(): number {
+    return this.tests.reduce((sum, t) => (t.retries > 0 ? sum + 1 : sum), 0)
+  }
+
   get failedTests(): TestCaseResult[] {
     return this.tests.filter(tc => tc.result === 'failed')
   }
@@ -122,7 +134,10 @@ export class TestCaseResult {
     readonly name: string,
     readonly result: TestExecutionResult,
     readonly time: number,
-    readonly error?: TestCaseError
+    readonly error?: TestCaseError,
+    // Attempts beyond the first, for a test the runner repeated. A test that
+    // needed one is flaky whether or not the attempt that counted passed.
+    readonly retries = 0
   ) {}
 }
 

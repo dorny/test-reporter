@@ -68,6 +68,75 @@ describe('java-junit tests', () => {
     expect(failed?.name).toBe('A loaded autoplay video ends up muted so it can autoplay silently')
   })
 
+  it('counts a test the runner retried once, as the attempt that counted', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'external', 'xcode', 'trainer-retried-tests.xml')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: []
+    }
+
+    const parser = new JavaJunitParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+
+    expect(result.tests).toBe(4)
+    expect(result.passed).toBe(3)
+    expect(result.failed).toBe(1)
+    expect(result.flaky).toBe(2)
+    expect(result.result).toBe('failed')
+  })
+
+  it('folds a case emitted once per repetition without calling it a retry', async () => {
+    // A parameterized test is expanded into one case per argument, and each of
+    // them is then written once per repetition of the whole function — every copy
+    // carrying the same repetition name. Counted as attempts they would inflate
+    // both the test count and the flaky count.
+    const fixturePath = path.join(__dirname, 'fixtures', 'external', 'xcode', 'trainer-retried-tests.xml')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: []
+    }
+
+    const parser = new JavaJunitParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+    const duplicated = result.suites[0].groups[0].tests.filter(t => t.name.startsWith('a ticket is filtered by city'))
+
+    expect(duplicated).toHaveLength(1)
+    expect(duplicated[0].retries).toBe(0)
+  })
+
+  it('keeps the failed attempt of a test that passed on the retry', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'external', 'xcode', 'trainer-retried-tests.xml')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: []
+    }
+
+    const parser = new JavaJunitParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+    const tests = result.suites[0].groups[0].tests
+
+    const recovered = tests.find(t => t.name === 'offline filtering keeps the active ticket')
+    expect(recovered?.result).toBe('success')
+    expect(recovered?.retries).toBe(1)
+    expect(recovered?.error?.message).toBe('TicketRepositoryTests.swift:48: Expectation failed')
+
+    const stillFailing = tests.find(t => t.name === 'an expired ticket is dropped')
+    expect(stillFailing?.result).toBe('failed')
+    expect(stillFailing?.retries).toBe(1)
+
+    const neverRetried = tests.find(t => t.name === 'a ticket without a session is ignored')
+    expect(neverRetried?.retries).toBe(0)
+  })
+
   it('report from apache/pulsar single suite test results matches snapshot', async () => {
     const fixturePath = path.join(
       __dirname,

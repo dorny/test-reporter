@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites tests='4' failures='1'>
+  <testsuite name='TicketsTests' tests='4' failures='1' skipped='0' time='2.5'>
+    <testcase classname='TicketRepositoryTests' name='offline filtering keeps the active ticket' time='0.9'>
+      <failure message='TicketRepositoryTests.swift:48: Expectation failed'/>
+      <properties>
+        <property name='repetition' value='Repetition 1 of 3'/>
+      </properties>
+    </testcase>
+    <testcase classname='TicketRepositoryTests' name='offline filtering keeps the active ticket' time='0.8'>
+      <properties>
+        <property name='repetition' value='Repetition 2 of 3'/>
+      </properties>
+    </testcase>
+    <testcase classname='TicketRepositoryTests' name='an expired ticket is dropped' time='0.4'>
+      <failure message='TicketRepositoryTests.swift:96: Expectation failed'/>
+      <properties>
+        <property name='repetition' value='Repetition 1 of 3'/>
+      </properties>
+    </testcase>
+    <testcase classname='TicketRepositoryTests' name='an expired ticket is dropped' time='0.4'>
+      <failure message='TicketRepositoryTests.swift:96: Expectation failed'/>
+      <properties>
+        <property name='repetition' value='Repetition 2 of 3'/>
+      </properties>
+    </testcase>
+    <testcase classname='TicketRepositoryTests' name='a ticket without a session is ignored' time='0.1'/>
+    <testcase classname='TicketRepositoryTests' name='a ticket is filtered by city (&quot;MAD&quot;)' time='0.2'>
+      <properties>
+        <property name='testname' value='a ticket is filtered by city (city:)'/>
+        <property name='argument' value='&quot;MAD&quot;'/>
+        <property name='repetition' value='First Run'/>
+      </properties>
+    </testcase>
+    <testcase classname='TicketRepositoryTests' name='a ticket is filtered by city (&quot;MAD&quot;)' time='0.2'>
+      <properties>
+        <property name='testname' value='a ticket is filtered by city (city:)'/>
+        <property name='argument' value='&quot;MAD&quot;'/>
+        <property name='repetition' value='First Run'/>
+      </properties>
+    </testcase>
+  </testsuite>
+</testsuites>

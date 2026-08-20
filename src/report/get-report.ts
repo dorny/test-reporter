@@ -76,7 +76,10 @@ function getMaxReportLength(options: ReportOptions = DEFAULT_OPTIONS): number {
 function trimReport(lines: string[], options: ReportOptions): string {
   const closingBlock = '```'
   const errorMsg = `**Report exceeded GitHub limit of ${getMaxReportLength(options)} bytes and has been trimmed**`
-  const maxDetailsClosingLength = countOpenDetails(lines) * (DETAILS_CLOSE.length + 1)
+  // The deepest nesting anywhere in the report, not the depth it ends at: a
+  // complete report is balanced, so the depth at the end is zero and would
+  // reserve nothing for the sections left open wherever the trim lands.
+  const maxDetailsClosingLength = detailsDepth(lines).peak * (DETAILS_CLOSE.length + 1)
   const maxErrorMsgLength = closingBlock.length + errorMsg.length + 2 + maxDetailsClosingLength
   const maxReportLength = getMaxReportLength(options) - maxErrorMsgLength
 
@@ -103,23 +106,25 @@ function trimReport(lines: string[], options: ReportOptions): string {
   }
   // The trim message must land outside every open <details>, or it is hidden in a
   // section the reader has to guess to expand.
-  for (let i = countOpenDetails(reportLines); i > 0; i--) {
+  for (let i = detailsDepth(reportLines).open; i > 0; i--) {
     reportLines.push(DETAILS_CLOSE)
   }
   reportLines.push(errorMsg)
   return reportLines.join('\n')
 }
 
-function countOpenDetails(lines: string[]): number {
+function detailsDepth(lines: string[]): {open: number; peak: number} {
   let depth = 0
+  let peak = 0
   for (const line of lines) {
     if (line.startsWith('<details')) {
       depth++
+      peak = Math.max(peak, depth)
     } else if (line === DETAILS_CLOSE) {
       depth--
     }
   }
-  return Math.max(depth, 0)
+  return {open: Math.max(depth, 0), peak}
 }
 
 function applySort(results: TestRunResult[], options: ReportOptions): void {
@@ -248,16 +253,17 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
     sections.push(`## ${icon}\xa0${nameLink}`)
 
     const time = formatTime(tr.time)
+    const flaky = tr.flaky > 0 ? ` **${tr.flaky}** of them only after being retried.` : ''
     const headingLine2 =
       tr.tests > 0
-        ? `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`
+        ? `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.${flaky}`
         : 'No tests found'
     sections.push(headingLine2)
 
     if (suites.length > 0) {
       const suitesTable = table(
-        ['Test suite', 'Passed', 'Failed', 'Skipped', 'Time'],
-        [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right],
+        ['Test suite', 'Passed', 'Failed', 'Skipped', 'Retried', 'Time'],
+        [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right, Align.Right],
         ...suites.map((s, suiteIndex) => {
           const tsTime = formatTime(s.time)
           const tsName = s.name
@@ -267,7 +273,8 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
           const passed = s.passed > 0 ? `${s.passed} ${Icon.success}` : ''
           const failed = s.failed > 0 ? `${s.failed} ${Icon.fail}` : ''
           const skipped = s.skipped > 0 ? `${s.skipped} ${Icon.skip}` : ''
-          return [tsNameLink, passed, failed, skipped, tsTime]
+          const flaky = s.flaky > 0 ? `${s.flaky} ${Icon.flaky}` : ''
+          return [tsNameLink, passed, failed, skipped, flaky, tsTime]
         })
       )
       sections.push(suitesTable)
@@ -369,7 +376,8 @@ function getGroupTestLines(grp: TestGroupResult, options: ReportOptions, indent:
       continue
     }
     const result = getResultIcon(tc.result)
-    lines.push(`${indent}${result} ${tc.name}`)
+    const retried = tc.retries > 0 ? ` ${Icon.flaky} retried ${tc.retries}\xd7` : ''
+    lines.push(`${indent}${result} ${tc.name}${retried}`)
     if (tc.error) {
       const errorLines = (tc.error.message ?? getFirstNonEmptyLine(tc.error.details)?.trim())
         ?.split(/\r?\n/g)
@@ -383,7 +391,7 @@ function getGroupTestLines(grp: TestGroupResult, options: ReportOptions, indent:
   return lines
 }
 
-function formatCounts(result: {passed: number; failed: number; skipped: number; time: number}): string {
+function formatCounts(result: {passed: number; failed: number; skipped: number; flaky: number; time: number}): string {
   const counts = []
   if (result.passed > 0) {
     counts.push(`${result.passed} ${Icon.success}`)
@@ -393,6 +401,9 @@ function formatCounts(result: {passed: number; failed: number; skipped: number; 
   }
   if (result.skipped > 0) {
     counts.push(`${result.skipped} ${Icon.skip}`)
+  }
+  if (result.flaky > 0) {
+    counts.push(`${result.flaky} ${Icon.flaky}`)
   }
   return `${counts.join(' ')} (${formatTime(result.time)})`
 }
