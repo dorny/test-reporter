@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.6.3
+* Feature: Print accumulated test time of a minute or more as `35m 27s` and an hour or more as `6h 11m`, so a suite whose cases ran concurrently reads as accumulated time rather than as a broken seconds count
+
 ## 2.6.2
 * Feature: Add `collapse-suites` input rendering each test suite's case list as a collapsed `<details>` section, so a report with many suites can be navigated without scrolling past every test case
 * Fix: Close any open `<details>` section before the "report has been trimmed" message, which was otherwise hidden inside a collapsed section
