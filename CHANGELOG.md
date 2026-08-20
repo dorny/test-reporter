@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.6.4
+* Feature: Add `collapse-groups` input rendering each group of test cases within a suite as a collapsed `<details>` section, so opening a suite that spans a whole test target does not list every case it ran
+
 ## 2.6.3
 * Feature: Print accumulated test time of a minute or more as `35m 27s` and an hour or more as `6h 11m`, so a suite whose cases ran concurrently reads as accumulated time rather than as a broken seconds count
 
