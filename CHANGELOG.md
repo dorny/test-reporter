@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.6.2
+* Feature: Add `collapse-suites` input rendering each test suite's case list as a collapsed `<details>` section, so a report with many suites can be navigated without scrolling past every test case
+* Fix: Close any open `<details>` section before the "report has been trimmed" message, which was otherwise hidden inside a collapsed section
+
 ## 2.6.1
 * Fix: Count test cases nested several suites deep in `java-junit` reports (fastlane trainer / Xcode results reported 0 passed, 0 failed, 0 skipped)
 
