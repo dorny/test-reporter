@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.6.6
+* Feature: Rename the suites table's `Time` column to `Test time` — a suite has no elapsed time of its own, so the value is the sum of its test cases' and counts concurrent tests once each
+
 ## 2.6.5
 * Fix: Merge the attempts of a repeated test into the result the runner settled on, so a test that failed once and passed on the retry no longer reports as both a failure and a pass
 * Feature: Report how many tests only passed after being retried — a `🔁 retried N×` marker per test, a `Retried` column in the suites table, and a sentence on the run heading
