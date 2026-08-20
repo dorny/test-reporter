@@ -315,6 +315,7 @@ class TestReporter {
     reportTitle = core.getInput('report-title', { required: false });
     collapsed = core.getInput('collapsed', { required: false });
     collapseSuites = core.getInput('collapse-suites', { required: false }) === 'true';
+    collapseGroups = core.getInput('collapse-groups', { required: false }) === 'true';
     token = core.getInput('token', { required: true });
     octokit;
     context = (0, github_utils_1.getCheckRunContext)();
@@ -415,7 +416,7 @@ class TestReporter {
                 throw error;
             }
         }
-        const { listSuites, sortSuites, listTests, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed, collapseSuites } = this;
+        const { listSuites, sortSuites, listTests, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed, collapseSuites, collapseGroups } = this;
         const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
         const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
         const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
@@ -432,7 +433,8 @@ class TestReporter {
                 badgeTitle,
                 reportTitle,
                 collapsed,
-                collapseSuites
+                collapseSuites,
+                collapseGroups
             }, shortSummary);
             core.info('Summary content:');
             core.info(summary);
@@ -462,7 +464,8 @@ class TestReporter {
                 badgeTitle,
                 reportTitle,
                 collapsed,
-                collapseSuites
+                collapseSuites,
+                collapseGroups
             });
             core.info('Creating annotations');
             const annotations = (0, get_annotations_1.getAnnotations)(results, this.maxAnnotations);
@@ -2475,7 +2478,8 @@ exports.DEFAULT_OPTIONS = {
     badgeTitle: 'tests',
     reportTitle: '',
     collapsed: 'auto',
-    collapseSuites: false
+    collapseSuites: false,
+    collapseGroups: false
 };
 function getReport(results, options = exports.DEFAULT_OPTIONS, shortSummary = '') {
     applySort(results, options);
@@ -2695,52 +2699,83 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
         sections.push(DETAILS_SEPARATOR);
         // No href on the anchor: a link in the summary would swallow the click that is
         // supposed to open the section.
-        sections.push(`<details><summary><a id="${tsSlug.id}"></a>${icon}\xa0${tsName}\xa0${getSuiteCounts(ts)}</summary>`);
+        sections.push(`<details><summary><a id="${tsSlug.id}"></a>${icon}\xa0${tsName}\xa0${formatCounts(ts)}</summary>`);
         sections.push(DETAILS_SEPARATOR);
     }
     else {
         sections.push(`### ${icon}\xa0${tsNameLink}`);
     }
-    sections.push('```');
-    for (const grp of groups) {
-        if (grp.name) {
-            sections.push(grp.name);
-        }
-        const space = grp.name ? '  ' : '';
-        for (const tc of grp.tests) {
-            if (options.listTests === 'failed' && tc.result !== 'failed') {
-                continue;
-            }
-            const result = getResultIcon(tc.result);
-            sections.push(`${space}${result} ${tc.name}`);
-            if (tc.error) {
-                const lines = (tc.error.message ?? (0, parse_utils_1.getFirstNonEmptyLine)(tc.error.details)?.trim())
-                    ?.split(/\r?\n/g)
-                    .map(l => '\t' + l);
-                if (lines) {
-                    sections.push(...lines);
-                }
-            }
-        }
+    if (options.collapseGroups) {
+        sections.push(...getCollapsedGroupsReport(groups, options));
     }
-    sections.push('```');
+    else {
+        sections.push('```');
+        for (const grp of groups) {
+            if (grp.name) {
+                sections.push(grp.name);
+            }
+            sections.push(...getGroupTestLines(grp, options, grp.name ? '  ' : ''));
+        }
+        sections.push('```');
+    }
     if (options.collapseSuites) {
         sections.push(DETAILS_CLOSE);
     }
     return sections;
 }
-function getSuiteCounts(ts) {
+// A suite here is a whole test target, whose cases are grouped by the class that
+// declares them. Listing them all inline puts thousands of lines behind one
+// summary line, which is the wall the suite sections were closed to avoid.
+function getCollapsedGroupsReport(groups, options) {
+    const sections = [];
+    for (const grp of groups) {
+        const testLines = getGroupTestLines(grp, options, '');
+        if (testLines.length === 0) {
+            continue;
+        }
+        if (grp.name) {
+            sections.push(DETAILS_SEPARATOR);
+            sections.push(`<details><summary>${getResultIcon(grp.result)}\xa0${grp.name}\xa0${formatCounts(grp)}</summary>`);
+            sections.push(DETAILS_SEPARATOR);
+        }
+        sections.push('```', ...testLines, '```');
+        if (grp.name) {
+            sections.push(DETAILS_CLOSE);
+        }
+    }
+    return sections;
+}
+function getGroupTestLines(grp, options, indent) {
+    const lines = [];
+    for (const tc of grp.tests) {
+        if (options.listTests === 'failed' && tc.result !== 'failed') {
+            continue;
+        }
+        const result = getResultIcon(tc.result);
+        lines.push(`${indent}${result} ${tc.name}`);
+        if (tc.error) {
+            const errorLines = (tc.error.message ?? (0, parse_utils_1.getFirstNonEmptyLine)(tc.error.details)?.trim())
+                ?.split(/\r?\n/g)
+                .map(l => '\t' + l);
+            if (errorLines) {
+                lines.push(...errorLines);
+            }
+        }
+    }
+    return lines;
+}
+function formatCounts(result) {
     const counts = [];
-    if (ts.passed > 0) {
-        counts.push(`${ts.passed} ${markdown_utils_1.Icon.success}`);
+    if (result.passed > 0) {
+        counts.push(`${result.passed} ${markdown_utils_1.Icon.success}`);
     }
-    if (ts.failed > 0) {
-        counts.push(`${ts.failed} ${markdown_utils_1.Icon.fail}`);
+    if (result.failed > 0) {
+        counts.push(`${result.failed} ${markdown_utils_1.Icon.fail}`);
     }
-    if (ts.skipped > 0) {
-        counts.push(`${ts.skipped} ${markdown_utils_1.Icon.skip}`);
+    if (result.skipped > 0) {
+        counts.push(`${result.skipped} ${markdown_utils_1.Icon.skip}`);
     }
-    return `${counts.join(' ')} (${(0, markdown_utils_1.formatTime)(ts.time)})`;
+    return `${counts.join(' ')} (${(0, markdown_utils_1.formatTime)(result.time)})`;
 }
 function makeRunSlug(runIndex, options) {
     // use prefix to avoid slug conflicts after escaping the paths

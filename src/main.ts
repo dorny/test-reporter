@@ -54,6 +54,7 @@ class TestReporter {
   readonly reportTitle = core.getInput('report-title', {required: false})
   readonly collapsed = core.getInput('collapsed', {required: false}) as 'auto' | 'always' | 'never'
   readonly collapseSuites = core.getInput('collapse-suites', {required: false}) === 'true'
+  readonly collapseGroups = core.getInput('collapse-groups', {required: false}) === 'true'
   readonly token = core.getInput('token', {required: true})
   readonly octokit: InstanceType<typeof GitHub>
   readonly context = getCheckRunContext()
@@ -190,7 +191,8 @@ class TestReporter {
       badgeTitle,
       reportTitle,
       collapsed,
-      collapseSuites
+      collapseSuites,
+      collapseGroups
     } = this
 
     const passed = results.reduce((sum, tr) => sum + tr.passed, 0)
@@ -212,7 +214,8 @@ class TestReporter {
           badgeTitle,
           reportTitle,
           collapsed,
-          collapseSuites
+          collapseSuites,
+          collapseGroups
         },
         shortSummary
       )
@@ -245,7 +248,8 @@ class TestReporter {
         badgeTitle,
         reportTitle,
         collapsed,
-        collapseSuites
+        collapseSuites,
+        collapseGroups
       })
 
       core.info('Creating annotations')

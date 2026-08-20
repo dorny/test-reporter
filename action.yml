@@ -115,6 +115,14 @@ inputs:
       whole report.
     required: false
     default: 'false'
+  collapse-groups:
+    description: |
+      Renders each group of test cases within a suite as its own collapsible section, closed by default.
+      Useful where a suite is a whole test target and its groups are the classes inside it, so that
+      opening one suite does not list every test the target ran. Independent of `collapse-suites`;
+      set both to close each level.
+    required: false
+    default: 'false'
   token:
     description: GitHub Access Token
     required: false

@@ -190,6 +190,12 @@ jobs:
     # whole report.
     collapse-suites: 'false'
 
+    # Renders each group of test cases within a suite as its own collapsible section, closed by default.
+    # Useful where a suite is a whole test target and its groups are the classes inside it, so that
+    # opening one suite does not list every test the target ran. Independent of `collapse-suites`;
+    # set both to close each level.
+    collapse-groups: 'false'
+
     # Limits number of created annotations with error message and stack trace captured during test execution.
     # Must be less or equal to 50.
     max-annotations: '10'

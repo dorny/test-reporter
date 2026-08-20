@@ -202,3 +202,80 @@ describe('collapseSuites', () => {
     expect(Buffer.byteLength(report, 'utf8')).toBeLessThanOrEqual(65535)
   })
 })
+
+describe('collapseGroups', () => {
+  const passing = (name: string): TestCaseResult => new TestCaseResult(name, 'success', 1)
+  const failing = (name: string): TestCaseResult => new TestCaseResult(name, 'failed', 1)
+
+  const run = (): TestRunResult =>
+    new TestRunResult(
+      'report.xml',
+      [
+        new TestSuiteResult('Tests', [
+          new TestGroupResult('AlphaTests', [passing('a'), passing('b')]),
+          new TestGroupResult('BetaTests', [failing('c')])
+        ])
+      ],
+      10
+    )
+
+  it('lists the groups inline by default', () => {
+    const report = getReport([run()], {...DEFAULT_OPTIONS, collapsed: 'never'})
+
+    expect(report).toContain('```\nAlphaTests\n  ✅ a\n  ✅ b\nBetaTests\n  ❌ c\n```')
+  })
+
+  it('renders each group as a closed section carrying its own counts', () => {
+    const report = getReport([run()], {...DEFAULT_OPTIONS, collapsed: 'never', collapseGroups: true})
+
+    expect(report).toContain('<details><summary>✅\xa0AlphaTests\xa02 ✅')
+    expect(report).toContain('<details><summary>❌\xa0BetaTests\xa01 ❌')
+    expect(report).toContain('```\n✅ a\n✅ b\n```')
+    expect(report.match(/<details/g)).toHaveLength(2)
+    expect(report.match(/<\/details>/g)).toHaveLength(2)
+  })
+
+  it('nests the groups inside their suite section', () => {
+    const report = getReport([run()], {
+      ...DEFAULT_OPTIONS,
+      collapsed: 'always',
+      collapseSuites: true,
+      collapseGroups: true
+    })
+
+    const lines = report.split('\n')
+    const suite = lines.findIndex(l => l.includes('>❌\xa0Tests\xa0'))
+    const group = lines.findIndex(l => l.includes('>✅\xa0AlphaTests\xa0'))
+
+    expect(suite).toBeGreaterThan(-1)
+    expect(group).toBeGreaterThan(suite)
+    expect(report.match(/<details/g)).toHaveLength(4)
+    expect(report.match(/<\/details>/g)).toHaveLength(4)
+  })
+
+  it('leaves out a group whose tests are all filtered away', () => {
+    const report = getReport([run()], {
+      ...DEFAULT_OPTIONS,
+      collapsed: 'never',
+      collapseGroups: true,
+      listTests: 'failed'
+    })
+
+    expect(report).toContain('BetaTests')
+    expect(report).not.toContain('AlphaTests\xa0')
+    expect(report).not.toContain('```\n```')
+  })
+
+  it('writes an unnamed group as a bare block with no section to open', () => {
+    const unnamed = new TestRunResult(
+      'report.xml',
+      [new TestSuiteResult('Tests', [new TestGroupResult('', [passing('a')])])],
+      10
+    )
+
+    const report = getReport([unnamed], {...DEFAULT_OPTIONS, collapsed: 'never', collapseGroups: true})
+
+    expect(report).toContain('```\n✅ a\n```')
+    expect(report).not.toContain('<details')
+  })
+})
