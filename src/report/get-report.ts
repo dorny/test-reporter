@@ -357,7 +357,9 @@ function getCollapsedGroupsReport(groups: TestGroupResult[], options: ReportOpti
 
     if (grp.name) {
       sections.push(DETAILS_SEPARATOR)
-      sections.push(`<details><summary>${getResultIcon(grp.result)}\xa0${grp.name}\xa0${formatCounts(grp)}</summary>`)
+      sections.push(
+        `<details><summary>${getResultIcon(grp.result)}\xa0${grp.name}\xa0${formatCounts(grp, ' of test time')}</summary>`
+      )
       sections.push(DETAILS_SEPARATOR)
     }
 
@@ -394,7 +396,10 @@ function getGroupTestLines(grp: TestGroupResult, options: ReportOptions, indent:
   return lines
 }
 
-function formatCounts(result: {passed: number; failed: number; skipped: number; flaky: number; time: number}): string {
+function formatCounts(
+  result: {passed: number; failed: number; skipped: number; flaky: number; time: number},
+  timeSuffix = ''
+): string {
   const counts = []
   if (result.passed > 0) {
     counts.push(`${result.passed} ${Icon.success}`)
@@ -408,7 +413,7 @@ function formatCounts(result: {passed: number; failed: number; skipped: number; 
   if (result.flaky > 0) {
     counts.push(`${result.flaky} ${Icon.flaky}`)
   }
-  return `${counts.join(' ')} (${formatTime(result.time)})`
+  return `${counts.join(' ')} (${formatTime(result.time)}${timeSuffix})`
 }
 
 function makeRunSlug(runIndex: number, options: ReportOptions): {id: string; link: string} {

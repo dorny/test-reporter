@@ -2801,7 +2801,7 @@ function getCollapsedGroupsReport(groups, options) {
         }
         if (grp.name) {
             sections.push(DETAILS_SEPARATOR);
-            sections.push(`<details><summary>${getResultIcon(grp.result)}\xa0${grp.name}\xa0${formatCounts(grp)}</summary>`);
+            sections.push(`<details><summary>${getResultIcon(grp.result)}\xa0${grp.name}\xa0${formatCounts(grp, ' of test time')}</summary>`);
             sections.push(DETAILS_SEPARATOR);
         }
         sections.push('```', ...testLines, '```');
@@ -2831,7 +2831,7 @@ function getGroupTestLines(grp, options, indent) {
     }
     return lines;
 }
-function formatCounts(result) {
+function formatCounts(result, timeSuffix = '') {
     const counts = [];
     if (result.passed > 0) {
         counts.push(`${result.passed} ${markdown_utils_1.Icon.success}`);
@@ -2845,7 +2845,7 @@ function formatCounts(result) {
     if (result.flaky > 0) {
         counts.push(`${result.flaky} ${markdown_utils_1.Icon.flaky}`);
     }
-    return `${counts.join(' ')} (${(0, markdown_utils_1.formatTime)(result.time)})`;
+    return `${counts.join(' ')} (${(0, markdown_utils_1.formatTime)(result.time)}${timeSuffix})`;
 }
 function makeRunSlug(runIndex, options) {
     // use prefix to avoid slug conflicts after escaping the paths

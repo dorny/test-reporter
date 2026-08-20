@@ -346,3 +346,32 @@ describe('retried tests', () => {
     expect(report).not.toContain('only after being retried')
   })
 })
+
+describe('accumulated time', () => {
+  const run = (): TestRunResult =>
+    new TestRunResult(
+      'report.xml',
+      [
+        new TestSuiteResult(
+          'Tests',
+          [new TestGroupResult('SlowTests', [new TestCaseResult('a', 'success', 90_000)])],
+          10_000
+        )
+      ],
+      10_000
+    )
+
+  it('says a group time is accumulated, where a suite time need not be', () => {
+    // A suite can be given its real elapsed time; a group's is only ever the sum
+    // of its cases', so it can exceed the suite that holds it.
+    const report = getReport([run()], {
+      ...DEFAULT_OPTIONS,
+      collapsed: 'never',
+      collapseSuites: true,
+      collapseGroups: true
+    })
+
+    expect(report).toContain('Tests\xa01 ✅ (10s)</summary>')
+    expect(report).toContain('SlowTests\xa01 ✅ (1m 30s of test time)</summary>')
+  })
+})
