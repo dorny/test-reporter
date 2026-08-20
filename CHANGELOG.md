@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.6.5
+* Fix: Merge the attempts of a repeated test into the result the runner settled on, so a test that failed once and passed on the retry no longer reports as both a failure and a pass
+* Feature: Report how many tests only passed after being retried — a `🔁 retried N×` marker per test, a `Retried` column in the suites table, and a sentence on the run heading
+* Fix: Fold a case a generator emitted once per repetition of a parameterized function, which inflated the test count
+* Fix: Reserve the report's deepest `<details>` nesting when trimming, not the depth it ends at, so a trimmed report cannot overrun the limit it was trimmed to fit
+
 ## 2.6.4
 * Feature: Add `collapse-groups` input rendering each group of test cases within a suite as a collapsed `<details>` section, so opening a suite that spans a whole test target does not list every case it ran
 
