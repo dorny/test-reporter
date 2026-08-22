@@ -3,7 +3,7 @@
     "lib": ["es2023"],
     "module": "nodenext",
     "target": "es2022",
-
+    "types": ["jest", "node"],
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,

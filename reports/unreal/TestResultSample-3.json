@@ -1,0 +1,742 @@
+﻿{
+	"devices": [
+		{
+			"deviceName": "Sarah-Personal-MacBook-2.local",
+			"instance": "F35C7BB1284BDF8F6E09B880ABB1710E",
+			"instanceName": "Sarah-Personal-MacBook-2.local-68471",
+			"platform": "MacEditor",
+			"oSVersion": "macOS 26.5.2 25F84",
+			"model": "Default",
+			"gPL": "Apple M3 Max",
+			"cPUModel": "Apple M3 Max",
+			"rAMInGB": 36,
+			"renderMode": "SM6",
+			"rHI": "",
+			"appInstanceLog": ""
+		}
+	],
+	"reportCreatedOn": "2026.08.10-11.46.00",
+	"succeeded": 50,
+	"succeededWithWarnings": 0,
+	"failed": 0,
+	"notRun": 0,
+	"inProcess": 0,
+	"totalDuration": 0.41858440637588501,
+	"comparisonExported": false,
+	"comparisonExportDirectory": "",
+	"tests": [
+		{
+			"testDisplayName": "Basic",
+			"fullTestPath": "System.Mass.ArchetypeEntityCollection.Create.Basic",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0080692917108535767,
+			"dateTime": "2026.08.10-11.45.59",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "CrossChunk",
+			"fullTestPath": "System.Mass.ArchetypeEntityCollection.Create.CrossChunk",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0062205009162425995,
+			"dateTime": "2026.08.10-11.45.59",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Duplicates",
+			"fullTestPath": "System.Mass.ArchetypeEntityCollection.Create.Duplicates",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0083998329937458038,
+			"dateTime": "2026.08.10-11.45.59",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "InvalidDuplicates",
+			"fullTestPath": "System.Mass.ArchetypeEntityCollection.Create.InvalidDuplicates",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0083998739719390869,
+			"dateTime": "2026.08.10-11.45.59",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "TestWithEntries",
+			"fullTestPath": "System.Mass.ArchetypeEntityCollection.Create.InvalidDuplicatesWithPayloadWithPayload",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0081562884151935577,
+			"dateTime": "2026.08.10-11.45.59",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "MultiDuplicatesWithPayload",
+			"fullTestPath": "System.Mass.ArchetypeEntityCollection.Create.MultiDuplicatesWithPayload",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0083472505211830139,
+			"dateTime": "2026.08.10-11.45.59",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "OrderInvariant",
+			"fullTestPath": "System.Mass.ArchetypeEntityCollection.Create.OrderInvariant",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0081661231815814972,
+			"dateTime": "2026.08.10-11.45.59",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "TrivialDuplicates",
+			"fullTestPath": "System.Mass.ArchetypeEntityCollection.Create.TrivialDuplicates",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0081017911434173584,
+			"dateTime": "2026.08.10-11.45.59",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "TrivialDuplicatesWithPayload",
+			"fullTestPath": "System.Mass.ArchetypeEntityCollection.Create.TrivialDuplicatesWithPayload",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0083047933876514435,
+			"dateTime": "2026.08.10-11.45.59",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "WithPayload",
+			"fullTestPath": "System.Mass.ArchetypeEntityCollection.Create.WithPayload",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0081974565982818604,
+			"dateTime": "2026.08.10-11.45.59",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "CreatedEntities",
+			"fullTestPath": "System.Mass.ArchetypeEntityCollection.ExportHandles.CreatedEntities",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0082525387406349182,
+			"dateTime": "2026.08.10-11.45.59",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Fragments",
+			"fullTestPath": "System.Mass.BitSetBuilder.Wrapper.Fragments",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0083513744175434113,
+			"dateTime": "2026.08.10-11.45.59",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Tags",
+			"fullTestPath": "System.Mass.BitSetBuilder.Wrapper.Tags",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0084049180150032043,
+			"dateTime": "2026.08.10-11.45.59",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "AddingFragmentInstancesToDiscontinouousEntitiesCollection",
+			"fullTestPath": "System.Mass.Complex.AddingFragmentInstancesToDiscontinouousEntitiesCollection",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0081370025873184204,
+			"dateTime": "2026.08.10-11.45.59",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "ParallelFor",
+			"fullTestPath": "System.Mass.Entity.Iterator.ParallelFor",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.016195956617593765,
+			"dateTime": "2026.08.10-11.45.59",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Parity",
+			"fullTestPath": "System.Mass.Entity.Iterator.Parity",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0085506662726402283,
+			"dateTime": "2026.08.10-11.45.59",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Processorless",
+			"fullTestPath": "System.Mass.Entity.Iterator.Processorless",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0083087906241416931,
+			"dateTime": "2026.08.10-11.45.59",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Queryless",
+			"fullTestPath": "System.Mass.Entity.Iterator.Queryless",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0084677897393703461,
+			"dateTime": "2026.08.10-11.45.59",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "BatchMove",
+			"fullTestPath": "System.Mass.Entity.ZeroLengthRanges.BatchMove",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0079818777740001678,
+			"dateTime": "2026.08.10-11.45.59",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "BatchSetFragmentValues",
+			"fullTestPath": "System.Mass.Entity.ZeroLengthRanges.BatchSetFragmentValues",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0081688724458217621,
+			"dateTime": "2026.08.10-11.45.59",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Destroy",
+			"fullTestPath": "System.Mass.Entity.ZeroLengthRanges.Destroy",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0081848315894603729,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Execute",
+			"fullTestPath": "System.Mass.Entity.ZeroLengthRanges.Execute",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0084290839731693268,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "AchetypeEquivalance",
+			"fullTestPath": "System.Mass.Entity.AchetypeEquivalance",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0082624591886997223,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "AchetypesCreation",
+			"fullTestPath": "System.Mass.Entity.AchetypesCreation",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0083944164216518402,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "AddingFragmentType",
+			"fullTestPath": "System.Mass.Entity.AddingFragmentType",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0081819146871566772,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "BatchCreatingSingleEntity",
+			"fullTestPath": "System.Mass.Entity.BatchCreatingSingleEntity",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.008356872946023941,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "BatchCreation",
+			"fullTestPath": "System.Mass.Entity.BatchCreation",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.008059084415435791,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "EntityCreation",
+			"fullTestPath": "System.Mass.Entity.EntityCreation",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0083737932145595551,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "EntityCreationFromInstances",
+			"fullTestPath": "System.Mass.Entity.EntityCreationFromInstances",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0082145407795906067,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "MultipleEntitiesCreation",
+			"fullTestPath": "System.Mass.Entity.MultipleEntitiesCreation",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0081990398466587067,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "RemovingFragment",
+			"fullTestPath": "System.Mass.Entity.RemovingFragment",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.008227955549955368,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Abort",
+			"fullTestPath": "System.Mass.EntityBuilder.Abort",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.008410625159740448,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "AllElements",
+			"fullTestPath": "System.Mass.EntityBuilder.AllElements",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0081842914223670959,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Append",
+			"fullTestPath": "System.Mass.EntityBuilder.Append",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0082903318107128143,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Copy",
+			"fullTestPath": "System.Mass.EntityBuilder.Copy",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0083005018532276154,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "CopyEntity",
+			"fullTestPath": "System.Mass.EntityBuilder.CopyEntity",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0082880817353725433,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "DuringProcessing",
+			"fullTestPath": "System.Mass.EntityBuilder.DuringProcessing",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0083343349397182465,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "OneLiner",
+			"fullTestPath": "System.Mass.EntityBuilder.OneLiner",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.008250456303358078,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Override",
+			"fullTestPath": "System.Mass.EntityBuilder.Override",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0082596652209758759,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "PassOver",
+			"fullTestPath": "System.Mass.EntityBuilder.PassOver",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0080097094178199768,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Reuse",
+			"fullTestPath": "System.Mass.EntityBuilder.Reuse",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0080867521464824677,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "SyncBuildingAsyncSubmission",
+			"fullTestPath": "System.Mass.EntityBuilder.SyncBuildingAsyncSubmission",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0084040015935897827,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "Second execution of the processor shouldn't change a thing.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.08.10-11.46.00"
+				}
+			],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "WithInstancedStructs",
+			"fullTestPath": "System.Mass.EntityBuilder.WithInstancedStructs",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.008129708468914032,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "MultipleNullProcessors",
+			"fullTestPath": "System.Mass.Execution.MultipleNullProcessors",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0084846280515193939,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Sparse",
+			"fullTestPath": "System.Mass.Execution.Sparse",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0082567483186721802,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Batch",
+			"fullTestPath": "System.Mass.Observer.Create.CreationOperationOrder.Batch",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0081608742475509644,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Individual",
+			"fullTestPath": "System.Mass.Observer.Create.CreationOperationOrder.Individual",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0084763355553150177,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "ModificationsToOtherEntities",
+			"fullTestPath": "System.Mass.Observer.Create.ModificationsToOtherEntities",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0079016238451004028,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "UnobservedCompositionChange",
+			"fullTestPath": "System.Mass.Observer.Create.UnobservedCompositionChange",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.0083895400166511536,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "MoveToAnotherArchetype",
+			"fullTestPath": "System.Mass.Observer.MoveToAnotherArchetype",
+			"state": "Success",
+			"deviceInstance": [
+				"F35C7BB1284BDF8F6E09B880ABB1710E"
+			],
+			"duration": 0.007899165153503418,
+			"dateTime": "2026.08.10-11.46.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		}
+	]
+}
