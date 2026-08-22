@@ -1,0 +1,118 @@
+{
+  "devices": [
+    {
+      "deviceName": "bd1d2441e9a9",
+      "instance": "B28A4677D38945D7B2C0E56D2FF23657",
+      "instanceName": "bd1d2441e9a9-64",
+      "platform": "LinuxEditor",
+      "oSVersion": "Ubuntu 22.04.2 LTS 7.0.12-201.fc44.aarch64",
+      "model": "Default",
+      "gPL": "UnknownVendor",
+      "cPUModel": "QEMU TCG CPU version 2.5+",
+      "rAMInGB": 15,
+      "renderMode": "SM6",
+      "rHI": "",
+      "appInstanceLog": ""
+    }
+  ],
+  "reportCreatedOn": "2026.08.06-11.49.53",
+  "succeeded": 1,
+  "succeededWithWarnings": 1,
+  "failed": 0,
+  "notRun": 0,
+  "inProcess": 0,
+  "totalDuration": 1.2361487150192261,
+  "comparisonExported": false,
+  "comparisonExportDirectory": "",
+  "tests": [
+    {
+      "testDisplayName": "ConversationDataTest",
+      "fullTestPath": "AdventureGame.Dialog.ConversationDataTest",
+      "state": "Success",
+      "deviceInstance": [
+        "B28A4677D38945D7B2C0E56D2FF23657"
+      ],
+      "duration": 0.010997915640473366,
+      "dateTime": "2026.08.06-11.49.51",
+      "entries": [],
+      "warnings": 0,
+      "errors": 0,
+      "artifacts": []
+    },
+    {
+      "testDisplayName": "BarkTextMultiLineTest",
+      "fullTestPath": "Private.Tests.BarkTextMultiLineTest",
+      "state": "Success",
+      "deviceInstance": [
+        "B28A4677D38945D7B2C0E56D2FF23657"
+      ],
+      "duration": 1.2251508235931396,
+      "dateTime": "2026.08.06-11.49.51",
+      "entries": [
+        {
+          "event":
+          {
+            "type": "Warning",
+            "message": "LogDialog: AddBarkRequest - 4 lines",
+            "context": "log",
+            "artifact": "00000000000000000000000000000000"
+          },
+          "filename": "",
+          "lineNumber": -1,
+          "timestamp": "2026.08.06-11.49.53"
+        },
+        {
+          "event":
+          {
+            "type": "Warning",
+            "message": "LogDialog: #### SetBarkLineTimer: 7.000000",
+            "context": "log",
+            "artifact": "00000000000000000000000000000000"
+          },
+          "filename": "",
+          "lineNumber": -1,
+          "timestamp": "2026.08.06-11.49.53"
+        },
+        {
+          "event":
+          {
+            "type": "Warning",
+            "message": "LogDialog: #### SetBarkLineTimer: 3.000000",
+            "context": "log",
+            "artifact": "00000000000000000000000000000000"
+          },
+          "filename": "",
+          "lineNumber": -1,
+          "timestamp": "2026.08.06-11.49.53"
+        },
+        {
+          "event":
+          {
+            "type": "Warning",
+            "message": "LogDialog: #### SetBarkLineTimer: 7.000000",
+            "context": "log",
+            "artifact": "00000000000000000000000000000000"
+          },
+          "filename": "",
+          "lineNumber": -1,
+          "timestamp": "2026.08.06-11.49.53"
+        },
+        {
+          "event":
+          {
+            "type": "Warning",
+            "message": "LogDialog: #### SetBarkLineTimer: 5.000000",
+            "context": "log",
+            "artifact": "00000000000000000000000000000000"
+          },
+          "filename": "",
+          "lineNumber": -1,
+          "timestamp": "2026.08.06-11.49.53"
+        }
+      ],
+      "warnings": 5,
+      "errors": 0,
+      "artifacts": []
+    }
+  ]
+}
