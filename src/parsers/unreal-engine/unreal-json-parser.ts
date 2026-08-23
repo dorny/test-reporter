@@ -9,7 +9,11 @@ import {
 } from '../../test-results.js'
 import {UnrealReport, UnrealTest} from './unreal-json-types.js'
 
-function convertUnrealState(unrealState: UnrealTest['state']): TestExecutionResult | undefined {
+export const EMPTY_SUITE_NAME = 'EMPTY_SUITE_NAME'
+export const EMPTY_GROUP_NAME = 'EMPTY_GROUP_NAME'
+export const EMPTY_TEST_NAME = 'EMPTY_TEST_NAME'
+
+export function convertUnrealState(unrealState: UnrealTest['state']): TestExecutionResult | undefined {
   switch (unrealState) {
     case 'Success':
       return 'success'
@@ -46,7 +50,7 @@ class TestSuite {
     const results: TestGroupResult[] = []
     if (this.groups) {
       for (const g of this.groups) {
-        results.push()
+        // results.push(new TestGroupResult(g.groupName, ))
       }
     } else {
       // If the test run has a single test, like "MyTest" with no "." separators,
@@ -87,6 +91,11 @@ class TestCase {
   }
 }
 
+/////////////////////////////////
+///
+/// @class TestPathsMapElement
+/// @classdesc Models a node of the tree of Unreal Engine tests
+
 export class TestPathsMapElement {
   public readonly children: TestPathsMapElement[]
   public test?: UnrealTest
@@ -98,44 +107,58 @@ export class TestPathsMapElement {
    * Return true if every node under this is a leaf.
    * Don't call this on a leaf. That's an error.
    */
-  isBranchEnd(): boolean {
+  private isBranchEnd(): boolean {
     if (this.isLeaf()) throw Error('programmer error')
     for (const c of this.children) {
       if (!c.isLeaf()) return false
     }
     return true
   }
-  firstChild(): TestPathsMapElement | undefined {
+  private firstChild(): TestPathsMapElement | undefined {
     return this.children.at(0)
   }
   isLeaf(): boolean {
     return this.children.length === 0
   }
-  isTrunk(): boolean {
+  private isTrunk(): boolean {
     return this.children.length === 1
   }
-  isBranchPoint(): boolean {
+  private isBranchPoint(): boolean {
     return this.children.length > 1
   }
 
   /**
    * Create groups from all nodes including this, and those
-   * below it, not including the leaf nodes. Don't call
-   * this on leaf node. That's an error.
+   * below it, up to but not including the leaf (test) nodes.
+   * If this is a suite node, don't include it.
+   * Don't call this on leaf node. That's an error.
    */
-  groups(): TestGroup[] {
+  findGroups(): TestGroup[] {
+    const f = this.findGroupNode()
+    if (f === this) {
+      const suite = this.findSuiteName().split(/\./)
+      return f.groups(suite) ?? []
+    }
+    return f?.groups() ?? []
+  }
+
+  private groups(suite?: string[]): TestGroup[] {
     if (this.isLeaf()) throw Error('programmer error')
     const accGroups: TestGroup[] = []
     let thisAdded = false
+    const suiteEl = suite?.shift()
     for (const c of this.children) {
       if (!c.isLeaf()) {
-        const names = c.groupNames()
+        const names = c.groupNames(suite)
         for (const nm of names) {
-          const groupName = [this.elementName, ...nm]
-          accGroups.push(new TestGroup(groupName.join('.'), this))
+          if (this.elementName !== suiteEl) {
+            nm.unshift(this.elementName)
+          }
+          const groupName = nm.join('.')
+          accGroups.push(new TestGroup(groupName, this))
         }
       } else {
-        if (!thisAdded) {
+        if (!thisAdded && this.elementName !== suite?.at(0)) {
           accGroups.push(new TestGroup(this.elementName, this))
           thisAdded = true
         }
@@ -149,18 +172,31 @@ export class TestPathsMapElement {
    * including this, and below it, not including the leaf nodes.
    * Don't call this on leaf node. That's an error.
    */
-  groupNames(): string[][] {
+  findGroupNames(): string[][] {
+    const f = this.findGroupNode()
+    if (f === this) {
+      const suite = this.findSuiteName().split(/\./)
+      return f.groupNames(suite) ?? []
+    }
+    return f?.groupNames() ?? []
+  }
+
+  private groupNames(suite?: string[]): string[][] {
     if (this.isLeaf()) throw Error('programmer error')
     const accGroupNames: string[][] = []
     let thisAdded = false
+    const suiteEl = suite?.shift()
     for (const c of this.children) {
       if (!c.isLeaf()) {
-        const names = c.groupNames()
+        const names = c.groupNames(suite)
         for (const nm of names) {
-          accGroupNames.push([this.elementName, ...nm])
+          if (this.elementName !== suiteEl) {
+            nm.unshift(this.elementName)
+          }
+          accGroupNames.push(nm)
         }
       } else {
-        if (!thisAdded) {
+        if (!thisAdded && this.elementName !== suite?.at(0)) {
           accGroupNames.push([this.elementName])
           thisAdded = true
         }
@@ -185,6 +221,10 @@ export class TestPathsMapElement {
     return suiteNameArray
   }
 
+  /**
+   * Find the name for this suite. This should be called on a top-level
+   * element, that is root.childElements only.
+   */
   findSuiteName(): string {
     const suiteName = this.suiteName()
     return suiteName.length === 0 ? this.elementName : suiteName.join('.')
@@ -246,10 +286,10 @@ class TestRun {
    */
   calculateSuites() {
     this.suites = this.root.childElements.map(el => {
-      const name = el.suiteName().join('.')
+      const name = el.findSuiteName()
       const groupNode = el.findGroupNode()
       if (groupNode) {
-        return new TestSuite(name, el, groupNode.groups())
+        return new TestSuite(name, el, groupNode.findGroups())
       } else {
         return new TestSuite(name, el, [new TestGroup('DEFAULT', el)])
       }
@@ -258,7 +298,40 @@ class TestRun {
 }
 
 export class UnrealJsonParser implements TestParser {
-  assumedWorkDir: string | undefined
+  private root: TestPathsMapElement | undefined
+
+  /**
+   * Enforce invariant condition: fullTestPath is at least 2 elements: a suite
+   * and a test name, for example:  'SuiteName.[GroupName.]TestName'; dot-separated
+   * and with no white-space. Return the elements of the dot-separated path-name.
+   * @param testPathName string pathName to process
+   */
+  coercePathName(testPathName: string): string[] {
+    const testElements = testPathName
+      .split(/\./)
+      .map(s => s.trim())
+      .filter(s => s.length > 0)
+    if (testElements.length === 0) {
+      testElements.push(EMPTY_SUITE_NAME)
+    }
+    if (testElements.length === 1) {
+      testElements.push(EMPTY_TEST_NAME)
+    }
+    return testElements
+  }
+
+  /**
+   * Accumulate the test path names and test data into the tree structure, and
+   * enforce invariant that the `testDisplayName` in the data is non-empty.
+   * @param pathName elements for the test path to place the data in
+   * @param test the `UnrealTest` data
+   */
+  accumulateTests(pathName: string[], test: UnrealTest) {
+    if (test.testDisplayName.trim().length === 0) {
+      test.testDisplayName = pathName[pathName.length - 1]
+    }
+    this.root?.insertTest(pathName, test)
+  }
 
   async parse(path: string, content: string): Promise<TestRunResult> {
     // build tree of paths and find suites
@@ -267,11 +340,11 @@ export class UnrealJsonParser implements TestParser {
       const testResults: UnrealReport = JSON.parse(content)
       const success = testResults.failed === 0
       const duration = testResults.totalDuration
-      for (const t of testResults.tests) {
-        const testElements = t.fullTestPath.split(/\./)
-        root.insertTest(testElements, t)
-      }
       const tr = new TestRun(path, success, duration, root)
+      for (const t of testResults.tests) {
+        const p = this.coercePathName(t.fullTestPath)
+        this.accumulateTests(p, t)
+      }
       tr.calculateSuites()
       const suites = tr.suites.map(s => {
         return new TestSuiteResult(s.suiteName, [], 1.0)
