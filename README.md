@@ -23,6 +23,7 @@ This [Github Action](https://github.com/features/actions) displays test results 
 - PHP / [PHPUnit](https://phpunit.de/) / [Nette Tester](https://tester.nette.org/)
 - Ruby / [RSpec](https://rspec.info/)
 - Swift / xUnit
+- Unreal Engine / [Automation Tests](https://dev.epicgames.com/documentation/unreal-engine/review-test-results-in-unreal-engine#json)
 
 For more information see [Supported formats](#supported-formats) section.
 
@@ -444,6 +445,15 @@ For more information see:
   <summary>swift-xunit (Experimental)</summary>
 
 Support for Swift test results in xUnit format is experimental - should work but it was not extensively tested.
+</details>
+
+<details>
+  <summary>Unreal Engine</summary>
+
+Supports Unreal Engine [Automation tests](https://dev.epicgames.com/documentation/unreal-engine/review-test-results-in-unreal-engine#json)
+
+* See more [details here](src/parsers/unreal-engine/README.md)
+
 </details>
 
 ## GitHub limitations
