@@ -1,4 +1,4 @@
-import {TestParser} from '../../test-parser.js'
+import {ParseOptions, TestParser} from '../../test-parser.js'
 import {
   TestCaseError,
   TestCaseResult,
@@ -8,6 +8,7 @@ import {
   TestSuiteResult
 } from '../../test-results.js'
 import {UnrealReport, UnrealTest} from './unreal-json-types.js'
+import {getBasePath, normalizeFilePath} from '../../utils/path-utils.js'
 
 export const EMPTY_SUITE_NAME = 'EMPTY_SUITE_NAME'
 export const EMPTY_GROUP_NAME = 'EMPTY_GROUP_NAME'
@@ -300,8 +301,9 @@ class TestRun {
 
 export class UnrealJsonParser implements TestParser {
   private readonly root: TestPathsMapElement
+  assumedWorkDir: string | undefined
 
-  constructor() {
+  constructor(readonly options: ParseOptions) {
     this.root = new TestPathsMapElement('root')
   }
 
@@ -358,5 +360,22 @@ export class UnrealJsonParser implements TestParser {
     } catch (e) {
       throw new Error(`Invalid at ${path}: ${e}`)
     }
+  }
+
+  private getRelativePath(path: string): string {
+    path = normalizeFilePath(path)
+    const workDir = this.getWorkDir(path)
+    if (workDir !== undefined && path.startsWith(workDir)) {
+      path = path.substring(workDir.length)
+    }
+    return path
+  }
+
+  private getWorkDir(path: string): string | undefined {
+    return (
+      this.options.workDir ??
+      this.assumedWorkDir ??
+      (this.assumedWorkDir = getBasePath(path, this.options.trackedFiles))
+    )
   }
 }
