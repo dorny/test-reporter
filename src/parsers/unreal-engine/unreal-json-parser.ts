@@ -50,7 +50,7 @@ class TestSuite {
     const results: TestGroupResult[] = []
     if (this.groups) {
       for (const g of this.groups) {
-        // results.push(new TestGroupResult(g.groupName, ))
+        results.push(new TestGroupResult(g.groupName, g.testCaseResults))
       }
     } else {
       // If the test run has a single test, like "MyTest" with no "." separators,
@@ -74,10 +74,13 @@ class TestGroup {
       return new TestCase(el.elementName, el.test)
     })
   }
+  get testCaseResults(): TestCaseResult[] {
+    return this.tests.map(t => t.getResult()).filter(t => t !== undefined)
+  }
 }
 
 class TestCase {
-  private _testData: UnrealTest | undefined
+  private readonly _testData: UnrealTest | undefined
   constructor(
     readonly caseName: string,
     testData?: UnrealTest
@@ -95,7 +98,6 @@ class TestCase {
 ///
 /// @class TestPathsMapElement
 /// @classdesc Models a node of the tree of Unreal Engine tests
-
 export class TestPathsMapElement {
   public readonly children: TestPathsMapElement[]
   public test?: UnrealTest
@@ -103,24 +105,13 @@ export class TestPathsMapElement {
     this.children = []
   }
 
-  /**
-   * Return true if every node under this is a leaf.
-   * Don't call this on a leaf. That's an error.
-   */
-  private isBranchEnd(): boolean {
-    if (this.isLeaf()) throw Error('programmer error')
-    for (const c of this.children) {
-      if (!c.isLeaf()) return false
-    }
-    return true
-  }
   private firstChild(): TestPathsMapElement | undefined {
     return this.children.at(0)
   }
   isLeaf(): boolean {
     return this.children.length === 0
   }
-  private isTrunk(): boolean {
+  isTrunk(): boolean {
     return this.children.length === 1
   }
   private isBranchPoint(): boolean {
@@ -221,6 +212,14 @@ export class TestPathsMapElement {
     return suiteNameArray
   }
 
+  findTrunkGroup(): TestPathsMapElement | undefined {
+    // walk down the trunk to the first branch point
+    if (this.firstChild()?.isLeaf()) return this
+    if (this.isTrunk()) {
+      return this.firstChild()?.findTrunkGroup()
+    }
+  }
+
   /**
    * Find the name for this suite. This should be called on a top-level
    * element, that is root.childElements only.
@@ -285,20 +284,26 @@ class TestRun {
    * Find all the suites
    */
   calculateSuites() {
-    this.suites = this.root.childElements.map(el => {
+    for (const el of this.root.childElements) {
       const name = el.findSuiteName()
-      const groupNode = el.findGroupNode()
-      if (groupNode) {
-        return new TestSuite(name, el, groupNode.findGroups())
-      } else {
-        return new TestSuite(name, el, [new TestGroup('DEFAULT', el)])
+      const groups = el.findGroups()
+      if (groups.length === 0) {
+        const trunkGroup = el.findTrunkGroup()
+        if (trunkGroup !== undefined) {
+          groups.push(new TestGroup(EMPTY_GROUP_NAME, trunkGroup))
+        }
       }
-    })
+      this.suites.push(new TestSuite(name, el, groups))
+    }
   }
 }
 
 export class UnrealJsonParser implements TestParser {
-  private root: TestPathsMapElement | undefined
+  private readonly root: TestPathsMapElement
+
+  constructor() {
+    this.root = new TestPathsMapElement('root')
+  }
 
   /**
    * Enforce invariant condition: fullTestPath is at least 2 elements: a suite
@@ -323,31 +328,31 @@ export class UnrealJsonParser implements TestParser {
   /**
    * Accumulate the test path names and test data into the tree structure, and
    * enforce invariant that the `testDisplayName` in the data is non-empty.
-   * @param pathName elements for the test path to place the data in
+   * @param pathName the test path to collate the data under
    * @param test the `UnrealTest` data
    */
-  accumulateTests(pathName: string[], test: UnrealTest) {
+  accumulateTests(pathName: string, test: UnrealTest) {
+    const path = this.coercePathName(pathName)
     if (test.testDisplayName.trim().length === 0) {
       test.testDisplayName = pathName[pathName.length - 1]
     }
-    this.root?.insertTest(pathName, test)
+    this.root.insertTest(path, test)
   }
 
   async parse(path: string, content: string): Promise<TestRunResult> {
     // build tree of paths and find suites
-    const root = new TestPathsMapElement('root')
+
     try {
       const testResults: UnrealReport = JSON.parse(content)
       const success = testResults.failed === 0
       const duration = testResults.totalDuration
-      const tr = new TestRun(path, success, duration, root)
+      const tr = new TestRun(path, success, duration, this.root)
       for (const t of testResults.tests) {
-        const p = this.coercePathName(t.fullTestPath)
-        this.accumulateTests(p, t)
+        this.accumulateTests(t.fullTestPath, t)
       }
       tr.calculateSuites()
       const suites = tr.suites.map(s => {
-        return new TestSuiteResult(s.suiteName, [], 1.0)
+        return new TestSuiteResult(s.suiteName, s.getResults(), testResults.totalDuration)
       })
       return new TestRunResult(tr.path, suites, tr.time)
     } catch (e) {

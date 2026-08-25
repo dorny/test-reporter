@@ -101,6 +101,40 @@ describe('TestPathsMapElement', () => {
 })
 
 describe('basic test', () => {
+  it('TestSuiteResult and other helpers work as expected', async () => {
+    const {succeeded, failed, notRun, totalDuration, tests} = UnrealReportWithSingleTest
+    const {testDisplayName, duration, state} = tests[0]
+    const expectedState = convertUnrealState(state)
+    const testcase = new TestCaseResult(testDisplayName, expectedState, duration)
+    const group = new TestGroupResult('AGroup', [testcase])
+    const suite = new TestSuiteResult('Private.Test.ThisIs.Not', [group], duration)
+
+    const passCount = tests.filter(t => t.state === 'Success').length
+    const failedTests = tests.filter(t => t.state === 'Failed')
+    const failCount = failedTests.length
+    const groupResult: TestExecutionResult = failCount > 0 ? 'failed' : 'success'
+    const skipCount = tests.filter(t => t.state === 'Skipped').length
+    const time = tests.reduce((prev, curr) => prev + curr.duration, 0)
+    expect(succeeded).toStrictEqual(passCount)
+    expect(failed).toStrictEqual(failCount)
+    expect(notRun).toStrictEqual(skipCount)
+    expect(totalDuration).toStrictEqual(time)
+    expect(testcase.name).toStrictEqual(testDisplayName)
+    expect(testcase.error).toBeUndefined()
+    expect(testcase.result).toStrictEqual<TestExecutionResult>(expectedState)
+    expect(testcase.time).toEqual(duration)
+    expect(group.name).toStrictEqual('AGroup')
+    expect(group.passed).toStrictEqual(passCount)
+    expect(group.failed).toStrictEqual(failCount)
+    expect(group.skipped).toStrictEqual(skipCount)
+    expect(group.failedTests).toStrictEqual(failedTests)
+    expect(group.result).toStrictEqual(groupResult)
+    expect(group.tests).toStrictEqual([testcase])
+    expect(group.time).toStrictEqual(time)
+    expect(suite.name).toStrictEqual('Private.Test.ThisIs.Not')
+    expect(suite.failed).toStrictEqual(failCount)
+  })
+
   it('handles a basic single test suite with success state', async () => {
     const testContent = FakeSingleUnrealTest
     const FAKE_PATH = '/fake/file/path'
@@ -111,23 +145,44 @@ describe('basic test', () => {
     const {testDisplayName, duration, state} = tests[0]
     const expectedState = convertUnrealState(state)
     const testcase = new TestCaseResult(testDisplayName, expectedState, duration)
-    const group = new TestGroupResult('AGroup', [testcase])
-    const suite = new TestSuiteResult('Private.Test.ThisIs.Not', [group], duration)
+    const group = new TestGroupResult('EMPTY_GROUP_NAME', [testcase])
+    const suite = new TestSuiteResult('Private.Test.ThisIs.Not.AGroup', [group], duration)
 
-    // TODO - FIX COMMENTED OUT
     expect(result.failed).toStrictEqual(failed)
     expect(result.failedSuites).toStrictEqual([])
-    // expect(result.passed).toStrictEqual(succeeded)
+    expect(result.passed).toStrictEqual(succeeded)
     expect(result.path).toEqual(FAKE_PATH)
     expect(result.result).toStrictEqual<TestExecutionResult>(expectedState)
     expect(result.skipped).toStrictEqual(notRun)
-    // expect(result.tests).toStrictEqual(tests.length)
+    expect(result.tests).toStrictEqual(tests.length)
     expect(result.time).toStrictEqual(totalDuration)
-    // expect(result.suites).toStrictEqual([suite])
+    expect(result.suites).toStrictEqual([suite])
   })
 })
 
 describe('UnrealJsonParser', () => {
+  const testSuiteResult = {
+    groups: [
+      {
+        name: 'SomeGroup',
+        tests: [
+          {
+            name: 'Test1',
+            result: 'skipped',
+            time: 0
+          },
+          {
+            name: 'Test2',
+            result: 'success',
+            time: 0.3
+          }
+        ]
+      }
+    ],
+    name: 'Project.Functional Tests',
+    totalTime: 0.3
+  }
+
   it('A report from a path', async () => {
     const fixturePath = path.join(__dirname, 'fixtures', 'unreal-engine', 'unreal-test-report.json')
     const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
@@ -135,7 +190,14 @@ describe('UnrealJsonParser', () => {
 
     const parser = new UnrealJsonParser()
     const result = await parser.parse(filePath, fileContent)
-    expect(result.tests).toBe(0)
-    expect(result.result).toBe('success')
+    expect(result.failed).toStrictEqual(0)
+    expect(result.failedSuites).toStrictEqual([])
+    expect(result.passed).toStrictEqual(1)
+    expect(result.path).toEqual(path.join('fixtures', 'unreal-engine', 'unreal-test-report.json'))
+    expect(result.result).toStrictEqual<TestExecutionResult>('success')
+    expect(result.skipped).toStrictEqual(1)
+    expect(result.tests).toStrictEqual(2)
+    expect(result.time).toStrictEqual(0.3)
+    expect(result.suites).toEqual([testSuiteResult])
   })
 })
