@@ -56,7 +56,7 @@ export const UnrealReportWithSingleTest: UnrealReport = {
   failed: 0,
   notRun: 0,
   inProcess: 0,
-  totalDuration: 0.41858440637588501,
+  totalDuration: aTest.duration,
   comparisonExported: false,
   comparisonExportDirectory: '',
   tests: [aTest]
