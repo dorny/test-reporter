@@ -207,7 +207,7 @@ describe('UnrealJsonParser', () => {
     const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
     const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
 
-    const testData: UnrealReport = JSON.parse(fileContent.replace(/\s/g, ''));
+    const testData: UnrealReport = JSON.parse(fileContent.replace(/\s/g, ''))
     const parser = new UnrealJsonParser({parseErrors: false, trackedFiles: []})
     const result = await parser.parse(filePath, fileContent)
     expect(result.failed).toStrictEqual(testData.failed)
