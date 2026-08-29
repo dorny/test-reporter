@@ -15,12 +15,15 @@ export const EMPTY_GROUP_NAME = 'EMPTY_GROUP_NAME'
 export const EMPTY_TEST_NAME = 'EMPTY_TEST_NAME'
 
 export function convertUnrealState(unrealState: UnrealTest['state']): TestExecutionResult | undefined {
+  if (['Success', 'Skipped', 'Fail'].indexOf(unrealState) === -1) {
+    throw new Error(`Got unexpected state in Unreal test: "${unrealState}"`)
+  }
   switch (unrealState) {
     case 'Success':
       return 'success'
     case 'Skipped':
       return 'skipped'
-    case 'Failed':
+    case 'Fail':
       return 'failed'
   }
 }
@@ -66,14 +69,25 @@ class TestSuite {
 }
 
 class TestGroup {
+  private _groupName: string
   constructor(
-    readonly groupName: string,
+    groupName: string,
     readonly pathMap: TestPathsMapElement
-  ) {}
+  ) {
+    this._groupName = groupName
+  }
+  get groupName(): string {
+    return this._groupName
+  }
+  set groupName(newName: string) {
+    this._groupName = newName
+  }
   get tests(): TestCase[] {
-    return this.pathMap.childElements.map((el: TestPathsMapElement) => {
-      return new TestCase(el.elementName, el.test)
-    })
+    return this.pathMap.childElements
+      .filter(el => el.test !== undefined)
+      .map((el: TestPathsMapElement) => {
+        return new TestCase(el.elementName, <UnrealTest>el.test)
+      })
   }
   get testCaseResults(): TestCaseResult[] {
     return this.tests.map(t => t.getResult()).filter(t => t !== undefined)
@@ -81,28 +95,25 @@ class TestGroup {
 }
 
 class TestCase {
-  private readonly _testData: UnrealTest | undefined
   constructor(
     readonly caseName: string,
-    testData?: UnrealTest
-  ) {
-    this._testData = testData
-  }
+    readonly testData: UnrealTest
+  ) {}
   getResult(): TestCaseResult | undefined {
-    if (this._testData) {
-      return convertUnrealTest(this._testData)
-    }
+    return convertUnrealTest(this.testData)
   }
 }
 
-/////////////////////////////////
-///
-/// @class TestPathsMapElement
-/// @classdesc Models a node of the tree of Unreal Engine tests
+/**
+ * Models a node of the tree of Unreal Engine tests
+ */
 export class TestPathsMapElement {
   public readonly children: TestPathsMapElement[]
   public test?: UnrealTest
   constructor(readonly elementName: string) {
+    if (elementName === undefined || elementName === null || elementName.length === 0) {
+      throw Error('Tried to create a test element with empty name - programmer error')
+    }
     this.children = []
   }
 
@@ -117,6 +128,14 @@ export class TestPathsMapElement {
   }
   private isBranchPoint(): boolean {
     return this.children.length > 1
+  }
+  hasTests(): boolean {
+    for (const c of this.children) {
+      if (c.test !== undefined) {
+        return true
+      }
+    }
+    return false
   }
 
   /**
@@ -137,24 +156,19 @@ export class TestPathsMapElement {
   private groups(suite?: string[]): TestGroup[] {
     if (this.isLeaf()) throw Error('programmer error')
     const accGroups: TestGroup[] = []
-    let thisAdded = false
     const suiteEl = suite?.shift()
-    for (const c of this.children) {
-      if (!c.isLeaf()) {
-        const names = c.groupNames(suite)
-        for (const nm of names) {
-          if (this.elementName !== suiteEl) {
-            nm.unshift(this.elementName)
-          }
-          const groupName = nm.join('.')
-          accGroups.push(new TestGroup(groupName, this))
+    const nonLeafChildren = this.children.filter(c => !c.isLeaf())
+    for (const c of nonLeafChildren) {
+      const childGroups = c.groups(suite)
+      for (const g of childGroups) {
+        if (this.elementName !== suiteEl) {
+          g.groupName = `${this.elementName}.${g.groupName}`
         }
-      } else {
-        if (!thisAdded && this.elementName !== suite?.at(0)) {
-          accGroups.push(new TestGroup(this.elementName, this))
-          thisAdded = true
-        }
+        accGroups.push(g)
       }
+    }
+    if (this.hasTests() && this.elementName !== suiteEl) {
+      accGroups.push(new TestGroup(this.elementName, this))
     }
     return accGroups
   }
@@ -254,6 +268,7 @@ export class TestPathsMapElement {
     this.children.push(child)
     return child
   }
+
   insertTest(pathArray: string[], t: UnrealTest) {
     const el = pathArray.shift()
     if (el) {
@@ -289,6 +304,7 @@ class TestRun {
       const name = el.findSuiteName()
       const groups = el.findGroups()
       if (groups.length === 0) {
+        // There are no groups, all tests hang off the suite
         const trunkGroup = el.findTrunkGroup()
         if (trunkGroup !== undefined) {
           groups.push(new TestGroup(EMPTY_GROUP_NAME, trunkGroup))
@@ -345,7 +361,7 @@ export class UnrealJsonParser implements TestParser {
     // build tree of paths and find suites
 
     try {
-      const testResults: UnrealReport = JSON.parse(content)
+      const testResults: UnrealReport = JSON.parse(content.replace(/\s/g, ''))
       const success = testResults.failed === 0
       const duration = testResults.totalDuration
       const tr = new TestRun(path, success, duration, this.root)
