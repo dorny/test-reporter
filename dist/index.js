@@ -59638,12 +59638,15 @@ const EMPTY_SUITE_NAME = 'EMPTY_SUITE_NAME';
 const EMPTY_GROUP_NAME = 'EMPTY_GROUP_NAME';
 const EMPTY_TEST_NAME = 'EMPTY_TEST_NAME';
 function convertUnrealState(unrealState) {
+    if (['Success', 'Skipped', 'Fail'].indexOf(unrealState) === -1) {
+        throw new Error(`Got unexpected state in Unreal test: "${unrealState}"`);
+    }
     switch (unrealState) {
         case 'Success':
             return 'success';
         case 'Skipped':
             return 'skipped';
-        case 'Failed':
+        case 'Fail':
             return 'failed';
     }
 }
@@ -59690,14 +59693,22 @@ class unreal_json_parser_TestSuite {
     }
 }
 class unreal_json_parser_TestGroup {
-    groupName;
     pathMap;
+    _groupName;
     constructor(groupName, pathMap) {
-        this.groupName = groupName;
         this.pathMap = pathMap;
+        this._groupName = groupName;
+    }
+    get groupName() {
+        return this._groupName;
+    }
+    set groupName(newName) {
+        this._groupName = newName;
     }
     get tests() {
-        return this.pathMap.childElements.map((el) => {
+        return this.pathMap.childElements
+            .filter(el => el.test !== undefined)
+            .map((el) => {
             return new unreal_json_parser_TestCase(el.elementName, el.test);
         });
     }
@@ -59707,27 +59718,27 @@ class unreal_json_parser_TestGroup {
 }
 class unreal_json_parser_TestCase {
     caseName;
-    _testData;
+    testData;
     constructor(caseName, testData) {
         this.caseName = caseName;
-        this._testData = testData;
+        this.testData = testData;
     }
     getResult() {
-        if (this._testData) {
-            return convertUnrealTest(this._testData);
-        }
+        return convertUnrealTest(this.testData);
     }
 }
-/////////////////////////////////
-///
-/// @class TestPathsMapElement
-/// @classdesc Models a node of the tree of Unreal Engine tests
+/**
+ * Models a node of the tree of Unreal Engine tests
+ */
 class TestPathsMapElement {
     elementName;
     children;
     test;
     constructor(elementName) {
         this.elementName = elementName;
+        if (elementName === undefined || elementName === null || elementName.length === 0) {
+            throw Error('Tried to create a test element with empty name - programmer error');
+        }
         this.children = [];
     }
     firstChild() {
@@ -59741,6 +59752,14 @@ class TestPathsMapElement {
     }
     isBranchPoint() {
         return this.children.length > 1;
+    }
+    hasTests() {
+        for (const c of this.children) {
+            if (c.test !== undefined) {
+                return true;
+            }
+        }
+        return false;
     }
     /**
      * Create groups from all nodes including this, and those
@@ -59760,25 +59779,19 @@ class TestPathsMapElement {
         if (this.isLeaf())
             throw Error('programmer error');
         const accGroups = [];
-        let thisAdded = false;
         const suiteEl = suite?.shift();
-        for (const c of this.children) {
-            if (!c.isLeaf()) {
-                const names = c.groupNames(suite);
-                for (const nm of names) {
-                    if (this.elementName !== suiteEl) {
-                        nm.unshift(this.elementName);
-                    }
-                    const groupName = nm.join('.');
-                    accGroups.push(new unreal_json_parser_TestGroup(groupName, this));
+        const nonLeafChildren = this.children.filter(c => !c.isLeaf());
+        for (const c of nonLeafChildren) {
+            const childGroups = c.groups(suite);
+            for (const g of childGroups) {
+                if (this.elementName !== suiteEl) {
+                    g.groupName = `${this.elementName}.${g.groupName}`;
                 }
+                accGroups.push(g);
             }
-            else {
-                if (!thisAdded && this.elementName !== suite?.at(0)) {
-                    accGroups.push(new unreal_json_parser_TestGroup(this.elementName, this));
-                    thisAdded = true;
-                }
-            }
+        }
+        if (this.hasTests() && this.elementName !== suiteEl) {
+            accGroups.push(new unreal_json_parser_TestGroup(this.elementName, this));
         }
         return accGroups;
     }
@@ -59914,6 +59927,7 @@ class unreal_json_parser_TestRun {
             const name = el.findSuiteName();
             const groups = el.findGroups();
             if (groups.length === 0) {
+                // There are no groups, all tests hang off the suite
                 const trunkGroup = el.findTrunkGroup();
                 if (trunkGroup !== undefined) {
                     groups.push(new unreal_json_parser_TestGroup(EMPTY_GROUP_NAME, trunkGroup));
@@ -59966,7 +59980,7 @@ class UnrealJsonParser {
     async parse(path, content) {
         // build tree of paths and find suites
         try {
-            const testResults = JSON.parse(content);
+            const testResults = JSON.parse(content.replace(/\s/g, ''));
             const success = testResults.failed === 0;
             const duration = testResults.totalDuration;
             const tr = new unreal_json_parser_TestRun(path, success, duration, this.root);
