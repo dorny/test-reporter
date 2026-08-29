@@ -66,7 +66,7 @@ jobs:
           - reporter: rspec-json
             path: ./__tests__/fixtures/rspec-json.json
           - reporter: unreal-json
-            path: ./__tests__/fixtures/unreal-test-report.json
+            path: ./__tests__/fixtures/unreal-engine/unreal-test-report.json
 
     steps:
     - uses: actions/checkout@v7
