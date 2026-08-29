@@ -321,7 +321,7 @@ class TestReporter {
       case 'tester-junit':
         return new NetteTesterJunitParser(options)
       case 'unreal-json':
-        return new UnrealJsonParser()
+        return new UnrealJsonParser(options)
       default:
         throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`)
     }

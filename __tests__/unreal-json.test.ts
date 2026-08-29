@@ -11,8 +11,14 @@ import {
   TestPathsMapElement,
   UnrealJsonParser
 } from '../src/parsers/unreal-engine/unreal-json-parser.js'
-import {aReport, FakeSingleUnrealTest, UnrealReportWithSingleTest} from '../src/parsers/unreal-engine/fakes.js'
+import {
+  aReport,
+  FakeSingleUnrealTest,
+  UnrealEngineTestExample,
+  UnrealReportWithSingleTest
+} from '../src/parsers/unreal-engine/fakes.js'
 import {TestCaseResult, TestExecutionResult, TestGroupResult, TestSuiteResult} from '../src/test-results.js'
+import {UnrealReport} from '../src/parsers/unreal-engine/unreal-json-types.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -110,7 +116,7 @@ describe('basic test', () => {
     const suite = new TestSuiteResult('Private.Test.ThisIs.Not', [group], duration)
 
     const passCount = tests.filter(t => t.state === 'Success').length
-    const failedTests = tests.filter(t => t.state === 'Failed')
+    const failedTests = tests.filter(t => t.state === 'Fail')
     const failCount = failedTests.length
     const groupResult: TestExecutionResult = failCount > 0 ? 'failed' : 'success'
     const skipCount = tests.filter(t => t.state === 'Skipped').length
@@ -138,7 +144,7 @@ describe('basic test', () => {
   it('handles a basic single test suite with success state', async () => {
     const testContent = FakeSingleUnrealTest
     const FAKE_PATH = '/fake/file/path'
-    const parser = new UnrealJsonParser()
+    const parser = new UnrealJsonParser({parseErrors: false, trackedFiles: []})
     const result = await parser.parse(FAKE_PATH, testContent)
 
     const {succeeded, failed, notRun, totalDuration, tests} = UnrealReportWithSingleTest
@@ -162,42 +168,54 @@ describe('basic test', () => {
 
 describe('UnrealJsonParser', () => {
   const testSuiteResult = {
-    groups: [
+    path: '/tmp',
+    suites: [
       {
-        name: 'SomeGroup',
-        tests: [
+        groups: [
           {
-            name: 'Test1',
-            result: 'skipped',
-            time: 0
-          },
-          {
-            name: 'Test2',
-            result: 'success',
-            time: 0.3
+            name: 'SomeGroup',
+            tests: [
+              {
+                name: 'Test1',
+                result: 'skipped',
+                time: 0
+              },
+              {
+                name: 'Test2',
+                result: 'success',
+                time: 0.3
+              }
+            ]
           }
-        ]
+        ],
+        name: 'Project.FunctionalTests',
+        totalTime: 0.3
       }
     ],
-    name: 'Project.Functional Tests',
     totalTime: 0.3
   }
+
+  it('A report from a string', async () => {
+    const fileContent = JSON.stringify(UnrealEngineTestExample)
+    const parser = new UnrealJsonParser({parseErrors: false, trackedFiles: []})
+    const result = await parser.parse('/tmp', fileContent)
+    expect(result).toEqual(testSuiteResult)
+  })
 
   it('A report from a path', async () => {
     const fixturePath = path.join(__dirname, 'fixtures', 'unreal-engine', 'unreal-test-report.json')
     const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
     const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
 
-    const parser = new UnrealJsonParser()
+    const testData: UnrealReport = JSON.parse(fileContent.replace(/\s/g, ''));
+    const parser = new UnrealJsonParser({parseErrors: false, trackedFiles: []})
     const result = await parser.parse(filePath, fileContent)
-    expect(result.failed).toStrictEqual(0)
-    expect(result.failedSuites).toStrictEqual([])
-    expect(result.passed).toStrictEqual(1)
+    expect(result.failed).toStrictEqual(testData.failed)
+    expect(result.passed).toStrictEqual(testData.succeeded + testData.succeededWithWarnings)
     expect(result.path).toEqual(path.join('fixtures', 'unreal-engine', 'unreal-test-report.json'))
-    expect(result.result).toStrictEqual<TestExecutionResult>('success')
-    expect(result.skipped).toStrictEqual(1)
-    expect(result.tests).toStrictEqual(2)
-    expect(result.time).toStrictEqual(0.3)
-    expect(result.suites).toEqual([testSuiteResult])
+    expect(result.result).toStrictEqual<TestExecutionResult>(testData.failed > 0 ? 'failed' : 'success')
+    expect(result.skipped).toStrictEqual(testData.notRun)
+    expect(result.tests).toStrictEqual(testData.tests.length)
+    expect(result.time).toStrictEqual(testData.totalDuration)
   })
 })

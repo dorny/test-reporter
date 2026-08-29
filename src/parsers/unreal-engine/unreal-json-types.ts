@@ -48,7 +48,7 @@ export type UnrealTest = {
   /// eg: "System.Mass.ArchetypeEntityCollection.Create.SpawnEnemy"
   fullTestPath: string
   /// Outcome of the test
-  state: 'Success' | 'Skipped' | 'Failed'
+  state: 'Success' | 'Skipped' | 'Fail'
   /// F35C7BB1284BDF8F6E09B880ABB1710E - identifier/s of the device/s it ran on
   deviceInstance: string[]
   /// Wall clock time for this test eg 0.0080692917108535767, seconds

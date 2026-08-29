@@ -1,68 +1,621 @@
-{
-  "devices": [
-    {
-      "deviceName": "00-00-000-00",
-      "instance": "878B6A854613D3B6A69CDEAFBA1C5DBA",
-      "platform": "WindowsEditor",
-      "oSVersion": "Windows Server 2022 (21H2) [10.0.20348.524] ",
-      "model": "Default",
-      "gPL": "Microsoft Basic Display Adapter",
-      "cPUModel": "Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz",
-      "rAMInGB": 127,
-      "renderMode": "D3D11_SM5",
-      "rHI": "DirectX 11",
-      "appInstanceLog": ""
-    }
-  ],
-  "reportCreatedOn": "2000.01.01-12.00.00",
-  "succeeded": 1,
-  "succeededWithWarnings": 0,
-  "failed": 0,
-  "notRun": 0,
-  "inProcess": 0,
-  "totalDuration": 0.3,
-  "comparisonExported": false,
-  "comparisonExportDirectory": "",
-  "tests": [
-    {
-      "testDisplayName": "Test1",
-      "fullTestPath": "Project.Functional Tests.SomeGroup.Test1",
-      "state": "Skipped",
-      "deviceInstance": [
-        "878B6A854613D3B6A69CDEAFBA1C5DBA"
-      ],
-      "duration": 0,
-      "dateTime": "2000.01.01-12.00.00",
-      "entries": [
-        {
-          "event": {
-            "type": "Info",
-            "message": "Skipping test: Tests for review [config]",
-            "context": "",
-            "artifact": "00000000000000000000000000000000"
-          },
-          "filename": "",
-          "lineNumber": -1,
-          "timestamp": "2000.01.01-12.00.00"
-        }
-      ],
-      "warnings": 0,
-      "errors": 0,
-      "artifacts": []
-    },
-    {
-      "testDisplayName": "Test2",
-      "fullTestPath": "Project.Functional Tests.SomeGroup.Test2",
-      "state": "Success",
-      "deviceInstance": [
-        "878B6A854613D3B6A69CDEAFBA1C5DBA"
-      ],
-      "duration": 0.3,
-      "dateTime": "2000.01.01-12.00.00",
-      "entries": [],
-      "warnings": 0,
-      "errors": 0,
-      "artifacts": []
-    }
-  ]
+﻿{
+	"devices": [
+		{
+			"deviceName": "2f4ebae89552",
+			"instance": "BD828C222383418FAC64CB8FA8FB240D",
+			"instanceName": "2f4ebae89552-2414",
+			"platform": "LinuxEditor",
+			"oSVersion": "Ubuntu 22.04.2 LTS 7.0.12-201.fc44.aarch64",
+			"model": "Default",
+			"gPU": "UnknownVendor",
+			"cPUModel": "QEMU TCG CPU version 2.5+",
+			"rAMInGB": 15,
+			"renderMode": "SM6",
+			"rHI": "",
+			"appInstanceLog": ""
+		}
+	],
+	"reportCreatedOn": "2026.08.26-11.37.54",
+	"succeeded": 14,
+	"succeededWithWarnings": 3,
+	"failed": 5,
+	"notRun": 0,
+	"inProcess": 0,
+	"totalDuration": 1.611757755279541,
+	"comparisonExported": false,
+	"comparisonExportDirectory": "",
+	"tests": [
+		{
+			"testDisplayName": "Bad Order Sequence",
+			"fullTestPath": "AdventureGame.Dialog.ConversationDataVerifyTest.Bad Order Sequence",
+			"state": "Fail",
+			"deviceInstance": [
+				"BD828C222383418FAC64CB8FA8FB240D"
+			],
+			"duration": 0.016339560970664024,
+			"dateTime": "2026.08.26-11.37.52",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Error",
+						"message": "Expected 'Count is correct' to be 5, but it was 3.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "/home/ue4/UnrealEngine/Engine/Source/Runtime/Core/Public/Containers/Array.h",
+					"lineNumber": 677,
+					"timestamp": "2026.08.26-11.37.52"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "LogDialog: Invalid index pair: - Index: 1 - SubIndex: 0 vs PreviousIndex: 2 - PreviousSubIndex: 0",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.08.26-11.37.52"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "LogDialog:      Expected: [Index: 3 - SubIndex: 0] or [Index: 2 - SubIndex: 1]",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.08.26-11.37.52"
+				}
+			],
+			"warnings": 0,
+			"errors": 1,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Bad Sub-Sequence",
+			"fullTestPath": "AdventureGame.Dialog.ConversationDataVerifyTest.Bad Sub-Sequence",
+			"state": "Success",
+			"deviceInstance": [
+				"BD828C222383418FAC64CB8FA8FB240D"
+			],
+			"duration": 0.0072525688447058201,
+			"dateTime": "2026.08.26-11.37.52",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Empty Text Item",
+			"fullTestPath": "AdventureGame.Dialog.ConversationDataVerifyTest.Empty Text Item",
+			"state": "Success",
+			"deviceInstance": [
+				"BD828C222383418FAC64CB8FA8FB240D"
+			],
+			"duration": 0.0081588216125965118,
+			"dateTime": "2026.08.26-11.37.52",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Empty Text Row",
+			"fullTestPath": "AdventureGame.Dialog.ConversationDataVerifyTest.Empty Text Row",
+			"state": "Success",
+			"deviceInstance": [
+				"BD828C222383418FAC64CB8FA8FB240D"
+			],
+			"duration": 0.0074877780862152576,
+			"dateTime": "2026.08.26-11.37.52",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Long Bad Sequence",
+			"fullTestPath": "AdventureGame.Dialog.ConversationDataVerifyTest.Long Bad Sequence",
+			"state": "Success",
+			"deviceInstance": [
+				"BD828C222383418FAC64CB8FA8FB240D"
+			],
+			"duration": 0.0067759421654045582,
+			"dateTime": "2026.08.26-11.37.52",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Single Use Error",
+			"fullTestPath": "AdventureGame.Dialog.ConversationDataVerifyTest.Single Use Error",
+			"state": "Fail",
+			"deviceInstance": [
+				"BD828C222383418FAC64CB8FA8FB240D"
+			],
+			"duration": 0.0085717411711812019,
+			"dateTime": "2026.08.26-11.37.52",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "LogDialog: Hi mom",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.08.26-11.37.52"
+				},
+				{
+					"event":
+					{
+						"type": "Error",
+						"message": "Expected 'Count is correct' to be 99, but it was 2.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "/home/ue4/UnrealEngine/Engine/Source/Runtime/Core/Public/Containers/Array.h",
+					"lineNumber": 677,
+					"timestamp": "2026.08.26-11.37.52"
+				}
+			],
+			"warnings": 0,
+			"errors": 1,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "ConversationDataTest",
+			"fullTestPath": "AdventureGame.Dialog.ConversationDataTest",
+			"state": "Success",
+			"deviceInstance": [
+				"BD828C222383418FAC64CB8FA8FB240D"
+			],
+			"duration": 0.0074111530557274818,
+			"dateTime": "2026.08.26-11.37.52",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Three Items, Remove First Item",
+			"fullTestPath": "AdventureGame.Items.ItemListTest.Three Items, Remove First Item",
+			"state": "Fail",
+			"deviceInstance": [
+				"BD828C222383418FAC64CB8FA8FB240D"
+			],
+			"duration": 1.1841590404510498,
+			"dateTime": "2026.08.26-11.37.53",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "LogStreaming: FlushAsyncLoading(331): 1 QueuedPackages, 0 AsyncPackages",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.08.26-11.37.53"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "LogViewport: Player bShowMouseCursor Changed, False -> True",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.08.26-11.37.53"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "LogViewport: Player bShowMouseCursor Changed, False -> True",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.08.26-11.37.53"
+				},
+				{
+					"event":
+					{
+						"type": "Error",
+						"message": "Expected 'Count must be 1' to be 99, but it was 2.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "/home/ue4/UnrealEngine/Engine/Source/Runtime/Core/Public/Containers/Array.h",
+					"lineNumber": 1067,
+					"timestamp": "2026.08.26-11.37.54"
+				},
+				{
+					"event":
+					{
+						"type": "Error",
+						"message": "Expected 'Count should be 2' to be 5, but it was 2.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "/home/ue4/UnrealEngine/Engine/Source/Runtime/Core/Public/Containers/Array.h",
+					"lineNumber": 1067,
+					"timestamp": "2026.08.26-11.37.54"
+				}
+			],
+			"warnings": 0,
+			"errors": 2,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Three Items, Remove Last Item",
+			"fullTestPath": "AdventureGame.Items.ItemListTest.Three Items, Remove Last Item",
+			"state": "Fail",
+			"deviceInstance": [
+				"BD828C222383418FAC64CB8FA8FB240D"
+			],
+			"duration": 0.045640710741281509,
+			"dateTime": "2026.08.26-11.37.54",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Error",
+						"message": "Expected 'Count must be 1' to be 99, but it was 2.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "/home/ue4/UnrealEngine/Engine/Source/Runtime/Core/Public/Containers/Array.h",
+					"lineNumber": 1067,
+					"timestamp": "2026.08.26-11.37.54"
+				},
+				{
+					"event":
+					{
+						"type": "Error",
+						"message": "Expected 'Count should be 2' to be 5, but it was 2.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "/home/ue4/UnrealEngine/Engine/Source/Runtime/Core/Public/Containers/Array.h",
+					"lineNumber": 1067,
+					"timestamp": "2026.08.26-11.37.54"
+				}
+			],
+			"warnings": 0,
+			"errors": 2,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Three Items, Remove Middle Item",
+			"fullTestPath": "AdventureGame.Items.ItemListTest.Three Items, Remove Middle Item",
+			"state": "Fail",
+			"deviceInstance": [
+				"BD828C222383418FAC64CB8FA8FB240D"
+			],
+			"duration": 0.045207254588603973,
+			"dateTime": "2026.08.26-11.37.54",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Error",
+						"message": "Expected 'Count must be 1' to be 99, but it was 2.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "/home/ue4/UnrealEngine/Engine/Source/Runtime/Core/Public/Containers/Array.h",
+					"lineNumber": 1067,
+					"timestamp": "2026.08.26-11.37.54"
+				},
+				{
+					"event":
+					{
+						"type": "Error",
+						"message": "Expected 'Count should be 2' to be 5, but it was 2.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "/home/ue4/UnrealEngine/Engine/Source/Runtime/Core/Public/Containers/Array.h",
+					"lineNumber": 1067,
+					"timestamp": "2026.08.26-11.37.54"
+				}
+			],
+			"warnings": 0,
+			"errors": 2,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Four lines of text one long",
+			"fullTestPath": "Private.Tests.BarkRequestTest.Four lines of text one long",
+			"state": "Success",
+			"deviceInstance": [
+				"BD828C222383418FAC64CB8FA8FB240D"
+			],
+			"duration": 0.0074726119637489319,
+			"dateTime": "2026.08.26-11.37.54",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Four short lines of text",
+			"fullTestPath": "Private.Tests.BarkRequestTest.Four short lines of text",
+			"state": "Success",
+			"deviceInstance": [
+				"BD828C222383418FAC64CB8FA8FB240D"
+			],
+			"duration": 0.008615114726126194,
+			"dateTime": "2026.08.26-11.37.54",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Simply one line of text",
+			"fullTestPath": "Private.Tests.BarkRequestTest.Simply one line of text",
+			"state": "Success",
+			"deviceInstance": [
+				"BD828C222383418FAC64CB8FA8FB240D"
+			],
+			"duration": 0.0081633217632770538,
+			"dateTime": "2026.08.26-11.37.54",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Text used in an actual game",
+			"fullTestPath": "Private.Tests.BarkRequestTest.Text used in an actual game",
+			"state": "Success",
+			"deviceInstance": [
+				"BD828C222383418FAC64CB8FA8FB240D"
+			],
+			"duration": 0.0071262768469750881,
+			"dateTime": "2026.08.26-11.37.54",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Two lines one very long",
+			"fullTestPath": "Private.Tests.BarkRequestTest.Two lines one very long",
+			"state": "Success",
+			"deviceInstance": [
+				"BD828C222383418FAC64CB8FA8FB240D"
+			],
+			"duration": 0.0067151919938623905,
+			"dateTime": "2026.08.26-11.37.54",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Bark completed normally",
+			"fullTestPath": "Private.Tests.BarkTextTest.Bark completed normally",
+			"state": "Success",
+			"deviceInstance": [
+				"BD828C222383418FAC64CB8FA8FB240D"
+			],
+			"duration": 0.095219604671001434,
+			"dateTime": "2026.08.26-11.37.54",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogDialog: AddBarkRequest - 1 lines",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.08.26-11.37.54"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogDialog: #### SetBarkLineTimer: 5.000000",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.08.26-11.37.54"
+				}
+			],
+			"warnings": 2,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Bark interrupted",
+			"fullTestPath": "Private.Tests.BarkTextTest.Bark interrupted",
+			"state": "Success",
+			"deviceInstance": [
+				"BD828C222383418FAC64CB8FA8FB240D"
+			],
+			"duration": 0.052778031677007675,
+			"dateTime": "2026.08.26-11.37.54",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogDialog: AddBarkRequest - 1 lines",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.08.26-11.37.54"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogDialog: #### SetBarkLineTimer: 5.000000",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.08.26-11.37.54"
+				}
+			],
+			"warnings": 2,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "22 chars - medium bucket - one line",
+			"fullTestPath": "Private.Tests.GameUtilsTests.22 chars - medium bucket - one line",
+			"state": "Success",
+			"deviceInstance": [
+				"BD828C222383418FAC64CB8FA8FB240D"
+			],
+			"duration": 0.0076430700719356537,
+			"dateTime": "2026.08.26-11.37.54",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "34 chars - long bucket - three lines",
+			"fullTestPath": "Private.Tests.GameUtilsTests.34 chars - long bucket - three lines",
+			"state": "Success",
+			"deviceInstance": [
+				"BD828C222383418FAC64CB8FA8FB240D"
+			],
+			"duration": 0.0084674898535013199,
+			"dateTime": "2026.08.26-11.37.54",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "80 chars - extra long bucket - four lines",
+			"fullTestPath": "Private.Tests.GameUtilsTests.80 chars - extra long bucket - four lines",
+			"state": "Success",
+			"deviceInstance": [
+				"BD828C222383418FAC64CB8FA8FB240D"
+			],
+			"duration": 0.010697039775550365,
+			"dateTime": "2026.08.26-11.37.54",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "9 chars - short bucket - two lines",
+			"fullTestPath": "Private.Tests.GameUtilsTests.9 chars - short bucket - two lines",
+			"state": "Success",
+			"deviceInstance": [
+				"BD828C222383418FAC64CB8FA8FB240D"
+			],
+			"duration": 0.0076258210465312004,
+			"dateTime": "2026.08.26-11.37.54",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "BarkTextMultiLineTest",
+			"fullTestPath": "Private.Tests.BarkTextMultiLineTest",
+			"state": "Success",
+			"deviceInstance": [
+				"BD828C222383418FAC64CB8FA8FB240D"
+			],
+			"duration": 0.054229576140642166,
+			"dateTime": "2026.08.26-11.37.54",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogDialog: AddBarkRequest - 4 lines",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.08.26-11.37.54"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogDialog: #### SetBarkLineTimer: 7.000000",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.08.26-11.37.54"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogDialog: #### SetBarkLineTimer: 3.000000",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.08.26-11.37.54"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogDialog: #### SetBarkLineTimer: 7.000000",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.08.26-11.37.54"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogDialog: #### SetBarkLineTimer: 5.000000",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.08.26-11.37.54"
+				}
+			],
+			"warnings": 5,
+			"errors": 0,
+			"artifacts": []
+		}
+	]
 }

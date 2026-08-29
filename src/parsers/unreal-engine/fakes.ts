@@ -118,4 +118,70 @@ export function aReport(
   }
 }
 
+/** From Unreal's website: https://dev.epicgames.com/documentation/unreal-engine/review-test-results-in-unreal-engine#json */
+export const UnrealEngineTestExample = {
+  devices: [
+    {
+      deviceName: '00-00-000-00',
+      instance: '878B6A854613D3B6A69CDEAFBA1C5DBA',
+      platform: 'WindowsEditor',
+      oSVersion: 'Windows Server 2022 (21H2) [10.0.20348.524] ',
+      model: 'Default',
+      gPU: 'Microsoft Basic Display Adapter',
+      cPUModel: 'Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz',
+      rAMInGB: 127,
+      renderMode: 'D3D11_SM5',
+      rHI: 'DirectX 11',
+      appInstanceLog: ''
+    }
+  ],
+  reportCreatedOn: '2000.01.01-12.00.00',
+  succeeded: 1,
+  succeededWithWarnings: 0,
+  failed: 0,
+  notRun: 0,
+  inProcess: 0,
+  totalDuration: 0.3,
+  comparisonExported: false,
+  comparisonExportDirectory: '',
+  tests: [
+    {
+      testDisplayName: 'Test1',
+      fullTestPath: 'Project.Functional Tests.SomeGroup.Test1',
+      state: 'Skipped',
+      deviceInstance: ['878B6A854613D3B6A69CDEAFBA1C5DBA'],
+      duration: 0,
+      dateTime: '2000.01.01-12.00.00',
+      entries: [
+        {
+          event: {
+            type: 'Info',
+            message: 'Skipping test: Tests for review [config]',
+            context: '',
+            artifact: '00000000000000000000000000000000'
+          },
+          filename: '',
+          lineNumber: -1,
+          timestamp: '2000.01.01-12.00.00'
+        }
+      ],
+      warnings: 0,
+      errors: 0,
+      artifacts: []
+    },
+    {
+      testDisplayName: 'Test2',
+      fullTestPath: 'Project.Functional Tests.SomeGroup.Test2',
+      state: 'Success',
+      deviceInstance: ['878B6A854613D3B6A69CDEAFBA1C5DBA'],
+      duration: 0.3,
+      dateTime: '2000.01.01-12.00.00',
+      entries: [],
+      warnings: 0,
+      errors: 0,
+      artifacts: []
+    }
+  ]
+}
+
 export const FakeSingleUnrealTest = JSON.stringify(UnrealReportWithSingleTest)
