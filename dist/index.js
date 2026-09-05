@@ -59653,15 +59653,15 @@ function convertUnrealState(unrealState) {
 function convertUnrealTest(unrealTest) {
     const { testDisplayName, duration, state, entries } = unrealTest;
     let error;
-    if (unrealTest.errors > 0) {
-        if (entries.length > 0) {
-            error = {
-                path: entries[0].filename,
-                line: entries[0].lineNumber,
-                message: `${entries[0].event.type} ${entries[0].timestamp}`,
-                details: entries[0].event.message
-            };
-        }
+    if (unrealTest.errors > 0 && entries.length > 0) {
+        const errorEntries = entries.filter(e => e.event.type === 'Error');
+        const { filename: path, lineNumber: line, event: { message }, timestamp } = errorEntries[0];
+        error = {
+            path,
+            line,
+            message,
+            details: `${timestamp} - Error: ${message}`
+        };
     }
     return new TestCaseResult(testDisplayName, convertUnrealState(state), duration, error);
 }
@@ -59940,7 +59940,6 @@ class unreal_json_parser_TestRun {
 class UnrealJsonParser {
     options;
     root;
-    assumedWorkDir;
     constructor(options) {
         this.options = options;
         this.root = new TestPathsMapElement('root');
@@ -59978,9 +59977,12 @@ class UnrealJsonParser {
         this.root.insertTest(path, test);
     }
     async parse(path, content) {
+        if (this.options.parseErrors || (this.options.trackedFiles && this.options.trackedFiles.length > 0)) {
+            info('Unreal Automation tests do not support file paths - see docs');
+        }
         // build tree of paths and find suites
         try {
-            const testResults = JSON.parse(content.replace(/\s/g, ''));
+            const testResults = JSON.parse(content.replace(/\t/g, ''));
             const success = testResults.failed === 0;
             const duration = testResults.totalDuration;
             const tr = new unreal_json_parser_TestRun(path, success, duration, this.root);
@@ -59996,19 +59998,6 @@ class UnrealJsonParser {
         catch (e) {
             throw new Error(`Invalid at ${path}: ${e}`);
         }
-    }
-    getRelativePath(path) {
-        path = normalizeFilePath(path);
-        const workDir = this.getWorkDir(path);
-        if (workDir !== undefined && path.startsWith(workDir)) {
-            path = path.substring(workDir.length);
-        }
-        return path;
-    }
-    getWorkDir(path) {
-        return (this.options.workDir ??
-            this.assumedWorkDir ??
-            (this.assumedWorkDir = getBasePath(path, this.options.trackedFiles)));
     }
 }
 
