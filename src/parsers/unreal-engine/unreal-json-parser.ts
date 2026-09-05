@@ -368,7 +368,7 @@ export class UnrealJsonParser implements TestParser {
     // build tree of paths and find suites
 
     try {
-      const testResults: UnrealReport = JSON.parse(content.replace(/\t/g, ''))
+      const testResults: UnrealReport = JSON.parse(sanitizeJSONContentString(content))
       const success = testResults.failed === 0
       const duration = testResults.totalDuration
       const tr = new TestRun(path, success, duration, this.root)
@@ -384,4 +384,11 @@ export class UnrealJsonParser implements TestParser {
       throw new Error(`Invalid at ${path}: ${e}`)
     }
   }
+}
+
+// Unreal is a windows creature and there's control chars and BOM marks that blow-up JSON
+// \uFEFF: Targets the Byte Order Mark (BOM).
+export const sanitizeJSONContentString = (fileContentRaw: string): string => {
+  // eslint-disable-next-line no-control-regex
+  return fileContentRaw.replace(/[\u0000-\u001F\u007F-\u009F\uFEFF]/g, '')
 }
