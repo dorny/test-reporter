@@ -59982,7 +59982,7 @@ class UnrealJsonParser {
         }
         // build tree of paths and find suites
         try {
-            const testResults = JSON.parse(content.replace(/\t/g, ''));
+            const testResults = JSON.parse(sanitizeJSONContentString(content));
             const success = testResults.failed === 0;
             const duration = testResults.totalDuration;
             const tr = new unreal_json_parser_TestRun(path, success, duration, this.root);
@@ -60000,6 +60000,12 @@ class UnrealJsonParser {
         }
     }
 }
+// Unreal is a windows creature and there's control chars and BOM marks that blow-up JSON
+// \uFEFF: Targets the Byte Order Mark (BOM).
+const sanitizeJSONContentString = (fileContentRaw) => {
+    // eslint-disable-next-line no-control-regex
+    return fileContentRaw.replace(/[\u0000-\u001F\u007F-\u009F\uFEFF]/g, '');
+};
 
 ;// CONCATENATED MODULE: ./lib/main.js
 
