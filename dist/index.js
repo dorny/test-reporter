@@ -59631,7 +59631,384 @@ class NetteTesterJunitParser {
     }
 }
 
+;// CONCATENATED MODULE: ./lib/parsers/unreal-engine/unreal-json-parser.js
+
+
+const EMPTY_SUITE_NAME = 'EMPTY_SUITE_NAME';
+const EMPTY_GROUP_NAME = 'EMPTY_GROUP_NAME';
+const EMPTY_TEST_NAME = 'EMPTY_TEST_NAME';
+function convertUnrealState(unrealState) {
+    if (['Success', 'Skipped', 'Fail'].indexOf(unrealState) === -1) {
+        throw new Error(`Got unexpected state in Unreal test: "${unrealState}"`);
+    }
+    switch (unrealState) {
+        case 'Success':
+            return 'success';
+        case 'Skipped':
+            return 'skipped';
+        case 'Fail':
+            return 'failed';
+    }
+}
+function convertUnrealTest(unrealTest) {
+    const { testDisplayName, duration, state, entries } = unrealTest;
+    let error;
+    if (unrealTest.errors > 0 && entries.length > 0) {
+        const errorEntries = entries.filter(e => e.event.type === 'Error');
+        const { filename: path, lineNumber: line, event: { message }, timestamp } = errorEntries[0];
+        error = {
+            path,
+            line,
+            message,
+            details: `${timestamp} - Error: ${message}`
+        };
+    }
+    return new TestCaseResult(testDisplayName, convertUnrealState(state), duration, error);
+}
+class unreal_json_parser_TestSuite {
+    suiteName;
+    pathMap;
+    groups;
+    constructor(suiteName, pathMap, groups) {
+        this.suiteName = suiteName;
+        this.pathMap = pathMap;
+        this.groups = groups;
+    }
+    getResults() {
+        const results = [];
+        if (this.groups) {
+            for (const g of this.groups) {
+                results.push(new TestGroupResult(g.groupName, g.testCaseResults));
+            }
+        }
+        else {
+            // If the test run has a single test, like "MyTest" with no "." separators,
+            // then the suite will have a test with "MyTest" as the name
+            if (this.pathMap.isLeaf() && this.pathMap.test) {
+                const t = convertUnrealTest(this.pathMap.test);
+                results.push(new TestGroupResult('DEFAULT', [t]));
+            }
+        }
+        return results;
+    }
+}
+class unreal_json_parser_TestGroup {
+    pathMap;
+    _groupName;
+    constructor(groupName, pathMap) {
+        this.pathMap = pathMap;
+        this._groupName = groupName;
+    }
+    get groupName() {
+        return this._groupName;
+    }
+    set groupName(newName) {
+        this._groupName = newName;
+    }
+    get tests() {
+        return this.pathMap.childElements
+            .filter(el => el.test !== undefined)
+            .map((el) => {
+            return new unreal_json_parser_TestCase(el.elementName, el.test);
+        });
+    }
+    get testCaseResults() {
+        return this.tests.map(t => t.getResult()).filter(t => t !== undefined);
+    }
+}
+class unreal_json_parser_TestCase {
+    caseName;
+    testData;
+    constructor(caseName, testData) {
+        this.caseName = caseName;
+        this.testData = testData;
+    }
+    getResult() {
+        return convertUnrealTest(this.testData);
+    }
+}
+/**
+ * Models a node of the tree of Unreal Engine tests
+ */
+class TestPathsMapElement {
+    elementName;
+    children;
+    test;
+    constructor(elementName) {
+        this.elementName = elementName;
+        if (elementName === undefined || elementName === null || elementName.length === 0) {
+            throw Error('Tried to create a test element with empty name - programmer error');
+        }
+        this.children = [];
+    }
+    firstChild() {
+        return this.children.at(0);
+    }
+    isLeaf() {
+        return this.children.length === 0;
+    }
+    isTrunk() {
+        return this.children.length === 1;
+    }
+    isBranchPoint() {
+        return this.children.length > 1;
+    }
+    hasTests() {
+        for (const c of this.children) {
+            if (c.test !== undefined) {
+                return true;
+            }
+        }
+        return false;
+    }
+    /**
+     * Create groups from all nodes including this, and those
+     * below it, up to but not including the leaf (test) nodes.
+     * If this is a suite node, don't include it.
+     * Don't call this on leaf node. That's an error.
+     */
+    findGroups() {
+        const f = this.findGroupNode();
+        if (f === this) {
+            const suite = this.findSuiteName().split(/\./);
+            return f.groups(suite) ?? [];
+        }
+        return f?.groups() ?? [];
+    }
+    groups(suite) {
+        if (this.isLeaf())
+            throw Error('programmer error');
+        const accGroups = [];
+        const suiteEl = suite?.shift();
+        const nonLeafChildren = this.children.filter(c => !c.isLeaf());
+        for (const c of nonLeafChildren) {
+            const childGroups = c.groups(suite);
+            for (const g of childGroups) {
+                if (this.elementName !== suiteEl) {
+                    g.groupName = `${this.elementName}.${g.groupName}`;
+                }
+                accGroups.push(g);
+            }
+        }
+        if (this.hasTests() && this.elementName !== suiteEl) {
+            accGroups.push(new unreal_json_parser_TestGroup(this.elementName, this));
+        }
+        return accGroups;
+    }
+    /**
+     * Walk from this node down and find all group names
+     * including this, and below it, not including the leaf nodes.
+     * Don't call this on leaf node. That's an error.
+     */
+    findGroupNames() {
+        const f = this.findGroupNode();
+        if (f === this) {
+            const suite = this.findSuiteName().split(/\./);
+            return f.groupNames(suite) ?? [];
+        }
+        return f?.groupNames() ?? [];
+    }
+    groupNames(suite) {
+        if (this.isLeaf())
+            throw Error('programmer error');
+        const accGroupNames = [];
+        let thisAdded = false;
+        const suiteEl = suite?.shift();
+        for (const c of this.children) {
+            if (!c.isLeaf()) {
+                const names = c.groupNames(suite);
+                for (const nm of names) {
+                    if (this.elementName !== suiteEl) {
+                        nm.unshift(this.elementName);
+                    }
+                    accGroupNames.push(nm);
+                }
+            }
+            else {
+                if (!thisAdded && this.elementName !== suite?.at(0)) {
+                    accGroupNames.push([this.elementName]);
+                    thisAdded = true;
+                }
+            }
+        }
+        return accGroupNames;
+    }
+    /**
+     * Walk depth-first down the tree trunk to either the first leaf
+     * or to the first branch point and return the element names.
+     * Can be an empty array.
+     */
+    suiteName() {
+        const suiteNameArray = [];
+        if (!this.isTrunk())
+            return suiteNameArray;
+        suiteNameArray.push(this.elementName);
+        const el = this.firstChild();
+        if (el?.isLeaf())
+            return suiteNameArray;
+        const names = el?.suiteName() ?? [];
+        suiteNameArray.push(...names);
+        return suiteNameArray;
+    }
+    findTrunkGroup() {
+        // walk down the trunk to the first branch point
+        if (this.firstChild()?.isLeaf())
+            return this;
+        if (this.isTrunk()) {
+            return this.firstChild()?.findTrunkGroup();
+        }
+    }
+    /**
+     * Find the name for this suite. This should be called on a top-level
+     * element, that is root.childElements only.
+     */
+    findSuiteName() {
+        const suiteName = this.suiteName();
+        return suiteName.length === 0 ? this.elementName : suiteName.join('.');
+    }
+    /**
+     * Walk depth-first down the tree trunk to the first branch point
+     * and return the element. Can be an undefined.
+     */
+    findGroupNode() {
+        if (this.isLeaf())
+            return undefined;
+        if (this.isBranchPoint()) {
+            return this;
+        }
+        // walk down the trunk to the first branch point
+        if (this.isTrunk()) {
+            return this.firstChild()?.findGroupNode();
+        }
+    }
+    get childElements() {
+        return this.children;
+    }
+    addChild(name) {
+        const child = new TestPathsMapElement(name);
+        this.children.push(child);
+        return child;
+    }
+    insertTest(pathArray, t) {
+        const el = pathArray.shift();
+        if (el) {
+            const pathFound = this.children.find(v => v.elementName === el);
+            if (pathFound) {
+                pathFound.insertTest(pathArray, t);
+            }
+            else {
+                const newEl = this.addChild(el);
+                newEl.insertTest(pathArray, t);
+            }
+        }
+        else {
+            this.test = t;
+        }
+    }
+}
+class unreal_json_parser_TestRun {
+    path;
+    success;
+    time;
+    root;
+    suites;
+    constructor(path, success, time, root) {
+        this.path = path;
+        this.success = success;
+        this.time = time;
+        this.root = root;
+        this.suites = [];
+    }
+    /**
+     * Find all the suites
+     */
+    calculateSuites() {
+        for (const el of this.root.childElements) {
+            const name = el.findSuiteName();
+            const groups = el.findGroups();
+            if (groups.length === 0) {
+                // There are no groups, all tests hang off the suite
+                const trunkGroup = el.findTrunkGroup();
+                if (trunkGroup !== undefined) {
+                    groups.push(new unreal_json_parser_TestGroup(EMPTY_GROUP_NAME, trunkGroup));
+                }
+            }
+            this.suites.push(new unreal_json_parser_TestSuite(name, el, groups));
+        }
+    }
+}
+class UnrealJsonParser {
+    options;
+    root;
+    constructor(options) {
+        this.options = options;
+        this.root = new TestPathsMapElement('root');
+    }
+    /**
+     * Enforce invariant condition: fullTestPath is at least 2 elements: a suite
+     * and a test name, for example:  'SuiteName.[GroupName.]TestName'; dot-separated
+     * and with no white-space. Return the elements of the dot-separated path-name.
+     * @param testPathName string pathName to process
+     */
+    coercePathName(testPathName) {
+        const testElements = testPathName
+            .split(/\./)
+            .map(s => s.trim())
+            .filter(s => s.length > 0);
+        if (testElements.length === 0) {
+            testElements.push(EMPTY_SUITE_NAME);
+        }
+        if (testElements.length === 1) {
+            testElements.push(EMPTY_TEST_NAME);
+        }
+        return testElements;
+    }
+    /**
+     * Accumulate the test path names and test data into the tree structure, and
+     * enforce invariant that the `testDisplayName` in the data is non-empty.
+     * @param pathName the test path to collate the data under
+     * @param test the `UnrealTest` data
+     */
+    accumulateTests(pathName, test) {
+        const path = this.coercePathName(pathName);
+        if (test.testDisplayName.trim().length === 0) {
+            test.testDisplayName = pathName[pathName.length - 1];
+        }
+        this.root.insertTest(path, test);
+    }
+    async parse(path, content) {
+        if (this.options.parseErrors || (this.options.trackedFiles && this.options.trackedFiles.length > 0)) {
+            info('Unreal Automation tests do not support file paths - see docs');
+        }
+        // build tree of paths and find suites
+        try {
+            const testResults = JSON.parse(sanitizeJSONContentString(content));
+            const success = testResults.failed === 0;
+            const duration = testResults.totalDuration;
+            const tr = new unreal_json_parser_TestRun(path, success, duration, this.root);
+            for (const t of testResults.tests) {
+                this.accumulateTests(t.fullTestPath, t);
+            }
+            tr.calculateSuites();
+            const suites = tr.suites.map(s => {
+                return new TestSuiteResult(s.suiteName, s.getResults(), testResults.totalDuration);
+            });
+            return new TestRunResult(tr.path, suites, tr.time);
+        }
+        catch (e) {
+            throw new Error(`Invalid at ${path}: ${e}`);
+        }
+    }
+}
+// Unreal is a windows creature and there's control chars and BOM marks that blow-up JSON
+// \uFEFF: Targets the Byte Order Mark (BOM).
+const sanitizeJSONContentString = (fileContentRaw) => {
+    // eslint-disable-next-line no-control-regex
+    return fileContentRaw.replace(/[\u0000-\u001F\u007F-\u009F\uFEFF]/g, '');
+};
+
 ;// CONCATENATED MODULE: ./lib/main.js
+
 
 
 
@@ -59898,6 +60275,8 @@ class TestReporter {
                 return new SwiftXunitParser(options);
             case 'tester-junit':
                 return new NetteTesterJunitParser(options);
+            case 'unreal-json':
+                return new UnrealJsonParser(options);
             default:
                 throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`);
         }
