@@ -9,7 +9,6 @@ import {
   TestSuiteResult
 } from '../../test-results.js'
 import {UnrealReport, UnrealTest} from './unreal-json-types.js'
-import {getBasePath, normalizeFilePath} from '../../utils/path-utils.js'
 
 export const EMPTY_SUITE_NAME = 'EMPTY_SUITE_NAME'
 export const EMPTY_GROUP_NAME = 'EMPTY_GROUP_NAME'
@@ -34,7 +33,12 @@ function convertUnrealTest(unrealTest: UnrealTest): TestCaseResult {
   let error: TestCaseError | undefined
   if (unrealTest.errors > 0 && entries.length > 0) {
     const errorEntries = entries.filter(e => e.event.type === 'Error')
-    const { filename: path, lineNumber: line, event: { message }, timestamp } = errorEntries[0];
+    const {
+      filename: path,
+      lineNumber: line,
+      event: {message},
+      timestamp
+    } = errorEntries[0]
     error = {
       path,
       line,
