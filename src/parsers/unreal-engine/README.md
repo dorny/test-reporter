@@ -14,6 +14,27 @@ IMPLEMENT_COMPLEX_AUTOMATION_TEST(ItemListTest, "AdventureGame.Items.ItemListTes
     EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
 ```
 
+or [spec tests declared like this]:
+
+```c++
+BEGIN_DEFINE_SPEC(MyCoolFeatureTest, "Private.Tests.MyCoolFeatureTest",
+                  EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
+
+END_DEFINE_SPEC(MyCoolFeatureTest)
+
+void MyCoolFeatureTest::Define()
+{
+	Describe("MyCoolFeature", [this]()
+	{
+			It("Some behavior", [this]()
+			{
+				TestEqual(TEXT("Behaviour is correct"), MyCoolFeature().DoThing(), 42);
+			});
+		};
+	});
+}
+```
+
 It expects a JSON test report in the [format specified by Epic Games on their Unreal Engine documentation
 website]. To get a report like that when you have the above tests in place use a command with `-ReportExportPath`
 like this:
@@ -33,25 +54,38 @@ The report will be  `Reports/index.json`.
 ## Use in GitHub Actions
 
 Try using this with the official Unreal Engine Docker containers, rather than checking out and
-building Unreal in tests.
+building Unreal Engine source code in tests.
 
 See [this Github Actions YAML file] for an example.
 
 [this Github Actions YAML file]: https://github.com/sarah-j-smith/AdventureGameTemplate/blob/main/.github/workflows/unreal-unit-tests.yml
 
-[format specified by Epic Games on their Unreal Engine documentation
-website]: https://dev.epicgames.com/documentation/unreal-engine/review-test-results-in-unreal-engine#json
+[format specified by Epic Games on their Unreal Engine documentation website]: https://dev.epicgames.com/documentation/unreal-engine/review-test-results-in-unreal-engine#json
 
 ## Suite, Group and Test Name Discovery
 
 This parser attempts to derive a suite name, any group names and test names from the test output 
-JSON file entries named `fullTestPath`. Look at a typical test report to see how this naming works.
+JSON file entries field `fullTestPath`. Look at a typical test report to see how this naming works.
 
 The Unreal Engine [editor UI presents these tests in a tree-list format]. This tree format of tests
 is defined by dot-separated, free-text defined by a method on the Automation Test's base class called
 `GetBeautifiedTestName`. Suites, groups and names are derived on a _best effort_ basis.
 
-## 
+## Mapping Test Errors & Failures to Filenames
+
+* Not supported
+
+Unreal Engine JSON gets this data from the Automation framework:
+
+* `fullTestPath: 'Project.Functional Tests.SomeGroup.Test1'`
+
+These dot-separated "paths" bear no fixed relation to the file system. When errors are reported
+these are shown with the `fullTestPath` which developers can search-in-code to find.
+
+In the case of error events, a `filename` is recorded, but research to date has shown it bears no 
+relation to the file containing the test failure. 
+
+The `unreal-json` parser ignores the `parseErrors` argument and prints an informational message.
 
 ## Unreal Testing Landscape
 
@@ -98,7 +132,7 @@ in Rider's test reporters it is either [not supported or only recently supported
 Once those stabilise spec tests have great promise and would be good to make supported.
 
 ----
-
+[spec tests declared like this]: https://dev.epicgames.com/documentation/unreal-engine/automation-spec-in-unreal-engine#howtosetupaspec
 [simple tests declared like this]: https://github.com/test544/UE5_AutotestsExample/blob/main/AplusB.Test.cpp
 [data driven tests declared like this]: https://github.com/sarah-j-smith/AdventureGameTemplate/blob/main/Plugins/AdventureTools/Source/AdventureCommon/Private/__TESTS__/GameUtilsTests.cpp#L13
 [editor UI presents these tests in a tree-list format]: https://dev.epicgames.com/documentation/unreal-engine/automation-system-user-guide-in-unreal-engine

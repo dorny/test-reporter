@@ -1,4 +1,5 @@
 import {ParseOptions, TestParser} from '../../test-parser.js'
+import * as core from '@actions/core'
 import {
   TestCaseError,
   TestCaseResult,
@@ -31,14 +32,14 @@ export function convertUnrealState(unrealState: UnrealTest['state']): TestExecut
 function convertUnrealTest(unrealTest: UnrealTest): TestCaseResult {
   const {testDisplayName, duration, state, entries} = unrealTest
   let error: TestCaseError | undefined
-  if (unrealTest.errors > 0) {
-    if (entries.length > 0) {
-      error = {
-        path: entries[0].filename,
-        line: entries[0].lineNumber,
-        message: `${entries[0].event.type} ${entries[0].timestamp}`,
-        details: entries[0].event.message
-      }
+  if (unrealTest.errors > 0 && entries.length > 0) {
+    const errorEntries = entries.filter(e => e.event.type === 'Error')
+    const { filename: path, lineNumber: line, event: { message }, timestamp } = errorEntries[0];
+    error = {
+      path,
+      line,
+      message,
+      details: `${timestamp} - Error: ${message}`
     }
   }
   return new TestCaseResult(testDisplayName, convertUnrealState(state), duration, error)
@@ -317,7 +318,6 @@ class TestRun {
 
 export class UnrealJsonParser implements TestParser {
   private readonly root: TestPathsMapElement
-  assumedWorkDir: string | undefined
 
   constructor(readonly options: ParseOptions) {
     this.root = new TestPathsMapElement('root')
@@ -358,10 +358,13 @@ export class UnrealJsonParser implements TestParser {
   }
 
   async parse(path: string, content: string): Promise<TestRunResult> {
+    if (this.options.parseErrors || (this.options.trackedFiles && this.options.trackedFiles.length > 0)) {
+      core.info('Unreal Automation tests do not support file paths - see docs')
+    }
     // build tree of paths and find suites
 
     try {
-      const testResults: UnrealReport = JSON.parse(content.replace(/\s/g, ''))
+      const testResults: UnrealReport = JSON.parse(content.replace(/\t/g, ''))
       const success = testResults.failed === 0
       const duration = testResults.totalDuration
       const tr = new TestRun(path, success, duration, this.root)
@@ -376,22 +379,5 @@ export class UnrealJsonParser implements TestParser {
     } catch (e) {
       throw new Error(`Invalid at ${path}: ${e}`)
     }
-  }
-
-  private getRelativePath(path: string): string {
-    path = normalizeFilePath(path)
-    const workDir = this.getWorkDir(path)
-    if (workDir !== undefined && path.startsWith(workDir)) {
-      path = path.substring(workDir.length)
-    }
-    return path
-  }
-
-  private getWorkDir(path: string): string | undefined {
-    return (
-      this.options.workDir ??
-      this.assumedWorkDir ??
-      (this.assumedWorkDir = getBasePath(path, this.options.trackedFiles))
-    )
   }
 }
