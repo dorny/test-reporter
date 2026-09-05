@@ -7,7 +7,8 @@ import {fileURLToPath} from 'url'
 import {dirname} from 'path'
 
 import {
-  convertUnrealState, sanitizeJSONContentString,
+  convertUnrealState,
+  sanitizeJSONContentString,
   TestPathsMapElement,
   UnrealJsonParser
 } from '../src/parsers/unreal-engine/unreal-json-parser.js'
@@ -17,13 +18,7 @@ import {
   UnrealEngineTestExample,
   UnrealReportWithSingleTest
 } from '../src/parsers/unreal-engine/fakes.js'
-import {
-  TestCaseResult,
-  TestExecutionResult,
-  TestGroupResult,
-  TestRunResult,
-  TestSuiteResult
-} from '../src/test-results.js'
+import {TestCaseResult, TestExecutionResult, TestGroupResult, TestSuiteResult} from '../src/test-results.js'
 import {UnrealReport} from '../src/parsers/unreal-engine/unreal-json-types.js'
 
 const __filename = fileURLToPath(import.meta.url)
