@@ -10,5 +10,10 @@
   "license": "MIT",
   "devDependencies": {
     "mocha": "^11.7.5"
+  },
+  "overrides": {
+    "mocha": {
+      "serialize-javascript": "7.0.5"
+    }
   }
 }
