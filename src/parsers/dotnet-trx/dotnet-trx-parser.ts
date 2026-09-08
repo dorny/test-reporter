@@ -15,6 +15,25 @@ import {
   TestCaseError
 } from '../../test-results.js'
 
+// The only place a trx outcome becomes a test result. Outcomes VSTest emits but
+// this parser does not name (Timeout, Aborted, Error, NotRunnable and the rest)
+// must not be reported as passing tests, so they fail like a Failed test does.
+function getOutcomeResult(outcome: Outcome): TestExecutionResult {
+  switch (outcome) {
+    // PassedButRunAborted is a test that passed. The aborted run is reported
+    // by getRunFailure instead of by failing tests that did their job.
+    case 'Passed':
+    case 'PassedButRunAborted':
+      return 'success'
+    // Inconclusive is what Assert.Inconclusive produces: a test that opted out
+    case 'NotExecuted':
+    case 'Inconclusive':
+      return 'skipped'
+    default:
+      return 'failed'
+  }
+}
+
 class TestClass {
   constructor(readonly name: string) {}
   readonly tests: Test[] = []
@@ -28,15 +47,8 @@ class Test {
     readonly error?: ErrorInfo
   ) {}
 
-  get result(): TestExecutionResult | undefined {
-    switch (this.outcome) {
-      case 'Passed':
-        return 'success'
-      case 'NotExecuted':
-        return 'skipped'
-      case 'Failed':
-        return 'failed'
-    }
+  get result(): TestExecutionResult {
+    return getOutcomeResult(this.outcome)
   }
 }
 
@@ -121,11 +133,46 @@ export class DotnetTrxParser implements TestParser {
       return new TestSuiteResult(testClass.name, [group])
     })
 
+    const runFailure = this.getRunFailure(trx, suites)
+    if (runFailure) {
+      suites.push(runFailure)
+    }
+
     return new TestRunResult(path, suites, totalTime)
   }
 
+  // A test run can fail without any single test failing: the test host crashes,
+  // the run is aborted or times out. The run outcome is then the only record of
+  // it, and reporting such a run as successful hides the failure completely.
+  // When tests did fail, they already report it and this adds nothing.
+  private getRunFailure(trx: TrxReport, suites: TestSuiteResult[]): TestSuiteResult | undefined {
+    const summary = trx.TestRun.ResultSummary?.[0]
+    const outcome = summary?.$?.outcome
+    if (outcome === undefined || outcome === 'Completed' || outcome === 'Passed') {
+      return undefined
+    }
+    if (suites.some(s => s.result === 'failed')) {
+      return undefined
+    }
+
+    const details = (summary?.RunInfos ?? [])
+      .flatMap(infos => infos.RunInfo ?? [])
+      .filter(info => getOutcomeResult(info.$.outcome) === 'failed')
+      .flatMap(info => info.Text ?? [])
+      .join('\n')
+      .trim()
+
+    const message = `Test run finished with outcome ${outcome} and no failing test`
+    const error: TestCaseError | undefined = this.options.parseErrors
+      ? {message, details: details.length > 0 ? details : message}
+      : undefined
+
+    const test = new TestCaseResult(`Test run outcome: ${outcome}`, 'failed', 0, error)
+    return new TestSuiteResult('Test run', [new TestGroupResult(null, [test])], 0)
+  }
+
   private getErrorInfo(testResult: UnitTestResult): ErrorInfo | undefined {
-    if (testResult.$.outcome !== 'Failed') {
+    if (getOutcomeResult(testResult.$.outcome) !== 'failed') {
       return undefined
     }
 
