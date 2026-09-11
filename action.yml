@@ -1,6 +1,6 @@
 name: Test Reporter - Sarah Test Fork
 description: Displays test results from popular testing frameworks directly in GitHub
-author: Michal Dorner <dorner.michal@gmail.com> / Sarah Smith <sez@storybridge.org>
+author: Michal Dorner <dorner.michal@gmail.com>
 inputs:
   artifact:
     description: Name or regex of artifact containing test results
