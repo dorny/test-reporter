@@ -386,9 +386,7 @@ export class UnrealJsonParser implements TestParser {
   }
 }
 
-// Unreal is a windows creature and there's control chars and BOM marks that blow-up JSON
-// \uFEFF: Targets the Byte Order Mark (BOM).
+// Unreal adds non-printable characters that blow-up JSON
 export const sanitizeJSONContentString = (fileContentRaw: string): string => {
-  // eslint-disable-next-line no-control-regex
-  return fileContentRaw.replace(/[\u0000-\u001F\u007F-\u009F\uFEFF]/g, '')
+  return fileContentRaw.replace(/[\t\r\n]/g, '')
 }

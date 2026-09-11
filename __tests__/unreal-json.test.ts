@@ -20,6 +20,8 @@ import {
 } from '../src/parsers/unreal-engine/fakes.js'
 import {TestCaseResult, TestExecutionResult, TestGroupResult, TestSuiteResult} from '../src/test-results.js'
 import {UnrealReport} from '../src/parsers/unreal-engine/unreal-json-types.js'
+import {stripVTControlCharacters} from 'node:util'
+import stripBom from 'strip-bom'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -207,7 +209,7 @@ describe('UnrealJsonParser', () => {
   it('A report from a path', async () => {
     const fixturePath = path.join(__dirname, 'fixtures', 'unreal-engine', 'unreal-test-report.json')
     const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
-    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+    const fileContent = stripBom(fs.readFileSync(fixturePath, {encoding: 'utf8'}))
     const parser = new UnrealJsonParser({parseErrors: false, trackedFiles: []})
     const result = await parser.parse(filePath, fileContent)
     const testData: UnrealReport = JSON.parse(sanitizeJSONContentString(fileContent))
