@@ -119,7 +119,7 @@ describe('basic test', () => {
     const expectedState = convertUnrealState(state)
     const testcase = new TestCaseResult(testDisplayName, expectedState, duration)
     const group = new TestGroupResult('AGroup', [testcase])
-    const suite = new TestSuiteResult('Private.Test.ThisIs.Not', [group], duration)
+    const suite = new TestSuiteResult('Private.Test.ThisIs.Not', [group])
 
     const passCount = tests.filter(t => t.state === 'Success').length
     const failedTests = tests.filter(t => t.state === 'Fail')
@@ -158,7 +158,7 @@ describe('basic test', () => {
     const expectedState = convertUnrealState(state)
     const testcase = new TestCaseResult(testDisplayName, expectedState, duration)
     const group = new TestGroupResult('EMPTY_GROUP_NAME', [testcase])
-    const suite = new TestSuiteResult('Private.Test.ThisIs.Not.AGroup', [group], duration)
+    const suite = new TestSuiteResult('Private.Test.ThisIs.Not.AGroup', [group])
 
     expect(result.failed).toStrictEqual(failed)
     expect(result.failedSuites).toStrictEqual([])
@@ -195,10 +195,10 @@ describe('UnrealJsonParser', () => {
           }
         ],
         name: 'Project.Functional Tests',
-        totalTime: 0.3
+        time: 0.3
       }
     ],
-    totalTime: 0.3
+    time: 0.3
   }
 
   it('A report from a string', async () => {
@@ -207,6 +207,53 @@ describe('UnrealJsonParser', () => {
     const parser = new UnrealJsonParser({parseErrors: false, trackedFiles: []})
     const result = await parser.parse('/tmp', fileContent)
     expect(result).toMatchObject(testSuiteResult)
+  })
+  it('resets parser state for each report', async () => {
+    const parser = new UnrealJsonParser({parseErrors: false, trackedFiles: []})
+    const firstReport = {
+      ...UnrealReportWithSingleTest,
+      tests: [aTestWithResult('First.Test')]
+    }
+    const secondReport = {
+      ...UnrealReportWithSingleTest,
+      tests: [aTestWithResult('Second.Test')]
+    }
+
+    const firstResult = await parser.parse('/first', JSON.stringify(firstReport))
+    const secondResult = await parser.parse('/second', JSON.stringify(secondReport))
+
+    expect(firstResult.tests).toBe(1)
+    expect(secondResult.tests).toBe(1)
+    expect(secondResult.suites.map(suite => suite.name)).toStrictEqual(['Second'])
+  })
+
+  it('uses the final path segment for an empty test display name', async () => {
+    const report = {
+      ...UnrealReportWithSingleTest,
+      tests: [{...aTestWithResult('Suite.Group.ReadableTest'), testDisplayName: ''}]
+    }
+    const parser = new UnrealJsonParser({parseErrors: false, trackedFiles: []})
+
+    const result = await parser.parse('/empty-name', JSON.stringify(report))
+
+    expect(result.suites[0].groups[0].tests[0].name).toBe('ReadableTest')
+  })
+
+  it('uses each suite test time instead of the report time', async () => {
+    const report = {
+      ...UnrealReportWithSingleTest,
+      totalDuration: 1,
+      tests: [
+        {...aTestWithResult('First.Test'), duration: 0.25},
+        {...aTestWithResult('Second.Test'), duration: 0.75}
+      ]
+    }
+    const parser = new UnrealJsonParser({parseErrors: false, trackedFiles: []})
+
+    const result = await parser.parse('/suite-times', JSON.stringify(report))
+
+    expect(result.time).toBe(1)
+    expect(result.suites.map(suite => suite.time)).toStrictEqual([0.25, 0.75])
   })
 
   it('A report from a path', async () => {
@@ -252,7 +299,7 @@ function device(): UnrealDevice {
     platform: 'MacEditor',
     oSVersion: 'macOS 26.5.2 25F84',
     model: 'Default',
-    gPL: 'Apple M3 Max',
+    gPU: 'Apple M3 Max',
     cPUModel: 'Apple M3 Max',
     rAMInGB: 36,
     renderMode: 'SM6',

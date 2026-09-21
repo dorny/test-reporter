@@ -22,7 +22,7 @@ export type UnrealDevice = {
   model: string
   /** Seems to be model again, possibly license
    * @example  Apple M3 Max */
-  gPL: string
+  gPU: string
   /** CPU of the device or emulator
    * @example  QEMU TCG CPU version 2.5+, for docker image
    * @example Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz */
@@ -48,7 +48,7 @@ export type UnrealDevice = {
  */
 export type UnrealTestEventTypeRecord = {
   /** The type of event */
-  type: 'Warning' | 'Error' | 'Debug' | 'Log'
+  type: 'Warning' | 'Error' | 'Debug' | 'Log' | 'Info'
   /** What is displayed in the event,
    * @example "LogDialog: #### SetBarkLineTimer: 7.000000" */
   message: string

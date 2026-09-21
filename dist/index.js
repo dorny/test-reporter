@@ -59939,10 +59939,8 @@ class unreal_json_parser_TestRun {
 }
 class UnrealJsonParser {
     options;
-    root;
     constructor(options) {
         this.options = options;
-        this.root = new TestPathsMapElement('root');
     }
     /**
      * Enforce invariant condition: fullTestPath is at least 2 elements: a suite
@@ -59969,12 +59967,12 @@ class UnrealJsonParser {
      * @param pathName the test path to collate the data under
      * @param test the `UnrealTest` data
      */
-    accumulateTests(pathName, test) {
+    accumulateTests(pathName, test, root) {
         const path = this.coercePathName(pathName);
         if (test.testDisplayName.trim().length === 0) {
-            test.testDisplayName = pathName[pathName.length - 1];
+            test.testDisplayName = path[path.length - 1];
         }
-        this.root.insertTest(path, test);
+        root.insertTest(path, test);
     }
     async parse(path, content) {
         if (this.options.parseErrors || (this.options.trackedFiles && this.options.trackedFiles.length > 0)) {
@@ -59985,13 +59983,14 @@ class UnrealJsonParser {
             const testResults = JSON.parse(sanitizeJSONContentString(content));
             const success = testResults.failed === 0;
             const duration = testResults.totalDuration;
-            const tr = new unreal_json_parser_TestRun(path, success, duration, this.root);
+            const root = new TestPathsMapElement('root');
+            const tr = new unreal_json_parser_TestRun(path, success, duration, root);
             for (const t of testResults.tests) {
-                this.accumulateTests(t.fullTestPath, t);
+                this.accumulateTests(t.fullTestPath, t, root);
             }
             tr.calculateSuites();
             const suites = tr.suites.map(s => {
-                return new TestSuiteResult(s.suiteName, s.getResults(), testResults.totalDuration);
+                return new TestSuiteResult(s.suiteName, s.getResults());
             });
             return new TestRunResult(tr.path, suites, tr.time);
         }

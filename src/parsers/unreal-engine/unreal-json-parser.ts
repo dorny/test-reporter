@@ -321,11 +321,7 @@ class TestRun {
 }
 
 export class UnrealJsonParser implements TestParser {
-  private readonly root: TestPathsMapElement
-
-  constructor(readonly options: ParseOptions) {
-    this.root = new TestPathsMapElement('root')
-  }
+  constructor(readonly options: ParseOptions) {}
 
   /**
    * Enforce invariant condition: fullTestPath is at least 2 elements: a suite
@@ -353,12 +349,12 @@ export class UnrealJsonParser implements TestParser {
    * @param pathName the test path to collate the data under
    * @param test the `UnrealTest` data
    */
-  accumulateTests(pathName: string, test: UnrealTest) {
+  accumulateTests(pathName: string, test: UnrealTest, root: TestPathsMapElement) {
     const path = this.coercePathName(pathName)
     if (test.testDisplayName.trim().length === 0) {
-      test.testDisplayName = pathName[pathName.length - 1]
+      test.testDisplayName = path[path.length - 1]
     }
-    this.root.insertTest(path, test)
+    root.insertTest(path, test)
   }
 
   async parse(path: string, content: string): Promise<TestRunResult> {
@@ -371,13 +367,14 @@ export class UnrealJsonParser implements TestParser {
       const testResults: UnrealReport = JSON.parse(sanitizeJSONContentString(content))
       const success = testResults.failed === 0
       const duration = testResults.totalDuration
-      const tr = new TestRun(path, success, duration, this.root)
+      const root = new TestPathsMapElement('root')
+      const tr = new TestRun(path, success, duration, root)
       for (const t of testResults.tests) {
-        this.accumulateTests(t.fullTestPath, t)
+        this.accumulateTests(t.fullTestPath, t, root)
       }
       tr.calculateSuites()
       const suites = tr.suites.map(s => {
-        return new TestSuiteResult(s.suiteName, s.getResults(), testResults.totalDuration)
+        return new TestSuiteResult(s.suiteName, s.getResults())
       })
       return new TestRunResult(tr.path, suites, tr.time)
     } catch (e) {
