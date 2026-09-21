@@ -7,6 +7,7 @@ import picomatch from 'picomatch'
 
 import {FileContent, InputProvider, ReportInput} from './input-provider.js'
 import {downloadArtifact, listFiles} from '../utils/github-utils.js'
+import {decodeReportBytes} from '../utils/text-decoder.js'
 
 type WorkflowRunArtifact = {
   id: number
@@ -90,7 +91,8 @@ export class ArtifactProvider implements InputProvider {
             core.info(`Skipping ${file}: filename does not match pattern`)
             continue
           }
-          const content = zip.readAsText(entry)
+          const bytes = entry.getData()
+          const content = decodeReportBytes(file, bytes)
           files.push({file, content})
           core.info(`Read ${file}: ${content.length} chars`)
         }

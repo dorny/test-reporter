@@ -37,6 +37,7 @@ inputs:
         - python-xunit
         - rspec-json
         - swift-xunit
+        - unreal-json
     required: true
   list-suites:
     description: |

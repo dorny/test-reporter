@@ -2,6 +2,7 @@ import * as fs from 'fs'
 import glob from 'fast-glob'
 import {FileContent, InputProvider, ReportInput} from './input-provider.js'
 import {listFiles} from '../utils/git.js'
+import {decodeReportBytes} from '../utils/text-decoder.js'
 
 export class LocalFileProvider implements InputProvider {
   constructor(
@@ -14,7 +15,8 @@ export class LocalFileProvider implements InputProvider {
     for (const pat of this.pattern) {
       const paths = await glob(pat, {dot: true})
       for (const file of paths) {
-        const content = await fs.promises.readFile(file, {encoding: 'utf8'})
+        const bytes = await fs.promises.readFile(file)
+        const content = decodeReportBytes(file, bytes)
         result.push({file, content})
       }
     }

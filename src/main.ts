@@ -28,6 +28,7 @@ import {SwiftXunitParser} from './parsers/swift-xunit/swift-xunit-parser.js'
 import {NetteTesterJunitParser} from './parsers/tester-junit/tester-junit-parser.js'
 import {normalizeDirPath, normalizeFilePath} from './utils/path-utils.js'
 import {getCheckRunContext} from './utils/github-utils.js'
+import {UnrealJsonParser} from './parsers/unreal-engine/unreal-json-parser.js'
 
 async function main(): Promise<void> {
   try {
@@ -319,6 +320,8 @@ class TestReporter {
         return new SwiftXunitParser(options)
       case 'tester-junit':
         return new NetteTesterJunitParser(options)
+      case 'unreal-json':
+        return new UnrealJsonParser(options)
       default:
         throw new Error(`Input variable 'reporter' is set to invalid value '${reporter}'`)
     }

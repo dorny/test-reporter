@@ -35,7 +35,8 @@ jobs:
             tester-junit,
             phpunit-junit,
             python-xunit,
-            rspec-json
+            rspec-json,
+            unreal-json
           ]
         include:
           - reporter: jest-junit
@@ -64,6 +65,8 @@ jobs:
             path: ./__tests__/fixtures/python-xunit-pytest.xml
           - reporter: rspec-json
             path: ./__tests__/fixtures/rspec-json.json
+          - reporter: unreal-json
+            path: ./__tests__/fixtures/unreal-engine/unreal-test-report.json
 
     steps:
     - uses: actions/checkout@v7
