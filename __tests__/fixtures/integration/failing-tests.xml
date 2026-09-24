@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="FailingSuite" tests="3" failures="1" errors="0" time="0.5">
+  <testsuite name="FailingSuite" tests="3" failures="1" errors="0" time="0.5">
+    <testcase name="should pass test 1" classname="FailingSuite" time="0.1"/>
+    <testcase name="should fail test 2" classname="FailingSuite" time="0.2">
+      <failure message="Assertion failed" type="AssertionError">
+        Expected: true
+        Received: false
+        at Object.test (/test/example.test.js:10:5)
+      </failure>
+    </testcase>
+    <testcase name="should pass test 3" classname="FailingSuite" time="0.2"/>
+  </testsuite>
+</testsuites>
