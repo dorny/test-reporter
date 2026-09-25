@@ -162,15 +162,13 @@ export class PhpunitJunitParser implements TestParser {
       // useful on its own — pull a "Type: …" line from the body when present,
       // otherwise leave message unset so the report falls back to details (#711).
       if (failure.$.message) {
-        message = failure.$.type
-          ? `${failure.$.type}: ${failure.$.message}`
-          : failure.$.message
+        message = failure.$.type ? `${failure.$.type}: ${failure.$.message}` : failure.$.message
       } else if (failure.$.type && details) {
         const failureType = failure.$.type
         const typedLine = details
           .split(/\r?\n/)
-          .map(line => line.trim())
-          .find(line => line.startsWith(`${failureType}:`))
+          .map(detailLine => detailLine.trim())
+          .find(detailLine => detailLine.startsWith(`${failureType}:`))
         if (typedLine) {
           message = typedLine
         }
