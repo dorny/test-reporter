@@ -58301,6 +58301,9 @@ function getBasePath(path, trackedFiles) {
 
 const DEFAULT_LOCALE = 'en-US';
 function getExceptionSource(stackTrace, trackedFiles, getRelativePath) {
+    if (typeof stackTrace !== 'string') {
+        return undefined;
+    }
     const lines = stackTrace.split(/\r?\n/);
     const re = /\((.*):(\d+):\d+\)$/;
     for (const str of lines) {
@@ -59632,7 +59635,7 @@ class JestJunitParser {
             return undefined;
         }
         const message = tc.failure ? tc.failure[0] : tc.error ? tc.error[0] : 'unknown failure';
-        const details = typeof message === 'string' ? message : message['_'];
+        const details = typeof message === 'string' ? message : (message._ ?? message.$?.message ?? '');
         let path;
         let line;
         const src = getExceptionSource(details, this.options.trackedFiles, file => this.getRelativePath(file));
