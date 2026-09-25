@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="8ba3ff08-3b6f-4c62-b9a1-8d3c2a5c1f01" name="Timed out test run" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2025-06-22T14:17:11.000000+00:00" queuing="2025-06-22T14:17:11.000000+00:00" start="2025-06-22T14:17:11.000000+00:00" finish="2025-06-22T14:17:41.000000+00:00" />
+  <Results>
+    <UnitTestResult executionId="0a6d5cc4-6b6d-4a3e-9d51-3c9c0c6e2a01" testId="1c0a2e8f-15f6-4c7a-90ee-6a4b8a0f1101" testName="DotnetTests.XUnitTests.CalculatorTests.Passing_Test" computerName="CI" duration="00:00:00.0100000" outcome="Passed" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <UnitTestResult executionId="0a6d5cc4-6b6d-4a3e-9d51-3c9c0c6e2a02" testId="1c0a2e8f-15f6-4c7a-90ee-6a4b8a0f1102" testName="DotnetTests.XUnitTests.CalculatorTests.Timed_Out_Test" computerName="CI" duration="00:00:30.0000000" outcome="Timeout" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+        <ErrorInfo>
+          <Message>Test 'Timed_Out_Test' exceeded execution timeout period.</Message>
+          <StackTrace />
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="0a6d5cc4-6b6d-4a3e-9d51-3c9c0c6e2a04" testId="1c0a2e8f-15f6-4c7a-90ee-6a4b8a0f1104" testName="DotnetTests.XUnitTests.CalculatorTests.Inconclusive_Test" computerName="CI" duration="00:00:00.0100000" outcome="Inconclusive" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="Passing_Test" storage="dotnettests.xunittests.dll" id="1c0a2e8f-15f6-4c7a-90ee-6a4b8a0f1101">
+      <Execution id="0a6d5cc4-6b6d-4a3e-9d51-3c9c0c6e2a01" />
+      <TestMethod codeBase="DotnetTests.XUnitTests.dll" className="DotnetTests.XUnitTests.CalculatorTests" name="Passing_Test" />
+    </UnitTest>
+    <UnitTest name="Timed_Out_Test" storage="dotnettests.xunittests.dll" id="1c0a2e8f-15f6-4c7a-90ee-6a4b8a0f1102">
+      <Execution id="0a6d5cc4-6b6d-4a3e-9d51-3c9c0c6e2a02" />
+      <TestMethod codeBase="DotnetTests.XUnitTests.dll" className="DotnetTests.XUnitTests.CalculatorTests" name="Timed_Out_Test" />
+    </UnitTest>
+    <UnitTest name="Inconclusive_Test" storage="dotnettests.xunittests.dll" id="1c0a2e8f-15f6-4c7a-90ee-6a4b8a0f1104">
+      <Execution id="0a6d5cc4-6b6d-4a3e-9d51-3c9c0c6e2a04" />
+      <TestMethod codeBase="DotnetTests.XUnitTests.dll" className="DotnetTests.XUnitTests.CalculatorTests" name="Inconclusive_Test" />
+    </UnitTest>
+  </TestDefinitions>
+  <ResultSummary outcome="Failed">
+    <Counters total="3" executed="3" passed="1" failed="0" error="0" timeout="1" aborted="0" inconclusive="1" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+</TestRun>

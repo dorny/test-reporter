@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="8ba3ff08-3b6f-4c62-b9a1-8d3c2a5c1f02" name="Aborted test run" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2025-06-22T14:20:11.000000+00:00" queuing="2025-06-22T14:20:11.000000+00:00" start="2025-06-22T14:20:11.000000+00:00" finish="2025-06-22T14:20:13.000000+00:00" />
+  <Results>
+    <UnitTestResult executionId="0a6d5cc4-6b6d-4a3e-9d51-3c9c0c6e2a03" testId="1c0a2e8f-15f6-4c7a-90ee-6a4b8a0f1103" testName="DotnetTests.XUnitTests.CalculatorTests.Passing_Test" computerName="CI" duration="00:00:00.0100000" outcome="Passed" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="Passing_Test" storage="dotnettests.xunittests.dll" id="1c0a2e8f-15f6-4c7a-90ee-6a4b8a0f1103">
+      <Execution id="0a6d5cc4-6b6d-4a3e-9d51-3c9c0c6e2a03" />
+      <TestMethod codeBase="DotnetTests.XUnitTests.dll" className="DotnetTests.XUnitTests.CalculatorTests" name="Passing_Test" />
+    </UnitTest>
+  </TestDefinitions>
+  <ResultSummary outcome="Failed">
+    <Counters total="1" executed="1" passed="1" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <RunInfos>
+      <RunInfo computerName="CI" outcome="Error" timestamp="2025-06-22T14:20:13.000000+00:00">
+        <Text>The active test run was aborted. Reason: Test host process crashed : Unhandled exception. System.AccessViolationException</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

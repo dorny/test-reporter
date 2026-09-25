@@ -6,6 +6,25 @@ export interface TestRun {
   Times: Times[]
   Results?: Results[]
   TestDefinitions?: TestDefinitions[]
+  ResultSummary?: ResultSummary[]
+}
+
+export interface ResultSummary {
+  $: {
+    outcome: Outcome
+  }
+  RunInfos?: RunInfos[]
+}
+
+export interface RunInfos {
+  RunInfo?: RunInfo[]
+}
+
+export interface RunInfo {
+  $: {
+    outcome: Outcome
+  }
+  Text?: string[]
 }
 
 export interface Times {
@@ -57,4 +76,7 @@ export interface ErrorInfo {
   StackTrace: string[]
 }
 
-export type Outcome = 'Passed' | 'NotExecuted' | 'Failed'
+// VSTest writes any of its TestOutcome values here. Besides the three named
+// below it can emit Timeout, Aborted, Error, NotRunnable, Inconclusive and
+// others. An outcome without a mapping is treated as a failure, never as a pass.
+export type Outcome = 'Passed' | 'NotExecuted' | 'Failed' | (string & {})
