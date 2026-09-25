@@ -29,7 +29,15 @@ export interface TestCase {
     name: string
     time: string
   }
-  failure?: string[]
+  failure?: (string | Failure)[]
   skipped?: string[]
-  error?: string[]
+  error?: (string | Failure)[]
+}
+
+export interface Failure {
+  _?: string
+  $?: {
+    message?: string
+    type?: string
+  }
 }
