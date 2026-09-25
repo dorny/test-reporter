@@ -166,10 +166,11 @@ export class PhpunitJunitParser implements TestParser {
           ? `${failure.$.type}: ${failure.$.message}`
           : failure.$.message
       } else if (failure.$.type && details) {
+        const failureType = failure.$.type
         const typedLine = details
           .split(/\r?\n/)
           .map(line => line.trim())
-          .find(line => line.startsWith(`${failure.$.type}:`))
+          .find(line => line.startsWith(`${failureType}:`))
         if (typedLine) {
           message = typedLine
         }
