@@ -58332,7 +58332,8 @@ function slug(name, options) {
         .trim()
         .replace(/_/g, '')
         .replace(/[./\\]/g, '-')
-        .replace(/[^\w-]/g, '');
+        .replace(/[^\w-]/g, '')
+        .toLowerCase();
     const id = `user-content-${slugId}`;
     // When using the Action Summary for display, links must include the "user-content-" prefix.
     const link = options.useActionsSummary ? `#${id}` : `#${slugId}`;
@@ -58348,6 +58349,7 @@ function slug(name, options) {
 const MAX_REPORT_LENGTH = 65535;
 const MAX_ACTIONS_SUMMARY_LENGTH = 1048576;
 const DEFAULT_OPTIONS = {
+    name: '',
     listSuites: 'all',
     listTests: 'all',
     slugPrefix: '',
@@ -58461,7 +58463,8 @@ function getBadge(passed, failed, skipped, options) {
     const encodedBadgeTitle = encodeImgShieldsURIComponent(options.badgeTitle);
     const encodedMessage = encodeImgShieldsURIComponent(message);
     const encodedColor = encodeImgShieldsURIComponent(color);
-    return `![${hint}](https://img.shields.io/badge/${encodedBadgeTitle}-${encodedMessage}-${encodedColor})`;
+    const reportSlug = makeReportSlug(options);
+    return `[![${hint}](https://img.shields.io/badge/${encodedBadgeTitle}-${encodedMessage}-${encodedColor})](${reportSlug.link})`;
 }
 function getTestRunsReport(testRuns, options) {
     const sections = [];
@@ -58472,6 +58475,8 @@ function getTestRunsReport(testRuns, options) {
         sections.push(`<details><summary>Expand for details</summary>`);
         sections.push(` `);
     }
+    const reportSlug = makeReportSlug(options);
+    sections.push(`# <a name="${reportSlug.id}"></a> Tests report`);
     // Filter test runs based on list-files option
     const filteredTestRuns = options.listFiles === 'failed'
         ? testRuns.filter(tr => tr.result === 'failed')
@@ -58581,11 +58586,18 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
 }
 function makeRunSlug(runIndex, options) {
     // use prefix to avoid slug conflicts after escaping the paths
-    return slug(`r${runIndex}`, options);
+    return makeNamedSlug(`r${runIndex}`, options);
 }
 function makeSuiteSlug(runIndex, suiteIndex, options) {
     // use prefix to avoid slug conflicts after escaping the paths
-    return slug(`r${runIndex}s${suiteIndex}`, options);
+    return makeNamedSlug(`r${runIndex}s${suiteIndex}`, options);
+}
+function makeReportSlug(options) {
+    return makeNamedSlug('test-report', options);
+}
+function makeNamedSlug(anchor, options) {
+    const namePrefix = options.name ? `${options.name}-` : '';
+    return slug(`${namePrefix}${anchor}`, options);
 }
 function getResultIcon(result) {
     switch (result) {
@@ -60737,7 +60749,7 @@ class TestReporter {
     workDirInput = getInput('working-directory', { required: false });
     onlySummary = getInput('only-summary', { required: false }) === 'true';
     useActionsSummary = getInput('use-actions-summary', { required: false }) === 'true';
-    slugPrefix = `tr-${(0,external_node_crypto_.randomBytes)(4).toString('base64url')}-`;
+    slugPrefix = `tr-${(0,external_node_crypto_.randomBytes)(4).toString('hex')}-`;
     badgeTitle = getInput('badge-title', { required: false });
     reportTitle = getInput('report-title', { required: false });
     collapsed = getInput('collapsed', { required: false });
@@ -60850,6 +60862,7 @@ class TestReporter {
         let baseUrl = '';
         if (this.useActionsSummary) {
             const summary = getReport(results, {
+                name,
                 listSuites,
                 listTests,
                 slugPrefix,
@@ -60881,6 +60894,7 @@ class TestReporter {
             info('Creating report summary');
             baseUrl = createResp.data.html_url;
             const summary = getReport(results, {
+                name,
                 listSuites,
                 listTests,
                 slugPrefix,

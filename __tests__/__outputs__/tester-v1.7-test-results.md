@@ -1,4 +1,5 @@
-![Tests failed](https://img.shields.io/badge/tests-61%20passed%2C%201%20failed%2C%203%20skipped-critical)
+[![Tests failed](https://img.shields.io/badge/tests-61%20passed%2C%201%20failed%2C%203%20skipped-critical)](#user-content-test-report)
+# <a name="user-content-test-report"></a> Tests report
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
 |[fixtures/nette-tester/tester-v1.7-report.xml](#user-content-r0)|61 ✅|1 ❌|3 ⚪|2s|
