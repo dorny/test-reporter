@@ -58345,6 +58345,7 @@ function slug(name, options) {
 
 
 
+
 const MAX_REPORT_LENGTH = 65535;
 const MAX_ACTIONS_SUMMARY_LENGTH = 1048576;
 const DEFAULT_OPTIONS = {
@@ -58357,7 +58358,8 @@ const DEFAULT_OPTIONS = {
     useActionsSummary: true,
     badgeTitle: 'tests',
     reportTitle: '',
-    collapsed: 'auto'
+    collapsed: 'auto',
+    fileNameOnly: false
 };
 function getReport(results, options = DEFAULT_OPTIONS, shortSummary = '') {
     applySort(results);
@@ -58483,7 +58485,7 @@ function getTestRunsReport(testRuns, options) {
         .filter(({ tr }) => tr.passed > 0 || tr.failed > 0 || tr.skipped > 0)
         .map(({ tr, originalIndex }) => {
         const time = formatTime(tr.time);
-        const name = tr.path;
+        const name = options.fileNameOnly ? (0,external_node_path_namespaceObject.basename)(tr.path) : tr.path;
         const addr = options.baseUrl + makeRunSlug(originalIndex, options).link;
         const nameLink = markdown_utils_link(name, addr);
         const passed = tr.passed > 0 ? `${tr.passed} ${Icon.success}` : '';
@@ -58509,7 +58511,7 @@ function getSuitesReport(tr, runIndex, options) {
     const suites = options.listSuites === 'failed' ? tr.failedSuites : tr.suites;
     if (options.listSuites !== 'none') {
         const trSlug = makeRunSlug(runIndex, options);
-        const nameLink = `<a id="${trSlug.id}" href="${options.baseUrl + trSlug.link}">${tr.path}</a>`;
+        const nameLink = `<a id="${trSlug.id}" href="${options.baseUrl + trSlug.link}">${options.fileNameOnly ? (0,external_node_path_namespaceObject.basename)(tr.path) : tr.path}</a>`;
         const icon = getResultIcon(tr.result);
         sections.push(`## ${icon}\xa0${nameLink}`);
         const time = formatTime(tr.time);
@@ -60741,6 +60743,7 @@ class TestReporter {
     badgeTitle = getInput('badge-title', { required: false });
     reportTitle = getInput('report-title', { required: false });
     collapsed = getInput('collapsed', { required: false });
+    fileNameOnly = getInput('file-name-only', { required: false }) === 'true';
     token = getInput('token', { required: true });
     octokit;
     context = getCheckRunContext();
@@ -60842,7 +60845,7 @@ class TestReporter {
                 throw error;
             }
         }
-        const { listSuites, listTests, slugPrefix, listFiles, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed } = this;
+        const { listSuites, listTests, slugPrefix, listFiles, onlySummary, useActionsSummary, badgeTitle, reportTitle, collapsed, fileNameOnly } = this;
         const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
         const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
         const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
@@ -60859,7 +60862,8 @@ class TestReporter {
                 useActionsSummary,
                 badgeTitle,
                 reportTitle,
-                collapsed
+                collapsed,
+                fileNameOnly
             }, shortSummary);
             info('Summary content:');
             info(summary);
@@ -60890,7 +60894,8 @@ class TestReporter {
                 useActionsSummary,
                 badgeTitle,
                 reportTitle,
-                collapsed
+                collapsed,
+                fileNameOnly
             });
             info('Creating annotations');
             const annotations = getAnnotations(results, this.maxAnnotations);
