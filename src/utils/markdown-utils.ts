@@ -17,6 +17,12 @@ export function link(title: string, address: string): string {
 
 type ToString = string | number | boolean | Date
 export function table(headers: ToString[], align: ToString[], ...rows: ToString[][]): string {
+  return tableFromRows(headers, align, rows)
+}
+
+// Takes the rows as an array rather than as rest arguments. A table with more rows than the maximum
+// argument count cannot be built with `table`, because spreading them makes each row an argument.
+export function tableFromRows(headers: ToString[], align: ToString[], rows: ToString[][]): string {
   const headerRow = `|${headers.map(tableEscape).join('|')}|`
   const alignRow = `|${align.join('|')}|`
   const contentRows = rows.map(row => `|${row.map(tableEscape).join('|')}|`).join('\n')
