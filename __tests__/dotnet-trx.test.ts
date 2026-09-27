@@ -97,6 +97,25 @@ describe('dotnet-trx tests', () => {
     expect(completedResult.result).toBe('success')
   })
 
+  it('reports a run with only run-level warnings as successful', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'dotnet-trx-run-warning.trx')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: []
+    }
+
+    const parser = new DotnetTrxParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+
+    // Legacy MSTest writes ResultSummary outcome="Warning" when every test
+    // passed and the run only logged a warning, such as for code coverage
+    expect(result.result).toBe('success')
+    expect(result.suites.some(s => s.name === 'Test run')).toBe(false)
+  })
+
   it('does not add a run failure when tests already report the failure', async () => {
     const fixturePath = path.join(__dirname, 'fixtures', 'dotnet-trx.trx')
     const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))

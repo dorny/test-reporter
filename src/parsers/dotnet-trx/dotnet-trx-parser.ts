@@ -148,7 +148,9 @@ export class DotnetTrxParser implements TestParser {
   private getRunFailure(trx: TrxReport, suites: TestSuiteResult[]): TestSuiteResult | undefined {
     const summary = trx.TestRun.ResultSummary?.[0]
     const outcome = summary?.$?.outcome
-    if (outcome === undefined || outcome === 'Completed' || outcome === 'Passed') {
+    // Legacy MSTest (mstest.exe) writes Warning for a run whose only problems are
+    // run-level warnings, such as code coverage. That run did not fail.
+    if (outcome === undefined || outcome === 'Completed' || outcome === 'Passed' || outcome === 'Warning') {
       return undefined
     }
     if (suites.some(s => s.result === 'failed')) {
