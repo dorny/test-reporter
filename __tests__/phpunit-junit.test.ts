@@ -355,6 +355,31 @@ describe('phpunit-junit tests', () => {
     expect(report).toContain('TypeError: Cannot assign DOMNodeList')
   })
 
+  it('keeps the exception type when the body has no matching typed line', async () => {
+    const fixturePath = path.join(
+      __dirname,
+      'fixtures',
+      'phpunit',
+      'phpunit-error-type-only-no-typed-line.xml'
+    )
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: ['src/DOMCasterTest.php', 'src/DOMCaster.php']
+    }
+
+    const parser = new PhpunitJunitParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+    const test = result.suites[0].groups.flatMap(g => g.tests)[0]
+
+    expect(test.result).toBe('failed')
+    expect(test.error).toBeDefined()
+    expect(test.error!.message).toBe('TypeError')
+    expect(test.error!.details).toContain('DOMCasterTest::testCastModernDocumentType')
+  })
+
   it('report from phpcheckstyle-phpunit.xml matches snapshot', async () => {
     const fixturePath = path.join(__dirname, 'fixtures', 'external', 'phpunit', 'phpcheckstyle-phpunit.xml')
     const outputPath = path.join(__dirname, '__outputs__', 'phpunit-phpcheckstyle-results.md')
