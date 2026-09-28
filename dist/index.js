@@ -58140,6 +58140,11 @@ function markdown_utils_link(title, address) {
     return `[${title}](${address})`;
 }
 function table(headers, align, ...rows) {
+    return tableFromRows(headers, align, rows);
+}
+// Takes the rows as an array rather than as rest arguments. A table with more rows than the maximum
+// argument count cannot be built with `table`, because spreading them makes each row an argument.
+function tableFromRows(headers, align, rows) {
     const headerRow = `|${headers.map(tableEscape).join('|')}|`;
     const alignRow = `|${align.join('|')}|`;
     const contentRows = rows.map(row => `|${row.map(tableEscape).join('|')}|`).join('\n');
@@ -58429,8 +58434,18 @@ function renderReport(results, options, shortSummary) {
     const badge = getReportBadge(results, options);
     sections.push(badge);
     const runs = getTestRunsReport(results, options);
-    sections.push(...runs);
+    pushAll(sections, runs);
     return sections;
+}
+// Appends every item of `items` to `target`.
+//
+// This is `target.push(...items)` without the argument-count limit: spreading makes each item an
+// argument, so a large enough report - tens of thousands of tests - overflows the stack before it
+// can be rendered, let alone trimmed to fit.
+function pushAll(target, items) {
+    for (const item of items) {
+        target.push(item);
+    }
 }
 function getReportBadge(results, options) {
     const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
@@ -58492,12 +58507,12 @@ function getTestRunsReport(testRuns, options) {
         return [nameLink, passed, failed, skipped, time];
     });
     if (tableData.length > 0) {
-        const resultsTable = table(['Report', 'Passed', 'Failed', 'Skipped', 'Time'], [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right], ...tableData);
+        const resultsTable = tableFromRows(['Report', 'Passed', 'Failed', 'Skipped', 'Time'], [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right], tableData);
         sections.push(resultsTable);
     }
     if (options.onlySummary === false) {
         const suitesReports = filteredTestRuns.map((tr, i) => getSuitesReport(tr, i, options)).flat();
-        sections.push(...suitesReports);
+        pushAll(sections, suitesReports);
     }
     if (shouldCollapse) {
         sections.push(`</details>`);
@@ -58518,7 +58533,7 @@ function getSuitesReport(tr, runIndex, options) {
             : 'No tests found';
         sections.push(headingLine2);
         if (suites.length > 0) {
-            const suitesTable = table(['Test suite', 'Passed', 'Failed', 'Skipped', 'Time'], [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right], ...suites.map((s, suiteIndex) => {
+            const suitesTable = tableFromRows(['Test suite', 'Passed', 'Failed', 'Skipped', 'Time'], [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right], suites.map((s, suiteIndex) => {
                 const tsTime = formatTime(s.time);
                 const tsName = s.name;
                 const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed');
@@ -58535,7 +58550,7 @@ function getSuitesReport(tr, runIndex, options) {
     if (options.listTests !== 'none') {
         const tests = suites.map((ts, suiteIndex) => getTestsReport(ts, runIndex, suiteIndex, options)).flat();
         if (tests.length > 1) {
-            sections.push(...tests);
+            pushAll(sections, tests);
         }
     }
     return sections;
@@ -58571,7 +58586,7 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
                     ?.split(/\r?\n/g)
                     .map(l => '\t' + l);
                 if (lines) {
-                    sections.push(...lines);
+                    pushAll(sections, lines);
                 }
             }
         }

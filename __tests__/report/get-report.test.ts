@@ -275,4 +275,63 @@ describe('getReport', () => {
       expect(report).toContain('failing-file-2.spec.ts')
     })
   })
+
+  describe('very large reports', () => {
+    // Builds a result set whose rendered form has more lines than the number of arguments a
+    // function call can take, so any spread-based array splicing overflows the stack.
+    function createLargeResults(runs: number, suitesPerRun: number, testsPerSuite: number): TestRunResult[] {
+      const results: TestRunResult[] = []
+      for (let r = 0; r < runs; r++) {
+        const suites: TestSuiteResult[] = []
+        for (let s = 0; s < suitesPerRun; s++) {
+          const tests: TestCaseResult[] = []
+          for (let t = 0; t < testsPerSuite; t++) {
+            tests.push(new TestCaseResult(`test-${t}`, 'success', 1))
+          }
+          suites.push(new TestSuiteResult(`suite-${s}`, [new TestGroupResult('group', tests)], 1))
+        }
+        results.push(new TestRunResult(`run-${r}.xml`, suites, 1))
+      }
+      return results
+    }
+
+    it('renders a report with more lines than the maximum argument count', () => {
+      // 250k tests across 10k suites renders ~280k lines - well past the ~125k argument limit.
+      const results = createLargeResults(100, 100, 25)
+
+      expect(() => getReport(results, DEFAULT_OPTIONS)).not.toThrow()
+    })
+
+    it('keeps a report of that size within the summary limit', () => {
+      const results = createLargeResults(100, 100, 25)
+
+      const report = getReport(results, DEFAULT_OPTIONS)
+
+      expect(Buffer.byteLength(report, 'utf8')).toBeLessThanOrEqual(1048576)
+      expect(report).toContain('|Report|Passed|Failed|Skipped|Time|')
+    })
+
+    it('trims a report of that size when it still does not fit', () => {
+      const results = createLargeResults(100, 100, 25)
+
+      // The lower check-run limit, which even the suite tables alone exceed.
+      const report = getReport(results, {...DEFAULT_OPTIONS, useActionsSummary: false})
+
+      expect(report).toContain('has been trimmed')
+      expect(Buffer.byteLength(report, 'utf8')).toBeLessThanOrEqual(65535)
+    })
+
+    it('renders every suite of a large report when it fits', () => {
+      // Small enough to survive spread-based splicing, so this passes with or without the fix -
+      // it guards against the fix dropping or reordering content.
+      const results = createLargeResults(2, 3, 2)
+
+      const report = getReport(results, DEFAULT_OPTIONS)
+
+      expect(report).toContain('run-0.xml')
+      expect(report).toContain('run-1.xml')
+      expect(report).toContain('suite-2')
+      expect(report.indexOf('run-0.xml')).toBeLessThan(report.indexOf('run-1.xml'))
+    })
+  })
 })

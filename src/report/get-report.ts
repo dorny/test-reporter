@@ -1,6 +1,6 @@
 import * as core from '@actions/core'
 import {TestExecutionResult, TestRunResult, TestSuiteResult} from '../test-results.js'
-import {Align, formatTime, Icon, link, table} from '../utils/markdown-utils.js'
+import {Align, formatTime, Icon, link, tableFromRows} from '../utils/markdown-utils.js'
 import {DEFAULT_LOCALE} from '../utils/node-utils.js'
 import {getFirstNonEmptyLine} from '../utils/parse-utils.js'
 import {slug} from '../utils/slugger.js'
@@ -125,9 +125,20 @@ function renderReport(results: TestRunResult[], options: ReportOptions, shortSum
   sections.push(badge)
 
   const runs = getTestRunsReport(results, options)
-  sections.push(...runs)
+  pushAll(sections, runs)
 
   return sections
+}
+
+// Appends every item of `items` to `target`.
+//
+// This is `target.push(...items)` without the argument-count limit: spreading makes each item an
+// argument, so a large enough report - tens of thousands of tests - overflows the stack before it
+// can be rendered, let alone trimmed to fit.
+function pushAll<T>(target: T[], items: readonly T[]): void {
+  for (const item of items) {
+    target.push(item)
+  }
 }
 
 function getReportBadge(results: TestRunResult[], options: ReportOptions): string {
@@ -198,17 +209,17 @@ function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): s
     })
 
   if (tableData.length > 0) {
-    const resultsTable = table(
+    const resultsTable = tableFromRows(
       ['Report', 'Passed', 'Failed', 'Skipped', 'Time'],
       [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right],
-      ...tableData
+      tableData
     )
     sections.push(resultsTable)
   }
 
   if (options.onlySummary === false) {
     const suitesReports = filteredTestRuns.map((tr, i) => getSuitesReport(tr, i, options)).flat()
-    sections.push(...suitesReports)
+    pushAll(sections, suitesReports)
   }
 
   if (shouldCollapse) {
@@ -235,10 +246,10 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
     sections.push(headingLine2)
 
     if (suites.length > 0) {
-      const suitesTable = table(
+      const suitesTable = tableFromRows(
         ['Test suite', 'Passed', 'Failed', 'Skipped', 'Time'],
         [Align.Left, Align.Right, Align.Right, Align.Right, Align.Right],
-        ...suites.map((s, suiteIndex) => {
+        suites.map((s, suiteIndex) => {
           const tsTime = formatTime(s.time)
           const tsName = s.name
           const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed')
@@ -258,7 +269,7 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
     const tests = suites.map((ts, suiteIndex) => getTestsReport(ts, runIndex, suiteIndex, options)).flat()
 
     if (tests.length > 1) {
-      sections.push(...tests)
+      pushAll(sections, tests)
     }
   }
 
@@ -299,7 +310,7 @@ function getTestsReport(ts: TestSuiteResult, runIndex: number, suiteIndex: numbe
           ?.split(/\r?\n/g)
           .map(l => '\t' + l)
         if (lines) {
-          sections.push(...lines)
+          pushAll(sections, lines)
         }
       }
     }

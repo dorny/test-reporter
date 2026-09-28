@@ -3,6 +3,7 @@
 ## 3.1.0
 * Feature: Add `list-files` input to control test report file listing https://github.com/dorny/test-reporter/pull/773
 * Feature: Add `summary_file` output with the path to the generated summary in Markdown format https://github.com/dorny/test-reporter/pull/772
+* Fix: Render very large reports without exceeding the maximum call stack size https://github.com/dorny/test-reporter/pull/813
 
 ## 3.0.0
 * Feature: Use NodeJS 24 LTS as default runtime https://github.com/dorny/test-reporter/pull/738
