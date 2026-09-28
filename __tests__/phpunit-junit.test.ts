@@ -356,12 +356,7 @@ describe('phpunit-junit tests', () => {
   })
 
   it('keeps the exception type when the body has no matching typed line', async () => {
-    const fixturePath = path.join(
-      __dirname,
-      'fixtures',
-      'phpunit',
-      'phpunit-error-type-only-no-typed-line.xml'
-    )
+    const fixturePath = path.join(__dirname, 'fixtures', 'phpunit', 'phpunit-error-type-only-no-typed-line.xml')
     const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
     const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
 
