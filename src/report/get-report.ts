@@ -1,4 +1,5 @@
 import * as core from '@actions/core'
+import {basename} from 'node:path'
 import {TestExecutionResult, TestRunResult, TestSuiteResult} from '../test-results.js'
 import {Align, formatTime, Icon, link, table} from '../utils/markdown-utils.js'
 import {DEFAULT_LOCALE} from '../utils/node-utils.js'
@@ -19,6 +20,7 @@ export interface ReportOptions {
   badgeTitle: string
   reportTitle: string
   collapsed: 'auto' | 'always' | 'never'
+  fileNameOnly: boolean
 }
 
 export const DEFAULT_OPTIONS: ReportOptions = {
@@ -31,7 +33,8 @@ export const DEFAULT_OPTIONS: ReportOptions = {
   useActionsSummary: true,
   badgeTitle: 'tests',
   reportTitle: '',
-  collapsed: 'auto'
+  collapsed: 'auto',
+  fileNameOnly: false
 }
 
 export function getReport(
@@ -188,7 +191,7 @@ function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): s
     .filter(({tr}) => tr.passed > 0 || tr.failed > 0 || tr.skipped > 0)
     .map(({tr, originalIndex}) => {
       const time = formatTime(tr.time)
-      const name = tr.path
+      const name = options.fileNameOnly ? basename(tr.path) : tr.path
       const addr = options.baseUrl + makeRunSlug(originalIndex, options).link
       const nameLink = link(name, addr)
       const passed = tr.passed > 0 ? `${tr.passed} ${Icon.success}` : ''
@@ -223,7 +226,7 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
 
   if (options.listSuites !== 'none') {
     const trSlug = makeRunSlug(runIndex, options)
-    const nameLink = `<a id="${trSlug.id}" href="${options.baseUrl + trSlug.link}">${tr.path}</a>`
+    const nameLink = `<a id="${trSlug.id}" href="${options.baseUrl + trSlug.link}">${options.fileNameOnly ? basename(tr.path) : tr.path}</a>`
     const icon = getResultIcon(tr.result)
     sections.push(`## ${icon}\xa0${nameLink}`)
 
