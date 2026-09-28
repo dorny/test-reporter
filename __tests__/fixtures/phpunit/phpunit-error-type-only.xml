@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="DOMCasterTest" tests="1" assertions="0" errors="1" failures="0" skipped="0" time="0.001">
+    <testcase name="testCastModernDocumentType" file="/home/runner/work/app/src/DOMCasterTest.php" line="230" class="DOMCasterTest" classname="DOMCasterTest" assertions="0" time="0.001">
+      <error type="TypeError">DOMCasterTest::testCastModernDocumentType
+TypeError: Cannot assign DOMNodeList to property Dom\Node::$childNodes of type Dom\NodeList
+
+/home/runner/work/app/src/DOMCaster.php:190
+</error>
+    </testcase>
+  </testsuite>
+</testsuites>

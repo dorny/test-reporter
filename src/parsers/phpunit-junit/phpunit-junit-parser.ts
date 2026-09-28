@@ -157,9 +157,20 @@ export class PhpunitJunitParser implements TestParser {
 
     let message: string | undefined
     if (typeof failure !== 'string' && failure.$) {
-      message = failure.$.message
-      if (failure.$.type) {
-        message = message ? `${failure.$.type}: ${message}` : failure.$.type
+      // Prefer the message attribute. A bare `type` (common for PHPUnit
+      // `<error type="TypeError">…body…</error>` with no message attr) is not
+      // useful on its own — pull a "Type: …" line from the body when present,
+      // otherwise keep the exception type so rendering does not fall back to
+      // an unrelated first body line (e.g. the test name).
+      if (failure.$.message) {
+        message = failure.$.type ? `${failure.$.type}: ${failure.$.message}` : failure.$.message
+      } else if (failure.$.type && details) {
+        const failureType = failure.$.type
+        const typedLine = details
+          .split(/\r?\n/)
+          .map(detailLine => detailLine.trim())
+          .find(detailLine => detailLine.startsWith(`${failureType}:`))
+        message = typedLine ?? failureType
       }
     }
 
