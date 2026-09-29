@@ -69,15 +69,17 @@ export class JavaJunitParser implements TestParser {
     return new TestRunResult(filePath, suites, time)
   }
 
-  private collectSuites(results: TestSuiteResult[], testsuites: TestSuite[]): void {
+  private collectSuites(results: TestSuiteResult[], testsuites: TestSuite[], parentName = ''): void {
     for (const ts of testsuites) {
+      // Nested suites (e.g. bun test describe blocks) are named after their parents: "file › describe › nested"
+      const ownName = ts.$.name.trim()
+      const name = parentName ? `${parentName} › ${ownName}` : ownName
       if (ts.testcase && ts.testcase.length > 0) {
-        const name = ts.$.name.trim()
         const time = parseFloat(ts.$.time) * 1000
         results.push(new TestSuiteResult(name, this.getGroups(ts), time))
       }
       if (ts.testsuite) {
-        this.collectSuites(results, ts.testsuite)
+        this.collectSuites(results, ts.testsuite, name)
       }
     }
   }
