@@ -1,4 +1,5 @@
-![Tests failed](https://img.shields.io/badge/tests-1%20passed%2C%203%20failed-critical)
+[![Tests failed](https://img.shields.io/badge/tests-1%20passed%2C%203%20failed-critical)](#user-content-test-report)
+# <a name="user-content-test-report"></a> Tests report
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
 |[fixtures/dotnet-xunitv3.trx](#user-content-r0)|1 ✅|3 ❌||267ms|

@@ -1,4 +1,5 @@
-![Tests failed](https://img.shields.io/badge/tests-5%20passed%2C%201%20failed-critical)
+[![Tests failed](https://img.shields.io/badge/tests-5%20passed%2C%201%20failed-critical)](#user-content-test-report)
+# <a name="user-content-test-report"></a> Tests report
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
 |[fixtures/external/java/junit4-basic.xml](#user-content-r0)|5 ✅|1 ❌||16s|
