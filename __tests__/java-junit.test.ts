@@ -28,6 +28,40 @@ describe('java-junit tests', () => {
     expect(result.result).toBe('success')
   })
 
+  it('report from bun:test with describe block (test cases inside nested testsuite elements)', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'java-junit-nested-testsuites.xml')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: []
+    }
+
+    const parser = new JavaJunitParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+
+    expect(result.tests).toBe(3)
+    expect(result.passed).toBe(2)
+    expect(result.failed).toBe(1)
+
+    const allTestNames = result.suites.flatMap(s => s.groups.flatMap(g => g.tests.map(t => t.name)))
+    expect(allTestNames).toEqual(expect.arrayContaining(['top-level', 'passes', 'fails']))
+  })
+
+  it('names nested testsuite elements after their parents', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'java-junit-nested-testsuites.xml')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const result = await new JavaJunitParser({parseErrors: true, trackedFiles: []}).parse(filePath, fileContent)
+    expect(result.suites.map(s => s.name)).toEqual([
+      'math.test.ts',
+      'math.test.ts › add',
+      'math.test.ts › add › negative'
+    ])
+  })
+
   it('report from apache/pulsar single suite test results matches snapshot', async () => {
     const fixturePath = path.join(
       __dirname,

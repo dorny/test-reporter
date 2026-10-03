@@ -59470,17 +59470,25 @@ class JavaJunitParser {
         }
     }
     getTestRunResult(filePath, junit) {
-        const suites = junit.testsuites.testsuite === undefined
-            ? []
-            : junit.testsuites.testsuite.map(ts => {
-                const name = ts.$.name.trim();
-                const time = parseFloat(ts.$.time) * 1000;
-                const sr = new TestSuiteResult(name, this.getGroups(ts), time);
-                return sr;
-            });
+        const suites = [];
+        this.collectSuites(suites, junit.testsuites.testsuite ?? []);
         const seconds = parseFloat(junit.testsuites.$?.time);
         const time = isNaN(seconds) ? undefined : seconds * 1000;
         return new TestRunResult(filePath, suites, time);
+    }
+    collectSuites(results, testsuites, parentName = '') {
+        for (const ts of testsuites) {
+            // Nested suites (e.g. bun test describe blocks) are named after their parents: "file › describe › nested"
+            const ownName = ts.$.name.trim();
+            const name = parentName ? `${parentName} › ${ownName}` : ownName;
+            if (ts.testcase && ts.testcase.length > 0) {
+                const time = parseFloat(ts.$.time) * 1000;
+                results.push(new TestSuiteResult(name, this.getGroups(ts), time));
+            }
+            if (ts.testsuite) {
+                this.collectSuites(results, ts.testsuite, name);
+            }
+        }
     }
     getGroups(suite) {
         if (suite.testcase === undefined) {
