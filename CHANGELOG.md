@@ -4,6 +4,7 @@
 
 ### Fixes
 * Fix: `dotnet-trx` reports unmapped test outcomes and aborted test runs as failures https://github.com/dorny/test-reporter/pull/825
+* Fix: report test cases from nested <testsuite> elements in `java-junit` reporter https://github.com/dorny/test-reporter/pull/840
 
 ## 3.1.0
 
