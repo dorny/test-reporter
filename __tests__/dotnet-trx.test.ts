@@ -44,6 +44,77 @@ describe('dotnet-trx tests', () => {
     expect(result.result).toBe('success')
   })
 
+  it('reports a test with an outcome the parser does not know as failed', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'dotnet-trx-unknown-outcome.trx')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: []
+    }
+
+    const parser = new DotnetTrxParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+
+    // Passed, Timeout and Inconclusive: only Timeout has no mapping of its own
+    expect(result.tests).toBe(3)
+    expect(result.passed).toBe(1)
+    expect(result.failed).toBe(1)
+    expect(result.skipped).toBe(1)
+    expect(result.result).toBe('failed')
+
+    // The failure keeps the message VSTest wrote for it
+    const timedOut = result.suites[0].groups[0].tests.find(t => t.name === 'Timed_Out_Test')
+    expect(timedOut?.result).toBe('failed')
+    expect(timedOut?.error?.details).toContain('exceeded execution timeout period')
+  })
+
+  it('reports a run that failed without any failing test', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'dotnet-trx-run-aborted.trx')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: []
+    }
+
+    const parser = new DotnetTrxParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+
+    // The test host crashed: every test that reported passed, but the run did not
+    expect(result.result).toBe('failed')
+    const runSuite = result.suites.find(s => s.name === 'Test run')
+    expect(runSuite?.result).toBe('failed')
+    expect(runSuite?.groups[0].tests[0].error?.details).toContain('Test host process crashed')
+
+    // The run outcome decides, not the RunInfo. A completed run is not a
+    // failure just because a RunInfo carries an error line; some loggers echo
+    // test failures there.
+    const completed = fileContent.replace('<ResultSummary outcome="Failed">', '<ResultSummary outcome="Completed">')
+    const completedResult = await parser.parse(filePath, completed)
+    expect(completedResult.result).toBe('success')
+  })
+
+  it('does not add a run failure when tests already report the failure', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'dotnet-trx.trx')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: []
+    }
+
+    const parser = new DotnetTrxParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+
+    // ResultSummary outcome is Failed, but the failing tests are in the report
+    expect(result.result).toBe('failed')
+    expect(result.suites.some(s => s.name === 'Test run')).toBe(false)
+  })
+
   it.each([['dotnet-trx'], ['dotnet-xunitv3']])('matches %s report snapshot', async reportName => {
     const fixturePath = path.join(__dirname, 'fixtures', `${reportName}.trx`)
     const outputPath = path.join(__dirname, '__outputs__', `${reportName}.md`)
