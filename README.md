@@ -474,3 +474,4 @@ Unfortunately, there are some known issues and limitations caused by GitHub API:
 ## License
 
 The scripts and documentation in this project are released under the [MIT License](https://github.com/dorny/test-reporter/blob/main/LICENSE)
+Documentation updated by Aloysius
