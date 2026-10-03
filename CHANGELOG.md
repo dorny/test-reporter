@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.2.0
+
+### Fixes
+* Fix: `dotnet-trx` reports unmapped test outcomes and aborted test runs as failures https://github.com/dorny/test-reporter/pull/825
+
 ## 3.1.0
 
 ### Features
@@ -15,7 +20,6 @@
 
 ### Maintenance and security
 * Update dependencies and rebuild the distribution to include security fixes and current tooling.
-
 
 ## 3.0.0
 * Feature: Use NodeJS 24 LTS as default runtime https://github.com/dorny/test-reporter/pull/738
