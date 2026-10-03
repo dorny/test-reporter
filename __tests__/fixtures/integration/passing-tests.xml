@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="PassingSuite" tests="3" failures="0" errors="0" time="0.5">
+  <testsuite name="PassingSuite" tests="3" failures="0" errors="0" time="0.5">
+    <testcase name="should pass test 1" classname="PassingSuite" time="0.1"/>
+    <testcase name="should pass test 2" classname="PassingSuite" time="0.2"/>
+    <testcase name="should pass test 3" classname="PassingSuite" time="0.2"/>
+  </testsuite>
+</testsuites>
