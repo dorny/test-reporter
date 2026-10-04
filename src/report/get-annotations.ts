@@ -32,7 +32,7 @@ export function getAnnotations(results: TestRunResult[], maxCount: number): Anno
   // Collect errors from TestRunResults
   // Merge duplicates if there are more test results files processed
   const errors: TestError[] = []
-  const mergeDup = results.length > 1
+  const mergeDuplicates = results.length > 1
   for (const tr of results) {
     for (const ts of tr.suites) {
       for (const tg of ts.groups) {
@@ -43,10 +43,18 @@ export function getAnnotations(results: TestRunResult[], maxCount: number): Anno
           }
           const path = err.path ?? tr.path
           const line = err.line ?? 0
-          if (mergeDup) {
-            const dup = errors.find(e => path === e.path && line === e.line && err.details === e.details)
-            if (dup !== undefined) {
-              dup.testRunPaths.push(tr.path)
+          const testName = tg.name ? `${tg.name} ► ${tc.name}` : tc.name
+          if (mergeDuplicates) {
+            const duplicate = errors.find(
+              e =>
+                ts.name === e.suiteName &&
+                testName === e.testName &&
+                path === e.path &&
+                line === e.line &&
+                err.details === e.details
+            )
+            if (duplicate !== undefined) {
+              duplicate.testRunPaths.push(tr.path)
               continue
             }
           }
@@ -54,7 +62,7 @@ export function getAnnotations(results: TestRunResult[], maxCount: number): Anno
           errors.push({
             testRunPaths: [tr.path],
             suiteName: ts.name,
-            testName: tg.name ? `${tg.name} ► ${tc.name}` : tc.name,
+            testName,
             details: err.details,
             message: err.message ?? getFirstNonEmptyLine(err.details) ?? 'Test failed',
             path,
