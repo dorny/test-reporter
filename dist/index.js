@@ -58228,7 +58228,7 @@ function getAnnotations(results, maxCount) {
         }
     }
     // Limit number of created annotations
-    errors.splice(maxCount + 1);
+    errors.splice(maxCount);
     const annotations = errors.map(e => {
         const message = [
             'Failed test found in:',
