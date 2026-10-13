@@ -66,7 +66,7 @@ export function getAnnotations(results: TestRunResult[], maxCount: number): Anno
   }
 
   // Limit number of created annotations
-  errors.splice(maxCount + 1)
+  errors.splice(maxCount)
 
   const annotations = errors.map(e => {
     const message = [
