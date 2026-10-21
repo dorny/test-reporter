@@ -1,164 +1,143 @@
-name: 'Publish Test Results'
-author: 'EnricoMi'
-description: 'Publishes JUnit, NUnit, XUnit, TRX, JSON test results on GitHub for .NET, Dart, Java, JS, Jest, Mocha, Python, Scala, …'
-
+name: Test Reporter
+description: Displays test results from popular testing frameworks directly in GitHub
+author: Michal Dorner <dorner.michal@gmail.com>
 inputs:
-  github_token:
-    description: 'GitHub API Access Token.'
-    default: ${{ github.token }}
+  artifact:
+    description: Name or regex of artifact containing test results
     required: false
-  github_token_actor:
-    description: '[deprecated] This is not needed any more as this is detected automatically.'
-    deprecationMessage: 'This is not needed any more as this is detected automatically.'
+  name:
+    description: Name of the check run
+    required: true
+  path:
+    description: |
+      Comma-separated list of paths to test results
+      Supports wildcards via [fast-glob](https://github.com/mrmlnc/fast-glob)
+      All matched result files must be of same format
+    required: true
+  path-replace-backslashes:
+    description: |
+      The fast-glob library that is internally used interprets backslashes as escape characters.
+      If enabled, all backslashes in provided path will be replaced by forward slashes and act as directory separators.
+      It might be useful when path input variable is composed dynamically from existing directory paths on Windows.
+    default: 'false'
     required: false
-  github_retries:
-    description: 'Requests to the GitHub API are retried this number of times. The value must be a positive integer or zero.'
+  reporter:
+    description: |
+      Format of test results. Supported options:
+        - dart-json
+        - dotnet-nunit
+        - dotnet-trx
+        - flutter-json
+        - golang-json
+        - java-junit
+        - jest-junit
+        - mocha-json
+        - tester-junit
+        - phpunit-junit
+        - python-xunit
+        - rspec-json
+        - swift-xunit
+        - unreal-json
+    required: true
+  list-suites:
+    description: |
+      Limits which test suites are listed. Supported options:
+        - all
+        - failed
+        - none
+    required: false
+    default: 'all'
+  list-tests:
+    description: |
+      Limits which test cases are listed. Supported options:
+        - all
+        - failed
+        - none
+    required: false
+    default: 'all'
+  list-files:
+    description: |
+      Limits which test result files are listed. Supported options:
+        - all
+        - failed
+        - none
+    required: false
+    default: 'all'
+  max-annotations:
+    description: |
+      Limits number of created annotations with error message and stack trace captured during test execution.
+      Must be less or equal to 50.
+    required: false
     default: '10'
+  fail-on-error:
+    description: Set this action as failed if test report contain any failed test
     required: false
-  ssl_verify:
-    description: 'Either "true" or "false", in which case it controls whether to verify the Github server’s TLS certificate, or a string, in which case it must be a path to a CA bundle to use. Default is "true".'
-    default: true
+    default: 'true'
+  fail-on-empty:
+    description: Set this action as failed if no test results were found
+    required: true
+    default: 'true'
+  working-directory:
+    description: Relative path under $GITHUB_WORKSPACE where the repository was checked out
     required: false
-  commit:
-    description: 'Commit SHA to which test results are published. Only needed if the value of GITHUB_SHA does not work for you.'
+  report-title:
+    description: Title for the test report summary
     required: false
-  check_name:
-    description: 'Name of the created check run.'
-    default: 'Test Results'
-    required: false
-  comment_title:
-    description: 'An alternative title for the pull request comment. Defaults to value of check_name input.'
-    required: false
-  comment_mode:
-    description: 'The action posts comments to pull requests that are associated with the commit. Set to "always" - always comment, "changes" - comment when changes w.r.t. the target branch exist, "changes in failures" - when changes in the number of failures and errors exist, "changes in errors" - when changes in the number of (only) errors exist, "failures" - when failures or errors exist, "errors" - when (only) errors exist, "off" - to not create pull request comments.'
-    default: 'always'
-    required: false
-  fail_on:
-    description: 'The created test result check run has failure state if any test fails or test errors occur. Never fails when set to "nothing", fails only on errors when set to "errors". Default is "test failures".'
-    default: 'test failures'
-    required: false
-  action_fail:
-    description: 'When set "true", the action itself fails when tests have failed (see option fail_on).'
+    default: ''
+  only-summary:
+    description: |
+      Allows you to generate only the summary.
+      If enabled, the report will contain a table listing each test results file and the number of passed, failed, and skipped tests.
+      Detailed listing of test suites and test cases will be skipped.
     default: 'false'
     required: false
-  action_fail_on_inconclusive:
-    description: 'When set "true", the action itself fails when no result files are found (the neutral/inconclusive conclusion). Valid result files containing no tests are not currently inconclusive; see issue #664.'
-    default: 'false'
-    required: false
-  files:
-    description: 'File patterns of test result files. Relative paths are known to work best, while the non-Docker action also works with absolute paths. Supports "*", "**", "?", and "[]" character ranges. Use multiline string for multiple patterns. Patterns starting with "!" exclude the matching files. There have to be at least one pattern starting without a "!".'
-    required: false
-  junit_files:
-    description: 'Deprecated, use "files" option instead.'
-    deprecationMessage: 'Use "files" option instead.'
-    required: false
-  nunit_files:
-    description: 'Deprecated, use "files" option instead.'
-    deprecationMessage: 'Use "files" option instead.'
-    required: false
-  xunit_files:
-    description: 'Deprecated, use "files" option instead.'
-    deprecationMessage: 'Use "files" option instead.'
-    required: false
-  trx_files:
-    description: 'Deprecated, use "files" option instead.'
-    deprecationMessage: 'Use "files" option instead.'
-    required: false
-  time_unit:
-    description: 'Time values in the test result files have this unit. Supports "seconds" and "milliseconds".'
-    default: 'seconds'
-    required: false
-  test_file_prefix:
-    description: 'Paths in the test result files should be relative to the git repository for annotations to work best. This prefix is added to (if starting with "+"), or remove from (if starting with "-") test file paths. Examples: "+src/" or "-/opt/actions-runner".'
-    required: false
-  report_individual_runs:
-    description: 'Individual runs of the same test may see different failures. Reports all individual failures when set "true" or the first only otherwise.'
-    required: false
-  report_suite_logs:
-    description: 'In addition to reporting regular test logs, also report test suite logs. These are logs provided on suite level, not individual test level. Set to "info" for normal output, "error" for error output, "any" for both, or "none" for no suite logs at all. Defaults to "none".'
-    default: 'none'
-    required: false
-  deduplicate_classes_by_file_name:
-    description: 'De-duplicates classes with same name by their file name when set "true", combines test results for those classes otherwise.'
-    required: false
-  large_files:
-    description: 'Support for large files is enabled when set to "true". Defaults to "false", unless ignore_runs is "true".'
-    required: false
-  ignore_runs:
-    description: 'Does not collect test run information from the test result files, which is useful for very large files. This disables any check run annotations.'
-    default: 'false'
-    required: false
-  check_run:
-    description: 'Set to "true", the results are published as a check run, but it may not be associated with the workflow that ran this action.'
+  use-actions-summary:
+    description: |
+      Allows you to generate reports for Actions Summary
+      https://github.com/orgs/github/teams/engineering/discussions/871
     default: 'true'
     required: false
-  job_summary:
-    description: 'Set to "true", the results are published as part of the job summary page of the workflow run.'
-    default: 'true'
+  badge-title:
+    description: Customize badge title
     required: false
-  compare_to_earlier_commit:
-    description: 'Test results are compared to results of earlier commits to highlight changes: "false" - disable comparison, "true" - compare across commits.'
-    default: 'true'
+    default: 'tests'
+  collapsed:
+    description: |
+      Controls whether test report details are collapsed or expanded. Supported options:
+        - auto: Collapse only if all tests pass (default behavior)
+        - always: Always collapse the report details
+        - never: Always expand the report details
     required: false
-  pull_request_build:
-    description: 'As part of pull requests, GitHub builds a merge commit, which combines the commit and the target branch. If tests ran on the actual pushed commit, then set this to "commit". Defaults to "merge".'
-    default: 'merge'
+    default: 'auto'
+  token:
+    description: GitHub Access Token
     required: false
-  event_file:
-    description: 'An alternative event file to use. Useful to replace a "workflow_run" event file with the actual source event file.'
-    required: false
-  event_name:
-    description: 'An alternative event name to use. Useful to replace a "workflow_run" event name with the actual source event name: github.event.workflow_run.event.'
-    required: false
-  test_changes_limit:
-    description: 'Limits the number of removed or skipped tests reported on pull request comments. This report can be disabled with a value of 0. The default is 10.'
-    required: false
-  check_run_annotations:
-    description: 'Adds additional information to the check run. This is a comma-separated list of any of the following values: "all tests" - list all found tests, "skipped tests" - list all skipped tests. Set to "none" to add no extra annotations at all.'
-    default: 'all tests, skipped tests'
-    required: false
-  check_run_annotations_branch:
-    description: 'Adds check run annotations only on given branches. Comma-separated list of branch names allowed, asterisk "*" matches all branches. Defaults to event.repository.default_branch or "main, master".'
-    required: false
-  seconds_between_github_reads:
-    description: 'Sets the number of seconds the action waits between concurrent read requests to the GitHub API. This throttles the API usage to avoid abuse rate limits: https://docs.github.com/en/rest/overview/resources-in-the-rest-api#abuse-rate-limits.'
-    default: '0.25'
-    required: false
-  seconds_between_github_writes:
-    description: 'Sets the number of seconds the action waits between concurrent write requests to the GitHub API. This throttles the API usage to avoid abuse rate limits: https://docs.github.com/en/rest/overview/resources-in-the-rest-api#abuse-rate-limits.'
-    default: '2.0'
-    required: false
-  secondary_rate_limit_wait_seconds:
-    description: 'Sets the number of seconds to wait before retrying secondary rate limit errors. If not set, the default defined in the PyGithub library is used (currently 60 seconds).'
-    required: false
-  json_file:
-    description: 'Results are written to this JSON file.'
-    required: false
-  json_thousands_separator:
-    description: 'Formatted numbers in JSON use this character to separate groups of thousands. Common values are "," or ".". Defaults to punctuation space (\u2008).'
-    default: ' '
-    required: false
-  json_suite_details:
-    description: 'Write out all suite details to the JSON file. Setting this to "true" can greatly increase the size of the output. Defaults to "false".'
-    default: 'false'
-    required: false
-  json_test_case_results:
-    description: 'Write out all individual test case results to the JSON file. Setting this to "true" can greatly increase the size of the output. Defaults to "false".'
-    default: 'false'
-    required: false
-  search_pull_requests:
-    description: 'Prior to v2.6.0, the action used the "/search/issues" REST API to find pull requests related to a commit. If you need to restore that behaviour, set this to "true". Defaults to "false".'
-    default: 'false'
-    required: false
-
+    default: ${{ github.token }}
 outputs:
-  json:
-    description: "Test results as JSON"
-
+  conclusion:
+    description: |
+      Final conclusion of the created check run:
+        - 'success' if no failed tests was found
+        - 'failure' if any failed test was found
+  passed:
+    description: Count of passed tests
+  failed:
+    description: Count of failed tests
+  skipped:
+    description: Count of skipped tests
+  time:
+    description: Test execution time [ms]
+  url:
+    description: Check run URL
+  url_html:
+    description: Check run URL HTML
+  summary_file:
+    description: Path to a file containing the generated test report summary in Markdown format
+  slug_prefix:
+    description: Random prefix added to generated report anchor slugs for this action run
 runs:
-  using: 'docker'
-  image: 'docker://ghcr.io/enricomi/publish-unit-test-result-action:v2.25.0'
-
+  using: 'node24'
+  main: 'dist/index.js'
 branding:
-  icon: 'check-circle'
-  color: 'green'
+  color: blue
+  icon: file-text
