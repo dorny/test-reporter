@@ -59607,7 +59607,11 @@ async function listGitTree(octokit, sha, path) {
                 continue;
             }
             const files = await listGitTree(octokit, tr.sha, `${file}/`);
-            result.push(...files);
+            // Avoid `result.push(...files)`: spreading a large array into call
+            // arguments can exceed V8's argument limit and throw a RangeError.
+            for (const f of files) {
+                result.push(f);
+            }
         }
     }
     return result;
