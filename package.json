@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "@octokit/webhooks-types": "^7.6.1",
-    "@types/adm-zip": "^0.5.8",
+    "@types/adm-zip": "^0.6.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.13.6",
     "@types/picomatch": "^4.0.3",
