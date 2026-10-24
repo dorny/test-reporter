@@ -9,6 +9,7 @@ const MAX_REPORT_LENGTH = 65535
 const MAX_ACTIONS_SUMMARY_LENGTH = 1048576
 
 export interface ReportOptions {
+  name: string
   listSuites: 'all' | 'failed' | 'none'
   listTests: 'all' | 'failed' | 'none'
   slugPrefix: string
@@ -22,6 +23,7 @@ export interface ReportOptions {
 }
 
 export const DEFAULT_OPTIONS: ReportOptions = {
+  name: '',
   listSuites: 'all',
   listTests: 'all',
   slugPrefix: '',
@@ -160,7 +162,8 @@ export function getBadge(passed: number, failed: number, skipped: number, option
   const encodedBadgeTitle = encodeImgShieldsURIComponent(options.badgeTitle)
   const encodedMessage = encodeImgShieldsURIComponent(message)
   const encodedColor = encodeImgShieldsURIComponent(color)
-  return `![${hint}](https://img.shields.io/badge/${encodedBadgeTitle}-${encodedMessage}-${encodedColor})`
+  const reportSlug = makeReportSlug(options)
+  return `[![${hint}](https://img.shields.io/badge/${encodedBadgeTitle}-${encodedMessage}-${encodedColor})](${reportSlug.link})`
 }
 
 function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): string[] {
@@ -174,6 +177,9 @@ function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): s
     sections.push(`<details><summary>Expand for details</summary>`)
     sections.push(` `)
   }
+
+  const reportSlug = makeReportSlug(options)
+  sections.push(`# <a name="${reportSlug.id}"></a> Tests report`)
 
   // Filter test runs based on list-files option
   const filteredTestRuns =
@@ -311,12 +317,21 @@ function getTestsReport(ts: TestSuiteResult, runIndex: number, suiteIndex: numbe
 
 function makeRunSlug(runIndex: number, options: ReportOptions): {id: string; link: string} {
   // use prefix to avoid slug conflicts after escaping the paths
-  return slug(`r${runIndex}`, options)
+  return makeNamedSlug(`r${runIndex}`, options)
 }
 
 function makeSuiteSlug(runIndex: number, suiteIndex: number, options: ReportOptions): {id: string; link: string} {
   // use prefix to avoid slug conflicts after escaping the paths
-  return slug(`r${runIndex}s${suiteIndex}`, options)
+  return makeNamedSlug(`r${runIndex}s${suiteIndex}`, options)
+}
+
+function makeReportSlug(options: ReportOptions): {id: string; link: string} {
+  return makeNamedSlug('test-report', options)
+}
+
+function makeNamedSlug(anchor: string, options: ReportOptions): {id: string; link: string} {
+  const namePrefix = options.name ? `${options.name}-` : ''
+  return slug(`${namePrefix}${anchor}`, options)
 }
 
 function getResultIcon(result: TestExecutionResult): string {

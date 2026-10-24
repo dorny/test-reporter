@@ -1,4 +1,5 @@
-![Tests failed](https://img.shields.io/badge/tests-4%20passed%2C%202%20failed%2C%202%20skipped-critical)
+[![Tests failed](https://img.shields.io/badge/tests-4%20passed%2C%202%20failed%2C%202%20skipped-critical)](#user-content-test-report)
+# <a name="user-content-test-report"></a> Tests report
 |Report|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
 |[fixtures/python-xunit-unittest.xml](#user-content-r0)|4 ✅|2 ❌|2 ⚪|1ms|
