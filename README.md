@@ -32,7 +32,7 @@ Please create [Issue](https://github.com/dorny/test-reporter/issues/new) or cont
 
 ## Example
 
-Following setup does not work in workflows triggered by pull request from forked repository.
+With `use-actions-summary: 'false'`, following setup does not work in workflows triggered by pull request from forked repository.
 If that's fine for you, using this action is as simple as:
 
 ```yaml
@@ -61,9 +61,15 @@ jobs:
           reporter: jest-junit        # Format of test results
 ```
 
+> [!NOTE]
+> The `checks: write` permission is only needed when `use-actions-summary` is set to `false`.
+> With the default `use-actions-summary: 'true'`, the report is written to the GitHub Actions job summary and no check run is created,
+> so `checks: write` can be omitted. This also works in workflows triggered by pull requests from forked repositories.
+
 ## Recommended setup for public repositories
 
 Workflows triggered by pull requests from forked repositories are executed with read-only token and therefore can't create check runs.
+This only matters when check runs are created (`use-actions-summary: 'false'`).
 To workaround this security restriction, it's required to use two separate workflows:
 1. `CI` runs in the context of the PR head branch with the read-only token. It executes the tests and uploads test results as a build artifact
 2. `Test Report` runs in the context of the repository main branch with read/write token. It will download test results and create reports
@@ -163,6 +169,7 @@ jobs:
 
     # Allows you to generate reports for Actions Summary
     # https://github.blog/2022-05-09-supercharging-github-actions-with-job-summaries/
+    # If enabled, no check run is created and the `checks: write` permission is not required.
     use-actions-summary: 'true'
     
     # Optionally specify a title (Heading level 1) for the report. Leading and trailing whitespace are ignored.
