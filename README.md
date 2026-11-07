@@ -42,7 +42,7 @@ on:
 permissions:
   contents: read
   actions: read
-  checks: write
+  checks: write                       # only needed with use-actions-summary: 'false'
 jobs:
   build-test:
     name: Build & Test
@@ -60,6 +60,9 @@ jobs:
           path: reports/jest-*.xml    # Path to test results
           reporter: jest-junit        # Format of test results
 ```
+
+By default (`use-actions-summary: 'true'`) the report is written to the job summary and no check run is created, so the `checks: write` permission is not needed.
+It's required only when you set `use-actions-summary: 'false'` to publish the report as a check run with annotations.
 
 ## Recommended setup for public repositories
 
@@ -99,7 +102,7 @@ on:
 permissions:
   contents: read
   actions: read
-  checks: write
+  checks: write                           # only needed with use-actions-summary: 'false'
 jobs:
   report:
     runs-on: ubuntu-latest
@@ -163,6 +166,7 @@ jobs:
 
     # Allows you to generate reports for Actions Summary
     # https://github.blog/2022-05-09-supercharging-github-actions-with-job-summaries/
+    # If disabled, a check run with annotations is created instead, which requires the `checks: write` permission.
     use-actions-summary: 'true'
     
     # Optionally specify a title (Heading level 1) for the report. Leading and trailing whitespace are ignored.
