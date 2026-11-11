@@ -1,6 +1,7 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import {GitHub} from '@actions/github/lib/utils'
+import {retry} from '@octokit/plugin-retry'
 import {randomBytes} from 'node:crypto'
 import {writeFileSync} from 'node:fs'
 import {tmpdir} from 'node:os'
@@ -64,7 +65,14 @@ class TestReporter {
   readonly context = getCheckRunContext()
 
   constructor() {
-    this.octokit = github.getOctokit(this.token)
+    // Retry transient GitHub API failures (5xx, rate limits) instead of failing the whole job (#246).
+    // 404 is retried too (removed from the plugin's default doNotRetry list) (#866).
+    // Backoff is (retryCount + 1)^2 * retryAfterBaseValue: waits of 2s, 8s, 18s, 32s, 50s (~110s total).
+    this.octokit = github.getOctokit(
+      this.token,
+      {retry: {retries: 5, retryAfterBaseValue: 2000, doNotRetry: [400, 401, 403, 410, 422, 451]}},
+      retry
+    )
 
     if (this.listSuites !== 'all' && this.listSuites !== 'failed' && this.listSuites !== 'none') {
       core.setFailed(`Input parameter 'list-suites' has invalid value`)
