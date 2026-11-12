@@ -29,6 +29,7 @@ import {SwiftXunitParser} from './parsers/swift-xunit/swift-xunit-parser.js'
 import {NetteTesterJunitParser} from './parsers/tester-junit/tester-junit-parser.js'
 import {normalizeDirPath, normalizeFilePath} from './utils/path-utils.js'
 import {getCheckRunContext} from './utils/github-utils.js'
+import {retryOnNotFound} from './utils/retry-utils.js'
 import {UnrealJsonParser} from './parsers/unreal-engine/unreal-json-parser.js'
 
 async function main(): Promise<void> {
@@ -66,13 +67,8 @@ class TestReporter {
 
   constructor() {
     // Retry transient GitHub API failures (5xx, rate limits) instead of failing the whole job (#246).
-    // 404 is retried too (removed from the plugin's default doNotRetry list) (#866).
     // Backoff is (retryCount + 1)^2 * retryAfterBaseValue: waits of 2s, 8s, 18s, 32s, 50s (~110s total).
-    this.octokit = github.getOctokit(
-      this.token,
-      {retry: {retries: 5, retryAfterBaseValue: 2000, doNotRetry: [400, 401, 403, 410, 422, 451]}},
-      retry
-    )
+    this.octokit = github.getOctokit(this.token, {retry: {retries: 5, retryAfterBaseValue: 2000}}, retry)
 
     if (this.listSuites !== 'all' && this.listSuites !== 'failed' && this.listSuites !== 'none') {
       core.setFailed(`Input parameter 'list-suites' has invalid value`)
@@ -249,6 +245,7 @@ class TestReporter {
         ...github.context.repo
       })
 
+      core.info(`Created check run ${createResp.data.id}`)
       core.info('Creating report summary')
       baseUrl = createResp.data.html_url as string
       const summary = getReport(results, {
@@ -273,17 +270,20 @@ class TestReporter {
       const conclusion = isFailed ? 'failure' : 'success'
 
       core.info(`Updating check run conclusion (${conclusion}) and output`)
-      const resp = await this.octokit.rest.checks.update({
-        check_run_id: createResp.data.id,
-        conclusion,
-        status: 'completed',
-        output: {
-          title: shortSummary,
-          summary,
-          annotations
-        },
-        ...github.context.repo
-      })
+      // The check run was just created, so a 404 here means GitHub has not caught up yet (#866).
+      const resp = await retryOnNotFound(async () =>
+        this.octokit.rest.checks.update({
+          check_run_id: createResp.data.id,
+          conclusion,
+          status: 'completed',
+          output: {
+            title: shortSummary,
+            summary,
+            annotations
+          },
+          ...github.context.repo
+        })
+      )
       core.info(`Check run create response: ${resp.status}`)
       core.info(`Check run URL: ${resp.data.url}`)
       core.info(`Check run HTML: ${resp.data.html_url}`)

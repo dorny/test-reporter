@@ -62001,6 +62001,29 @@ class NetteTesterJunitParser {
     }
 }
 
+;// CONCATENATED MODULE: ./lib/utils/retry-utils.js
+
+const sleep = async (ms) => new Promise(resolve => setTimeout(resolve, ms));
+/**
+ * Retries `fn` while it fails with HTTP 404, waiting `delays[i]` ms before retry i+1.
+ * Only meant for calls on a resource this run just created, where a 404 means GitHub has not caught up yet (#866).
+ * Any other error, or a 404 after the last delay, is rethrown.
+ */
+async function retryOnNotFound(fn, delays = [1000, 2000, 4000, 8000], wait = sleep) {
+    for (let attempt = 0;; attempt++) {
+        try {
+            return await fn();
+        }
+        catch (error) {
+            if (error.status !== 404 || attempt >= delays.length) {
+                throw error;
+            }
+            info(`Got 404, retrying in ${delays[attempt] / 1000}s (attempt ${attempt + 1} of ${delays.length})`);
+            await wait(delays[attempt]);
+        }
+    }
+}
+
 ;// CONCATENATED MODULE: ./lib/parsers/unreal-engine/unreal-json-parser.js
 
 
@@ -62401,6 +62424,7 @@ const sanitizeJSONContentString = (fileContentRaw) => {
 
 
 
+
 async function main() {
     try {
         const testReporter = new TestReporter();
@@ -62437,10 +62461,9 @@ class TestReporter {
     context = getCheckRunContext();
     constructor() {
         // Retry transient GitHub API failures (5xx, rate limits) instead of failing the whole job (#246).
-        // 404 is retried too (removed from the plugin's default doNotRetry list), because GitHub returns it
-        // for existing resources during incidents.
+        // 404 stays on the plugin's default doNotRetry list; only the check-run update retries it (#866).
         // Backoff is (retryCount + 1)^2 * retryAfterBaseValue: waits of 2s, 8s, 18s, 32s, 50s (~110s total).
-        this.octokit = getOctokit(this.token, { retry: { retries: 5, retryAfterBaseValue: 2000, doNotRetry: [400, 401, 403, 410, 422, 451] } }, retry);
+        this.octokit = getOctokit(this.token, { retry: { retries: 5, retryAfterBaseValue: 2000 } }, retry);
         if (this.listSuites !== 'all' && this.listSuites !== 'failed' && this.listSuites !== 'none') {
             setFailed(`Input parameter 'list-suites' has invalid value`);
             return;
@@ -62574,6 +62597,7 @@ class TestReporter {
                 },
                 ...github_context.repo
             });
+            info(`Created check run ${createResp.data.id}`);
             info('Creating report summary');
             baseUrl = createResp.data.html_url;
             const summary = getReport(results, {
@@ -62595,7 +62619,8 @@ class TestReporter {
             const isFailed = this.failOnError && results.some(tr => tr.result === 'failed');
             const conclusion = isFailed ? 'failure' : 'success';
             info(`Updating check run conclusion (${conclusion}) and output`);
-            const resp = await this.octokit.rest.checks.update({
+            // The check run was just created, so a 404 here means GitHub has not caught up yet (#866).
+            const resp = await retryOnNotFound(async () => this.octokit.rest.checks.update({
                 check_run_id: createResp.data.id,
                 conclusion,
                 status: 'completed',
@@ -62605,7 +62630,7 @@ class TestReporter {
                     annotations
                 },
                 ...github_context.repo
-            });
+            }));
             info(`Check run create response: ${resp.status}`);
             info(`Check run URL: ${resp.data.url}`);
             info(`Check run HTML: ${resp.data.html_url}`);
