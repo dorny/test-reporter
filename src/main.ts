@@ -178,6 +178,10 @@ class TestReporter {
     core.info(`Processing test results for check run ${name}`)
     const results: TestRunResult[] = []
     for (const {file, content} of files) {
+      if (content.trim() === '') {
+        core.warning(`Skipping empty test report file ${file}`)
+        continue
+      }
       try {
         const tr = await parser.parse(file, content)
         results.push(tr)
@@ -185,6 +189,10 @@ class TestReporter {
         core.error(`Processing test results from ${file} failed`)
         throw error
       }
+    }
+
+    if (results.length === 0) {
+      return []
     }
 
     const {
