@@ -31,4 +31,18 @@ describe('golang-json tests', () => {
     fs.mkdirSync(path.dirname(outputPath), {recursive: true})
     fs.writeFileSync(outputPath, report)
   })
+
+  it('reports a test stopped by -timeout as failed', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'golang-json-timeout.json')
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const parser = new GolangJsonParser({parseErrors: true, trackedFiles: []})
+    const result = await parser.parse('golang-json-timeout.json', fileContent)
+
+    const tests = result.suites[0].groups.flatMap(g => g.tests)
+    expect(tests.map(t => [t.name, t.result])).toEqual([
+      ['TestQuick', 'success'],
+      ['TestHang', 'failed']
+    ])
+  })
 })
