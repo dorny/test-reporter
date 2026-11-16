@@ -61092,10 +61092,8 @@ class GolangJsonParser {
             }
             const lastEvent = eventGroup.at(-1);
             const result = lastEvent.Action === 'pass' ? 'success' : lastEvent.Action === 'skip' ? 'skipped' : 'failed';
-            if (lastEvent.Elapsed === undefined) {
-                throw new Error('missing elapsed on final test event');
-            }
-            const time = lastEvent.Elapsed * 1000;
+            // A test stopped by -timeout or a crash has no final pass/fail event, so no Elapsed
+            const time = (lastEvent.Elapsed ?? 0) * 1000;
             let error = undefined;
             if (result !== 'success') {
                 const outputEvents = eventGroup
