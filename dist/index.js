@@ -61114,6 +61114,29 @@ class GolangJsonParser {
             }
             group.tests.push(new TestCaseResult(testName, result, time, error));
         }
+        // A package can fail with no failed test: a build failure, or a panic in TestMain or init
+        for (const event of events) {
+            if (event.Test || event.Action !== 'fail') {
+                continue;
+            }
+            let suite = suites.find(s => s.name === event.Package);
+            if (suite?.result === 'failed') {
+                continue;
+            }
+            if (!suite) {
+                suite = new TestSuiteResult(event.Package, []);
+                suites.push(suite);
+            }
+            const details = events
+                .filter(e => event.FailedBuild
+                ? e.Action === 'build-output' && e.ImportPath === event.FailedBuild
+                : e.Action === 'output' && e.Package === event.Package && !e.Test)
+                .map(e => e.Output ?? '')
+                .join('');
+            suite.groups.push(new TestGroupResult(null, [
+                new TestCaseResult(event.Package, 'failed', (event.Elapsed ?? 0) * 1000, { message: details, details })
+            ]));
+        }
         return new TestRunResult(path, suites);
     }
 }
