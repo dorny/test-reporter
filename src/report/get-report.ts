@@ -275,7 +275,7 @@ function getTestsReport(ts: TestSuiteResult, runIndex: number, suiteIndex: numbe
   if (options.listTests === 'failed' && ts.result !== 'failed') {
     return []
   }
-  const groups = ts.groups
+  const groups = options.listTests === 'failed' ? ts.failedGroups : ts.groups
   if (groups.length === 0) {
     return []
   }
