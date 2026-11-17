@@ -60268,7 +60268,7 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
     if (options.listTests === 'failed' && ts.result !== 'failed') {
         return [];
     }
-    const groups = ts.groups;
+    const groups = options.listTests === 'failed' ? ts.failedGroups : ts.groups;
     if (groups.length === 0) {
         return [];
     }

@@ -190,6 +190,62 @@ describe('getReport', () => {
     })
   })
 
+  describe('list-tests parameter', () => {
+    const groups = [
+      new TestGroupResult('passing-group', [new TestCaseResult('passing-test', 'success', 100)]),
+      new TestGroupResult('skipped-group', [new TestCaseResult('skipped-test', 'skipped', 0)]),
+      new TestGroupResult('empty-group', []),
+      new TestGroupResult('mixed-group', [
+        new TestCaseResult('mixed-passing-test', 'success', 100),
+        new TestCaseResult('mixed-skipped-test', 'skipped', 0),
+        new TestCaseResult('mixed-failing-test', 'failed', 100, {
+          message: 'Assertion error',
+          details: 'Test failed'
+        })
+      ]),
+      new TestGroupResult('', [new TestCaseResult('ungrouped-failing-test', 'failed', 100)])
+    ]
+    const results = [new TestRunResult('result.xml', [new TestSuiteResult('test-suite', groups)])]
+
+    it('omits groups without failures when list-tests is "failed"', () => {
+      const report = getReport(results, {...DEFAULT_OPTIONS, listTests: 'failed'})
+
+      expect(report).not.toContain('passing-group')
+      expect(report).not.toContain('skipped-group')
+      expect(report).not.toContain('empty-group')
+      expect(report).not.toContain('passing-test')
+      expect(report).not.toContain('skipped-test')
+      expect(report).toContain('mixed-group')
+      expect(report).toContain('mixed-failing-test')
+      expect(report).toContain('ungrouped-failing-test')
+      expect(report).toContain('Assertion error')
+      expect(report).toContain('**2** passed, **2** failed and **2** skipped.')
+    })
+
+    it('retains all groups and tests when list-tests is "all"', () => {
+      const report = getReport(results, {...DEFAULT_OPTIONS, listTests: 'all'})
+
+      expect(report).toContain('passing-group')
+      expect(report).toContain('skipped-group')
+      expect(report).toContain('empty-group')
+      expect(report).toContain('mixed-group')
+      expect(report).toContain('passing-test')
+      expect(report).toContain('skipped-test')
+      expect(report).toContain('mixed-passing-test')
+      expect(report).toContain('mixed-skipped-test')
+      expect(report).toContain('mixed-failing-test')
+      expect(report).toContain('ungrouped-failing-test')
+    })
+
+    it('omits all groups and tests when list-tests is "none"', () => {
+      const report = getReport(results, {...DEFAULT_OPTIONS, listTests: 'none'})
+
+      expect(report).not.toContain('mixed-group')
+      expect(report).not.toContain('mixed-failing-test')
+      expect(report).not.toContain('ungrouped-failing-test')
+    })
+  })
+
   describe('list-files parameter', () => {
     const results = [
       createTestResult('passing-file.spec.ts', 5, 0, 0),
