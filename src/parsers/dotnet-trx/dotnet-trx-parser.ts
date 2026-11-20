@@ -121,12 +121,12 @@ export class DotnetTrxParser implements TestParser {
   }
 
   private getTestRunResult(path: string, trx: TrxReport, testClasses: TestClass[]): TestRunResult {
-    const times = trx.TestRun.Times[0].$
-    const totalTime = parseIsoDate(times.finish).getTime() - parseIsoDate(times.start).getTime()
+    var totalTime = 0
 
     const suites = testClasses.map(testClass => {
       const tests = testClass.tests.map(test => {
         const error = this.getError(test)
+        totalTime += test.duration
         return new TestCaseResult(test.name, test.result, test.duration, error)
       })
       const group = new TestGroupResult(null, tests)
@@ -136,6 +136,12 @@ export class DotnetTrxParser implements TestParser {
     const runFailure = this.getRunFailure(trx, suites)
     if (runFailure) {
       suites.push(runFailure)
+    }
+
+    const times = trx.TestRun.Times?.[0].$
+    if (times !== undefined) {
+      // For test runs which specify actual times, we don't need to rely on our manually-calculated value
+      totalTime = parseIsoDate(times.finish).getTime() - parseIsoDate(times.start).getTime()
     }
 
     return new TestRunResult(path, suites, totalTime)
