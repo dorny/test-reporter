@@ -28,6 +28,7 @@ function getOutcomeResult(outcome: Outcome): TestExecutionResult {
     // Inconclusive is what Assert.Inconclusive produces: a test that opted out
     case 'NotExecuted':
     case 'Inconclusive':
+    case 'Skipped':
       return 'skipped'
     default:
       return 'failed'
