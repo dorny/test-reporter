@@ -2,10 +2,11 @@ import * as core from '@actions/core'
 import {getExecOutput} from '@actions/exec'
 
 export async function listFiles(): Promise<string[]> {
+  const silent = core.getInput('silent-git') === 'true'
   core.startGroup('Listing all files tracked by git')
   let output = ''
   try {
-    output = (await getExecOutput('git', ['ls-files', '-z'])).stdout
+    output = (await getExecOutput('git', ['ls-files', '-z'], {silent})).stdout
   } finally {
     fixStdOutNullTermination()
     core.endGroup()

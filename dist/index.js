@@ -59795,10 +59795,11 @@ var out = __nccwpck_require__(5648);
 
 
 async function git_listFiles() {
+    const silent = getInput('silent-git') === 'true';
     startGroup('Listing all files tracked by git');
     let output = '';
     try {
-        output = (await getExecOutput('git', ['ls-files', '-z'])).stdout;
+        output = (await getExecOutput('git', ['ls-files', '-z'], { silent })).stdout;
     }
     finally {
         fixStdOutNullTermination();
