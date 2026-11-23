@@ -30,6 +30,7 @@ import {NetteTesterJunitParser} from './parsers/tester-junit/tester-junit-parser
 import {normalizeDirPath, normalizeFilePath} from './utils/path-utils.js'
 import {getCheckRunContext} from './utils/github-utils.js'
 import {retryOnNotFound} from './utils/retry-utils.js'
+import {appendSummary} from './utils/summary-utils.js'
 import {UnrealJsonParser} from './parsers/unreal-engine/unreal-json-parser.js'
 
 async function main(): Promise<void> {
@@ -230,7 +231,7 @@ class TestReporter {
       core.info('Summary content:')
       core.info(summary)
       this.writeSummaryFile(summary)
-      await core.summary.addRaw(summary).write()
+      await appendSummary(summary)
     } else {
       core.info(`Creating check run ${name}`)
       const createResp = await this.octokit.rest.checks.create({
