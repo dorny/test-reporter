@@ -53142,7 +53142,7 @@ const _summary = new Summary();
  * @deprecated use `core.summary`
  */
 const markdownSummary = (/* unused pure expression or super */ null && (_summary));
-const summary_summary = _summary;
+const summary = _summary;
 //# sourceMappingURL=summary.js.map
 ;// CONCATENATED MODULE: ./node_modules/@actions/core/lib/path-utils.js
 
@@ -62132,6 +62132,18 @@ async function retryOnNotFound(fn, wait = external_node_timers_promises_namespac
     return fn();
 }
 
+;// CONCATENATED MODULE: ./lib/utils/summary-utils.js
+
+/**
+ * Appends a report to the job summary, followed by a blank line.
+ * With an `artifact` pattern, every matching artifact gets its own report in the same summary (#675).
+ * The blank line closes the report's last block (a code block, or the `<details>` of a passed run),
+ * so the next report's heading renders as a heading.
+ */
+async function appendSummary(report) {
+    await summary.addRaw(report, true).addEOL().write();
+}
+
 ;// CONCATENATED MODULE: ./lib/parsers/unreal-engine/unreal-json-parser.js
 
 
@@ -62533,6 +62545,7 @@ const sanitizeJSONContentString = (fileContentRaw) => {
 
 
 
+
 async function main() {
     try {
         const testReporter = new TestReporter();
@@ -62689,7 +62702,7 @@ class TestReporter {
             info('Summary content:');
             info(summary);
             this.writeSummaryFile(summary);
-            await summary_summary.addRaw(summary).write();
+            await appendSummary(summary);
         }
         else {
             info(`Creating check run ${name}`);
