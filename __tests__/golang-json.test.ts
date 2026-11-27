@@ -31,4 +31,18 @@ describe('golang-json tests', () => {
     fs.mkdirSync(path.dirname(outputPath), {recursive: true})
     fs.writeFileSync(outputPath, report)
   })
+
+  it('reports a package that fails to build as failed', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'golang-json-build-failure.json')
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const parser = new GolangJsonParser({parseErrors: true, trackedFiles: []})
+    const result = await parser.parse('golang-json-build-failure.json', fileContent)
+
+    expect(result.result).toBe('failed')
+    expect(result.suites.map(s => [s.name, s.result])).toEqual([
+      ['example.com/calc/good', 'success'],
+      ['example.com/calc/broken', 'failed']
+    ])
+  })
 })
