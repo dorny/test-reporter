@@ -69,6 +69,10 @@ inputs:
       Must be less or equal to 50.
     required: false
     default: '10'
+  silent-git:
+    description: Suppress Git command output without disabling tracked-file discovery or failure details.
+    required: false
+    default: 'false'
   fail-on-error:
     description: Set this action as failed if test report contain any failed test
     required: false

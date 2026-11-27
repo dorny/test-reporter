@@ -196,6 +196,10 @@ jobs:
     # Must be less or equal to 50.
     max-annotations: '10'
 
+    # Suppress Git command output without disabling tracked-file discovery,
+    # annotations, or failure details.
+    silent-git: 'false'
+
     # Set action as failed if test report contains any failed test
     fail-on-error: 'true'
 
