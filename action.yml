@@ -74,7 +74,7 @@ inputs:
     required: false
     default: 'true'
   fail-on-empty:
-    description: Set this action as failed if no test results were found
+    description: Set this action as failed if no report files match `path`; a valid XML JUnit report with zero test cases is still a report and does not cause `fail-on-empty` to fail
     required: true
     default: 'true'
   working-directory:
