@@ -82,10 +82,8 @@ export class GolangJsonParser implements TestParser {
 
       const result: TestExecutionResult =
         lastEvent.Action === 'pass' ? 'success' : lastEvent.Action === 'skip' ? 'skipped' : 'failed'
-      if (lastEvent.Elapsed === undefined) {
-        throw new Error('missing elapsed on final test event')
-      }
-      const time: number = lastEvent.Elapsed * 1000
+      // A test stopped by -timeout or a crash has no final pass/fail event, so no Elapsed
+      const time: number = (lastEvent.Elapsed ?? 0) * 1000
 
       let error: TestCaseError | undefined = undefined
       if (result !== 'success') {
